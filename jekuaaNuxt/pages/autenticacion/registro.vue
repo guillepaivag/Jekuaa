@@ -1,0 +1,82 @@
+<template>
+  <div class="">
+    <authEmail
+      action="r"
+      :data="data"
+      v-on:process="registroEmail($event)"
+    />
+  </div>
+</template>
+
+<script>
+import firebase from 'firebase'
+import { mapActions, mapMutations } from 'vuex'
+import authEmail from '@/components/auth/authEmail'
+
+export default {
+  name: 'Registro',
+  components: {
+    authEmail
+  },
+  middleware: 'accesoNoAutenticado',
+  data () {
+    return {
+      data: {
+        title: 'Registro',
+        btnMessage: 'Registrarme'
+      }
+    }
+  },
+  methods: {
+    ...mapActions('modules/user/user', ['firebaseRegistroUser_EmailAndPassword', 'firebaseInicioSesionUser_EmailAndPassword', 'login', 'firebaseFirestoreGetUser_UID']),
+    ...mapMutations('modules/system', ['setLoading', 'setError']),
+    async registroEmail (usuario) {
+
+      try {
+        this.setLoading(true)
+
+        // REGISTRAMOS UN USUARIO
+        const datosRegistroUsuario = await this.firebaseRegistroUser_EmailAndPassword({
+          nombreUsuario: usuario.nombreUsuario,
+          correo: usuario.correo,
+          contrasenha: usuario.contrasenha,
+          nombreCompleto: usuario.nombreCompleto
+        })
+        console.log('datosRegistroUsuario', datosRegistroUsuario)
+
+        if (!datosRegistroUsuario) {
+          // Vista de error
+
+          return
+        }
+
+        // INICIO DE SESION DEL USUARIO
+        const userCredential = await this.firebaseInicioSesionUser_EmailAndPassword({
+          correo: usuario.correo,
+          contrasenha: usuario.contrasenha
+        })
+        console.log('userCredential', userCredential)
+
+        this.$router.push(`/bienvenido-a-jekuaa/${datosRegistroUsuario.nombreUsuario}`)
+
+      } catch (error) {
+        this.setError({
+          existe: true,
+          titulo: 'Hubo un error al registrarse',
+          mensaje: 'Hubo un error al registrarse en Jekuaa con correo.',
+          error
+        })
+
+        this.setLoading(false)
+      } finally {
+        // this.setLoading(false)
+      }
+    }
+  },
+  
+}
+</script>
+
+<style>
+
+</style>

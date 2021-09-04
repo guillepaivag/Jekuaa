@@ -1,0 +1,41 @@
+{
+  "FooterDefault": {
+    "description": "Auto imported from components/FooterDefault.vue"
+  },
+  "Loading": {
+    "description": "Auto imported from components/Loading.vue"
+  },
+  "Logo": {
+    "description": "Auto imported from components/Logo.vue"
+  },
+  "NavigationDefault": {
+    "description": "Auto imported from components/NavigationDefault.vue"
+  },
+  "NavigationUser": {
+    "description": "Auto imported from components/NavigationUser.vue"
+  },
+  "VideoPlayer": {
+    "description": "Auto imported from components/VideoPlayer.vue"
+  },
+  "VuetifyLogo": {
+    "description": "Auto imported from components/VuetifyLogo.vue"
+  },
+  "AuthEmail": {
+    "description": "Auto imported from components/auth/authEmail.vue"
+  },
+  "InicioAtajos": {
+    "description": "Auto imported from components/inicio/atajos.vue"
+  },
+  "InicioPresentacion": {
+    "description": "Auto imported from components/inicio/presentacion.vue"
+  },
+  "InicioSubpresentacion": {
+    "description": "Auto imported from components/inicio/subpresentacion.vue"
+  },
+  "FilterAdminUser": {
+    "description": "Auto imported from components/filter/admin/User.vue"
+  },
+  "ListsAdminUser": {
+    "description": "Auto imported from components/lists/admin/User.vue"
+  }
+}

@@ -1,0 +1,87 @@
+{
+  "indexes": [
+    {
+      "collectionGroup": "Usuarios",
+      "queryScope": "COLLECTION",
+      "fields": [
+        {
+          "fieldPath": "correo",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "datosRol.rol",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "datosPlan.tipoPremium",
+          "order": "ASCENDING"
+        }
+      ]
+    },
+    {
+      "collectionGroup": "Usuarios",
+      "queryScope": "COLLECTION",
+      "fields": [
+        {
+          "fieldPath": "datosRol.rol",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "datosPlan.tipoPremium",
+          "order": "ASCENDING"
+        }
+      ]
+    },
+    {
+      "collectionGroup": "Usuarios",
+      "queryScope": "COLLECTION",
+      "fields": [
+        {
+          "fieldPath": "datosRol.rol",
+          "order": "DESCENDING"
+        },
+        {
+          "fieldPath": "datosPlan.tipoPremium",
+          "order": "DESCENDING"
+        }
+      ]
+    },
+    {
+      "collectionGroup": "Usuarios",
+      "queryScope": "COLLECTION",
+      "fields": [
+        {
+          "fieldPath": "nombreUsuario",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "datosRol.rol",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "datosPlan.tipoPremium",
+          "order": "ASCENDING"
+        }
+      ]
+    },
+    {
+      "collectionGroup": "Usuarios",
+      "queryScope": "COLLECTION",
+      "fields": [
+        {
+          "fieldPath": "uid",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "datosRol.rol",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "datosPlan.tipoPremium",
+          "order": "ASCENDING"
+        }
+      ]
+    }
+  ],
+  "fieldOverrides": []
+}

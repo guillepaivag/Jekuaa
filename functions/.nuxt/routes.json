@@ -1,0 +1,107 @@
+[
+  {
+    "name": "admin",
+    "path": "/admin",
+    "component": "C:\\\\Users\\\\i3\\\\Desktop\\\\PDGP\\\\WebDevelopment\\\\Proyectos\\\\Jekuaa\\\\jekuaa-app\\\\jekuaaNuxt\\\\pages\\\\admin\\\\index.vue",
+    "chunkName": "pages/admin/index",
+    "_name": "_3ea0c566"
+  },
+  {
+    "name": "blog",
+    "path": "/blog",
+    "component": "C:\\\\Users\\\\i3\\\\Desktop\\\\PDGP\\\\WebDevelopment\\\\Proyectos\\\\Jekuaa\\\\jekuaa-app\\\\jekuaaNuxt\\\\pages\\\\blog\\\\index.vue",
+    "chunkName": "pages/blog/index",
+    "_name": "_97099906"
+  },
+  {
+    "name": "cursos",
+    "path": "/cursos",
+    "component": "C:\\\\Users\\\\i3\\\\Desktop\\\\PDGP\\\\WebDevelopment\\\\Proyectos\\\\Jekuaa\\\\jekuaa-app\\\\jekuaaNuxt\\\\pages\\\\cursos\\\\index.vue",
+    "chunkName": "pages/cursos/index",
+    "_name": "_557c5930"
+  },
+  {
+    "name": "perfil",
+    "path": "/perfil",
+    "component": "C:\\\\Users\\\\i3\\\\Desktop\\\\PDGP\\\\WebDevelopment\\\\Proyectos\\\\Jekuaa\\\\jekuaa-app\\\\jekuaaNuxt\\\\pages\\\\perfil\\\\index.vue",
+    "chunkName": "pages/perfil/index",
+    "_name": "_e0d95c5a"
+  },
+  {
+    "name": "planes",
+    "path": "/planes",
+    "component": "C:\\\\Users\\\\i3\\\\Desktop\\\\PDGP\\\\WebDevelopment\\\\Proyectos\\\\Jekuaa\\\\jekuaa-app\\\\jekuaaNuxt\\\\pages\\\\planes\\\\index.vue",
+    "chunkName": "pages/planes/index",
+    "_name": "_4dbc0d28"
+  },
+  {
+    "name": "admin-blog",
+    "path": "/admin/blog",
+    "component": "C:\\\\Users\\\\i3\\\\Desktop\\\\PDGP\\\\WebDevelopment\\\\Proyectos\\\\Jekuaa\\\\jekuaa-app\\\\jekuaaNuxt\\\\pages\\\\admin\\\\blog\\\\index.vue",
+    "chunkName": "pages/admin/blog/index",
+    "_name": "_5020d7f8"
+  },
+  {
+    "name": "admin-cursos",
+    "path": "/admin/cursos",
+    "component": "C:\\\\Users\\\\i3\\\\Desktop\\\\PDGP\\\\WebDevelopment\\\\Proyectos\\\\Jekuaa\\\\jekuaa-app\\\\jekuaaNuxt\\\\pages\\\\admin\\\\cursos\\\\index.vue",
+    "chunkName": "pages/admin/cursos/index",
+    "_name": "_25bfa3a2"
+  },
+  {
+    "name": "admin-usuarios",
+    "path": "/admin/usuarios",
+    "component": "C:\\\\Users\\\\i3\\\\Desktop\\\\PDGP\\\\WebDevelopment\\\\Proyectos\\\\Jekuaa\\\\jekuaa-app\\\\jekuaaNuxt\\\\pages\\\\admin\\\\usuarios\\\\index.vue",
+    "chunkName": "pages/admin/usuarios/index",
+    "_name": "_5967f27e"
+  },
+  {
+    "name": "autenticacion-inicioSesion",
+    "path": "/autenticacion/inicioSesion",
+    "component": "C:\\\\Users\\\\i3\\\\Desktop\\\\PDGP\\\\WebDevelopment\\\\Proyectos\\\\Jekuaa\\\\jekuaa-app\\\\jekuaaNuxt\\\\pages\\\\autenticacion\\\\inicioSesion.vue",
+    "chunkName": "pages/autenticacion/inicioSesion",
+    "_name": "_146dcb5a"
+  },
+  {
+    "name": "autenticacion-registro",
+    "path": "/autenticacion/registro",
+    "component": "C:\\\\Users\\\\i3\\\\Desktop\\\\PDGP\\\\WebDevelopment\\\\Proyectos\\\\Jekuaa\\\\jekuaa-app\\\\jekuaaNuxt\\\\pages\\\\autenticacion\\\\registro.vue",
+    "chunkName": "pages/autenticacion/registro",
+    "_name": "_7ade277e"
+  },
+  {
+    "name": "admin-usuarios-uidUser",
+    "path": "/admin/usuarios/:uidUser",
+    "component": "C:\\\\Users\\\\i3\\\\Desktop\\\\PDGP\\\\WebDevelopment\\\\Proyectos\\\\Jekuaa\\\\jekuaa-app\\\\jekuaaNuxt\\\\pages\\\\admin\\\\usuarios\\\\_uidUser\\\\index.vue",
+    "chunkName": "pages/admin/usuarios/_uidUser/index",
+    "_name": "_5bb9dbf6"
+  },
+  {
+    "name": "admin-usuarios-uidUser-editar",
+    "path": "/admin/usuarios/:uidUser/editar",
+    "component": "C:\\\\Users\\\\i3\\\\Desktop\\\\PDGP\\\\WebDevelopment\\\\Proyectos\\\\Jekuaa\\\\jekuaa-app\\\\jekuaaNuxt\\\\pages\\\\admin\\\\usuarios\\\\_uidUser\\\\editar.vue",
+    "chunkName": "pages/admin/usuarios/_uidUser/editar",
+    "_name": "_58a2fed0"
+  },
+  {
+    "name": "bienvenido-a-jekuaa-nombreUsuario",
+    "path": "/bienvenido-a-jekuaa/:nombreUsuario?",
+    "component": "C:\\\\Users\\\\i3\\\\Desktop\\\\PDGP\\\\WebDevelopment\\\\Proyectos\\\\Jekuaa\\\\jekuaa-app\\\\jekuaaNuxt\\\\pages\\\\bienvenido-a-jekuaa\\\\_nombreUsuario.vue",
+    "chunkName": "pages/bienvenido-a-jekuaa/_nombreUsuario",
+    "_name": "_1b6eaccc"
+  },
+  {
+    "name": "blog-uid",
+    "path": "/blog/:uid",
+    "component": "C:\\\\Users\\\\i3\\\\Desktop\\\\PDGP\\\\WebDevelopment\\\\Proyectos\\\\Jekuaa\\\\jekuaa-app\\\\jekuaaNuxt\\\\pages\\\\blog\\\\_uid\\\\index.vue",
+    "chunkName": "pages/blog/_uid/index",
+    "_name": "_34fcd4e8"
+  },
+  {
+    "name": "index",
+    "path": "/",
+    "component": "C:\\\\Users\\\\i3\\\\Desktop\\\\PDGP\\\\WebDevelopment\\\\Proyectos\\\\Jekuaa\\\\jekuaa-app\\\\jekuaaNuxt\\\\pages\\\\index.vue",
+    "chunkName": "pages/index",
+    "_name": "_5653b39f"
+  }
+]
