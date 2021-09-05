@@ -1,3 +1,5 @@
+const MiembroJekuaa = require("../../models/TiposUsuarios/MiembroJekuaa")
+
 const controllerMiembroJekuaa = {}
 
 controllerMiembroJekuaa.verUsuarioPorUID = async (req, res) => {
@@ -33,12 +35,7 @@ controllerMiembroJekuaa.actualizarUsuarioPorUID = async (req, res) => {
             datosActualizados
         } = data
 
-        const listaDeDatosParaActualizar = Object.keys(datosActualizados)
-
-        if (listaDeDatosParaActualizar.includes('nombreUsuario')) {
-            
-        }
-
+        await MiembroJekuaa.actalizarUsuarioPorUID(uid, datosActualizados)
         
     } catch (error) {
         

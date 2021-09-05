@@ -45,7 +45,12 @@ class JekuaaPremium {
             ###############################
         */
 
+        formatoValido () {
 
+
+
+            return true
+        }
         
 
 

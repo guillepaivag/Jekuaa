@@ -1,3 +1,8 @@
+const seccionesValidas = [
+    'informatica',
+    'matematica'
+]
+
 class JekuaaRoles {
 
     constructor ( datosRoles ) {
@@ -117,6 +122,22 @@ class JekuaaRoles {
             ###############################
         */
 
+        formatoValido () {
+
+
+            return true
+        }
+
+        cumpleCondiciones () {
+
+            // Verificar rol valido
+
+            // Verificar secciones validas y de acuerdo al rol 
+
+            // Verificar instructor valido y de acuerdo al rol 
+
+            return true
+        }
 
 
         /* 

@@ -9,6 +9,6 @@ const {
     actualizarUsuarioPorUID
 } = require('../../controllers/usuarios/MiembroJekuaa')
 
-router.post('/actualizarUsuarioPorUID/:uid', esMiembroJekuaa, actualizarUsuarioPorUID)
+router.post('/actualizarUsuarioPorUID/:uid', actualizarUsuarioPorUID)
 
 module.exports = router

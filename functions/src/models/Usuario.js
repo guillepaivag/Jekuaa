@@ -257,7 +257,7 @@ class Usuario {
         }
 
         if ( !this.uid ) {
-            throw new Error('Para actualizar el nombre de usuario se debe tener la uid primeramente.')
+            throw new Error('Para actualizar el usuario se debe tener la uid primeramente.')
         }
 
         if ( !this.nombreUsuario ) {
@@ -526,7 +526,7 @@ class Usuario {
 
     }
 
-    static async actualizarUsuarioRolPorUID ( uid, datosRol ) {
+    static async actualizarRolPorUID ( uid, datosRol ) {
 
         if ( !uid ) {
             throw new Error('Para actualizar la fecha de nacimiento se debe tener la uid primeramente.')
@@ -558,6 +558,80 @@ class Usuario {
 
     }
 
+    static verificadorDeFormato ( datosUsuario ) {
+        const {
+            uid,
+            nombreUsuario,
+            correo,
+            nombreCompleto,
+            fechaNacimiento,
+            jekuaaPremium,
+            jekuaaRoles,
+            jekuaaPoint
+        } = datosUsuario
+
+        if ( uid && typeof uid != 'string' ) {
+            throw new Error('La uid debe ser de tipo string.')
+        }
+
+        if ( nombreUsuario && typeof nombreUsuario != 'string' ) {
+            throw new Error('El nombre de usuario debe ser de tipo string.')
+        }
+
+        if ( correo && typeof correo != 'string' ) {
+            throw new Error('El correo debe ser de tipo string.')
+        }
+
+        if ( nombreCompleto && typeof nombreCompleto != 'string' ) {
+            throw new Error('El nombre completo debe ser de tipo string.')
+        }
+
+        if ( fechaNacimiento && typeof fechaNacimiento != 'object' ) {
+            throw new Error('La fecha de nacimiento debe ser de tipo object (Date).')
+        }
+
+        if ( jekuaaPremium ) {
+
+            if ( typeof jekuaaPremium != 'object' ) {
+                throw new Error('El jekuaaPremium debe ser de tipo object.')
+            }
+
+            const formatoJekuaaPremium = new JekuaaPremium({
+                plan: jekuaaPremium.plan,
+                fechaCompra: jekuaaPremium.fechaCompra,
+                duracion: jekuaaPremium.duracion,
+            })
+
+            if( !formatoJekuaaPremium.formatoValido() ) { // ARREGLAR
+                throw new Error('El jekuaaPremium es un objeto pero no tiene el formato valido.')
+            }
+        }
+
+        if ( jekuaaRoles ) {
+
+            if ( typeof jekuaaRoles != 'object' ) {
+                throw new Error('El jekuaaRoles debe ser de tipo object.')
+            }
+            
+            const formatoJekuaaRoles = new JekuaaRoles({
+                rol: jekuaaRoles.rol,
+                secciones: jekuaaRoles.secciones,
+                instructor: jekuaaRoles.instructor
+            })
+
+            if ( !formatoJekuaaRoles.formatoValido() ) { // ARREGLAR
+                throw new Error('El jekuaaRoles es un objeto pero no tiene el formato valido.')
+            }
+
+            if ( !formatoJekuaaRoles.cumpleCondiciones() ) { // ARREGLAR
+                throw new Error('El jekuaaRoles es un objeto, tiene el formato valido pero no cumple las condiciones.')
+            }
+        }
+
+        if ( jekuaaPoint && typeof jekuaaPoint != 'number' ) {
+            throw new Error('El jekuaaPoint debe ser de tipo number.')
+        }
+    }
 }
 
 module.exports = Usuario
