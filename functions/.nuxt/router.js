@@ -14,8 +14,8 @@ const _4c015e03 = () => interopDefault(import('..\\..\\jekuaaNuxt\\pages\\admin\
 const _02bedcd6 = () => interopDefault(import('..\\..\\jekuaaNuxt\\pages\\admin\\usuarios\\index.vue' /* webpackChunkName: "pages/admin/usuarios/index" */))
 const _77ba35f4 = () => interopDefault(import('..\\..\\jekuaaNuxt\\pages\\autenticacion\\inicioSesion.vue' /* webpackChunkName: "pages/autenticacion/inicioSesion" */))
 const _01cdbbed = () => interopDefault(import('..\\..\\jekuaaNuxt\\pages\\autenticacion\\registro.vue' /* webpackChunkName: "pages/autenticacion/registro" */))
-const _7a3723d9 = () => interopDefault(import('..\\..\\jekuaaNuxt\\pages\\admin\\usuarios\\_uidUser\\index.vue' /* webpackChunkName: "pages/admin/usuarios/_uidUser/index" */))
-const _2e1ca944 = () => interopDefault(import('..\\..\\jekuaaNuxt\\pages\\admin\\usuarios\\_uidUser\\editar.vue' /* webpackChunkName: "pages/admin/usuarios/_uidUser/editar" */))
+const _ec364ab4 = () => interopDefault(import('..\\..\\jekuaaNuxt\\pages\\admin\\usuarios\\lista-usuarios\\index.vue' /* webpackChunkName: "pages/admin/usuarios/lista-usuarios/index" */))
+const _37480160 = () => interopDefault(import('..\\..\\jekuaaNuxt\\pages\\admin\\usuarios\\_uidUsuario.vue' /* webpackChunkName: "pages/admin/usuarios/_uidUsuario" */))
 const _da154b10 = () => interopDefault(import('..\\..\\jekuaaNuxt\\pages\\bienvenido-a-jekuaa\\_nombreUsuario.vue' /* webpackChunkName: "pages/bienvenido-a-jekuaa/_nombreUsuario" */))
 const _47ce9638 = () => interopDefault(import('..\\..\\jekuaaNuxt\\pages\\blog\\_uid\\index.vue' /* webpackChunkName: "pages/blog/_uid/index" */))
 const _50fb564b = () => interopDefault(import('..\\..\\jekuaaNuxt\\pages\\index.vue' /* webpackChunkName: "pages/index" */))
@@ -72,13 +72,13 @@ export const routerOptions = {
     component: _01cdbbed,
     name: "autenticacion-registro"
   }, {
-    path: "/admin/usuarios/:uidUser",
-    component: _7a3723d9,
-    name: "admin-usuarios-uidUser"
+    path: "/admin/usuarios/lista-usuarios",
+    component: _ec364ab4,
+    name: "admin-usuarios-lista-usuarios"
   }, {
-    path: "/admin/usuarios/:uidUser/editar",
-    component: _2e1ca944,
-    name: "admin-usuarios-uidUser-editar"
+    path: "/admin/usuarios/:uidUsuario",
+    component: _37480160,
+    name: "admin-usuarios-uidUsuario"
   }, {
     path: "/bienvenido-a-jekuaa/:nombreUsuario?",
     component: _da154b10,

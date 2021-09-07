@@ -20,8 +20,6 @@ export const actions = {
 
         const datosUsuarioDB = await dispatch('modules/user/user/firebaseFirestoreGetUser_UID', uid)
 
-        console.log('datosUsuarioDB: ', datosUsuarioDB.data())
-
         // Objetos a insertar
         const fotoPerfil = user.decodedToken.picture ? user.decodedToken.picture : null
         const nombreUsuario = user.decodedToken.name ? user.decodedToken.name : null
@@ -51,8 +49,6 @@ export const actions = {
           jekuaaRoles,
           jekuaaPoint
         }
-
-        console.log('datosUsuario: ', datosUsuario)
 
         await dispatch('modules/user/user/setDatosUsuario', datosUsuario)
 

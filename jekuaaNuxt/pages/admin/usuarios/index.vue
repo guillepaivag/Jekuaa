@@ -1,42 +1,38 @@
 <template>
-  <div>
     <div class="container">
-      <buscadorUsuarios v-on:buscar="buscarUsuario($event)" />
+        <div class="row mt-5">
+            <div class="col-md-7">
+                * Formulario para crear un usuario *
+            </div>
+            <div class="col-md-5">
 
-      <hr>
-
+                <div>
+                    <v-btn 
+                        color="success" 
+                        block
+                        to="/admin/usuarios/lista-usuarios"
+                    >
+                        Lista de usuarios
+                    </v-btn>
+                </div>
+                
+            </div>
+        </div>
     </div>
-  </div>
 </template>
 
 <script>
-import buscadorUsuarios from '@/components/admin/buscadorUsuarios'
-import listaUsuarios from "@/components/admin/listaUsuarios"
-
 export default {
-  name: "",
-  middleware: 'esMiembroJekuaa',
-  components: {
-    buscadorUsuarios,
-    listaUsuarios
-  },
-  data() {
-    return {
-      
-    }
-  },
-  methods: {
-    buscarUsuario ( datosBusqueda ) {
-      const {
-        identificadorUsuario,
-        codigoBuscador
-      } = datosBusqueda
-
-      alert(`Buscar por ${codigoBuscador} al usuario ${identificadorUsuario}`)
-    }
-  },
-};
+    name: '',
+    middleware: 'esMiembroJekuaa',
+    data() {
+        return {
+            
+        }
+    },
+}
 </script>
 
 <style>
+
 </style>

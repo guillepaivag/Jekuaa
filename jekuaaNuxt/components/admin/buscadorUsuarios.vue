@@ -1,7 +1,7 @@
 <template>
     <div>
         <div class="row mb-4">
-            <div class="col-md-6">
+            <div class="col-md-4">
                 <v-select
                     v-model="identificador"
                     :hint="`${identificador.codigo ? `Buscar por: ${identificador.texto}` : 'No hay identificador'}`"
@@ -15,7 +15,7 @@
                 ></v-select>
             </div>
 
-            <div class="col-md-6" v-if="identificador.codigo">
+            <div class="col-md-8" v-if="identificador.codigo">
                 <form onsubmit="return false">
                     <v-text-field
                         v-if="identificador.codigo === 'uid'"
@@ -85,11 +85,11 @@ export default {
         return {
             identificadorUsuario: '',
             identificador: {
-                texto: 'Elegir un identificador',
+                texto: 'Todos',
                 codigo: null
             },
             opcionesIdentificadores: [
-                { texto: 'Elegir un identificador', codigo: null },
+                { texto: 'Todos', codigo: null },
                 { texto: 'UID', codigo: 'uid' },
                 { texto: 'Nombre de usuario', codigo: 'nombreUsuario' },
                 { texto: 'Correo', codigo: 'correo' }
@@ -121,9 +121,18 @@ export default {
         },
     },
 
+    watch: {
+        identificador: function ( identificadorNuevo, identificadorViejo ) {
+            if ( !identificadorNuevo.codigo ) {
+                this.identificadorUsuario = ''
+                this.buscarPorIdentificador()
+            }
+        },
+    },
+
     methods: {
         buscarPorIdentificador(){
-            this.$v.$touch()
+            // this.$v.$touch()
             this.$emit('buscar', {
                 identificadorUsuario: this.identificadorUsuario,
                 codigoBuscador: this.identificador.codigo

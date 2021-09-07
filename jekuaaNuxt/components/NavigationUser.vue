@@ -5,7 +5,7 @@
       temporary
       app
     >
-      <v-list-item>
+      <v-list-item to="/perfil">
         <v-list-item-avatar color="#683bce">
           <v-img v-if="!!fotoPerfil" src="https://randomuser.me/api/portraits/men/78.jpg" />
           <span v-else class="white--text headline">
@@ -159,9 +159,12 @@
               </v-avatar>
             </v-btn>
           </template>
-          <v-card>
-            <v-list-item-content class="justify-center">
-              <div class="mx-auto text-center">
+          
+          <v-card class="mx-auto" max-width="300" tile>
+            <!-- shaped -->
+            <v-list>
+              
+              <div class="mx-auto text-center mt-3">
                 <v-avatar
                   color="#683bce"
                 >
@@ -173,29 +176,43 @@
                 <p class="caption mt-1">
                   {{ correoUsuario }}
                 </p>
-                <v-divider class="my-3" />
-                <v-btn
-                  depressed
-                  rounded
-                  text
-                  class="estiloTexto"
-                  to="/perfil"
-                >
-                  Ver perfil
-                </v-btn>
-                <v-divider class="my-3" />
-                <v-btn
-                  depressed
-                  rounded
-                  text
-                  class="estiloTexto"
-                  @click="cerrarSesion"
-                >
-                  Cerrar sesión
-                </v-btn>
               </div>
-            </v-list-item-content>
+
+              <v-divider class="my-3" />
+
+              <v-list-item
+                v-for="(item, i) in itemsPerfil"
+                :key="i"
+                :to="item.to"
+              >
+                <v-list-item-icon>
+                  <v-icon v-text="item.icon"></v-icon>
+                </v-list-item-icon>
+                <v-list-item-content>
+                  <v-list-item-title v-text="item.text"></v-list-item-title>
+                </v-list-item-content>
+              </v-list-item>
+
+              <v-divider class="my-3" />
+
+              <v-list-item
+                @click="cerrarSesion"
+              >
+                <v-list-item-icon>
+                  <v-icon>
+                    mdi-logout-variant
+                  </v-icon>
+                </v-list-item-icon>
+                <v-list-item-content>
+                  <v-list-item-title>
+                    Cerrar sesión
+                  </v-list-item-title>
+                </v-list-item-content>
+              </v-list-item>
+              
+            </v-list>
           </v-card>
+
         </v-menu>
       </div>
 
@@ -220,6 +237,9 @@ export default {
         { title: 'Cursos', icon: 'mdi-television-play', to: '/cursos' },
         { title: 'Planes', icon: 'mdi-cards', to: '/planes' },
         { title: 'Blog', icon: 'mdi-book-open-variant', to: '/blog' }
+      ],
+      itemsPerfil: [
+        { text: 'Ver perfil', icon: 'mdi-account', to: '/perfil' },
       ]
     }
   },

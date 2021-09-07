@@ -1,5 +1,49 @@
 <template>
-
+    <div>
+        
+        <v-simple-table dense>
+            <template v-slot:default>
+                <thead>
+                <tr>
+                    <th class="text-left">
+                    UID
+                    </th>
+                    <th class="text-left">
+                    Correo
+                    </th>
+                    <th class="text-left">
+                    Usuario
+                    </th>
+                    <th class="text-left">
+                    Acciones
+                    </th>
+                </tr>
+                </thead>
+                <tbody>
+                    <tr
+                        v-for="(usuario, index) in listaUsuarios"
+                        :key="index"
+                    >
+                        <td>{{ usuario.uid }}</td>
+                        <td>{{ usuario.correo }}</td>
+                        <td>{{ usuario.nombreUsuario }}</td>
+                        <td>
+                            <v-btn
+                                class="ma-2"
+                                outlined
+                                color="#683bce"
+                                block
+                                :to="`/admin/usuarios/${usuario.uid}`"
+                            >
+                                Ver datos
+                            </v-btn>
+                        </td>
+                    </tr>
+                </tbody>
+            </template>
+        </v-simple-table>
+        
+    </div>
 </template>
 
 <script>
@@ -9,35 +53,19 @@ export default {
             listaUsuarios: []
         }
     },
+    props: {
+        usuarios: Array
+    },
+    watch: {
+        usuarios: function ( nuevo, viejo ) {
+            this.listaUsuarios = this.usuarios
+        }
+    },
     methods: {
-        async pagination(){
-
-            try {
-                const db = this.$firebase.firestore()
-
-                let next = db.collection('Usuarios')
-
-                next = this.filtracion(next, this.dataFilter)
-                
-                next = next.startAfter(this.lastDocumentList).limit(this.limit);
-
-                const snapshot = await next.get();
-
-                if(snapshot.size > 0) {
-                    snapshot.forEach(snap => {
-                        this.usersDataList.push(snap.data())
-                    })
-                    
-                    this.lastDocumentList = snapshot.docs[snapshot.docs.length - 1];
-                } else {
-                    this.moreDataList = false
-                }
-            } catch (error) {
-                console.log('error', error)
-
-            }
-
-        },
+        
+    },
+    created() {
+        this.listaUsuarios = this.usuarios
     },
 }
 </script>
