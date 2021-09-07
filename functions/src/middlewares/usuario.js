@@ -9,7 +9,7 @@ middlewaresUser.estaAutenticado = (req, res, next) => {
             const { authToken } = req
 
             const userInfo = await admin.auth().verifyIdToken(authToken)
-            req.requesterUID = userInfo.uid
+            req.uidSolicitante = userInfo.uid
 
             return next()
     

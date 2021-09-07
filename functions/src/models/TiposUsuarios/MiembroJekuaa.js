@@ -4,6 +4,7 @@ const Usuario = require("../Usuario")
 const Blog = require('../Blog')
 const JekuaaPremium = require('../JekuaaPremium')
 const JekuaaRoles = require('../JekuaaRoles')
+const Instructor = require('./Instructor')
 
 const COLECCION_USUARIO = 'Usuarios'
 const COLECCION_INSTRUCTOR = 'Instructores'
@@ -50,72 +51,72 @@ class MiembroJekuaa extends Usuario {
             ###############################
         */
 
-        // CRUD BLOG
-        async crearBlog ( datosBlog ) {
-            const blog = new Blog (datosBlog)
+    // CRUD BLOG
+    async crearBlog ( datosBlog ) {
+        const blog = new Blog (datosBlog)
 
-            await blog.crearBlog()
+        await blog.crearBlog()
 
-            return blog
-        }
+        return blog
+    }
 
-        async verBlog ( uidBlog ) {
-            const blog = new Blog ()
+    async verBlog ( uidBlog ) {
+        const blog = new Blog ()
 
-            await blog.importarDatosBlogPorUID( uidBlog )
+        await blog.importarDatosBlogPorUID( uidBlog )
 
-            return blog
-        }
+        return blog
+    }
 
-        async editarBlog ( uidBlog, datosBlog ) {
-            const blog = new Blog ()
+    async editarBlog ( uidBlog, datosBlog ) {
+        const blog = new Blog ()
 
-            blog.setBLOG( datosBlog )
-            blog.setUID( uidBlog )
-            await blog.actualizarBlog()
+        blog.setBLOG( datosBlog )
+        blog.setUID( uidBlog )
+        await blog.actualizarBlog()
 
-            return blog
-        }
+        return blog
+    }
 
-        async habilitarBlog ( uidBlog, habilitado ) {
-            const blog = new Blog ()
+    async habilitarBlog ( uidBlog, habilitado ) {
+        const blog = new Blog ()
 
-            await blog.importarDatosBlogPorUID( uidBlog )
-            blog.setHABILITADO(habilitado)
-            await blog.habilitarBlog()
+        await blog.importarDatosBlogPorUID( uidBlog )
+        blog.setHABILITADO(habilitado)
+        await blog.habilitarBlog()
 
-            return blog
-        }
+        return blog
+    }
 
-        async eliminarBlog ( uidBlog ) {
-            const blog = new Blog ()
+    async eliminarBlog ( uidBlog ) {
+        const blog = new Blog ()
 
-            await blog.importarDatosBlogPorUID( uidBlog )
-            await blog.eliminarBlog()
+        await blog.importarDatosBlogPorUID( uidBlog )
+        await blog.eliminarBlog()
 
-            return blog
-        }
+        return blog
+    }
 
-        // CRUD USUARIO
-        crearUsuario ( datosUsuario ) {
-            
-        }
+    // CRUD USUARIO
+    crearUsuario ( datosUsuario ) {
+        
+    }
 
-        verUsuario ( uidUsuario ) {
+    verUsuario ( uidUsuario ) {
 
-        }
+    }
 
-        editarUsuario ( uidUsuario, datosUsuario ) {
+    editarUsuario ( uidUsuario, datosUsuario ) {
 
-        }
+    }
 
-        habilitarUsuario ( uidUsuario, habilitado ) {
-            
-        }
+    habilitarUsuario ( uidUsuario, habilitado ) {
+        
+    }
 
-        eliminarUsuario ( uidUsuario ) {
+    eliminarUsuario ( uidUsuario ) {
 
-        }
+    }
 
         /* 
             ###############################
@@ -123,94 +124,62 @@ class MiembroJekuaa extends Usuario {
             ###############################
         */
 
-        static async actalizarUsuarioPorUID ( uidUsuario, datosActualizados ) {
+    static async actalizarUsuarioPorUID ( uidUsuario, datosActualizados ) {
 
-            const {
-                nombreUsuario,
-                correo,
-                nombreCompleto,
-                fechaNacimiento,
-                jekuaaPremium,
-                jekuaaRoles,
-                jekuaaPoint
-            } = datosActualizados
+        const {
+            nombreUsuario,
+            correo,
+            nombreCompleto,
+            fechaNacimiento,
+            jekuaaPremium,
+            jekuaaRoles,
+            jekuaaPoint
+        } = datosActualizados
 
-            const docUsuario = await db.collection(COLECCION_USUARIO).doc(uidUsuario).get()
-
-            if ( !docUsuario.exists ) {
-                throw new Error(`No existe el usuario con la uid ${uidUsuario}.`)
-            }
-
-            Usuario.verificadorDeFormato( datosActualizados )
-
-            const datosUsuario = docUsuario.data()
-
-            const datosUsuarioDBActualizar = {}
-            const datosUsuarioAuthActualizar = {}
-
-            const cambioNombreUsuario = nombreUsuario != datosUsuario.nombreUsuario
-            if ( nombreUsuario && cambioNombreUsuario ) {
-                datosUsuarioDBActualizar.nombreUsuario = nombreUsuario
-                datosUsuarioAuthActualizar.displayName = nombreUsuario
-            }
-
-            const cambioCorreo = correo != datosUsuario.correo
-            if ( correo && cambioCorreo ) {
-                datosUsuarioDBActualizar.correo = correo
-                datosUsuarioAuthActualizar.email = correo
-            }
-
-            const cambioNombreCompleto = nombreCompleto != datosUsuario.nombreCompleto
-            if ( nombreCompleto && cambioNombreCompleto ) {
-                datosUsuarioDBActualizar.nombreCompleto = nombreCompleto
-            }
-
-            const cambioFechaNacimiento = fechaNacimiento.getTime() != new Date(datosUsuario.fechaNacimiento.seconds * 1000).getTime()
-            if ( fechaNacimiento && cambioFechaNacimiento ) {
-                datosUsuarioDBActualizar.fechaNacimiento = admin.firestore.Timestamp.fromDate(fechaNacimiento)
-            }
-
-            const cambioPlan = jekuaaPremium.plan != datosUsuario.jekuaaPremium.plan
-            const cambioFechaCompra = jekuaaPremium.fechaCompra.getTime() != new Date(datosUsuario.jekuaaPremium.fechaCompra.seconds * 1000).getTime()
-            const cambioDuracion = jekuaaPremium.duracion != datosUsuario.jekuaaPremium.duracion
-            const cambioJekuaaPremium = cambioPlan || cambioFechaCompra || cambioDuracion
-            if ( jekuaaPremium && cambioJekuaaPremium ) {
-                datosUsuarioDBActualizar.jekuaaPremium = JSON.parse( JSON.stringify( jekuaaPremium ) )
-                datosUsuarioDBActualizar.jekuaaPremium.fechaCompra = admin.firestore.Timestamp.fromDate( jekuaaPremium.fechaCompra )
-            }
-            
-            const cambioRol = jekuaaRoles.rol != datosUsuario.jekuaaRoles.rol
-            const cambioSecciones = jekuaaPremium.secciones != datosUsuario.jekuaaPremium.secciones // ARREGLAR
-            const cambioInstructor = jekuaaPremium.instructor != datosUsuario.jekuaaPremium.instructor
-            const cambioJekuaaRoles = cambioRol || cambioSecciones || cambioInstructor
-            if ( jekuaaRoles && cambioJekuaaRoles ) {
-                datosUsuarioDBActualizar.jekuaaRoles = JSON.parse( JSON.stringify( jekuaaRoles ) )
-            }
-
-            const cambioJekuaaPoint = jekuaaPoint != datosUsuario.jekuaaPoint
-            if ( jekuaaPoint && cambioJekuaaPoint ) {
-                datosUsuarioDBActualizar.jekuaaPoint = jekuaaPoint
-            }
-
-            await admin.auth().updateUser(uidUsuario, datosUsuarioAuthActualizar)
-            await db.collection(COLECCION_USUARIO).doc(uidUsuario).update(datosUsuarioDBActualizar)
-
-            // Operar los datos de instructor en caso de cambio
-            if ( !cambioInstructor ) {
-                return 
-            }
-
-            const noExisteInstructor = !(await db.collection(COLECCION_INSTRUCTOR).doc(uidUsuario).get()).exists
-            if (jekuaaPremium.instructor && noExisteInstructor) {
-                // Agregar instructor
-                // ARREGLAR
-            }
-
-            const usuario = new Usuario()
-            await usuario.importarDatosUsuarioPorUID(uid)
-
-            return usuario
+        if ( !Object.keys( datosActualizados ).length ) {
+            throw new Error(`No hay datos para actualizar.`)
         }
+
+        const docUsuario = await db.collection(COLECCION_USUARIO).doc(uidUsuario).get()
+
+        if ( !docUsuario.exists ) {
+            throw new Error(`No existe el usuario con la uid ${uidUsuario}.`)
+        }
+
+        const datosUsuario = docUsuario.data()
+
+        const {
+            datosUsuarioDBActualizar,
+            datosUsuarioAuthActualizar,
+            datosUsuarioAuthClaimsActualizar
+        } = Usuario.construirDatosParaActualizar (datosActualizados, datosUsuario)
+
+        Usuario.verificadorDeFormatoParaActualizar( datosUsuarioDBActualizar )
+
+        await admin.auth().updateUser(uidUsuario, datosUsuarioAuthActualizar)
+        await db.collection(COLECCION_USUARIO).doc(uidUsuario).update(datosUsuarioDBActualizar)
+        await admin.auth().setCustomUserClaims(uidUsuario, datosUsuarioAuthClaimsActualizar)
+
+        const usuario = new Usuario()
+        await usuario.importarDatosUsuarioPorUID(uidUsuario)
+
+        // Operar los datos de instructor en caso de cambio
+        const cambioInstructor = jekuaaRoles ? jekuaaRoles.instructor != datosUsuario.jekuaaRoles.instructor : false
+        if ( !cambioInstructor ) {
+            return usuario 
+        }
+
+        const noExisteInstructor = !(await db.collection(COLECCION_INSTRUCTOR).doc(uidUsuario).get()).exists
+        if ( jekuaaRoles.instructor && noExisteInstructor ) {
+            // Agregar instructor
+
+            Instructor.crearNuevoInstructor({
+                uid: uidUsuario
+            })
+        }
+
+        return usuario 
+    }
 }
 
 module.exports = MiembroJekuaa

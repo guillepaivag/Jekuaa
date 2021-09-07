@@ -23,6 +23,15 @@
   "AuthEmail": {
     "description": "Auto imported from components/auth/authEmail.vue"
   },
+  "AdminBuscadorUsuarios": {
+    "description": "Auto imported from components/admin/buscadorUsuarios.vue"
+  },
+  "AdminFiltroUsuarios": {
+    "description": "Auto imported from components/admin/filtroUsuarios.vue"
+  },
+  "AdminListaUsuarios": {
+    "description": "Auto imported from components/admin/listaUsuarios.vue"
+  },
   "InicioAtajos": {
     "description": "Auto imported from components/inicio/atajos.vue"
   },

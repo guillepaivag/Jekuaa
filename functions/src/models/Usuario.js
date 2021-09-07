@@ -21,8 +21,8 @@ class Usuario {
         this.correo = correo ? correo : ''
         this.nombreCompleto = nombreCompleto ? nombreCompleto : ''
         this.fechaNacimiento = fechaNacimiento ? fechaNacimiento : null
-        this.jekuaaPremium = jekuaaPremium ? jekuaaPremium : null
-        this.jekuaaRoles = jekuaaRoles ? jekuaaRoles : new JekuaaRoles().getDatosRoles()
+        this.jekuaaPremium = jekuaaPremium ? jekuaaPremium : new JekuaaPremium()
+        this.jekuaaRoles = jekuaaRoles ? jekuaaRoles : new JekuaaRoles()
         this.jekuaaPoint = jekuaaPoint ? jekuaaPoint : 0
     }
     
@@ -34,7 +34,16 @@ class Usuario {
     */
 
     getUsuario () {
-        return this
+        return {
+            uid: this.uid,
+            nombreUsuario: this.nombreUsuario,
+            correo: this.correo, 
+            nombreCompleto: this.nombreCompleto,
+            fechaNacimiento: this.fechaNacimiento,
+            jekuaaPremium: this.jekuaaPremium,
+            jekuaaRoles: this.jekuaaRoles,
+            jekuaaPoint: this.jekuaaPoint
+        }
     }
 
     getUID () {
@@ -150,7 +159,7 @@ class Usuario {
             return
         }
 
-        this.jekuaaPremium = null
+        this.jekuaaPremium = new JekuaaPremium()
     }
 
     setJekuaaRoles ( jekuaaRoles = null ) {
@@ -161,11 +170,11 @@ class Usuario {
                 instructor
             } = jekuaaRoles
 
-            this.jekuaaRoles = new JekuaaRoles(jekuaaRoles).getDatosRoles()
+            this.jekuaaRoles = new JekuaaRoles(jekuaaRoles)
             return
         }
 
-        this.jekuaaRoles = new JekuaaRoles().getDatosRoles()
+        this.jekuaaRoles = new JekuaaRoles()
     }
 
     setJekuaaPoints ( jekuaaPoint = 0 ) {
@@ -206,11 +215,24 @@ class Usuario {
             throw new Error('No existe el usuario.')
         }
 
-        const datosUsuario = documentoUsuario.data()
+        const data = documentoUsuario.data()
+
+        const datosUsuario = JSON.parse( JSON.stringify( data ) )
+
+        datosUsuario.fechaNacimiento = data.fechaNacimiento ? new Date( data.fechaNacimiento.seconds * 1000 ) : null
+
+        datosUsuario.jekuaaPremium = new JekuaaPremium()
+        datosUsuario.jekuaaPremium.setDatosPremiumConTimestamp( data.jekuaaPremium )
+
+        datosUsuario.jekuaaRoles = new JekuaaRoles( {
+            rol: data.jekuaaRoles.rol,
+            secciones: data.jekuaaRoles.secciones,
+            instructor: data.jekuaaRoles.instructor
+        } )
 
         this.setUsuario(datosUsuario)
 
-        return this.getUsuario()
+        return this
     }
 
     async obtenerDatosDeAuthentication () {
@@ -227,26 +249,6 @@ class Usuario {
         const datosUsuarioAuthentication = await admin.auth().getUser(this.uid)
     
         return datosUsuarioAuthentication
-    }
-
-    async guardarUsuario (contrasenha = String) {
-        
-        if ( this.uid && this.uid.length > 0 ) {
-            const docUsuario = await db.collection(COLECCION_USUARIO).doc(this.uid).get()
-
-            if ( docUsuario.exists ) {
-                throw new Error(`Ya existe el usuario con la uid ${this.uid}.`)
-            }
-        }
-
-        this.uid = await Usuario.crearNuevoUsuario({
-            nombreUsuario: this.nombreUsuario,
-            correo: this.correo,
-            nombreCompleto: this.nombreCompleto,
-            fechaNacimiento: this.fechaNacimiento,
-        }, contrasenha)
-     
-        return this.getUsuario()
     }
 
     async actualizarDatosPersonales () {
@@ -303,30 +305,21 @@ class Usuario {
             datosUsuarioDBActualizar.nombreCompleto = this.nombreCompleto
         }
 
-        if ( new Date(datosUsuario.fechaNacimiento.seconds * 1000).getTime() != this.fechaNacimiento.getTime() ) {
-            datosUsuarioDBActualizar.fechaNacimiento = admin.firestore.Timestamp.fromDate(this.fechaNacimiento)
+        if ( this.fechaNacimiento ) {
+            if ( !datosUsuario.fechaNacimiento ) {
+                datosUsuarioDBActualizar.fechaNacimiento = admin.firestore.Timestamp.fromDate(this.fechaNacimiento)
+
+            } else {
+                if ( new Date(datosUsuario.fechaNacimiento.seconds * 1000).getTime() != this.fechaNacimiento.getTime() ) {
+                    datosUsuarioDBActualizar.fechaNacimiento = admin.firestore.Timestamp.fromDate(this.fechaNacimiento)
+                }
+            }
         }
 
         await admin.auth().updateUser(this.uid, datosUsuarioAuthActualizar)
         await db.collection(COLECCION_USUARIO).doc(this.uid).update(datosUsuarioDBActualizar)
 
-        return this.getUsuario()
-        
-    }
-
-    async actualizarNombreUsuario () {
-
-    }
-
-    async actualizarCorreo () {
-        
-    }
-
-    async actualizarNombreCompleto () {
-        
-    }
-
-    async actualizarFechaNacimineto () {
+        return this
         
     }
 
@@ -381,7 +374,7 @@ class Usuario {
         }
 
         if ( fechaNacimiento && ( typeof fechaNacimiento != 'object' ) ) {
-            throw new Error('La fecha de nacimiento debe ser de tipo object.')
+            throw new Error('La fecha de nacimiento debe ser de tipo object (Date).')
         }
         
         const existeNombreUsuario = !(await db.collection(COLECCION_USUARIO).where('nombreUsuario', '==', nombreUsuario).get()).empty
@@ -400,9 +393,9 @@ class Usuario {
             uid: usuarioAuthNuevo.uid,
             nombreUsuario: nombreUsuario,
             correo: correo,
-            nombreCompleto: nombreCompleto ? nombreCompleto : null,
+            nombreCompleto: nombreCompleto ? nombreCompleto : '',
             fechaNacimiento: fechaNacimiento ? admin.firestore.Timestamp.fromDate(fechaNacimiento) : null,
-            jekuaaPremium: null,
+            jekuaaPremium: new JekuaaPremium().getDatosPremiumConTimestamp(),
             jekuaaRoles: new JekuaaRoles().getDatosRoles(),
             jekuaaPoint: 0
         }
@@ -418,147 +411,139 @@ class Usuario {
         return usuarioAuthNuevo.uid
 
     }
+
+    static construirDatosParaActualizar ( datosNuevos, datosViejos ) {
+        /* 
+            IMPORTANTE: FECHAS FORMATO STRING
+        */
+        
+        const {
+            nombreUsuario,
+            correo,
+            nombreCompleto,
+            fechaNacimiento,
+            jekuaaPremium,
+            jekuaaRoles,
+            jekuaaPoint
+        } = datosNuevos
     
-    static async actualizarNombreUsuarioPorUID ( uid, nombreUsuario ) {
+        const datosUsuarioDBActualizar = {}
+        const datosUsuarioAuthActualizar = {}
+        const datosUsuarioAuthClaimsActualizar = {}
+    
+        const cambioNombreUsuario = nombreUsuario != datosViejos.nombreUsuario
+        if ( nombreUsuario && cambioNombreUsuario ) {
+            datosUsuarioDBActualizar.nombreUsuario = nombreUsuario
+            datosUsuarioAuthActualizar.displayName = nombreUsuario
+        }
+    
+        const cambioCorreo = correo != datosViejos.correo
+        if ( correo && cambioCorreo ) {
+            datosUsuarioDBActualizar.correo = correo
+            datosUsuarioAuthActualizar.email = correo
+        }
+    
+        const cambioNombreCompleto = nombreCompleto != datosViejos.nombreCompleto
+        if ( nombreCompleto && cambioNombreCompleto ) {
+            datosUsuarioDBActualizar.nombreCompleto = nombreCompleto
+        }
+    
+        if ( fechaNacimiento ) {
+            datosUsuarioDBActualizar.fechaNacimiento = admin.firestore.Timestamp.fromDate( new Date ( fechaNacimiento ) )
+        }
+    
+        if ( jekuaaPremium ) {
+            
+            datosUsuarioDBActualizar.jekuaaPremium = new JekuaaPremium().getDatosPremiumConTimestamp()
 
-        if ( !uid ) {
-            throw new Error('Para actualizar el nombre de usuario se debe tener la uid primeramente.')
+            // PLAN
+            if ( jekuaaPremium.plan ) {
+                datosUsuarioAuthClaimsActualizar.jekuaaPremium = true
+                datosUsuarioDBActualizar.jekuaaPremium.plan = jekuaaPremium.plan
+                
+            } else if ( jekuaaPremium.plan === '' ) {
+                datosUsuarioAuthClaimsActualizar.jekuaaPremium = false
+                datosUsuarioDBActualizar.jekuaaPremium.plan = ''
+    
+            } else {
+                datosUsuarioAuthClaimsActualizar.jekuaaPremium = !!datosViejos.jekuaaPremium.plan
+                datosUsuarioDBActualizar.jekuaaPremium.plan = datosViejos.jekuaaPremium.plan
+            }
+    
+            // FECHAS
+            if ( !datosUsuarioAuthClaimsActualizar.jekuaaPremium ) {
+                datosUsuarioDBActualizar.jekuaaPremium.fechaCompra = null
+                datosUsuarioDBActualizar.jekuaaPremium.fechaHasta = null
+            } else {
+                if ( jekuaaPremium.fechaCompra ) {
+                    datosUsuarioDBActualizar.jekuaaPremium.fechaCompra = admin.firestore.Timestamp.fromDate( new Date ( jekuaaPremium.fechaCompra ) )
+                } else {
+                    datosUsuarioDBActualizar.jekuaaPremium.fechaCompra = datosViejos.jekuaaPremium.fechaCompra
+                }
+    
+                if ( jekuaaPremium.fechaHasta ) {
+                    datosUsuarioDBActualizar.jekuaaPremium.fechaHasta = admin.firestore.Timestamp.fromDate( new Date ( jekuaaPremium.fechaHasta ) )
+                } else {
+                    datosUsuarioDBActualizar.jekuaaPremium.fechaHasta = datosViejos.jekuaaPremium.fechaHasta
+                }
+            }
+    
+        }
+    
+        if ( jekuaaRoles ) {
+
+            datosUsuarioDBActualizar.jekuaaRoles = new JekuaaRoles().getDatosRoles()
+            
+            // ROL
+            if ( jekuaaRoles.rol ) {
+                datosUsuarioAuthClaimsActualizar.rol = jekuaaRoles.rol
+                datosUsuarioDBActualizar.jekuaaRoles.rol = jekuaaRoles.rol
+            } else {
+                datosUsuarioAuthClaimsActualizar.rol = datosViejos.jekuaaRoles.rol
+                datosUsuarioDBActualizar.jekuaaRoles.rol = datosViejos.jekuaaRoles.rol
+            }
+    
+            // SECCIONES E INSTRUCTOR
+            if ( datosUsuarioAuthClaimsActualizar.rol === 'estudiante' ) {
+                datosUsuarioDBActualizar.jekuaaRoles.secciones = []
+                datosUsuarioDBActualizar.jekuaaRoles.instructor = false
+            } else {
+                if ( jekuaaRoles.secciones ) {
+                    datosUsuarioDBActualizar.jekuaaRoles.secciones = jekuaaRoles.secciones
+                } else {
+                    datosUsuarioDBActualizar.jekuaaRoles.secciones = datosViejos.jekuaaRoles.secciones
+                }
+    
+                if ( jekuaaRoles.instructor ) {
+                    datosUsuarioDBActualizar.jekuaaRoles.instructor = jekuaaRoles.instructor
+                } else {
+                    datosUsuarioDBActualizar.jekuaaRoles.instructor = datosViejos.jekuaaRoles.instructor
+                }
+            }
+        
         }
 
-        if ( !nombreUsuario ) {
-            throw new Error('Para actualizar el nombre de usuario debe existir el nombre de usuario.')
+        if ( !datosUsuarioAuthClaimsActualizar.jekuaaPremium && datosUsuarioAuthClaimsActualizar.rol ) {
+            datosUsuarioAuthClaimsActualizar.jekuaaPremium = !!datosViejos.jekuaaPremium.plan
         }
 
-        if ( typeof nombreUsuario != 'string' ) {
-            throw new Error('El nombre de usuario debe ser de tipo string.')
+        if ( datosUsuarioAuthClaimsActualizar.jekuaaPremium && !datosUsuarioAuthClaimsActualizar.rol ) {
+            datosUsuarioAuthClaimsActualizar.rol = datosViejos.jekuaaRoles.rol
+        }
+    
+        const cambioJekuaaPoint = jekuaaPoint != datosViejos.jekuaaPoint
+        if ( jekuaaPoint && cambioJekuaaPoint ) {
+            datosUsuarioDBActualizar.jekuaaPoint = jekuaaPoint
         }
 
-        await admin.auth().updateUser(uid, {
-            displayName: nombreUsuario,
-        })
-
-        await db.collection(COLECCION_USUARIO).doc(uid).update({
-            nombreUsuario: nombreUsuario
-        })
-
-        return true
+        return {
+            datosUsuarioDBActualizar,
+            datosUsuarioAuthActualizar,
+            datosUsuarioAuthClaimsActualizar
+        }
     }
 
-    static async actualizarCorreoPorUID ( uid, correo ) {
-
-        if ( !uid ) {
-            throw new Error('Para actualizar el correo se debe tener la uid primeramente.')
-        }
-
-        if ( !correo ) {
-            throw new Error('Para actualizar el correo debe existir el correo.')
-        }
-
-        if ( typeof correo != 'string' ) {
-            throw new Error('El correo debe ser de tipo string.')
-        }
-
-        await admin.auth().updateUser(uid, {
-            email: correo,
-        })
-
-        await db.collection(COLECCION_USUARIO).doc(uid).update({
-            correo: correo
-        })
-
-        return true
-    }
-
-    static async actualizarNombreCompletoPorUID ( uid, nombreCompleto ) {
-
-        if ( !uid ) {
-            throw new Error('Para actualizar el nombre completo se debe tener la uid primeramente.')
-        }
-
-        if ( nombreCompleto && typeof nombreCompleto != 'string' ) {
-            throw new Error('El nombre completo debe ser de tipo string.')
-        }
-
-        await db.collection(COLECCION_USUARIO).doc(uid).update({
-            nombreCompleto: nombreCompleto ? nombreCompleto : ''
-        })
-
-        return true
-    }
-
-    static async actualizarFechaNaciminetoPorUID ( uid, fechaNacimiento ) {
-
-        if ( !uid ) {
-            throw new Error('Para actualizar la fecha de nacimiento se debe tener la uid primeramente.')
-        }
-
-        if ( fechaNacimiento && typeof fechaNacimiento != 'object' ) {
-            throw new Error('La fecha de nacimiento debe ser de tipo object (Date).')
-        }
-
-        await db.collection(COLECCION_USUARIO).doc(uid).update({
-            fechaNacimiento: fechaNacimiento ? admin.firestore.Timestamp.fromDate(fechaNacimiento) : null
-        })
-
-        return true
-
-    }
-
-    static async actualizarJekuaaPremiumPorUID ( uid, jekuaaPremium ) {
-
-        if ( !uid ) {
-            throw new Error('Para actualizar la fecha de nacimiento se debe tener la uid primeramente.')
-        }
-
-        if ( jekuaaPremium && typeof jekuaaPremium != 'object' ) {
-            throw new Error('El jekuaa premium debe ser de tipo object.')
-        }
-
-        if ( jekuaaPremium && ( !jekuaaPremium.duracion || !jekuaaPremium.fechaCompra || !jekuaaPremium.plan ) ) {
-            throw new Error('Para actualizar el jekuaaPremium de un usuario debe existir los datos premium.')
-        }
-
-        await db.collection(COLECCION_USUARIO).doc(uid).update({
-            jekuaaPremium: jekuaaPremium ? jekuaaPremium : null
-        })
-
-        return true
-
-    }
-
-    static async actualizarRolPorUID ( uid, datosRol ) {
-
-        if ( !uid ) {
-            throw new Error('Para actualizar la fecha de nacimiento se debe tener la uid primeramente.')
-        }
-
-        if ( typeof datosRol != 'object' ) {
-            throw new Error('Los datos rol debe contener la información necesaria.')
-        }
-
-        return true
-
-    }
-
-    static async actualizarJekuaaPointPorUID ( uid, jekuaaPoint ) {
-
-        if ( !uid ) {
-            throw new Error('Para actualizar la fecha de nacimiento se debe tener la uid primeramente.')
-        }
-
-        if ( jekuaaPoint && typeof jekuaaPoint != 'number' ) {
-            throw new Error('El jekuaa point debe ser de tipo number.')
-        }
-
-        await db.collection(COLECCION_USUARIO).doc(uid).update({
-            jekuaaPoint: jekuaaPoint ? jekuaaPoint : 0
-        })
-
-        return true
-
-    }
-
-    static verificadorDeFormato ( datosUsuario ) {
+    static verificadorDeFormatoParaActualizar ( datosUsuarioParaActualizar ) {
         const {
             uid,
             nombreUsuario,
@@ -568,7 +553,7 @@ class Usuario {
             jekuaaPremium,
             jekuaaRoles,
             jekuaaPoint
-        } = datosUsuario
+        } = datosUsuarioParaActualizar
 
         if ( uid && typeof uid != 'string' ) {
             throw new Error('La uid debe ser de tipo string.')
@@ -596,13 +581,14 @@ class Usuario {
                 throw new Error('El jekuaaPremium debe ser de tipo object.')
             }
 
-            const formatoJekuaaPremium = new JekuaaPremium({
+            const formatoJekuaaPremium = new JekuaaPremium()
+            formatoJekuaaPremium.setDatosPremiumConTimestamp({
                 plan: jekuaaPremium.plan,
                 fechaCompra: jekuaaPremium.fechaCompra,
-                duracion: jekuaaPremium.duracion,
+                fechaHasta: jekuaaPremium.fechaHasta,
             })
 
-            if( !formatoJekuaaPremium.formatoValido() ) { // ARREGLAR
+            if( !formatoJekuaaPremium.formatoValido() ) {
                 throw new Error('El jekuaaPremium es un objeto pero no tiene el formato valido.')
             }
         }
@@ -619,11 +605,11 @@ class Usuario {
                 instructor: jekuaaRoles.instructor
             })
 
-            if ( !formatoJekuaaRoles.formatoValido() ) { // ARREGLAR
+            if ( !formatoJekuaaRoles.formatoValido() ) {
                 throw new Error('El jekuaaRoles es un objeto pero no tiene el formato valido.')
             }
 
-            if ( !formatoJekuaaRoles.cumpleCondiciones() ) { // ARREGLAR
+            if ( !formatoJekuaaRoles.cumpleCondiciones() ) {
                 throw new Error('El jekuaaRoles es un objeto, tiene el formato valido pero no cumple las condiciones.')
             }
         }

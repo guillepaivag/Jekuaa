@@ -1,7 +1,4 @@
-const seccionesValidas = [
-    'informatica',
-    'matematica'
-]
+const utilsRoles = require('../utils/usuarios/RolesSecciones')
 
 class JekuaaRoles {
 
@@ -124,6 +121,17 @@ class JekuaaRoles {
 
         formatoValido () {
 
+            if ( typeof this.rol != 'string' ) {
+                return false
+            }
+
+            if ( typeof this.secciones != 'object' && !(this.secciones instanceof Array) ) {
+                return false
+            }
+
+            if ( typeof this.instructor != 'boolean' ) {
+                return false
+            }
 
             return true
         }
@@ -131,10 +139,27 @@ class JekuaaRoles {
         cumpleCondiciones () {
 
             // Verificar rol valido
+            if ( !utilsRoles.esValidoElRol( this.rol ) ) {
+                return false
+            }
 
             // Verificar secciones validas y de acuerdo al rol 
+            if ( !utilsRoles.sonValidasLasSecciones( this.secciones ) ) {
+                return false
+            }
 
-            // Verificar instructor valido y de acuerdo al rol 
+            if ( this.secciones.length > 0 && !utilsRoles.rolNecesitaSecciones ( this.rol ) ) {
+                return false
+            }
+
+            if ( this.secciones.length === 0 && utilsRoles.rolNecesitaSecciones ( this.rol ) ) {
+                return false
+            }
+
+            // Verificar instructor valido y de acuerdo al rol
+            if ( this.instructor && !utilsRoles.esMiembroJekuaa ( this.rol ) ) {
+                return false
+            }
 
             return true
         }

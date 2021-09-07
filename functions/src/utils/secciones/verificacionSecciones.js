@@ -1,5 +1,3 @@
-const formatoRespuesta = require('../formatoRespuesta')
-
 const seccionesValidas = [
     'informatica',
     'matematica'

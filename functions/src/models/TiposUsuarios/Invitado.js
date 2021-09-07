@@ -1,6 +1,8 @@
 const admin = require('../../../firebase-service')
 const db = require('../../../db')
 const Usuario = require('../Usuario')
+const JekuaaPremium = require('../JekuaaPremium')
+const JekuaaRoles = require('../JekuaaRoles')
 
 class Invitado {
 
@@ -17,22 +19,14 @@ class Invitado {
             nombreCompleto
         } = data
 
-        const datosUsuario = {
-            uid: null,
-            nombreCompleto: nombreCompleto,
-            nombreUsuario: nombreUsuario,
+        const uidUsuario = await Usuario.crearNuevoUsuario({
             correo: correo,
-            fechaNacimiento: null,
-            jekuaaPremium: null,
-            jekuaaRoles: null,
-            jekuaaPoint: 0
-        }
+            nombreUsuario: nombreUsuario,
+            nombreCompleto: nombreCompleto,
+        }, contrasenha)
 
         const usuario = new Usuario()
-
-        usuario.setUsuario( datosUsuario )
-
-        await usuario.guardarUsuario( contrasenha )
+        await usuario.importarDatosUsuarioPorUID(uidUsuario)
 
         return usuario
         

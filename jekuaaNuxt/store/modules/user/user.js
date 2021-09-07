@@ -4,6 +4,12 @@ const COOKIE_NAME = '__session'
 const collectionName = 'Usuarios'
 const realTime = false
 
+const jekuaaPremiumDefault = {
+  plan: '',
+  fechaCompra: null,
+  fechaHasta: null
+}
+
 const jekuaaRolesDefault = {
   rol: 'estudiante',
   secciones: [],
@@ -21,7 +27,7 @@ export const state = {
   correo: '',
   nombreCompleto: '',
   fechaNacimiento: null,
-  jekuaaPremium: null,
+  jekuaaPremium: jekuaaPremiumDefault,
   jekuaaRoles: jekuaaRolesDefault,
   jekuaaPoint: 0,
 }
@@ -78,6 +84,10 @@ export const getters = {
   esJekuaaPremium (state) {
     return !!state.jekuaaPremium
   },
+
+  esMiembroJekuaa (state) {
+    return state.jekuaaRoles.rol != 'estudiante'
+  }
 
 }
 

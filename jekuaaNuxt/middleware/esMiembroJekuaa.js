@@ -1,5 +1,5 @@
 export default function ({ store, redirect }) {
-  if (!store.getters['modules/user/user/jekuaaTeam']) {
+  if (!store.getters['modules/user/user/esMiembroJekuaa']) {
     return redirect('/')
   }
 }

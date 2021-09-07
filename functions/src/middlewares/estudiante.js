@@ -9,7 +9,7 @@ middlewaresUser.checkIfAuthenticated = (req, res, next) => {
             const { authToken } = req
 
             const userInfo = await admin.auth().verifyIdToken(authToken)
-            req.requesterUID = userInfo.uid
+            req.uidSolicitante = userInfo.uid
 
             return next()
     
@@ -28,7 +28,7 @@ middlewaresUser.checkIfOwner = (req, res, next) => {
             const { authToken } = req
 
             const userInfo = await admin.auth().verifyIdToken(authToken)
-            req.requesterUID = userInfo.uid
+            req.uidSolicitante = userInfo.uid
 
             const dataUser = await admin.auth().getUser(userInfo.uid)
             
@@ -53,7 +53,7 @@ middlewaresUser.checkIfAdmin = (req, res, next) => {
             const { authToken } = req
 
             const userInfo = await admin.auth().verifyIdToken(authToken)
-            req.requesterUID = userInfo.uid
+            req.uidSolicitante = userInfo.uid
 
             const dataUser = await admin.auth().getUser(userInfo.uid)
             

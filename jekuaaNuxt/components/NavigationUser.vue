@@ -41,7 +41,7 @@
         </v-list-item>
 
         <v-list-item
-          v-if="jekuaaTeam"
+          v-if="esMiembroJekuaa"
           to="/admin"
           link
         >
@@ -73,91 +73,6 @@
         </v-list-item>
       </v-list>
     </v-navigation-drawer>
-
-    <!-- <v-toolbar
-            height="100"
-            fixed
-        >
-            <div style="margin-left: 10px; margin-right: 20px;">
-                <v-app-bar-nav-icon @click="sidebar = !sidebar">
-                    <v-avatar
-                        size="100"
-                        tile
-                    >
-                        <v-img
-                        contain
-                        max-height="60%"
-                        src="https://firebasestorage.googleapis.com/v0/b/jekuaa-py.appspot.com/o/JekuaaLogo.png?alt=media&token=26851757-faff-48da-8e6f-e21f3c2c1e96"
-                        ></v-img>
-                    </v-avatar>
-                </v-app-bar-nav-icon>
-            </div>
-
-            <v-toolbar-items class="d-none d-sm-none d-md-flex">
-                <v-btn text to="/">Inicio</v-btn>
-                <v-btn text to="/cursos">Cursos</v-btn>
-                <v-btn text to="/planes">Planes</v-btn>
-                <v-btn text to="/blog">Blog</v-btn>
-            </v-toolbar-items>
-
-            <v-spacer/>
-
-            <div style="margin-right: 10px;">
-                <v-menu
-                    class="mr-5"
-                    bottom
-                    min-width="200px"
-                    rounded
-                    offset-y
-                >
-                    <template v-slot:activator="{ on }">
-                        <v-btn
-                            icon
-                            x-large
-                            v-on="on"
-                        >
-                            <v-avatar
-                            color="#683bce"
-                            size="48"
-                            >
-                            <span class="white--text headline">{{ userData.initials }}</span>
-                            </v-avatar>
-                        </v-btn>
-                    </template>
-                    <v-card>
-                        <v-list-item-content class="justify-center">
-                            <div class="mx-auto text-center">
-                            <v-avatar
-                                color="#683bce"
-                            >
-                                <span class="white--text headline">{{ userData.initials }}</span>
-                            </v-avatar>
-                            <h3>{{ userData.fullName }}</h3>
-                            <p class="caption mt-1">
-                                {{ userData.email }}
-                            </p>
-                            <v-divider class="my-3"></v-divider>
-                            <v-btn
-                                depressed
-                                rounded
-                                text
-                            >
-                                Edit Account
-                            </v-btn>
-                            <v-divider class="my-3"></v-divider>
-                            <v-btn
-                                depressed
-                                rounded
-                                text
-                            >
-                                Disconnect
-                            </v-btn>
-                            </div>
-                        </v-list-item-content>
-                    </v-card>
-                </v-menu>
-            </div>
-        </v-toolbar> -->
 
     <v-app-bar
       height="100"
@@ -211,7 +126,7 @@
           <samp class="estiloTexto">Blog</samp>
         </v-tab>
 
-        <v-tab v-if="jekuaaTeam" to="/admin">
+        <v-tab v-if="esMiembroJekuaa" to="/admin">
           <v-icon class="navItemIcon">
             mdi-account-supervisor-circle-outline
           </v-icon>
@@ -292,7 +207,7 @@
 </template>
 
 <script>
-import { mapActions, mapState } from 'vuex'
+import { mapActions, mapState, mapGetters } from 'vuex'
 
 export default {
   name: 'NavigationDefault',
@@ -329,7 +244,8 @@ export default {
     }
   },
   computed: {
-    ...mapState('modules/user/user', ['fotoPerfil', 'nombreUsuario', 'correo', 'jekuaaTeam']),
+    ...mapState('modules/user/user', ['fotoPerfil', 'nombreUsuario', 'correo']),
+    ...mapGetters('modules/user/user', ['esMiembroJekuaa']),
     inicialNombreUsuario () {
       return this.nombreUsuario[0].toUpperCase()
     },

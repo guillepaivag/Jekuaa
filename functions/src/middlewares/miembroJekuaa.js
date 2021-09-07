@@ -9,7 +9,7 @@ middlewaresUser.esPropietario = (req, res, next) => {
             const { authToken } = req
 
             const userInfo = await admin.auth().verifyIdToken(authToken)
-            req.requesterUID = userInfo.uid
+            req.uidSolicitante = userInfo.uid
 
             const dataUser = await admin.auth().getUser(userInfo.uid)
             
@@ -34,7 +34,7 @@ middlewaresUser.esMiembroJekuaa = (req, res, next) => {
             const { authToken } = req
 
             const userInfo = await admin.auth().verifyIdToken(authToken)
-            req.requesterUID = userInfo.uid
+            req.uidSolicitante = userInfo.uid
 
             const dataUser = await admin.auth().getUser(userInfo.uid)
             
