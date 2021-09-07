@@ -1,1 +1,1 @@
-# jekuaa-app
+# Jekuaa
