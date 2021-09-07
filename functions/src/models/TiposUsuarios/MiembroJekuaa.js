@@ -180,6 +180,17 @@ class MiembroJekuaa extends Usuario {
 
         return usuario 
     }
+
+    static async verDatosDeUnUsuarioPorUID ( uidUsuario ) {
+        const usuario = new Usuario()
+        await usuario.importarDatosUsuarioPorUID(uidUsuario)
+        
+        const datosUsuario = {}
+        datosUsuario.firestore = usuario.getUsuario()
+        datosUsuario.auth = await usuario.obtenerDatosDeAuthentication()
+
+        return datosUsuario
+    }
 }
 
 module.exports = MiembroJekuaa

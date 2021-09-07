@@ -162,7 +162,7 @@
           
           <v-card class="mx-auto" max-width="300" tile>
             <!-- shaped -->
-            <v-list>
+            <v-list shaped>
               
               <div class="mx-auto text-center mt-3">
                 <v-avatar

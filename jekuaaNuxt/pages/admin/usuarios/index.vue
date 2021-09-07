@@ -14,6 +14,15 @@
                     >
                         Lista de usuarios
                     </v-btn>
+
+                    <v-btn
+                        class="mt-4"
+                        color="success" 
+                        block
+                        to="/admin/instructores/lista-instructores"
+                    >
+                        Lista de instructores 
+                    </v-btn>
                 </div>
                 
             </div>

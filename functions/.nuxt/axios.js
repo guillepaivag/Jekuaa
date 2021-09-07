@@ -148,8 +148,8 @@ export default (ctx, inject) => {
   const runtimeConfig = ctx.$config && ctx.$config.axios || {}
   // baseURL
   const baseURL = process.browser
-    ? (runtimeConfig.browserBaseURL || runtimeConfig.browserBaseUrl || runtimeConfig.baseURL || runtimeConfig.baseUrl || 'http://localhost:5001/jekuaa-py/us-central1/appBackEnd/apiJekuaa')
-      : (runtimeConfig.baseURL || runtimeConfig.baseUrl || process.env._AXIOS_BASE_URL_ || 'http://localhost:5001/jekuaa-py/us-central1/appBackEnd/apiJekuaa')
+    ? (runtimeConfig.browserBaseURL || runtimeConfig.browserBaseUrl || runtimeConfig.baseURL || runtimeConfig.baseUrl || 'http://localhost:5001/jekuaa-py/us-central1/appJekuaa')
+      : (runtimeConfig.baseURL || runtimeConfig.baseUrl || process.env._AXIOS_BASE_URL_ || 'http://localhost:5001/jekuaa-py/us-central1/appJekuaa')
 
   // Create fresh objects for all default header scopes
   // Axios creates only one which is shared across SSR requests!

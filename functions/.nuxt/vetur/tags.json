@@ -1,4 +1,7 @@
 {
+  "ConfirmacionEliminacion": {
+    "description": "Auto imported from components/confirmacionEliminacion.vue"
+  },
   "FooterDefault": {
     "description": "Auto imported from components/FooterDefault.vue"
   },
@@ -20,9 +23,6 @@
   "VuetifyLogo": {
     "description": "Auto imported from components/VuetifyLogo.vue"
   },
-  "AuthEmail": {
-    "description": "Auto imported from components/auth/authEmail.vue"
-  },
   "AdminBuscadorUsuarios": {
     "description": "Auto imported from components/admin/buscadorUsuarios.vue"
   },
@@ -31,6 +31,9 @@
   },
   "AdminListaUsuarios": {
     "description": "Auto imported from components/admin/listaUsuarios.vue"
+  },
+  "AuthEmail": {
+    "description": "Auto imported from components/auth/authEmail.vue"
   },
   "InicioAtajos": {
     "description": "Auto imported from components/inicio/atajos.vue"

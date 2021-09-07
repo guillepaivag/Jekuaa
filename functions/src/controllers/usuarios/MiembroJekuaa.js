@@ -2,6 +2,7 @@ const admin = require('../../../firebase-service')
 const db = require('../../../db')
 const MiembroJekuaa = require("../../models/TiposUsuarios/MiembroJekuaa")
 const utilsRoles = require('../../utils/usuarios/RolesSecciones')
+const Usuario = require('../../models/Usuario')
 
 const controllerMiembroJekuaa = {}
 
@@ -9,12 +10,27 @@ controllerMiembroJekuaa.verUsuarioPorUID = async (req, res) => {
 
     try {
 
-        const {
+        const { uidSolicitante, params } = req
+        const { uid } = params
 
-        } = req.body
+        // Verificar si es del miembroJekuaa
+
+
+        // Obtener datos del usuario
+        const datosUsuario = await MiembroJekuaa.verDatosDeUnUsuarioPorUID(uid)
+
+        return res.status(200).json({
+            mensaje: 'Los datos de los usuarios se enviaron de forma exitosa',
+            resultado: datosUsuario
+        })
         
     } catch (error) {
-        
+        console.log('Error - verUsuarioPorUID: ', error)
+
+        return res.status(500).json({
+            mensaje: error.message,
+            resultado: error
+        })
     }
 
 }
@@ -44,7 +60,7 @@ controllerMiembroJekuaa.actualizarUsuarioPorUID = async (req, res) => {
         //     // No autorizado
 
         //     return res.status(401).json({
-
+                
         //     })
         // }
 
@@ -52,14 +68,16 @@ controllerMiembroJekuaa.actualizarUsuarioPorUID = async (req, res) => {
         await MiembroJekuaa.actalizarUsuarioPorUID(uid, datosActualizados)
 
         return res.status(200).json({
-
+            mensaje: 'El usuario se actualizo de forma exitosa!',
+            resultado: true
         })
         
     } catch (error) {
         console.log('Error - actualizarUsuarioPorUID: ', error)
 
         return res.status(500).json({
-            mensaje: error.message
+            mensaje: error.message,
+            resultado: error
         })
     }
 

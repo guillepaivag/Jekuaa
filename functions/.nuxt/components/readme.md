@@ -6,6 +6,7 @@ You can directly use them in pages and other components without the need to impo
 
 **Tip:** If a component is conditionally rendered with `v-if` and is big, it is better to use `Lazy` or `lazy-` prefix to lazy load.
 
+- `<ConfirmacionEliminacion>` | `<confirmacion-eliminacion>` (components/confirmacionEliminacion.vue)
 - `<FooterDefault>` | `<footer-default>` (components/FooterDefault.vue)
 - `<Loading>` | `<loading>` (components/Loading.vue)
 - `<Logo>` | `<logo>` (components/Logo.vue)
@@ -13,10 +14,10 @@ You can directly use them in pages and other components without the need to impo
 - `<NavigationUser>` | `<navigation-user>` (components/NavigationUser.vue)
 - `<VideoPlayer>` | `<video-player>` (components/VideoPlayer.vue)
 - `<VuetifyLogo>` | `<vuetify-logo>` (components/VuetifyLogo.vue)
-- `<AuthEmail>` | `<auth-email>` (components/auth/authEmail.vue)
 - `<AdminBuscadorUsuarios>` | `<admin-buscador-usuarios>` (components/admin/buscadorUsuarios.vue)
 - `<AdminFiltroUsuarios>` | `<admin-filtro-usuarios>` (components/admin/filtroUsuarios.vue)
 - `<AdminListaUsuarios>` | `<admin-lista-usuarios>` (components/admin/listaUsuarios.vue)
+- `<AuthEmail>` | `<auth-email>` (components/auth/authEmail.vue)
 - `<InicioAtajos>` | `<inicio-atajos>` (components/inicio/atajos.vue)
 - `<InicioPresentacion>` | `<inicio-presentacion>` (components/inicio/presentacion.vue)
 - `<InicioSubpresentacion>` | `<inicio-subpresentacion>` (components/inicio/subpresentacion.vue)
