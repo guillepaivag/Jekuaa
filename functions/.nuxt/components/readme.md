@@ -6,7 +6,7 @@ You can directly use them in pages and other components without the need to impo
 
 **Tip:** If a component is conditionally rendered with `v-if` and is big, it is better to use `Lazy` or `lazy-` prefix to lazy load.
 
-- `<ConfirmacionEliminacion>` | `<confirmacion-eliminacion>` (components/confirmacionEliminacion.vue)
+- `<ConfirmacionAccionPorUID>` | `<confirmacion-accion-por-u-i-d>` (components/confirmacionAccionPorUID.vue)
 - `<FooterDefault>` | `<footer-default>` (components/FooterDefault.vue)
 - `<Loading>` | `<loading>` (components/Loading.vue)
 - `<Logo>` | `<logo>` (components/Logo.vue)

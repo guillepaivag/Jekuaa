@@ -42,7 +42,7 @@
 
         <v-list-item
           v-if="esMiembroJekuaa"
-          to="/admin"
+          to="/miembro-jekuaa"
           link
         >
           <v-list-item-icon>
@@ -126,7 +126,7 @@
           <samp class="estiloTexto">Blog</samp>
         </v-tab>
 
-        <v-tab v-if="esMiembroJekuaa" to="/admin">
+        <v-tab v-if="esMiembroJekuaa" to="/miembro-jekuaa">
           <v-icon class="navItemIcon">
             mdi-account-supervisor-circle-outline
           </v-icon>

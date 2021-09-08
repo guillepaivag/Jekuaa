@@ -42,19 +42,19 @@ export default {
           color: '#683bce',
           title: 'Usuarios',
           description: 'Administra a los usuarios.',
-          to: '/admin/usuarios'
+          to: '/miembro-jekuaa/usuarios'
         },
         {
           color: '#ff1d89',
           title: 'Blog',
           description: 'Administra los blogs de Jekuaa.',
-          to: '/admin/blog'
+          to: '/miembro-jekuaa/blog'
         },
         {
           color: '#683bce',
           title: 'Cursos',
           description: 'Administra los cursos de Jekuaa.',
-          to: '/admin/cursos'
+          to: '/miembro-jekuaa/cursos'
         }
       ]
     }

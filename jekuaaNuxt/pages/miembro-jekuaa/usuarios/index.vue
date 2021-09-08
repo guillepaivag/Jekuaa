@@ -10,7 +10,7 @@
                     <v-btn 
                         color="success" 
                         block
-                        to="/admin/usuarios/lista-usuarios"
+                        to="/miembro-jekuaa/usuarios/lista-usuarios"
                     >
                         Lista de usuarios
                     </v-btn>
@@ -19,7 +19,7 @@
                         class="mt-4"
                         color="success" 
                         block
-                        to="/admin/instructores/lista-instructores"
+                        to="/miembro-jekuaa/instructores/lista-instructores"
                     >
                         Lista de instructores 
                     </v-btn>

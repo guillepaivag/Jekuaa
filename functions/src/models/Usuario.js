@@ -618,6 +618,22 @@ class Usuario {
             throw new Error('El jekuaaPoint debe ser de tipo number.')
         }
     }
+
+    static async obtenerDatosDeAuthenticationPorUID ( uid ) {
+        
+        if ( !uid ) {
+            throw new Error('La uid debe existir.')
+        }
+        
+        if ( typeof uid != 'string' ) {
+            throw new Error('La uid debe ser string.')
+        }
+    
+        // Recolectamos los datos de firebase authentication
+        const datosUsuarioAuthentication = await admin.auth().getUser(uid)
+    
+        return datosUsuarioAuthentication
+    }
 }
 
 module.exports = Usuario

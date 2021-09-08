@@ -33,7 +33,7 @@
                                 outlined
                                 color="#683bce"
                                 block
-                                :to="`/admin/usuarios/${usuario.uid}`"
+                                :to="`/miembro-jekuaa/usuarios/${usuario.uid}`"
                             >
                                 Ver datos
                             </v-btn>

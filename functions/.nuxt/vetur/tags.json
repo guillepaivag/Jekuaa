@@ -1,6 +1,6 @@
 {
-  "ConfirmacionEliminacion": {
-    "description": "Auto imported from components/confirmacionEliminacion.vue"
+  "ConfirmacionAccionPorUID": {
+    "description": "Auto imported from components/confirmacionAccionPorUID.vue"
   },
   "FooterDefault": {
     "description": "Auto imported from components/FooterDefault.vue"

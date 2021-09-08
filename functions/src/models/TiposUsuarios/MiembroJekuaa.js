@@ -181,15 +181,17 @@ class MiembroJekuaa extends Usuario {
         return usuario 
     }
 
-    static async verDatosDeUnUsuarioPorUID ( uidUsuario ) {
+    static async verDatosUsuarioPorUID ( uidUsuario ) {
         const usuario = new Usuario()
         await usuario.importarDatosUsuarioPorUID(uidUsuario)
-        
-        const datosUsuario = {}
-        datosUsuario.firestore = usuario.getUsuario()
-        datosUsuario.auth = await usuario.obtenerDatosDeAuthentication()
 
-        return datosUsuario
+        return usuario.getUsuario()
+    }
+
+    static async verDatosAuthPorUID ( uidUsuario ) {
+        const datosAuth = await Usuario.obtenerDatosDeAuthenticationPorUID( uidUsuario )
+
+        return datosAuth
     }
 }
 

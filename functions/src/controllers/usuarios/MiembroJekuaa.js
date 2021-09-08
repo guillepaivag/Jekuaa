@@ -6,7 +6,7 @@ const Usuario = require('../../models/Usuario')
 
 const controllerMiembroJekuaa = {}
 
-controllerMiembroJekuaa.verUsuarioPorUID = async (req, res) => {
+controllerMiembroJekuaa.verDatosUsuarioPorUID = async (req, res) => {
 
     try {
 
@@ -17,11 +17,40 @@ controllerMiembroJekuaa.verUsuarioPorUID = async (req, res) => {
 
 
         // Obtener datos del usuario
-        const datosUsuario = await MiembroJekuaa.verDatosDeUnUsuarioPorUID(uid)
+        const datosUsuario = await MiembroJekuaa.verDatosUsuarioPorUID( uid )
 
         return res.status(200).json({
-            mensaje: 'Los datos de los usuarios se enviaron de forma exitosa',
+            mensaje: 'Los datos de los usuarios se enviaron de forma exitosa!',
             resultado: datosUsuario
+        })
+        
+    } catch (error) {
+        console.log('Error - verUsuarioPorUID: ', error)
+
+        return res.status(500).json({
+            mensaje: error.message,
+            resultado: error
+        })
+    }
+
+}
+
+controllerMiembroJekuaa.verDatosAuthPorUID = async (req, res) => {
+
+    try {
+
+        const { uidSolicitante, params } = req
+        const { uid } = params
+
+        // Verificar si es del miembroJekuaa
+
+
+        // Obtener datos del usuario
+        const datosAuth = await MiembroJekuaa.verDatosAuthPorUID(uid)
+
+        return res.status(200).json({
+            mensaje: 'Los datos de los usuarios se enviaron de forma exitosa!',
+            resultado: datosAuth
         })
         
     } catch (error) {

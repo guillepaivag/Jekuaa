@@ -1,4 +1,4 @@
-export { default as ConfirmacionEliminacion } from '../..\\..\\jekuaaNuxt\\components\\confirmacionEliminacion.vue'
+export { default as ConfirmacionAccionPorUID } from '../..\\..\\jekuaaNuxt\\components\\confirmacionAccionPorUID.vue'
 export { default as FooterDefault } from '../..\\..\\jekuaaNuxt\\components\\FooterDefault.vue'
 export { default as Loading } from '../..\\..\\jekuaaNuxt\\components\\Loading.vue'
 export { default as Logo } from '../..\\..\\jekuaaNuxt\\components\\Logo.vue'

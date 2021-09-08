@@ -4,10 +4,10 @@
         max-width="800px"
     >
         <v-card>
-            <v-card-title class="informacionEliminacion textoInformacionEliminacion">
+            <v-card-title class="informacionAccion textoInformacionAccion">
                 {{ titulo }}
             </v-card-title>
-            <v-card-text class="informacionEliminacion textoInformacionEliminacion">
+            <v-card-text class="informacionAccion textoInformacionAccion">
                 {{ mensaje }}
             </v-card-text>
             <v-card-text class="mt-5">
@@ -16,8 +16,8 @@
 
             <div class="container text-center" max-width="400px">
                 <v-text-field
-                    class="inputConfirmacionEliminacion"
-                    v-model="uidConfirmacionEliminar"
+                    class="inputConfirmacionAccion"
+                    v-model="uidConfirmacionAccion"
                     :counter="50"
                     :label="uid"
                     required
@@ -27,12 +27,12 @@
             <v-card-actions class="d-flex flex-row-reverse pb-5 pt-5">
                 <v-btn
                     class="ml-4 mr-3"
-                    :disabled="uidConfirmacionEliminar != uid"
+                    :disabled="uidConfirmacionAccion != uid"
                     color="red"
                     text
                     @click="borrarUsuario"
                 >
-                    Borrar
+                    {{ textoAccion }}
                 </v-btn>
 
                 <v-btn
@@ -52,7 +52,8 @@ export default {
     data() {
         return {
             estadoDialogController: false,
-            uidConfirmacionEliminar: ''
+            uidConfirmacionAccion: '',
+            textoAccion: ''
         }
     },
     props: {
@@ -60,7 +61,8 @@ export default {
         mensaje: String,
         explicacion: String,
         uid: String,
-        estadoDialog: Boolean
+        estadoDialog: Boolean,
+        accion: String
     },
     watch: {
         estadoDialog: function ( nuevo, viejo ) {
@@ -70,7 +72,7 @@ export default {
         },
         estadoDialogController: function ( nuevo, viejo ) {
             if ( !nuevo ) {
-                this.uidConfirmacionEliminar = ''
+                this.uidConfirmacionAccion = ''
             
                 this.$emit('dialogCerrado', {
                     cerrado: !nuevo,
@@ -80,27 +82,43 @@ export default {
     },
     methods: {
         borrarUsuario () {
-            this.$emit('eliminar', {
+            this.$emit('accion', {
                 uid: this.uid,
             })
 
             this.estadoDialogController = false
+        },
+        setNombreAccion () {
+            if ( this.accion === 'agregar' ) {
+                this.textoAccion = 'Agregar'
+            } else if ( this.accion === 'actualizar' ) {
+                this.textoAccion = 'Actualizar'
+            } else if ( this.accion === 'eliminar' ) {
+                this.textoAccion = 'Eliminar'
+            } else if ( this.accion === 'leer' ) {
+                this.textoAccion = 'Leer'
+            } else {
+                throw new Error(`No existe esta operacion.`) 
+            }
         }
+    },
+    created() {
+        this.setNombreAccion()
     },
 }
 </script>
 
 <style scoped>
-.informacionEliminacion {
+.informacionAccion {
     /* rgba(230, 62, 62, 0.159) */
     background-color: rgba(255, 29, 137, 0.159);
 }
 
-.textoInformacionEliminacion {
+.textoInformacionAccion {
     color: rgb(197, 52, 52);
 }
 
-.inputConfirmacionEliminacion {
+.inputConfirmacionAccion {
     margin-left: 12px;
     margin-right: 12px;
 }

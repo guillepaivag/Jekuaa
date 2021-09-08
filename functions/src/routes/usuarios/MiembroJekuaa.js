@@ -7,10 +7,12 @@ const {
 
 const {
     actualizarUsuarioPorUID,
-    verUsuarioPorUID
+    verDatosUsuarioPorUID,
+    verDatosAuthPorUID
 } = require('../../controllers/usuarios/MiembroJekuaa')
 
-router.post('/verDatosDeUnUsuarioPorUID/:uid', verUsuarioPorUID)
+router.post('/verDatosUsuarioPorUID/:uid', verDatosUsuarioPorUID)
+router.post('/verDatosAuthPorUID/:uid', verDatosAuthPorUID)
 router.post('/actualizarUsuarioPorUID/:uid', actualizarUsuarioPorUID)
 
 module.exports = router
