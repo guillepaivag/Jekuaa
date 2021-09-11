@@ -382,10 +382,6 @@ export const actions = {
     })
     console.log('datosRegistroUsuario', datosRegistroUsuario)
 
-    if (datosRegistroUsuario.codigo === 'Error') {
-      return null
-    }
-
     // Retornar datos de registro del usuario
     return datosRegistroUsuario.data.resultado
   },
@@ -398,7 +394,10 @@ export const actions = {
 
   async firebaseCerrarSesionUser_EmailAndPassword ({ dispatch, state }) {
     console.log('[STORE ACTIONS] - firebaseCerrarSesionUser_EmailAndPassword')
-    return this.$firebase.auth().signOut()
+    await this.$firebase.auth().signOut()
+
+    // Insertamos los datos del usuario en la store
+    await dispatch('setDatosUsuario', null)
   },
 
   async firebaseFirestoreGetUser_UID ({ dispatch, state }, uid) {

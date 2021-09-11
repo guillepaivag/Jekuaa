@@ -6,7 +6,7 @@
 
 <script>
 export default {
-  middleware: 'esUsuarioTeamJekuaa',
+  middleware: 'esMiembroJekuaa',
 }
 </script>
 

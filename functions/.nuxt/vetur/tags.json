@@ -1,7 +1,4 @@
 {
-  "ConfirmacionAccionPorUID": {
-    "description": "Auto imported from components/confirmacionAccionPorUID.vue"
-  },
   "FooterDefault": {
     "description": "Auto imported from components/FooterDefault.vue"
   },
@@ -26,6 +23,9 @@
   "AdminBuscadorUsuarios": {
     "description": "Auto imported from components/admin/buscadorUsuarios.vue"
   },
+  "AdminConfirmacionAccionPorUID": {
+    "description": "Auto imported from components/admin/confirmacionAccionPorUID.vue"
+  },
   "AdminFiltroUsuarios": {
     "description": "Auto imported from components/admin/filtroUsuarios.vue"
   },
@@ -43,6 +43,9 @@
   },
   "InicioSubpresentacion": {
     "description": "Auto imported from components/inicio/subpresentacion.vue"
+  },
+  "AdminFormsCrearUsuario": {
+    "description": "Auto imported from components/admin/forms/crearUsuario.vue"
   },
   "FilterAdminUser": {
     "description": "Auto imported from components/filter/admin/User.vue"

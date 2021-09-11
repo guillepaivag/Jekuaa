@@ -1,12 +1,16 @@
 <template>
     <div class="container">
-        <div class="row mt-5">
+        <div class="row mt-3">
             <div class="col-md-7">
-                * Formulario para crear un usuario *
+                <div class="">
+                    <crearUsuario 
+                        v-on:crearUsuario="crearUsuario($event)"
+                    />
+                </div>
             </div>
             <div class="col-md-5">
 
-                <div>
+                <div class="mt-3">
                     <v-btn 
                         color="success" 
                         block
@@ -31,12 +35,22 @@
 </template>
 
 <script>
+import crearUsuario from '@/components/admin/forms/crearUsuario'
+
 export default {
     name: '',
     middleware: 'esMiembroJekuaa',
+    components: {
+        crearUsuario
+    },
     data() {
         return {
             
+        }
+    },
+    methods: {
+        async crearUsuario( datosUsuario ) {
+            alert(JSON.stringify(datosUsuario))
         }
     },
 }

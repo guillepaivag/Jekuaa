@@ -1,7 +1,6 @@
 const utilsRolesSecciones = {}
 
 // VARIABLES
-
 const datosRoles = [
     {
         rol: 'propietario',
@@ -28,16 +27,18 @@ const seccionesValidas = [
     'matematica'
 ]
 
-// ROLES: Funciones para los roles
 
+
+
+// ROLES: Funciones para los roles
 utilsRolesSecciones.getDatosRoles = () => datosRoles
 
-utilsRolesSecciones.rolXMayorRolY = ( rolX, rolY ) => {
+utilsRolesSecciones.compararNivelRol = ( rolX, rolY ) => {
 
     const datoRolX = datosRoles.find(datoRol => datoRol.rol === rolX)
     const datoRolY = datosRoles.find(datoRol => datoRol.rol === rolY)
 
-    return datoRolX.nivel > datoRolY.nivel
+    return datoRolX.nivel - datoRolY.nivel
 
 }
 
@@ -54,8 +55,10 @@ utilsRolesSecciones.esMiembroJekuaa = ( rol ) => {
     return datosRol.esMiembroJekuaa
 }
 
-// SECCIONES: Funciones para las secciones
 
+
+
+// SECCIONES: Funciones para las secciones
 utilsRolesSecciones.sonValidasLasSecciones = ( secciones ) => {
 
     let valido = true
@@ -80,5 +83,8 @@ utilsRolesSecciones.rolNecesitaSecciones = ( rol ) => {
 
     return datoRol.nesecitaSecciones
 }
+
+
+
 
 module.exports = utilsRolesSecciones

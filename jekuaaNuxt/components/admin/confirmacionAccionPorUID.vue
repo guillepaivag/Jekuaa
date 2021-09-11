@@ -30,7 +30,7 @@
                     :disabled="uidConfirmacionAccion != uid"
                     color="red"
                     text
-                    @click="borrarUsuario"
+                    @click="realizarAccion"
                 >
                     {{ textoAccion }}
                 </v-btn>
@@ -81,7 +81,7 @@ export default {
         },
     },
     methods: {
-        borrarUsuario () {
+        realizarAccion () {
             this.$emit('accion', {
                 uid: this.uid,
             })

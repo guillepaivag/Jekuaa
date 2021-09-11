@@ -37,7 +37,7 @@
                 class="ma-2"
                 outlined
                 color="red darken-1"
-                @click="estadoDialog = true"
+                @click="estadoDialogEliminacion = true"
             >
                 Eliminar usuario
             </v-btn>
@@ -48,11 +48,11 @@
             mensaje="Esta acción borrará permanentemente los datos del usuario."
             explicacion="Para confirmar que deseas borrar este usuario, escribe su UID"
             :uid="uidUsuario"
-            :estadoDialog="estadoDialog"
+            :estadoDialog="estadoDialogEliminacion"
             accion="eliminar"
             
             v-on:accion="borrarUsuario($event)"
-            v-on:dialogCerrado="dialogCerrado($event)"
+            v-on:dialogCerrado="dialogEliminacionCerrado($event)"
         />
 
         <v-divider class="my-3" />
@@ -65,7 +65,7 @@
 </template>
 
 <script>
-import confirmacionAccionPorUID from '@/components/confirmacionAccionPorUID'
+import confirmacionAccionPorUID from '@/components/admin/confirmacionAccionPorUID'
 
 export default {
     name: 'datosUsuario',
@@ -74,9 +74,9 @@ export default {
         return {
             uidUsuario: this.$route.params.uidUsuario,
             uidUsuarioConfirmacionEliminar: '',
-            estadoDialog: false,
-            datosUsuario: {},
-            datosAuth: {}
+            estadoDialogEliminacion: false,
+            datosUsuario: null,
+            datosAuth: null
         }
     },
     components: {
@@ -90,18 +90,28 @@ export default {
 
             alert(`Usuario ${uid} eliminado.`)
         },
-        dialogCerrado ( estado ) {
+        dialogEliminacionCerrado ( estado ) {
             const {
                 cerrado
             } = estado
 
-            this.estadoDialog = !cerrado
+            this.estadoDialogEliminacion = !cerrado
         }
     },
     async created() {
         this.uidUsuario = this.$route.params.uidUsuario
 
-        const datosUsuario = await this.$axios.$post(`/miembroJekuaa/verDatosUsuarioPorUID/${this.uidUsuario}`)
+        let token = this.$firebase.auth().currentUser
+
+        if( token ){
+            token = await token.getIdToken()
+        }
+
+        const auth = `Bearer ${token}`
+
+        const datosUsuario = await this.$axios.$post(`/miembroJekuaa/verDatosUsuarioPorUID/${this.uidUsuario}`, {
+            auth
+        })
 
         this.datosUsuario = datosUsuario.resultado
     }

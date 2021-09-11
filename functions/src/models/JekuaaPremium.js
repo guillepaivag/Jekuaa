@@ -4,7 +4,7 @@ class JekuaaPremium {
 
     constructor ( datosPremium ) {
         
-        if ( !datosPremium ) {
+        if ( !datosPremium || ( datosPremium && !datosPremium.plan ) ) {
             this.plan = ''
             this.fechaCompra = null
             this.fechaHasta = null
@@ -18,10 +18,13 @@ class JekuaaPremium {
             fechaHasta,
         } = datosPremium
 
+        if ( ( fechaCompra && !fechaHasta ) || ( !fechaCompra && fechaHasta ) ) {
+            throw new Error('El jekuaa premium no tiene un formato valido')
+        }
 
-        this.plan = plan
-        this.fechaCompra = fechaCompra
-        this.fechaHasta = fechaHasta
+        this.plan = plan                // String
+        this.fechaCompra = fechaCompra  // Timestamp
+        this.fechaHasta = fechaHasta    // Timestamp
     }
     
 
@@ -36,14 +39,6 @@ class JekuaaPremium {
             plan: this.getPlan(),
             fechaCompra: this.getFechaCompra(),
             fechaHasta: this.getFechaHasta(),
-        }
-    }
-
-    getDatosPremiumConTimestamp () {
-        return {
-            plan: this.getPlan(),
-            fechaCompra: this.getFechaCompra() ? admin.firestore.Timestamp.fromDate( this.getFechaCompra() ) : null,
-            fechaHasta: this.getFechaHasta() ? admin.firestore.Timestamp.fromDate( this.getFechaHasta() ) : null,
         }
     }
 
@@ -66,7 +61,7 @@ class JekuaaPremium {
     */
 
     setDatosPremium ( jekuaaPremium ) {
-        if ( !jekuaaPremium ) {
+        if ( !jekuaaPremium || ( jekuaaPremium && !jekuaaPremium.plan ) ) {
             this.plan = ''
             this.fechaCompra = null
             this.fechaHasta = null
@@ -79,34 +74,14 @@ class JekuaaPremium {
             fechaCompra,
             fechaHasta,
         } = jekuaaPremium
-    
-        let planAux = plan ? plan : ''
-        let fechaCompraAux = fechaCompra ? fechaCompra : null
-        let fechaHastaAux = fechaHasta ? fechaHasta : null
 
-        this.setPlan( planAux )
-        this.setFechaCompra( fechaCompraAux )
-        this.setFechaHasta( fechaHastaAux )
-    }
-
-    setDatosPremiumConTimestamp ( jekuaaPremiumConTimestamp ) {
-        if ( !jekuaaPremiumConTimestamp ) {
-            this.plan = ''
-            this.fechaCompra = null
-            this.fechaHasta = null
-
-            return
+        if ( ( fechaCompra && !fechaHasta ) || ( !fechaCompra && fechaHasta ) ) {
+            throw new Error('El jekuaa premium no tiene un formato valido')
         }
-
-        const {
-            plan,
-            fechaCompra,
-            fechaHasta,
-        } = jekuaaPremiumConTimestamp
-
-        let planAux = plan ? plan : ''
-        let fechaCompraAux = fechaCompra ? new Date ( fechaCompra.seconds * 1000 ) : null
-        let fechaHastaAux = fechaHasta ? new Date ( fechaHasta.seconds * 1000 ) : null
+    
+        let planAux = plan
+        let fechaCompraAux = fechaCompra
+        let fechaHastaAux = fechaHasta
 
         this.setPlan( planAux )
         this.setFechaCompra( fechaCompraAux )
@@ -172,6 +147,25 @@ class JekuaaPremium {
     }
         
 
+    cumpleCondiciones () {
+        if ( this.plan === '' ) {
+            if ( this.fechaCompra != null || this.fechaHasta != null ) {
+                return false
+            }
+
+            return true
+        }
+
+        if ( this.fechaCompra == null || this.fechaHasta == null ) {
+            return false
+        }
+
+        if ( this.fechaCompra.seconds >= this.fechaHasta.seconds ) {
+            return false
+        }
+
+        return true
+    }
 
 
         /* 

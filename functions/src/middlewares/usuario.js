@@ -3,20 +3,28 @@ const middlewaresUser = {}
 
 // MIDDLEWARES
 middlewaresUser.estaAutenticado = (req, res, next) => {
+    console.log('MIDDLEWARE 1')
+
     getAuthToken(req, res, async () => {
         
         try {
-            const { authToken } = req
+            const { authToken } = req.jekuaaDatos
 
             const userInfo = await admin.auth().verifyIdToken(authToken)
-            req.uidSolicitante = userInfo.uid
+            req.jekuaaDatos.uidSolicitante = userInfo.uid
+
+            const datosAuthSolicitante = await admin.auth().getUser( userInfo.uid )
+            req.jekuaaDatos.datosAuthSolicitante = datosAuthSolicitante
 
             return next()
     
         } catch (error) {
             console.log('error', error)
 
-            return res.status(401).json({error: 'You are not authorized'})
+            return res.status(401).json({
+                mensaje: 'No estas autorizado, favor iniciar sesión.',
+                resultado: null
+            })
         }
     })
 }
@@ -25,10 +33,12 @@ middlewaresUser.estaAutenticado = (req, res, next) => {
 getAuthToken = (req, res, next) => {
     const {auth} = req.body 
 
+    req.jekuaaDatos = req.jekuaaDatos ? req.jekuaaDatos : {}
+    
     if(auth && auth.split(' ')[0] === 'Bearer'){
-        req.authToken = auth.split(' ')[1]
+        req.jekuaaDatos.authToken = auth.split(' ')[1]
     }else{
-        req.authToken = null
+        req.jekuaaDatos.authToken = null
     }
 
     next()

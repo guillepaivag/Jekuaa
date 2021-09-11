@@ -1,68 +1,95 @@
 const admin = require('../../firebase-service')
-const middlewaresUser = {}
+const utilsRoles = require('../utils/usuarios/RolesSecciones')
+const middlewaresMiembroJekuaa = {}
 
 // MIDDLEWARES
-middlewaresUser.esPropietario = (req, res, next) => {
-    getAuthToken(req, res, async () => {
-        
-        try {
-            const { authToken } = req
-
-            const userInfo = await admin.auth().verifyIdToken(authToken)
-            req.uidSolicitante = userInfo.uid
-
-            const dataUser = await admin.auth().getUser(userInfo.uid)
-            
-            if(dataUser.customClaims.rol === 'propietario') {
-                return next()
-            }
-
-            return res.status(401).json({error: 'You are not authorized'})
+middlewaresMiembroJekuaa.esPropietario = async (req, res, next) => {
     
-        } catch (error) {
-            console.log('error', error)
-
-            return res.status(401).json({error: 'You are not authorized'})
+    try {
+        const { uidSolicitante, datosAuthSolicitante } = req.jekuaaDatos
+        
+        if(datosAuthSolicitante.customClaims.rol != 'propietario') {
+            return res.status(403).json({
+                mensaje: 'No estas autorizado, no eres propietario.',
+                resultado: null
+            })
         }
-    })
+
+        return next()
+
+    } catch (error) {
+        console.log('error', error)
+
+        return res.status(403).json({
+            mensaje: 'No estas autorizado, no eres propietario.',
+            resultado: error
+        })
+    }
+    
 }
 
-middlewaresUser.esMiembroJekuaa = (req, res, next) => {
-    getAuthToken(req, res, async () => {
-        
-        try {
-            const { authToken } = req
-
-            const userInfo = await admin.auth().verifyIdToken(authToken)
-            req.uidSolicitante = userInfo.uid
-
-            const dataUser = await admin.auth().getUser(userInfo.uid)
-            
-            if(dataUser.customClaims.rol != 'estudiante' ) {
-                return next()
-            }
-
-            return res.status(401).json({error: 'You are not authorized'})
+middlewaresMiembroJekuaa.esMiembroJekuaa = async (req, res, next) => {
     
-        } catch (error) {
-            console.log('error', error)
+    try {
+        console.log('MIDDLEWARE 2')
 
-            return res.status(401).json({error: 'You are not authorized'})
+        const { uidSolicitante, datosAuthSolicitante } = req.jekuaaDatos
+        
+        if ( datosAuthSolicitante.customClaims.rol === 'estudiante' ) {
+            return res.status(403).json({
+                mensaje: 'No estas autorizado, no eres miembro del equipo Jekuaa.',
+                resultado: null
+            })
         }
-    })
-}
 
-// FUNCIONES
-getAuthToken = (req, res, next) => {
-    const {auth} = req.body 
+        return next()
 
-    if(auth && auth.split(' ')[0] === 'Bearer'){
-        req.authToken = auth.split(' ')[1]
-    }else{
-        req.authToken = null
+    } catch (error) {
+        console.log('error', error)
+
+        return res.status(403).json({
+            mensaje: 'No estas autorizado, no eres miembro del equipo Jekuaa.',
+            resultado: error
+        })
     }
 
-    next()
 }
 
-module.exports = middlewaresUser
+middlewaresMiembroJekuaa.esDeMayorIgualNivel = async ( req, res, next ) => {
+    
+    try {
+        console.log('MIDDLEWARE 3')
+
+        const { params, jekuaaDatos } = req
+        const { uidSolicitante, datosAuthSolicitante } = jekuaaDatos
+        const { uid } = params
+
+        console.log('datosAuthSolicitante', datosAuthSolicitante)
+
+        const datosAuthUsuario = await admin.auth().getUser(uid)
+        console.log('datosAuthUsuario', datosAuthUsuario)
+
+        // El solicitante debe tener mayor o igual nivel que el usuario a actualizar
+        const diferenciaNivelRol = utilsRoles.compararNivelRol( datosAuthSolicitante.customClaims.rol, datosAuthUsuario.customClaims.rol)
+        console.log('diferenciaNivelRol', diferenciaNivelRol)
+
+        if ( diferenciaNivelRol < 0 ) {
+            // No autorizado
+            return res.status(403).json({
+                mensaje: 'No estas autorizado, no puedes operar a este usuario.',
+                resultado: null
+            })
+        }
+
+        return next()
+
+    } catch (error) {
+        return res.status(403).json({
+            mensaje: 'No estas autorizado, no puedes operar a este usuario..',
+            resultado: error
+        })
+    }
+    
+}
+
+module.exports = middlewaresMiembroJekuaa

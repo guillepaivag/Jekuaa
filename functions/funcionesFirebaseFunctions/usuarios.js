@@ -1,11 +1,11 @@
 const functions = require('firebase-functions')
-const Invitado = require('../src/models/TiposUsuarios/Invitado')
+const Usuario = require('../src/models/Usuario')
 const ffUsuarios = {}
 
 ffUsuarios.registrarUsuarioPorCorreoYContrasenha = functions.https.onCall(async (data, context) => {
 
     try {
-        if ( context.auth && context.auth.token ) {    
+        if ( context && context.auth && context.auth.token ) {    
             return
         }
     
@@ -15,28 +15,23 @@ ffUsuarios.registrarUsuarioPorCorreoYContrasenha = functions.https.onCall(async 
             nombreUsuario,
             nombreCompleto
         } = data
-    
-        const invitado = new Invitado()
-    
-        const usuarioNuevo = await invitado.registrarmePorCorreoYContrasenha({
-            correo,
-            contrasenha,
-            nombreUsuario,
-            nombreCompleto
-        })
-    
-        if ( !usuarioNuevo ) {
-            return {
-                codigo: 'Error-Sistema',
-                mensaje: 'Hubo un problema al registrar el usuario.',
-                resultado: null
-            }
-        }
+
+        const uidUsuario = await Usuario.crearNuevoUsuarioSoloConDatosPersonales({
+            correo: correo,
+            nombreUsuario: nombreUsuario,
+            nombreCompleto: nombreCompleto,
+        }, contrasenha)
+
+        const usuario = new Usuario()
+        usuario.setUID(uidUsuario)
+        usuario.setNombreUsuario(nombreUsuario)
+        usuario.setCorreo(correo)
+        usuario.setNombreCompleto(nombreCompleto)
         
         return {
             codigo: 'Exito',
             mensaje: 'Registro de usuario completado con éxito.',
-            resultado: usuarioNuevo
+            resultado: usuario
         }
 
     } catch (error) {

@@ -40,8 +40,8 @@ class Usuario {
             correo: this.correo, 
             nombreCompleto: this.nombreCompleto,
             fechaNacimiento: this.fechaNacimiento,
-            jekuaaPremium: this.jekuaaPremium,
-            jekuaaRoles: this.jekuaaRoles,
+            jekuaaPremium: this.jekuaaPremium.getDatosPremium(),
+            jekuaaRoles: this.jekuaaRoles.getDatosRoles(),
             jekuaaPoint: this.jekuaaPoint
         }
     }
@@ -215,22 +215,9 @@ class Usuario {
             throw new Error('No existe el usuario.')
         }
 
-        const data = documentoUsuario.data()
+        const datosUsuario = documentoUsuario.data()
 
-        const datosUsuario = JSON.parse( JSON.stringify( data ) )
-
-        datosUsuario.fechaNacimiento = data.fechaNacimiento ? new Date( data.fechaNacimiento.seconds * 1000 ) : null
-
-        datosUsuario.jekuaaPremium = new JekuaaPremium()
-        datosUsuario.jekuaaPremium.setDatosPremiumConTimestamp( data.jekuaaPremium )
-
-        datosUsuario.jekuaaRoles = new JekuaaRoles( {
-            rol: data.jekuaaRoles.rol,
-            secciones: data.jekuaaRoles.secciones,
-            instructor: data.jekuaaRoles.instructor
-        } )
-
-        this.setUsuario(datosUsuario)
+        this.setUsuario( datosUsuario )
 
         return this
     }
@@ -306,14 +293,7 @@ class Usuario {
         }
 
         if ( this.fechaNacimiento ) {
-            if ( !datosUsuario.fechaNacimiento ) {
-                datosUsuarioDBActualizar.fechaNacimiento = admin.firestore.Timestamp.fromDate(this.fechaNacimiento)
-
-            } else {
-                if ( new Date(datosUsuario.fechaNacimiento.seconds * 1000).getTime() != this.fechaNacimiento.getTime() ) {
-                    datosUsuarioDBActualizar.fechaNacimiento = admin.firestore.Timestamp.fromDate(this.fechaNacimiento)
-                }
-            }
+            datosUsuarioDBActualizar.fechaNacimiento = admin.firestore.Timestamp.fromDate( this.fechaNacimiento )
         }
 
         await admin.auth().updateUser(this.uid, datosUsuarioAuthActualizar)
@@ -344,7 +324,7 @@ class Usuario {
         el registro como el nombre de usuario.
     */
 
-    static async crearNuevoUsuario ( datosNuevoUsuario, contrasenha ) {
+    static async crearNuevoUsuarioSoloConDatosPersonales ( datosNuevoUsuario, contrasenha ) {
 
         const {
             correo,
@@ -377,11 +357,10 @@ class Usuario {
             throw new Error('La fecha de nacimiento debe ser de tipo object (Date).')
         }
         
-        const existeNombreUsuario = !(await db.collection(COLECCION_USUARIO).where('nombreUsuario', '==', nombreUsuario).get()).empty
-
-        if ( existeNombreUsuario ) {
-            throw new Error(`Ya existe el nombre de usuario ${nombreUsuario}`)
-        }
+        await Usuario.errorExisteUsuario({
+            nombreUsuario,
+            correo
+        })
 
         const usuarioAuthNuevo = await admin.auth().createUser({
             email: correo,
@@ -394,8 +373,8 @@ class Usuario {
             nombreUsuario: nombreUsuario,
             correo: correo,
             nombreCompleto: nombreCompleto ? nombreCompleto : '',
-            fechaNacimiento: fechaNacimiento ? admin.firestore.Timestamp.fromDate(fechaNacimiento) : null,
-            jekuaaPremium: new JekuaaPremium().getDatosPremiumConTimestamp(),
+            fechaNacimiento: fechaNacimiento ? admin.firestore.Timestamp.fromMillis( fechaNacimiento ) : null,
+            jekuaaPremium: new JekuaaPremium().getDatosPremium(),
             jekuaaRoles: new JekuaaRoles().getDatosRoles(),
             jekuaaPoint: 0
         }
@@ -405,7 +384,7 @@ class Usuario {
             jekuaaPremium: false
         }
 
-        await admin.firestore().collection(COLECCION_USUARIO).doc(usuarioAuthNuevo.uid).set(datosUsuario)
+        await admin.firestore().collection(COLECCION_USUARIO).doc(usuarioAuthNuevo.uid).set( datosUsuario )
         await admin.auth().setCustomUserClaims(usuarioAuthNuevo.uid, informacionDeDatosUsuario)
 
         return usuarioAuthNuevo.uid
@@ -449,12 +428,12 @@ class Usuario {
         }
     
         if ( fechaNacimiento ) {
-            datosUsuarioDBActualizar.fechaNacimiento = admin.firestore.Timestamp.fromDate( new Date ( fechaNacimiento ) )
+            datosUsuarioDBActualizar.fechaNacimiento = fechaNacimiento
         }
     
         if ( jekuaaPremium ) {
             
-            datosUsuarioDBActualizar.jekuaaPremium = new JekuaaPremium().getDatosPremiumConTimestamp()
+            datosUsuarioDBActualizar.jekuaaPremium = new JekuaaPremium().getDatosPremium()
 
             // PLAN
             if ( jekuaaPremium.plan ) {
@@ -476,13 +455,13 @@ class Usuario {
                 datosUsuarioDBActualizar.jekuaaPremium.fechaHasta = null
             } else {
                 if ( jekuaaPremium.fechaCompra ) {
-                    datosUsuarioDBActualizar.jekuaaPremium.fechaCompra = admin.firestore.Timestamp.fromDate( new Date ( jekuaaPremium.fechaCompra ) )
+                    datosUsuarioDBActualizar.jekuaaPremium.fechaCompra = jekuaaPremium.fechaCompra
                 } else {
                     datosUsuarioDBActualizar.jekuaaPremium.fechaCompra = datosViejos.jekuaaPremium.fechaCompra
                 }
     
                 if ( jekuaaPremium.fechaHasta ) {
-                    datosUsuarioDBActualizar.jekuaaPremium.fechaHasta = admin.firestore.Timestamp.fromDate( new Date ( jekuaaPremium.fechaHasta ) )
+                    datosUsuarioDBActualizar.jekuaaPremium.fechaHasta = jekuaaPremium.fechaHasta
                 } else {
                     datosUsuarioDBActualizar.jekuaaPremium.fechaHasta = datosViejos.jekuaaPremium.fechaHasta
                 }
@@ -507,6 +486,11 @@ class Usuario {
             if ( datosUsuarioAuthClaimsActualizar.rol === 'estudiante' ) {
                 datosUsuarioDBActualizar.jekuaaRoles.secciones = []
                 datosUsuarioDBActualizar.jekuaaRoles.instructor = false
+            } else if ( datosUsuarioAuthClaimsActualizar.rol === 'propietario' ) {
+                
+                datosUsuarioDBActualizar.jekuaaRoles.secciones = []
+                datosUsuarioDBActualizar.jekuaaRoles.instructor = datosViejos.jekuaaRoles.instructor
+
             } else {
                 if ( jekuaaRoles.secciones ) {
                     datosUsuarioDBActualizar.jekuaaRoles.secciones = jekuaaRoles.secciones
@@ -543,7 +527,7 @@ class Usuario {
         }
     }
 
-    static verificadorDeFormatoParaActualizar ( datosUsuarioParaActualizar ) {
+    static verificadorDeFormatoParaDB ( datosUsuarioParaActualizar ) {
         const {
             uid,
             nombreUsuario,
@@ -582,7 +566,7 @@ class Usuario {
             }
 
             const formatoJekuaaPremium = new JekuaaPremium()
-            formatoJekuaaPremium.setDatosPremiumConTimestamp({
+            formatoJekuaaPremium.setDatosPremium({
                 plan: jekuaaPremium.plan,
                 fechaCompra: jekuaaPremium.fechaCompra,
                 fechaHasta: jekuaaPremium.fechaHasta,
@@ -590,6 +574,10 @@ class Usuario {
 
             if( !formatoJekuaaPremium.formatoValido() ) {
                 throw new Error('El jekuaaPremium es un objeto pero no tiene el formato valido.')
+            }
+
+            if( !formatoJekuaaPremium.cumpleCondiciones() ) {
+                throw new Error('El jekuaaPremium no cumple con las condiciones necesarias.')
             }
         }
 
@@ -610,7 +598,7 @@ class Usuario {
             }
 
             if ( !formatoJekuaaRoles.cumpleCondiciones() ) {
-                throw new Error('El jekuaaRoles es un objeto, tiene el formato valido pero no cumple las condiciones.')
+                throw new Error('El jekuaaRoles no cumple las condiciones necesarias.')
             }
         }
 
@@ -633,6 +621,92 @@ class Usuario {
         const datosUsuarioAuthentication = await admin.auth().getUser(uid)
     
         return datosUsuarioAuthentication
+    }
+
+    static async errorExisteUsuario ( identificadores ) {
+
+        const {
+            uid,
+            nombreUsuario,
+            correo
+        } = identificadores
+
+        if ( uid ) {
+
+            let usuario = null
+            try {
+                await admin.auth().getUser(uid)
+
+            } catch (error) {
+                
+            }
+
+            if ( usuario ) {
+                throw new Error(`Ya existe el uid ${uid}`)
+            }
+        }
+
+        if ( nombreUsuario ) {
+            const existe = !(await db.collection(COLECCION_USUARIO).where('nombreUsuario', '==', nombreUsuario).get()).empty
+
+            if ( existe ) {
+                throw new Error(`Ya existe el nombre de usuario ${nombreUsuario}`)
+            }
+        }
+
+        if ( correo ) {
+
+            let usuario = null
+            try {
+                usuario = await admin.auth().getUserByEmail( correo )
+
+            } catch (error) {
+                
+            }
+
+            if ( usuario ) {
+                throw new Error(`Ya existe el correo ${correo}`)
+            }
+        }
+    }
+    
+    static async errorNoExisteUsuario ( identificadores ) {
+
+        const {
+            uid,
+            nombreUsuario,
+            correo
+        } = identificadores
+
+        if ( uid ) {
+            try {
+                await admin.auth().getUser(uid)
+            } catch (error) {
+                console.log('error -> auth/user-not-found', error)
+
+                throw new Error(`No existe el uid ${uid}`)
+            }
+        }
+
+        if ( nombreUsuario ) {
+            const existe = !(await db.collection(COLECCION_USUARIO).where('nombreUsuario', '==', nombreUsuario).get()).empty
+
+            if ( existe ) {
+                throw new Error(`No existe el nombre de usuario ${nombreUsuario}`)
+            }
+        }
+
+        if ( correo ) {
+
+            try {
+                await admin.auth().getUserByEmail( correo )
+            } catch (error) {
+                console.log('error -> auth/user-not-found', error)
+
+                throw new Error(`No existe el correo ${correo}`)
+            }
+
+        }
     }
 }
 

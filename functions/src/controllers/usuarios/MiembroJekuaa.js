@@ -3,6 +3,7 @@ const db = require('../../../db')
 const MiembroJekuaa = require("../../models/TiposUsuarios/MiembroJekuaa")
 const utilsRoles = require('../../utils/usuarios/RolesSecciones')
 const Usuario = require('../../models/Usuario')
+const formatos = require('../../utils/formatos')
 
 const controllerMiembroJekuaa = {}
 
@@ -10,11 +11,9 @@ controllerMiembroJekuaa.verDatosUsuarioPorUID = async (req, res) => {
 
     try {
 
-        const { uidSolicitante, params } = req
+        const { jekuaaDatos, params } = req
+        const { uidSolicitante } = jekuaaDatos
         const { uid } = params
-
-        // Verificar si es del miembroJekuaa
-
 
         // Obtener datos del usuario
         const datosUsuario = await MiembroJekuaa.verDatosUsuarioPorUID( uid )
@@ -39,11 +38,17 @@ controllerMiembroJekuaa.verDatosAuthPorUID = async (req, res) => {
 
     try {
 
-        const { uidSolicitante, params } = req
+        const { jekuaaDatos, params } = req
+        const { uidSolicitante, datosAuthSolicitante } = jekuaaDatos
         const { uid } = params
 
-        // Verificar si es del miembroJekuaa
-
+        // Si queremos ver nuestros propios datos, retornamos el datosAuthSolicitante
+        if ( uidSolicitante === uid ) {
+            return res.status(200).json({
+                mensaje: 'Los datos de los usuarios se enviaron de forma exitosa!',
+                resultado: datosAuthSolicitante
+            })
+        }
 
         // Obtener datos del usuario
         const datosAuth = await MiembroJekuaa.verDatosAuthPorUID(uid)
@@ -67,9 +72,41 @@ controllerMiembroJekuaa.verDatosAuthPorUID = async (req, res) => {
 controllerMiembroJekuaa.crearUsuario = async (req, res) => {
 
     try {
+        const { jekuaaDatos, body } = req
+        const { uidSolicitante, datosAuthSolicitante } = jekuaaDatos
+        const { datosUsuario, contrasenha } = body
+
+        // El solicitante no puede actualizar (crear) un nuevo propietario si no es propietario
+        if ( datosAuthSolicitante.customClaims.rol != 'propietario' && 
+            datosUsuario && datosUsuario.jekuaaRoles && datosUsuario.jekuaaRoles.rol &&
+            datosUsuario.jekuaaRoles.rol === 'propietario' ) {
+            
+            //No autorizado
+            return res.status(403).json({
+                mensaje: 'No tienes permiso para agregar un nuevo propietario.',
+                resultado: null
+            })
+
+        }
+
+        // Cambiamos el formato del cliente al formato servidor
+        const datosUsuarioParseado = formatos.usuario_milliseconds_a_timestamp( datosUsuario )
+
+        // Actualizar usuario
+        const usuarioNuevo = await MiembroJekuaa.crearNuevoUsuario( datosUsuarioParseado, contrasenha )
+
+        return res.status(200).json({
+            mensaje: 'El usuario se creo de forma exitosa!',
+            resultado: usuarioNuevo
+        })
         
     } catch (error) {
-        
+        console.log('Error - crearUsuario: ', error)
+
+        return res.status(500).json({
+            mensaje: error.message,
+            resultado: error
+        })
     }
 
 }
@@ -77,28 +114,33 @@ controllerMiembroJekuaa.crearUsuario = async (req, res) => {
 controllerMiembroJekuaa.actualizarUsuarioPorUID = async (req, res) => {
 
     try {
-        const { uidSolicitante, params, body } = req
+        const { jekuaaDatos, params, body } = req
+        const { uidSolicitante, datosAuthSolicitante } = jekuaaDatos
         const { uid } = params
         const { datosActualizados } = body
 
-        // // Verificacion de uid, uidSolicitante debe ser mayor a la uid a actualizar
-        // const authUserSolicitante = await admin.auth().getUser(uidSolicitante)
-        // const authUser = await admin.auth().getUser(uid)
-        
-        // if ( !utilsRoles.rolXMayorRolY( authUserSolicitante.customClaims.rol, authUser.customClaims.rol) ) {
-        //     // No autorizado
+        // El solicitante no puede actualizar (crear) un nuevo propietario si no es propietario
+        if ( datosAuthSolicitante.customClaims.rol != 'propietario' && 
+            datosActualizados && datosActualizados.jekuaaRoles && datosActualizados.jekuaaRoles.rol &&
+            datosActualizados.jekuaaRoles.rol === 'propietario') {
+            
+            //No autorizado
+            return res.status(403).json({
+                mensaje: 'No tienes permiso para agregar un nuevo propietario.',
+                resultado: null
+            })
 
-        //     return res.status(401).json({
-                
-        //     })
-        // }
+        }
+
+        // Cambiamos el formato del cliente al formato servidor
+        const datosActualizadosParseado = formatos.usuario_milliseconds_a_timestamp( datosActualizados )
 
         // Actualizar usuario
-        await MiembroJekuaa.actalizarUsuarioPorUID(uid, datosActualizados)
+        const usuarioActualizado = await MiembroJekuaa.actalizarUsuarioPorUID( uid, datosActualizadosParseado )
 
         return res.status(200).json({
             mensaje: 'El usuario se actualizo de forma exitosa!',
-            resultado: true
+            resultado: usuarioActualizado
         })
         
     } catch (error) {
@@ -115,9 +157,40 @@ controllerMiembroJekuaa.actualizarUsuarioPorUID = async (req, res) => {
 controllerMiembroJekuaa.habilitarUsuarioPorUID = async (req, res) => {
 
     try {
+        const { jekuaaDatos, params, body } = req
+        const { uidSolicitante, datosAuthSolicitante } = jekuaaDatos
+        const { uid } = params
+        const { habilitar } = body
+
+        // Obtener auth del solicitante y del usuario a actualizar
+        const datosAuth = await admin.auth().getUser( uid )
         
+        if ( datosAuth.disabled === !habilitar ) {
+            
+            let habilitarText = habilitar ? 'habilitar' : 'deshabilitar'
+            let habilitadoText = habilitar ? 'habilitado' : 'deshabilitado'
+            return res.status(400).json({
+                mensaje: `No puedes ${habilitarText} si ya esta ${habilitadoText}.`,
+                resultado: error
+            })
+
+        }
+
+        const resultado = await MiembroJekuaa.habilitarUsuarioPorUID( uid, habilitar )
+
+        let mensaje = habilitar ? `El usuario se habilito de forma exitosa.` : `El usuario se deshabilito de forma exitosa.`
+        return res.status(200).json({
+            mensaje,
+            resultado
+        })
+
     } catch (error) {
-        
+        console.log('Error - habilitarUsuarioPorUID: ', error)
+
+        return res.status(500).json({
+            mensaje: error.message,
+            resultado: error
+        })
     }
 
 }

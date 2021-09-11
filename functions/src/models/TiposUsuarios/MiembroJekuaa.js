@@ -5,6 +5,7 @@ const Blog = require('../Blog')
 const JekuaaPremium = require('../JekuaaPremium')
 const JekuaaRoles = require('../JekuaaRoles')
 const Instructor = require('./Instructor')
+const formatos = require('../../utils/formatos')
 
 const COLECCION_USUARIO = 'Usuarios'
 const COLECCION_INSTRUCTOR = 'Instructores'
@@ -124,6 +125,78 @@ class MiembroJekuaa extends Usuario {
             ###############################
         */
 
+    static async crearNuevoUsuario ( datosUsuario, contrasenha ) {
+        const {
+            nombreUsuario,
+            correo,
+            nombreCompleto,
+            fechaNacimiento,
+            jekuaaPremium,
+            jekuaaRoles,
+            jekuaaPoint
+        } = datosUsuario
+
+        if ( !Object.keys( datosUsuario ).length ) {
+            throw new Error(`No hay datos para agregar.`)
+        }
+
+        if ( !nombreUsuario ) {
+            throw new Error(`No existe el nombre de usuario, favor verificar.`)
+        }
+
+        if ( !correo ) {
+            throw new Error(`No existe el correo, favor verificar.`)
+        }
+
+        if ( !contrasenha ) {
+            throw new Error(`No existe contraseña, favor verificar.`)
+        }
+
+        if ( typeof contrasenha != 'string' ) {
+            throw new Error(`La contraseña no esta en su formato correcto, favor verificar.`)
+        }
+
+        await Usuario.errorExisteUsuario({
+            nombreUsuario,
+            correo
+        })
+
+        const usuarioNuevoJekuaa = new Usuario( datosUsuario ).getUsuario()
+
+        Usuario.verificadorDeFormatoParaDB( usuarioNuevoJekuaa )
+
+        const usuarioAuthNuevo = await admin.auth().createUser({
+            email: usuarioNuevoJekuaa.correo,
+            password: contrasenha,
+            displayName: usuarioNuevoJekuaa.nombreUsuario,
+        })
+        
+        const informacionDeDatosUsuario = {
+            rol: usuarioNuevoJekuaa.jekuaaRoles.rol,
+            jekuaaPremium: !!usuarioNuevoJekuaa.jekuaaPremium.plan
+        }
+
+        await admin.firestore().collection(COLECCION_USUARIO).doc(usuarioAuthNuevo.uid).set( {
+            ...usuarioNuevoJekuaa,
+            uid: usuarioAuthNuevo.uid
+        } )
+        await admin.auth().setCustomUserClaims(usuarioAuthNuevo.uid, informacionDeDatosUsuario)
+
+        if ( usuarioNuevoJekuaa.jekuaaRoles.instructor ) {
+            // Agregar instructor
+            Instructor.crearNuevoInstructor({
+                uid: usuarioAuthNuevo.uid
+            })
+        }
+
+        const usuario = new Usuario({
+            ...usuarioNuevoJekuaa,
+            uid: usuarioAuthNuevo.uid
+        })
+
+        return usuario
+    }
+
     static async actalizarUsuarioPorUID ( uidUsuario, datosActualizados ) {
 
         const {
@@ -140,6 +213,10 @@ class MiembroJekuaa extends Usuario {
             throw new Error(`No hay datos para actualizar.`)
         }
 
+        // await Usuario.errorNoExisteUsuario({
+        //     uid: uidUsuario
+        // })
+
         const docUsuario = await db.collection(COLECCION_USUARIO).doc(uidUsuario).get()
 
         if ( !docUsuario.exists ) {
@@ -154,11 +231,19 @@ class MiembroJekuaa extends Usuario {
             datosUsuarioAuthClaimsActualizar
         } = Usuario.construirDatosParaActualizar (datosActualizados, datosUsuario)
 
-        Usuario.verificadorDeFormatoParaActualizar( datosUsuarioDBActualizar )
+        Usuario.verificadorDeFormatoParaDB( datosUsuarioDBActualizar )
 
-        await admin.auth().updateUser(uidUsuario, datosUsuarioAuthActualizar)
-        await db.collection(COLECCION_USUARIO).doc(uidUsuario).update(datosUsuarioDBActualizar)
-        await admin.auth().setCustomUserClaims(uidUsuario, datosUsuarioAuthClaimsActualizar)
+        if ( Object.keys(datosUsuarioAuthActualizar).length > 0 ) {
+            await admin.auth().updateUser(uidUsuario, datosUsuarioAuthActualizar)
+        }
+
+        if ( Object.keys(datosUsuarioDBActualizar).length > 0 ) {
+            await db.collection(COLECCION_USUARIO).doc(uidUsuario).update(datosUsuarioDBActualizar)
+        }
+
+        if ( Object.keys(datosUsuarioAuthClaimsActualizar).length > 0 ) {
+            await admin.auth().setCustomUserClaims(uidUsuario, datosUsuarioAuthClaimsActualizar)
+        }
 
         const usuario = new Usuario()
         await usuario.importarDatosUsuarioPorUID(uidUsuario)
@@ -172,7 +257,6 @@ class MiembroJekuaa extends Usuario {
         const noExisteInstructor = !(await db.collection(COLECCION_INSTRUCTOR).doc(uidUsuario).get()).exists
         if ( jekuaaRoles.instructor && noExisteInstructor ) {
             // Agregar instructor
-
             Instructor.crearNuevoInstructor({
                 uid: uidUsuario
             })
@@ -192,6 +276,19 @@ class MiembroJekuaa extends Usuario {
         const datosAuth = await Usuario.obtenerDatosDeAuthenticationPorUID( uidUsuario )
 
         return datosAuth
+    }
+
+    static async habilitarUsuarioPorUID ( uidUsuario, habilitar ) {
+
+        if ( typeof habilitar != 'boolean' ) {
+            throw new Error('La opcion de habilitar debe ser boolean.')
+        }
+
+        let resultado = await admin.auth().updateUser(uidUsuario, {
+            disabled: !habilitar,
+        })
+
+        return resultado
     }
 }
 
