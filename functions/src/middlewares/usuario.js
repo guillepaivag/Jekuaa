@@ -3,7 +3,6 @@ const middlewaresUser = {}
 
 // MIDDLEWARES
 middlewaresUser.estaAutenticado = (req, res, next) => {
-    console.log('MIDDLEWARE 1')
 
     getAuthToken(req, res, async () => {
         
@@ -27,6 +26,7 @@ middlewaresUser.estaAutenticado = (req, res, next) => {
             })
         }
     })
+    
 }
 
 // FUNCIONES

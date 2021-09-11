@@ -31,8 +31,6 @@ middlewaresMiembroJekuaa.esPropietario = async (req, res, next) => {
 middlewaresMiembroJekuaa.esMiembroJekuaa = async (req, res, next) => {
     
     try {
-        console.log('MIDDLEWARE 2')
-
         const { uidSolicitante, datosAuthSolicitante } = req.jekuaaDatos
         
         if ( datosAuthSolicitante.customClaims.rol === 'estudiante' ) {
@@ -58,8 +56,6 @@ middlewaresMiembroJekuaa.esMiembroJekuaa = async (req, res, next) => {
 middlewaresMiembroJekuaa.esDeMayorIgualNivel = async ( req, res, next ) => {
     
     try {
-        console.log('MIDDLEWARE 3')
-
         const { params, jekuaaDatos } = req
         const { uidSolicitante, datosAuthSolicitante } = jekuaaDatos
         const { uid } = params
