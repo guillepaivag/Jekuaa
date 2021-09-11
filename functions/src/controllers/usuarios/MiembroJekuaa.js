@@ -199,6 +199,12 @@ controllerMiembroJekuaa.eliminarUsuarioPorUID = async (req, res) => {
     
     try {
         
+        const { params, body, jekuaaDatos } = req
+        const { uid } = params
+        const { uidSolicitante, datosAuthSolicitante } = jekuaaDatos
+
+        
+
     } catch (error) {
         
     }

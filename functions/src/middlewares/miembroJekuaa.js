@@ -6,24 +6,29 @@ const middlewaresMiembroJekuaa = {}
 middlewaresMiembroJekuaa.esPropietario = async (req, res, next) => {
     
     try {
+
         const { uidSolicitante, datosAuthSolicitante } = req.jekuaaDatos
         
-        if(datosAuthSolicitante.customClaims.rol != 'propietario') {
-            return res.status(403).json({
-                mensaje: 'No estas autorizado, no eres propietario.',
-                resultado: null
-            })
+        if( datosAuthSolicitante.customClaims.rol != 'propietario' ) {
+            
+            let codigo = 'jekuaa/error/usuario_no_autorizado'
+            const respuesta = new Respuesta().setRespuestaPorCodigo( codigo )
+            const status = respuesta.getInformacionPorCodigo().status
+            
+            return res.status( status ).json( respuesta.getRespuesta() )
+        
         }
 
         return next()
 
-    } catch (error) {
-        console.log('error', error)
+    } catch ( error ) {
 
-        return res.status(403).json({
-            mensaje: 'No estas autorizado, no eres propietario.',
-            resultado: error
-        })
+        let codigo = 'jekuaa/error/sistema'
+        const respuesta = new Respuesta().setRespuestaPorCodigo( codigo, error )
+        const status = respuesta.getInformacionPorCodigo().status
+        
+        return res.status( status ).json( respuesta.getRespuesta() )
+
     }
     
 }
@@ -31,24 +36,29 @@ middlewaresMiembroJekuaa.esPropietario = async (req, res, next) => {
 middlewaresMiembroJekuaa.esMiembroJekuaa = async (req, res, next) => {
     
     try {
+
         const { uidSolicitante, datosAuthSolicitante } = req.jekuaaDatos
         
         if ( datosAuthSolicitante.customClaims.rol === 'estudiante' ) {
-            return res.status(403).json({
-                mensaje: 'No estas autorizado, no eres miembro del equipo Jekuaa.',
-                resultado: null
-            })
+            
+            let codigo = 'jekuaa/error/usuario_no_autorizado'
+            const respuesta = new Respuesta().setRespuestaPorCodigo( codigo )
+            const status = respuesta.getInformacionPorCodigo().status
+            
+            return res.status( status ).json( respuesta.getRespuesta() )
+            
         }
 
         return next()
 
-    } catch (error) {
-        console.log('error', error)
+    } catch ( error ) {
+        
+        let codigo = 'jekuaa/error/sistema'
+        const respuesta = new Respuesta().setRespuestaPorCodigo( codigo, error )
+        const status = respuesta.getInformacionPorCodigo().status
+        
+        return res.status( status ).json( respuesta.getRespuesta() )
 
-        return res.status(403).json({
-            mensaje: 'No estas autorizado, no eres miembro del equipo Jekuaa.',
-            resultado: error
-        })
     }
 
 }
@@ -56,34 +66,40 @@ middlewaresMiembroJekuaa.esMiembroJekuaa = async (req, res, next) => {
 middlewaresMiembroJekuaa.esDeMayorIgualNivel = async ( req, res, next ) => {
     
     try {
+        
         const { params, jekuaaDatos } = req
         const { uidSolicitante, datosAuthSolicitante } = jekuaaDatos
         const { uid } = params
 
-        console.log('datosAuthSolicitante', datosAuthSolicitante)
-
-        const datosAuthUsuario = await admin.auth().getUser(uid)
-        console.log('datosAuthUsuario', datosAuthUsuario)
+        const datosAuthUsuario = await admin.auth().getUser( uid )
 
         // El solicitante debe tener mayor o igual nivel que el usuario a actualizar
-        const diferenciaNivelRol = utilsRoles.compararNivelRol( datosAuthSolicitante.customClaims.rol, datosAuthUsuario.customClaims.rol)
-        console.log('diferenciaNivelRol', diferenciaNivelRol)
+        const diferenciaNivelRol = utilsRoles.compararNivelRol( datosAuthSolicitante.customClaims.rol, 
+            datosAuthUsuario.customClaims.rol )
 
         if ( diferenciaNivelRol < 0 ) {
             // No autorizado
-            return res.status(403).json({
-                mensaje: 'No estas autorizado, no puedes operar a este usuario.',
-                resultado: null
-            })
+            let codigo = 'jekuaa/error/usuario_no_autorizado'
+            const respuesta = new Respuesta().setRespuestaPorCodigo( codigo )
+            const status = respuesta.getInformacionPorCodigo().status
+            
+            return res.status( status ).json( respuesta.getRespuesta() )
         }
 
         return next()
 
     } catch (error) {
-        return res.status(403).json({
-            mensaje: 'No estas autorizado, no puedes operar a este usuario..',
-            resultado: error
-        })
+
+        let codigo = 'jekuaa/error/sistema'
+        if ( error.code === 'auth/user-not-found' ) {
+            codigo = 'jekuaa/error/usuario_no_autenticado'
+        }
+
+        const respuesta = new Respuesta().setRespuestaPorCodigo( codigo, error )
+        const status = respuesta.getInformacionPorCodigo().status
+        
+        return res.status( status ).json( respuesta.getRespuesta() )
+
     }
     
 }

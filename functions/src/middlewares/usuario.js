@@ -1,4 +1,5 @@
 const admin = require('../../firebase-service')
+const Respuesta = require('../models/Respuesta')
 const middlewaresUser = {}
 
 // MIDDLEWARES
@@ -9,21 +10,36 @@ middlewaresUser.estaAutenticado = (req, res, next) => {
         try {
             const { authToken } = req.jekuaaDatos
 
-            const userInfo = await admin.auth().verifyIdToken(authToken)
+            const userInfo = await admin.auth().verifyIdToken( authToken )
             req.jekuaaDatos.uidSolicitante = userInfo.uid
 
             const datosAuthSolicitante = await admin.auth().getUser( userInfo.uid )
             req.jekuaaDatos.datosAuthSolicitante = datosAuthSolicitante
 
+            if ( datosAuthSolicitante.disabled ) {
+                
+                let codigo = 'jekuaa/error/usuario_deshabilitado'
+                const respuesta = new Respuesta().setRespuestaPorCodigo( codigo )
+                const status = respuesta.getInformacionPorCodigo().status
+
+                return res.status( status ).json( respuesta.getRespuesta() )
+
+            }
+
             return next()
     
-        } catch (error) {
+        } catch ( error ) {
             console.log('error', error)
 
-            return res.status(401).json({
-                mensaje: 'No estas autorizado, favor iniciar sesión.',
-                resultado: null
-            })
+            let codigo = 'jekuaa/error/sistema'
+            if ( error.code === 'auth/user-not-found' ) {
+                codigo = 'jekuaa/error/usuario_no_autenticado'
+            }
+
+            const respuesta = new Respuesta().setRespuestaPorCodigo( codigo, error )
+            const status = respuesta.getInformacionPorCodigo().status
+
+            return res.status( status ).json( respuesta.getRespuesta() )
         }
     })
     

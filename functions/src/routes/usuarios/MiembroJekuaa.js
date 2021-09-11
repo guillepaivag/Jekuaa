@@ -24,6 +24,6 @@ router.post('/verDatosAuthPorUID/:uid', estaAutenticado, esMiembroJekuaa, verDat
 router.post('/crearUsuario', estaAutenticado, esMiembroJekuaa, crearUsuario)
 router.post('/actualizarUsuarioPorUID/:uid', estaAutenticado, esMiembroJekuaa, esDeMayorIgualNivel, actualizarUsuarioPorUID)
 router.post('/habilitarUsuarioPorUID/:uid', estaAutenticado, esMiembroJekuaa, esDeMayorIgualNivel, habilitarUsuarioPorUID)
-// router.post('/eliminarUsuarioPorUID/:uid', estaAutenticado, esMiembroJekuaa, esDeMayorIgualNivel, eliminarUsuarioPorUID)
+router.post('/eliminarUsuarioPorUID/:uid', estaAutenticado, esMiembroJekuaa, esDeMayorIgualNivel, eliminarUsuarioPorUID)
 
 module.exports = router
