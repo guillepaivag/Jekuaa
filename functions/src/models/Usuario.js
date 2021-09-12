@@ -635,15 +635,16 @@ class Usuario {
 
             let usuario = null
             try {
-                await admin.auth().getUser(uid)
+                usuario = await admin.auth().getUser(uid)
+
+                if ( usuario ) {
+                    throw new Error(`Ya existe el uid ${uid}`)
+                }
 
             } catch (error) {
                 
             }
 
-            if ( usuario ) {
-                throw new Error(`Ya existe el uid ${uid}`)
-            }
         }
 
         if ( nombreUsuario ) {
@@ -660,12 +661,12 @@ class Usuario {
             try {
                 usuario = await admin.auth().getUserByEmail( correo )
 
+                if ( usuario ) {
+                    throw new Error(`Ya existe el correo ${correo}`)
+                }
+            
             } catch (error) {
                 
-            }
-
-            if ( usuario ) {
-                throw new Error(`Ya existe el correo ${correo}`)
             }
         }
     }
