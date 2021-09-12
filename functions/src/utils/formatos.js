@@ -2,26 +2,6 @@ const admin = require('../../firebase-service')
 const db = require('../../db')
 const formatos = {}
 
-formatos.fechaString_a_fechaDate = ( fechaString ) => {
-    if ( !fechaString ) {
-        return null
-    }
-
-    let fechaDate = new Date ( fechaString )
-
-    return fechaDate
-}
-
-formatos.date_a_timestamp = ( fechaDate ) => {
-    if ( !fechaDate ) {
-        return null
-    }
-
-    let fechaTimestamp = admin.firestore.Timestamp.fromDate ( fechaDate )
-
-    return fechaTimestamp
-}
-
 formatos.milliseconds_a_timestamp = ( milliseconds ) => {
     if ( !milliseconds ) {
         return null

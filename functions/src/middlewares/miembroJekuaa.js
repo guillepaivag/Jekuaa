@@ -24,7 +24,9 @@ middlewaresMiembroJekuaa.esPropietario = async (req, res, next) => {
     } catch ( error ) {
 
         let codigo = 'jekuaa/error/sistema'
-        const respuesta = new Respuesta().setRespuestaPorCodigo( codigo, error )
+        const respuesta = new Respuesta().setRespuestaPorCodigo( codigo, {
+            resultado: error
+        } )
         const status = respuesta.getInformacionPorCodigo().status
         
         return res.status( status ).json( respuesta.getRespuesta() )
@@ -54,7 +56,9 @@ middlewaresMiembroJekuaa.esMiembroJekuaa = async (req, res, next) => {
     } catch ( error ) {
         
         let codigo = 'jekuaa/error/sistema'
-        const respuesta = new Respuesta().setRespuestaPorCodigo( codigo, error )
+        const respuesta = new Respuesta().setRespuestaPorCodigo( codigo, {
+            resultado: error
+        } )
         const status = respuesta.getInformacionPorCodigo().status
         
         return res.status( status ).json( respuesta.getRespuesta() )
@@ -95,7 +99,9 @@ middlewaresMiembroJekuaa.esDeMayorIgualNivel = async ( req, res, next ) => {
             codigo = 'jekuaa/error/usuario_no_autenticado'
         }
 
-        const respuesta = new Respuesta().setRespuestaPorCodigo( codigo, error )
+        const respuesta = new Respuesta().setRespuestaPorCodigo( codigo, {
+            resultado: error
+        } )
         const status = respuesta.getInformacionPorCodigo().status
         
         return res.status( status ).json( respuesta.getRespuesta() )

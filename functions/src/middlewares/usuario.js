@@ -36,7 +36,9 @@ middlewaresUser.estaAutenticado = (req, res, next) => {
                 codigo = 'jekuaa/error/usuario_no_autenticado'
             }
 
-            const respuesta = new Respuesta().setRespuestaPorCodigo( codigo, error )
+            const respuesta = new Respuesta().setRespuestaPorCodigo( codigo, {
+                resultado: error
+            } )
             const status = respuesta.getInformacionPorCodigo().status
 
             return res.status( status ).json( respuesta.getRespuesta() )

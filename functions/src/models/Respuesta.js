@@ -78,15 +78,24 @@ class Respuesta {
         ACCIONES
     */
 
-    setRespuestaPorCodigo ( codigo, resultado ) {
+    setRespuestaPorCodigo ( codigo, datosPersonalizados ) {
         
+        const {
+            mensaje,
+            resultado
+        } = datosPersonalizados
+
         let rutasCodigo = codigo.split('/')
 
-        let informacionCodigo = informacionCodigos [ rutasCodigo[0] ] [ rutasCodigo[1] ] [ rutasCodigo[2] ]
+        let informacionCodigo = informacionCodigos [ rutasCodigo[0] ] [ rutasCodigo[1] ]
+
+        if ( rutasCodigo[1] === 'error' ) {
+            informacionCodigo = informacionCodigo [ rutasCodigo[2] ]
+        }
 
         this.setRespuesta({
             codigo: informacionCodigo.codigo,
-            mensaje: informacionCodigo.mensaje,
+            mensaje: mensaje ? mensaje : informacionCodigo.mensaje,
             resultado: resultado ? resultado : null
         })
 
@@ -96,7 +105,13 @@ class Respuesta {
     getInformacionPorCodigo ( codigo ) {
         let rutasCodigo = codigo.split('/')
 
-        return informacionCodigos [ rutasCodigo[0] ] [ rutasCodigo[1] ] [ rutasCodigo[2] ]
+        let informacionCodigo = informacionCodigos [ rutasCodigo[0] ] [ rutasCodigo[1] ]
+
+        if ( rutasCodigo[1] === 'error' ) {
+            informacionCodigo = informacionCodigo [ rutasCodigo[2] ]
+        }
+
+        return informacionCodigo
     }
 }
 

@@ -4,6 +4,7 @@ const MiembroJekuaa = require("../../models/TiposUsuarios/MiembroJekuaa")
 const utilsRoles = require('../../utils/usuarios/RolesSecciones')
 const Usuario = require('../../models/Usuario')
 const formatos = require('../../utils/formatos')
+const Respuesta = require('../../models/Respuesta')
 
 const controllerMiembroJekuaa = {}
 
@@ -18,18 +19,26 @@ controllerMiembroJekuaa.verDatosUsuarioPorUID = async (req, res) => {
         // Obtener datos del usuario
         const datosUsuario = await MiembroJekuaa.verDatosUsuarioPorUID( uid )
 
-        return res.status(200).json({
+        let codigo = 'jekuaa/exito'
+        const respuesta = new Respuesta().setRespuestaPorCodigo( codigo, {
             mensaje: 'Los datos de los usuarios se enviaron de forma exitosa!',
             resultado: datosUsuario
-        })
+        } )
+        const status = respuesta.getInformacionPorCodigo().status
         
-    } catch (error) {
+        return res.status( status ).json( respuesta.getRespuesta() )
+        
+    } catch ( error ) {
         console.log('Error - verUsuarioPorUID: ', error)
 
-        return res.status(500).json({
-            mensaje: error.message,
+        let codigo = 'jekuaa/error/sistema'
+        const respuesta = new Respuesta().setRespuestaPorCodigo( codigo, {
             resultado: error
-        })
+        } )
+        const status = respuesta.getInformacionPorCodigo().status
+        
+        return res.status( status ).json( respuesta.getRespuesta() )
+
     }
 
 }
@@ -41,30 +50,45 @@ controllerMiembroJekuaa.verDatosAuthPorUID = async (req, res) => {
         const { jekuaaDatos, params } = req
         const { uidSolicitante, datosAuthSolicitante } = jekuaaDatos
         const { uid } = params
+        
+        const respuesta = new Respuesta()
+        let codigo = 'jekuaa/exito'
 
         // Si queremos ver nuestros propios datos, retornamos el datosAuthSolicitante
         if ( uidSolicitante === uid ) {
-            return res.status(200).json({
+            
+            respuesta.setRespuestaPorCodigo( codigo, {
                 mensaje: 'Los datos de los usuarios se enviaron de forma exitosa!',
                 resultado: datosAuthSolicitante
-            })
+            } )
+            const status = respuesta.getInformacionPorCodigo().status
+            
+            return res.status( status ).json( respuesta.getRespuesta() )
+
         }
 
         // Obtener datos del usuario
-        const datosAuth = await MiembroJekuaa.verDatosAuthPorUID(uid)
+        const datosAuth = await MiembroJekuaa.verDatosAuthPorUID( uid )
 
-        return res.status(200).json({
+        respuesta.setRespuestaPorCodigo( codigo, {
             mensaje: 'Los datos de los usuarios se enviaron de forma exitosa!',
             resultado: datosAuth
-        })
+        } )
+        const status = respuesta.getInformacionPorCodigo().status
         
-    } catch (error) {
+        return res.status( status ).json( respuesta.getRespuesta() )
+        
+    } catch ( error ) {
         console.log('Error - verUsuarioPorUID: ', error)
 
-        return res.status(500).json({
-            mensaje: error.message,
+        let codigo = 'jekuaa/error/sistema'
+        const respuesta = new Respuesta().setRespuestaPorCodigo( codigo, {
             resultado: error
-        })
+        } )
+        const status = respuesta.getInformacionPorCodigo().status
+        
+        return res.status( status ).json( respuesta.getRespuesta() )
+
     }
 
 }
@@ -76,16 +100,25 @@ controllerMiembroJekuaa.crearUsuario = async (req, res) => {
         const { uidSolicitante, datosAuthSolicitante } = jekuaaDatos
         const { datosUsuario, contrasenha } = body
 
+        const respuesta = new Respuesta()
+        let codigo = 'jekuaa/exito'
+
         // El solicitante no puede actualizar (crear) un nuevo propietario si no es propietario
-        if ( datosAuthSolicitante.customClaims.rol != 'propietario' && 
-            datosUsuario && datosUsuario.jekuaaRoles && datosUsuario.jekuaaRoles.rol &&
-            datosUsuario.jekuaaRoles.rol === 'propietario' ) {
+        let noPuedeCrearPropietario = datosAuthSolicitante.customClaims.rol != 'propietario' && 
+        datosUsuario && datosUsuario.jekuaaRoles && datosUsuario.jekuaaRoles.rol &&
+        datosUsuario.jekuaaRoles.rol === 'propietario'
+        
+        if ( noPuedeCrearPropietario ) {
             
             //No autorizado
-            return res.status(403).json({
+            codigo = 'jekuaa/error/usuario_no_autorizado'
+
+            respuesta.setRespuestaPorCodigo( codigo, {
                 mensaje: 'No tienes permiso para agregar un nuevo propietario.',
-                resultado: null
-            })
+            } )
+            const status = respuesta.getInformacionPorCodigo().status
+            
+            return res.status( status ).json( respuesta.getRespuesta() )
 
         }
 
@@ -95,18 +128,25 @@ controllerMiembroJekuaa.crearUsuario = async (req, res) => {
         // Actualizar usuario
         const usuarioNuevo = await MiembroJekuaa.crearNuevoUsuario( datosUsuarioParseado, contrasenha )
 
-        return res.status(200).json({
+        respuesta.setRespuestaPorCodigo( codigo, {
             mensaje: 'El usuario se creo de forma exitosa!',
             resultado: usuarioNuevo
-        })
+        } )
+        const status = respuesta.getInformacionPorCodigo().status
         
-    } catch (error) {
+        return res.status( status ).json( respuesta.getRespuesta() )
+        
+    } catch ( error ) {
         console.log('Error - crearUsuario: ', error)
 
-        return res.status(500).json({
+        let codigo = 'jekuaa/error/sistema'
+        const respuesta = new Respuesta().setRespuestaPorCodigo( codigo, {
             mensaje: error.message,
             resultado: error
-        })
+        } )
+        const status = respuesta.getInformacionPorCodigo().status
+        
+        return res.status( status ).json( respuesta.getRespuesta() )
     }
 
 }
@@ -119,16 +159,23 @@ controllerMiembroJekuaa.actualizarUsuarioPorUID = async (req, res) => {
         const { uid } = params
         const { datosActualizados } = body
 
+        const respuesta = new Respuesta()
+        let codigo = 'jekuaa/exito'
+
         // El solicitante no puede actualizar (crear) un nuevo propietario si no es propietario
         if ( datosAuthSolicitante.customClaims.rol != 'propietario' && 
             datosActualizados && datosActualizados.jekuaaRoles && datosActualizados.jekuaaRoles.rol &&
             datosActualizados.jekuaaRoles.rol === 'propietario') {
             
             //No autorizado
-            return res.status(403).json({
+            codigo = 'jekuaa/error/usuario_no_autorizado'
+
+            respuesta.setRespuestaPorCodigo( codigo, {
                 mensaje: 'No tienes permiso para agregar un nuevo propietario.',
-                resultado: null
-            })
+            } )
+            const status = respuesta.getInformacionPorCodigo().status
+            
+            return res.status( status ).json( respuesta.getRespuesta() )
 
         }
 
@@ -138,18 +185,25 @@ controllerMiembroJekuaa.actualizarUsuarioPorUID = async (req, res) => {
         // Actualizar usuario
         const usuarioActualizado = await MiembroJekuaa.actalizarUsuarioPorUID( uid, datosActualizadosParseado )
 
-        return res.status(200).json({
-            mensaje: 'El usuario se actualizo de forma exitosa!',
+        respuesta.setRespuestaPorCodigo( codigo, {
+            mensaje: 'El usuario se creo de forma exitosa!',
             resultado: usuarioActualizado
-        })
+        } )
+        const status = respuesta.getInformacionPorCodigo().status
         
-    } catch (error) {
+        return res.status( status ).json( respuesta.getRespuesta() )
+        
+    } catch ( error ) {
         console.log('Error - actualizarUsuarioPorUID: ', error)
 
-        return res.status(500).json({
+        let codigo = 'jekuaa/error/sistema'
+        const respuesta = new Respuesta().setRespuestaPorCodigo( codigo, {
             mensaje: error.message,
             resultado: error
-        })
+        } )
+        const status = respuesta.getInformacionPorCodigo().status
+        
+        return res.status( status ).json( respuesta.getRespuesta() )
     }
 
 }
@@ -165,32 +219,47 @@ controllerMiembroJekuaa.habilitarUsuarioPorUID = async (req, res) => {
         // Obtener auth del solicitante y del usuario a actualizar
         const datosAuth = await admin.auth().getUser( uid )
         
+        const respuesta = new Respuesta()
+        let codigo = 'jekuaa/exito'
+
         if ( datosAuth.disabled === !habilitar ) {
             
             let habilitarText = habilitar ? 'habilitar' : 'deshabilitar'
             let habilitadoText = habilitar ? 'habilitado' : 'deshabilitado'
-            return res.status(400).json({
+            
+            codigo = 'jekuaa/error/usuario_mala_solicitud'
+            respuesta.setRespuestaPorCodigo( codigo, {
                 mensaje: `No puedes ${habilitarText} si ya esta ${habilitadoText}.`,
-                resultado: error
-            })
+            } )
+            const status = respuesta.getInformacionPorCodigo().status
+            
+            return res.status( status ).json( respuesta.getRespuesta() )
 
         }
 
         const resultado = await MiembroJekuaa.habilitarUsuarioPorUID( uid, habilitar )
-
         let mensaje = habilitar ? `El usuario se habilito de forma exitosa.` : `El usuario se deshabilito de forma exitosa.`
-        return res.status(200).json({
+
+        respuesta.setRespuestaPorCodigo( codigo, {
             mensaje,
             resultado
-        })
+        } )
+        const status = respuesta.getInformacionPorCodigo().status
+        
+        return res.status( status ).json( respuesta.getRespuesta() )
 
-    } catch (error) {
+    } catch ( error ) {
         console.log('Error - habilitarUsuarioPorUID: ', error)
 
-        return res.status(500).json({
+        let codigo = 'jekuaa/error/sistema'
+        const respuesta = new Respuesta().setRespuestaPorCodigo( codigo, {
             mensaje: error.message,
             resultado: error
-        })
+        } )
+        const status = respuesta.getInformacionPorCodigo().status
+        
+        return res.status( status ).json( respuesta.getRespuesta() )
+
     }
 
 }
@@ -205,7 +274,7 @@ controllerMiembroJekuaa.eliminarUsuarioPorUID = async (req, res) => {
 
         
 
-    } catch (error) {
+    } catch ( error ) {
         
     }
 
