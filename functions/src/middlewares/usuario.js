@@ -1,4 +1,6 @@
 const admin = require('../../firebase-service')
+const ErroresJekuaa = require('../models/Error/ErroresJekuaa')
+const manejadorErrores = require('../models/Error/ManejadorErrores')
 const Respuesta = require('../models/Respuesta')
 const middlewaresUser = {}
 
@@ -17,12 +19,10 @@ middlewaresUser.estaAutenticado = (req, res, next) => {
             req.jekuaaDatos.datosAuthSolicitante = datosAuthSolicitante
 
             if ( datosAuthSolicitante.disabled ) {
-                
-                let codigo = 'jekuaa/error/usuario_deshabilitado'
-                const respuesta = new Respuesta().setRespuestaPorCodigo( codigo )
-                const status = respuesta.getInformacionPorCodigo().status
 
-                return res.status( status ).json( respuesta.getRespuesta() )
+                throw new ErroresJekuaa({
+                    codigo: 'jekuaa/error/usuario_deshabilitado'
+                })
 
             }
 
@@ -31,17 +31,12 @@ middlewaresUser.estaAutenticado = (req, res, next) => {
         } catch ( error ) {
             console.log('error', error)
 
-            let codigo = 'jekuaa/error/sistema'
-            if ( error.code === 'auth/user-not-found' ) {
-                codigo = 'jekuaa/error/usuario_no_autenticado'
-            }
+            const {
+                status,
+                respuesta
+            } = manejadorErrores( error )
 
-            const respuesta = new Respuesta().setRespuestaPorCodigo( codigo, {
-                resultado: error
-            } )
-            const status = respuesta.getInformacionPorCodigo().status
-
-            return res.status( status ).json( respuesta.getRespuesta() )
+            return res.status( status ).json( respuesta )
         }
     })
     

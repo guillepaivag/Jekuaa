@@ -1,4 +1,5 @@
 const admin = require('../../firebase-service')
+const ErrorJekuaa = require('../models/Error/ErroresJekuaa')
 const utilsRoles = require('../utils/usuarios/RolesSecciones')
 const middlewaresMiembroJekuaa = {}
 
@@ -10,26 +11,22 @@ middlewaresMiembroJekuaa.esPropietario = async (req, res, next) => {
         const { uidSolicitante, datosAuthSolicitante } = req.jekuaaDatos
         
         if( datosAuthSolicitante.customClaims.rol != 'propietario' ) {
-            
-            let codigo = 'jekuaa/error/usuario_no_autorizado'
-            const respuesta = new Respuesta().setRespuestaPorCodigo( codigo )
-            const status = respuesta.getInformacionPorCodigo().status
-            
-            return res.status( status ).json( respuesta.getRespuesta() )
-        
+            // No autorizado
+            throw new ErrorJekuaa({
+                codigo: 'jekuaa/error/usuario_no_autorizado'
+            })
         }
 
         return next()
 
     } catch ( error ) {
 
-        let codigo = 'jekuaa/error/sistema'
-        const respuesta = new Respuesta().setRespuestaPorCodigo( codigo, {
-            resultado: error
-        } )
-        const status = respuesta.getInformacionPorCodigo().status
-        
-        return res.status( status ).json( respuesta.getRespuesta() )
+        const {
+            status,
+            respuesta
+        } = manejadorErrores( error )
+
+        return res.status( status ).json( respuesta )
 
     }
     
@@ -42,26 +39,22 @@ middlewaresMiembroJekuaa.esMiembroJekuaa = async (req, res, next) => {
         const { uidSolicitante, datosAuthSolicitante } = req.jekuaaDatos
         
         if ( datosAuthSolicitante.customClaims.rol === 'estudiante' ) {
-            
-            let codigo = 'jekuaa/error/usuario_no_autorizado'
-            const respuesta = new Respuesta().setRespuestaPorCodigo( codigo )
-            const status = respuesta.getInformacionPorCodigo().status
-            
-            return res.status( status ).json( respuesta.getRespuesta() )
-            
+            // No autorizado
+            throw new ErrorJekuaa({
+                codigo: 'jekuaa/error/usuario_no_autorizado'
+            })
         }
 
         return next()
 
     } catch ( error ) {
         
-        let codigo = 'jekuaa/error/sistema'
-        const respuesta = new Respuesta().setRespuestaPorCodigo( codigo, {
-            resultado: error
-        } )
-        const status = respuesta.getInformacionPorCodigo().status
-        
-        return res.status( status ).json( respuesta.getRespuesta() )
+        const {
+            status,
+            respuesta
+        } = manejadorErrores( error )
+
+        return res.status( status ).json( respuesta )
 
     }
 
@@ -83,28 +76,21 @@ middlewaresMiembroJekuaa.esDeMayorIgualNivel = async ( req, res, next ) => {
 
         if ( diferenciaNivelRol < 0 ) {
             // No autorizado
-            let codigo = 'jekuaa/error/usuario_no_autorizado'
-            const respuesta = new Respuesta().setRespuestaPorCodigo( codigo )
-            const status = respuesta.getInformacionPorCodigo().status
-            
-            return res.status( status ).json( respuesta.getRespuesta() )
+            throw new ErrorJekuaa({
+                codigo: 'jekuaa/error/usuario_no_autorizado'
+            })
         }
 
         return next()
 
     } catch (error) {
 
-        let codigo = 'jekuaa/error/sistema'
-        if ( error.code === 'auth/user-not-found' ) {
-            codigo = 'jekuaa/error/usuario_no_autenticado'
-        }
+        const {
+            status,
+            respuesta
+        } = manejadorErrores( error )
 
-        const respuesta = new Respuesta().setRespuestaPorCodigo( codigo, {
-            resultado: error
-        } )
-        const status = respuesta.getInformacionPorCodigo().status
-        
-        return res.status( status ).json( respuesta.getRespuesta() )
+        return res.status( status ).json( respuesta )
 
     }
     

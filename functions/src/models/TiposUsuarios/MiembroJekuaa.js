@@ -137,28 +137,25 @@ class MiembroJekuaa extends Usuario {
         } = datosUsuario
 
         if ( !Object.keys( datosUsuario ).length ) {
-            throw new Error(`No hay datos para agregar.`)
+            throw new ErrorJekuaa({
+                codigo: 'jekuaa/error/usuario_mala_solicitud'
+            })
         }
 
         if ( !nombreUsuario ) {
-            throw new Error(`No existe el nombre de usuario, favor verificar.`)
-        }
-
-        if ( !correo ) {
-            throw new Error(`No existe el correo, favor verificar.`)
+            throw new ErrorJekuaa({
+                codigo: 'jekuaa/error/usuario_mala_solicitud'
+            })
         }
 
         if ( !contrasenha ) {
-            throw new Error(`No existe contraseña, favor verificar.`)
-        }
-
-        if ( typeof contrasenha != 'string' ) {
-            throw new Error(`La contraseña no esta en su formato correcto, favor verificar.`)
+            throw new ErrorJekuaa({
+                codigo: 'jekuaa/error/usuario_mala_solicitud'
+            })
         }
 
         await Usuario.errorExisteUsuario({
-            nombreUsuario,
-            correo
+            nombreUsuario
         })
 
         const usuarioNuevoJekuaa = new Usuario( datosUsuario ).getUsuario()

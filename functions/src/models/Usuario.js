@@ -2,6 +2,7 @@ const admin = require('../../firebase-service')
 const db = require('../../db')
 const JekuaaPremium = require('./JekuaaPremium')
 const JekuaaRoles = require('./JekuaaRoles')
+const ErrorJekuaa = require('./Error/ErroresJekuaa')
 
 const COLECCION_USUARIO = 'Usuarios'
 
@@ -200,19 +201,13 @@ class Usuario {
         */
 
     async importarDatosUsuarioPorUID ( uid ) {
-        
-        if ( !uid ) {
-            throw new Error('La uid debe existir.')
-        }
-
-        if ( typeof uid != 'string' ) {
-            throw new Error('La uid debe ser un string.')
-        }
 
         const documentoUsuario = await db.collection(COLECCION_USUARIO).doc(uid).get()
 
         if ( !documentoUsuario.exists ) {
-            throw new Error('No existe el usuario.')
+            throw new ErrorJekuaa({
+                codigo: 'jekuaa/error/usuario_no_existe'
+            })
         }
 
         const datosUsuario = documentoUsuario.data()
@@ -220,22 +215,16 @@ class Usuario {
         this.setUsuario( datosUsuario )
 
         return this
+
     }
 
     async obtenerDatosDeAuthentication () {
-        
-        if ( !this.uid ) {
-            throw new Error('La uid debe existir.')
-        }
-        
-        if ( typeof this.uid != 'string' ) {
-            throw new Error('La uid debe ser string.')
-        }
     
         // Recolectamos los datos de firebase authentication
         const datosUsuarioAuthentication = await admin.auth().getUser(this.uid)
     
         return datosUsuarioAuthentication
+    
     }
 
     async actualizarDatosPersonales () {
@@ -609,18 +598,11 @@ class Usuario {
 
     static async obtenerDatosDeAuthenticationPorUID ( uid ) {
         
-        if ( !uid ) {
-            throw new Error('La uid debe existir.')
-        }
-        
-        if ( typeof uid != 'string' ) {
-            throw new Error('La uid debe ser string.')
-        }
-    
         // Recolectamos los datos de firebase authentication
-        const datosUsuarioAuthentication = await admin.auth().getUser(uid)
+        const datosUsuarioAuthentication = await admin.auth().getUser( uid )
     
         return datosUsuarioAuthentication
+
     }
 
     static async errorExisteUsuario ( identificadores ) {
@@ -638,7 +620,9 @@ class Usuario {
                 usuario = await admin.auth().getUser(uid)
 
                 if ( usuario ) {
-                    throw new Error(`Ya existe el uid ${uid}`)
+                    throw new ErrorJekuaa({
+                        codigo: 'jekuaa/error/usuario_ya_existe'
+                    })
                 }
 
             } catch (error) {
@@ -651,7 +635,9 @@ class Usuario {
             const existe = !(await db.collection(COLECCION_USUARIO).where('nombreUsuario', '==', nombreUsuario).get()).empty
 
             if ( existe ) {
-                throw new Error(`Ya existe el nombre de usuario ${nombreUsuario}`)
+                throw new ErrorJekuaa({
+                    codigo: 'jekuaa/error/usuario_ya_existe'
+                })
             }
         }
 
@@ -662,7 +648,9 @@ class Usuario {
                 usuario = await admin.auth().getUserByEmail( correo )
 
                 if ( usuario ) {
-                    throw new Error(`Ya existe el correo ${correo}`)
+                    throw new ErrorJekuaa({
+                        codigo: 'jekuaa/error/usuario_ya_existe'
+                    })
                 }
             
             } catch (error) {

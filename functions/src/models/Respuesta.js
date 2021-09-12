@@ -102,8 +102,8 @@ class Respuesta {
         return this
     }
 
-    getInformacionPorCodigo ( codigo ) {
-        let rutasCodigo = codigo.split('/')
+    getStatusCode () {
+        let rutasCodigo = this.codigo.split('/')
 
         let informacionCodigo = informacionCodigos [ rutasCodigo[0] ] [ rutasCodigo[1] ]
 
@@ -111,8 +111,9 @@ class Respuesta {
             informacionCodigo = informacionCodigo [ rutasCodigo[2] ]
         }
 
-        return informacionCodigo
+        return informacionCodigo.status
     }
+
 }
 
 module.exports = Respuesta
