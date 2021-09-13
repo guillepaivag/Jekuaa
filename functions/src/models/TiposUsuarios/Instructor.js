@@ -166,14 +166,6 @@ class Instructor {
             especializacionesIntereses
         } = datosInstructor
 
-        if ( !uid ) {
-            throw new Error('La uid debe existir.')
-        }
-
-        if ( typeof uid != 'string' ) {
-            throw new Error('La uid debe ser de tipo string.')
-        }
-
         if ( cantidadCursos && typeof cantidadCursos != 'number' ) {
             throw new Error('La cantidadCursos debe ser de tipo number.')
         }
@@ -203,6 +195,10 @@ class Instructor {
             informacionInstructor: informacionInstructor ? informacionInstructor : '',
             especializacionesIntereses: especializacionesIntereses ? especializacionesIntereses : []
         })
+    }
+
+    static datosValidosParaInstructor ( datosInstructor ) {
+        
     }
 }
 

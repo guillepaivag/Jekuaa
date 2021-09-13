@@ -425,11 +425,11 @@ class Usuario {
             datosUsuarioDBActualizar.jekuaaPremium = new JekuaaPremium().getDatosPremium()
 
             // PLAN
-            if ( jekuaaPremium.plan ) {
+            if ( JekuaaPremium.tienePlan( jekuaaPremium.plan ) ) {
                 datosUsuarioAuthClaimsActualizar.jekuaaPremium = true
                 datosUsuarioDBActualizar.jekuaaPremium.plan = jekuaaPremium.plan
                 
-            } else if ( jekuaaPremium.plan === '' ) {
+            } else if ( !JekuaaPremium.tienePlan( jekuaaPremium.plan ) ) {
                 datosUsuarioAuthClaimsActualizar.jekuaaPremium = false
                 datosUsuarioDBActualizar.jekuaaPremium.plan = ''
     
@@ -470,28 +470,33 @@ class Usuario {
                 datosUsuarioAuthClaimsActualizar.rol = datosViejos.jekuaaRoles.rol
                 datosUsuarioDBActualizar.jekuaaRoles.rol = datosViejos.jekuaaRoles.rol
             }
-    
-            // SECCIONES E INSTRUCTOR
-            if ( datosUsuarioAuthClaimsActualizar.rol === 'estudiante' ) {
+
+            if ( JekuaaRoles.esEstudiante( datosUsuarioAuthClaimsActualizar.rol ) ) {
+                // Para Estudiante
                 datosUsuarioDBActualizar.jekuaaRoles.secciones = []
                 datosUsuarioDBActualizar.jekuaaRoles.instructor = false
-            } else if ( datosUsuarioAuthClaimsActualizar.rol === 'propietario' ) {
-                
-                datosUsuarioDBActualizar.jekuaaRoles.secciones = []
-                datosUsuarioDBActualizar.jekuaaRoles.instructor = datosViejos.jekuaaRoles.instructor
 
             } else {
-                if ( jekuaaRoles.secciones ) {
-                    datosUsuarioDBActualizar.jekuaaRoles.secciones = jekuaaRoles.secciones
+                // Para Miembro Jekuaa
+
+                // SECCIONES
+                if ( !JekuaaRoles.necesitaSecciones( datosUsuarioAuthClaimsActualizar.rol ) ) {
+                    datosUsuarioDBActualizar.jekuaaRoles.secciones = []
                 } else {
-                    datosUsuarioDBActualizar.jekuaaRoles.secciones = datosViejos.jekuaaRoles.secciones
+                    if ( jekuaaRoles.secciones ) {
+                        datosUsuarioDBActualizar.jekuaaRoles.secciones = jekuaaRoles.secciones
+                    } else {
+                        datosUsuarioDBActualizar.jekuaaRoles.secciones = datosViejos.jekuaaRoles.secciones
+                    }
                 }
-    
+
+                // INSTRUCTOR
                 if ( jekuaaRoles.instructor ) {
                     datosUsuarioDBActualizar.jekuaaRoles.instructor = jekuaaRoles.instructor
                 } else {
                     datosUsuarioDBActualizar.jekuaaRoles.instructor = datosViejos.jekuaaRoles.instructor
                 }
+
             }
         
         }
@@ -528,30 +533,18 @@ class Usuario {
             jekuaaPoint
         } = datosUsuarioParaActualizar
 
-        if ( uid && typeof uid != 'string' ) {
-            throw new Error('La uid debe ser de tipo string.')
-        }
-
-        if ( nombreUsuario && typeof nombreUsuario != 'string' ) {
-            throw new Error('El nombre de usuario debe ser de tipo string.')
-        }
-
-        if ( correo && typeof correo != 'string' ) {
-            throw new Error('El correo debe ser de tipo string.')
-        }
-
         if ( nombreCompleto && typeof nombreCompleto != 'string' ) {
-            throw new Error('El nombre completo debe ser de tipo string.')
+            throw new TypeError('Debe de ser de tipo string el nombre completo del usuario.', 'Usuario.js')
         }
 
         if ( fechaNacimiento && typeof fechaNacimiento != 'object' ) {
-            throw new Error('La fecha de nacimiento debe ser de tipo object (Date).')
+            throw new TypeError('La fecha de nacimiento debe ser de tipo object (Timestamp).', 'Usuario.js')
         }
 
         if ( jekuaaPremium ) {
 
             if ( typeof jekuaaPremium != 'object' ) {
-                throw new Error('El jekuaaPremium debe ser de tipo object.')
+                throw new TypeError('El jekuaaPremium debe ser de tipo object.', 'Usuario.js')
             }
 
             const formatoJekuaaPremium = new JekuaaPremium()
@@ -561,13 +554,10 @@ class Usuario {
                 fechaHasta: jekuaaPremium.fechaHasta,
             })
 
-            if( !formatoJekuaaPremium.formatoValido() ) {
-                throw new Error('El jekuaaPremium es un objeto pero no tiene el formato valido.')
-            }
+            formatoJekuaaPremium.formatoValido()
 
-            if( !formatoJekuaaPremium.cumpleCondiciones() ) {
-                throw new Error('El jekuaaPremium no cumple con las condiciones necesarias.')
-            }
+            formatoJekuaaPremium.cumpleCondiciones()
+
         }
 
         if ( jekuaaRoles ) {
@@ -582,17 +572,14 @@ class Usuario {
                 instructor: jekuaaRoles.instructor
             })
 
-            if ( !formatoJekuaaRoles.formatoValido() ) {
-                throw new Error('El jekuaaRoles es un objeto pero no tiene el formato valido.')
-            }
+            formatoJekuaaRoles.formatoValido()
 
-            if ( !formatoJekuaaRoles.cumpleCondiciones() ) {
-                throw new Error('El jekuaaRoles no cumple las condiciones necesarias.')
-            }
+            formatoJekuaaRoles.cumpleCondiciones()
+
         }
 
         if ( jekuaaPoint && typeof jekuaaPoint != 'number' ) {
-            throw new Error('El jekuaaPoint debe ser de tipo number.')
+            throw new TypeError('El jekuaaPoint no es de tipo numerico.', 'Usuario.js')
         }
     }
 

@@ -1,5 +1,6 @@
-const Respuesta = require("../Respuesta");
-const ErrorJekuaa = require("./ErroresJekuaa");
+const Respuesta = require("../models/Respuesta");
+const ErrorJekuaa = require("../models/Error/ErroresJekuaa");
+const manejadorErroresFirebaseAuth = require("./ManejadorErroresFirebaseAuth");
 
 function manejadorErrores ( error ) {
 
@@ -48,37 +49,27 @@ function manejadorErrores ( error ) {
     // Errores de Firebase Authentication
     if ( error && error.code && error.code.includes('auth/') ) {
         
-        if ( error.code === 'auth/user-not-found' ) {
-            /* 
-             *  No existe ningún registro de usuario 
-             *  que corresponda al identificador proporcionado.
-             */
-    
-            const errorJekuaa = new ErrorJekuaa({
-                codigo: 'jekuaa/error/usuario_no_autenticado'
-            })
-
-            status = errorJekuaa.status
-            respuesta.setRespuesta({
-                codigo: errorJekuaa.codigo,
-                mensaje: errorJekuaa.mensaje,
-                resultado: null
-            })
-    
-        } else if ( error.code === 'auth/email-already-exists' ) {
-            
-        } else if ( error.code === 'auth/invalid-id-token' ) {
-            
-        } else {
-    
-        }
+        let errorManejado = manejadorErroresFirebaseAuth( error )
+        
+        status = errorManejado.status
+        respuesta = errorManejado.respuesta
 
     }
 
     // Errores comunes
     if ( error instanceof TypeError) {
         // sentencias para manejar excepciones TypeError
-    
+        const errorJekuaa = new ErrorJekuaa({
+            codigo: 'jekuaa/error/usuario_mala_solicitud'
+        })
+
+        status = errorJekuaa.status
+        respuesta.setRespuesta({
+            codigo: errorJekuaa.codigo,
+            mensaje: error.message,
+            resultado: error
+        })
+
     } else if ( error instanceof RangeError) {
         // sentencias para manejar excepciones RangeError
     

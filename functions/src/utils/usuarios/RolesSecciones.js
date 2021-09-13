@@ -1,34 +1,9 @@
+const JekuaaRoles = require("../../models/JekuaaRoles")
+
 const utilsRolesSecciones = {}
 
-// VARIABLES
-const datosRoles = [
-    {
-        rol: 'propietario',
-        nesecitaSecciones: false,
-        esMiembroJekuaa: true,
-        nivel: 10
-    },
-    {
-        rol: 'miembroJekuaa',
-        nesecitaSecciones: true,
-        esMiembroJekuaa: true,
-        nivel: 5
-    },
-    {
-        rol: 'estudiante',
-        nesecitaSecciones: false,
-        esMiembroJekuaa: false,
-        nivel: 1
-    }
-]
-
-const seccionesValidas = [
-    'informatica',
-    'matematica'
-]
-
-
-
+const datosRoles = require('../../InformacionEstatica/DatosRoles')
+const seccionesValidas = require('../../InformacionEstatica/SeccionesValidas')
 
 // ROLES: Funciones para los roles
 utilsRolesSecciones.getDatosRoles = () => datosRoles

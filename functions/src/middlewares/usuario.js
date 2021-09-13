@@ -1,6 +1,6 @@
 const admin = require('../../firebase-service')
 const ErroresJekuaa = require('../models/Error/ErroresJekuaa')
-const manejadorErrores = require('../models/Error/ManejadorErrores')
+const manejadorErrores = require('../utils/ManejadorErrores')
 const Respuesta = require('../models/Respuesta')
 const middlewaresUser = {}
 

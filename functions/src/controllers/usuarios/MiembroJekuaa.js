@@ -5,7 +5,7 @@ const utilsRoles = require('../../utils/usuarios/RolesSecciones')
 const Usuario = require('../../models/Usuario')
 const formatos = require('../../utils/formatos')
 const Respuesta = require('../../models/Respuesta')
-const manejadorErrores = require('../../models/Error/ManejadorErrores')
+const manejadorErrores = require('../../utils/ManejadorErrores')
 const ErrorJekuaa = require('../../models/Error/ErroresJekuaa')
 
 const controllerMiembroJekuaa = {}
@@ -164,7 +164,7 @@ controllerMiembroJekuaa.actualizarUsuarioPorUID = async (req, res) => {
             respuesta.setRespuestaPorCodigo( codigo, {
                 mensaje: 'No tienes permiso para agregar un nuevo propietario.',
             } )
-            const status = respuesta.getInformacionPorCodigo().status
+            const status = respuesta.getStatusCode()
             
             return res.status( status ).json( respuesta.getRespuesta() )
 
@@ -180,7 +180,7 @@ controllerMiembroJekuaa.actualizarUsuarioPorUID = async (req, res) => {
             mensaje: 'El usuario se creo de forma exitosa!',
             resultado: usuarioActualizado
         } )
-        const status = respuesta.getInformacionPorCodigo().status
+        const status = respuesta.getStatusCode()
         
         return res.status( status ).json( respuesta.getRespuesta() )
         
@@ -220,7 +220,7 @@ controllerMiembroJekuaa.habilitarUsuarioPorUID = async (req, res) => {
             respuesta.setRespuestaPorCodigo( codigo, {
                 mensaje: `No puedes ${habilitarText} si ya esta ${habilitadoText}.`,
             } )
-            const status = respuesta.getInformacionPorCodigo().status
+            const status = respuesta.getStatusCode()
             
             return res.status( status ).json( respuesta.getRespuesta() )
 
@@ -233,7 +233,7 @@ controllerMiembroJekuaa.habilitarUsuarioPorUID = async (req, res) => {
             mensaje,
             resultado
         } )
-        const status = respuesta.getInformacionPorCodigo().status
+        const status = respuesta.getStatusCode()
         
         return res.status( status ).json( respuesta.getRespuesta() )
 

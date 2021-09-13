@@ -138,19 +138,22 @@ class MiembroJekuaa extends Usuario {
 
         if ( !Object.keys( datosUsuario ).length ) {
             throw new ErrorJekuaa({
-                codigo: 'jekuaa/error/usuario_mala_solicitud'
+                codigo: 'jekuaa/error/usuario_mala_solicitud',
+                mensaje: 'No hay datos para crear un usuario.'
             })
         }
 
         if ( !nombreUsuario ) {
             throw new ErrorJekuaa({
-                codigo: 'jekuaa/error/usuario_mala_solicitud'
+                codigo: 'jekuaa/error/usuario_mala_solicitud',
+                mensaje: 'No existe el nombre de usuario para crear un usuario.'
             })
         }
 
         if ( !contrasenha ) {
             throw new ErrorJekuaa({
-                codigo: 'jekuaa/error/usuario_mala_solicitud'
+                codigo: 'jekuaa/error/usuario_mala_solicitud',
+                mensaje: 'No existe una contraseña para crear un usuario.'
             })
         }
 
@@ -167,17 +170,16 @@ class MiembroJekuaa extends Usuario {
             password: contrasenha,
             displayName: usuarioNuevoJekuaa.nombreUsuario,
         })
-        
-        const informacionDeDatosUsuario = {
+
+        await admin.auth().setCustomUserClaims(usuarioAuthNuevo.uid, {
             rol: usuarioNuevoJekuaa.jekuaaRoles.rol,
             jekuaaPremium: !!usuarioNuevoJekuaa.jekuaaPremium.plan
-        }
+        })
 
-        await admin.firestore().collection(COLECCION_USUARIO).doc(usuarioAuthNuevo.uid).set( {
+        await admin.firestore().collection(COLECCION_USUARIO).doc(usuarioAuthNuevo.uid).set({
             ...usuarioNuevoJekuaa,
             uid: usuarioAuthNuevo.uid
-        } )
-        await admin.auth().setCustomUserClaims(usuarioAuthNuevo.uid, informacionDeDatosUsuario)
+        })
 
         if ( usuarioNuevoJekuaa.jekuaaRoles.instructor ) {
             // Agregar instructor
@@ -207,7 +209,10 @@ class MiembroJekuaa extends Usuario {
         } = datosActualizados
 
         if ( !Object.keys( datosActualizados ).length ) {
-            throw new Error(`No hay datos para actualizar.`)
+            throw new ErrorJekuaa({
+                codigo: 'jekuaa/error/usuario_mala_solicitud',
+                mensaje: 'No hay datos para actualizar un usuario.'
+            })
         }
 
         // await Usuario.errorNoExisteUsuario({
@@ -216,9 +221,9 @@ class MiembroJekuaa extends Usuario {
 
         const docUsuario = await db.collection(COLECCION_USUARIO).doc(uidUsuario).get()
 
-        if ( !docUsuario.exists ) {
-            throw new Error(`No existe el usuario con la uid ${uidUsuario}.`)
-        }
+        // if ( !docUsuario.exists ) {
+        //     throw new Error(`No existe el usuario con la uid ${uidUsuario}.`)
+        // }
 
         const datosUsuario = docUsuario.data()
 
@@ -230,17 +235,14 @@ class MiembroJekuaa extends Usuario {
 
         Usuario.verificadorDeFormatoParaDB( datosUsuarioDBActualizar )
 
-        if ( Object.keys(datosUsuarioAuthActualizar).length > 0 ) {
-            await admin.auth().updateUser(uidUsuario, datosUsuarioAuthActualizar)
-        }
+        Object.keys(datosUsuarioAuthActualizar).length > 0 ? 
+        await admin.auth().updateUser(uidUsuario, datosUsuarioAuthActualizar) : ''
 
-        if ( Object.keys(datosUsuarioDBActualizar).length > 0 ) {
-            await db.collection(COLECCION_USUARIO).doc(uidUsuario).update(datosUsuarioDBActualizar)
-        }
+        Object.keys(datosUsuarioAuthClaimsActualizar).length > 0 ? 
+        await admin.auth().setCustomUserClaims(uidUsuario, datosUsuarioAuthClaimsActualizar) : ''
 
-        if ( Object.keys(datosUsuarioAuthClaimsActualizar).length > 0 ) {
-            await admin.auth().setCustomUserClaims(uidUsuario, datosUsuarioAuthClaimsActualizar)
-        }
+        Object.keys(datosUsuarioDBActualizar).length > 0 ? 
+        await db.collection(COLECCION_USUARIO).doc(uidUsuario).update(datosUsuarioDBActualizar) : ''
 
         const usuario = new Usuario()
         await usuario.importarDatosUsuarioPorUID(uidUsuario)
@@ -264,7 +266,7 @@ class MiembroJekuaa extends Usuario {
 
     static async verDatosUsuarioPorUID ( uidUsuario ) {
         const usuario = new Usuario()
-        await usuario.importarDatosUsuarioPorUID(uidUsuario)
+        await usuario.importarDatosUsuarioPorUID( uidUsuario )
 
         return usuario.getUsuario()
     }
@@ -276,10 +278,6 @@ class MiembroJekuaa extends Usuario {
     }
 
     static async habilitarUsuarioPorUID ( uidUsuario, habilitar ) {
-
-        if ( typeof habilitar != 'boolean' ) {
-            throw new Error('La opcion de habilitar debe ser boolean.')
-        }
 
         let resultado = await admin.auth().updateUser(uidUsuario, {
             disabled: !habilitar,

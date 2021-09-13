@@ -4,6 +4,14 @@ class Respuesta {
 
     constructor ( respuesta ) {
 
+        if ( !respuesta ) {
+            this.codigo = ''
+            this.mensaje = ''
+            this.resultado = null
+
+            return
+        }
+
         const {
             codigo, mensaje, resultado
         } = respuesta
@@ -16,7 +24,7 @@ class Respuesta {
 
 
 
-
+    
     /*
         SETTERS
     */

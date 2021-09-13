@@ -132,15 +132,15 @@ class JekuaaPremium {
     formatoValido () {
 
         if ( typeof this.plan != 'string' ) {
-            return false
+            throw new TypeError('El plan de jekuaaPremium debe ser de tipo string.', 'JekuaaPremium.js')
         }
 
         if ( typeof this.fechaCompra != 'object' ) {
-            return false
+            throw new TypeError('La fechaCompra de jekuaaPremium debe ser de tipo object.', 'JekuaaPremium.js')
         }
 
         if ( typeof this.fechaHasta != 'object' ) {
-            return false
+            throw new TypeError('La fechaHasta de jekuaaPremium debe ser de tipo object.', 'JekuaaPremium.js')
         }
 
         return true
@@ -150,18 +150,18 @@ class JekuaaPremium {
     cumpleCondiciones () {
         if ( this.plan === '' ) {
             if ( this.fechaCompra != null || this.fechaHasta != null ) {
-                return false
+                throw new TypeError('Una de las fechas tienen valores pero no hay ningún plan.', 'JekuaaPremium.js')
             }
 
             return true
         }
 
         if ( this.fechaCompra == null || this.fechaHasta == null ) {
-            return false
+            throw new TypeError('Existe un plan pero las fechas de compra y fecha hasta no tienen valores.', 'JekuaaPremium.js')
         }
 
         if ( this.fechaCompra.seconds >= this.fechaHasta.seconds ) {
-            return false
+            throw new TypeError('La fecha de compra es mayor o igual a la fecha hasta.', 'JekuaaPremium.js')
         }
 
         return true
@@ -175,7 +175,9 @@ class JekuaaPremium {
         */
 
 
-
+    static tienePlan ( plan ) {
+        return plan != ''
+    }
 
 }
 

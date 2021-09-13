@@ -10,6 +10,12 @@ const informacionCodigos = {
                 mensaje: 'Se ha realizado una mala solicitud.',
                 descripcion: 'Cuando el usuario quiere realizar alguna acción y no tiene el rol con los permisos.'
             },
+            usuario_ya_existe: {
+                codigo: 'jekuaa/error/usuario_ya_existe',
+                status: 400,
+                mensaje: 'Ya existe el usuario.',
+                descripcion: 'Cuando ya existe un usuario.'
+            },
             usuario_no_autenticado: {
                 codigo: 'jekuaa/error/usuario_no_autenticado',
                 status: 401,
@@ -28,17 +34,17 @@ const informacionCodigos = {
                 mensaje: 'No estas autorizado.',
                 descripcion: 'Cuando el usuario quiere realizar alguna acción y no tiene el rol con los permisos.'
             },
+            usuario_token_expirado: {
+                codigo: 'jekuaa/error/usuario_token_expirado',
+                status: 403,
+                mensaje: 'No estas autorizado, el token del usuario expiro, vuelva a cargar.',
+                descripcion: 'Cuando el usuario quiere realizar alguna acción y no tiene el rol con los permisos.'
+            },
             usuario_no_existe: {
                 codigo: 'jekuaa/error/usuario_no_existe',
                 status: 404,
                 mensaje: 'No existe el usuario.',
                 descripcion: 'Cuando se busca un usuario inexistente ocurrira este error.'
-            },
-            usuario_ya_existe: {
-                codigo: 'jekuaa/error/usuario_ya_existe',
-                status: 400,
-                mensaje: 'Ya existe el usuario.',
-                descripcion: 'Cuando ya existe un usuario..'
             },
             sistema: {
                 codigo: 'jekuaa/error/sistema',
