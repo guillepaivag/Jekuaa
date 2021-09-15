@@ -3,9 +3,9 @@ const db = require('../../../db')
 const MiembroJekuaa = require("../../models/TiposUsuarios/MiembroJekuaa")
 const utilsRoles = require('../../utils/usuarios/RolesSecciones')
 const Usuario = require('../../models/Usuario')
-const formatos = require('../../utils/formatos')
+const timestamp = require('../../utils/Timestamp')
 const Respuesta = require('../../models/Respuesta')
-const manejadorErrores = require('../../utils/ManejadorErrores')
+const manejadorErrores = require('../../models/Error/ManejoErrores/ManejadorErrores')
 const ErrorJekuaa = require('../../models/Error/ErroresJekuaa')
 
 const controllerMiembroJekuaa = {}
@@ -113,7 +113,7 @@ controllerMiembroJekuaa.crearUsuario = async (req, res) => {
         }
 
         // Cambiamos el formato del cliente al formato servidor
-        const datosUsuarioParseado = formatos.usuario_milliseconds_a_timestamp( datosUsuario )
+        const datosUsuarioParseado = timestamp.usuario_milliseconds_a_timestamp( datosUsuario )
 
         // Actualizar usuario
         const usuarioNuevo = await MiembroJekuaa.crearNuevoUsuario( datosUsuarioParseado, contrasenha )
@@ -171,7 +171,7 @@ controllerMiembroJekuaa.actualizarUsuarioPorUID = async (req, res) => {
         }
 
         // Cambiamos el formato del cliente al formato servidor
-        const datosActualizadosParseado = formatos.usuario_milliseconds_a_timestamp( datosActualizados )
+        const datosActualizadosParseado = timestamp.usuario_milliseconds_a_timestamp( datosActualizados )
 
         // Actualizar usuario
         const usuarioActualizado = await MiembroJekuaa.actalizarUsuarioPorUID( uid, datosActualizadosParseado )

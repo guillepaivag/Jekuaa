@@ -1,10 +1,17 @@
 <template>
   <div class="">
-    <authEmail
-      action="r"
-      :data="data"
-      v-on:process="registroEmail($event)"
-    />
+    <div class="row">
+      <div class="col-md-8 presentacion">
+
+      </div>
+      <div class="col-md-4">
+        <authEmail
+          action="r"
+          :data="data"  
+          v-on:process="registroEmail($event)"
+        />
+      </div>
+    </div>
   </div>
 </template>
 
@@ -22,7 +29,7 @@ export default {
   data () {
     return {
       data: {
-        title: 'Registro',
+        title: 'Registrarme',
         btnMessage: 'Registrarme'
       }
     }
@@ -77,6 +84,18 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
+
+@media (min-width: 0px) and (max-width: 959px) { 
+  .presentacion {
+    display: none;
+  }
+}
+
+.presentacion {
+  width: 50%;
+  height: 100vh;
+  background-color: #683bce; 
+}
 
 </style>

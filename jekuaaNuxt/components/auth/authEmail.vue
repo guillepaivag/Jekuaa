@@ -1,19 +1,30 @@
 <template>
   <div class="">
-    <v-responsive color="teal" dark height="100px">
-      <v-container fill-height>
-        <v-row row align-center>
-          <v-col text-xs-center>
-            <h3 class="display-1">
-              {{ data.title }}
-            </h3>
-          </v-col>
-        </v-row>
-      </v-container>
-    </v-responsive>
 
-    <v-container>
+    <v-container class="auth text-center">
       <v-responsive>
+        <div class="title">
+          <v-row row align-center>
+            <v-col text-xs-center>
+
+              <v-avatar
+                size="100"
+                tile
+              >
+                <v-img
+                  contain
+                  max-height="60%"
+                  src="https://firebasestorage.googleapis.com/v0/b/jekuaa-py.appspot.com/o/JekuaaLogo.png?alt=media&token=26851757-faff-48da-8e6f-e21f3c2c1e96"
+                />
+              </v-avatar>
+              
+              <h3 class="display-1">
+                {{ data.title }}
+              </h3>
+            </v-col>
+          </v-row>
+        </div>
+
         <v-form id="nativeForm" v-model="valid">
           <v-text-field
             v-if="action === 'r'"
@@ -50,7 +61,7 @@
             type="password"
           />
 
-          <v-btn color="teal" dark :disabled="!valid" @click="submit">
+          <v-btn class="mt-4" color="#683bce" dark :disabled="!valid" @click="submit">
             {{ data.btnMessage }}
           </v-btn>
         </v-form>
@@ -110,5 +121,12 @@ export default {
 </script>
 
 <style>
+.auth {
+  margin-top: 20px;
+  margin-bottom: 35px;
+}
 
+.title {
+  margin-bottom: 20px;
+}
 </style>

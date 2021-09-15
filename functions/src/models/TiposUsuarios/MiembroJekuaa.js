@@ -5,7 +5,8 @@ const Blog = require('../Blog')
 const JekuaaPremium = require('../JekuaaPremium')
 const JekuaaRoles = require('../JekuaaRoles')
 const Instructor = require('./Instructor')
-const formatos = require('../../utils/formatos')
+const formatos = require('../../utils/Timestamp')
+const { verificadorDeFormatoParaDB, construirDatosParaActualizar } = require('../../utils/Usuario')
 
 const COLECCION_USUARIO = 'Usuarios'
 const COLECCION_INSTRUCTOR = 'Instructores'
@@ -163,7 +164,7 @@ class MiembroJekuaa extends Usuario {
 
         const usuarioNuevoJekuaa = new Usuario( datosUsuario ).getUsuario()
 
-        Usuario.verificadorDeFormatoParaDB( usuarioNuevoJekuaa )
+        verificadorDeFormatoParaDB( usuarioNuevoJekuaa )
 
         const usuarioAuthNuevo = await admin.auth().createUser({
             email: usuarioNuevoJekuaa.correo,
@@ -215,15 +216,11 @@ class MiembroJekuaa extends Usuario {
             })
         }
 
-        // await Usuario.errorNoExisteUsuario({
-        //     uid: uidUsuario
-        // })
-
         const docUsuario = await db.collection(COLECCION_USUARIO).doc(uidUsuario).get()
 
-        // if ( !docUsuario.exists ) {
-        //     throw new Error(`No existe el usuario con la uid ${uidUsuario}.`)
-        // }
+        if ( !docUsuario.exists ) {
+            throw new Error(`No existe el usuario con la uid ${uidUsuario}.`)
+        }
 
         const datosUsuario = docUsuario.data()
 
@@ -231,9 +228,9 @@ class MiembroJekuaa extends Usuario {
             datosUsuarioDBActualizar,
             datosUsuarioAuthActualizar,
             datosUsuarioAuthClaimsActualizar
-        } = Usuario.construirDatosParaActualizar (datosActualizados, datosUsuario)
+        } = construirDatosParaActualizar (datosActualizados, datosUsuario)
 
-        Usuario.verificadorDeFormatoParaDB( datosUsuarioDBActualizar )
+        verificadorDeFormatoParaDB( datosUsuarioDBActualizar )
 
         Object.keys(datosUsuarioAuthActualizar).length > 0 ? 
         await admin.auth().updateUser(uidUsuario, datosUsuarioAuthActualizar) : ''

@@ -1,5 +1,7 @@
 const admin = require('./firebase-service')
-const ffUsuarios = require('./funcionesFirebaseFunctions/usuarios')
+const {
+  registrarUsuarioPorCorreoYContrasenha
+} = require('./funcionesFirebaseFunctions/usuarios')
 const functions = require('firebase-functions')
 const cors = require('cors')
 const { Nuxt } = require('nuxt')
@@ -77,7 +79,7 @@ exports.nuxtssr = functions.https.onRequest(appNuxt)
 
 exports.appJekuaa = functions.https.onRequest(appJekuaa)
 
-exports.registrarUsuarioPorCorreoYContrasenha = ffUsuarios.registrarUsuarioPorCorreoYContrasenha
+exports.registrarUsuarioPorCorreoYContrasenha = registrarUsuarioPorCorreoYContrasenha
 
 exports.getUserClaims = functions.https.onCall(async (data, context) => {
 
@@ -92,19 +94,9 @@ exports.getUserClaims = functions.https.onCall(async (data, context) => {
 
     userRecord = await admin.auth().getUser(uid)
     console.log('userRecord.customClaims', userRecord.customClaims)
-    console.log('tipoPremium: ', userRecord.customClaims['tipoPremium']);
+    console.log('jekuaaPremium: ', userRecord.customClaims['jekuaaPremium']);
     console.log('rol: ', userRecord.customClaims['rol']);
     return userRecord.customClaims
-    
-    // admin.auth().getUser(uid)
-    // .then((userRecord) => {
-    //   // The claims can be accessed on the user record.
-    //   console.log('userRecord.customClaims', userRecord.customClaims)
-    //   console.log('premium: ', userRecord.customClaims['premium']);
-    //   console.log('rol: ', userRecord.customClaims['rol']);
-
-    //   return userRecord
-    // });
 
   } else {
     return {

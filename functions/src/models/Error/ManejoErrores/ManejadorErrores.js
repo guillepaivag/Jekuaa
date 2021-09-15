@@ -1,5 +1,5 @@
-const Respuesta = require("../models/Respuesta");
-const ErrorJekuaa = require("../models/Error/ErroresJekuaa");
+const Respuesta = require("../../Respuesta");
+const ErrorJekuaa = require("../ErroresJekuaa");
 const manejadorErroresFirebaseAuth = require("./ManejadorErroresFirebaseAuth");
 
 function manejadorErrores ( error ) {
@@ -9,33 +9,6 @@ function manejadorErrores ( error ) {
 
     // Errores de Jekuaa 
     if ( error instanceof ErrorJekuaa ) {
-        
-        /* 
-         *  jekuaa/error/usuario_mala_solicitud: 
-         *  Cuando el usuario quiere realizar alguna acción y no tiene el rol con los permisos.
-         */
-
-        /* 
-         *  jekuaa/error/usuario_no_autenticado: 
-         *  Cuando el usuario intenta realizar una acción pero no inicio sesión.
-         */
-
-        /* 
-         *  jekuaa/error/usuario_deshabilitado: 
-         *  Cuando el usuario intenta realizar una acción pero se encuentra deshabilitado.
-         */
-
-
-        /* 
-         *  jekuaa/error/usuario_no_autorizado: 
-         *  Cuando el usuario quiere realizar alguna acción y no tiene el rol con los permisos.
-         */
-
-
-        /* 
-         *  jekuaa/error/sistema: 
-         *  Cuando hay un error en el sistema.
-         */
 
         status = error.status
         respuesta.setRespuesta({

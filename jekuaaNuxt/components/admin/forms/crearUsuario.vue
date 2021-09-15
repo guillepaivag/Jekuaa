@@ -4,7 +4,7 @@
 
         <form class="mt-2">
             <v-text-field
-                v-model="nombreUsuario"
+                v-model="datosUsuario.nombreUsuario"
                 :error-messages="nombreUsuarioErrors"
                 :counter="logitudesDeTexto.maxNombreUsuario"
                 label="Nombre de usuario"
@@ -13,7 +13,7 @@
                 @blur="$v.nombreUsuario.$touch()"
             ></v-text-field>
             <v-text-field
-                v-model="correo"
+                v-model="datosUsuario.correo"
                 :error-messages="correoErrors"
                 label="Correo"
                 required
@@ -21,20 +21,41 @@
                 @blur="$v.correo.$touch()"
             ></v-text-field>
             <v-text-field
-                v-model="nombreCompleto"
+                v-model="datosUsuario.nombreCompleto"
                 :error-messages="nombreCompletoErrors"
                 :counter="logitudesDeTexto.maxNombreCompleto"
                 label="Nombre completo"
                 @input="$v.nombreCompleto.$touch()"
                 @blur="$v.nombreCompleto.$touch()"
             ></v-text-field>
+            
+            Fecha de nacimiento:
+            <v-date-picker
+                color="#683bce"
+                class="mt-5"
+                full-width 
+                v-model="datosUsuario.fechaNacimiento"
+                locale="es-es"
+            ></v-date-picker>
 
-            <v-btn class="mr-4" @click="submit">
-                Crear usuario
-            </v-btn>
-            <v-btn @click="clear">
-                Limpiar
-            </v-btn>
+            <v-divider />
+
+            <div class="container">
+                <v-btn 
+                    class="white--text"
+                    color="#683bce"
+                    @click="submit"
+                >
+                    Crear usuario
+                </v-btn>
+                <v-btn
+                    class="white--text"
+                    color="#683bce"
+                    @click="clear"
+                >
+                    Limpiar
+                </v-btn>
+            </div>
         </form>
     </div>
 </template>
@@ -54,23 +75,26 @@ export default {
         correo: { required, email },
         nombreCompleto: { maxLength: maxLength( MAX_NOMBRE_COMPLETO ) }
     },
-
+    
     data: () => ({
-        nombreUsuario: '',
-        correo: '',
-        nombreCompleto: '',
-        fechaNacimiento: '',
-        jekuaaPremium: {
-            plan: '',
-            fechaCompra: '',
-            fechaHasta: '',
+        datosUsuario: {
+            nombreUsuario: '',
+            correo: '',
+            nombreCompleto: '',
+            fechaNacimiento: '',
+            jekuaaPremium: {
+                plan: '',
+                fechaCompra: '',
+                fechaHasta: '',
+            },
+            jekuaaRoles: {
+                rol: '',
+                secciones: [],
+                instructor: false
+            },
+            jekuaaPoint: 0,
         },
-        jekuaaRoles: {
-            rol: '',
-            secciones: [],
-            instructor: false
-        },
-        jekuaaPoint: 0,
+        contrasenha: '',
         logitudesDeTexto: {
             maxNombreUsuario: MAX_NOMBRE_USUARIO,
             maxNombreCompleto: MAX_NOMBRE_COMPLETO
@@ -105,33 +129,40 @@ export default {
             this.$v.$touch()
 
             this.$emit('crearUsuario', {
-
+                datosUsuario,
+                contrasenha
             })
         },
         clear () {
             this.$v.$reset()
             
-            this.nombreUsuario = ''
-            this.correo = ''
-            this.nombreCompleto = ''
-            this.fechaNacimiento = ''
+            this.datosUsuario.nombreUsuario = ''
+            this.datosUsuario.correo = ''
+            this.datosUsuario.nombreCompleto = ''
+            this.datosUsuario.fechaNacimiento = ''
 
-            this.jekuaaPremium = {
+            this.datosUsuario.jekuaaPremium = {
                 plan: '',
                 fechaCompra: '',
                 fechaHasta: '',
             }
 
-            this.jekuaaRoles = {
+            this.datosUsuario.jekuaaRoles = {
                 rol: 'estudiante',
                 secciones: [],
                 instructor: false
             }
 
-            this.jekuaaPoint = 0
+            this.datosUsuario.jekuaaPoint = 0
 
         },
     },
+
+    watch: {
+        fechaNacimiento: function ( nuevo, viejo ) {
+            
+        }
+    }
   }
 </script>
 

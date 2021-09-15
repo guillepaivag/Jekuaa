@@ -1,8 +1,10 @@
 const functions = require('firebase-functions')
+const Respuesta = require('../src/models/Respuesta')
 const Usuario = require('../src/models/Usuario')
+const manejadorErrores = require('../src/models/Error/ManejoErrores/ManejadorErrores')
 const ffUsuarios = {}
 
-ffUsuarios.registrarUsuarioPorCorreoYContrasenha = functions.https.onCall(async (data, context) => {
+ffUsuarios.registrarUsuarioPorCorreoYContrasenha = functions.https.onCall( async (data, context) => {
 
     try {
         if ( context && context.auth && context.auth.token ) {    
@@ -16,7 +18,7 @@ ffUsuarios.registrarUsuarioPorCorreoYContrasenha = functions.https.onCall(async 
             nombreCompleto
         } = data
 
-        const uidUsuario = await Usuario.crearNuevoUsuarioSoloConDatosPersonales({
+        const uidUsuario = await Usuario.crearNuevoUsuarioEstudiante({
             correo: correo,
             nombreUsuario: nombreUsuario,
             nombreCompleto: nombreCompleto,
@@ -28,18 +30,25 @@ ffUsuarios.registrarUsuarioPorCorreoYContrasenha = functions.https.onCall(async 
         usuario.setCorreo(correo)
         usuario.setNombreCompleto(nombreCompleto)
         
-        return {
-            codigo: 'Exito',
-            mensaje: 'Registro de usuario completado con éxito.',
+        const respuesta = new Respuesta()
+        let codigo = 'jekuaa/exito'
+        respuesta.setRespuestaPorCodigo( codigo, {
+            mensaje,
             resultado: usuario
-        }
+        } )
+        const status = respuesta.getStatusCode()
+        
+        return res.status( status ).json( respuesta.getRespuesta() )
 
     } catch (error) {
-        return {
-            codigo: 'Error-Sistema',
-            mensaje: 'Hubo un problema en el registro de un usuario.',
-            resultado: error
-        }
+        
+        const {
+            status,
+            respuesta
+        } = manejadorErrores( error )
+
+        return res.status( status ).json( respuesta )
+
     }
 
 }) 

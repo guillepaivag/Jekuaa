@@ -1,18 +1,13 @@
 <template>
     <div class="container">
         <div class="row mt-3">
-            <div class="col-md-7">
-                <div class="">
-                    <crearUsuario 
-                        v-on:crearUsuario="crearUsuario($event)"
-                    />
-                </div>
-            </div>
+
             <div class="col-md-5">
 
                 <div class="mt-3">
-                    <v-btn 
-                        color="success" 
+                    <v-btn
+                        class="mt-4 white--text"
+                        color="#683bce" 
                         block
                         to="/miembro-jekuaa/usuarios/lista-usuarios"
                     >
@@ -20,8 +15,8 @@
                     </v-btn>
 
                     <v-btn
-                        class="mt-4"
-                        color="success" 
+                        class="mt-4 white--text"
+                        color="#683bce" 
                         block
                         to="/miembro-jekuaa/instructores/lista-instructores"
                     >
@@ -30,6 +25,15 @@
                 </div>
                 
             </div>
+
+            <div class="col-md-7">
+                <div class="">
+                    <crearUsuario 
+                        v-on:crearUsuario="crearUsuario($event)"
+                    />
+                </div>
+            </div>
+            
         </div>
     </div>
 </template>

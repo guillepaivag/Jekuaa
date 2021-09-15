@@ -1,5 +1,5 @@
-const ErrorJekuaa = require("../models/Error/ErroresJekuaa")
-const Respuesta = require("../models/Respuesta")
+const ErrorJekuaa = require("../ErroresJekuaa")
+const Respuesta = require("../../Respuesta")
 
 const manejadorErroresFirebaseAuth = ( error ) => {
 
@@ -77,6 +77,7 @@ const manejadorErroresFirebaseAuth = ( error ) => {
             mensaje: 'No es válido el correo.',
             resultado: error
         })
+
     } else if ( igualCodigo( code, 'auth/email-already-exists' ) ) {
         /* 
          * Cuando se quiere realizar una acción como
@@ -94,6 +95,7 @@ const manejadorErroresFirebaseAuth = ( error ) => {
             mensaje: 'Ya existe el usuario.',
             resultado: error
         })
+
     } else if ( igualCodigo( code, 'auth/invalid-email-verified' ) ) {
         /* 
          * Para insertar un valor de email verificado
@@ -110,6 +112,7 @@ const manejadorErroresFirebaseAuth = ( error ) => {
             mensaje: 'El correo verificado debe de ser boolean.',
             resultado: error
         })
+
     } else if ( igualCodigo( code, 'auth/invalid-display-name' ) ) {
         /* 
          * Si el nombre de usuario es invalido, o sea
@@ -125,6 +128,7 @@ const manejadorErroresFirebaseAuth = ( error ) => {
             mensaje: 'El nombre de usuario debe de ser de tipo string.',
             resultado: error
         })
+
     } else if ( igualCodigo( code, 'auth/invalid-claims' ) ) {
         
     } else if ( igualCodigo( code, 'auth/claims-too-large' ) ) {
@@ -202,6 +206,7 @@ const manejadorErroresFirebaseAuth = ( error ) => {
             mensaje: errorJekuaa.mensaje,
             resultado: error
         })
+
     } else if ( igualCodigo( code, 'auth/id-token-revoked' ) ) {
         
     } else if ( igualCodigo( code, 'auth/invalid-credential' ) ) {
@@ -254,6 +259,7 @@ const manejadorErroresFirebaseAuth = ( error ) => {
             mensaje: errorJekuaa.mensaje,
             resultado: error
         })
+
     } else {
         const errorJekuaa = new ErrorJekuaa({
             codigo: 'jekuaa/error/sistema'
@@ -265,6 +271,7 @@ const manejadorErroresFirebaseAuth = ( error ) => {
             mensaje: errorJekuaa.mensaje,
             resultado: error
         })
+        
     }
 
     return {
