@@ -2,7 +2,7 @@
     <div class="container">
         <div class="row mt-3">
 
-            <div class="col-md-5">
+            <div class="col-md-3">
 
                 <div class="mt-3">
                     <v-btn
@@ -26,7 +26,7 @@
                 
             </div>
 
-            <div class="col-md-7">
+            <div class="col-md-9">
                 <div class="">
                     <crearUsuario 
                         v-on:crearUsuario="crearUsuario($event)"

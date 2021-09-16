@@ -7,6 +7,7 @@ const JekuaaRoles = require('../JekuaaRoles')
 const Instructor = require('./Instructor')
 const formatos = require('../../utils/Timestamp')
 const { verificadorDeFormatoParaDB, construirDatosParaActualizar } = require('../../utils/Usuario')
+const ErrorJekuaa = require('../Error/ErroresJekuaa')
 
 const COLECCION_USUARIO = 'Usuarios'
 const COLECCION_INSTRUCTOR = 'Instructores'
@@ -219,7 +220,10 @@ class MiembroJekuaa extends Usuario {
         const docUsuario = await db.collection(COLECCION_USUARIO).doc(uidUsuario).get()
 
         if ( !docUsuario.exists ) {
-            throw new Error(`No existe el usuario con la uid ${uidUsuario}.`)
+            throw new ErrorJekuaa({
+                codigo: 'jekuaa/error/usuario_no_existe',
+                mensaje: `No existe el usuario con la uid ${uidUsuario}.`
+            })
         }
 
         const datosUsuario = docUsuario.data()
@@ -228,9 +232,7 @@ class MiembroJekuaa extends Usuario {
             datosUsuarioDBActualizar,
             datosUsuarioAuthActualizar,
             datosUsuarioAuthClaimsActualizar
-        } = construirDatosParaActualizar (datosActualizados, datosUsuario)
-
-        verificadorDeFormatoParaDB( datosUsuarioDBActualizar )
+        } = construirDatosParaActualizarYVerificarFormatoParaDB (datosActualizados, datosUsuario)
 
         Object.keys(datosUsuarioAuthActualizar).length > 0 ? 
         await admin.auth().updateUser(uidUsuario, datosUsuarioAuthActualizar) : ''
@@ -281,6 +283,12 @@ class MiembroJekuaa extends Usuario {
         })
 
         return resultado
+    }
+
+    static async eliminarUsuarioPorUID ( uidUsuario ) {
+
+        
+
     }
 }
 

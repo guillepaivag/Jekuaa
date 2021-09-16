@@ -20,6 +20,7 @@ let store = {};
   store.modules = store.modules || {}
 
   resolveStoreModules(require('..\\..\\jekuaaNuxt\\store\\modules\\system.js'), 'modules/system.js')
+  resolveStoreModules(require('..\\..\\jekuaaNuxt\\store\\modules\\general\\RolesSecciones.js'), 'modules/general/RolesSecciones.js')
   resolveStoreModules(require('..\\..\\jekuaaNuxt\\store\\modules\\user\\intereses.js'), 'modules/user/intereses.js')
   resolveStoreModules(require('..\\..\\jekuaaNuxt\\store\\modules\\user\\misCursos.js'), 'modules/user/misCursos.js')
   resolveStoreModules(require('..\\..\\jekuaaNuxt\\store\\modules\\user\\seguimientos.js'), 'modules/user/seguimientos.js')
@@ -34,6 +35,7 @@ let store = {};
     module.hot.accept([
       '..\\..\\jekuaaNuxt\\store\\index.js',
       '..\\..\\jekuaaNuxt\\store\\modules\\system.js',
+      '..\\..\\jekuaaNuxt\\store\\modules\\general\\RolesSecciones.js',
       '..\\..\\jekuaaNuxt\\store\\modules\\user\\intereses.js',
       '..\\..\\jekuaaNuxt\\store\\modules\\user\\misCursos.js',
       '..\\..\\jekuaaNuxt\\store\\modules\\user\\seguimientos.js',

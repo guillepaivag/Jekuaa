@@ -204,4 +204,20 @@ funciones.verificadorDeFormatoParaDB = ( datosUsuario ) => {
     }
 }
 
+funciones.construirDatosParaActualizarYVerificarFormatoParaDB = ( datosNuevos, datosViejos ) => {
+    const {
+        datosUsuarioDBActualizar,
+        datosUsuarioAuthActualizar,
+        datosUsuarioAuthClaimsActualizar
+    } = funciones.construirDatosParaActualizar( datosNuevos, datosViejos )
+
+    funciones.verificadorDeFormatoParaDB( datosUsuarioDBActualizar )
+
+    return {
+        datosUsuarioDBActualizar,
+        datosUsuarioAuthActualizar,
+        datosUsuarioAuthClaimsActualizar
+    }
+}
+
 module.exports = funciones
