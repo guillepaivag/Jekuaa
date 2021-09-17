@@ -28,7 +28,7 @@
 
             <div class="col-md-9">
                 <div class="">
-                    <crearUsuario 
+                    <formularioUsuario 
                         v-on:crearUsuario="crearUsuario($event)"
                     />
                 </div>
@@ -39,22 +39,63 @@
 </template>
 
 <script>
-import crearUsuario from '@/components/admin/forms/crearUsuario'
+import formularioUsuario from '@/components/admin/forms/formularioUsuario'
 
 export default {
     name: '',
     middleware: 'esMiembroJekuaa',
     components: {
-        crearUsuario
+        formularioUsuario
     },
     data() {
         return {
-            
+            usuarioNuevo: {
+                nombreUsuario: '',
+                correo: '',
+                nombreCompleto: '',
+                fechaNacimiento: '',
+                jekuaaPremium: {
+                    plan: '',
+                    fechaCompra: '',
+                    fechaHasta: '',
+                },
+                jekuaaRoles: {
+                    rol: 'estudiante',
+                    secciones: [],
+                    instructor: false
+                },
+                jekuaaPoint: 0,
+            },
         }
     },
     methods: {
-        async crearUsuario( datosUsuario ) {
-            alert(JSON.stringify(datosUsuario))
+        async crearUsuario( data ) {
+            const {
+                datosUsuario,
+                contrasenha
+            } = data
+
+            console.log('datosUsuario', datosUsuario)
+
+            let token = this.$firebase.auth().currentUser
+
+            if( !token ){
+                return
+            }
+
+            token = await token.getIdToken()
+
+            const auth = `Bearer ${token}`
+
+            const usuarioNuevo = await this.$axios.$post(`/miembroJekuaa/crearUsuario`, {
+                auth,
+                datosUsuario,
+                contrasenha
+            })
+
+            this.usuarioNuevo = usuarioNuevo.resultado
+
+            console.log('usuarioNuevo', usuarioNuevo)
         }
     },
 }

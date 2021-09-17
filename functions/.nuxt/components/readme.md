@@ -21,6 +21,6 @@ You can directly use them in pages and other components without the need to impo
 - `<InicioAtajos>` | `<inicio-atajos>` (components/inicio/atajos.vue)
 - `<InicioPresentacion>` | `<inicio-presentacion>` (components/inicio/presentacion.vue)
 - `<InicioSubpresentacion>` | `<inicio-subpresentacion>` (components/inicio/subpresentacion.vue)
-- `<AdminFormsCrearUsuario>` | `<admin-forms-crear-usuario>` (components/admin/forms/crearUsuario.vue)
+- `<AdminFormsFormularioUsuario>` | `<admin-forms-formulario-usuario>` (components/admin/forms/formularioUsuario.vue)
 - `<FilterAdminUser>` | `<filter-admin-user>` (components/filter/admin/User.vue)
 - `<ListsAdminUser>` | `<lists-admin-user>` (components/lists/admin/User.vue)

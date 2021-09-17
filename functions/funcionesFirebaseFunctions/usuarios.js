@@ -7,6 +7,7 @@ const ffUsuarios = {}
 ffUsuarios.registrarUsuarioPorCorreoYContrasenha = functions.https.onCall( async (data, context) => {
 
     try {
+
         if ( context && context.auth && context.auth.token ) {    
             return
         }
@@ -33,21 +34,30 @@ ffUsuarios.registrarUsuarioPorCorreoYContrasenha = functions.https.onCall( async
         const respuesta = new Respuesta()
         let codigo = 'jekuaa/exito'
         respuesta.setRespuestaPorCodigo( codigo, {
-            mensaje,
+            mensaje: 'Se a creado el usuario de forma correcta.',
             resultado: usuario
         } )
-        const status = respuesta.getStatusCode()
+
+        console.log('respuesta', respuesta)
         
-        return res.status( status ).json( respuesta.getRespuesta() )
+        return {
+            status: respuesta.getStatusCode(),
+            respuesta: respuesta.getRespuesta()
+        }
 
     } catch (error) {
-        
+
+        console.log('error', error)
+
         const {
             status,
             respuesta
         } = manejadorErrores( error )
 
-        return res.status( status ).json( respuesta )
+        return {
+            status,
+            respuesta
+        }
 
     }
 

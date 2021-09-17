@@ -44,8 +44,8 @@
   "InicioSubpresentacion": {
     "description": "Auto imported from components/inicio/subpresentacion.vue"
   },
-  "AdminFormsCrearUsuario": {
-    "description": "Auto imported from components/admin/forms/crearUsuario.vue"
+  "AdminFormsFormularioUsuario": {
+    "description": "Auto imported from components/admin/forms/formularioUsuario.vue"
   },
   "FilterAdminUser": {
     "description": "Auto imported from components/filter/admin/User.vue"

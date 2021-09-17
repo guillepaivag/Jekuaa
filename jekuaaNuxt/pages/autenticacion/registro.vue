@@ -51,18 +51,11 @@ export default {
         })
         console.log('datosRegistroUsuario', datosRegistroUsuario)
 
-        if (!datosRegistroUsuario) {
-          // Vista de error
-
-          return
-        }
-
         // INICIO DE SESION DEL USUARIO
         const userCredential = await this.firebaseInicioSesionUser_EmailAndPassword({
           correo: usuario.correo,
           contrasenha: usuario.contrasenha
         })
-        console.log('userCredential', userCredential)
 
         this.$router.push(`/bienvenido-a-jekuaa/${datosRegistroUsuario.nombreUsuario}`)
 

@@ -1,7 +1,5 @@
 const admin = require('./firebase-service')
-const {
-  registrarUsuarioPorCorreoYContrasenha
-} = require('./funcionesFirebaseFunctions/usuarios')
+const cloudFunctions = require('./funcionesFirebaseFunctions/usuarios')
 const functions = require('firebase-functions')
 const cors = require('cors')
 const { Nuxt } = require('nuxt')
@@ -79,7 +77,7 @@ exports.nuxtssr = functions.https.onRequest(appNuxt)
 
 exports.appJekuaa = functions.https.onRequest(appJekuaa)
 
-exports.registrarUsuarioPorCorreoYContrasenha = registrarUsuarioPorCorreoYContrasenha
+exports.registrarUsuarioPorCorreoYContrasenha = cloudFunctions.registrarUsuarioPorCorreoYContrasenha
 
 exports.getUserClaims = functions.https.onCall(async (data, context) => {
 

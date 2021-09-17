@@ -13,7 +13,7 @@ export { default as AuthEmail } from '../..\\..\\jekuaaNuxt\\components\\auth\\a
 export { default as InicioAtajos } from '../..\\..\\jekuaaNuxt\\components\\inicio\\atajos.vue'
 export { default as InicioPresentacion } from '../..\\..\\jekuaaNuxt\\components\\inicio\\presentacion.vue'
 export { default as InicioSubpresentacion } from '../..\\..\\jekuaaNuxt\\components\\inicio\\subpresentacion.vue'
-export { default as AdminFormsCrearUsuario } from '../..\\..\\jekuaaNuxt\\components\\admin\\forms\\crearUsuario.vue'
+export { default as AdminFormsFormularioUsuario } from '../..\\..\\jekuaaNuxt\\components\\admin\\forms\\formularioUsuario.vue'
 export { default as FilterAdminUser } from '../..\\..\\jekuaaNuxt\\components\\filter\\admin\\User.vue'
 export { default as ListsAdminUser } from '../..\\..\\jekuaaNuxt\\components\\lists\\admin\\User.vue'
 

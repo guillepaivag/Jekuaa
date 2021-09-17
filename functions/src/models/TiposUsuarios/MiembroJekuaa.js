@@ -163,7 +163,7 @@ class MiembroJekuaa extends Usuario {
             nombreUsuario
         })
 
-        const usuarioNuevoJekuaa = new Usuario( datosUsuario ).getUsuario()
+        const usuarioNuevoJekuaa = new Usuario().setUsuario( datosUsuario ).getUsuarioJSON()
 
         verificadorDeFormatoParaDB( usuarioNuevoJekuaa )
 

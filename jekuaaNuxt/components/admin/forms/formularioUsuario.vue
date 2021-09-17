@@ -7,13 +7,14 @@
             class="mt-5"
             v-model="step"
             vertical
-        >
+        > 
             <div
                 v-for="(item, index) in infoTextoFormulario" :key="index"
             >
                 <v-stepper-step
+                    :rules="[() => !item.error]"
                     v-on:click="step = item.paso"
-                    :complete="step > item.paso"
+                    :complete="!item.requerido || (!item.error && item.existe)"
                     :step="item.paso"
                 >
                     {{ item.titulo }}
@@ -24,14 +25,14 @@
                     <!-- Nombre de usuario -->
                     <v-text-field
                         v-if="item.paso === 1"
-                        class="mb-5"
                         v-model="datosUsuario.nombreUsuario"
                         :error-messages="nombreUsuarioErrors"
-                        :counter="logitudesDeTexto.maxNombreUsuario"
+                        :counter="logitudesDeTexto.nombreUsuario.max"
+                        :min="logitudesDeTexto.nombreUsuario.min"
                         label="Nombre de usuario"
                         required
-                        @input="$v.nombreUsuario.$touch()"
-                        @blur="$v.nombreUsuario.$touch()"
+                        @input="$v.datosUsuario.nombreUsuario.$touch()"
+                        @blur="$v.datosUsuario.nombreUsuario.$touch()"
                     ></v-text-field>
 
                     <!-- Correo -->
@@ -41,8 +42,8 @@
                         :error-messages="correoErrors"
                         label="Correo"
                         required
-                        @input="$v.correo.$touch()"
-                        @blur="$v.correo.$touch()"
+                        @input="$v.datosUsuario.correo.$touch()"
+                        @blur="$v.datosUsuario.correo.$touch()"
                     ></v-text-field>
 
                     <!-- Nombre completo -->
@@ -50,10 +51,10 @@
                         v-if="item.paso === 3"
                         v-model="datosUsuario.nombreCompleto"
                         :error-messages="nombreCompletoErrors"
-                        :counter="logitudesDeTexto.maxNombreCompleto"
+                        :counter="logitudesDeTexto.nombreCompleto.max"
                         label="Nombre completo"
-                        @input="$v.nombreCompleto.$touch()"
-                        @blur="$v.nombreCompleto.$touch()"
+                        @input="$v.datosUsuario.nombreCompleto.$touch()"
+                        @blur="$v.datosUsuario.nombreCompleto.$touch()"
                     ></v-text-field>
 
                     <!-- Fecha de nacimiento -->
@@ -98,7 +99,13 @@
                                     cols="12"
                                     md="5"
                                 >
-                                    {{ datosUsuario.jekuaaPremium.fechaCompra }} - {{ datosUsuario.jekuaaPremium.fechaHasta }}
+                                    {{ horaFechaPremium }}
+                                    <v-time-picker
+                                        v-model="horaFechaPremium"
+                                        format="24hr"
+                                        full-width
+                                        use-seconds
+                                    ></v-time-picker>
                                 </v-col>
 
                             </v-row>
@@ -172,22 +179,23 @@
                         v-if="item.paso === 7"
                         v-model="datosUsuario.jekuaaPoint"
                         :error-messages="nombreCompletoErrors"
-                        :counter="logitudesDeTexto.maxNombreCompleto"
+                        :counter="logitudesDeTexto.nombreCompleto.max"
                         label="Jekuaa Points"
                         type="number"
-                        @input="$v.nombreCompleto.$touch()"
-                        @blur="$v.nombreCompleto.$touch()"
+                        @input="$v.datosUsuario.nombreCompleto.$touch()"
+                        @blur="$v.datosUsuario.nombreCompleto.$touch()"
                     ></v-text-field>
 
-                    <!-- Nombre completo -->
+                    <!-- Contraseña -->
                     <v-text-field
                         v-if="item.paso === 8"
                         v-model="contrasenha"
-                        :error-messages="nombreCompletoErrors"
-                        :counter="logitudesDeTexto.maxNombreCompleto"
+                        :error-messages="contrasenhaErrors"
+                        :counter="logitudesDeTexto.contrasenha.max"
+                        :min="logitudesDeTexto.contrasenha.min"
                         label="Contraseña"
-                        @input="$v.nombreCompleto.$touch()"
-                        @blur="$v.nombreCompleto.$touch()"
+                        @input="$v.contrasenha.$touch()"
+                        @blur="$v.contrasenha.$touch()"
                     ></v-text-field>
 
                     <v-btn color="primary" @click="next">
@@ -206,18 +214,34 @@
 
 <script>
 import { validationMixin } from 'vuelidate'
-import { required, maxLength, email } from 'vuelidate/lib/validators'
+import { required, minLength, maxLength, email, numeric } from 'vuelidate/lib/validators'
 
-const MAX_NOMBRE_USUARIO = 10
-const MAX_NOMBRE_COMPLETO = 55
+const logitudesDeTexto = {
+    nombreUsuario: {
+        max: 10,
+        min: 4
+    },
+    nombreCompleto: {
+        max: 50,
+        min: 0
+    },
+    contrasenha: {
+        max: 20,
+        min: 6
+    }
+}
 
 export default {
     mixins: [validationMixin],
 
     validations: {
-        nombreUsuario: { required, maxLength: maxLength( MAX_NOMBRE_USUARIO ) },
-        correo: { required, email },
-        nombreCompleto: { maxLength: maxLength( MAX_NOMBRE_COMPLETO ) }
+        datosUsuario: {
+            nombreUsuario: { required, minLength: minLength( logitudesDeTexto.nombreUsuario.min ), maxLength: maxLength( logitudesDeTexto.nombreUsuario.max ) },
+            correo: { required, email },
+            nombreCompleto: { maxLength: maxLength( logitudesDeTexto.nombreCompleto.max ) },
+            jekuaaPoint: { numeric },
+        },
+        contrasenha: { required, minLength: minLength( logitudesDeTexto.contrasenha.min ), maxLength: maxLength( logitudesDeTexto.contrasenha.max ) }
     },
     
     data: () => ({
@@ -232,17 +256,14 @@ export default {
                 fechaHasta: '',
             },
             jekuaaRoles: {
-                rol: '',
+                rol: 'estudiante',
                 secciones: [],
                 instructor: false
             },
             jekuaaPoint: 0,
         },
         contrasenha: '',
-        logitudesDeTexto: {
-            maxNombreUsuario: MAX_NOMBRE_USUARIO,
-            maxNombreCompleto: MAX_NOMBRE_COMPLETO
-        },
+        logitudesDeTexto,
         planSeleccionado: { text: 'Elegir un plan', value: '' },
         planes: [
           { text: 'Elegir un plan', value: '' },
@@ -250,6 +271,7 @@ export default {
           { text: 'Avanzado', value: 'avanzado' },
         ],
         rangoFechaPremium: [],
+        horaFechaPremium: '',
         rolSeleccionado: { text: 'Estudiante', value: 'estudiante' },
         roles: [
           { text: 'Estudiante', value: 'estudiante' },
@@ -262,42 +284,56 @@ export default {
             {
                 paso: 1,
                 titulo: 'Nombre de usuario',
-                descripcion: 'Identificador del usuario', 
+                descripcion: 'Identificador del usuario',
+                error: false,
+                existe: false,
+                requerido: true
             },
             {
                 paso: 2,
                 titulo: 'Correo',
-                descripcion: 'Identificador del usuario', 
+                descripcion: 'Identificador del usuario',
+                error: false,
+                existe: false,
+                requerido: true
             },
             {
                 paso: 3,
                 titulo: 'Nombre completo',
-                descripcion: null, 
+                descripcion: null,
+                error: false,
             },
             {
                 paso: 4,
                 titulo: 'Fecha de nacimiento',
-                descripcion: null, 
+                descripcion: null,
+                error: false,
             },
             {
                 paso: 5,
                 titulo: 'Datos Jekuaa Premium',
-                descripcion: null, 
+                descripcion: null,
+                error: false,
             },
             {
                 paso: 6,
                 titulo: 'Datos Jekuaa Roles',
-                descripcion: null, 
+                descripcion: null,
+                error: false,
             },
             {
                 paso: 7,
                 titulo: 'Datos Jekuaa Points',
-                descripcion: null, 
+                descripcion: null,
+                error: false,
             },
             {
                 paso: 8,
                 titulo: 'Contraseña del usuario',
-                descripcion: null, 
+                descripcion: null,
+                error: false,
+                existe: false,
+                requerido: true
             }
         ]
     }),
@@ -305,23 +341,63 @@ export default {
     computed: {
         nombreUsuarioErrors () {
             const errors = []
-            if (!this.$v.nombreUsuario.$dirty) return errors
-            !this.$v.nombreUsuario.maxLength && errors.push('El nombre de usuario es muy largo.')
-            !this.$v.nombreUsuario.required && errors.push('Nombre de usuario es necesario.')
+            
+            if (this.$v.datosUsuario.nombreUsuario.$dirty) {
+                !this.$v.datosUsuario.nombreUsuario.minLength && errors.push('El nombre de usuario es muy corto.')
+                !this.$v.datosUsuario.nombreUsuario.maxLength && errors.push('El nombre de usuario es muy largo.')
+                !this.$v.datosUsuario.nombreUsuario.required && errors.push('Nombre de usuario es necesario.')
+            }
+            
+            this.infoTextoFormulario[0].error = !!errors.length
             return errors
+
         },
         correoErrors () {
             const errors = []
-            if (!this.$v.correo.$dirty) return errors
-            !this.$v.correo.email && errors.push('El correo debe de ser valido.')
-            !this.$v.correo.required && errors.push('Correo del usuario es necesaio.')
+            
+            if (this.$v.datosUsuario.correo.$dirty) {
+                !this.$v.datosUsuario.correo.email && errors.push('El correo debe de ser valido.')
+                !this.$v.datosUsuario.correo.required && errors.push('Correo del usuario es necesaio.')
+            }
+            
+            this.infoTextoFormulario[1].error = !!errors.length
             return errors
+
         },
         nombreCompletoErrors () {
             const errors = []
-            if (!this.$v.nombreCompleto.$dirty) return errors
-            !this.$v.nombreCompleto.maxLength && errors.push('El nombre de usuario es muy largo.')
+            
+            if (this.$v.datosUsuario.nombreCompleto.$dirty) {
+                !this.$v.datosUsuario.nombreCompleto.maxLength && errors.push('El nombre de usuario es muy largo.')
+            }
+            
+            this.infoTextoFormulario[2].error = !!errors.length
             return errors
+
+        },
+        jekuaaPointsErrors () {
+            const errors = []
+            
+            if (this.$v.datosUsuario.jekuaaPoint.$dirty) {
+                !this.$v.datosUsuario.jekuaaPoint.numeric && errors.push('Debe ser numerico.')
+            }
+            
+            this.infoTextoFormulario[6].error = !!errors.length
+            return errors
+
+        },
+        contrasenhaErrors () {
+            const errors = []
+            
+            if (this.$v.contrasenha.$dirty) {
+                !this.$v.contrasenha.minLength && errors.push('La contraseña es muy corta.')
+                !this.$v.contrasenha.maxLength && errors.push('La contraseña es muy larga.')
+                !this.$v.contrasenha.required && errors.push('La contraseña es requerida.')
+            }
+            
+            this.infoTextoFormulario[7].error = !!errors.length
+            return errors
+
         },
     },
 
@@ -329,9 +405,40 @@ export default {
         submit () {
             this.$v.$touch()
 
+            const noPermitido = this.infoTextoFormulario.find( x => {
+                return x.error || ( x.requerido && !x.existe )
+            })
+
+            if (noPermitido) {
+                // No se puede llamar al evento "crearUsuario"
+                alert("No se puede llamar al evento \"crearUsuario\".")
+                return
+            }
+
+            const datosUsuario = JSON.parse( JSON.stringify( this.datosUsuario ) )
+
+            // Nombre completo
+            datosUsuario.nombreCompleto = datosUsuario.nombreCompleto ?
+            datosUsuario.nombreCompleto : ''
+
+            // Fecha de nacimiento
+            datosUsuario.fechaNacimiento = datosUsuario.fechaNacimiento ? 
+            new Date(`${datosUsuario.fechaNacimiento}T05:00:00.000Z`).getTime() : null
+
+            // Jekuaa Premium
+            datosUsuario.jekuaaPremium.fechaCompra = datosUsuario.jekuaaPremium.plan ? 
+            new Date(`${datosUsuario.jekuaaPremium.fechaCompra}T${this.horaFechaPremium}`).getTime() : null
+
+            datosUsuario.jekuaaPremium.fechaHasta = datosUsuario.jekuaaPremium.plan ? 
+            new Date(`${datosUsuario.jekuaaPremium.fechaHasta}T${this.horaFechaPremium}`).getTime() : null
+
+            // Jekuaa Points
+            datosUsuario.jekuaaPoint = datosUsuario.jekuaaPoint ?
+            Number(datosUsuario.jekuaaPoint) : 0
+
             this.$emit('crearUsuario', {
                 datosUsuario,
-                contrasenha
+                contrasenha: this.contrasenha
             })
         },
         clear () {
@@ -414,6 +521,11 @@ export default {
             return datosRol.esMiembroJekuaa
         },
         next() {
+            if ( this.step === 8 ) {
+                this.submit()
+                return
+            }
+            
             this.step++
         }
     },
@@ -455,6 +567,15 @@ export default {
                 }
             }
 
+        },
+        'datosUsuario.nombreUsuario': function ( nuevo, vuejo ) {
+            this.infoTextoFormulario[0].existe = !!nuevo
+        },
+        'datosUsuario.correo': function ( nuevo, vuejo ) {
+            this.infoTextoFormulario[1].existe = !!nuevo
+        },
+        'contrasenha': function ( nuevo, vuejo ) {
+            this.infoTextoFormulario[7].existe = !!nuevo
         }
     },
 

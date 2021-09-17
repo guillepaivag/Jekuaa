@@ -380,10 +380,11 @@ export const actions = {
       nombreUsuario: usuario.nombreUsuario,
       nombreCompleto: usuario.nombreCompleto
     })
+
     console.log('datosRegistroUsuario', datosRegistroUsuario)
 
     // Retornar datos de registro del usuario
-    return datosRegistroUsuario.data.resultado
+    return datosRegistroUsuario.data.respuesta.resultado
   },
 
   async firebaseInicioSesionUser_EmailAndPassword ({ dispatch, state }, usuario) {

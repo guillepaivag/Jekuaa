@@ -41,10 +41,25 @@ class Usuario {
             correo: this.correo, 
             nombreCompleto: this.nombreCompleto,
             fechaNacimiento: this.fechaNacimiento,
+            jekuaaPremium: this.jekuaaPremium,
+            jekuaaRoles: this.jekuaaRoles,
+            jekuaaPoint: this.jekuaaPoint
+        }
+    }
+
+    getUsuarioJSON () {
+        let usuarioJSON = JSON.parse( JSON.stringify({
+            uid: this.uid,
+            nombreUsuario: this.nombreUsuario,
+            correo: this.correo, 
+            nombreCompleto: this.nombreCompleto,
+            fechaNacimiento: this.fechaNacimiento,
             jekuaaPremium: this.jekuaaPremium.getDatosPremium(),
             jekuaaRoles: this.jekuaaRoles.getDatosRoles(),
             jekuaaPoint: this.jekuaaPoint
-        }
+        }) )
+
+        return usuarioJSON
     }
 
     getUID () {
@@ -101,6 +116,8 @@ class Usuario {
         this.setJekuaaPremium(jekuaaPremium)
         this.setJekuaaRoles(jekuaaRoles)
         this.setJekuaaPoints(jekuaaPoint)
+
+        return this
     }
 
     setUID ( uid = '' ) {
@@ -110,6 +127,8 @@ class Usuario {
         }
 
         this.uid = ''
+
+        return this
     }
 
     setNombreUsuario ( nombreUsuario = '' ) {
@@ -119,6 +138,8 @@ class Usuario {
         }
 
         this.nombreUsuario = ''
+
+        return this
     }
 
     setCorreo ( correo = '' ) {
@@ -128,6 +149,8 @@ class Usuario {
         }
 
         this.correo = ''
+
+        return this
     }
 
     setNombreCompleto ( nombreCompleto = '' ) {
@@ -137,6 +160,8 @@ class Usuario {
         }
 
         this.nombreCompleto = ''
+
+        return this
     }
 
     setFechaNacimiento ( fechaNacimiento = null ) {
@@ -146,6 +171,8 @@ class Usuario {
         }
 
         this.fechaNacimiento = null
+
+        return this
     }
 
     setJekuaaPremium ( jekuaaPremium = null ) {
@@ -161,6 +188,8 @@ class Usuario {
         }
 
         this.jekuaaPremium = new JekuaaPremium()
+
+        return this
     }
 
     setJekuaaRoles ( jekuaaRoles = null ) {
@@ -176,6 +205,8 @@ class Usuario {
         }
 
         this.jekuaaRoles = new JekuaaRoles()
+
+        return this
     }
 
     setJekuaaPoints ( jekuaaPoint = 0 ) {
@@ -185,6 +216,8 @@ class Usuario {
         }
 
         this.jekuaaPoint = 0
+
+        return this
     }
 
 
@@ -325,10 +358,14 @@ class Usuario {
         if ( fechaNacimiento && ( typeof fechaNacimiento != 'object' ) ) {
             throw new Error('La fecha de nacimiento debe ser de tipo object (Date).')
         }
+
+        console.log('1')
         
         await Usuario.errorExisteUsuario({
             nombreUsuario
         })
+
+        console.log('2')
 
         const usuarioAuthNuevo = await admin.auth().createUser({
             email: correo,
@@ -336,24 +373,21 @@ class Usuario {
             displayName: nombreUsuario,
         })
 
-        const datosUsuario = {
-            uid: usuarioAuthNuevo.uid,
-            nombreUsuario: nombreUsuario,
-            correo: correo,
-            nombreCompleto: nombreCompleto ? nombreCompleto : '',
-            fechaNacimiento: fechaNacimiento ? admin.firestore.Timestamp.fromMillis( fechaNacimiento ) : null,
-            jekuaaPremium: new JekuaaPremium().getDatosPremium(),
-            jekuaaRoles: new JekuaaRoles().getDatosRoles(),
-            jekuaaPoint: 0
-        }
-        
-        const informacionDeDatosUsuario = {
+        console.log('3')
+
+        let datosUsuario = new Usuario()
+        datosUsuario.setUsuario( datosNuevoUsuario )
+        datosUsuario.setUID( usuarioAuthNuevo.uid )
+        datosUsuario = datosUsuario.getUsuarioJSON()
+        console.log('datosUsuario', datosUsuario)
+
+        await admin.firestore().collection(COLECCION_USUARIO).doc(usuarioAuthNuevo.uid).set(datosUsuario)
+        await admin.auth().setCustomUserClaims(usuarioAuthNuevo.uid, {
             rol: 'estudiante',
             jekuaaPremium: false
-        }
+        })
 
-        await admin.firestore().collection(COLECCION_USUARIO).doc(usuarioAuthNuevo.uid).set( datosUsuario )
-        await admin.auth().setCustomUserClaims(usuarioAuthNuevo.uid, informacionDeDatosUsuario)
+        console.log('usuarioAuthNuevo.uid', usuarioAuthNuevo.uid)
 
         return usuarioAuthNuevo.uid
 
