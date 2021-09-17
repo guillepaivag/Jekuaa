@@ -39,7 +39,7 @@ middlewaresMiembroJekuaa.esMiembroJekuaa = async (req, res, next) => {
 
         const { uidSolicitante, datosAuthSolicitante } = req.jekuaaDatos
         
-        if ( datosAuthSolicitante.customClaims.rol === 'estudiante' ) {
+        if ( !utilsRoles.esMiembroJekuaa( datosAuthSolicitante.customClaims.rol ) ) {
             // No autorizado
             throw new ErrorJekuaa({
                 codigo: 'jekuaa/error/usuario_no_autorizado'

@@ -8,8 +8,19 @@ ffUsuarios.registrarUsuarioPorCorreoYContrasenha = functions.https.onCall( async
 
     try {
 
+        const respuesta = new Respuesta()
+        let codigo = 'jekuaa/exito'
+
         if ( context && context.auth && context.auth.token ) {    
-            return
+            respuesta.setRespuestaPorCodigo('usuario_no_autorizado', {
+                mensaje: 'No puedes registrarte, cierra sesión primeramente.',
+                resultado: null
+            })
+            
+            return {
+                status: 403,
+                respuesta: respuesta.getRespuesta()
+            }
         }
     
         const {
@@ -31,12 +42,10 @@ ffUsuarios.registrarUsuarioPorCorreoYContrasenha = functions.https.onCall( async
         usuario.setCorreo(correo)
         usuario.setNombreCompleto(nombreCompleto)
         
-        const respuesta = new Respuesta()
-        let codigo = 'jekuaa/exito'
-        respuesta.setRespuestaPorCodigo( codigo, {
+        respuesta.setRespuestaPorCodigo(codigo, {
             mensaje: 'Se a creado el usuario de forma correcta.',
             resultado: usuario
-        } )
+        })
 
         console.log('respuesta', respuesta)
         

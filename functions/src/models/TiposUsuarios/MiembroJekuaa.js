@@ -138,27 +138,6 @@ class MiembroJekuaa extends Usuario {
             jekuaaPoint
         } = datosUsuario
 
-        if ( !Object.keys( datosUsuario ).length ) {
-            throw new ErrorJekuaa({
-                codigo: 'jekuaa/error/usuario_mala_solicitud',
-                mensaje: 'No hay datos para crear un usuario.'
-            })
-        }
-
-        if ( !nombreUsuario ) {
-            throw new ErrorJekuaa({
-                codigo: 'jekuaa/error/usuario_mala_solicitud',
-                mensaje: 'No existe el nombre de usuario para crear un usuario.'
-            })
-        }
-
-        if ( !contrasenha ) {
-            throw new ErrorJekuaa({
-                codigo: 'jekuaa/error/usuario_mala_solicitud',
-                mensaje: 'No existe una contraseña para crear un usuario.'
-            })
-        }
-
         await Usuario.errorExisteUsuario({
             nombreUsuario
         })

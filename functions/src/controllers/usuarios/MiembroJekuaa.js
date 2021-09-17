@@ -100,20 +100,44 @@ controllerMiembroJekuaa.crearUsuario = async (req, res) => {
         const { uidSolicitante, datosAuthSolicitante } = jekuaaDatos
         const { datosUsuario, contrasenha } = body
 
-        // El solicitante no puede actualizar (crear) un nuevo propietario si no es propietario
-        let noPuedeCrearPropietario = datosAuthSolicitante.customClaims.rol != 'propietario' && 
-        datosUsuario && datosUsuario.jekuaaRoles && datosUsuario.jekuaaRoles.rol &&
-        datosUsuario.jekuaaRoles.rol === 'propietario'
+        // El solicitante no puede crear un usuario con mayor rol que el de el mismo
+        if ( datosUsuario && datosUsuario.jekuaaRoles && datosUsuario.jekuaaRoles.rol ) {
+            let diferenciaDeNivelDeRol = utilsRoles.compararNivelRol( datosAuthSolicitante.customClaims.rol, 
+                datosUsuario.jekuaaRoles.rol )
         
-        if ( noPuedeCrearPropietario ) {
-            //No autorizado
-            throw new ErrorJekuaa({
-                codigo: 'jekuaa/error/usuario_no_autorizado'
-            })
+            if ( diferenciaDeNivelDeRol < 0 ) {
+                //No autorizado
+                throw new ErrorJekuaa({
+                    codigo: 'jekuaa/error/usuario_no_autorizado',
+                    mensaje: 'No puedes crear un usuario con mayor rol que el tuyo.'
+                })
+            }
         }
 
         // Cambiamos el formato del cliente al formato servidor
         const datosUsuarioParseado = timestamp.usuario_milliseconds_a_timestamp( datosUsuario )
+
+        // Verificamos que existan datos y los datos importantes
+        if ( !Object.keys( datosUsuarioParseado ).length ) {
+            throw new ErrorJekuaa({
+                codigo: 'jekuaa/error/usuario_mala_solicitud',
+                mensaje: 'No hay datos para crear un usuario.'
+            })
+        }
+
+        if ( !datosUsuarioParseado.nombreUsuario ) {
+            throw new ErrorJekuaa({
+                codigo: 'jekuaa/error/usuario_mala_solicitud',
+                mensaje: 'No existe el nombre de usuario para crear un usuario.'
+            })
+        }
+
+        if ( !contrasenha ) {
+            throw new ErrorJekuaa({
+                codigo: 'jekuaa/error/usuario_mala_solicitud',
+                mensaje: 'No existe una contraseña para crear un usuario.'
+            })
+        }
 
         // Actualizar usuario
         const usuarioNuevo = await MiembroJekuaa.crearNuevoUsuario( datosUsuarioParseado, contrasenha )
@@ -121,10 +145,10 @@ controllerMiembroJekuaa.crearUsuario = async (req, res) => {
         const respuesta = new Respuesta()
         let codigo = 'jekuaa/exito'
 
-        respuesta.setRespuestaPorCodigo( codigo, {
+        respuesta.setRespuestaPorCodigo(codigo, {
             mensaje: 'El usuario se creo de forma exitosa!',
             resultado: usuarioNuevo
-        } )
+        })
         const status = respuesta.getStatusCode()
         
         return res.status( status ).json( respuesta.getRespuesta() )
@@ -153,21 +177,22 @@ controllerMiembroJekuaa.actualizarUsuarioPorUID = async (req, res) => {
         const respuesta = new Respuesta()
         let codigo = 'jekuaa/exito'
 
-        // El solicitante no puede actualizar (crear) un nuevo propietario si no es propietario
-        if ( datosAuthSolicitante.customClaims.rol != 'propietario' && 
-            datosActualizados && datosActualizados.jekuaaRoles && datosActualizados.jekuaaRoles.rol &&
-            datosActualizados.jekuaaRoles.rol === 'propietario') {
-            
-            //No autorizado
-            codigo = 'jekuaa/error/usuario_no_autorizado'
+        // El solicitante no puede actualizar un usuario si su rul es menor de lo que el quiere poner
+        if ( datosActualizados && datosActualizados.jekuaaRoles && datosActualizados.jekuaaRoles.rol ) {
+            let diferenciaDeNivelDeRol = utilsRoles.compararNivelRol( datosAuthSolicitante.customClaims.rol, 
+                datosActualizados.jekuaaRoles.rol )
 
-            respuesta.setRespuestaPorCodigo( codigo, {
-                mensaje: 'No tienes permiso para agregar un nuevo propietario.',
-            } )
-            const status = respuesta.getStatusCode()
-            
-            return res.status( status ).json( respuesta.getRespuesta() )
+            if ( diferenciaDeNivelDeRol < 0 ) {
+                //No autorizado
+                codigo = 'jekuaa/error/usuario_no_autorizado'
 
+                respuesta.setRespuestaPorCodigo( codigo, {
+                    mensaje: 'No tienes permiso para actualizar a un usuario un rol mayor al tuyo.',
+                } )
+                const status = respuesta.getStatusCode()
+                
+                return res.status( status ).json( respuesta.getRespuesta() )
+            }
         }
 
         // Cambiamos el formato del cliente al formato servidor

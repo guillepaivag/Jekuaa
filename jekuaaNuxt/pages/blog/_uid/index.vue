@@ -27,20 +27,19 @@ export default {
         }
     },
     async created() {
-        const uidBlog = this.$route.params.uid
-        const documentBlog = await this.$firebase.firestore().collection('Blog').doc(uidBlog).get()
+        // const uidBlog = this.$route.params.uid
+        // const documentBlog = await this.$firebase.firestore().collection('Blog').doc(uidBlog).get()
 
-        if ( !documentBlog.exists ) {
-            this.$router.push('/blog')
-        }
+        // if ( !documentBlog.exists ) {
+        //     this.$router.push('/blog')
+        // }
 
-        const blog = documentBlog.data()
+        // const blog = documentBlog.data()
 
-        if ( !blog.habilitado ) {
-            this.$router.push('/blog')
-        }
+        // if ( !blog.habilitado ) {
+        //     this.$router.push('/blog')
+        // }
         
-
     },
     async asyncData({ $content, params }) {
         const uidBlog = params.uid

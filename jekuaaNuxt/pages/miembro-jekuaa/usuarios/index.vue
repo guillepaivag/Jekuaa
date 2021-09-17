@@ -40,6 +40,7 @@
 
 <script>
 import formularioUsuario from '@/components/admin/forms/formularioUsuario'
+import { mapMutations, mapGetters } from 'vuex'
 
 export default {
     name: '',
@@ -75,29 +76,38 @@ export default {
                 contrasenha
             } = data
 
-            console.log('datosUsuario', datosUsuario)
+            try {
+                let token = this.$firebase.auth().currentUser
 
-            let token = this.$firebase.auth().currentUser
+                if( !token ){
+                    return
+                }
 
-            if( !token ){
-                return
+                token = await token.getIdToken()
+
+                const auth = `Bearer ${token}`
+
+                const usuarioNuevo = await this.$axios.$post(`/miembroJekuaa/crearUsuario`, {
+                    auth,
+                    datosUsuario,
+                    contrasenha
+                })
+
+                this.usuarioNuevo = usuarioNuevo.resultado
+
+            } catch (error) {
+                console.log('error', error)
+                console.log('error', error.codigo)
+                console.log('error', error.mensaje)
+                console.log('error', error.resultado)
+
+                this.setError(error)
             }
-
-            token = await token.getIdToken()
-
-            const auth = `Bearer ${token}`
-
-            const usuarioNuevo = await this.$axios.$post(`/miembroJekuaa/crearUsuario`, {
-                auth,
-                datosUsuario,
-                contrasenha
-            })
-
-            this.usuarioNuevo = usuarioNuevo.resultado
-
-            console.log('usuarioNuevo', usuarioNuevo)
         }
     },
+    computed: {
+        ...mapMutations('modules/system', ['setError'])
+    }
 }
 </script>
 

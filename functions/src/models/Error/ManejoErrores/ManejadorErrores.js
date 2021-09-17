@@ -30,7 +30,7 @@ function manejadorErrores ( error ) {
     }
 
     // Errores comunes
-    if ( error instanceof TypeError) {
+    if ( error instanceof TypeError ) {
         // sentencias para manejar excepciones TypeError
         const errorJekuaa = new ErrorJekuaa({
             codigo: 'jekuaa/error/usuario_mala_solicitud'
@@ -43,12 +43,16 @@ function manejadorErrores ( error ) {
             resultado: error
         })
 
-    } else if ( error instanceof RangeError) {
+    } else if ( error instanceof RangeError ) {
         // sentencias para manejar excepciones RangeError
     
-    } else if ( error instanceof EvalError) {
+    } else if ( error instanceof EvalError ) {
         // sentencias para manejar excepciones EvalError
     
+    }
+
+    if ( !respuesta.codigo ) {
+        respuesta.setRespuestaPorCodigo('jekuaa/error/sistema')
     }
 
     return {

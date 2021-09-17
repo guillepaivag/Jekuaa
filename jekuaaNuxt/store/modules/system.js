@@ -1,5 +1,4 @@
 export const state = {
-  adminTeamSeccion: ['admin', 'subAdmin', 'creadorContenido'],
   loading: false,
   error: {
     existe: false,
@@ -10,10 +9,6 @@ export const state = {
 }
 
 export const getters = {
-
-  getAdminTeamSECCION (state) {
-    return state.adminTeamSeccion
-  },
 
   getLoading (state) {
     return state.loading

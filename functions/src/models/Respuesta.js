@@ -86,12 +86,7 @@ class Respuesta {
         ACCIONES
     */
 
-    setRespuestaPorCodigo ( codigo, datosPersonalizados ) {
-        
-        const {
-            mensaje,
-            resultado
-        } = datosPersonalizados
+    setRespuestaPorCodigo ( codigo, {mensaje, resultado} ) {
 
         let rutasCodigo = codigo.split('/')
 

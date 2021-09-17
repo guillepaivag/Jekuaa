@@ -44,7 +44,7 @@ middlewaresUser.estaAutenticado = (req, res, next) => {
 
 // FUNCIONES
 getAuthToken = (req, res, next) => {
-    const {auth} = req.body 
+    const { auth } = req.body 
 
     req.jekuaaDatos = req.jekuaaDatos ? req.jekuaaDatos : {}
     
