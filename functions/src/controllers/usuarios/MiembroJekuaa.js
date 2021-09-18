@@ -242,9 +242,9 @@ controllerMiembroJekuaa.habilitarUsuarioPorUID = async (req, res) => {
             let habilitadoText = habilitar ? 'habilitado' : 'deshabilitado'
             
             codigo = 'jekuaa/error/usuario_mala_solicitud'
-            respuesta.setRespuestaPorCodigo( codigo, {
+            respuesta.setRespuestaPorCodigo(codigo, {
                 mensaje: `No puedes ${habilitarText} si ya esta ${habilitadoText}.`,
-            } )
+            })
             const status = respuesta.getStatusCode()
             
             return res.status( status ).json( respuesta.getRespuesta() )

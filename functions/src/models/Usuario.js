@@ -239,7 +239,8 @@ class Usuario {
 
         if ( !documentoUsuario.exists ) {
             throw new ErrorJekuaa({
-                codigo: 'jekuaa/error/usuario_no_existe'
+                codigo: 'jekuaa/error/usuario_mala_solicitud',
+                mensaje: 'No existe el usuario.',
             })
         }
 
@@ -358,14 +359,10 @@ class Usuario {
         if ( fechaNacimiento && ( typeof fechaNacimiento != 'object' ) ) {
             throw new Error('La fecha de nacimiento debe ser de tipo object (Date).')
         }
-
-        console.log('1')
         
         await Usuario.errorExisteUsuario({
             nombreUsuario
         })
-
-        console.log('2')
 
         const usuarioAuthNuevo = await admin.auth().createUser({
             email: correo,
@@ -373,21 +370,16 @@ class Usuario {
             displayName: nombreUsuario,
         })
 
-        console.log('3')
-
         let datosUsuario = new Usuario()
         datosUsuario.setUsuario( datosNuevoUsuario )
         datosUsuario.setUID( usuarioAuthNuevo.uid )
         datosUsuario = datosUsuario.getUsuarioJSON()
-        console.log('datosUsuario', datosUsuario)
 
         await admin.firestore().collection(COLECCION_USUARIO).doc(usuarioAuthNuevo.uid).set(datosUsuario)
         await admin.auth().setCustomUserClaims(usuarioAuthNuevo.uid, {
             rol: 'estudiante',
             jekuaaPremium: false
         })
-
-        console.log('usuarioAuthNuevo.uid', usuarioAuthNuevo.uid)
 
         return usuarioAuthNuevo.uid
 
@@ -418,7 +410,8 @@ class Usuario {
 
                 if ( usuario ) {
                     throw new ErrorJekuaa({
-                        codigo: 'jekuaa/error/usuario_ya_existe'
+                        codigo: 'jekuaa/error/usuario_mala_solicitud',
+                        mensaje: 'Ya existe el usuario.'
                     })
                 }
 
@@ -433,7 +426,8 @@ class Usuario {
 
             if ( existe ) {
                 throw new ErrorJekuaa({
-                    codigo: 'jekuaa/error/usuario_ya_existe'
+                    codigo: 'jekuaa/error/usuario_mala_solicitud',
+                    mensaje: 'Ya existe el usuario.'
                 })
             }
         }
@@ -446,7 +440,8 @@ class Usuario {
 
                 if ( usuario ) {
                     throw new ErrorJekuaa({
-                        codigo: 'jekuaa/error/usuario_ya_existe'
+                        codigo: 'jekuaa/error/usuario_mala_solicitud',
+                        mensaje: 'Ya existe el usuario.'
                     })
                 }
             

@@ -20,9 +20,9 @@ class JekuaaRoles {
             instructor
         } = datosRoles
 
-        this.rol = rol
-        this.secciones = secciones
-        this.instructor = instructor
+        this.rol = rol ? rol : 'estudiante'
+        this.secciones = secciones ? secciones : []
+        this.instructor = instructor ? instructor : false
 
     }
 

@@ -26,7 +26,6 @@ let store = {};
   resolveStoreModules(require('..\\..\\jekuaaNuxt\\store\\modules\\user\\seguimientos.js'), 'modules/user/seguimientos.js')
   resolveStoreModules(require('..\\..\\jekuaaNuxt\\store\\modules\\user\\user.js'), 'modules/user/user.js')
   resolveStoreModules(require('..\\..\\jekuaaNuxt\\store\\modules\\user\\userInstructor.js'), 'modules/user/userInstructor.js')
-  resolveStoreModules(require('..\\..\\jekuaaNuxt\\store\\modules\\user\\userJekuaaTeam.js'), 'modules/user/userJekuaaTeam.js')
 
   // If the environment supports hot reloading...
 
@@ -41,7 +40,6 @@ let store = {};
       '..\\..\\jekuaaNuxt\\store\\modules\\user\\seguimientos.js',
       '..\\..\\jekuaaNuxt\\store\\modules\\user\\user.js',
       '..\\..\\jekuaaNuxt\\store\\modules\\user\\userInstructor.js',
-      '..\\..\\jekuaaNuxt\\store\\modules\\user\\userJekuaaTeam.js',
     ], () => {
       // Update `root.modules` with the latest definitions.
       updateModules()

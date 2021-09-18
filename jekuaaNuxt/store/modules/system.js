@@ -1,10 +1,9 @@
 export const state = {
   loading: false,
   error: {
-    existe: false,
-    titulo: '',
+    codigo: '',
     mensaje: '',
-    error: null
+    resultado: null
   }
 }
 
@@ -15,6 +14,9 @@ export const getters = {
   },
   getError (state) {
     return state.error
+  },
+  existeError ( state ) {
+    return state.error.codigo != ''
   }
 
 }
@@ -27,6 +29,20 @@ export const actions = {
   setError (state, error) {
     console.log('[STORE ACTIONS] - setError:', error)
     commit('setError', error)
+  },
+  errorHandler ( { dispatch, commit }, responseError ) {
+
+    console.log('responseError', responseError)
+    commit('setError', responseError)
+
+    if ( responseError.codigo.includes('usuario_no_autorizado') || responseError.codigo.includes('sistema') ) {
+      return 'redireccion-error'
+    } else if ( responseError.codigo.includes('usuario_no_autenticado') ) {
+      return 'redireccion-login'
+    } else if ( responseError.codigo.includes('usuario_mala_solicitud') ) {
+      return ''
+    }
+
   }
 }
 
@@ -38,5 +54,7 @@ export const mutations = {
   setError (state, error) {
     console.log('[STORE MUTATIONS] - setError:', error)
     state.error = error
+
+    return error
   }
 }

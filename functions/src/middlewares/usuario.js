@@ -21,7 +21,8 @@ middlewaresUser.estaAutenticado = (req, res, next) => {
             if ( datosAuthSolicitante.disabled ) {
 
                 throw new ErroresJekuaa({
-                    codigo: 'jekuaa/error/usuario_deshabilitado'
+                    codigo: 'jekuaa/error/usuario_no_autorizado',
+                    mensaje: 'No estas autorizado, el usuario esta deshabilitado.',
                 })
 
             }

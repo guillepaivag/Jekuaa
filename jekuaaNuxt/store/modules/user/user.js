@@ -187,12 +187,6 @@ export const actions = {
         return;
       }
 
-      // if (!realTime) {
-      //   await dispatch('modules/user/userJekuaaTeam/setDatosUsuarioJekuaaTeamPorUID', uid, { root: true })
-      // } else {
-      //   await dispatch('modules/user/userJekuaaTeam/setDatosUsuarioJekuaaTeamPorUID_RealTime', uid, { root: true })
-      // }
-      
     } else {
       commit('setJekuaaRoles', null)
     }

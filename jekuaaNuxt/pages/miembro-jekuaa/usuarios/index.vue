@@ -1,5 +1,6 @@
 <template>
     <div class="container">
+
         <div class="row mt-3">
 
             <div class="col-md-3">
@@ -40,7 +41,7 @@
 
 <script>
 import formularioUsuario from '@/components/admin/forms/formularioUsuario'
-import { mapMutations, mapGetters } from 'vuex'
+import { mapActions, mapGetters } from 'vuex'
 
 export default {
     name: '',
@@ -70,6 +71,9 @@ export default {
         }
     },
     methods: {
+        ...mapActions({
+            errorHandler: 'modules/system/errorHandler',
+        }),
         async crearUsuario( data ) {
             const {
                 datosUsuario,
@@ -79,11 +83,7 @@ export default {
             try {
                 let token = this.$firebase.auth().currentUser
 
-                if( !token ){
-                    return
-                }
-
-                token = await token.getIdToken()
+                token = token ? await token.getIdToken() : ''
 
                 const auth = `Bearer ${token}`
 
@@ -96,17 +96,24 @@ export default {
                 this.usuarioNuevo = usuarioNuevo.resultado
 
             } catch (error) {
-                console.log('error', error)
-                console.log('error', error.codigo)
-                console.log('error', error.mensaje)
-                console.log('error', error.resultado)
+                const accion = await this.errorHandler( error.response.data )
 
-                this.setError(error)
+                if ( accion.includes('error') ) {
+                    this.$nuxt.error({
+                        statusCode: error.response.status
+                    })
+                } else if ( accion.includes('login') ) {
+                    this.$router.push('/autenticacion/inicioSesion')
+                }
+
             }
         }
     },
     computed: {
-        ...mapMutations('modules/system', ['setError'])
+        
+    },
+    mounted() {
+        console.log('this.$nuxt', this.$nuxt)
     }
 }
 </script>

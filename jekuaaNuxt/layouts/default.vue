@@ -41,7 +41,7 @@ export default {
     }
   },
   computed: {
-    ...mapGetters('modules/user/system', [
+    ...mapGetters('modules/system', [
       'getLoading',
     ]),
     ...mapGetters('modules/user/user', [

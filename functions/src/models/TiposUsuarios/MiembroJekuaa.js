@@ -6,7 +6,11 @@ const JekuaaPremium = require('../JekuaaPremium')
 const JekuaaRoles = require('../JekuaaRoles')
 const Instructor = require('./Instructor')
 const formatos = require('../../utils/Timestamp')
-const { verificadorDeFormatoParaDB, construirDatosParaActualizar } = require('../../utils/Usuario')
+const { 
+    verificadorDeFormatoParaDB,
+    construirDatosParaActualizar,
+    construirDatosParaActualizarYVerificarFormatoParaDB
+} = require('../../utils/Usuario')
 const ErrorJekuaa = require('../Error/ErroresJekuaa')
 
 const COLECCION_USUARIO = 'Usuarios'
@@ -200,7 +204,7 @@ class MiembroJekuaa extends Usuario {
 
         if ( !docUsuario.exists ) {
             throw new ErrorJekuaa({
-                codigo: 'jekuaa/error/usuario_no_existe',
+                codigo: 'jekuaa/error/usuario_mala_solicitud',
                 mensaje: `No existe el usuario con la uid ${uidUsuario}.`
             })
         }

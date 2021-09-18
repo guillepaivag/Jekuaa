@@ -1,5 +1,7 @@
 <template>
   <v-app dark>
+    {{ error.statusCode }}
+
     <h1 v-if="error.statusCode === 404">
       {{ pageNotFound }}
     </h1>
@@ -13,6 +15,8 @@
 </template>
 
 <script>
+import { mapGetters } from 'vuex'
+
 export default {
   layout: 'empty',
   props: {
@@ -23,16 +27,43 @@ export default {
   },
   data () {
     return {
-      pageNotFound: '404 Not Found',
-      otherError: 'An error occurred'
+      pageNotFound: '404 No se encontró la página.',
+      otherError: 'Ha ocurrido un error'
+    }
+  },
+  methods: {
+    handleError() {
+      console.log('this.getError', this.getError)
+      
+      if ( this.getError.codigo === '' ) {
+        return
+      }
+      
+      const codigoError = this.getError.codigo
+      this.otherError = this.getError.mensaje
+
+      if ( codigoError === 'jekuaa/error/usuario_no_autenticado' ) {
+        
+      } else if ( codigoError === 'jekuaa/error/usuario_deshabilitado' ) {
+        
+      } else if ( codigoError === 'jekuaa/error/usuario_no_autorizado' ) {
+        
+      } else if ( codigoError === 'jekuaa/error/sistema' ) {
+        
+      }
+
     }
   },
   head () {
     const title = this.error.statusCode === 404 ? this.pageNotFound : this.otherError
-    return {
-      title
-    }
-  }
+    return { title }
+  },
+  computed: {
+    ...mapGetters('modules/system', ['getError']),
+  },
+  created() {
+    this.handleError()
+  },
 }
 </script>
 

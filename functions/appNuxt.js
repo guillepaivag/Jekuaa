@@ -10,10 +10,10 @@ const nuxt = new Nuxt({
 let isReady = false
 const readyPromise = nuxt.ready()
 .then(() => {
-    isReady = true
+  isReady = true
 })
 .catch(() => {
-    process.exit(1)
+  process.exit(1)
 })
 
 async function handleRequest(req, res) {

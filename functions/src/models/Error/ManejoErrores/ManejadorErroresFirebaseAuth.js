@@ -36,7 +36,8 @@ const manejadorErroresFirebaseAuth = ( error ) => {
          * existente.
          */
         const errorJekuaa = new ErrorJekuaa({
-            codigo: 'jekuaa/error/usuario_ya_existe'
+            codigo: 'jekuaa/error/usuario_mala_solicitud',
+            mensaje: 'Ya existe el usuario.'
         })
 
         status = errorJekuaa.status
@@ -68,7 +69,7 @@ const manejadorErroresFirebaseAuth = ( error ) => {
          * correo no es valida, retornar error.
          */
         const errorJekuaa = new ErrorJekuaa({
-            codigo: 'jekuaa/error/usuario_mala_solicitud'
+            codigo: 'jekuaa/error/usuario_mala_solicitud',
         })
 
         status = errorJekuaa.status
@@ -86,7 +87,8 @@ const manejadorErroresFirebaseAuth = ( error ) => {
          * existente.
          */
         const errorJekuaa = new ErrorJekuaa({
-            codigo: 'jekuaa/error/usuario_ya_existe'
+            codigo: 'jekuaa/error/usuario_mala_solicitud',
+            mensaje: 'Ya existe el usuario.'
         })
 
         status = errorJekuaa.status
@@ -197,7 +199,8 @@ const manejadorErroresFirebaseAuth = ( error ) => {
          * error.
          */
         const errorJekuaa = new ErrorJekuaa({
-            codigo: 'jekuaa/error/usuario_token_expirado'
+            codigo: 'jekuaa/error/usuario_no_autorizado',
+            mensaje: 'El token del usuario expiro, vuelva a cargar.'
         })
 
         status = errorJekuaa.status
@@ -250,7 +253,8 @@ const manejadorErroresFirebaseAuth = ( error ) => {
          */
 
         const errorJekuaa = new ErrorJekuaa({
-            codigo: 'jekuaa/error/usuario_no_existe'
+            codigo: 'jekuaa/error/usuario_mala_solicitud',
+            mensaje: 'No existe el usuario'
         })
 
         status = errorJekuaa.status

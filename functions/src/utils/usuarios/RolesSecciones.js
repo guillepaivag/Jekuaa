@@ -1,5 +1,3 @@
-const JekuaaRoles = require("../../models/JekuaaRoles")
-
 const utilsRolesSecciones = {}
 
 const datosRoles = require('../../InformacionEstatica/DatosRoles')

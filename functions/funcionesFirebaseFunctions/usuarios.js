@@ -11,7 +11,7 @@ ffUsuarios.registrarUsuarioPorCorreoYContrasenha = functions.https.onCall( async
         const respuesta = new Respuesta()
         let codigo = 'jekuaa/exito'
 
-        if ( context && context.auth && context.auth.token ) {    
+        if ( context && context.auth && context.auth.token ) {
             respuesta.setRespuestaPorCodigo('usuario_no_autorizado', {
                 mensaje: 'No puedes registrarte, cierra sesión primeramente.',
                 resultado: null
@@ -46,8 +46,6 @@ ffUsuarios.registrarUsuarioPorCorreoYContrasenha = functions.https.onCall( async
             mensaje: 'Se a creado el usuario de forma correcta.',
             resultado: usuario
         })
-
-        console.log('respuesta', respuesta)
         
         return {
             status: respuesta.getStatusCode(),

@@ -1,5 +1,6 @@
 <template>
     <div>
+        hola
         <nav>
             <ul>
                 <li v-for="link of article.toc" :key="link.id">
@@ -23,10 +24,12 @@ export default {
     name: '',
     data() {
         return {
-            
+            hola: 'hola'
         }
     },
     async created() {
+        this.hola = 'siuu'
+
         // const uidBlog = this.$route.params.uid
         // const documentBlog = await this.$firebase.firestore().collection('Blog').doc(uidBlog).get()
 
