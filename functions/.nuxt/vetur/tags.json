@@ -14,11 +14,17 @@
   "NavigationUser": {
     "description": "Auto imported from components/NavigationUser.vue"
   },
+  "NotFound": {
+    "description": "Auto imported from components/notFound.vue"
+  },
   "VideoPlayer": {
     "description": "Auto imported from components/VideoPlayer.vue"
   },
   "VuetifyLogo": {
     "description": "Auto imported from components/VuetifyLogo.vue"
+  },
+  "AuthEmail": {
+    "description": "Auto imported from components/auth/authEmail.vue"
   },
   "AdminBuscadorUsuarios": {
     "description": "Auto imported from components/admin/buscadorUsuarios.vue"
@@ -32,9 +38,6 @@
   "AdminListaUsuarios": {
     "description": "Auto imported from components/admin/listaUsuarios.vue"
   },
-  "AuthEmail": {
-    "description": "Auto imported from components/auth/authEmail.vue"
-  },
   "InicioAtajos": {
     "description": "Auto imported from components/inicio/atajos.vue"
   },
@@ -44,11 +47,11 @@
   "InicioSubpresentacion": {
     "description": "Auto imported from components/inicio/subpresentacion.vue"
   },
-  "AdminFormsFormularioUsuario": {
-    "description": "Auto imported from components/admin/forms/formularioUsuario.vue"
-  },
   "FilterAdminUser": {
     "description": "Auto imported from components/filter/admin/User.vue"
+  },
+  "AdminFormsFormularioUsuario": {
+    "description": "Auto imported from components/admin/forms/formularioUsuario.vue"
   },
   "ListsAdminUser": {
     "description": "Auto imported from components/lists/admin/User.vue"

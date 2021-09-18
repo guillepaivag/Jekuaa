@@ -1,24 +1,23 @@
 <template>
-  <v-app dark>
-    {{ error.statusCode }}
-
+  <div dark>
     <h1 v-if="error.statusCode === 404">
-      {{ pageNotFound }}
+      <notFound :error="error" />
     </h1>
     <h1 v-else>
       {{ otherError }}
     </h1>
-    <NuxtLink to="/">
-      Home page
-    </NuxtLink>
-  </v-app>
+  </div>
 </template>
 
 <script>
+import notFound from '@/components/notFound'
 import { mapGetters } from 'vuex'
 
 export default {
   layout: 'empty',
+  components: {
+    notFound
+  },
   props: {
     error: {
       type: Object,
@@ -32,37 +31,16 @@ export default {
     }
   },
   methods: {
-    handleError() {
-      console.log('this.getError', this.getError)
-      
-      if ( this.getError.codigo === '' ) {
-        return
-      }
-      
-      const codigoError = this.getError.codigo
-      this.otherError = this.getError.mensaje
-
-      if ( codigoError === 'jekuaa/error/usuario_no_autenticado' ) {
-        
-      } else if ( codigoError === 'jekuaa/error/usuario_deshabilitado' ) {
-        
-      } else if ( codigoError === 'jekuaa/error/usuario_no_autorizado' ) {
-        
-      } else if ( codigoError === 'jekuaa/error/sistema' ) {
-        
-      }
-
-    }
   },
   head () {
-    const title = this.error.statusCode === 404 ? this.pageNotFound : this.otherError
+    const title = this.error.statusCode === 404 ? '404 - No se encontró la página' : this.otherError
     return { title }
   },
   computed: {
     ...mapGetters('modules/system', ['getError']),
   },
   created() {
-    this.handleError()
+    
   },
 }
 </script>
