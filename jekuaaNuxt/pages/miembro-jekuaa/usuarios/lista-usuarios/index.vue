@@ -39,7 +39,7 @@ export default {
       },
       usuarios: [],
       ultimoDocumento: null,
-      MAXIMO_USUARIOS: 1,
+      MAXIMO_USUARIOS: 10,
       existeMasDatos: false
     }
   },

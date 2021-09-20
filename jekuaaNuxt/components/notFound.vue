@@ -4,7 +4,6 @@
             <div class="row text-center presentacion">
                 <div class="col-md-6">
                     <h1 class="notFoundNumber">404</h1>
-                    <!-- <img class="imgNotFound" :src="src" alt=""> -->
                 </div>
                 <div class="col-md-6">
                     <div class="mensaje_posicion">

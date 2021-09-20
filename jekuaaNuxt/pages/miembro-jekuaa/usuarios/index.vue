@@ -29,7 +29,8 @@
 
             <div class="col-md-9">
                 <div class="">
-                    <formularioUsuario 
+                    <formularioUsuario
+                        accionModo="crear"
                         v-on:crearUsuario="crearUsuario($event)"
                     />
                 </div>

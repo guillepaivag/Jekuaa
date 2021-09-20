@@ -172,34 +172,42 @@ controllerMiembroJekuaa.actualizarUsuarioPorUID = async (req, res) => {
         const { jekuaaDatos, params, body } = req
         const { uidSolicitante, datosAuthSolicitante } = jekuaaDatos
         const { uid } = params
-        const { datosActualizados } = body
+        const { datosActualizados, contrasenha } = body
 
         const respuesta = new Respuesta()
         let codigo = 'jekuaa/exito'
+        let usuarioActualizado = {}
 
-        // El solicitante no puede actualizar un usuario si su rul es menor de lo que el quiere poner
-        if ( datosActualizados && datosActualizados.jekuaaRoles && datosActualizados.jekuaaRoles.rol ) {
-            let diferenciaDeNivelDeRol = utilsRoles.compararNivelRol( datosAuthSolicitante.customClaims.rol, 
-                datosActualizados.jekuaaRoles.rol )
+        if ( Object.keys(datosActualizados).length ) {
+            // El solicitante no puede actualizar un usuario si su rul es menor de lo que el quiere poner
+            if ( datosActualizados && datosActualizados.jekuaaRoles && datosActualizados.jekuaaRoles.rol ) {
+                let diferenciaDeNivelDeRol = utilsRoles.compararNivelRol( datosAuthSolicitante.customClaims.rol, 
+                    datosActualizados.jekuaaRoles.rol )
 
-            if ( diferenciaDeNivelDeRol < 0 ) {
-                //No autorizado
-                codigo = 'jekuaa/error/usuario_no_autorizado'
+                if ( diferenciaDeNivelDeRol < 0 ) {
+                    //No autorizado
+                    codigo = 'jekuaa/error/usuario_no_autorizado'
 
-                respuesta.setRespuestaPorCodigo( codigo, {
-                    mensaje: 'No tienes permiso para actualizar a un usuario un rol mayor al tuyo.',
-                } )
-                const status = respuesta.getStatusCode()
-                
-                return res.status( status ).json( respuesta.getRespuesta() )
+                    respuesta.setRespuestaPorCodigo( codigo, {
+                        mensaje: 'No tienes permiso para actualizar a un usuario un rol mayor al tuyo.',
+                    } )
+                    const status = respuesta.getStatusCode()
+                    
+                    return res.status( status ).json( respuesta.getRespuesta() )
+                }
             }
+
+            // Cambiamos el formato del cliente al formato servidor
+            const datosActualizadosParseado = timestamp.usuario_milliseconds_a_timestamp( datosActualizados )
+
+            // Actualizar usuario
+            let datosUsuarioActualizado = await MiembroJekuaa.actalizarUsuarioPorUID( uid, datosActualizadosParseado )
+            usuarioActualizado = Object.assign( usuarioActualizado, datosUsuarioActualizado )
         }
 
-        // Cambiamos el formato del cliente al formato servidor
-        const datosActualizadosParseado = timestamp.usuario_milliseconds_a_timestamp( datosActualizados )
-
-        // Actualizar usuario
-        const usuarioActualizado = await MiembroJekuaa.actalizarUsuarioPorUID( uid, datosActualizadosParseado )
+        if ( contrasenha ) {
+            // Actualizacion de contraseña
+        }
 
         respuesta.setRespuestaPorCodigo( codigo, {
             mensaje: 'El usuario se creo de forma exitosa!',

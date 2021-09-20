@@ -57,7 +57,14 @@
 
         <v-divider class="my-3" />
         
-        {{ datosUsuario }}
+        <div v-if="datosUsuario">
+            <formularioUsuario
+                :uid="uidUsuario"
+                :usuario="datosUsuario"
+                accionModo="actualizar"
+                v-on:actualizarUsuario="actualizarUsuario($event)"
+            />
+        </div>
 
         <v-divider class="my-3" />
 
@@ -65,6 +72,7 @@
 </template>
 
 <script>
+import formularioUsuario from '@/components/admin/forms/formularioUsuario'
 import confirmacionAccionPorUID from '@/components/admin/confirmacionAccionPorUID'
 
 export default {
@@ -76,11 +84,13 @@ export default {
             uidUsuarioConfirmacionEliminar: '',
             estadoDialogEliminacion: false,
             datosUsuario: null,
-            datosAuth: null
+            datosAuth: null,
+            usuarioActualizado: null
         }
     },
     components: {
-        confirmacionAccionPorUID
+        confirmacionAccionPorUID,
+        formularioUsuario
     },
     methods: {
         borrarUsuario(datosUsuario) {
@@ -96,6 +106,42 @@ export default {
             } = estado
 
             this.estadoDialogEliminacion = !cerrado
+        },
+        async actualizarUsuario( data ) {
+            console.log('data', data)
+            
+            const {
+                datosUsuario,
+                contrasenha
+            } = data
+
+            try {
+                let token = this.$firebase.auth().currentUser
+
+                token = token ? await token.getIdToken() : ''
+
+                const auth = `Bearer ${token}`
+
+                const respuesta = await this.$axios.$post(`/miembroJekuaa/actualizarUsuarioPorUID/${this.uidUsuario}`, {
+                    auth,
+                    datosActualizados: datosUsuario,
+                    contrasenha
+                })
+
+                this.usuarioActualizado = respuesta.resultado
+
+            } catch (error) {
+                const accion = await this.errorHandler( error.response.data )
+
+                if ( accion.includes('error') ) {
+                    this.$nuxt.error({
+                        statusCode: error.response.status
+                    })
+                } else if ( accion.includes('login') ) {
+                    this.$router.push('/autenticacion/inicioSesion')
+                }
+
+            }
         }
     },
     async created() {

@@ -173,10 +173,7 @@ class MiembroJekuaa extends Usuario {
             })
         }
 
-        const usuario = new Usuario({
-            ...usuarioNuevoJekuaa,
-            uid: usuarioAuthNuevo.uid
-        })
+        const usuario = new Usuario( Object.assign( usuarioNuevoJekuaa, { uid: usuarioAuthNuevo.uid } ) )
 
         return usuario
     }
