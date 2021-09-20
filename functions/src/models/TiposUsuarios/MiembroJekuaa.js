@@ -267,8 +267,14 @@ class MiembroJekuaa extends Usuario {
 
     static async eliminarUsuarioPorUID ( uidUsuario ) {
 
-        
+        let authEliminado = await admin.auth().deleteUser( uidUsuario )
+        let firestoreEliminado = await admin.firestore().collection(COLECCION_USUARIO)
+                                .doc(uidUsuario).delete()
 
+        return {
+            authEliminado,
+            firestoreEliminado
+        }
     }
 }
 

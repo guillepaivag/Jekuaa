@@ -1,7 +1,14 @@
 <template>
     <div>
 
-        <h3 class="mt-3"> {{ titulo }} </h3>
+        <h3 
+            class="mt-3" 
+            :class="modo != 'crear' ? (estaHabilitado ? 'green--text' : 'red--text') : 'black--text'"
+        >
+            <b >
+                {{ titulo }}
+            </b>
+        </h3>
 
         <v-stepper
             class="mt-5"
@@ -107,7 +114,6 @@
                                     cols="12"
                                     md="5"
                                 >
-                                    {{ horaFechaPremium }}
                                     <v-time-picker
                                         color="#683bce"
                                         v-model="horaFechaPremium"
@@ -279,6 +285,7 @@ export default {
             jekuaaPoint: 0,
         },
         contrasenha: '',
+        estaHabilitado: true,
         planSeleccionado: { text: 'Elegir un plan', value: '' },
         rangoFechaPremium: [],
         horaFechaPremium: '',
@@ -368,7 +375,8 @@ export default {
     props: {
         uid: String,
         accionModo: String,
-        usuario: Object
+        usuario: Object,
+        habilitado: Boolean
     },
 
     computed: {
@@ -439,11 +447,11 @@ export default {
         },
         titulo () {
             if ( this.modo === 'leer' ) {
-                return `Datos del usuario: ${this.uid}`
+                return `Datos del usuario: ${this.usuario.nombreUsuario} - ${this.estaHabilitado ? '(Habilitado)' : '(Deshabilitado)'}`
             } else if ( this.modo === 'crear' ) {
                 return 'Crear nuevo usuario'
             } else if ( this.modo === 'actualizar' ) {
-                return `Actualizar al usuario: ${this.uid}`
+                return `Actualizar al usuario: ${this.usuario.nombreUsuario} - ${this.estaHabilitado ? '(Habilitado)' : '(Deshabilitado)'}`
             }
         } 
     },
@@ -654,6 +662,9 @@ export default {
     },
 
     watch: {
+        habilitado: function ( nuevo, viejo ) {
+            this.estaHabilitado = nuevo
+        },
         planSeleccionado: function ( nuevo, viejo ) {
             this.datosUsuario.jekuaaPremium.plan = nuevo.value
 
@@ -760,9 +771,9 @@ export default {
                 SOLO PARA CREACIÓN
             */
             this.datosUsuario = {
-                nombreUsuario: 'Estudiante4',
-                correo: 'estudiante4@gmail.com',
-                nombreCompleto: 'Estudiante4 De Jekuaa',
+                nombreUsuario: '',
+                correo: '',
+                nombreCompleto: '',
                 fechaNacimiento: '',
                 jekuaaPremium: {
                     plan: '',
@@ -777,7 +788,7 @@ export default {
                 jekuaaPoint: 0,
             }
             
-            this.contrasenha = '123456'
+            this.contrasenha = ''
 
             this.planSeleccionado = { text: 'Elegir un plan', value: '' }
             this.rangoFechaPremium = []
@@ -792,6 +803,8 @@ export default {
             this.infoTextoFormulario[7].requerido = false
             
             this.datosUsuario = JSON.parse( JSON.stringify( this.usuario ) )
+
+            this.estaHabilitado = this.habilitado
 
             // Fecha de nacimiento
             this.datosUsuario.fechaNacimiento = this.usuario.fechaNacimiento ? 
@@ -815,7 +828,6 @@ export default {
             this.rolSeleccionado = this.roles.find( rol => rol.value === this.usuario.jekuaaRoles.rol )
         }
 
-        console.log('this.datosUsuario', this.datosUsuario)
     },
   }
 </script>

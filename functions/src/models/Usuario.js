@@ -48,7 +48,7 @@ class Usuario {
     }
 
     getUsuarioJSON () {
-        let usuarioJSON = JSON.parse( JSON.stringify({
+        return {
             uid: this.uid,
             nombreUsuario: this.nombreUsuario,
             correo: this.correo, 
@@ -57,9 +57,7 @@ class Usuario {
             jekuaaPremium: this.jekuaaPremium.getDatosPremium(),
             jekuaaRoles: this.jekuaaRoles.getDatosRoles(),
             jekuaaPoint: this.jekuaaPoint
-        }) )
-
-        return usuarioJSON
+        }
     }
 
     getUID () {

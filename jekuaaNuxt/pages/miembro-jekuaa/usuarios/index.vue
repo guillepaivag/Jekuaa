@@ -14,15 +14,6 @@
                     >
                         Lista de usuarios
                     </v-btn>
-
-                    <v-btn
-                        class="mt-4 white--text"
-                        color="#683bce" 
-                        block
-                        to="/miembro-jekuaa/instructores/lista-instructores"
-                    >
-                        Lista de instructores 
-                    </v-btn>
                 </div>
                 
             </div>

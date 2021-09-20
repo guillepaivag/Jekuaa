@@ -292,10 +292,29 @@ controllerMiembroJekuaa.eliminarUsuarioPorUID = async (req, res) => {
         const { uid } = params
         const { uidSolicitante, datosAuthSolicitante } = jekuaaDatos
 
-        
+        const respuesta = new Respuesta()
+        let codigo = 'jekuaa/exito'
 
-    } catch ( error ) {
+        const resultado = await MiembroJekuaa.eliminarUsuarioPorUID( uid )
+
+        let mensaje = uidSolicitante === uid ? 'Te has eliminado de forma correcta.' : `Se ha eliminado el usuario ${uid}`
+
+        respuesta.setRespuestaPorCodigo( codigo, {
+            mensaje,
+            resultado
+        } )
+        const status = respuesta.getStatusCode()
         
+        return res.status( status ).json( respuesta.getRespuesta() )
+    } catch ( error ) {
+        console.log('Error - eliminarUsuarioPorUID: ', error)
+
+        const {
+            status,
+            respuesta
+        } = manejadorErrores( error )
+
+        return res.status( status ).json( respuesta )
     }
 
 }

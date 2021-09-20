@@ -4,31 +4,28 @@
             <v-btn
                 class="ma-2"
                 outlined
-                color="blue"
+                color="#683bce"
+                @click="authVisible = true"
             >
                 Ver Auth
             </v-btn>
 
             <v-btn
+                v-if="datosAuth && datosAuth.disabled"
                 class="ma-2"
                 outlined
                 color="green darken-1"
+                v-on:click="habilitar"
             >
                 Habilitar usuario
             </v-btn>
 
             <v-btn
-                class="ma-2"
-                outlined
-                color="#683bce"
-            >
-                Actualizar usuario
-            </v-btn>
-
-            <v-btn
+                v-else
                 class="ma-2"
                 outlined
                 color="gray darken-1"
+                v-on:click="deshabilitar"
             >
                 Deshabilitar usuario
             </v-btn>
@@ -43,6 +40,23 @@
             </v-btn>
         </div>
 
+        <v-divider class="my-3" />
+        
+        <div v-if="datosUsuario && datosAuth">
+            <formularioUsuario
+                :habilitado="!datosAuth.disabled"
+                :uid="uidUsuario"
+                :usuario="datosUsuario"
+                accionModo="actualizar"
+                v-on:actualizarUsuario="actualizarUsuario($event)"
+            />
+        </div>
+        <div v-else>
+
+        </div>
+
+        <v-divider class="my-3" />
+
         <confirmacionAccionPorUID 
             titulo="¿Quieres borrar el usuario?"
             mensaje="Esta acción borrará permanentemente los datos del usuario."
@@ -55,18 +69,43 @@
             v-on:dialogCerrado="dialogEliminacionCerrado($event)"
         />
 
-        <v-divider class="my-3" />
-        
-        <div v-if="datosUsuario">
-            <formularioUsuario
-                :uid="uidUsuario"
-                :usuario="datosUsuario"
-                accionModo="actualizar"
-                v-on:actualizarUsuario="actualizarUsuario($event)"
-            />
-        </div>
-
-        <v-divider class="my-3" />
+        <v-dialog
+            v-model="authVisible"
+            max-width="500px"
+        >
+            <v-card>
+                <v-card-title>
+                    Datos Authentication
+                </v-card-title>
+            <v-card-text>
+                <v-divider class="mb-3" />
+                    <div v-if="datosAuth">
+                        <p> <b> UID: </b> {{ datosAuth.uid }} </p>
+                        <p> <b> Correo: </b> {{ datosAuth.email }} </p>
+                        <p> <b> Correo verificado: </b> {{ datosAuth.emailVerified }} </p>
+                        <p> <b> Nombre de usuario: </b> {{ datosAuth.displayName }} </p>
+                        <p> <b> Habilitado: </b> {{ !datosAuth.disabled }} </p>
+                        <p> <b> Creado: </b> {{ datosAuth.metadata.creationTime }} </p>
+                        <p> <b> Ultima vez iniciado sesión: </b> {{ datosAuth.metadata.lastSignInTime }} </p>
+                        <p> <b> Premium: </b> {{ datosAuth.customClaims.jekuaaPremium }} </p>
+                        <p> <b> Rol: </b> {{ datosAuth.customClaims.rol }} </p>
+                    </div>
+                    <div v-else>
+                        Cargando...
+                    </div>
+                <v-divider class="mt-3" />
+            </v-card-text>
+            <v-card-actions>
+                <v-btn
+                    color="#683bce"
+                    text
+                    @click="authVisible = false"
+                >
+                    Cerrar
+                </v-btn>
+            </v-card-actions>
+            </v-card>
+        </v-dialog>
 
     </div>
 </template>
@@ -74,6 +113,7 @@
 <script>
 import formularioUsuario from '@/components/admin/forms/formularioUsuario'
 import confirmacionAccionPorUID from '@/components/admin/confirmacionAccionPorUID'
+import { mapActions, mapGetters } from 'vuex'
 
 export default {
     name: 'datosUsuario',
@@ -85,20 +125,78 @@ export default {
             estadoDialogEliminacion: false,
             datosUsuario: null,
             datosAuth: null,
-            usuarioActualizado: null
+            usuarioActualizado: null,
+            authVisible: false
         }
     },
     components: {
         confirmacionAccionPorUID,
         formularioUsuario
     },
+    watch: {
+        authVisible: async function ( nuevo, viejo ) {
+            if ( nuevo ) {
+                try {
+                    let token = this.$firebase.auth().currentUser
+
+                    token = token ? await token.getIdToken() : ''
+
+                    const auth = `Bearer ${token}`
+
+                    const datosAuth = await this.$axios.$post(`/miembroJekuaa/verDatosAuthPorUID/${this.uidUsuario}`, {
+                        auth
+                    })
+
+                    this.datosAuth = datosAuth.resultado
+                    
+                } catch (error) {
+                    const accion = await this.errorHandler( error.response.data )
+
+                    if ( accion.includes('error') ) {
+                        this.$nuxt.error({
+                            statusCode: error.response.status
+                        })
+                    } else if ( accion.includes('login') ) {
+                        this.$router.push('/autenticacion/inicioSesion')
+                    }
+                }
+            }
+        }
+    },
     methods: {
-        borrarUsuario(datosUsuario) {
+        ...mapActions({
+            errorHandler: 'modules/system/errorHandler',
+        }),
+        async borrarUsuario(datosUsuario) {
             const {
                 uid
             } = datosUsuario
 
-            alert(`Usuario ${uid} eliminado.`)
+            try {
+                let token = this.$firebase.auth().currentUser
+
+                token = token ? await token.getIdToken() : ''
+
+                const auth = `Bearer ${token}`
+
+                const respuesta = await this.$axios.$post(`/miembroJekuaa/eliminarUsuarioPorUID/${this.uidUsuario}`, {
+                    auth
+                })
+
+                this.$router.push('/miembro-jekuaa/usuarios/lista-usuarios')
+
+            } catch (error) {
+                const accion = await this.errorHandler( error.response.data )
+
+                if ( accion.includes('error') ) {
+                    this.$nuxt.error({
+                        statusCode: error.response.status
+                    })
+                } else if ( accion.includes('login') ) {
+                    this.$router.push('/autenticacion/inicioSesion')
+                }
+
+            }
         },
         dialogEliminacionCerrado ( estado ) {
             const {
@@ -108,7 +206,6 @@ export default {
             this.estadoDialogEliminacion = !cerrado
         },
         async actualizarUsuario( data ) {
-            console.log('data', data)
             
             const {
                 datosUsuario,
@@ -142,24 +239,98 @@ export default {
                 }
 
             }
+        },
+        async habilitar (  ) {
+            try {
+                let token = this.$firebase.auth().currentUser
+
+                token = token ? await token.getIdToken() : ''
+
+                const auth = `Bearer ${token}`
+
+                const respuesta = await this.$axios.$post(`/miembroJekuaa/habilitarUsuarioPorUID/${this.uidUsuario}`, {
+                    auth,
+                    habilitar: true
+                })
+
+                this.datosAuth = respuesta.resultado
+
+            } catch (error) {
+                const accion = await this.errorHandler( error.response.data )
+
+                if ( accion.includes('error') ) {
+                    this.$nuxt.error({
+                        statusCode: error.response.status
+                    })
+                } else if ( accion.includes('login') ) {
+                    this.$router.push('/autenticacion/inicioSesion')
+                }
+
+            }
+        },
+        async deshabilitar (  ) {
+            try {
+                let token = this.$firebase.auth().currentUser
+
+                token = token ? await token.getIdToken() : ''
+
+                const auth = `Bearer ${token}`
+
+                const respuesta = await this.$axios.$post(`/miembroJekuaa/habilitarUsuarioPorUID/${this.uidUsuario}`, {
+                    auth,
+                    habilitar: false
+                })
+
+                this.datosAuth = respuesta.resultado
+
+            } catch (error) {
+                const accion = await this.errorHandler( error.response.data )
+
+                if ( accion.includes('error') ) {
+                    this.$nuxt.error({
+                        statusCode: error.response.status
+                    })
+                } else if ( accion.includes('login') ) {
+                    this.$router.push('/autenticacion/inicioSesion')
+                }
+
+            }
         }
     },
     async created() {
-        this.uidUsuario = this.$route.params.uidUsuario
+        try {
+            this.uidUsuario = this.$route.params.uidUsuario
 
-        let token = this.$firebase.auth().currentUser
+            let token = this.$firebase.auth().currentUser
 
-        if( token ){
-            token = await token.getIdToken()
+            if( token ){
+                token = await token.getIdToken()
+            }
+
+            const auth = `Bearer ${token}`
+
+            const datosUsuario = await this.$axios.$post(`/miembroJekuaa/verDatosUsuarioPorUID/${this.uidUsuario}`, {
+                auth
+            })
+
+            const datosAuth = await this.$axios.$post(`/miembroJekuaa/verDatosAuthPorUID/${this.uidUsuario}`, {
+                auth
+            })
+
+            this.datosUsuario = datosUsuario.resultado
+            this.datosAuth = datosAuth.resultado
+            
+        } catch (error) {
+            const accion = await this.errorHandler( error.response.data )
+
+            if ( accion.includes('error') ) {
+                this.$nuxt.error({
+                    statusCode: error.response.status
+                })
+            } else if ( accion.includes('login') ) {
+                this.$router.push('/autenticacion/inicioSesion')
+            }
         }
-
-        const auth = `Bearer ${token}`
-
-        const datosUsuario = await this.$axios.$post(`/miembroJekuaa/verDatosUsuarioPorUID/${this.uidUsuario}`, {
-            auth
-        })
-
-        this.datosUsuario = datosUsuario.resultado
     }
 }
 </script>
