@@ -174,6 +174,8 @@ controllerMiembroJekuaa.actualizarUsuarioPorUID = async (req, res) => {
         const { uid } = params
         const { datosActualizados, contrasenha } = body
 
+        console.log('body', body)
+
         const respuesta = new Respuesta()
         let codigo = 'jekuaa/exito'
         let usuarioActualizado = {}

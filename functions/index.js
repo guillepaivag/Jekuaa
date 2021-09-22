@@ -10,6 +10,9 @@ const apiJekuaa = require('./apiJekuaa')
 const {
   registrarUsuarioPorCorreoYContrasenha
 } = require('./funcionesFirebaseFunctions/usuarios')
+const {
+  indexBlog
+} = require('./funcionesFirebaseFunctions/algolia')
 
 /*
  * FUNCIONES - FIREBASE CLOUD FUNCTIONS
@@ -24,3 +27,5 @@ exports.nuxtssr = functions.https.onRequest(appNuxt)
 exports.apiJekuaa = functions.https.onRequest(apiJekuaa)
 
 exports.registrarUsuarioPorCorreoYContrasenha = registrarUsuarioPorCorreoYContrasenha
+
+exports.indexBlog = functions.firestore.document('blogs/{blogId}').onWrite(indexBlog)

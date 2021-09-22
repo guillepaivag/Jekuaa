@@ -205,6 +205,7 @@ funciones.verificadorDeFormatoParaDB = ( datosUsuario ) => {
 }
 
 funciones.construirDatosParaActualizarYVerificarFormatoParaDB = ( datosNuevos, datosViejos ) => {
+    
     const {
         datosUsuarioDBActualizar,
         datosUsuarioAuthActualizar,

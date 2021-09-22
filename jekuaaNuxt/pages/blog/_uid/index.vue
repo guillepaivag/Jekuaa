@@ -1,21 +1,28 @@
 <template>
     <div>
-        hola
-        <nav>
-            <ul>
-                <li v-for="link of article.toc" :key="link.id">
-                    <NuxtLink :to="`#${link.id}`">{{ link.text }}</NuxtLink>
-                </li>
-            </ul>
-        </nav>
 
-        <nuxt-content :document="article" />
+        <div v-if="article">
+            <nav>
+                <ul>
+                    <li v-for="link of article.toc" :key="link.id">
+                        <NuxtLink :to="`#${link.id}`">{{ link.text }}</NuxtLink>
+                    </li>
+                </ul>
+            </nav>
 
-        <pre> {{ article }} </pre>
+            <nuxt-content :document="article" />
 
-        <div class="p-4 mb-4 text-white bg-blue-500">
-            This is HTML inside markdown that has a class of note
+            <pre> {{ article }} </pre>
+
+            <div class="p-4 mb-4 text-white bg-blue-500">
+                This is HTML inside markdown that has a class of note
+            </div>
         </div>
+
+        <div v-else>
+            No existe este blog :(
+        </div>
+        
     </div>
 </template>
 
@@ -24,11 +31,10 @@ export default {
     name: '',
     data() {
         return {
-            hola: 'hola'
+            
         }
     },
     async created() {
-        this.hola = 'siuu'
 
         // const uidBlog = this.$route.params.uid
         // const documentBlog = await this.$firebase.firestore().collection('Blog').doc(uidBlog).get()
@@ -44,11 +50,15 @@ export default {
         // }
         
     },
-    async asyncData({ $content, params }) {
-        const uidBlog = params.uid
-        const article = await $content('articles', uidBlog).fetch()
+    async asyncData({ $content, redirect, params }) {
+        try {
+            const uidBlog = params.uid
+            const article = await $content('articles', uidBlog).fetch()
 
-        return { article }
+            return { article }
+        } catch (err) {
+            redirect('/blog')
+        }
     },
 }
 </script>

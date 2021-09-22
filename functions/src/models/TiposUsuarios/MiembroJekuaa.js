@@ -2,16 +2,13 @@ const admin = require('../../../firebase-service')
 const db = require('../../../db')
 const Usuario = require("../Usuario")
 const Blog = require('../Blog')
-const JekuaaPremium = require('../JekuaaPremium')
-const JekuaaRoles = require('../JekuaaRoles')
 const Instructor = require('./Instructor')
-const formatos = require('../../utils/Timestamp')
+const ErrorJekuaa = require('../Error/ErroresJekuaa')
 const { 
     verificadorDeFormatoParaDB,
-    construirDatosParaActualizar,
     construirDatosParaActualizarYVerificarFormatoParaDB
 } = require('../../utils/Usuario')
-const ErrorJekuaa = require('../Error/ErroresJekuaa')
+
 
 const COLECCION_USUARIO = 'Usuarios'
 const COLECCION_INSTRUCTOR = 'Instructores'
@@ -105,7 +102,7 @@ class MiembroJekuaa extends Usuario {
     }
 
     // CRUD USUARIO
-    crearUsuario ( datosUsuario ) {
+    crearUsuario ( datosUsuario, contrasenha ) {
         
     }
 
@@ -131,6 +128,7 @@ class MiembroJekuaa extends Usuario {
             ###############################
         */
 
+    // Usuarios
     static async crearNuevoUsuario ( datosUsuario, contrasenha ) {
         const {
             nombreUsuario,
@@ -207,7 +205,7 @@ class MiembroJekuaa extends Usuario {
         }
 
         const datosUsuario = docUsuario.data()
-
+        
         const {
             datosUsuarioDBActualizar,
             datosUsuarioAuthActualizar,
@@ -276,6 +274,7 @@ class MiembroJekuaa extends Usuario {
             firestoreEliminado
         }
     }
+
 }
 
 module.exports = MiembroJekuaa

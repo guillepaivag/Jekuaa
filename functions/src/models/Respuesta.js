@@ -1,4 +1,4 @@
-const informacionCodigos = require("./InformacionCodigo")
+const informacionCodigos = require("../InformacionEstatica/InformacionCodigo")
 
 class Respuesta {
 

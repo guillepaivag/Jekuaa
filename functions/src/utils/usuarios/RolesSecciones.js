@@ -58,6 +58,4 @@ utilsRolesSecciones.rolNecesitaSecciones = ( rol ) => {
 }
 
 
-
-
 module.exports = utilsRolesSecciones

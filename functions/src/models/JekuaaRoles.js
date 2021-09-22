@@ -188,7 +188,7 @@ class JekuaaRoles {
     }
 
     static necesitaSecciones ( rol ) {
-        utilsRoles.rolNecesitaSecciones ( rol )
+        return utilsRoles.rolNecesitaSecciones ( rol )
     }
 
     static informacionDatosRoles () {

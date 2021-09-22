@@ -103,6 +103,14 @@
                 >
                     Cerrar
                 </v-btn>
+
+                <v-btn
+                    class="white--text"
+                    color="#683bce"
+                    @click="verDatosAuth"
+                >
+                    Actualizar
+                </v-btn>
             </v-card-actions>
             </v-card>
         </v-dialog>
@@ -133,40 +141,36 @@ export default {
         confirmacionAccionPorUID,
         formularioUsuario
     },
-    watch: {
-        authVisible: async function ( nuevo, viejo ) {
-            if ( nuevo ) {
-                try {
-                    let token = this.$firebase.auth().currentUser
-
-                    token = token ? await token.getIdToken() : ''
-
-                    const auth = `Bearer ${token}`
-
-                    const datosAuth = await this.$axios.$post(`/miembroJekuaa/verDatosAuthPorUID/${this.uidUsuario}`, {
-                        auth
-                    })
-
-                    this.datosAuth = datosAuth.resultado
-                    
-                } catch (error) {
-                    const accion = await this.errorHandler( error.response.data )
-
-                    if ( accion.includes('error') ) {
-                        this.$nuxt.error({
-                            statusCode: error.response.status
-                        })
-                    } else if ( accion.includes('login') ) {
-                        this.$router.push('/autenticacion/inicioSesion')
-                    }
-                }
-            }
-        }
-    },
     methods: {
         ...mapActions({
             errorHandler: 'modules/system/errorHandler',
         }),
+        async verDatosAuth () {
+            try {
+                let token = this.$firebase.auth().currentUser
+
+                token = token ? await token.getIdToken() : ''
+
+                const auth = `Bearer ${token}`
+
+                const datosAuth = await this.$axios.$post(`/miembroJekuaa/verDatosAuthPorUID/${this.uidUsuario}`, {
+                    auth
+                })
+
+                this.datosAuth = datosAuth.resultado
+                
+            } catch (error) {
+                const accion = await this.errorHandler( error.response.data )
+
+                if ( accion.includes('error') ) {
+                    this.$nuxt.error({
+                        statusCode: error.response.status
+                    })
+                } else if ( accion.includes('login') ) {
+                    this.$router.push('/autenticacion/inicioSesion')
+                }
+            }
+        },
         async borrarUsuario(datosUsuario) {
             const {
                 uid
@@ -211,6 +215,8 @@ export default {
                 datosUsuario,
                 contrasenha
             } = data
+
+            console.log('data', data)
 
             try {
                 let token = this.$firebase.auth().currentUser

@@ -497,6 +497,8 @@ export default {
             datosUsuario.jekuaaPoint = datosUsuario.jekuaaPoint ?
             Number(datosUsuario.jekuaaPoint) : 0
 
+            console.log('this.modo', this.modo)
+
             if ( this.modo === 'crear' ) {
                 this.$emit('crearUsuario', {
                     datosUsuario,
