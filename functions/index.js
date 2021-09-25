@@ -22,10 +22,18 @@ const {
  * Tu código JavaScript o TypeScript se almacena en la nube 
  * de Google y se ejecuta en un entorno administrado.
  */ 
-exports.nuxtssr = functions.https.onRequest(appNuxt)
 
-exports.apiJekuaa = functions.https.onRequest(apiJekuaa)
+// SSR Para el cliente con Nuxt.js
+exports.nuxtssr = functions.region('southamerica-east1').https.onRequest(appNuxt)
 
+// REST-API de Jekuaa
+// apiJekuaa.listen(7777, () => {
+//   console.log('server is running at port 7777')
+// })
+exports.apiJekuaa = functions.region('southamerica-east1').https.onRequest(apiJekuaa)
+
+// Función de registro de usuarios de Jekuaa
 exports.registrarUsuarioPorCorreoYContrasenha = registrarUsuarioPorCorreoYContrasenha
 
-exports.indexBlog = functions.firestore.document('blogs/{blogId}').onWrite(indexBlog)
+// Indexación para blogs
+exports.indexBlog = indexBlog

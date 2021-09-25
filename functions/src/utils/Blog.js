@@ -139,14 +139,14 @@ utils_blog.verificadorDeFormato = ( datosBlog, usuarioSolicitante ) => {
         }
     }
 
-    if ( !categoriaPerteneceASeccion( seccion, categoria ) ) {
+    if ( seccion && categoria && !categoriaPerteneceASeccion( seccion, categoria ) ) {
         throw new ErrorJekuaa({
             codigo: 'jekuaa/error/usuario_mala_solicitud',
             mensaje: 'Esta categoría no pertenece a esta sección.'
         })
     }
 
-    if ( !subcategoriasPertenecenACategoria( seccion, categoria, subCategorias ) ) {
+    if ( seccion && categoria && subCategorias && !subcategoriasPertenecenACategoria( seccion, categoria, subCategorias ) ) {
         throw new ErrorJekuaa({
             codigo: 'jekuaa/error/usuario_mala_solicitud',
             mensaje: 'Algunas de estas subcategorias no pertenecen a esta categoría y sección.'
@@ -219,12 +219,6 @@ utils_blog.verificadorDeDatosRequeridos = ( datosBlog ) => {
         })
     }
 
-    if ( !subCategorias ) {
-        throw new ErrorJekuaa({
-            codigo: 'jekuaa/error/usuario_mala_solicitud',
-            mensaje: 'La subcategoria debe existir.'
-        })
-    }
 }
 
 utils_blog.construirDatosParaActualizarYVerificarFormato = ( datosNuevos, datosViejos ) => {

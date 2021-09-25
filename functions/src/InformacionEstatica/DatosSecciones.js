@@ -28,9 +28,9 @@ agregarDatoSeccion('informatica', 'desarrollo_web', [
     'vue.js',
     'javascript'
 ])
-agregarDatoSeccion('informatica', 'desarrollo_movil', [
-    'kotlin',
-    'flutter'
+agregarDatoSeccion('informatica', 'algoritmos', [
+    'dijkstra',
+    'sort-shell'
 ])
 agregarDatoSeccion('matematica', 'calculo', [
     'calculo_vectorial'

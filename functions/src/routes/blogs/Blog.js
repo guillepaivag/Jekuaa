@@ -1,5 +1,6 @@
 const {Router} = require('express')
 const router = Router()
+const fileMiddleware = require('express-multipart-file-parser')
 
 const {
     
@@ -15,9 +16,11 @@ const {
 } = require('../../middlewares/miembroJekuaa')
 
 const {
-    crearBlog
+    crearBlog,
+    guardarArchivoBlog
 } = require('../../controllers/blogs/Blog')
 
 router.post('/crearBlog', estaAutenticado, esMiembroJekuaa, crearBlog)
+router.post('/guardarArchivoBlog/:uid', fileMiddleware, estaAutenticado, esMiembroJekuaa, guardarArchivoBlog)
 
 module.exports = router

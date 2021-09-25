@@ -1,0 +1,22 @@
+{
+  "name": "blogs/10-buenos-ejercicios-de-calculo.md",
+  "bucket": "jekuaa-py.appspot.com",
+  "contentType": "text/markdown",
+  "metageneration": 1,
+  "generation": 1632531282694,
+  "storageClass": "STANDARD",
+  "etag": "someETag",
+  "contentDisposition": "inline",
+  "contentEncoding": "identity",
+  "customMetadata": {
+    "contentType": "multipart/form-data"
+  },
+  "downloadTokens": [
+    "58135483-4cdc-4af9-a480-01cbebefcf94"
+  ],
+  "timeCreated": "2021-09-25T00:54:42.693Z",
+  "updated": "2021-09-25T00:54:42.693Z",
+  "size": 12,
+  "md5Hash": "oT/HGbqKFJH44lflZJxSng==",
+  "crc32c": "1904092115"
+}

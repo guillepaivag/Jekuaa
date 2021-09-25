@@ -4,7 +4,8 @@ const Usuario = require('../src/models/Usuario')
 const manejadorErrores = require('../src/models/Error/ManejoErrores/ManejadorErrores')
 const ffUsuarios = {}
 
-ffUsuarios.registrarUsuarioPorCorreoYContrasenha = functions.https.onCall( async (data, context) => {
+ffUsuarios.registrarUsuarioPorCorreoYContrasenha = 
+functions.region('southamerica-east1').https.onCall( async (data, context) => {
 
     try {
 

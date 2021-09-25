@@ -1,6 +1,6 @@
 const colors = require('vuetify/es5/util/colors')
-// const baseURL = 'https://us-central1-jekuaa-py.cloudfunctions.net/appBackEnd/apiJekuaa/api'
-const baseURL = 'http://localhost:5001/jekuaa-py/us-central1/appBackEnd/apiJekuaa/api'
+// const baseURL = ''
+const baseURL = 'http://localhost:5001/jekuaa-py/southamerica-east1/apiJekuaa'
 
 module.exports = {
   // Global page headers: https://go.nuxtjs.dev/config-head

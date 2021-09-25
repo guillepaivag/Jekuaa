@@ -5,7 +5,8 @@ const algoliaControllers = {}
 
 const INDEX_NAME = config.environment.mode === 'production' ? 'blogs_prod' : 'blogs_dev'
 
-algoliaControllers.indexBlog = functions.firestore.document('blogs/{blogId}').onWrite(( change, context ) => {
+algoliaControllers.indexBlog = 
+functions.region('southamerica-east1').firestore.document('blogs/{blogId}').onWrite(( change, context ) => {
     // "document" will be empty if it's deleted, otherwise, this contains
     // the updated values.
     const document = change.after.exists ? change.after.data() : null

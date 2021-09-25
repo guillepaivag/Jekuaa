@@ -1,6 +1,7 @@
 const admin = require('../../firebase-service')
 const db = require('../../db')
 const ErrorJekuaa = require('./Error/ErroresJekuaa')
+const storage = require('../../GoogleStorage')
 
 const COLECCION_BLOG = 'Blog'
 
@@ -190,7 +191,7 @@ class Blog {
 
         const blog = documentBlog.data()
 
-        this.setBlog( blog )
+        this.setBLOG( blog )
 
         return this
     }
@@ -253,17 +254,70 @@ class Blog {
         const blog = new Blog()
         blog.setUID( uid )
         blog.setTITULO( titulo )
-        blog.setDESCRIPCION( descripcion )
+        blog.setDESCRIPCION( descripcion )      // Opcional
         blog.setPUBLICADOR( publicador )
         blog.setSECCION( seccion )
         blog.setCATEGORIA( categoria )
-        blog.setSUB_CATEGORIAS( subCategorias )
+        blog.setSUB_CATEGORIAS( subCategorias ) // Opcional
         blog.setHABILITADO( false )
         blog.setPENDIENTE( true )
-        blog.setFECHA_CREACION()
-        blog.setFECHA_ACTUALIZACION()
+        blog.setFECHA_CREACION( fechaCreacion )
+        blog.setFECHA_ACTUALIZACION( fechaActualizacion )
 
         return await blog.crearBlog()
+    }
+
+    static async subirArchivoAStorage ( uploadData ) {
+
+        const {
+            filepath,
+            filename,
+            mimetype
+        } = uploadData
+        
+        const bucket = storage.bucket('jekuaa-py.appspot.com')
+        const response = await bucket.upload(filepath, {
+            destination: `blogs/${filename}`,
+            uploadType: 'media',
+            metadata: {
+                metadata: {
+                    contentType: mimetype
+                }
+            }
+        })
+
+        return response
+    }
+
+    static async obtenerURL ( filename ) {
+        const bucket = storage.bucket('jekuaa-py.appspot.com')
+        const file = bucket.file(filename)
+        const action = 'read'
+        const expires = new Date().getTime() + 10 * 1000
+        const links = await file.getSignedUrl({
+            action,
+            expires
+        })
+        
+        return links[0]
+    }
+
+    static async errorExisteBlogPorUID ( uid, operacion ) {
+        const existe = (await db.collection(COLECCION_BLOG).doc(uid).get()).exists
+
+        if ( operacion === 'existe' && existe ) {
+            throw new ErrorJekuaa({
+                codigo: 'jekuaa/error/usuario_mala_solicitud',
+                mensaje: `Ya existe el blog ${uid}`
+            })
+
+        } else if ( operacion !== 'existe' && !existe ) {
+            throw new ErrorJekuaa({
+                codigo: 'jekuaa/error/usuario_mala_solicitud',
+                mensaje: `No existe el blog ${uid}`
+            })
+        }
+
     }
 }
 
