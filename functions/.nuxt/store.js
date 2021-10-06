@@ -19,13 +19,11 @@ let store = {};
   // Enforce store modules
   store.modules = store.modules || {}
 
-  resolveStoreModules(require('..\\..\\jekuaaNuxt\\store\\modules\\system.js'), 'modules/system.js')
-  resolveStoreModules(require('..\\..\\jekuaaNuxt\\store\\modules\\general\\RolesSecciones.js'), 'modules/general/RolesSecciones.js')
-  resolveStoreModules(require('..\\..\\jekuaaNuxt\\store\\modules\\user\\intereses.js'), 'modules/user/intereses.js')
-  resolveStoreModules(require('..\\..\\jekuaaNuxt\\store\\modules\\user\\misCursos.js'), 'modules/user/misCursos.js')
-  resolveStoreModules(require('..\\..\\jekuaaNuxt\\store\\modules\\user\\seguimientos.js'), 'modules/user/seguimientos.js')
-  resolveStoreModules(require('..\\..\\jekuaaNuxt\\store\\modules\\user\\user.js'), 'modules/user/user.js')
-  resolveStoreModules(require('..\\..\\jekuaaNuxt\\store\\modules\\user\\userInstructor.js'), 'modules/user/userInstructor.js')
+  resolveStoreModules(require('..\\..\\jekuaaNuxt\\store\\modules\\sistema.js'), 'modules/sistema.js')
+  resolveStoreModules(require('..\\..\\jekuaaNuxt\\store\\modules\\usuarios\\index.js'), 'modules/usuarios/index.js')
+  resolveStoreModules(require('..\\..\\jekuaaNuxt\\store\\modules\\rolesSecciones\\index.js'), 'modules/rolesSecciones/index.js')
+  resolveStoreModules(require('..\\..\\jekuaaNuxt\\store\\modules\\usuarios\\instructor.js'), 'modules/usuarios/instructor.js')
+  resolveStoreModules(require('..\\..\\jekuaaNuxt\\store\\modules\\usuarios\\misCursos.js'), 'modules/usuarios/misCursos.js')
 
   // If the environment supports hot reloading...
 
@@ -33,13 +31,11 @@ let store = {};
     // Whenever any Vuex module is updated...
     module.hot.accept([
       '..\\..\\jekuaaNuxt\\store\\index.js',
-      '..\\..\\jekuaaNuxt\\store\\modules\\system.js',
-      '..\\..\\jekuaaNuxt\\store\\modules\\general\\RolesSecciones.js',
-      '..\\..\\jekuaaNuxt\\store\\modules\\user\\intereses.js',
-      '..\\..\\jekuaaNuxt\\store\\modules\\user\\misCursos.js',
-      '..\\..\\jekuaaNuxt\\store\\modules\\user\\seguimientos.js',
-      '..\\..\\jekuaaNuxt\\store\\modules\\user\\user.js',
-      '..\\..\\jekuaaNuxt\\store\\modules\\user\\userInstructor.js',
+      '..\\..\\jekuaaNuxt\\store\\modules\\sistema.js',
+      '..\\..\\jekuaaNuxt\\store\\modules\\usuarios\\index.js',
+      '..\\..\\jekuaaNuxt\\store\\modules\\rolesSecciones\\index.js',
+      '..\\..\\jekuaaNuxt\\store\\modules\\usuarios\\instructor.js',
+      '..\\..\\jekuaaNuxt\\store\\modules\\usuarios\\misCursos.js',
     ], () => {
       // Update `root.modules` with the latest definitions.
       updateModules()

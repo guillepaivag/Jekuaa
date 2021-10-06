@@ -30,18 +30,26 @@ export const actions = {
     console.log('[STORE ACTIONS] - setError:', error)
     commit('setError', error)
   },
-  errorHandler ( { dispatch, commit }, responseError ) {
+  errorHandler ( { dispatch, commit }, error ) {
 
-    console.log('responseError', responseError)
-    commit('setError', responseError)
+    if ( error.response ) { 
+      // 
+      commit('setError', error.response)
 
-    if ( responseError.codigo.includes('usuario_no_autorizado') || responseError.codigo.includes('sistema') ) {
-      return 'redireccion-error'
-    } else if ( responseError.codigo.includes('usuario_no_autenticado') ) {
-      return 'redireccion-login'
-    } else if ( responseError.codigo.includes('usuario_mala_solicitud') ) {
-      return ''
-    }
+      if ( responseError.codigo.includes('usuario_no_autorizado') || responseError.codigo.includes('sistema') ) {
+        return 'redireccion-error'
+      } else if ( responseError.codigo.includes('usuario_no_autenticado') ) {
+        return 'redireccion-login'
+      } else if ( responseError.codigo.includes('usuario_mala_solicitud') ) {
+        return ''
+      }
+    } else if (err.request) { 
+      // client never received a response, or request never left 
+    } else { 
+      // anything else 
+    } 
+
+    
 
   }
 }

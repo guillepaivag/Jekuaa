@@ -35,6 +35,9 @@
   "AdminListaUsuarios": {
     "description": "Auto imported from components/admin/listaUsuarios.vue"
   },
+  "AuthEmail": {
+    "description": "Auto imported from components/auth/authEmail.vue"
+  },
   "InicioAtajos": {
     "description": "Auto imported from components/inicio/atajos.vue"
   },
@@ -43,9 +46,6 @@
   },
   "InicioSubpresentacion": {
     "description": "Auto imported from components/inicio/subpresentacion.vue"
-  },
-  "AuthEmail": {
-    "description": "Auto imported from components/auth/authEmail.vue"
   },
   "AdminFormsFormularioUsuario": {
     "description": "Auto imported from components/admin/forms/formularioUsuario.vue"

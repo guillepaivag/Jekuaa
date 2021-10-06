@@ -47,11 +47,6 @@ middlewaresUser.estaAutenticado = (req, res, next) => {
 getAuthToken = (req, res, next) => {
     const { auth } = req.body 
 
-    // express-fileupload
-    console.log('req.body', req.body)
-    console.log('req.files', req.files)
-    console.log('auth', auth)
-
     req.jekuaaDatos = req.jekuaaDatos ? req.jekuaaDatos : {}
     
     if(auth && auth.split(' ')[0] === 'Bearer'){

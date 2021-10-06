@@ -244,7 +244,7 @@ export default {
     }
   },
   methods: {
-    ...mapActions('modules/user/user', ['firebaseCerrarSesionUser_EmailAndPassword', 'logout']),
+    ...mapActions('modules/usuarios', ['firebaseCerrarSesionUser_EmailAndPassword', 'logout']),
     async cerrarSesion () {
       
       try {
@@ -264,8 +264,8 @@ export default {
     }
   },
   computed: {
-    ...mapState('modules/user/user', ['fotoPerfil', 'nombreUsuario', 'correo']),
-    ...mapGetters('modules/user/user', ['esMiembroJekuaa']),
+    ...mapState('modules/usuarios', ['fotoPerfil', 'nombreUsuario', 'correo']),
+    ...mapGetters('modules/usuarios', ['esMiembroJekuaa']),
     inicialNombreUsuario () {
       return this.nombreUsuario[0].toUpperCase()
     },

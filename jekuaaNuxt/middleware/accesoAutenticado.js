@@ -1,5 +1,5 @@
 export default function ({ store, redirect }) {
-  if (!store.getters['modules/user/user/autenticado']) {
+  if (!store.getters['modules/usuarios/autenticado']) {
     return redirect('/auth/signin')
   }
 }

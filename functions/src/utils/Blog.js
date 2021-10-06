@@ -5,16 +5,54 @@ const { rolNecesitaSecciones } = require("./usuarios/RolesSecciones")
 const utils_blog = {}
 const TAMANHO_MAXIMO_UID = 100
 
-utils_blog.construirDatosParaActualizar = ( datosNuevos, datosViejos ) => {
+utils_blog.filtroDeDatosDiferentes = ( datosNuevos, datosViejos ) => {
     
-    
+    const {
+        uid,
+        titulo,
+        descripcion,
+        publicador,
+        seccion,
+        categoria,
+        subCategorias,
+        habilitado,
+        estado,
+        actualizacionActual,
+        fechaCreacion,
+        fechaActualizacion,
+    } = datosNuevos
 
-    return {
+    const datosFiltrados = {}
 
+    if ( titulo && titulo != datosViejos.titulo ) {
+        datosFiltrados.titulo = titulo
     }
+
+    if ( descripcion && descripcion != datosViejos.descripcion ) {
+        datosFiltrados.descripcion = descripcion
+    }
+
+    if ( seccion && seccion != datosViejos.seccion ) {
+        datosFiltrados.seccion = seccion
+    }
+
+    if ( categoria && categoria != datosViejos.categoria ) {
+        datosFiltrados.categoria = categoria
+    }
+
+    if ( subCategorias ) {
+        let subCategorias1 = JSON.stringify(subCategorias.sort())
+        let subCategorias2 = JSON.stringify(datosViejos.subCategorias.sort())
+        
+        if ( subCategorias1 != subCategorias2 ) {
+            datosFiltrados.subCategorias = subCategorias
+        }
+    }
+
+    return datosFiltrados
 }
 
-utils_blog.verificadorDeFormato = ( datosBlog, usuarioSolicitante ) => {
+utils_blog.verificadorDeTipoDeDatos = ( datosBlog ) => {
 
     const {
         uid,
@@ -25,7 +63,8 @@ utils_blog.verificadorDeFormato = ( datosBlog, usuarioSolicitante ) => {
         categoria,
         subCategorias,
         habilitado,
-        pendiente,
+        estado,
+        actualizacionActual,
         fechaCreacion,
         fechaActualizacion,
     } = datosBlog
@@ -33,6 +72,7 @@ utils_blog.verificadorDeFormato = ( datosBlog, usuarioSolicitante ) => {
     /**
      * Tipos de datos: Formato y tipo de datos 
      * correctos para un blog
+     * 
     */
     if ( uid && typeof uid != 'string' ) {
         throw new ErrorJekuaa({
@@ -90,10 +130,17 @@ utils_blog.verificadorDeFormato = ( datosBlog, usuarioSolicitante ) => {
         })
     }
 
-    if ( pendiente && typeof pendiente != 'boolean' ) {
+    if ( estado && typeof estado != 'string' ) {
         throw new ErrorJekuaa({
             codigo: 'jekuaa/error/usuario_mala_solicitud',
-            mensaje: 'El estado pendiente del blog debe ser boolean.'
+            mensaje: 'El estado del blog debe ser string.'
+        })
+    }
+
+    if ( actualizacionActual && ( typeof actualizacionActual != 'string' || typeof actualizacionActual != 'object' ) ) {
+        throw new ErrorJekuaa({
+            codigo: 'jekuaa/error/usuario_mala_solicitud',
+            mensaje: 'El estado actualizacionActual del blog debe ser string o object.'
         })
     }
 
@@ -111,9 +158,29 @@ utils_blog.verificadorDeFormato = ( datosBlog, usuarioSolicitante ) => {
         })
     }
 
+}
+
+utils_blog.verificadorDeCondicionesDeBlogUsuario = ( datosBlog, usuarioSolicitante ) => {
+
+    const {
+        uid,
+        titulo,
+        descripcion,
+        publicador,
+        seccion,
+        categoria,
+        subCategorias,
+        habilitado,
+        estado,
+        actualizacionActual,
+        fechaCreacion,
+        fechaActualizacion,
+    } = datosBlog
+
     /**
      * Verificación de datos: Formato correcto
      * para un blog.
+     * 
     */
     if ( uid && uid.length > TAMANHO_MAXIMO_UID ) {
         throw new ErrorJekuaa({
@@ -122,6 +189,7 @@ utils_blog.verificadorDeFormato = ( datosBlog, usuarioSolicitante ) => {
         })
     }
 
+    // La uid del solicitante debe ser igual a la uid del dueño del blog
     if ( publicador && publicador != usuarioSolicitante.uid ) {
         throw new ErrorJekuaa({
             codigo: 'jekuaa/error/usuario_no_autorizado',
@@ -129,6 +197,7 @@ utils_blog.verificadorDeFormato = ( datosBlog, usuarioSolicitante ) => {
         })
     }
 
+    // La seccion solo es valida si el solicitante pertenece a esa seccion
     if ( seccion && rolNecesitaSecciones( usuarioSolicitante.jekuaaRoles.rol ) ) {
         const seccionValida = usuarioSolicitante.jekuaaRoles.secciones.includes( seccion )
         if ( !seccionValida ) {
@@ -139,6 +208,7 @@ utils_blog.verificadorDeFormato = ( datosBlog, usuarioSolicitante ) => {
         }
     }
 
+    // Verificacion de que la categoria pertenezca a la seccion
     if ( seccion && categoria && !categoriaPerteneceASeccion( seccion, categoria ) ) {
         throw new ErrorJekuaa({
             codigo: 'jekuaa/error/usuario_mala_solicitud',
@@ -146,6 +216,7 @@ utils_blog.verificadorDeFormato = ( datosBlog, usuarioSolicitante ) => {
         })
     }
 
+    // Verificacion de que la subcategoria pertenezca a la seccion y la categoria
     if ( seccion && categoria && subCategorias && !subcategoriasPertenecenACategoria( seccion, categoria, subCategorias ) ) {
         throw new ErrorJekuaa({
             codigo: 'jekuaa/error/usuario_mala_solicitud',
@@ -153,18 +224,22 @@ utils_blog.verificadorDeFormato = ( datosBlog, usuarioSolicitante ) => {
         })
     }
 
-    if ( habilitado === true && pendiente === true ) {
-        throw new ErrorJekuaa({
-            codigo: 'jekuaa/error/usuario_mala_solicitud',
-            mensaje: 'Un blog no puede estar habilitado y en estado pendiente a la vez.'
-        })
-    }
+    // La fecha de creacion debe ser menor o igual a la de actualizacion
+    if ( fechaActualizacion ) {
+        if ( !fechaCreacion ) {
+            throw new ErrorJekuaa({
+                codigo: 'jekuaa/error/usuario_mala_solicitud',
+                mensaje: 'No se tiene el dato de fechaCreacion para verificar la validez de fechaActualizacion.'
+            })
+        }
 
-    if ( ( fechaCreacion && fechaActualizacion ) && fechaCreacion.seconds > fechaActualizacion.seconds ) {
-        throw new ErrorJekuaa({
-            codigo: 'jekuaa/error/usuario_mala_solicitud',
-            mensaje: 'La fecha de creación no puede ser estrictamente mayor que la fecha de actualización.'
-        })
+        if ( fechaCreacion.seconds > fechaActualizacion.seconds ) {
+            throw new ErrorJekuaa({
+                codigo: 'jekuaa/error/usuario_mala_solicitud',
+                mensaje: 'La fecha de creación no puede ser estrictamente mayor que la fecha de actualización.'
+            })
+        }
+        
     }
 
 }
@@ -179,7 +254,8 @@ utils_blog.verificadorDeDatosRequeridos = ( datosBlog ) => {
         categoria,
         subCategorias,
         habilitado,
-        pendiente,
+        estado,
+        actualizacionActual,
         fechaCreacion,
         fechaActualizacion,
     } = datosBlog
@@ -221,20 +297,60 @@ utils_blog.verificadorDeDatosRequeridos = ( datosBlog ) => {
 
 }
 
-utils_blog.construirDatosParaActualizarYVerificarFormato = ( datosNuevos, datosViejos ) => {
-    
-    // Datos Construidos
+utils_blog.generadorDeDatosParaActualizar = ( datosNuevos, datosViejos, usuarioSolicitante ) => {
+
+    // Verificador de tipos de datos
+    utils_blog.verificadorDeTipoDeDatos( datosNuevos )
+
+    // Verificador de condiciones de datos del blog de acuerdo a los datos del usuario
+    utils_blog.verificadorDeCondicionesDeBlogUsuario( datosNuevos, usuarioSolicitante )
+
+    // Verificar campos constantes
+    utils_blog.verificadorDeDatosConstantes( datosNuevos, datosViejos )
+
+    // Generador de datos diferentes (nuevos)
+    return utils_blog.filtroDeDatosDiferentes( datosNuevos, datosViejos )
+
+}
+
+utils_blog.verificadorDeDatosConstantes = ( datosNuevos, datosViejos ) => {
+
     const {
+        uid,                    // Constante
+        titulo,
+        descripcion,
+        publicador,             // Constante
+        seccion,
+        categoria,
+        subCategorias,
+        habilitado,             // Automatico
+        estado,                 // Automatico
+        actualizacionActual,    // Automatico
+        fechaCreacion,          // Constante
+        fechaActualizacion,     // Automatico
+    } = datosNuevos
 
-    } = utils_blog.construirDatosParaActualizar( datosNuevos, datosViejos )
-
-    // Verificar formato
-    utils_blog.verificadorDeFormato( datosUsuarioDBActualizar )
-
-    // Retornar los datos solo para actualizar
-    return {
-        
+    if ( uid ) {
+        throw new ErrorJekuaa({
+            codigo: 'jekuaa/error/usuario_mala_solicitud',
+            mensaje: 'No se puede editar la uid.'
+        })
     }
+
+    if ( publicador ) {
+        throw new ErrorJekuaa({
+            codigo: 'jekuaa/error/usuario_mala_solicitud',
+            mensaje: 'No se puede editar el publicador.'
+        })
+    }
+
+    if ( fechaCreacion && fechaCreacion.seconds != datosViejos.fechaCreacion.seconds ) {
+        throw new ErrorJekuaa({
+            codigo: 'jekuaa/error/usuario_mala_solicitud',
+            mensaje: 'No se puede editar la fechaCreacion del blog.'
+        })
+    }
+
 }
 
 module.exports = utils_blog

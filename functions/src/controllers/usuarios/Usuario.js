@@ -1,10 +1,6 @@
 const controllerUsuario = {}
 
-controllerUsuario.comprarCurso = async (req, res) => {
-
-}
-
-controllerUsuario.obtenerCurso = async (req, res) => {
+controllerUsuario.actualizarDatosPersonalesPorUID = async (req, res) => {
     
 }
 

@@ -97,4 +97,40 @@ middlewaresMiembroJekuaa.esDeMayorIgualNivel = async ( req, res, next ) => {
     
 }
 
+middlewaresMiembroJekuaa.esDeMayorNivel = async ( req, res, next ) => {
+    
+    try {
+        
+        const { params, jekuaaDatos } = req
+        const { uidSolicitante, datosAuthSolicitante } = jekuaaDatos
+        const { uid } = params
+
+        const datosAuthUsuario = await admin.auth().getUser( uid )
+
+        // El solicitante debe tener mayor o igual nivel que el usuario a actualizar
+        const diferenciaNivelRol = utilsRoles.compararNivelRol( datosAuthSolicitante.customClaims.rol, 
+            datosAuthUsuario.customClaims.rol )
+
+        if ( diferenciaNivelRol <= 0 ) {
+            // No autorizado
+            throw new ErrorJekuaa({
+                codigo: 'jekuaa/error/usuario_no_autorizado'
+            })
+        }
+
+        return next()
+
+    } catch (error) {
+
+        const {
+            status,
+            respuesta
+        } = manejadorErrores( error )
+
+        return res.status( status ).json( respuesta )
+
+    }
+    
+}
+
 module.exports = middlewaresMiembroJekuaa

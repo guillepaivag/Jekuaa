@@ -304,6 +304,7 @@ export default {
         ],
         secciones: ['informatica', 'matematica'],
         logitudesDeTexto,
+        datosRoles: [],
         infoTextoFormulario: [
             {
                 paso: 1,

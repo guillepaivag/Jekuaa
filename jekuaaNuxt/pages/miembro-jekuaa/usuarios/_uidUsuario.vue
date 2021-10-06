@@ -1,6 +1,6 @@
 <template>
     <div class="container">
-        <div class="text-center mt-2 mb-5">
+        <div class="text-center mt-2 mb-5" v-if="datosUsuario && datosAuth">
             <v-btn
                 class="ma-2"
                 outlined
@@ -40,6 +40,13 @@
             </v-btn>
         </div>
 
+        <div class="text-center mt-2 mb-5" v-else>
+            <v-progress-circular
+                indeterminate
+                color="primary"
+            ></v-progress-circular>
+        </div>
+
         <v-divider class="my-3" />
         
         <div v-if="datosUsuario && datosAuth">
@@ -51,11 +58,8 @@
                 v-on:actualizarUsuario="actualizarUsuario($event)"
             />
         </div>
-        <div v-else>
 
-        </div>
-
-        <v-divider class="my-3" />
+        <v-divider class="my-3" v-if="datosUsuario && datosAuth" />
 
         <confirmacionAccionPorUID 
             titulo="¿Quieres borrar el usuario?"
@@ -109,7 +113,7 @@
                     color="#683bce"
                     @click="verDatosAuth"
                 >
-                    Actualizar
+                    Recargar
                 </v-btn>
             </v-card-actions>
             </v-card>

@@ -86,7 +86,10 @@ class Respuesta {
         ACCIONES
     */
 
-    setRespuestaPorCodigo ( codigo, {mensaje, resultado} ) {
+    setRespuestaPorCodigo ( codigo, opciones ) {
+
+        const mensaje = opciones && opciones.mensaje ? opciones.mensaje : undefined
+        const resultado = opciones && opciones.resultado ? opciones.resultado : undefined
 
         let rutasCodigo = codigo.split('/')
 

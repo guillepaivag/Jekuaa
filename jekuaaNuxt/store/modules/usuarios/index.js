@@ -267,12 +267,8 @@ export const actions = {
 
     // if (!realTime) {
     //   await dispatch('modules/user/misCursos/setDatosMisCursosPorUID', uid, { root: true })
-    //   // await dispatch('modules/user/seguimientos/setDatosSeguimientosPorUID', null, { root: true })
-    //   // await dispatch('modules/user/intereses/setDatosInteresesPorUID', null, { root: true })
     // } else {
     //   await dispatch('modules/user/misCursos/setDatosMisCursosPorUID_RealTime', uid, { root: true })
-    //   // await dispatch('modules/user/seguimientos/setDatosSeguimientosPorUID_RealTime', null, { root: true })
-    //   // await dispatch('modules/user/intereses/setDatosInteresesPorUID_RealTime', null, { root: true })
     // }
 
   },
@@ -374,8 +370,6 @@ export const actions = {
       nombreUsuario: usuario.nombreUsuario,
       nombreCompleto: usuario.nombreCompleto
     })
-
-    console.log('datosRegistroUsuario', datosRegistroUsuario)
 
     // Retornar datos de registro del usuario
     return datosRegistroUsuario.data.respuesta.resultado

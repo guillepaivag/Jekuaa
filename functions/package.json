@@ -7,7 +7,7 @@
     "start": "npm run shell",
     "deploy": "firebase deploy --only functions",
     "logs": "firebase functions:log",
-    "fe": "cd .. && firebase emulators:start --import=./emulator-data --export-on-exit=./emulator-data"
+    "fe": "cd .. && firebase emulators:start --only hosting,functions,firestore,auth,ui --import=./emulator-data --export-on-exit=./emulator-data"
   },
   "engines": {
     "node": "14"

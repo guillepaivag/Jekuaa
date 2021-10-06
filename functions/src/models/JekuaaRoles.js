@@ -1,6 +1,4 @@
 const utilsRoles = require('../utils/usuarios/RolesSecciones')
-const datosRoles = require('../InformacionEstatica/DatosRoles')
-const seccionesValidas = require('../InformacionEstatica/SeccionesValidas')
 
 class JekuaaRoles {
 
@@ -192,11 +190,11 @@ class JekuaaRoles {
     }
 
     static informacionDatosRoles () {
-        return datosRoles
+        return utilsRoles.getDatosRoles()
     }
 
     static informacionSeccionesValidas () {
-        return seccionesValidas
+        return utilsRoles.getSeccionesValidas()
     }
 }
 

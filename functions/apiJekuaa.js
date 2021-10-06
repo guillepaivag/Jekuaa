@@ -36,23 +36,8 @@ apiJekuaa.use(express.urlencoded({
 // apiJekuaa.use(fileUpload())
 
 // rutas
-apiJekuaa.use('/miembroJekuaa', require('./src/routes/usuarios/MiembroJekuaa'))
+apiJekuaa.use('/usuarios', require('./src/routes/usuarios/Usuario'))
 apiJekuaa.use('/blog', require('./src/routes/blogs/Blog'))
-
-apiJekuaa.post('/a', fileMiddleware, async (req, res) => {
-  
-  console.log('req.files', req.files )
-
-  if (!req.files) {
-    return res.send('No files to upload.');
-  }
-
-  return res.status(200).json({
-    files: req.files,
-    body: req.body,
-    rawBody: req.rawBody,
-  })
-  
-})
+apiJekuaa.use('/rolesSecciones', require('./src/routes/usuarios/miembroJekuaa/RolesSecciones'))
 
 module.exports = apiJekuaa

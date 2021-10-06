@@ -8,7 +8,7 @@ export const actions = {
     
     try {
 
-      await dispatch('modules/system/setLoading', true)
+      await dispatch('modules/sistema/setLoading', true)
 
       const user = getUserFromCookie(req)
 
@@ -18,7 +18,7 @@ export const actions = {
 
         const uid = user.decodedToken.user_id
 
-        const datosUsuarioDB = await dispatch('modules/user/user/firebaseFirestoreGetUser_UID', uid)
+        const datosUsuarioDB = await dispatch('modules/usuarios/firebaseFirestoreGetUser_UID', uid)
 
         // Objetos a insertar
         const fotoPerfil = user.decodedToken.picture ? user.decodedToken.picture : null
@@ -50,17 +50,14 @@ export const actions = {
           jekuaaPoint
         }
 
-        await dispatch('modules/user/user/setDatosUsuario', datosUsuario)
+        await dispatch('modules/usuarios/setDatosUsuario', datosUsuario)
 
       } else {
-        await dispatch('modules/user/user/setDatosUsuario', null)
+        await dispatch('modules/usuarios/setDatosUsuario', null)
       }
     } catch (error) {
-      console.log('ERROOOR: ', error)
-
-      return 
-    } 
-
+      console.log('Error - nuxtServerInit: ', error)
+    }
   },
 
 }

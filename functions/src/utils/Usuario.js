@@ -3,7 +3,7 @@ const JekuaaRoles = require("../models/JekuaaRoles")
 
 const funciones = {}
 
-funciones.construirDatosParaActualizar = ( datosNuevos, datosViejos ) => {
+funciones.filtroDeDatosDiferentes = ( datosNuevos, datosViejos ) => {
         
     const {
         nombreUsuario,
@@ -210,7 +210,7 @@ funciones.construirDatosParaActualizarYVerificarFormatoParaDB = ( datosNuevos, d
         datosUsuarioDBActualizar,
         datosUsuarioAuthActualizar,
         datosUsuarioAuthClaimsActualizar
-    } = funciones.construirDatosParaActualizar( datosNuevos, datosViejos )
+    } = funciones.filtroDeDatosDiferentes( datosNuevos, datosViejos )
 
     funciones.verificadorDeFormatoParaDB( datosUsuarioDBActualizar )
 

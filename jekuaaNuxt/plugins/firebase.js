@@ -17,22 +17,22 @@ export default ({ env, store }, inject) => {
       firebase.auth().useEmulator('http://localhost:9099')
       firebase.firestore().useEmulator('localhost', 8080)
       firebase.functions().useEmulator('localhost', 5001)
-      firebase.storage().useEmulator('localhost', 9199)
+      // firebase.storage().useEmulator('localhost', 9199)
     }
 
     firebase.auth().onAuthStateChanged(async (user) => {
-      store.dispatch('modules/system/setLoading', true)
+      await store.dispatch('modules/sistema/setLoading', true)
 
       if (user) {
         console.log('signed in', user)
-        await store.dispatch('modules/user/user/login', user.uid)
+        await store.dispatch('modules/usuarios/login', user.uid)
 
       } else {
         console.log('signed out')
-        await store.dispatch('modules/user/user/logout')
+        await store.dispatch('modules/usuarios/logout')
       }
 
-      store.dispatch('modules/system/setLoading', false)
+      await store.dispatch('modules/sistema/setLoading', false)
     })
 
   }

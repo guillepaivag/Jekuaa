@@ -22,7 +22,6 @@
 
 <script>
 import firebase from 'firebase'
-import { mapActions, mapMutations } from 'vuex'
 import authEmail from '@/components/auth/authEmail'
 
 export default {
@@ -40,13 +39,11 @@ export default {
     }
   },
   methods: {
-    ...mapActions('modules/user/user', ['firebaseInicioSesionUser_EmailAndPassword', 'login', 'firebaseFirestoreGetUser_UID']),
-    ...mapMutations('modules/system', ['setLoading', 'setError']),
     async inicioSesionEmail (user) {
       try {
-        this.setLoading(true)
+        this.$store.dispatch('modules/sistema/setLoading', true)
 
-        const userCredential = await this.firebaseInicioSesionUser_EmailAndPassword({
+        const userCredential = await this.$store.dispatch('modules/usuarios/firebaseInicioSesionUser_EmailAndPassword', {
           correo: user.correo,
           contrasenha: user.contrasenha
         })
@@ -54,16 +51,10 @@ export default {
 
         this.$router.push('/cursos')
       } catch (error) {
-        this.setError({
-          existe: true,
-          titulo: 'Hubo un error',
-          mensaje: '',
-          error
-        })
-
-        this.setLoading(false)
-      } finally {
+        console.log('Error - inicioSesionEmail', error)
         
+      } finally {
+        this.$store.dispatch('modules/sistema/setLoading', false)
       }
     }
   }
