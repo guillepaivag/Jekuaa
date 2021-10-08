@@ -20,7 +20,7 @@ class Blog {
         this.categoria = ( datosBlog && datosBlog.categoria ) ? datosBlog.categoria : ''
         this.subCategorias = ( datosBlog && datosBlog.subCategorias ) ? datosBlog.subCategorias : []
         this.habilitado = ( datosBlog && datosBlog.habilitado ) ? datosBlog.habilitado : false
-        this.estado = ( datosBlog && datosBlog.estado ) ? datosBlog.estado : false
+        this.blogEnPublicodos = ( datosBlog && datosBlog.blogEnPublicodos ) ? datosBlog.blogEnPublicodos : false
         this.actualizacionPendiente = ( datosBlog && datosBlog.actualizacionPendiente ) ? datosBlog.actualizacionPendiente : false
         this.fechaCreacion = ( datosBlog && datosBlog.fechaCreacion ) ? datosBlog.fechaCreacion : null
         this.fechaActualizacion = ( datosBlog && datosBlog.fechaActualizacion ) ? datosBlog.fechaActualizacion : null
@@ -43,7 +43,7 @@ class Blog {
             categoria: this.categoria,
             subCategorias: this.subCategorias,
             habilitado: this.habilitado,
-            estado: this.estado,
+            blogEnPublicodos: this.blogEnPublicodos,
             actualizacionPendiente: this.actualizacionPendiente,
             fechaCreacion: this.fechaCreacion,              // Constante
             fechaActualizacion: this.fechaActualizacion,
@@ -68,7 +68,7 @@ class Blog {
         this.setCATEGORIA( ( blog && blog.categoria ) ? blog.categoria : null )
         this.setSUB_CATEGORIAS( ( blog && blog.subCategorias ) ? blog.subCategorias : null )
         this.setHABILITADO( ( blog && blog.habilitado ) ? blog.habilitado : null )
-        this.setESTADO( ( blog && blog.estado ) ? blog.estado : null )
+        this.setBLOG_EN_PUBLICADOS( ( blog && blog.blogEnPublicodos ) ? blog.blogEnPublicodos : null )
         this.setACTUALIZACION_PENDIENTE( ( blog && blog.actualizacionPendiente ) ? blog.actualizacionPendiente : null )
         this.setFECHA_CREACION( ( blog && blog.fechaCreacion ) ? blog.fechaCreacion : null )
         this.setFECHA_ACTUALIZACION( ( blog && blog.fechaActualizacion ) ? blog.fechaActualizacion : null )
@@ -146,13 +146,13 @@ class Blog {
         this.habilitado = habilitado
     }
 
-    setESTADO ( estado ) {
-        if ( !estado ) {
-            this.estado = 'no-existe-archivo'
+    setBLOG_EN_PUBLICADOS ( blogEnPublicodos ) {
+        if ( !blogEnPublicodos ) {
+            this.blogEnPublicodos = false
             return
         }
 
-        this.estado = estado
+        this.blogEnPublicodos = blogEnPublicodos
     }
 
     setACTUALIZACION_PENDIENTE ( actualizacionPendiente ) {
@@ -257,49 +257,84 @@ class Blog {
 
         // Cambia el estado y actualizacionPendiente
         await this.actualizarDatosBlog({
-            estado: 'actualizacion-pendiente',
-            actualizacionPendiente: solicitudCreada.id
+            actualizacionPendiente: solicitudCreada
         })
 
         return solicitudCreada
     }
 
     async obtenerContenido ( opciones ) {
-        let rutaCloudStorage = opciones.pendiente ? 'blogs/pendientes' : 'blogs/publicados'
+        let rutaCloudStorage = opciones && opciones.pendiente ? 'blogs/pendientes' : 'blogs/publicados'
 
-        const myBucket = storage.bucket('jekuaa-py.appspot.com')
+        const bucket = storage.bucket('jekuaa-py.appspot.com')
 
-        const file = myBucket.file(`${rutaCloudStorage}/${this.uid}.md`)
+        const file = bucket.file(`${rutaCloudStorage}/${this.uid}.md`)
 
-        // Descargar archivo (de publicados o pendientes)
-        await file.download({
-            destination: opciones.rutaArchivoTemp
+        const archivo = file.createReadStream()
+        return await new Promise((resolve, reject) => {
+            let contenido = ''
+            archivo
+                .on('data', contenidoObtenido => {
+                    // Obtener el contenido del archivo
+                    contenido += contenidoObtenido
+                })
+                .on('end', () => {
+                    // Formatear de acuerdo a lo que se pide
+                    // Formato por defecto: Markdown (md)
+                    if ( opciones.extensionArchivo === 'html' ) {
+                        const converter = new showdown.Converter()
+                        contenido = converter.makeHtml(contenido)
+                    }
+                    
+                    resolve(contenido)
+                })
+                .on('error', err => {
+                    reject(err)
+                })
         })
 
-        // Obtener el contenido del archivo
-        let contenido = fs.readFileSync( opciones.rutaArchivoTemp, 'utf-8' )
-
-        // Borrar el archivo creado en el servidor
-        fs.unlink( opciones.rutaArchivoTemp, (err => {
-            if ( err ) {
-                console.log(err)
-                return
-            }
-            
-        }))
-
-        // Formatear de acuerdo a lo que se pide
-        // Formato por defecto: Markdown (md)
-        if ( opciones.formatoSalida === 'html' ) {
-            const converter = new showdown.Converter()
-            contenido = converter.makeHtml(contenido)
-        }
-
-        // Enviar string del contenido
-        return contenido
     }
 
-    async actualizarSolicitudDeActualizacion ( uid, datosActualizacion ) {
+    async aceptarArchivoPendiente () {
+        const bucket = storage.bucket('jekuaa-py.appspot.com')
+
+        const file = bucket.file(`blogs/pendientes/${this.uid}.md`)
+
+        const existe = (await file.exists())[0]
+
+        if ( !existe ) {
+            throw new ErrorJekuaa({
+                codigo: 'jekuaa/error/usuario_mala_solicitud',
+                mensaje: `No existe el blog.`
+            })
+        }
+
+        const filePublicado = bucket.file(`blogs/publicados/${this.uid}.md`)
+
+        await file.move(filePublicado)
+    }
+
+    async borrarArchivoBlog ( opciones ) {
+        let rutaCloudStorage = opciones && opciones.pendiente ? 'blogs/pendientes' : 'blogs/publicados'
+
+        const bucket = storage.bucket('jekuaa-py.appspot.com')
+
+        const file = bucket.file(`${rutaCloudStorage}/${this.uid}.md`)
+
+        const existe = (await file.exists())[0]
+
+        if ( !existe ) {
+            throw new ErrorJekuaa({
+                codigo: 'jekuaa/error/usuario_mala_solicitud',
+                mensaje: `No existe el blog.`
+            })
+        }
+
+        const data = await file.delete()
+        const apiResponse = data[0]
+    }
+
+    async actualizarSolicitudDeActualizacion ( referencia, datosActualizacion ) {
 
         const {
             fechaSolicitud,
@@ -309,9 +344,7 @@ class Blog {
             respuesta
         } = datosActualizacion
 
-        const actualizacion = await db.collection(COLECCION_BLOG).doc(this.uid)
-        .collection(COLECCION_BLOG_ACTUALIZACIONES).doc(uid)
-        .update({
+        const actualizacion = await referencia.update({
             estado,
             respuesta,
             fechaRespuesta,
@@ -323,7 +356,6 @@ class Blog {
     async habilitarBlog () {
 
         await db.collection(COLECCION_BLOG).doc(this.uid).update({
-            pendiente: false,
             habilitado: this.habilitado
         })
 
@@ -331,7 +363,9 @@ class Blog {
     }
 
     async eliminarBlog () {
+        // Eliminar historial de actualizaciones del blog
 
+        // Eliminar blog
         await db.collection(COLECCION_BLOG).doc(this.uid).delete()
 
         return this
@@ -355,7 +389,7 @@ class Blog {
             categoria,
             subCategorias,
             habilitado,
-            estado,
+            blogEnPublicodos,
             actualizacionPendiente,
             fechaCreacion,
             fechaActualizacion,
@@ -364,14 +398,14 @@ class Blog {
         const blog = new Blog()
         blog.setUID( uid )
         blog.setTITULO( titulo )
-        blog.setDESCRIPCION( descripcion )      // Opcional
+        blog.setDESCRIPCION( descripcion )                  // Opcional
         blog.setPUBLICADOR( publicador )
         blog.setSECCION( seccion )
         blog.setCATEGORIA( categoria )
-        blog.setSUB_CATEGORIAS( subCategorias ) // Opcional
-        blog.setHABILITADO()                        // Default: false
-        blog.setESTADO()                            // Default: no-existe-archivo
-        blog.setACTUALIZACION_PENDIENTE()           // Default: null
+        blog.setSUB_CATEGORIAS( subCategorias )             // Opcional
+        blog.setHABILITADO()                                    // Default: false
+        blog.setBLOG_EN_PUBLICADOS()                         // Default: false
+        blog.setACTUALIZACION_PENDIENTE()                       // Default: null
         blog.setFECHA_CREACION( fechaCreacion )
         blog.setFECHA_ACTUALIZACION( fechaActualizacion )
 
@@ -401,13 +435,34 @@ class Blog {
         return response
     }
 
-    static async obtenerURL ( nombreArchivo, extensionArchivo, pendiente, segundosValidos ) {
+    static async existeArchivoBlog ( rutaArchivo ) {
+        const bucket = storage.bucket('jekuaa-py.appspot.com')
+        const file = bucket.file(rutaArchivo)
+
+        const existe = (await file.exists())[0]
+
+        return existe
+    }
+
+    static async obtenerURL ( nombreArchivo, opcionesBlog ) {
+
+        // opcionesBlog: pendiente, segundosValidos
+
         const action = 'read'
-        const expires = new Date().getTime() + segundosValidos * 1000
-        const ruta = pendiente ? 'blogs/pendientes' : 'blogs/publicados'
+        const expires = new Date().getTime() + opcionesBlog.segundosValidos * 1000
+        const rutaArchivo = opcionesBlog.pendiente ? 'blogs/pendientes' : 'blogs/publicados'
 
         const bucket = storage.bucket('jekuaa-py.appspot.com')
-        const file = bucket.file(`${ruta}/${nombreArchivo}.${extensionArchivo}`)
+        const file = bucket.file(`${rutaArchivo}/${nombreArchivo}.md`)
+
+        const existe = (await file.exists())[0]
+
+        if ( !existe ) {
+            throw new ErrorJekuaa({
+                codigo: 'jekuaa/error/usuario_mala_solicitud',
+                mensaje: `No existe el blog ${nombreArchivo}`
+            })
+        }
         
         const links = await file.getSignedUrl({
             action,
@@ -424,39 +479,34 @@ class Blog {
 
         const file = myBucket.file(`${rutaCloudStorage}/${nombreArchivo}.md`)
 
-        // Descargar archivo (de publicados o pendientes)
-        await file.download({
-            destination: opciones.rutaArchivoTemp
+        const archivo = file.createReadStream()
+
+        let contenido = ''
+        archivo.on('data', function(contenidoObtenido) {
+            contenido += contenidoObtenido;
+        })
+        
+        archivo.on('end', function() {
+            return contenido
         })
 
-        // Obtener el contenido del archivo
-        let contenido = fs.readFileSync( opciones.rutaArchivoTemp, 'utf-8' )
-
-        // Borrar el archivo creado en el servidor
-        fs.unlink( opciones.rutaArchivoTemp, (err => {
-            if ( err ) {
-                console.log(err)
-                return
-            }
-            
-        }))
-
-        // Formatear de acuerdo a lo que se pide
-        // Formato por defecto: Markdown (md)
-        if ( opciones.formatoSalida === 'html' ) {
-            const converter = new showdown.Converter()
-            contenido = converter.makeHtml(contenido)
-        }
-
-        // Enviar string del contenido
-        return contenido
+        archivo.on('error', function(err) {
+            console.log('err', err)
+        })
     }
 
     static async eliminarArchivoBlog ( filename ) {
         const bucket = storage.bucket('jekuaa-py.appspot.com')
-        const file = bucket.file(`blogs/${filename}.md`)
-        
-        const resultado = await file.delete()
+        const filePublicado = bucket.file(`blogs/publicados/${filename}.md`)
+        const filePendiente = bucket.file(`blogs/pendientes/${filename}.md`)
+
+        const existePublicado = (await filePublicado.exists())[0]
+        const existePendiente = (await filePendiente.exists())[0]
+
+        const resultado = {}
+
+        resultado.publicado = existePublicado ? await filePublicado.delete() : null
+        resultado.pendiente = existePendiente ? await filePendiente.delete() : null
         
         return resultado
     }

@@ -80,10 +80,8 @@ class ActualizacionBlog {
         .collection(COLECCION_BLOG_ACTUALIZACIONES).add(this.getDatosActualizacionBlog())
     }
 
-    async actualizarSolicitudActualizacion ( datosSolicitudActualizacion ) {
-        return db.collection(COLECCION_BLOG).doc(this.uidBlog)
-        .collection(COLECCION_BLOG_ACTUALIZACIONES).doc(this.uidSolicitud)
-        .update(datosSolicitudActualizacion)
+    async actualizarSolicitudActualizacion ( referencia, datosActualizacion ) {
+        return referencia.update(datosActualizacion)
     }
 }
 

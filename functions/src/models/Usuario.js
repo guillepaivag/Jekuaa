@@ -47,7 +47,7 @@ class Usuario {
         }
     }
 
-    getUsuarioJSON () {
+    getDatosUsuarioProduccion () {
         return {
             uid: this.uid,
             nombreUsuario: this.nombreUsuario,

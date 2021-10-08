@@ -5,7 +5,7 @@ const Blog = require('../Blog')
 const Instructor = require('./Instructor')
 const ErrorJekuaa = require('../Error/ErroresJekuaa')
 const { 
-    verificadorDeFormatoParaDB,
+    verificadorDeFormatoProduccion,
     construirDatosParaActualizarYVerificarFormatoParaDB
 } = require('../../utils/Usuario')
 
@@ -140,38 +140,33 @@ class MiembroJekuaa extends Usuario {
             jekuaaPoint
         } = datosUsuario
 
-        await Usuario.errorExisteUsuario({
-            nombreUsuario
-        })
-
-        const usuarioNuevoJekuaa = new Usuario().setUsuario( datosUsuario ).getUsuarioJSON()
-
-        verificadorDeFormatoParaDB( usuarioNuevoJekuaa )
-
         const usuarioAuthNuevo = await admin.auth().createUser({
-            email: usuarioNuevoJekuaa.correo,
+            email: correo,
             password: contrasenha,
-            displayName: usuarioNuevoJekuaa.nombreUsuario,
+            displayName: nombreUsuario,
         })
 
         await admin.auth().setCustomUserClaims(usuarioAuthNuevo.uid, {
-            rol: usuarioNuevoJekuaa.jekuaaRoles.rol,
-            jekuaaPremium: !!usuarioNuevoJekuaa.jekuaaPremium.plan
+            jekuaaRol: jekuaaRoles.rol,
+            jekuaaPremium: jekuaaPremium.plan
         })
 
-        await admin.firestore().collection(COLECCION_USUARIO).doc(usuarioAuthNuevo.uid).set({
-            ...usuarioNuevoJekuaa,
+        await db.collection(COLECCION_USUARIO).doc(usuarioAuthNuevo.uid).set({
+            ...datosUsuario,
             uid: usuarioAuthNuevo.uid
         })
 
-        if ( usuarioNuevoJekuaa.jekuaaRoles.instructor ) {
+        if ( jekuaaRoles.instructor ) {
             // Agregar instructor
             Instructor.crearNuevoInstructor({
                 uid: usuarioAuthNuevo.uid
             })
         }
 
-        const usuario = new Usuario( Object.assign( usuarioNuevoJekuaa, { uid: usuarioAuthNuevo.uid } ) )
+        const usuario = new Usuario({
+            ...datosUsuario,
+            uid: usuarioAuthNuevo.uid
+        })
 
         return usuario
     }

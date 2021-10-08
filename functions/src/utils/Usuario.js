@@ -1,5 +1,9 @@
+const ErrorJekuaa = require("../models/Error/ErroresJekuaa")
 const JekuaaPremium = require("../models/JekuaaPremium")
 const JekuaaRoles = require("../models/JekuaaRoles")
+const Usuario = require("../models/Usuario")
+const utilsRolesSecciones = require("./usuarios/RolesSecciones")
+const timestamp = require('./Timestamp')
 
 const funciones = {}
 
@@ -141,7 +145,7 @@ funciones.filtroDeDatosDiferentes = ( datosNuevos, datosViejos ) => {
     }
 }
 
-funciones.verificadorDeFormatoParaDB = ( datosUsuario ) => {
+funciones.verificadorDeFormatoProduccion = ( datosUsuario ) => {
         
     const {
         uid,
@@ -153,6 +157,14 @@ funciones.verificadorDeFormatoParaDB = ( datosUsuario ) => {
         jekuaaRoles,
         jekuaaPoint
     } = datosUsuario
+
+    if ( nombreUsuario && typeof nombreUsuario != 'string' ) {
+        throw new TypeError('El nombreUsuario debe ser de tipo string.', 'Usuario.js')
+    }
+
+    if ( correo && typeof correo != 'string' ) {
+        throw new TypeError('El correo debe ser de tipo string.', 'Usuario.js')
+    }
 
     if ( nombreCompleto && typeof nombreCompleto != 'string' ) {
         throw new TypeError('Debe de ser de tipo string el nombre completo del usuario.', 'Usuario.js')
@@ -204,6 +216,317 @@ funciones.verificadorDeFormatoParaDB = ( datosUsuario ) => {
     }
 }
 
+funciones.verificarTipoDeDatosCliente = ( datosUsuario, contrasenha, confirmacionContrasenha ) => {
+        
+    const {
+        uid,
+        nombreUsuario,
+        correo,
+        nombreCompleto,
+        fechaNacimiento,
+        jekuaaPremium,
+        jekuaaRoles,
+        jekuaaPoint
+    } = datosUsuario
+
+    if ( nombreUsuario && typeof nombreUsuario != 'string' ) {
+        throw new TypeError('El nombreUsuario debe ser de tipo string.', 'Usuario.js')
+    }
+
+    if ( correo && typeof correo != 'string' ) {
+        throw new TypeError('El correo debe ser de tipo string.', 'Usuario.js')
+    }
+
+    if ( nombreCompleto && typeof nombreCompleto != 'string' ) {
+        throw new TypeError('Debe de ser de tipo string el nombre completo del usuario.', 'Usuario.js')
+    }
+
+    if ( fechaNacimiento && typeof fechaNacimiento != 'number' ) {
+        throw new TypeError('La fecha de nacimiento debe ser de tipo number en milisegundos.', 'Usuario.js')
+    }
+
+    if ( jekuaaPremium ) {
+        if ( typeof jekuaaPremium != 'object' ) {
+            throw new TypeError('El campo jekuaaPremium debe ser un objeto.', 'Usuario.js')
+        }
+        const verificadorFormato = new JekuaaPremium()
+        verificadorFormato.validarTodosLosTiposDeDatosCliente(jekuaaPremium)
+    }
+
+    if ( jekuaaRoles ) {
+        if ( typeof jekuaaRoles != 'object' ) {
+            throw new TypeError('El campo jekuaaRoles debe ser un objeto.', 'Usuario.js')
+        }
+        const verificadorFormato = new JekuaaRoles()
+        verificadorFormato.validarTodosLosTiposDeDatosCliente(jekuaaRoles)
+    }
+
+    if ( jekuaaPoint && typeof jekuaaPoint != 'number' ) {
+        throw new TypeError('El jekuaaPoint no es de tipo numerico.', 'Usuario.js')
+    }
+
+    if ( contrasenha && typeof contrasenha != 'string' ) {
+        throw new TypeError('La contraseña debe ser de tipo string.', 'Usuario.js')
+    }
+
+    if ( confirmacionContrasenha && typeof confirmacionContrasenha != 'string' ) {
+        throw new TypeError('La confirmación de contraseña debe ser de tipo string.', 'Usuario.js')
+    }
+}
+
+funciones.verificarDatosRequeridos = ( datosUsuario, contrasenha, confirmacionContrasenha ) => {
+
+    if ( !datosUsuario || typeof datosUsuario != 'object' ) {
+        throw new ErrorJekuaa({
+            codigo: 'jekuaa/error/usuario_mala_solicitud',
+            mensaje: 'No hay datos para crear un usuario.'
+        })
+    }
+
+    const {
+        uid,
+        nombreUsuario,
+        correo,
+        nombreCompleto,
+        fechaNacimiento,
+        jekuaaPremium,
+        jekuaaRoles,
+        jekuaaPoint
+    } = datosUsuario
+
+    if ( !nombreUsuario ) {
+        throw new ErrorJekuaa({
+            codigo: 'jekuaa/error/usuario_mala_solicitud',
+            mensaje: 'No existe el nombre de usuario.'
+        })
+    }
+
+    if ( !correo ) {
+        throw new ErrorJekuaa({
+            codigo: 'jekuaa/error/usuario_mala_solicitud',
+            mensaje: 'No existe el correo.'
+        })
+    }
+
+    if ( !contrasenha ) {
+        throw new ErrorJekuaa({
+            codigo: 'jekuaa/error/usuario_mala_solicitud',
+            mensaje: 'No existe la contraseña.'
+        })
+    }
+
+    if ( !confirmacionContrasenha ) {
+        throw new ErrorJekuaa({
+            codigo: 'jekuaa/error/usuario_mala_solicitud',
+            mensaje: 'No existe la confirmación de contraseña.'
+        })
+    }
+}
+
+funciones.validarDatosExistentesCliente = async ( datosUsuario, contrasenha, confirmacionContrasenha ) => {
+
+    const {
+        uid,
+        nombreUsuario,
+        correo,
+        nombreCompleto,
+        fechaNacimiento,
+        jekuaaPremium,
+        jekuaaRoles,
+        jekuaaPoint
+    } = datosUsuario
+
+    let cantidadCaracteresValido
+    let correoValido
+    let fechaNacimientoValido
+    let valido
+
+    // Nombre de usuario
+    if (nombreUsuario) {
+        cantidadCaracteresValido = nombreUsuario.length >= 1 && nombreUsuario.length <= 20
+        valido = cantidadCaracteresValido
+        if ( !valido ) {
+            throw new ErrorJekuaa({
+                codigo: 'jekuaa/error/usuario_mala_solicitud',
+                mensaje: 'El nombre de usuario debe ser mayor a 0 y menor a 21.'
+            })
+        }
+        await Usuario.errorExisteUsuario({
+            nombreUsuario
+        })
+    }
+
+    // Correo
+    if (correo) {
+        cantidadCaracteresValido = correo.length >= 5 && correo.length <= 100
+        correoValido = validarEmail(correo)
+        valido = cantidadCaracteresValido && correoValido
+        if ( !valido ) {
+            throw new ErrorJekuaa({
+                codigo: 'jekuaa/error/usuario_mala_solicitud',
+                mensaje: 'El correo debe ser válido y entre 5 a 100 carácteres.'
+            })
+        }
+    }
+
+    // Nombre completo
+    if (nombreCompleto) {
+        cantidadCaracteresValido = nombreCompleto.length >= 1 && nombreCompleto.length <= 100
+        valido = cantidadCaracteresValido
+        if ( !valido ) {
+            throw new ErrorJekuaa({
+                codigo: 'jekuaa/error/usuario_mala_solicitud',
+                mensaje: 'El nombre completo debe ser mayor a 0 y menor a 101.'
+            })
+        }
+    }
+
+    // Fecha de nacimiento
+    if (fechaNacimiento) {
+        // Solo si tiene 1 año de edad puede registrarse
+        fechaNacimientoValido = fechaNacimiento * 3.2*Math.pow(10, -11)
+        valido = fechaNacimientoValido >= 1
+        if ( !valido ) {
+            throw new ErrorJekuaa({
+                codigo: 'jekuaa/error/usuario_mala_solicitud',
+                mensaje: 'El nombre completo debe ser mayor a 0 y menor a 101.'
+            })
+        }
+    }
+
+    // Jekuaa Premium
+    if ( jekuaaPremium ) {
+        const jekuaaPlan = new JekuaaPremium({
+            plan: jekuaaPremium.plan,
+            fechaCompra: jekuaaPremium.fechaCompra,
+            fechaHasta: jekuaaPremium.fechaHasta,
+        })
+
+        jekuaaPlan.validarDatosCliente()
+    }
+
+    // Jekuaa Roles
+    if ( jekuaaRoles ) {
+        const jekuaaRol = new JekuaaRoles({
+            rol: jekuaaRoles.rol,
+            secciones: jekuaaRoles.secciones,
+            instructor: jekuaaRoles.instructor
+        })
+        
+        jekuaaRol.validarDatosCliente()
+    }
+
+    // Jekuaa Points
+    if (jekuaaPoint) {
+        valido = jekuaaPoint >= 0
+        if ( !valido ) {
+            throw new ErrorJekuaa({
+                codigo: 'jekuaa/error/usuario_mala_solicitud',
+                mensaje: 'El Jekuaa Point debe ser mayor o igual a 0.'
+            })
+        }
+    }
+
+    // Contraseñas
+    if (contrasenha) {
+        cantidadCaracteresValido = contrasenha.length >= 6 && contrasenha.length <= 20
+        valido = cantidadCaracteresValido
+        if ( !valido ) {
+            throw new ErrorJekuaa({
+                codigo: 'jekuaa/error/usuario_mala_solicitud',
+                mensaje: 'La contraseña debe ser mayor o igual a 6 y menor o igual a 20.'
+            })
+        }
+    }
+
+    if (confirmacionContrasenha) {
+        cantidadCaracteresValido = confirmacionContrasenha.length >= 6 && confirmacionContrasenha.length <= 20
+        valido = cantidadCaracteresValido
+        if ( !valido ) {
+            throw new ErrorJekuaa({
+                codigo: 'jekuaa/error/usuario_mala_solicitud',
+                mensaje: 'La confirmación de contraseña debe ser mayor o igual a 6 y menor o igual a 20.'
+            })
+        }
+    }
+
+    if (contrasenha !== confirmacionContrasenha) {
+        throw new ErrorJekuaa({
+            codigo: 'jekuaa/error/usuario_mala_solicitud',
+            mensaje: 'La contraseña debe ser igual a la confirmación de contraseña.'
+        })
+    }
+}
+
+funciones.construirDatosParaProduccion = ( datosUsuario, contrasenha ) => {
+    
+    const {
+        uid,
+        nombreUsuario,
+        correo,
+        nombreCompleto,
+        fechaNacimiento,
+        jekuaaPremium,
+        jekuaaRoles,
+        jekuaaPoint
+    } = datosUsuario
+
+    // Cambiamos el formato del cliente al formato servidor
+    let datosUsuarioProduccion = {}
+    let contrasenhaProduccion = ''
+
+    // Nombre de usuario
+    datosUsuarioProduccion.nombreUsuario = nombreUsuario.trim()
+
+    // Correo
+    datosUsuarioProduccion.correo = correo.trim()
+
+    // Nombre completo
+    datosUsuarioProduccion.nombreCompleto = nombreCompleto ? nombreCompleto.trim() : ''
+
+    // Fecha de nacimiento
+    datosUsuarioProduccion.fechaNacimiento = fechaNacimiento ? 
+    timestamp.milliseconds_a_timestamp(fechaNacimiento) : null
+
+    // Jekuaa Premium
+    const paraDatosPlanPorDefecto = !jekuaaPremium || JekuaaPremium.esPlanGratis(jekuaaPremium.plan) 
+    if ( paraDatosPlanPorDefecto ) {
+        // Datos por defectos
+        datosUsuarioProduccion.jekuaaPremium.plan = 'gratis'
+        datosUsuarioProduccion.jekuaaPremium.fechaCompra = null
+        datosUsuarioProduccion.jekuaaPremium.fechaHasta = null
+    } else {
+        datosUsuarioProduccion.jekuaaPremium.plan = jekuaaPremium.plan.trim()
+        datosUsuarioProduccion.jekuaaPremium.fechaCompra = timestamp.milliseconds_a_timestamp(jekuaaPremium.fechaCompra)
+        datosUsuarioProduccion.jekuaaPremium.fechaHasta = timestamp.milliseconds_a_timestamp(jekuaaPremium.fechaHasta)
+    }
+    
+    // Jekuaa Roles
+    const paraDatosRolPorDefecto = !jekuaaRoles || JekuaaRoles.esEstudiante(jekuaaRoles.rol) 
+    if (paraDatosRolPorDefecto ) {
+        // Datos por defectos
+        datosUsuarioProduccion.jekuaaRoles.rol = 'estudiante'
+        datosUsuarioProduccion.jekuaaRoles.secciones = []
+        datosUsuarioProduccion.jekuaaRoles.instructor = false
+    } else {
+        datosUsuarioProduccion.jekuaaRoles.rol = jekuaaRoles.rol.trim()
+        datosUsuarioProduccion.jekuaaRoles.secciones = jekuaaRoles.secciones
+        datosUsuarioProduccion.jekuaaRoles.instructor = jekuaaRoles.instructor
+    }
+
+    // Jekuaa Point
+    datosUsuarioProduccion.jekuaaPoint = jekuaaPoint
+
+    // Contraseña
+    contrasenhaProduccion = contrasenha.trim()
+
+    // Retornar datos para produccion
+    return {
+        datosUsuario: datosUsuarioProduccion, 
+        contrasenha: contrasenhaProduccion
+    }
+}
+
 funciones.construirDatosParaActualizarYVerificarFormatoParaDB = ( datosNuevos, datosViejos ) => {
     
     const {
@@ -222,3 +545,13 @@ funciones.construirDatosParaActualizarYVerificarFormatoParaDB = ( datosNuevos, d
 }
 
 module.exports = funciones
+
+
+
+function validarEmail(valor) {
+    
+    const expresionValida = /^(([^<>()[\]\.,;:\s@\"]+(\.[^<>()[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i
+
+    return expresionValida.test(valor)
+
+}

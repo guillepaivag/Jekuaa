@@ -16,7 +16,7 @@ utils_blog.filtroDeDatosDiferentes = ( datosNuevos, datosViejos ) => {
         categoria,
         subCategorias,
         habilitado,
-        estado,
+        blogEnPublicodos,
         actualizacionActual,
         fechaCreacion,
         fechaActualizacion,
@@ -63,7 +63,7 @@ utils_blog.verificadorDeTipoDeDatos = ( datosBlog ) => {
         categoria,
         subCategorias,
         habilitado,
-        estado,
+        blogEnPublicodos,
         actualizacionActual,
         fechaCreacion,
         fechaActualizacion,
@@ -130,10 +130,10 @@ utils_blog.verificadorDeTipoDeDatos = ( datosBlog ) => {
         })
     }
 
-    if ( estado && typeof estado != 'string' ) {
+    if ( blogEnPublicodos && typeof blogEnPublicodos != 'boolean' ) {
         throw new ErrorJekuaa({
             codigo: 'jekuaa/error/usuario_mala_solicitud',
-            mensaje: 'El estado del blog debe ser string.'
+            mensaje: 'El estado blogEnPublicodos del blog debe ser boolean.'
         })
     }
 
@@ -171,7 +171,7 @@ utils_blog.verificadorDeCondicionesDeBlogUsuario = ( datosBlog, usuarioSolicitan
         categoria,
         subCategorias,
         habilitado,
-        estado,
+        blogEnPublicodos,
         actualizacionActual,
         fechaCreacion,
         fechaActualizacion,
@@ -254,7 +254,7 @@ utils_blog.verificadorDeDatosRequeridos = ( datosBlog ) => {
         categoria,
         subCategorias,
         habilitado,
-        estado,
+        blogEnPublicodos,
         actualizacionActual,
         fechaCreacion,
         fechaActualizacion,
@@ -323,11 +323,11 @@ utils_blog.verificadorDeDatosConstantes = ( datosNuevos, datosViejos ) => {
         seccion,
         categoria,
         subCategorias,
-        habilitado,             // Automatico
-        estado,                 // Automatico
-        actualizacionActual,    // Automatico
+        habilitado,                 // Automatico
+        blogEnPublicodos,           // Automatico
+        actualizacionActual,        // Automatico
         fechaCreacion,          // Constante
-        fechaActualizacion,     // Automatico
+        fechaActualizacion,         // Automatico
     } = datosNuevos
 
     if ( uid ) {

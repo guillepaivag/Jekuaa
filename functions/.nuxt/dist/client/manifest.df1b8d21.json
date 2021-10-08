@@ -1,6 +1,7 @@
 {
   "name": "Jekuaa",
   "short_name": "jekuaanuxt",
+  "description": "## Build Setup",
   "icons": [
     {
       "src": "/_nuxt/icons/icon_64x64.10bc06.png",

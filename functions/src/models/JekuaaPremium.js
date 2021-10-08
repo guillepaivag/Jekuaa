@@ -1,4 +1,6 @@
 const admin = require('../../firebase-service')
+const db = require('../../db')
+const ErrorJekuaa = require('./Error/ErroresJekuaa')
 
 class JekuaaPremium {
 
@@ -145,6 +147,27 @@ class JekuaaPremium {
 
         return true
     }
+
+    validarTodosLosTiposDeDatosCliente (jekuaaPremium) {
+        if ( !jekuaaPremium.plan || !jekuaaPremium.fechaCompra || !jekuaaPremium.fechaHasta ) {
+            throw new ErrorJekuaa({
+                codigo: 'jekuaa/error/usuario_mala_solicitud',
+                mensaje: 'No existen todos los datos de jekuaaPremium.'
+            })
+        }
+        
+        if ( typeof jekuaaPremium.plan != 'string' ) {
+            throw new TypeError('El plan debe de ser de tipo string.', 'JekuaaPremium.js')
+        }
+        
+        if ( typeof jekuaaPremium.fechaCompra != 'number' ) {
+            throw new TypeError('La fechaCompra debe ser de tipo number en milisegundos.', 'JekuaaPremium.js')
+        }
+    
+        if ( typeof jekuaaPremium.fechaHasta != 'number' ) {
+            throw new TypeError('La fechaHasta debe ser de tipo number en milisegundos.', 'JekuaaPremium.js')
+        }
+    }
         
 
     cumpleCondiciones () {
@@ -167,6 +190,63 @@ class JekuaaPremium {
         return true
     }
 
+    async validarDatosCliente () {
+        const documentoPlan = await this.obtenerDocumentoPlan()
+        const existePlan = this.existePlan(documentoPlan)
+        if (existePlan) {
+            throw new ErrorJekuaa({
+                codigo: 'jekuaa/error/usuario_mala_solicitud',
+                mensaje: 'Este plan no existe.'
+            })
+        }
+
+        if ( this.esPlanGratis(documentoPlan) ) {
+            if (this.fechaCompra || this.fechaHasta) {
+                throw new ErrorJekuaa({
+                    codigo: 'jekuaa/error/usuario_mala_solicitud',
+                    mensaje: 'Es un plan premium pero no hay fechaCompra o fechaHasta.'
+                })
+            }
+        } else {
+            if (!this.fechaCompra || !this.fechaHasta) {
+                throw new ErrorJekuaa({
+                    codigo: 'jekuaa/error/usuario_mala_solicitud',
+                    mensaje: 'Es un plan premium pero no hay fechaCompra o fechaHasta.'
+                })
+            }
+            if (this.fechaCompra >= this.fechaHasta) {
+                throw new ErrorJekuaa({
+                    codigo: 'jekuaa/error/usuario_mala_solicitud',
+                    mensaje: 'La fecha de compra debe ser antes que la fecha de vencimiento.'
+                })
+            }
+        }
+    }
+
+    obtenerReferenciaPlan () {
+        const ref = db.collection('Planes').doc(this.plan)
+
+        return ref
+    }
+
+    async obtenerDocumentoPlan () {
+        const data = await db.collection('Planes').doc(this.plan).get()
+
+        return data
+    }
+
+    obtenerDatosPlan ( documentoPlan ) {
+        return documentoPlan.data()
+    }
+
+    existePlan ( documentoPlan ) {
+        return documentoPlan.exists
+    }
+
+    esPlanGratis ( documentoPlan ) {
+        const data = this.obtenerDatosPlan(documentoPlan)
+        return data.plan === 'gratis'
+    }
 
         /* 
             ###############################
@@ -176,9 +256,18 @@ class JekuaaPremium {
 
 
     static tienePlan ( plan ) {
-        return plan != ''
+        return plan != 'gratis'
     }
 
+    static async existePlan ( plan ) {
+        const planDoc = await db.collection('Planes').doc(plan).get()
+
+        return planDoc.exists
+    }
+
+    static esPlanGratis ( plan ) {
+        return plan === 'gratis'
+    }
 }
 
 module.exports = JekuaaPremium

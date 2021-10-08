@@ -1,7 +1,7 @@
-const Blog = require("../../models/Blog")
-const manejadorErrores = require("../../models/Error/ManejoErrores/ManejadorErrores")
-const Respuesta = require("../../models/Respuesta")
-const MiembroJekuaa = require("../../models/TiposUsuarios/MiembroJekuaa")
+const Blog = require("../models/Blog")
+const manejadorErrores = require("../models/Error/ManejoErrores/ManejadorErrores")
+const Respuesta = require("../models/Respuesta")
+const MiembroJekuaa = require("../models/TiposUsuarios/MiembroJekuaa")
 const Busboy = require("busboy")
 const {
     verificadorDeTipoDeDatos,
@@ -9,15 +9,15 @@ const {
     verificadorDeDatosRequeridos,
     verificadorDeDatosConstantes,
     generadorDeDatosParaActualizar
-} = require("../../utils/Blog")
-const { milliseconds_a_timestamp } = require("../../utils/Timestamp")
-const ErrorJekuaa = require("../../models/Error/ErroresJekuaa")
+} = require("../utils/Blog")
+const { milliseconds_a_timestamp } = require("../utils/Timestamp")
+const ErrorJekuaa = require("../models/Error/ErroresJekuaa")
 const os = require('os')
 const path = require('path')
 const fs = require('fs')
-const JekuaaRoles = require("../../models/JekuaaRoles")
-const { esMiembroJekuaa } = require("../../utils/usuarios/RolesSecciones")
-const ActualizacionBlog = require("../../models/Blogs/ActualizacionBlog")
+const JekuaaRoles = require("../models/JekuaaRoles")
+const { esMiembroJekuaa } = require("../utils/usuarios/RolesSecciones")
+const ActualizacionBlog = require("../models/Blogs/ActualizacionBlog")
 
 const controller = {}
 
@@ -118,7 +118,7 @@ controller.actualizarDatosBlog = async (req, res) => {
         await blog.importarDatosBlogPorUID(uid)
 
         // Comprobación de que el blog sea del solicitante
-        if ( uidSolicitante !== blog.getBlog().publicador ) {
+        if ( !JekuaaRoles.esPropietario( datosAuthSolicitante.customClaims.rol ) && uidSolicitante !== blog.getBlog().publicador ) {
             throw new ErrorJekuaa({
                 codigo: 'jekuaa/error/usuario_no_autorizado',
                 mensaje: `No puedes crear/actualizar este blog.`
@@ -218,22 +218,19 @@ controller.solicitarActualizacionDeContenido = async (req, res) => {
                 })
             }
 
-            const estadoActual = blog.getBlog().estado
-            if ( estadoActual === 'actualizacion-pendiente' ) {
+            if ( !!blog.getBlog().actualizacionPendiente ) {
                 // Obtener datos del estado de la solicitud actual.
-                const uidSolicitudActualizacion = blog.getBlog().actualizacionPendiente
+                const referenciaSolicitudActualizacion = blog.getBlog().actualizacionPendiente
                 const estadoSolicitud = `descartado`
-
+                
                 // Deshabilitar solicitud actual: actualizacion-pendiente
                 const solicitudActualizacionBlog = new ActualizacionBlog()
-                solicitudActualizacionBlog.setUID_BLOG(uid)
-                solicitudActualizacionBlog.setUID_SOLICITUD(uidSolicitudActualizacion)
-                solicitudActualizacionBlog.actualizarSolicitudActualizacion({
+                solicitudActualizacionBlog.actualizarSolicitudActualizacion(referenciaSolicitudActualizacion, {
                     estado: estadoSolicitud
                 })
             }
 
-            // Crear nueva solicitud: no-existe-archivo, actualizacion-pendiente, publicado, no-publicado
+            // Crear nueva solicitud: no-existe-archivo, actualizacion-pendiente
             await blog.crearSolicitudDeActualizacion({
                 fechaSolicitud: datosActualizacionClon.fechaSolicitud,
                 descripcionSolicitud: datosActualizacionClon.descripcionSolicitud,
@@ -257,6 +254,7 @@ controller.solicitarActualizacionDeContenido = async (req, res) => {
                 filename: `${uid}.md`, 
                 mimetype: mimetype
             }
+
             file.pipe( fs.createWriteStream( filepath ) )
         })
     
@@ -266,10 +264,21 @@ controller.solicitarActualizacionDeContenido = async (req, res) => {
             let archivoCreado = await Blog.subirArchivoAStorage( datosArchivo, true )
 
             // Borrar el archivo creado en el servidor
-            fs.unlinkSync( datosArchivo.filepath )
+            fs.unlink( datosArchivo.filepath, (err => {
+                if ( err ) {
+                    console.log(err)
+                    return
+                }
+                
+            }))
+
+            // Construccion de opciones
+            const opcionesBlog = {}
+            opcionesBlog.pendiente = true
+            opcionesBlog.segundosValidos = 3600
 
             // Obtener url del blog
-            const urlBlog = await Blog.obtenerURL( uid, 'md', true, 3600 )
+            const urlBlog = await Blog.obtenerURL( uid, opcionesBlog )
 
             // Retornar respuesta
             respuesta.setRespuestaPorCodigo(codigo, {
@@ -285,7 +294,7 @@ controller.solicitarActualizacionDeContenido = async (req, res) => {
         busboy.end(req.rawBody)
 
     } catch (error) {
-        console.log('Error - guardarArchivoBlog: ', error)
+        console.log('Error - solicitarActualizacionDeContenido: ', error)
 
         const {
             status,
@@ -298,15 +307,34 @@ controller.solicitarActualizacionDeContenido = async (req, res) => {
 
 controller.obtenerUrlFirmada = async (req, res) => {
     try {
-        const { jekuaaDatos, params } = req
+        const { jekuaaDatos, params, body } = req
         const { uidSolicitante, datosAuthSolicitante } = jekuaaDatos
+        const { opciones } = body
         const { uid } = params
 
         const respuesta = new Respuesta()
         let codigo = 'jekuaa/exito'
 
+        // Construccion de opciones
+        const opcionesBlog = {}
+        opcionesBlog.pendiente = opciones.pendiente ? true : false
+        opcionesBlog.segundosValidos = opciones.segundosValidos ? opciones.segundosValidos : 3600
+
+        // Construccion de ruta de archivo para verificacion de existencia
+        let ruta = opcionesBlog.pendiente ? 'blogs/pendientes' : 'blogs/publicados'
+        ruta = ruta + `/${uid}.md`
+
+        // Verificacion de existencia de archivo
+        const existe = await Blog.existeArchivoBlog(ruta)
+        if ( !existe ) {
+            throw new ErrorJekuaa({
+                codigo: 'jekuaa/error/usuario_mala_solicitud',
+                mensaje: `No existe el archivo.`
+            })
+        }
+
         // Obtener url del blog
-        const urlBlog = await Blog.obtenerURL( uid, 'md', false, 3600 )
+        const urlBlog = await Blog.obtenerURL( uid, opcionesBlog )
 
         // Retornar respuesta
         respuesta.setRespuestaPorCodigo(codigo, {
@@ -331,8 +359,7 @@ controller.obtenerUrlFirmada = async (req, res) => {
 
 controller.obtenerContenidoBlog = async ( req, res ) => {
     try {
-        const { params, body } = req
-        const { opciones } = body
+        const { params } = req
         const { uid } = params
 
         const respuesta = new Respuesta()
@@ -344,31 +371,22 @@ controller.obtenerContenidoBlog = async ( req, res ) => {
         const blog = new Blog()
         await blog.importarDatosBlogPorUID( uid )
 
-        if ( blog.getBlog().estado === 'no-existe-archivo' ) {
-            throw new ErrorJekuaa({
-                codigo: 'jekuaa/error/usuario_mala_solicitud',
-                mensaje: `No existe el blog: ${uid}`
-            })
-        }
-
-        let dirArray = ['..', '..', 'temp', 'blogs']
-        let dirVerificacion = path.join(__dirname)
-        for (let i = 0; i < dirArray.length; i++) {
-            const element = dirArray[i]
-
-            dirVerificacion = path.join(dirVerificacion, element)
-            
-            if ( element != '..' && !fs.existsSync(dirVerificacion) ){
-                fs.mkdirSync(dirVerificacion)
-            }
-        }
-
-        const rutaArchivoTemp = path.join(__dirname, '..', '..', 'temp', 'blogs', `${uid}.md`)
-
         // Valores por defecto
         opcionesBlog.pendiente = false
-        opcionesBlog.formatoSalida = 'html'
-        opcionesBlog.rutaArchivoTemp = rutaArchivoTemp
+        opcionesBlog.extensionArchivo = 'html'
+
+        // Construccion de ruta de archivo para verificacion de existencia
+        let ruta = opcionesBlog.pendiente ? 'blogs/pendientes' : 'blogs/publicados'
+        ruta = `${ruta}/${uid}.md`
+
+        // Verificacion de existencia de archivo
+        const existe = await Blog.existeArchivoBlog(ruta)
+        if ( !existe ) {
+            throw new ErrorJekuaa({
+                codigo: 'jekuaa/error/usuario_mala_solicitud',
+                mensaje: `No existe el archivo.`
+            })
+        }
 
         // Obtener archivo
         const contenido = await blog.obtenerContenido( opcionesBlog )
@@ -394,13 +412,18 @@ controller.obtenerContenidoBlog = async ( req, res ) => {
     }
 }
 
-controller.obtenerContenidoBlogPendiente = async ( req, res ) => {
+controller.obtenerContenidoBlogParaMiembrosJekuaa = async ( req, res ) => {
     try {
         const { jekuaaDatos, params, body } = req
         const { uidSolicitante, datosAuthSolicitante } = jekuaaDatos
         const { opciones } = body
         const { uid } = params
 
+        /**
+         * opciones
+         * 1. pendiente: Boolean
+         * 2. extensionArchivo: String -> Validos: 'html', 'md'
+         */
 
         const respuesta = new Respuesta()
         let codigo = 'jekuaa/exito'
@@ -408,23 +431,17 @@ controller.obtenerContenidoBlogPendiente = async ( req, res ) => {
 
         // Verificar existencia
         await Blog.errorExisteBlogPorUID( uid, 'no-existe' )
+        const blog = new Blog()
+        await blog.importarDatosBlogPorUID( uid )
 
-        // Si se busca en estado pendiente, verificar que sea un Miembro Jekuaa
-        if ( opciones && opciones.pendiente && !esMiembroJekuaa( datosAuthSolicitante.customClaims.rol ) ) {
-            // No autorizado
-            throw new ErrorJekuaa({
-                codigo: 'jekuaa/error/usuario_no_autorizado'
-            })
-        }
-
-        // Verificacion de tipos de datos
+        // Verificación de tipos de datos
         if ( opciones && opciones.pendiente && typeof opciones.pendiente != 'boolean' ) {
             throw new ErrorJekuaa({
                 codigo: 'jekuaa/error/usuario_mala_solicitud',
                 mensaje: 'El estado pendiente del blog debe ser boolean.'
             })
         }
-        if ( opciones && opciones.formatoSalida && typeof opciones.formatoSalida != 'string' ) {
+        if ( opciones && opciones.extensionArchivo && typeof opciones.extensionArchivo != 'string' ) {
             throw new ErrorJekuaa({
                 codigo: 'jekuaa/error/usuario_mala_solicitud',
                 mensaje: 'El formato de salida del blog debe ser string.'
@@ -433,34 +450,32 @@ controller.obtenerContenidoBlogPendiente = async ( req, res ) => {
 
         // Formato de salida valido
         const formatosSalidaValido = ['md', 'html']
-        if ( opciones && opciones.formatoSalida && formatosSalidaValido.includes( opciones.formatoSalida ) ) {
+        if ( opciones && opciones.extensionArchivo && !formatosSalidaValido.includes( opciones.extensionArchivo ) ) {
             throw new ErrorJekuaa({
                 codigo: 'jekuaa/error/usuario_mala_solicitud',
                 mensaje: 'Este formato no es valido.'
             })
         }
 
-        let dirArray = ['..', '..', 'temp', 'blogs']
-        let dirVerificacion = path.join(__dirname)
-        for (let i = 0; i < dirArray.length; i++) {
-            const element = dirArray[i]
-
-            dirVerificacion = path.join(dirVerificacion, element)
-            
-            if ( element != '..' && !fs.existsSync(dirVerificacion) ){
-                fs.mkdirSync(dirVerificacion)
-            }
-        }
-
-        const rutaArchivoTemp = path.join(__dirname, '..', '..', 'temp', 'blogs', `${uid}.md`)
-
         // Valores por defecto
         opcionesBlog.pendiente = opciones && opciones.pendiente ? opciones.pendiente : false
-        opcionesBlog.formatoSalida = opciones && opciones.formatoSalida ? opciones.formatoSalida : 'md'
-        opcionesBlog.rutaArchivoTemp = rutaArchivoTemp
+        opcionesBlog.extensionArchivo = opciones && opciones.extensionArchivo ? opciones.extensionArchivo : 'md'
+
+        // Construccion de ruta de archivo para verificacion de existencia
+        let ruta = opcionesBlog.pendiente ? 'blogs/pendientes' : 'blogs/publicados'
+        ruta = `${ruta}/${uid}.md`
+
+        // Verificacion de existencia de archivo
+        const existe = await Blog.existeArchivoBlog(ruta)
+        if ( !existe ) {
+            throw new ErrorJekuaa({
+                codigo: 'jekuaa/error/usuario_mala_solicitud',
+                mensaje: `No existe el archivo.`
+            })
+        }
 
         // Obtener archivo
-        const contenido = await Blog.obtenerContenidoPorUID( uid, opcionesBlog )
+        const contenido = await blog.obtenerContenido( opcionesBlog )
 
         // Retornar respuesta
         respuesta.setRespuestaPorCodigo(codigo, {
@@ -472,54 +487,7 @@ controller.obtenerContenidoBlogPendiente = async ( req, res ) => {
         return res.status( status ).send( respuesta.getResultado() )
 
     } catch (error) {
-        console.log('Error - obtenerContenidoBlog: ', error)
-
-        const {
-            status,
-            respuesta
-        } = manejadorErrores( error )
-
-        return res.status( status ).json( respuesta )
-    }
-}
-
-controller.eliminarBlog = async (req, res) => {
-    try {
-        const { jekuaaDatos, params } = req
-        const { uidSolicitante, datosAuthSolicitante } = jekuaaDatos
-        const { uid } = params
-
-        const respuesta = new Respuesta()
-        let codigo = 'jekuaa/exito'
-
-        await Blog.errorExisteBlogPorUID( uid, 'no-existe' )
-        const blog = new Blog()
-        await blog.importarDatosBlogPorUID( uid )
-
-        if ( uidSolicitante !== blog.getBlog().publicador ) {
-            throw new ErrorJekuaa({
-                codigo: 'jekuaa/error/usuario_no_autorizado',
-                mensaje: `No puedes eliminar este blog.`
-            })
-        }
-
-        // Eliminar el archivo del blog en Storage
-        const archivoBlogEliminado = await Blog.eliminarArchivoBlog( uid )
-
-        // Eliminar los datos del blog en Firestore
-        const datosBlogEliminado = await blog.eliminarBlog()
-
-        // Retornar respuesta
-        respuesta.setRespuestaPorCodigo(codigo, {
-            mensaje: '¡Se elimino el blog de forma exitosa!',
-            resultado: datosBlogEliminado
-        })
-        const status = respuesta.getStatusCode()
-        
-        return res.status( status ).json( respuesta.getRespuesta() )
-
-    } catch (error) {
-        console.log('Error - eliminarBlog: ', error)
+        console.log('Error - obtenerContenidoBlogPendiente: ', error)
 
         const {
             status,
@@ -545,13 +513,6 @@ controller.habilitarBlog = async (req, res) => {
         await blog.importarDatosBlogPorUID( uid )
 
         if ( !JekuaaRoles.esPropietario( datosAuthSolicitante.customClaims.rol ) ) {
-            if ( habilitar ) {
-                throw new ErrorJekuaa({
-                    codigo: 'jekuaa/error/usuario_no_autorizado',
-                    mensaje: `No puedes habilitar el blog.`
-                })
-            }
-
             if ( uidSolicitante !== blog.getBlog().publicador ) {
                 throw new ErrorJekuaa({
                     codigo: 'jekuaa/error/usuario_no_autorizado',
@@ -560,34 +521,176 @@ controller.habilitarBlog = async (req, res) => {
             }
         }
 
-        let blogPendienteHabilitado = blog.getBlog().habilitado && blog.getBlog().pendiente
-        let blogHabilitado = blog.getBlog().habilitado && !blog.getBlog().pendiente
-        let blogDeshabilitado = !blog.getBlog().habilitado && !blog.getBlog().pendiente
-        let blogPendienteDeshabilitado = !blog.getBlog().habilitado && blog.getBlog().pendiente
-
-        if ( habilitar && blogHabilitado ) {
+        if ( habilitar && blog.getBlog().habilitado ) {
             throw new ErrorJekuaa({
-                codigo: 'jekuaa/error/usuario_no_autorizado',
+                codigo: 'jekuaa/error/usuario_mala_solicitud',
                 mensaje: 'Ya esta habilitado.'
             })
         }
 
-        if ( !habilitar && blogDeshabilitado ) {
+        if ( !habilitar && !blog.getBlog().habilitado ) {
             throw new ErrorJekuaa({
-                codigo: 'jekuaa/error/usuario_no_autorizado',
+                codigo: 'jekuaa/error/usuario_mala_solicitud',
                 mensaje: 'Ya esta deshabilitado.'
             })
         }
 
+        // Construccion de ruta de archivo para verificacion de existencia
+        let ruta = `blogs/publicados/${uid}.md`
+
+        // Verificacion de existencia de archivo
+        const existe = await Blog.existeArchivoBlog(ruta)
+        if ( !existe ) {
+            throw new ErrorJekuaa({
+                codigo: 'jekuaa/error/usuario_mala_solicitud',
+                mensaje: `No existe el archivo.`
+            })
+        }
+
         // Proceso de habilitación/deshabilitación del blog
-        blog.setPENDIENTE( false )
-        blog.setHABILITADO( !!habilitar )
-        await blog.habilitarBlog()
+        const datosActualizacion = {}
+        datosActualizacion.habilitado = !!habilitar
+        blog.setHABILITADO(!!habilitar)
+        await blog.actualizarDatosBlog(datosActualizacion)
 
         // Retornar respuesta
         respuesta.setRespuestaPorCodigo(codigo, {
             mensaje: '¡Se actualizó el estado de habilitación del blog de forma exitosa!',
             resultado: blog.getBlog()
+        })
+        const status = respuesta.getStatusCode()
+        
+        return res.status( status ).json( respuesta.getRespuesta() )
+
+    } catch (error) {
+        console.log('Error - habilitarBlog: ', error)
+
+        const {
+            status,
+            respuesta
+        } = manejadorErrores( error )
+
+        return res.status( status ).json( respuesta )
+    }
+}
+
+controller.aceptarActualizacion = async (req, res) => {
+    try {
+        const { jekuaaDatos, params, body } = req
+        const { uidSolicitante, datosAuthSolicitante } = jekuaaDatos
+        const { aceptar, mensajeRespuesta } = body
+        const { uid } = params
+
+        const respuesta = new Respuesta()
+        let codigo = 'jekuaa/exito'
+
+        await Blog.errorExisteBlogPorUID( uid, 'no-existe' )
+        const blog = new Blog()
+        await blog.importarDatosBlogPorUID( uid )
+
+        if ( !JekuaaRoles.esPropietario( datosAuthSolicitante.customClaims.rol ) ) {
+            throw new ErrorJekuaa({
+                codigo: 'jekuaa/error/usuario_no_autorizado',
+                mensaje: `No puedes aceptar esta solicitud.`
+            })
+        }
+
+        // Construccion de ruta de archivo para verificacion de existencia
+        let ruta = `blogs/pendientes/${uid}.md`
+
+        // Verificacion de existencia de archivo
+        const existe = await Blog.existeArchivoBlog(ruta)
+        if ( !blog.getBlog().actualizacionPendiente || !existe ) {
+            throw new ErrorJekuaa({
+                codigo: 'jekuaa/error/usuario_mala_solicitud',
+                mensaje: `No hay una actualización para este blog.`
+            })
+        }
+
+        // Si es aceptado: mover archivo
+        if ( !!aceptar ) {
+            await blog.aceptarArchivoPendiente()
+        } else {
+            // Si no se acepta: borrar archivo
+            await blog.borrarArchivoBlog({
+                pendiente: true
+            })
+        }
+
+        // Modificar la solicitud de actualizacion actual
+        const referenciaSolicitudActualizacion = blog.getBlog().actualizacionPendiente
+        blog.actualizarSolicitudDeActualizacion(referenciaSolicitudActualizacion, {
+            estado: !!aceptar ? 'aceptado' : 'no-aceptado',
+            respuesta: mensajeRespuesta,
+            fechaRespuesta: milliseconds_a_timestamp( Date.now() ),
+        })
+
+        // Proceso de habilitación/deshabilitación del blog
+        const datosActualizados = {}
+
+        !!aceptar ? datosActualizados.habilitado = true : ''
+        datosActualizados.actualizacionPendiente = null
+        !!aceptar ? datosActualizados.blogEnPublicodos = true : ''
+
+        !!aceptar ? blog.setHABILITADO (true) : ''
+        blog.setACTUALIZACION_PENDIENTE ()
+        !!aceptar ? blog.setBLOG_EN_PUBLICADOS (true) : ''
+
+        await blog.actualizarDatosBlog(datosActualizados)
+
+        // Retornar respuesta
+        respuesta.setRespuestaPorCodigo(codigo, {
+            mensaje: '¡Se actualizó el estado de habilitación del blog de forma exitosa!',
+            resultado: blog.getBlog()
+        })
+        const status = respuesta.getStatusCode()
+        
+        return res.status( status ).json( respuesta.getRespuesta() )
+
+    } catch (error) {
+        console.log('Error - aceptarActualizacion: ', error)
+
+        const {
+            status,
+            respuesta
+        } = manejadorErrores( error )
+
+        return res.status( status ).json( respuesta )
+    }
+}
+
+controller.eliminarBlog = async (req, res) => {
+    try {
+        const { jekuaaDatos, params } = req
+        const { uidSolicitante, datosAuthSolicitante } = jekuaaDatos
+        const { uid } = params
+
+        const respuesta = new Respuesta()
+        let codigo = 'jekuaa/exito'
+
+        await Blog.errorExisteBlogPorUID( uid, 'no-existe' )
+        const blog = new Blog()
+        await blog.importarDatosBlogPorUID( uid )
+
+        if ( !JekuaaRoles.esPropietario( datosAuthSolicitante.customClaims.rol ) ) {
+            if ( uidSolicitante !== blog.getBlog().publicador ) {
+                throw new ErrorJekuaa({
+                    codigo: 'jekuaa/error/usuario_no_autorizado',
+                    mensaje: `No puedes eliminar este blog.`
+                })
+            }
+        }
+
+        // Eliminar los datos del blog en Firestore
+        const datosBlogEliminado = await blog.eliminarBlog()
+
+        // Eliminar el archivo del blog en Storage
+        const archivoBlogEliminado = await Blog.eliminarArchivoBlog( uid )
+
+        // Retornar respuesta
+        respuesta.setRespuestaPorCodigo(codigo, {
+            mensaje: '¡Se elimino el blog de forma exitosa!',
+            resultado: datosBlogEliminado
         })
         const status = respuesta.getStatusCode()
         

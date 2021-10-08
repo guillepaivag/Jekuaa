@@ -22,21 +22,24 @@ const {
     solicitarActualizacionDeContenido,
     obtenerUrlFirmada,
     obtenerContenidoBlog,
+    obtenerContenidoBlogParaMiembrosJekuaa,
+    habilitarBlog,
+    aceptarActualizacion,
     eliminarBlog,
-    habilitarBlog
-} = require('../../controllers/blogs/Blog')
+} = require('../../controllers/Blog')
 
 // Operaciones para: Usuarios
-router.get('/publicado/obtenerContenido/:uid', obtenerContenidoBlog)
+router.get('/obtenerContenido/:uid', obtenerContenidoBlog)
 
 // Operaciones para: MiembrosJekuaa
-router.post('/crearBlog', estaAutenticado, esMiembroJekuaa, crearBlog)
-router.post('/obtenerDatosBlog/:uid', estaAutenticado, esMiembroJekuaa, obtenerDatosBlog)
-router.post('/actualizarDatosBlog/:uid', estaAutenticado, esMiembroJekuaa, actualizarDatosBlog)
-router.post('/solicitarActualizacionDeContenido/:uid', fileMiddleware, estaAutenticado, esMiembroJekuaa, solicitarActualizacionDeContenido)
-router.post('/obtenerUrlFirmada/:uid', estaAutenticado, esMiembroJekuaa, obtenerUrlFirmada)
-router.get('/pendiente/obtenerContenido/:uid', estaAutenticado, esMiembroJekuaa, obtenerContenidoBlog)
-router.post('/eliminarBlog/:uid', estaAutenticado, esMiembroJekuaa, eliminarBlog)
-router.post('/habilitarBlog/:uid', estaAutenticado, esMiembroJekuaa, habilitarBlog)
+router.post('/miembroJekuaa/crearBlog', estaAutenticado, esMiembroJekuaa, crearBlog)
+router.post('/miembroJekuaa/obtenerDatosBlog/:uid', estaAutenticado, esMiembroJekuaa, obtenerDatosBlog)
+router.post('/miembroJekuaa/actualizarDatosBlog/:uid', estaAutenticado, esMiembroJekuaa, actualizarDatosBlog)
+router.post('/miembroJekuaa/solicitarActualizacionDeContenido/:uid', fileMiddleware, estaAutenticado, esMiembroJekuaa, solicitarActualizacionDeContenido)
+router.post('/miembroJekuaa/obtenerUrlFirmada/:uid', estaAutenticado, esMiembroJekuaa, obtenerUrlFirmada)
+router.post('/miembroJekuaa/obtenerContenido/:uid', estaAutenticado, esMiembroJekuaa, obtenerContenidoBlogParaMiembrosJekuaa)
+router.post('/miembroJekuaa/aceptarActualizacion/:uid', estaAutenticado, esMiembroJekuaa, aceptarActualizacion)
+router.post('/miembroJekuaa/habilitarBlog/:uid', estaAutenticado, esMiembroJekuaa, habilitarBlog)
+router.post('/miembroJekuaa/eliminarBlog/:uid', estaAutenticado, esMiembroJekuaa, eliminarBlog)
 
 module.exports = router

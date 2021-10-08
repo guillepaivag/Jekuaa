@@ -96,58 +96,19 @@ controllerMiembroJekuaa.verDatosAuthPorUID = async (req, res) => {
 controllerMiembroJekuaa.crearUsuario = async (req, res) => {
 
     try {
-        const { jekuaaDatos, body } = req
-        const { uidSolicitante, datosAuthSolicitante } = jekuaaDatos
-        const { datosUsuario, contrasenha } = body
+        const { jekuaaDatos } = req
+        const { uidSolicitante, datosAuthSolicitante, datosUsuarioProduccion } = jekuaaDatos
+        const { nuevoUsuario } = datosUsuarioProduccion
 
-        // El solicitante no puede crear un usuario con mayor rol que el de el mismo
-        if ( datosUsuario && datosUsuario.jekuaaRoles && datosUsuario.jekuaaRoles.rol ) {
-            let diferenciaDeNivelDeRol = utilsRoles.compararNivelRol( datosAuthSolicitante.customClaims.rol, 
-                datosUsuario.jekuaaRoles.rol )
-        
-            if ( diferenciaDeNivelDeRol < 0 ) {
-                //No autorizado
-                throw new ErrorJekuaa({
-                    codigo: 'jekuaa/error/usuario_no_autorizado',
-                    mensaje: 'No puedes crear un usuario con mayor rol que el tuyo.'
-                })
-            }
-        }
-
-        // Cambiamos el formato del cliente al formato servidor
-        const datosUsuarioParseado = timestamp.usuario_milliseconds_a_timestamp( datosUsuario )
-
-        // Verificamos que existan datos y los datos importantes
-        if ( !Object.keys( datosUsuarioParseado ).length ) {
-            throw new ErrorJekuaa({
-                codigo: 'jekuaa/error/usuario_mala_solicitud',
-                mensaje: 'No hay datos para crear un usuario.'
-            })
-        }
-
-        if ( !datosUsuarioParseado.nombreUsuario ) {
-            throw new ErrorJekuaa({
-                codigo: 'jekuaa/error/usuario_mala_solicitud',
-                mensaje: 'No existe el nombre de usuario para crear un usuario.'
-            })
-        }
-
-        if ( !contrasenha ) {
-            throw new ErrorJekuaa({
-                codigo: 'jekuaa/error/usuario_mala_solicitud',
-                mensaje: 'No existe una contraseña para crear un usuario.'
-            })
-        }
-
-        // Actualizar usuario
-        const usuarioNuevo = await MiembroJekuaa.crearNuevoUsuario( datosUsuarioParseado, contrasenha )
+        // Crear usuario
+        const datosUsuarioNuevo = await MiembroJekuaa.crearNuevoUsuario( nuevoUsuario.datosUsuario, nuevoUsuario.contrasenha )
 
         const respuesta = new Respuesta()
         let codigo = 'jekuaa/exito'
 
         respuesta.setRespuestaPorCodigo(codigo, {
             mensaje: 'El usuario se creo de forma exitosa!',
-            resultado: usuarioNuevo
+            resultado: datosUsuarioNuevo
         })
         const status = respuesta.getStatusCode()
         
@@ -173,8 +134,6 @@ controllerMiembroJekuaa.actualizarUsuarioPorUID = async (req, res) => {
         const { uidSolicitante, datosAuthSolicitante } = jekuaaDatos
         const { uid } = params
         const { datosActualizados, contrasenha } = body
-
-        console.log('body', body)
 
         const respuesta = new Respuesta()
         let codigo = 'jekuaa/exito'
@@ -207,7 +166,7 @@ controllerMiembroJekuaa.actualizarUsuarioPorUID = async (req, res) => {
             usuarioActualizado = Object.assign( usuarioActualizado, datosUsuarioActualizado )
         }
 
-        if ( contrasenha ) {
+        if ( contrasenha != undefined ) {
             // Actualizacion de contraseña
         }
 

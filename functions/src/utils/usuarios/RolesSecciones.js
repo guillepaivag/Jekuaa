@@ -7,21 +7,16 @@ const datosSecciones = require('../../InformacionEstatica/DatosSecciones')
  * ROLES: Funciones para los roles
  */
 
-
-
 utilsRolesSecciones.getDatosRoles = () => datosRoles
 
 utilsRolesSecciones.compararNivelRol = ( rolX, rolY ) => {
-
     const datoRolX = datosRoles.find(datoRol => datoRol.rol === rolX)
     const datoRolY = datosRoles.find(datoRol => datoRol.rol === rolY)
 
     return datoRolX.nivel - datoRolY.nivel
-
 }
 
 utilsRolesSecciones.esValidoElRol = ( rol ) => {
-
     const valido = !!datosRoles.find( rolX => rolX.rol === rol )
 
     return valido
