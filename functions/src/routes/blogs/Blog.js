@@ -8,12 +8,9 @@ const {
 
 const {
     estaAutenticado,
-} = require('../../middlewares/usuario')
-
-const {
     esMiembroJekuaa,
     esDeMayorIgualNivel
-} = require('../../middlewares/miembroJekuaa')
+} = require('../../middlewares/usuario')
 
 const {
     crearBlog,

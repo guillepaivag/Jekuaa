@@ -1,7 +1,7 @@
 const express = require('express')
 const cors = require('cors')
 const fileUpload = require('express-fileupload')
-const fileMiddleware = require('express-multipart-file-parser')
+const manejadorErrores = require('./src/models/Error/ManejoErrores/ManejadorErrores')
 
 const apiJekuaa = express()
 
@@ -25,11 +25,11 @@ const corsOptionsDelegate = function (req, callback) {
 }
 apiJekuaa.use(cors(corsOptionsDelegate))
 apiJekuaa.use(express.json())
-apiJekuaa.use(express.raw({
-  inflate: true,
-  limit: '100kb',
-  type: 'application/octet-stream'
-}))
+// apiJekuaa.use(express.raw({
+//   inflate: true,
+//   limit: '100kb',
+//   type: 'application/octet-stream'
+// }))
 apiJekuaa.use(express.urlencoded({
   extended: true
 }))
@@ -39,5 +39,17 @@ apiJekuaa.use(express.urlencoded({
 apiJekuaa.use('/usuarios', require('./src/routes/usuarios/Usuario'))
 apiJekuaa.use('/blog', require('./src/routes/blogs/Blog'))
 apiJekuaa.use('/rolesSecciones', require('./src/routes/usuarios/miembroJekuaa/RolesSecciones'))
+
+apiJekuaa.use((err, req, res, next) => { 
+  console.log('err', err)
+  
+  const {
+      status,
+      respuesta
+  } = manejadorErrores( err )
+
+  return res.status( status ).json( respuesta )
+})
+
 
 module.exports = apiJekuaa

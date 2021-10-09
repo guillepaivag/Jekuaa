@@ -487,6 +487,42 @@ class Usuario {
 
         }
     }
+
+    static construirDatosAutentication (datosUsuario, datosViejos) {
+        const datosAutenticacion = {}
+        
+        if ( datosUsuario.nombreUsuario && datosUsuario.nombreUsuario != datosViejos.displayName ) {
+            datosAutenticacion.displayName = datosUsuario.nombreUsuario
+        }
+
+        if ( datosUsuario.correo && datosUsuario.correo != datosViejos.email ) {
+            datosAutenticacion.email = datosUsuario.correo
+        }
+
+        return datosAutenticacion
+    }
+
+    static construirDatosReclamosAutenticacion (datosNuevos, datosReclamosViejos) {
+        const datosReclamosAutenticacion = {}
+
+        if (datosNuevos.jekuaaPremium && datosNuevos.jekuaaPremium.plan != datosReclamosViejos.jekuaaPremium) {
+            datosReclamosAutenticacion.jekuaaPremium = datosNuevos.jekuaaPremium.plan
+        }
+
+        if (datosNuevos.jekuaaRoles && datosNuevos.jekuaaRoles.rol != datosReclamosViejos.jekuaaRol) {
+            datosReclamosAutenticacion.jekuaaRol = datosNuevos.jekuaaRoles.rol
+        }
+
+        if ( datosReclamosAutenticacion.jekuaaPremium === undefined ) {
+            datosReclamosAutenticacion.jekuaaPremium = datosReclamosViejos.jekuaaPremium
+        }
+
+        if ( datosReclamosAutenticacion.jekuaaRol === undefined ) {
+            datosReclamosAutenticacion.jekuaaRol = datosReclamosViejos.jekuaaRol
+        }
+
+        return datosReclamosAutenticacion
+    }
 }
 
 module.exports = Usuario

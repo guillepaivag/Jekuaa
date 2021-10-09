@@ -7,7 +7,7 @@ class JekuaaPremium {
     constructor ( datosPremium ) {
         
         if ( !datosPremium || ( datosPremium && !datosPremium.plan ) ) {
-            this.plan = ''
+            this.plan = 'gratis'
             this.fechaCompra = null
             this.fechaHasta = null
 
@@ -20,13 +20,9 @@ class JekuaaPremium {
             fechaHasta,
         } = datosPremium
 
-        if ( ( fechaCompra && !fechaHasta ) || ( !fechaCompra && fechaHasta ) ) {
-            throw new Error('El jekuaa premium no tiene un formato valido')
-        }
-
         this.plan = plan                // String
-        this.fechaCompra = fechaCompra  // Timestamp
-        this.fechaHasta = fechaHasta    // Timestamp
+        this.fechaCompra = fechaCompra  // Timestamp || number
+        this.fechaHasta = fechaHasta    // Timestamp || number
     }
     
 
@@ -92,7 +88,7 @@ class JekuaaPremium {
 
     setPlan ( plan ) {
         if ( !plan ) {
-            this.plan = ''
+            this.plan = 'gratis'
             return 
         }
 
@@ -131,80 +127,62 @@ class JekuaaPremium {
             ###############################
         */
 
-    formatoValido () {
-
-        if ( typeof this.plan != 'string' ) {
-            throw new TypeError('El plan de jekuaaPremium debe ser de tipo string.', 'JekuaaPremium.js')
-        }
-
-        if ( typeof this.fechaCompra != 'object' ) {
-            throw new TypeError('La fechaCompra de jekuaaPremium debe ser de tipo object.', 'JekuaaPremium.js')
-        }
-
-        if ( typeof this.fechaHasta != 'object' ) {
-            throw new TypeError('La fechaHasta de jekuaaPremium debe ser de tipo object.', 'JekuaaPremium.js')
-        }
-
-        return true
-    }
-
-    validarTodosLosTiposDeDatosCliente (jekuaaPremium) {
-        if ( !jekuaaPremium.plan || !jekuaaPremium.fechaCompra || !jekuaaPremium.fechaHasta ) {
+    validarTodosLosTiposDeDatos (tipo) {
+        if ( !this.plan || this.fechaCompra === undefined || this.fechaHasta === undefined ) {
             throw new ErrorJekuaa({
                 codigo: 'jekuaa/error/usuario_mala_solicitud',
                 mensaje: 'No existen todos los datos de jekuaaPremium.'
             })
         }
         
-        if ( typeof jekuaaPremium.plan != 'string' ) {
+        if ( typeof this.plan != 'string' ) {
             throw new TypeError('El plan debe de ser de tipo string.', 'JekuaaPremium.js')
         }
         
-        if ( typeof jekuaaPremium.fechaCompra != 'number' ) {
-            throw new TypeError('La fechaCompra debe ser de tipo number en milisegundos.', 'JekuaaPremium.js')
-        }
+        if ( this.esPlanGratis() ) {
+            if ( this.fechaCompra != null ) {
+                throw new TypeError('La fechaCompra de jekuaaPremium debe ser null.', 'JekuaaPremium.js')
+            }
     
-        if ( typeof jekuaaPremium.fechaHasta != 'number' ) {
-            throw new TypeError('La fechaHasta debe ser de tipo number en milisegundos.', 'JekuaaPremium.js')
+            if ( this.fechaHasta != null ) {
+                throw new TypeError('La fechaHasta de jekuaaPremium debe ser null.', 'JekuaaPremium.js')
+            }
+        } else {
+            if (tipo === 'cliente') {
+                if ( typeof this.fechaCompra != 'number' ) {
+                    throw new TypeError('La fechaCompra debe ser de tipo number en milisegundos.', 'JekuaaPremium.js')
+                }
+            
+                if ( typeof this.fechaHasta != 'number' ) {
+                    throw new TypeError('La fechaHasta debe ser de tipo number en milisegundos.', 'JekuaaPremium.js')
+                }
+            } else {
+                if ( typeof this.fechaCompra != 'object' ) {
+                    throw new TypeError('La fechaCompra de jekuaaPremium debe ser de tipo object.', 'JekuaaPremium.js')
+                }
+        
+                if ( typeof this.fechaHasta != 'object' ) {
+                    throw new TypeError('La fechaHasta de jekuaaPremium debe ser de tipo object.', 'JekuaaPremium.js')
+                }
+            }
         }
     }
         
-
-    cumpleCondiciones () {
-        if ( this.plan === '' ) {
-            if ( this.fechaCompra != null || this.fechaHasta != null ) {
-                throw new TypeError('Una de las fechas tienen valores pero no hay ningún plan.', 'JekuaaPremium.js')
-            }
-
-            return true
-        }
-
-        if ( this.fechaCompra == null || this.fechaHasta == null ) {
-            throw new TypeError('Existe un plan pero las fechas de compra y fecha hasta no tienen valores.', 'JekuaaPremium.js')
-        }
-
-        if ( this.fechaCompra.seconds >= this.fechaHasta.seconds ) {
-            throw new TypeError('La fecha de compra es mayor o igual a la fecha hasta.', 'JekuaaPremium.js')
-        }
-
-        return true
-    }
-
     async validarDatosCliente () {
         const documentoPlan = await this.obtenerDocumentoPlan()
         const existePlan = this.existePlan(documentoPlan)
-        if (existePlan) {
+        if (!existePlan) {
             throw new ErrorJekuaa({
                 codigo: 'jekuaa/error/usuario_mala_solicitud',
                 mensaje: 'Este plan no existe.'
             })
         }
 
-        if ( this.esPlanGratis(documentoPlan) ) {
+        if ( this.esPlanGratis() ) {
             if (this.fechaCompra || this.fechaHasta) {
                 throw new ErrorJekuaa({
                     codigo: 'jekuaa/error/usuario_mala_solicitud',
-                    mensaje: 'Es un plan premium pero no hay fechaCompra o fechaHasta.'
+                    mensaje: 'El plan gratis no tiene fecha de compra/vencimiento.'
                 })
             }
         } else {
@@ -243,7 +221,11 @@ class JekuaaPremium {
         return documentoPlan.exists
     }
 
-    esPlanGratis ( documentoPlan ) {
+    esPlanGratis () {
+        return this.plan === 'gratis'
+    }
+
+    esPlanGratisPorDocumento ( documentoPlan ) {
         const data = this.obtenerDatosPlan(documentoPlan)
         return data.plan === 'gratis'
     }

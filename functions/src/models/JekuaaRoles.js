@@ -121,79 +121,29 @@ class JekuaaRoles {
             ###############################
         */
 
-    formatoValido () {
-
+    validarTodosLosTiposDeDatos () {
+        
         if ( typeof this.rol != 'string' ) {
-            throw new TypeError('El rol de jekuaaRoles debe ser de tipo string.', 'JekuaaRoles.js')
+            throw new TypeError('El plan debe de ser de tipo string.', 'JekuaaRoles.js')
         }
 
         if ( !(this.secciones instanceof Array) ) {
-            throw new TypeError('Las secciones de jekuaaRoles debe ser un arreglo con las secciones validas.', 'JekuaaRoles.js')
-        }
-
-        if ( typeof this.instructor != 'boolean' ) {
-            throw new TypeError('El permiso de instructor de jekuaaRoles debe ser de tipo boolean.', 'JekuaaRoles.js')
-        }
-
-        return true
-    }
-
-    validarTodosLosTiposDeDatosCliente ( jekuaaRoles ) {
-        if ( !jekuaaRoles.rol || !jekuaaRoles.instructor || !jekuaaRoles.secciones ) {
-            throw new ErrorJekuaa({
-                codigo: 'jekuaa/error/usuario_mala_solicitud',
-                mensaje: 'No existen todos los datos de jekuaaRoles.'
-            })
-        }
-        
-        if ( typeof jekuaaRoles.rol != 'string' ) {
-            throw new TypeError('El plan debe de ser de tipo string.', 'JekuaaRoles.js')
-        }
-        
-        if ( typeof jekuaaRoles.instructor != 'boolean' ) {
-            throw new TypeError('El estado instructor debe ser de tipo boolean.', 'JekuaaRoles.js')
-        }
-    
-        if ( !(jekuaaRoles.secciones instanceof Array) ) {
             throw new TypeError('Las secciones debe de ser un arreglo de string.', 'JekuaaRoles.js')
         }
 
-        if (jekuaaRoles.secciones.length) {
-            for (let i = 0; i < jekuaaRoles.secciones.length; i++) {
-                const element = jekuaaRoles.secciones[i]
+        if (this.secciones.length) {
+            for (let i = 0; i < this.secciones.length; i++) {
+                const element = this.secciones[i]
                 if ( typeof element != 'string' ) {
                     throw new TypeError('Las secciones de un miembro jekuaa debe ser de tipo string.', 'JekuaaRoles.js')
                 }
             }
         }
-    }
 
-    cumpleCondiciones () {
-
-        // Verificar rol valido
-        if ( !utilsRoles.esValidoElRol( this.rol ) ) {
-            throw new TypeError('No es un rol valido.', 'JekuaaRoles.js')
+        if ( typeof this.instructor != 'boolean' ) {
+            throw new TypeError('El estado instructor debe ser de tipo boolean.', 'JekuaaRoles.js')
         }
-
-        // Verificar secciones validas y de acuerdo al rol 
-        if ( !utilsRoles.sonValidasLasSecciones( this.secciones ) ) {
-            throw new TypeError('No son validas las secciones.', 'JekuaaRoles.js')
-        }
-
-        if ( this.secciones.length > 0 && !utilsRoles.rolNecesitaSecciones ( this.rol ) ) {
-            throw new TypeError('El rol no necesita secciones.', 'JekuaaRoles.js')
-        }
-
-        if ( this.secciones.length === 0 && utilsRoles.rolNecesitaSecciones ( this.rol ) ) {
-            throw new TypeError('El rol necesita secciones.', 'JekuaaRoles.js')
-        }
-
-        // Verificar instructor valido y de acuerdo al rol
-        if ( this.instructor && !utilsRoles.esMiembroJekuaa ( this.rol ) ) {
-            throw new TypeError('No tiene permisos para ser instructor.', 'JekuaaRoles.js')
-        }
-
-        return true
+        
     }
 
     obtenerReferenciaRol () {
@@ -354,6 +304,13 @@ class JekuaaRoles {
         const rolDoc = await db.collection('Roles').doc(rol).get()
 
         return rolDoc.exists
+    }
+
+    static async compararNivelRoles ( rolX, rolY ) {
+        const datoRolX = await db.collection('Roles').doc(rolX).get()
+        const datoRolY = await db.collection('Roles').doc(rolY).get()
+
+        return datoRolX.data().nivel - datoRolY.data().nivel
     }
 }
 

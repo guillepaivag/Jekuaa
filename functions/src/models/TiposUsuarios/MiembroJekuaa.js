@@ -6,7 +6,8 @@ const Instructor = require('./Instructor')
 const ErrorJekuaa = require('../Error/ErroresJekuaa')
 const { 
     verificadorDeFormatoProduccion,
-    construirDatosParaActualizarYVerificarFormatoParaDB
+    construirDatosParaActualizarYVerificarFormatoParaDB,
+    construirDatosParaActualizarUsuario
 } = require('../../utils/Usuario')
 
 
@@ -140,28 +141,32 @@ class MiembroJekuaa extends Usuario {
             jekuaaPoint
         } = datosUsuario
 
+        // Crear una autenticacion para el nuevo usuario
         const usuarioAuthNuevo = await admin.auth().createUser({
             email: correo,
             password: contrasenha,
             displayName: nombreUsuario,
         })
 
+        // Crear los reclamos de autenticacion para el nuevo usuario
         await admin.auth().setCustomUserClaims(usuarioAuthNuevo.uid, {
             jekuaaRol: jekuaaRoles.rol,
             jekuaaPremium: jekuaaPremium.plan
         })
 
+        // Crear los datos en firestore para el nuevo usuario
         await db.collection(COLECCION_USUARIO).doc(usuarioAuthNuevo.uid).set({
             ...datosUsuario,
             uid: usuarioAuthNuevo.uid
         })
 
-        if ( jekuaaRoles.instructor ) {
-            // Agregar instructor
-            Instructor.crearNuevoInstructor({
-                uid: usuarioAuthNuevo.uid
-            })
-        }
+        // // Crear instructor
+        // if ( jekuaaRoles.instructor ) {
+        //     // Agregar instructor
+        //     Instructor.crearNuevoInstructor({
+        //         uid: usuarioAuthNuevo.uid
+        //     })
+        // }
 
         const usuario = new Usuario({
             ...datosUsuario,
@@ -171,7 +176,7 @@ class MiembroJekuaa extends Usuario {
         return usuario
     }
 
-    static async actalizarUsuarioPorUID ( uidUsuario, datosActualizados ) {
+    static async actalizarDatosUsuarioPorUID ( uidUsuario, datosActualizados ) {
 
         const {
             nombreUsuario,
@@ -183,57 +188,40 @@ class MiembroJekuaa extends Usuario {
             jekuaaPoint
         } = datosActualizados
 
-        if ( !Object.keys( datosActualizados ).length ) {
-            throw new ErrorJekuaa({
-                codigo: 'jekuaa/error/usuario_mala_solicitud',
-                mensaje: 'No hay datos para actualizar un usuario.'
-            })
-        }
-
-        const docUsuario = await db.collection(COLECCION_USUARIO).doc(uidUsuario).get()
-
-        if ( !docUsuario.exists ) {
-            throw new ErrorJekuaa({
-                codigo: 'jekuaa/error/usuario_mala_solicitud',
-                mensaje: `No existe el usuario con la uid ${uidUsuario}.`
-            })
-        }
-
-        const datosUsuario = docUsuario.data()
+        const datosAuth = await admin.auth().getUser(uidUsuario)
         
-        const {
-            datosUsuarioDBActualizar,
-            datosUsuarioAuthActualizar,
-            datosUsuarioAuthClaimsActualizar
-        } = construirDatosParaActualizarYVerificarFormatoParaDB (datosActualizados, datosUsuario)
+        const datosAuthActualizados = Usuario.construirDatosAutentication (datosActualizados, datosAuth)
+        const datosAuthClaimsActualizados = Usuario.construirDatosReclamosAutenticacion (datosActualizados, datosAuth.customClaims)
 
-        Object.keys(datosUsuarioAuthActualizar).length > 0 ? 
-        await admin.auth().updateUser(uidUsuario, datosUsuarioAuthActualizar) : ''
+        // Actualizar la autenticacion del usuario
+        Object.keys(datosAuthActualizados).length ? 
+        await admin.auth().updateUser(uidUsuario, datosAuthActualizados) : ''
 
-        Object.keys(datosUsuarioAuthClaimsActualizar).length > 0 ? 
-        await admin.auth().setCustomUserClaims(uidUsuario, datosUsuarioAuthClaimsActualizar) : ''
+        // Actualizar los reclamos de autenticacion del usuario
+        Object.keys(datosAuthClaimsActualizados).length ? 
+        await admin.auth().setCustomUserClaims(uidUsuario, datosAuthClaimsActualizados) : ''
 
-        Object.keys(datosUsuarioDBActualizar).length > 0 ? 
-        await db.collection(COLECCION_USUARIO).doc(uidUsuario).update(datosUsuarioDBActualizar) : ''
+        // Actualizar los datos de firestore del usuario
+        Object.keys(datosActualizados).length ? 
+        await db.collection(COLECCION_USUARIO).doc(uidUsuario).update(datosActualizados) : ''
 
         const usuario = new Usuario()
-        await usuario.importarDatosUsuarioPorUID(uidUsuario)
 
-        // Operar los datos de instructor en caso de cambio
-        const cambioInstructor = jekuaaRoles ? jekuaaRoles.instructor != datosUsuario.jekuaaRoles.instructor : false
-        if ( !cambioInstructor ) {
-            return usuario 
-        }
+        // // Operar los datos de instructor en caso de cambio
+        // const cambioInstructor = jekuaaRoles ? jekuaaRoles.instructor != datosUsuario.jekuaaRoles.instructor : false
+        // if ( !cambioInstructor ) {
+        //     return usuario 
+        // }
 
-        const noExisteInstructor = !(await db.collection(COLECCION_INSTRUCTOR).doc(uidUsuario).get()).exists
-        if ( jekuaaRoles.instructor && noExisteInstructor ) {
-            // Agregar instructor
-            Instructor.crearNuevoInstructor({
-                uid: uidUsuario
-            })
-        }
+        // const noExisteInstructor = !(await db.collection(COLECCION_INSTRUCTOR).doc(uidUsuario).get()).exists
+        // if ( jekuaaRoles.instructor && noExisteInstructor ) {
+        //     // Agregar instructor
+        //     Instructor.crearNuevoInstructor({
+        //         uid: uidUsuario
+        //     })
+        // }
 
-        return usuario 
+        return uidUsuario 
     }
 
     static async verDatosUsuarioPorUID ( uidUsuario ) {

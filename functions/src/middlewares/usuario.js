@@ -1,7 +1,7 @@
 const admin = require('../../firebase-service')
+const ErrorJekuaa = require('../models/Error/ErroresJekuaa')
 const ErroresJekuaa = require('../models/Error/ErroresJekuaa')
-const manejadorErrores = require('../models/Error/ManejoErrores/ManejadorErrores')
-const Respuesta = require('../models/Respuesta')
+const JekuaaRoles = require('../models/JekuaaRoles')
 const utilsUsuarios = require('../utils/Usuario')
 const utilsRolesSecciones = require('../utils/usuarios/RolesSecciones')
 const middlewaresUser = {}
@@ -30,14 +30,7 @@ middlewaresUser.estaAutenticado = (req, res, next) => {
             return next()
     
         } catch ( error ) {
-            console.log('error', error)
-
-            const {
-                status,
-                respuesta
-            } = manejadorErrores( error )
-
-            return res.status( status ).json( respuesta )
+            next(error)
         }
     })
     
@@ -45,12 +38,12 @@ middlewaresUser.estaAutenticado = (req, res, next) => {
 
 middlewaresUser.validacionCreacionUsuario = async ( req, res, next ) => {
     
+    const { params, jekuaaDatos, body } = req
+    const { datosUsuario, contrasenha, confirmacionContrasenha } = body
+    const { uidSolicitante, datosAuthSolicitante } = jekuaaDatos
+    const { uid } = params
+
     try {
-        const { params, jekuaaDatos, body } = req
-        const { datosUsuario, contrasenha, confirmacionContrasenha } = body
-        const { uidSolicitante, datosAuthSolicitante } = jekuaaDatos
-        const { uid } = params
-        
         // Existencia de datos requeridos
         utilsUsuarios.verificarDatosRequeridos ( datosUsuario, contrasenha, confirmacionContrasenha )
 
@@ -58,23 +51,171 @@ middlewaresUser.validacionCreacionUsuario = async ( req, res, next ) => {
         utilsUsuarios.verificarTipoDeDatosCliente ( datosUsuario, contrasenha, confirmacionContrasenha )
 
         // Verificacion de validez de datos (existentes)
-        utilsUsuarios.validarDatosExistentesCliente ( datosUsuario, contrasenha, confirmacionContrasenha )
+        await utilsUsuarios.validarDatosExistentesCliente ( datosUsuario, contrasenha, confirmacionContrasenha )
         
         // Construir datos para produccion
         jekuaaDatos.datosUsuarioProduccion = {}
-        jekuaaDatos.datosUsuarioProduccion.nuevoUsuario = utilsUsuarios.construirDatosParaProduccion ( datosUsuario, contrasenha )
+        jekuaaDatos.datosUsuarioProduccion.nuevoUsuario = utilsUsuarios.construirDatosParaNuevoUsuario ( datosUsuario, contrasenha )
         
         return next()
 
     } catch (error) {
+        next(error)
+    }
+    
+}
 
-        const {
-            status,
-            respuesta
-        } = manejadorErrores( error )
+middlewaresUser.esMiembroJekuaa = async (req, res, next) => {
+    
+    try {
 
-        return res.status( status ).json( respuesta )
+        const { uidSolicitante, datosAuthSolicitante } = req.jekuaaDatos
+        
+        const jekuaaRol = new JekuaaRoles({
+            rol: datosAuthSolicitante.customClaims.jekuaaRol
+        })
 
+        const documentoRol = await jekuaaRol.obtenerDocumentoRol()
+        
+        if ( !jekuaaRol.esMiembroJekuaa(documentoRol) ) {
+            // No autorizado
+            throw new ErrorJekuaa({
+                codigo: 'jekuaa/error/usuario_no_autorizado'
+            })
+        }
+
+        return next()
+
+    } catch ( error ) {
+        next(error)
+
+    }
+
+}
+
+middlewaresUser.esDeMayorIgualNivel = async ( req, res, next ) => {
+    
+    try {
+        
+        const { params, jekuaaDatos } = req
+        const { uidSolicitante, datosAuthSolicitante } = jekuaaDatos
+        const { uid } = params
+
+        const datosAuthUsuario = await admin.auth().getUser( uid )
+
+        if ( datosAuthSolicitante.customClaims.jekuaaRol !== 'propietario' ) {
+            // El solicitante debe tener mayor o igual nivel que el usuario a actualizar
+            const diferenciaNivelRol = await JekuaaRoles.compararNivelRoles(datosAuthSolicitante.customClaims.jekuaaRol, 
+                datosAuthUsuario.customClaims.jekuaaRol)
+
+            if ( diferenciaNivelRol < 0 ) {
+                // No autorizado
+                throw new ErrorJekuaa({
+                    codigo: 'jekuaa/error/usuario_no_autorizado'
+                })
+            }
+        }
+
+        return next()
+
+    } catch (error) {
+        next(error)
+
+    }
+    
+}
+
+middlewaresUser.esDeMayorNivel = async ( req, res, next ) => {
+    
+    try {
+        const { params, jekuaaDatos } = req
+        const { uidSolicitante, datosAuthSolicitante } = jekuaaDatos
+        const { uid } = params
+
+        const datosAuthUsuario = await admin.auth().getUser( uid )
+
+        if ( datosAuthSolicitante.customClaims.jekuaaRol !== 'propietario' ) {
+            const diferenciaNivelRol = await JekuaaRoles.compararNivelRoles(datosAuthSolicitante.customClaims.jekuaaRol, 
+                datosAuthUsuario.customClaims.jekuaaRol)
+    
+            if ( diferenciaNivelRol <= 0 ) {
+                // No autorizado
+                throw new ErrorJekuaa({
+                    codigo: 'jekuaa/error/usuario_no_autorizado'
+                })
+            }
+        }
+
+        return next()
+
+    } catch (error) {
+        next(error)
+
+    }
+    
+}
+
+middlewaresUser.permisoParaOperarUnRol = async ( req, res, next ) => {
+    
+    try {
+        const { jekuaaDatos, body } = req
+        const { datosAuthSolicitante } = jekuaaDatos
+        const { datosUsuario } = body
+        
+        if ( datosAuthSolicitante.customClaims.jekuaaRol !== 'propietario' ) {
+            // El solicitante no puede crear un usuario con mayor rol que el de el mismo
+            if ( datosUsuario.jekuaaRoles ) {
+                const diferenciaNivelRol = await JekuaaRoles.compararNivelRoles(datosAuthSolicitante.customClaims.jekuaaRol, 
+                    datosUsuario.jekuaaRoles.jekuaaRol)
+
+                if ( diferenciaNivelRol < 0 ) {
+                    //No autorizado
+                    throw new ErrorJekuaa({
+                        codigo: 'jekuaa/error/usuario_no_autorizado',
+                        mensaje: 'No puedes crear o actualizar un usuario con mayor rol que el tuyo.'
+                    })
+                }
+            }
+        }
+
+        return next()
+
+    } catch (error) {
+        next(error)
+
+    }
+    
+}
+
+middlewaresUser.validacionActualizacionUsuario = async ( req, res, next ) => {
+    
+    const { params, jekuaaDatos, body } = req
+    const { datosUsuario, contrasenha, confirmacionContrasenha } = body
+    const { uidSolicitante, datosAuthSolicitante } = jekuaaDatos
+    const { uid } = params
+
+    try {
+        if ( !Object.keys(datosUsuario).length && !contrasenha ) {
+            throw new ErrorJekuaa({
+                codigo: 'jekuaa/error/usuario_mala_solicitud',
+                mensaje: 'No hay datos que actualizar.'
+            })
+        }
+
+        // Verificacion de los tipos de datos (existentes)
+        await utilsUsuarios.verificarTipoDeDatosCliente ( datosUsuario, contrasenha, confirmacionContrasenha )
+
+        // Verificacion de validez de datos (existentes)
+        await utilsUsuarios.validarDatosExistentesCliente ( datosUsuario, contrasenha, confirmacionContrasenha )
+        
+        // Construir datos para produccion
+        jekuaaDatos.datosUsuarioProduccion = {}
+        jekuaaDatos.datosUsuarioProduccion.datosActualizados = utilsUsuarios.construirDatosParaActualizarUsuario ( datosUsuario, contrasenha )
+        
+        return next()
+
+    } catch (error) {
+        next(error)
     }
     
 }
