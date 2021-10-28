@@ -1,12 +1,15 @@
 const functions = require('firebase-functions')
+const admin = require('firebase-admin')
+const algoliasearch = require('algoliasearch')
+
 const config = require('../config')
 
 const algoliaControllers = {}
 
 const INDEX_NAME = config.environment.mode === 'production' ? 'blogs_prod' : 'blogs_dev'
 
-algoliaControllers.indexBlog = 
-functions.region('southamerica-east1').firestore.document('blogs/{blogId}').onWrite(( change, context ) => {
+algoliaControllers.indexBlogAlgolia = 
+functions.region('southamerica-east1').firestore.document('Blogs/{blogId}').onWrite(async ( change, context ) => {
     // "document" will be empty if it's deleted, otherwise, this contains
     // the updated values.
     const document = change.after.exists ? change.after.data() : null
@@ -16,48 +19,41 @@ functions.region('southamerica-east1').firestore.document('blogs/{blogId}').onWr
 
     // The API ID and key are stored using Cloud Functions config variables.
     // @see https://firebase.google.com/docs/functions/config-env
-    const ALGOLIA_APP_ID= config.algolia.app_id
-    const ALGOLIA_API_KEY = config.algolia.api_key
+    const ALGOLIA_APP_ID = config.algolia_service.app_id
+    const ALGOLIA_API_KEY = config.algolia_service.api_key
 
     // Create an Algolia Search API client.
-    const client = algoliasearch(ALGOLIA_APP_ID, ALGOLIA_API_KEY)
+    const client = algoliasearch.default(ALGOLIA_APP_ID, ALGOLIA_API_KEY)
     const index = client.initIndex(INDEX_NAME)
 
-    function deleteObject() {
-        return index.deleteObject(blogId)
-        .then(() => {
-            return true
-        })
-        .catch((error) => {
-            console.error('Error deleting blog from index', error)
-        })
+    async function deleteObject() {
+        await index.deleteObject(blogId)
+
+        return true 
     }
 
-    function saveObject() {
-        // The body property is stripped of HTMl tags and stop words.
-        return index.saveObject({
-            objectID: blogId,
-            title: document.title,
-            body: stopword.removeStopwords(document.body.replace(/(<([^>]+)>)/ig,"").split(' ')).join(' ').replace(/\s\s+/g, ' '),
-            tags: document.tags,
-            changed: document.changed.toMillis()
+    async function saveObject() {
+        await index.saveObject({
+            objectID: document.uid,
+            titulo: document.titulo,
+            descripcion: document.descripcion,
+            seccion: document.seccion,
+            categoria: document.categoria,
+            subCategorias: document.subCategorias,
+            fechaActualizacion: document.fechaActualizacion.seconds * 1000
         })
-        .then(() => {
-            return true
-        })
-        .catch((error) => {
-            console.error('Error indexing blog', error)
-        })
+
+        return true
     }
 
     if (!document) {
-        return deleteObject(blogId)
+        return await deleteObject(blogId)
+    }
+
+    if (document.habilitado && document.publicado) {
+        return await saveObject()
     } else {
-        if (!document.published) {
-            return deleteObject(blogId)
-        } else {
-            return saveObject()
-        }
+        return await deleteObject(blogId)
     }
 })
 

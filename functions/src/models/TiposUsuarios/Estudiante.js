@@ -1,7 +1,12 @@
+const Usuario = require("../Usuario");
 
+class Estudiante extends Usuario {
+    
+    constructor () {
 
-class Estudiante {
+    }
 
+    
 }
 
 module.exports = Estudiante

@@ -49,7 +49,7 @@ export default {
         })
         console.log('userCredential', userCredential)
 
-        this.$router.push('/cursos')
+        this.$router.push('/')
       } catch (error) {
         console.log('Error - inicioSesionEmail', error)
         

@@ -1,11 +1,9 @@
 const admin = require('../../../firebase-service')
 const db = require('../../../db')
-const MiembroJekuaa = require("../../models/TiposUsuarios/MiembroJekuaa")
-const utilsRoles = require('../../utils/usuarios/RolesSecciones')
 const Usuario = require('../../models/Usuario')
 const timestamp = require('../../utils/Timestamp')
 const Respuesta = require('../../models/Respuesta')
-const manejadorErrores = require('../../models/Error/ManejoErrores/ManejadorErrores')
+const manejadorErrores = require('../../helpers/ManejoErrores')
 const ErrorJekuaa = require('../../models/Error/ErroresJekuaa')
 
 const controllerMiembroJekuaa = {}
@@ -18,7 +16,7 @@ controllerMiembroJekuaa.verDatosUsuarioPorUID = async (req, res) => {
         const { uid } = params
 
         // Obtener datos del usuario
-        const datosUsuario = await MiembroJekuaa.verDatosUsuarioPorUID( uid )
+        const datosUsuario = await Usuario.verDatosUsuarioPorUID( uid )
 
         let codigo = 'jekuaa/exito'
         const respuesta = new Respuesta().setRespuestaPorCodigo( codigo, {
@@ -68,7 +66,7 @@ controllerMiembroJekuaa.verDatosAuthPorUID = async (req, res) => {
         }
 
         // Obtener datos del usuario
-        const datosAuth = await MiembroJekuaa.verDatosAuthPorUID( uid )
+        const datosAuth = await Usuario.verDatosAuthPorUID( uid )
 
         respuesta.setRespuestaPorCodigo( codigo, {
             mensaje: 'Los datos de los usuarios se enviaron de forma exitosa!',
@@ -95,12 +93,12 @@ controllerMiembroJekuaa.verDatosAuthPorUID = async (req, res) => {
 controllerMiembroJekuaa.crearUsuario = async (req, res) => {
 
     try {
-        const { jekuaaDatos } = req
-        const { uidSolicitante, datosAuthSolicitante, datosUsuarioProduccion } = jekuaaDatos
-        const { nuevoUsuario } = datosUsuarioProduccion
+        const { jekuaaDatos, body } = req
+        const { datosUsuario, contrasenha } = body
+        const { uidSolicitante, datosAuthSolicitante } = jekuaaDatos
 
         // Crear usuario
-        const datosUsuarioNuevo = await MiembroJekuaa.crearNuevoUsuario( nuevoUsuario.datosUsuario, nuevoUsuario.contrasenha )
+        const datosUsuarioNuevo = await Usuario.crearNuevoUsuario( datosUsuario, contrasenha )
 
         const respuesta = new Respuesta()
         let codigo = 'jekuaa/exito'
@@ -129,28 +127,28 @@ controllerMiembroJekuaa.crearUsuario = async (req, res) => {
 controllerMiembroJekuaa.actualizarUsuarioPorUID = async (req, res) => {
 
     try {
-        const { jekuaaDatos, params } = req
-        const { uidSolicitante, datosAuthSolicitante, datosUsuarioProduccion } = jekuaaDatos
-        const { datosActualizados } = datosUsuarioProduccion
+        const { jekuaaDatos, params, body } = req
+        const { uidSolicitante, datosAuthSolicitante } = jekuaaDatos
+        const { datosUsuario, contrasenha } = body
         const { uid } = params
         
         const respuesta = new Respuesta()
         let codigo = 'jekuaa/exito'
 
         // Actualizar usuario
-        if ( Object.keys(datosActualizados.datosUsuario).length ) {
+        if ( datosUsuario ) {
             console.log('Actualizando datos del usuario...')
-            await MiembroJekuaa.actalizarDatosUsuarioPorUID( uid, datosActualizados.datosUsuario )
+            await Usuario.actalizarDatosUsuarioPorUID( uid, datosUsuario )
         }
 
         // Actualizacion de contraseña
-        if ( datosActualizados.contrasenha ) {
+        if ( contrasenha ) {
             console.log('Actualizando contraseña del usuario...')
         }
 
         respuesta.setRespuestaPorCodigo( codigo, {
             mensaje: 'El usuario se actualizó de forma exitosa!',
-            resultado: datosActualizados
+            resultado: datosUsuario
         } )
         const status = respuesta.getStatusCode()
         
@@ -198,7 +196,7 @@ controllerMiembroJekuaa.habilitarUsuarioPorUID = async (req, res) => {
 
         }
 
-        const resultado = await MiembroJekuaa.habilitarUsuarioPorUID( uid, habilitar )
+        const resultado = await Usuario.habilitarUsuarioPorUID( uid, habilitar )
         let mensaje = habilitar ? `El usuario se habilito de forma exitosa.` : `El usuario se deshabilito de forma exitosa.`
 
         respuesta.setRespuestaPorCodigo( codigo, {
@@ -234,7 +232,7 @@ controllerMiembroJekuaa.eliminarUsuarioPorUID = async (req, res) => {
         const respuesta = new Respuesta()
         let codigo = 'jekuaa/exito'
 
-        const resultado = await MiembroJekuaa.eliminarUsuarioPorUID( uid )
+        const resultado = await Usuario.eliminarUsuarioPorUID( uid )
 
         let mensaje = uidSolicitante === uid ? 'Te has eliminado de forma correcta.' : `Se ha eliminado el usuario ${uid}`
 

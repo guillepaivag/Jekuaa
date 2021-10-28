@@ -6,15 +6,13 @@ import NuxtError from '..\\..\\jekuaaNuxt\\layouts\\error.vue'
 import NuxtLoading from './components/nuxt-loading.vue'
 import NuxtBuildIndicator from './components/nuxt-build-indicator'
 
-import '..\\..\\jekuaaNuxt\\node_modules\\prismjs\\themes\\prism.css'
-
 import '..\\..\\jekuaaNuxt\\node_modules\\vuetify\\dist\\vuetify.css'
 
+import _4ce5d53e from '..\\..\\jekuaaNuxt\\layouts\\adminJekuaa.vue'
 import _6f6c098b from '..\\..\\jekuaaNuxt\\layouts\\default.vue'
-import _005d01a1 from '..\\..\\jekuaaNuxt\\layouts\\premium.vue'
-import _79d2f478 from '..\\..\\jekuaaNuxt\\layouts\\protected.vue'
+import _492dd2ca from '..\\..\\jekuaaNuxt\\layouts\\miembroJekuaa.vue'
 
-const layouts = { "_default": sanitizeComponent(_6f6c098b),"_premium": sanitizeComponent(_005d01a1),"_protected": sanitizeComponent(_79d2f478) }
+const layouts = { "_adminJekuaa": sanitizeComponent(_4ce5d53e),"_default": sanitizeComponent(_6f6c098b),"_miembroJekuaa": sanitizeComponent(_492dd2ca) }
 
 export default {
   render (h, props) {

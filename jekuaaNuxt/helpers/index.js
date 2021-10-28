@@ -5,7 +5,6 @@ export function getUserFromCookie (req) {
   if (req.headers.cookie) {
     const parsed = cookieparser.parse(req.headers.cookie)
     const accessTokenCookie = parsed.__session
-    console.log('parsed.__session', parsed.__session)
     if (!accessTokenCookie) { return }
 
     const decodedToken = jwtDecode(accessTokenCookie)

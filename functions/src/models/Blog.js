@@ -4,7 +4,6 @@ const ErrorJekuaa = require('./Error/ErroresJekuaa')
 const storage = require('../../GoogleStorage')
 const fs = require('fs')
 const showdown  = require('showdown')
-const ActualizacionBlog = require('./Blogs/ActualizacionBlog')
 
 const COLECCION_BLOG = 'Blogs'
 const COLECCION_BLOG_ACTUALIZACIONES = 'Actualizaciones'
@@ -13,15 +12,17 @@ class Blog {
 
     constructor ( datosBlog ) {
         this.uid = ( datosBlog && datosBlog.uid ) ? datosBlog.uid : ''
+        this.referencia = ( datosBlog && datosBlog.referencia ) ? datosBlog.referencia : ''
         this.titulo = ( datosBlog && datosBlog.titulo ) ? datosBlog.titulo : ''
         this.descripcion = ( datosBlog && datosBlog.descripcion ) ? datosBlog.descripcion : ''
         this.publicador = ( datosBlog && datosBlog.publicador ) ? datosBlog.publicador : ''
         this.seccion = ( datosBlog && datosBlog.seccion ) ? datosBlog.seccion : ''
         this.categoria = ( datosBlog && datosBlog.categoria ) ? datosBlog.categoria : ''
         this.subCategorias = ( datosBlog && datosBlog.subCategorias ) ? datosBlog.subCategorias : []
-        this.habilitado = ( datosBlog && datosBlog.habilitado ) ? datosBlog.habilitado : false
-        this.blogEnPublicodos = ( datosBlog && datosBlog.blogEnPublicodos ) ? datosBlog.blogEnPublicodos : false
-        this.actualizacionPendiente = ( datosBlog && datosBlog.actualizacionPendiente ) ? datosBlog.actualizacionPendiente : false
+        this.cantidadMeGusta = ( datosBlog && datosBlog.cantidadMeGusta ) ? datosBlog.cantidadMeGusta : 0
+        this.habilitado = ( datosBlog && datosBlog.habilitado ) ? datosBlog.habilitado : true
+        this.publicado = ( datosBlog && datosBlog.publicado ) ? datosBlog.publicado : true
+        this.revision = ( datosBlog && datosBlog.revision ) ? datosBlog.revision : true
         this.fechaCreacion = ( datosBlog && datosBlog.fechaCreacion ) ? datosBlog.fechaCreacion : null
         this.fechaActualizacion = ( datosBlog && datosBlog.fechaActualizacion ) ? datosBlog.fechaActualizacion : null
     }
@@ -36,21 +37,21 @@ class Blog {
     getBlog () {
         return {
             uid: this.uid,                                  // Constante
+            referencia: this.referencia,
             titulo: this.titulo,
             descripcion: this.descripcion,
             publicador: this.publicador,                    // Constante
             seccion: this.seccion,
             categoria: this.categoria,
             subCategorias: this.subCategorias,
+            cantidadMeGusta: this.cantidadMeGusta,
             habilitado: this.habilitado,
-            blogEnPublicodos: this.blogEnPublicodos,
-            actualizacionPendiente: this.actualizacionPendiente,
+            publicado: this.publicado,
+            revision: this.revision,
             fechaCreacion: this.fechaCreacion,              // Constante
             fechaActualizacion: this.fechaActualizacion,
         }
     }
-
-
 
     /* 
         SETTERS: Se agregan los datos que se desee a los atributos
@@ -59,17 +60,18 @@ class Blog {
     // Metodo
 
     setBLOG ( blog ) {
-        
         this.setUID( ( blog && blog.uid ) ? blog.uid : null )
+        this.setREFERENCIA( ( blog && blog.referencia ) ? blog.referencia : null )
         this.setTITULO( ( blog && blog.titulo ) ? blog.titulo : null )
         this.setDESCRIPCION( ( blog && blog.descripcion ) ? blog.descripcion : null )
         this.setPUBLICADOR( ( blog && blog.publicador ) ? blog.publicador : null )
         this.setSECCION( ( blog && blog.seccion ) ? blog.seccion : null )
         this.setCATEGORIA( ( blog && blog.categoria ) ? blog.categoria : null )
         this.setSUB_CATEGORIAS( ( blog && blog.subCategorias ) ? blog.subCategorias : null )
+        this.setCANTIDAD_ME_GUSTA( ( blog && blog.cantidadMeGusta ) ? blog.cantidadMeGusta : null )
         this.setHABILITADO( ( blog && blog.habilitado ) ? blog.habilitado : null )
-        this.setBLOG_EN_PUBLICADOS( ( blog && blog.blogEnPublicodos ) ? blog.blogEnPublicodos : null )
-        this.setACTUALIZACION_PENDIENTE( ( blog && blog.actualizacionPendiente ) ? blog.actualizacionPendiente : null )
+        this.setPUBLICADO( ( blog && blog.publicado ) ? blog.publicado : null )
+        this.setREVISION( ( blog && blog.revision ) ? blog.revision : null )
         this.setFECHA_CREACION( ( blog && blog.fechaCreacion ) ? blog.fechaCreacion : null )
         this.setFECHA_ACTUALIZACION( ( blog && blog.fechaActualizacion ) ? blog.fechaActualizacion : null )
     }
@@ -81,6 +83,15 @@ class Blog {
         }
 
         this.uid = uid
+    }
+
+    setREFERENCIA ( referencia ) {
+        if ( !referencia ) {
+            this.referencia = ''
+            return
+        }
+
+        this.referencia = referencia
     }
 
     setTITULO ( titulo ) {
@@ -137,31 +148,40 @@ class Blog {
         this.subCategorias = subCategorias
     }
 
+    setCANTIDAD_ME_GUSTA ( cantidadMeGusta ) {
+        if ( !cantidadMeGusta ) {
+            this.cantidadMeGusta = 0
+            return
+        }
+
+        this.cantidadMeGusta = cantidadMeGusta
+    }
+
     setHABILITADO ( habilitado ) {
         if ( !habilitado ) {
-            this.habilitado = false
+            this.habilitado = true
             return
         }
 
         this.habilitado = habilitado
     }
 
-    setBLOG_EN_PUBLICADOS ( blogEnPublicodos ) {
-        if ( !blogEnPublicodos ) {
-            this.blogEnPublicodos = false
+    setPUBLICADO ( publicado ) {
+        if ( !publicado ) {
+            this.publicado = true
             return
         }
 
-        this.blogEnPublicodos = blogEnPublicodos
+        this.publicado = publicado
     }
 
-    setACTUALIZACION_PENDIENTE ( actualizacionPendiente ) {
-        if ( !actualizacionPendiente ) {
-            this.actualizacionPendiente = null
+    setREVISION ( revision ) {
+        if ( !revision ) {
+            this.revision = true
             return
         }
 
-        this.actualizacionPendiente = actualizacionPendiente
+        this.revision = revision
     }
 
     setFECHA_CREACION ( fechaCreacion ) {
@@ -194,7 +214,6 @@ class Blog {
         */
 
     // Metodo
-
     async importarDatosBlogPorUID ( uid ) {
         const documentBlog = await db.collection(COLECCION_BLOG).doc(uid).get()
 
@@ -213,60 +232,59 @@ class Blog {
     }
 
     async crearBlog () {
-
         const blog = this.getBlog()
+        if ( !blog || typeof blog != 'object' ) {
+            throw new ErrorJekuaa({
+                codigo: 'jekuaa/error/usuario_mala_solicitud',
+                mensaje: `No hay datos para crear un blog.`
+            })
+        }
+        
         await db.collection(COLECCION_BLOG).doc(this.uid).set(blog)
 
         return this
     }
 
-    async actualizarDatosBlog ( blog ) {
-        if ( !blog || typeof blog != 'object' ) {
-            throw new ErrorJekuaa({
-                codigo: 'jekuaa/error/usuario_mala_solicitud',
-                mensaje: `No hay datos que actualizar :D`
-            })
-        }
-
+    async actualizarBlog ( blog ) {
         await db.collection(COLECCION_BLOG).doc(this.uid).update( blog )
 
         return this
     }
 
-    async crearSolicitudDeActualizacion ( datosActualizacion ) {
+    async eliminarBlog () {
+        // Eliminar blog
+        await db.collection(COLECCION_BLOG).doc(this.uid).delete()
+
+        return this
+    }
+
+    async subirArchivoAStorage ( datosArchivo ) {
 
         const {
-            fechaSolicitud,
-            descripcionSolicitud,
-            estado,
-            fechaRespuesta,
-            respuesta
-        } = datosActualizacion
-
-        // Crea una solicitud en su subcoleccion: Actualizaciones
-        const solicitudActualizacionBlog = new ActualizacionBlog()
-        solicitudActualizacionBlog.setUID_BLOG(this.uid)
-        solicitudActualizacionBlog.setDatosBlog({
-            descripcionSolicitud,
-            fechaSolicitud,
-            estado: 'pendiente',
-            respuesta: '',
-            fechaRespuesta: null,
-        })
-        const solicitudCreada = await solicitudActualizacionBlog.crearSolicitudActualizacion()
-
-        // Cambia el estado y actualizacionPendiente
-        await this.actualizarDatosBlog({
-            actualizacionPendiente: solicitudCreada
+            filepath,
+            filename,
+            mimetype
+        } = datosArchivo
+        const rutaArchivo = `blogs/${filename}`
+        
+        const bucket = storage.bucket('jekuaa-py.appspot.com')
+        const response = await bucket.upload(filepath, {
+            destination: rutaArchivo,
+            uploadType: 'media',
+            metadata: {
+                metadata: {
+                    contentType: mimetype
+                }
+            }
         })
 
-        return solicitudCreada
+        return response
     }
 
     async obtenerContenido ( opciones ) {
-        let rutaCloudStorage = opciones && opciones.pendiente ? 'blogs/pendientes' : 'blogs/publicados'
+        let rutaCloudStorage = process.env.NODE_ENV ? 'blogs/prod' : 'blogs/dev'
 
-        const bucket = storage.bucket('jekuaa-py.appspot.com')
+        const bucket = storage.bucket('jekuaa-blogs')
 
         const file = bucket.file(`${rutaCloudStorage}/${this.uid}.md`)
 
@@ -295,25 +313,6 @@ class Blog {
 
     }
 
-    async aceptarArchivoPendiente () {
-        const bucket = storage.bucket('jekuaa-py.appspot.com')
-
-        const file = bucket.file(`blogs/pendientes/${this.uid}.md`)
-
-        const existe = (await file.exists())[0]
-
-        if ( !existe ) {
-            throw new ErrorJekuaa({
-                codigo: 'jekuaa/error/usuario_mala_solicitud',
-                mensaje: `No existe el blog.`
-            })
-        }
-
-        const filePublicado = bucket.file(`blogs/publicados/${this.uid}.md`)
-
-        await file.move(filePublicado)
-    }
-
     async borrarArchivoBlog ( opciones ) {
         let rutaCloudStorage = opciones && opciones.pendiente ? 'blogs/pendientes' : 'blogs/publicados'
 
@@ -334,44 +333,22 @@ class Blog {
         const apiResponse = data[0]
     }
 
-    async actualizarSolicitudDeActualizacion ( referencia, datosActualizacion ) {
-
-        const {
-            fechaSolicitud,
-            descripcionSolicitud,
-            estado,
-            fechaRespuesta,
-            respuesta
-        } = datosActualizacion
-
-        const actualizacion = await referencia.update({
-            estado,
-            respuesta,
-            fechaRespuesta,
-        })
-
-        return actualizacion.id
-    }
-
-    async habilitarBlog () {
-
-        await db.collection(COLECCION_BLOG).doc(this.uid).update({
-            habilitado: this.habilitado
-        })
+    formatearDatos ( ) {
+        this.uid = this.uid ? this.uid.trim() : ''
+        this.referencia = this.referencia ? this.referencia.trim() : ''
+        this.titulo = this.titulo ? this.titulo.trim() : ''
+        this.descripcion = this.descripcion ? this.descripcion.trim() : ''
+        this.publicador = this.publicador ? this.publicador.trim() : ''
+        this.seccion = this.seccion ? this.seccion.trim() : ''
+        this.categoria = this.categoria ? this.categoria.trim() : ''
+        for (let i = 0; i < this.subCategorias.length; i++) {
+            this.subCategorias[i] = this.subCategorias[i].trim()
+        }
 
         return this
     }
 
-    async eliminarBlog () {
-        // Eliminar historial de actualizaciones del blog
 
-        // Eliminar blog
-        await db.collection(COLECCION_BLOG).doc(this.uid).delete()
-
-        return this
-    }
-
-    
         /* 
             ###############################
                    METODOS ESTATICOS
@@ -380,63 +357,21 @@ class Blog {
 
     
     static async crearNuevoBlog ( datosBlog ) {
-        const {
-            uid,
-            titulo,
-            descripcion,
-            publicador,
-            seccion,
-            categoria,
-            subCategorias,
-            habilitado,
-            blogEnPublicodos,
-            actualizacionPendiente,
-            fechaCreacion,
-            fechaActualizacion,
-        } = datosBlog
-
-        const blog = new Blog()
-        blog.setUID( uid )
-        blog.setTITULO( titulo )
-        blog.setDESCRIPCION( descripcion )                  // Opcional
-        blog.setPUBLICADOR( publicador )
-        blog.setSECCION( seccion )
-        blog.setCATEGORIA( categoria )
-        blog.setSUB_CATEGORIAS( subCategorias )             // Opcional
-        blog.setHABILITADO()                                    // Default: false
-        blog.setBLOG_EN_PUBLICADOS()                         // Default: false
-        blog.setACTUALIZACION_PENDIENTE()                       // Default: null
-        blog.setFECHA_CREACION( fechaCreacion )
-        blog.setFECHA_ACTUALIZACION( fechaActualizacion )
+        const blog = new Blog(datosBlog)
 
         return await blog.crearBlog()
     }
 
-    static async subirArchivoAStorage ( datosArchivo, pendiente ) {
+    static async actualizarBlog ( uid, datosBlog ) {
+        const blog = new Blog()
+        blog.setUID(uid)
+        await blog.actualizarBlog(datosBlog)
 
-        const {
-            filepath,
-            filename,
-            mimetype
-        } = datosArchivo
-        const rutaArchivo = pendiente ? 'blogs/pendientes' : 'blogs/publicados'
-        
-        const bucket = storage.bucket('jekuaa-py.appspot.com')
-        const response = await bucket.upload(filepath, {
-            destination: `${rutaArchivo}/${filename}`,
-            uploadType: 'media',
-            metadata: {
-                metadata: {
-                    contentType: mimetype
-                }
-            }
-        })
-
-        return response
+        return datosBlog
     }
 
     static async existeArchivoBlog ( rutaArchivo ) {
-        const bucket = storage.bucket('jekuaa-py.appspot.com')
+        const bucket = storage.bucket('jekuaa-blogs')
         const file = bucket.file(rutaArchivo)
 
         const existe = (await file.exists())[0]
@@ -444,16 +379,32 @@ class Blog {
         return existe
     }
 
+    static async subirArchivoAStorage ( rutaArchivo, uid ) {
+        const bucket = storage.bucket('jekuaa-blogs')
+
+        const rutaModo = process.env.NODE_ENV ? 'prod' : 'dev'
+        const response = await bucket.upload(rutaArchivo, {
+            destination: `blogs/${rutaModo}/${uid}.md`,
+            uploadType: 'media',
+            metadata: {
+                metadata: {
+                    contentType: '.md'
+                }
+            }
+        })
+
+        return response
+    }
+
     static async obtenerURL ( nombreArchivo, opcionesBlog ) {
 
         // opcionesBlog: pendiente, segundosValidos
-
         const action = 'read'
         const expires = new Date().getTime() + opcionesBlog.segundosValidos * 1000
-        const rutaArchivo = opcionesBlog.pendiente ? 'blogs/pendientes' : 'blogs/publicados'
+        const rutaArchivo = `blogs/${nombreArchivo}.md`
 
         const bucket = storage.bucket('jekuaa-py.appspot.com')
-        const file = bucket.file(`${rutaArchivo}/${nombreArchivo}.md`)
+        const file = bucket.file(rutaArchivo)
 
         const existe = (await file.exists())[0]
 
@@ -495,35 +446,36 @@ class Blog {
         })
     }
 
-    static async eliminarArchivoBlog ( filename ) {
-        const bucket = storage.bucket('jekuaa-py.appspot.com')
-        const filePublicado = bucket.file(`blogs/publicados/${filename}.md`)
-        const filePendiente = bucket.file(`blogs/pendientes/${filename}.md`)
+    static async eliminarBlog ( uid ) {
+        const result = await db.collection(COLECCION_BLOG).doc(uid).delete()
+        return result
+    }
 
-        const existePublicado = (await filePublicado.exists())[0]
-        const existePendiente = (await filePendiente.exists())[0]
+    static async eliminarArchivoBlog ( nombreArchivo ) {
+        const bucket = storage.bucket('jekuaa-blogs')
+        const modo = process.env.NODE_ENV ? 'prod' : 'dev'
+        const file = bucket.file(`blogs/${modo}/${nombreArchivo}.md`)
 
-        const resultado = {}
+        const existe = (await file.exists())[0]
 
-        resultado.publicado = existePublicado ? await filePublicado.delete() : null
-        resultado.pendiente = existePendiente ? await filePendiente.delete() : null
+        const resultado = existe ? await file.delete() : null
         
         return resultado
     }
 
-    static async errorExisteBlogPorUID ( uid, operacion ) {
+    static async errorBlogPorUID ( uid, operacion ) {
         const existe = (await db.collection(COLECCION_BLOG).doc(uid).get()).exists
 
         if ( operacion === 'existe' && existe ) {
             throw new ErrorJekuaa({
                 codigo: 'jekuaa/error/usuario_mala_solicitud',
-                mensaje: `Ya existe el blog ${uid}`
+                mensaje: `Existe el blog.`
             })
 
         } else if ( operacion === 'no-existe' && !existe ) {
             throw new ErrorJekuaa({
                 codigo: 'jekuaa/error/usuario_mala_solicitud',
-                mensaje: `No existe el blog ${uid}`
+                mensaje: `No existe el blog.`
             })
         }
 

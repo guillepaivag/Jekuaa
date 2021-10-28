@@ -2,13 +2,20 @@ const {Router} = require('express')
 const router = Router()
 
 const {
+    validarDatosActualizacionUsuario,
+    validarDatosCreacionUsuarioAdmin,
+    validarDatosActualizacionUsuarioAdmin,
+} = require('../../validators/Usuarios')
+
+const {
     estaAutenticado,
-    validacionCreacionUsuario,
-    validacionActualizacionUsuario,
-    esMiembroJekuaa,
-    esDeMayorIgualNivel,
+    esAdmin,
     esDeMayorNivel,
-    permisoParaOperarUnRol,
+    verificarDatosRequeridos,
+    verificarTipoDeDatosCliente,
+    validarDatosExistentesCliente,
+    construirDatosUsuario,
+    sePuedeEliminarPropietario,
 } = require('../../middlewares/usuario')
 
 const {
@@ -18,53 +25,76 @@ const {
     actualizarUsuarioPorUID,
     habilitarUsuarioPorUID,
     eliminarUsuarioPorUID
-} = require('../../controllers/usuarios/MiembroJekuaa')
+} = require('../../controllers/usuarios/AdminJekuaa')
 
 const {
-    actualizarDatosPersonalesPorUID
+    obtenerMiUsuario,
+    actualizarMiUsuario,
+    eliminarMiUsuario,
 } = require('../../controllers/usuarios/Usuario')
 
-// Operaciones para: Usuarios Generales
-router.post('/actualizarDatosPersonalesPorUID/:uid', 
-    estaAutenticado, 
-    actualizarDatosPersonalesPorUID)
 
-// Operaciones para: MiembrosJekuaa
-router.post('/miembroJekuaa/crearUsuario', 
+// Operaciones para: Usuarios (Estudiantes, MiembroJeuaa, Moderador, Propietario)
+router.get('/estudiante/leerUsuario/:uid', 
     estaAutenticado, 
-    esMiembroJekuaa, 
-    permisoParaOperarUnRol, 
-    validacionCreacionUsuario, 
+    obtenerMiUsuario)
+
+router.put('/estudiante/actualizarUsuario', 
+    estaAutenticado, 
+    verificarTipoDeDatosCliente,
+    validarDatosExistentesCliente,
+    construirDatosUsuario,
+    actualizarMiUsuario)
+
+router.delete('/estudiante/eliminarUsuario', 
+    estaAutenticado, 
+    sePuedeEliminarPropietario,
+    eliminarMiUsuario)
+
+
+
+
+// Operaciones para: Administración
+router.post('/adminJekuaa/crearUsuario', 
+    estaAutenticado, 
+    esAdmin, 
+    verificarDatosRequeridos, 
+    verificarTipoDeDatosCliente, 
+    validarDatosExistentesCliente,
+    construirDatosUsuario, 
     crearUsuario)
 
-router.post('/miembroJekuaa/verDatosUsuarioPorUID/:uid', 
+router.get('/adminJekuaa/verDatosUsuarioPorUID/:uid', 
     estaAutenticado, 
-    esMiembroJekuaa, 
+    esAdmin, 
     verDatosUsuarioPorUID)
 
-router.post('/miembroJekuaa/verDatosAuthPorUID/:uid', 
+router.get('/adminJekuaa/verDatosAuthPorUID/:uid', 
     estaAutenticado, 
-    esMiembroJekuaa, 
+    esAdmin, 
     verDatosAuthPorUID)
 
-router.post('/miembroJekuaa/actualizarUsuarioPorUID/:uid', 
+router.put('/adminJekuaa/actualizarUsuarioPorUID/:uid', 
     estaAutenticado, 
-    esMiembroJekuaa, 
+    esAdmin, 
     esDeMayorNivel, 
-    permisoParaOperarUnRol, 
-    validacionActualizacionUsuario,
+    verificarTipoDeDatosCliente,
+    validarDatosExistentesCliente,
+    sePuedeEliminarPropietario,
+    construirDatosUsuario,
     actualizarUsuarioPorUID)
 
-router.post('/miembroJekuaa/habilitarUsuarioPorUID/:uid', 
+router.put('/adminJekuaa/habilitarUsuarioPorUID/:uid', 
     estaAutenticado, 
-    esMiembroJekuaa, 
+    esAdmin, 
     esDeMayorNivel, 
     habilitarUsuarioPorUID)
 
-router.post('/miembroJekuaa/eliminarUsuarioPorUID/:uid', 
+router.delete('/adminJekuaa/eliminarUsuarioPorUID/:uid', 
     estaAutenticado, 
-    esMiembroJekuaa, 
+    esAdmin, 
     esDeMayorNivel, 
+    sePuedeEliminarPropietario,
     eliminarUsuarioPorUID)
 
 

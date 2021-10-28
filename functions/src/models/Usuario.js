@@ -3,6 +3,7 @@ const db = require('../../db')
 const JekuaaPremium = require('./JekuaaPremium')
 const JekuaaRoles = require('./JekuaaRoles')
 const ErrorJekuaa = require('./Error/ErroresJekuaa')
+const utilsUsuario = require('../utils/Usuario')
 
 const COLECCION_USUARIO = 'Usuarios'
 
@@ -13,7 +14,7 @@ class Usuario {
             var { 
                 uid, nombreUsuario, correo, 
                 nombreCompleto, fechaNacimiento,
-                jekuaaPremium, jekuaaRoles, jekuaaPoint
+                jekuaaPremium, jekuaaRol, instructor, jekuaaPoint
             } = datosUsuario
         }
 
@@ -23,7 +24,8 @@ class Usuario {
         this.nombreCompleto = nombreCompleto ? nombreCompleto : ''
         this.fechaNacimiento = fechaNacimiento ? fechaNacimiento : null
         this.jekuaaPremium = jekuaaPremium ? jekuaaPremium : new JekuaaPremium()
-        this.jekuaaRoles = jekuaaRoles ? jekuaaRoles : new JekuaaRoles()
+        this.jekuaaRol = jekuaaRol ? jekuaaRol : 'estudiante'
+        this.instructor = instructor ? instructor : false
         this.jekuaaPoint = jekuaaPoint ? jekuaaPoint : 0
     }
     
@@ -42,12 +44,13 @@ class Usuario {
             nombreCompleto: this.nombreCompleto,
             fechaNacimiento: this.fechaNacimiento,
             jekuaaPremium: this.jekuaaPremium,
-            jekuaaRoles: this.jekuaaRoles,
-            jekuaaPoint: this.jekuaaPoint
+            jekuaaRol: this.jekuaaRol,
+            instructor: this.instructor,
+            jekuaaPoint: this.jekuaaPoint,
         }
     }
 
-    getDatosUsuarioProduccion () {
+    getDatosUsuario () {
         return {
             uid: this.uid,
             nombreUsuario: this.nombreUsuario,
@@ -55,8 +58,9 @@ class Usuario {
             nombreCompleto: this.nombreCompleto,
             fechaNacimiento: this.fechaNacimiento,
             jekuaaPremium: this.jekuaaPremium.getDatosPremium(),
-            jekuaaRoles: this.jekuaaRoles.getDatosRoles(),
-            jekuaaPoint: this.jekuaaPoint
+            jekuaaRol: this.jekuaaRol,
+            instructor: this.instructor,
+            jekuaaPoint: this.jekuaaPoint,
         }
     }
 
@@ -84,8 +88,12 @@ class Usuario {
         return this.jekuaaPremium
     }
 
-    getJekuaaRoles () {
+    getJekuaaRol () {
         return this.jekuaaRoles
+    }
+
+    getInstructor () {
+        return this.instructor
     }
 
     getJekuaaPoints () {
@@ -103,7 +111,7 @@ class Usuario {
         const { 
             uid, nombreUsuario, correo, 
             nombreCompleto, fechaNacimiento,
-            jekuaaPremium, jekuaaRoles, jekuaaPoint
+            jekuaaPremium, jekuaaRol, instructor, jekuaaPoint
         } = datosUsuario
 
         this.setUID(uid)
@@ -112,109 +120,64 @@ class Usuario {
         this.setNombreCompleto(nombreCompleto)
         this.setFechaNacimiento(fechaNacimiento)
         this.setJekuaaPremium(jekuaaPremium)
-        this.setJekuaaRoles(jekuaaRoles)
+        this.setJekuaaRol(jekuaaRol)
+        this.setInstructor(instructor)
         this.setJekuaaPoints(jekuaaPoint)
 
         return this
     }
 
     setUID ( uid = '' ) {
-        if (uid) {
-            this.uid = uid
-            return
-        }
-
-        this.uid = ''
-
+        this.uid = uid
         return this
     }
 
     setNombreUsuario ( nombreUsuario = '' ) {
-        if (nombreUsuario) {
-            this.nombreUsuario = nombreUsuario
-            return
-        }
-
-        this.nombreUsuario = ''
-
+        this.nombreUsuario = nombreUsuario
         return this
     }
 
     setCorreo ( correo = '' ) {
-        if (correo) {
-            this.correo = correo
-            return
-        }
-
-        this.correo = ''
-
+        this.correo = correo
         return this
     }
 
     setNombreCompleto ( nombreCompleto = '' ) {
-        if (nombreCompleto) {
-            this.nombreCompleto = nombreCompleto
-            return
-        }
-
-        this.nombreCompleto = ''
-
+        this.nombreCompleto = nombreCompleto
         return this
     }
 
     setFechaNacimiento ( fechaNacimiento = null ) {
-        if (fechaNacimiento) {
-            this.fechaNacimiento = fechaNacimiento
-            return
-        }
-
-        this.fechaNacimiento = null
-
+        this.fechaNacimiento = fechaNacimiento
         return this
     }
 
-    setJekuaaPremium ( jekuaaPremium = null ) {
+    setJekuaaPremium ( jekuaaPremium = new JekuaaPremium() ) {
         if (jekuaaPremium) {
-            const {
-                fechaCompra,
-                duracion,
-                plan
-            } = jekuaaPremium
-
-            this.jekuaaPremium = new JekuaaPremium(jekuaaPremium)
-            return
+            this.jekuaaPremium = new JekuaaPremium({
+                plan: jekuaaPremium.plan,
+                fechaCompra: jekuaaPremium.fechaCompra,
+                fechaHasta: jekuaaPremium.fechaHasta,
+            })
+        } else {
+            this.jekuaaPremium = jekuaaPremium
         }
-
-        this.jekuaaPremium = new JekuaaPremium()
 
         return this
     }
 
-    setJekuaaRoles ( jekuaaRoles = null ) {
-        if (jekuaaRoles) {
-            const {
-                rol,
-                secciones,
-                instructor
-            } = jekuaaRoles
+    setJekuaaRol ( jekuaaRol = 'estudiante' ) {
+        this.jekuaaRol = jekuaaRol
+        return this
+    }
 
-            this.jekuaaRoles = new JekuaaRoles(jekuaaRoles)
-            return
-        }
-
-        this.jekuaaRoles = new JekuaaRoles()
-
+    setInstructor ( instructor = false ) {
+        this.instructor = !!instructor
         return this
     }
 
     setJekuaaPoints ( jekuaaPoint = 0 ) {
-        if (jekuaaPoint) {
-            this.jekuaaPoint = jekuaaPoint
-            return
-        }
-
-        this.jekuaaPoint = 0
-
+        this.jekuaaPoint = jekuaaPoint
         return this
     }
 
@@ -258,72 +221,7 @@ class Usuario {
         return datosUsuarioAuthentication
     
     }
-
-    async actualizarDatosPersonales () {
-        const docUsuario = await db.collection(COLECCION_USUARIO).doc(this.uid).get()
-
-        if ( !docUsuario.exists ) {
-            throw new Error(`No existe el usuario con la uid ${this.uid}.`)
-        }
-
-        if ( !this.uid ) {
-            throw new Error('Para actualizar el usuario se debe tener la uid primeramente.')
-        }
-
-        if ( !this.nombreUsuario ) {
-            throw new Error('Para actualizar el nombre de usuario debe existir el nombre de usuario.')
-        }
-
-        if ( !this.correo ) {
-            throw new Error('Para actualizar el correo debe existir el correo.')
-        }
-
-        if ( typeof this.nombreUsuario != 'string' ) {
-            throw new Error('El nombre de usuario debe ser de tipo string.')
-        }
-
-        if ( typeof this.correo != 'string' ) {
-            throw new Error('El correo debe ser de tipo string.')
-        }
-
-        if ( typeof this.nombreCompleto != 'string' ) {
-            throw new Error('El nombre completo debe ser de tipo string.')
-        }
-
-        if ( typeof this.fechaNacimiento != 'object' ) {
-            throw new Error('La fecha de nacimiento debe ser de tipo object (Date).')
-        }
-
-        const datosUsuario = docUsuario.data()
-
-        const datosUsuarioDBActualizar = {}
-        const datosUsuarioAuthActualizar = {}
-
-        if ( datosUsuario.nombreUsuario != this.nombreUsuario ) {
-            datosUsuarioDBActualizar.nombreUsuario = this.nombreUsuario
-            datosUsuarioAuthActualizar.displayName = this.nombreUsuario
-        }
-
-        if ( datosUsuario.correo != this.correo ) {
-            datosUsuarioDBActualizar.correo = this.correo
-            datosUsuarioAuthActualizar.email = this.correo
-        }
-
-        if ( datosUsuario.nombreCompleto != this.nombreCompleto ) {
-            datosUsuarioDBActualizar.nombreCompleto = this.nombreCompleto
-        }
-
-        if ( this.fechaNacimiento ) {
-            datosUsuarioDBActualizar.fechaNacimiento = admin.firestore.Timestamp.fromDate( this.fechaNacimiento )
-        }
-
-        await admin.auth().updateUser(this.uid, datosUsuarioAuthActualizar)
-        await db.collection(COLECCION_USUARIO).doc(this.uid).update(datosUsuarioDBActualizar)
-
-        return this
-        
-    }
-
+    
         /* 
             ###############################
                    METODOS ESTATICOS
@@ -337,68 +235,136 @@ class Usuario {
         el registro como el nombre de usuario.
     */
 
-    static async crearNuevoUsuarioEstudiante ( datosNuevoUsuario, contrasenha ) {
-
+    // Usuarios
+    static async crearNuevoUsuario ( datosUsuario, contrasenha ) {
         const {
-            correo,
             nombreUsuario,
+            correo,
             nombreCompleto,
-            fechaNacimiento
-        } = datosNuevoUsuario
+            fechaNacimiento,
+            jekuaaPremium,
+            jekuaaRol,
+            instructor,
+            jekuaaPoint
+        } = datosUsuario
 
-        if ( !correo || !contrasenha || !nombreUsuario ) {
-            throw new Error('Debe existir el correo, contraseña y un nombre de usuario para registrarse.')
-        }
-
-        if ( nombreCompleto && ( typeof nombreCompleto != 'string' ) ) {
-            throw new Error('El nombre completo debe ser de tipo string.')
-        }
-
-        if ( fechaNacimiento && ( typeof fechaNacimiento != 'object' ) ) {
-            throw new Error('La fecha de nacimiento debe ser de tipo object (Date).')
-        }
-        
-        await Usuario.errorExisteUsuario({
-            nombreUsuario
-        })
-
+        // Crear una autenticacion para el nuevo usuario
         const usuarioAuthNuevo = await admin.auth().createUser({
             email: correo,
             password: contrasenha,
             displayName: nombreUsuario,
         })
 
-        let datosUsuario = new Usuario()
-        datosUsuario.setUsuario( datosNuevoUsuario )
-        datosUsuario.setUID( usuarioAuthNuevo.uid )
-        datosUsuario = datosUsuario.getUsuarioJSON()
-
-        await admin.firestore().collection(COLECCION_USUARIO).doc(usuarioAuthNuevo.uid).set(datosUsuario)
+        // Crear los reclamos de autenticacion para el nuevo usuario
         await admin.auth().setCustomUserClaims(usuarioAuthNuevo.uid, {
-            rol: 'estudiante',
-            jekuaaPremium: false
+            jekuaaRol: jekuaaRol,
+            jekuaaPremium: jekuaaPremium.plan,
+            instructor: instructor
         })
 
-        return usuarioAuthNuevo.uid
+        // Crear los datos en firestore para el nuevo usuario
+        await db.collection(COLECCION_USUARIO).doc(usuarioAuthNuevo.uid).set({
+            ...datosUsuario,
+            uid: usuarioAuthNuevo.uid
+        })
 
+        // // Crear instructor
+        // if ( jekuaaRoles.instructor ) {
+        //     // Agregar instructor
+        //     Instructor.crearNuevoInstructor({
+        //         uid: usuarioAuthNuevo.uid
+        //     })
+        // }
+
+        const usuario = new Usuario({
+            ...datosUsuario,
+            uid: usuarioAuthNuevo.uid
+        })
+
+        return usuario
     }
 
-    static async obtenerDatosDeAuthenticationPorUID ( uid ) {
-        
-        // Recolectamos los datos de firebase authentication
-        const datosUsuarioAuthentication = await admin.auth().getUser( uid )
-    
-        return datosUsuarioAuthentication
+    static async actalizarDatosUsuarioPorUID ( uidUsuario, datosActualizados ) {
 
+        const {
+            nombreUsuario,
+            correo,
+            nombreCompleto,
+            fechaNacimiento,
+            jekuaaPremium,
+            jekuaaRol,
+            instructor,
+            jekuaaPoint
+        } = datosActualizados
+
+        const datosAuth = await admin.auth().getUser(uidUsuario)
+        
+        const datosAuthActualizados = utilsUsuario.construirDatosAutentication (datosActualizados, datosAuth)
+        const datosAuthClaimsActualizados = utilsUsuario.construirDatosReclamosAutenticacion (datosActualizados, datosAuth.customClaims)
+
+        // Actualizar la autenticacion del usuario
+        Object.keys(datosAuthActualizados).length ? 
+        await admin.auth().updateUser(uidUsuario, datosAuthActualizados) : ''
+
+        // Actualizar los reclamos de autenticacion del usuario
+        Object.keys(datosAuthClaimsActualizados).length ? 
+        await admin.auth().setCustomUserClaims(uidUsuario, datosAuthClaimsActualizados) : ''
+
+        // Actualizar los datos de firestore del usuario
+        Object.keys(datosActualizados).length ? 
+        await db.collection(COLECCION_USUARIO).doc(uidUsuario).update(datosActualizados) : ''
+
+        // // Operar los datos de instructor en caso de cambio
+        // const cambioInstructor = jekuaaRoles ? jekuaaRoles.instructor != datosUsuario.jekuaaRoles.instructor : false
+        // if ( !cambioInstructor ) {
+        //     return usuario 
+        // }
+
+        // const noExisteInstructor = !(await db.collection(COLECCION_INSTRUCTOR).doc(uidUsuario).get()).exists
+        // if ( jekuaaRoles.instructor && noExisteInstructor ) {
+        //     // Agregar instructor
+        //     Instructor.crearNuevoInstructor({
+        //         uid: uidUsuario
+        //     })
+        // }
+
+        return uidUsuario 
+    }
+
+    static async verDatosUsuarioPorUID ( uidUsuario ) {
+        const usuario = new Usuario()
+        await usuario.importarDatosUsuarioPorUID( uidUsuario )
+
+        return usuario.getDatosUsuario()
+    }
+
+    static async verDatosAuthPorUID ( uidUsuario ) {
+        const datosAuth = await admin.auth().getUser(uidUsuario)
+
+        return datosAuth
+    }
+
+    static async habilitarUsuarioPorUID ( uidUsuario, habilitar ) {
+        let resultado = await admin.auth().updateUser(uidUsuario, {
+            disabled: !habilitar,
+        })
+
+        return resultado
+    }
+
+    static async eliminarUsuarioPorUID ( uidUsuario ) {
+        let authEliminado = await admin.auth().deleteUser( uidUsuario )
+        let firestoreEliminado = await db.collection(COLECCION_USUARIO).doc(uidUsuario).delete()
+
+        return {
+            authEliminado,
+            firestoreEliminado
+        }
     }
 
     static async errorExisteUsuario ( identificadores ) {
 
-        const {
-            uid,
-            nombreUsuario,
-            correo
-        } = identificadores
+        const { uid, nombreUsuario, correo } = identificadores
 
         if ( uid ) {
 
@@ -486,42 +452,6 @@ class Usuario {
             }
 
         }
-    }
-
-    static construirDatosAutentication (datosUsuario, datosViejos) {
-        const datosAutenticacion = {}
-        
-        if ( datosUsuario.nombreUsuario && datosUsuario.nombreUsuario != datosViejos.displayName ) {
-            datosAutenticacion.displayName = datosUsuario.nombreUsuario
-        }
-
-        if ( datosUsuario.correo && datosUsuario.correo != datosViejos.email ) {
-            datosAutenticacion.email = datosUsuario.correo
-        }
-
-        return datosAutenticacion
-    }
-
-    static construirDatosReclamosAutenticacion (datosNuevos, datosReclamosViejos) {
-        const datosReclamosAutenticacion = {}
-
-        if (datosNuevos.jekuaaPremium && datosNuevos.jekuaaPremium.plan != datosReclamosViejos.jekuaaPremium) {
-            datosReclamosAutenticacion.jekuaaPremium = datosNuevos.jekuaaPremium.plan
-        }
-
-        if (datosNuevos.jekuaaRoles && datosNuevos.jekuaaRoles.rol != datosReclamosViejos.jekuaaRol) {
-            datosReclamosAutenticacion.jekuaaRol = datosNuevos.jekuaaRoles.rol
-        }
-
-        if ( datosReclamosAutenticacion.jekuaaPremium === undefined ) {
-            datosReclamosAutenticacion.jekuaaPremium = datosReclamosViejos.jekuaaPremium
-        }
-
-        if ( datosReclamosAutenticacion.jekuaaRol === undefined ) {
-            datosReclamosAutenticacion.jekuaaRol = datosReclamosViejos.jekuaaRol
-        }
-
-        return datosReclamosAutenticacion
     }
 }
 

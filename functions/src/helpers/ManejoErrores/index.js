@@ -1,6 +1,6 @@
-const Respuesta = require("../../Respuesta");
-const ErrorJekuaa = require("../ErroresJekuaa");
-const manejadorErroresFirebaseAuth = require("./ManejadorErroresFirebaseAuth");
+const Respuesta = require("../../models/Respuesta");
+const ErrorJekuaa = require("../../models/Error/ErroresJekuaa");
+const manejadorErroresFirebaseAuth = require("./FirebaseAuth");
 
 function manejadorErrores ( error ) {
 
@@ -49,6 +49,21 @@ function manejadorErrores ( error ) {
     } else if ( error instanceof EvalError ) {
         // sentencias para manejar excepciones EvalError
     
+    }
+
+    // Manejador de errores de Express Validators
+    if (error instanceof Error && error.errors instanceof Array && error.errors.length && error.errors[0].msg instanceof ErrorJekuaa) {
+        status = error.errors[0].msg.status
+        respuesta.setRespuesta({
+            codigo: error.errors[0].msg.codigo,
+            mensaje: error.errors[0].msg.mensaje,
+            resultado: error.errors[0].msg.resultado
+        })
+
+        return {
+            status,
+            respuesta
+        }
     }
 
     if ( !respuesta.codigo ) {

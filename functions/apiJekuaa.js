@@ -1,7 +1,7 @@
 const express = require('express')
 const cors = require('cors')
 const fileUpload = require('express-fileupload')
-const manejadorErrores = require('./src/models/Error/ManejoErrores/ManejadorErrores')
+const manejadorErrores = require('./src/helpers/ManejoErrores')
 
 const apiJekuaa = express()
 
@@ -38,10 +38,10 @@ apiJekuaa.use(express.urlencoded({
 // rutas
 apiJekuaa.use('/usuarios', require('./src/routes/usuarios/Usuario'))
 apiJekuaa.use('/blog', require('./src/routes/blogs/Blog'))
-apiJekuaa.use('/rolesSecciones', require('./src/routes/usuarios/miembroJekuaa/RolesSecciones'))
+// apiJekuaa.use('/rolesSecciones', require('./src/routes/RolesSecciones'))
 
 apiJekuaa.use((err, req, res, next) => { 
-  console.log('err', err)
+  console.log('err', err.throw)
   
   const {
       status,

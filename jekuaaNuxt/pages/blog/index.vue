@@ -1,5 +1,7 @@
 <template>
-  <h1>BLOG</h1>
+  <div>
+    BLOGS
+  </div>
 </template>
 
 <script>
@@ -7,7 +9,7 @@ export default {
   name: 'BlogIndex',
   data () {
     return {
-
+      editorContent: ''
     }
   },
   head () {
@@ -21,7 +23,7 @@ export default {
         }
       ]
     }
-  }
+  },
 }
 </script>
 

@@ -2,20 +2,12 @@ import 'firebase'
 import Cookies from 'js-cookie'
 const COOKIE_NAME = '__session'
 const collectionName = 'Usuarios'
-const realTime = false
 
 const jekuaaPremiumDefault = {
-  plan: '',
+  plan: 'gratis',
   fechaCompra: null,
   fechaHasta: null
 }
-
-const jekuaaRolesDefault = {
-  rol: 'estudiante',
-  secciones: [],
-  instructor: false
-}
-
 
 
 
@@ -28,7 +20,8 @@ export const state = {
   nombreCompleto: '',
   fechaNacimiento: null,
   jekuaaPremium: jekuaaPremiumDefault,
-  jekuaaRoles: jekuaaRolesDefault,
+  jekuaaRol: 'estudiante',
+  instructor: false,
   jekuaaPoint: 0,
 }
 
@@ -69,8 +62,12 @@ export const getters = {
     return state.jekuaaPremium
   },
 
-  jekuaaRoles (state) {
-    return state.jekuaaRoles
+  jekuaaRol (state) {
+    return state.jekuaaRol
+  },
+
+  instructor (state) {
+    return state.instructor
   },
 
   jekuaaPoint (state) {
@@ -84,10 +81,6 @@ export const getters = {
   esJekuaaPremium (state) {
     return !!state.jekuaaPremium
   },
-
-  esMiembroJekuaa (state) {
-    return state.jekuaaRoles.rol != 'estudiante'
-  }
 
 }
 
@@ -164,31 +157,30 @@ export const actions = {
     }
   },
 
-  setDatosJekuaaPremium ({ commit }, datosJekuaaPremium) {
-    console.log('[STORE ACTIONS] - setDatosJekuaaPremium')
-    if (datosJekuaaPremium) {
-      commit('setDatosJekuaaPremium', datosJekuaaPremium)
+  setJekuaaPremium ({ commit }, jekuaaPremium) {
+    console.log('[STORE ACTIONS] - setJekuaaPremium')
+    if (jekuaaPremium) {
+      commit('setJekuaaPremium', jekuaaPremium)
     } else {
-      commit('setDatosJekuaaPremium', null)
+      commit('setJekuaaPremium', null)
     }
   },
 
-  async setJekuaaRoles ({ dispatch, commit, state }, jekuaaRoles) {
-    console.log('[STORE ACTIONS] - setJekuaaRoles')
-    
-    if (jekuaaRoles) {
-      const uid = state.uid
-
-      const { rol, secciones, instructor } = jekuaaRoles
-
-      commit('setJekuaaRoles', { rol, secciones, instructor })
-
-      if (jekuaaRoles.rol === 'estudiante') {
-        return;
-      }
-
+  setJekuaaRol ({ dispatch, commit, state }, jekuaaRol) {
+    console.log('[STORE ACTIONS] - setJekuaaRol')
+    if (jekuaaRol) {
+      commit('setJekuaaRol', jekuaaRol)
     } else {
-      commit('setJekuaaRoles', null)
+      commit('setJekuaaRol', null)
+    }
+  },
+
+  setInstructor ({ dispatch, commit, state }, instructor) {
+    console.log('[STORE ACTIONS] - setInstructor')
+    if (instructor) {
+      commit('setInstructor', instructor)
+    } else {
+      commit('setInstructor', null)
     }
   },
 
@@ -209,11 +201,7 @@ export const actions = {
 
       // Obtenemos los datos del usuario por medio de la uid
       // Insertamos los datos de los usuarios en la store
-      if (!realTime) {
-        await dispatch('setDatosUsuarioPorUID', uid)
-      } else {
-        await dispatch('setDatosUsuarioPorUID_RealTime', uid) 
-      }
+      await dispatch('setDatosUsuarioPorUID', uid)
 
     } catch (error) {
       
@@ -246,8 +234,9 @@ export const actions = {
       await dispatch('setCorreo', datosUsuario.correo)
       await dispatch('setNombreCompleto', datosUsuario.nombreCompleto)
       await dispatch('setFechaNacimiento', datosUsuario.fechaNacimiento)
-      await dispatch('setDatosJekuaaPremium', datosUsuario.jekuaaPremium)
-      await dispatch('setJekuaaRoles', datosUsuario.jekuaaRoles)
+      await dispatch('setJekuaaPremium', datosUsuario.jekuaaPremium)
+      await dispatch('setJekuaaRol', datosUsuario.jekuaaRol)
+      await dispatch('setInstructor', datosUsuario.instructor)
       await dispatch('setJekuaaPoint', datosUsuario.jekuaaPoint)
       
     } else {
@@ -260,16 +249,13 @@ export const actions = {
       await dispatch('setCorreo', null)
       await dispatch('setNombreCompleto', null)
       await dispatch('setFechaNacimiento', null)
-      await dispatch('setDatosJekuaaPremium', null)
-      await dispatch('setJekuaaRoles', null)
+      await dispatch('setJekuaaPremium', null)
+      await dispatch('setJekuaaRol', null)
+      await dispatch('setInstructor', null)
       await dispatch('setJekuaaPoint', null)
     }
 
-    // if (!realTime) {
-    //   await dispatch('modules/user/misCursos/setDatosMisCursosPorUID', uid, { root: true })
-    // } else {
-    //   await dispatch('modules/user/misCursos/setDatosMisCursosPorUID_RealTime', uid, { root: true })
-    // }
+    // await dispatch('modules/user/misCursos/setDatosMisCursosPorUID', uid, { root: true })
 
   },
 
@@ -430,18 +416,24 @@ export const actions = {
 
     // Obtener datos de Jekuaa Premium
     const jekuaaPremium = usuario.jekuaaPremium ?
-                                usuario.jekuaaPremium : null
+      usuario.jekuaaPremium : null
 
     if (jekuaaPremium) {
       jekuaaPremium.fechaCompra = jekuaaPremium.fechaCompra ? 
-                            new Date(jekuaaPremium.fechaCompra.seconds * 1000) : null
+        new Date(jekuaaPremium.fechaCompra.seconds * 1000) : null
+
+      jekuaaPremium.fechaHasta = jekuaaPremium.fechaHasta ? 
+        new Date(jekuaaPremium.fechaHasta.seconds * 1000) : null
     }
 
-    const jekuaaRoles = usuario.jekuaaRoles ?
-                  usuario.jekuaaRoles : null
+    const jekuaaRol = usuario.jekuaaRol ?
+      usuario.jekuaaRol : null
+
+    const instructor = usuario.instructor ?
+      usuario.instructor : null
 
     const jekuaaPoint = usuario.jekuaaPoint ?
-                    usuario.jekuaaPoint : null
+      usuario.jekuaaPoint : null
 
     // Creamos un objeto a insertar
     const datosUsuario = {
@@ -453,7 +445,8 @@ export const actions = {
       correo,
       fechaNacimiento,
       jekuaaPremium,
-      jekuaaRoles,
+      jekuaaRol,
+      instructor,
       jekuaaPoint
     }
 
@@ -537,29 +530,33 @@ export const mutations = {
     }
   },
 
-  setDatosJekuaaPremium (state, jekuaaPremium) {
-    console.log('[STORE MUTATIONS] - setDatosJekuaaPremium:', jekuaaPremium)
+  setJekuaaPremium (state, jekuaaPremium) {
+    console.log('[STORE MUTATIONS] - setJekuaaPremium:', jekuaaPremium)
 
     if (jekuaaPremium) {
-      /* FORMATO: {
-          duracion: 0,
-          fechaCompra: null,
-          plan: ''
-      } */
-      
       state.jekuaaPremium = jekuaaPremium
     } else {
       state.jekuaaPremium = null
     }
   },
 
-  setJekuaaRoles (state, jekuaaRoles) {
-    console.log('[STORE MUTATIONS] - setJekuaaRoles:', jekuaaRoles)
+  setJekuaaRol (state, jekuaaRol) {
+    console.log('[STORE MUTATIONS] - setJekuaaRol:', jekuaaRol)
 
-    if (jekuaaRoles) {
-      state.jekuaaRoles = jekuaaRoles
+    if (jekuaaRol) {
+      state.jekuaaRol = jekuaaRol
     } else {
-      state.jekuaaRoles = jekuaaRolesDefault
+      state.jekuaaRol = 'estudiante'
+    }
+  },
+
+  setInstructor (state, instructor) {
+    console.log('[STORE MUTATIONS] - setInstructor:', instructor)
+
+    if (instructor) {
+      state.instructor = instructor
+    } else {
+      state.instructor = false
     }
   },
 

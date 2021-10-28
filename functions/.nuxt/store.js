@@ -21,7 +21,6 @@ let store = {};
 
   resolveStoreModules(require('..\\..\\jekuaaNuxt\\store\\modules\\sistema.js'), 'modules/sistema.js')
   resolveStoreModules(require('..\\..\\jekuaaNuxt\\store\\modules\\usuarios\\index.js'), 'modules/usuarios/index.js')
-  resolveStoreModules(require('..\\..\\jekuaaNuxt\\store\\modules\\rolesSecciones\\index.js'), 'modules/rolesSecciones/index.js')
   resolveStoreModules(require('..\\..\\jekuaaNuxt\\store\\modules\\usuarios\\instructor.js'), 'modules/usuarios/instructor.js')
   resolveStoreModules(require('..\\..\\jekuaaNuxt\\store\\modules\\usuarios\\misCursos.js'), 'modules/usuarios/misCursos.js')
 
@@ -33,7 +32,6 @@ let store = {};
       '..\\..\\jekuaaNuxt\\store\\index.js',
       '..\\..\\jekuaaNuxt\\store\\modules\\sistema.js',
       '..\\..\\jekuaaNuxt\\store\\modules\\usuarios\\index.js',
-      '..\\..\\jekuaaNuxt\\store\\modules\\rolesSecciones\\index.js',
       '..\\..\\jekuaaNuxt\\store\\modules\\usuarios\\instructor.js',
       '..\\..\\jekuaaNuxt\\store\\modules\\usuarios\\misCursos.js',
     ], () => {

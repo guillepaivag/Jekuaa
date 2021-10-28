@@ -11,7 +11,7 @@ const {
   registrarUsuarioPorCorreoYContrasenha
 } = require('./funcionesFirebaseFunctions/usuarios')
 const {
-  indexBlog
+  indexBlogAlgolia
 } = require('./funcionesFirebaseFunctions/algolia')
 
 /*
@@ -27,13 +27,10 @@ const {
 exports.nuxtssr = functions.region('southamerica-east1').https.onRequest(appNuxt)
 
 // REST-API de Jekuaa
-// apiJekuaa.listen(7777, () => {
-//   console.log('server is running at port 7777')
-// })
 exports.apiJekuaa = functions.region('southamerica-east1').https.onRequest(apiJekuaa)
 
 // Función de registro de usuarios de Jekuaa
 exports.registrarUsuarioPorCorreoYContrasenha = registrarUsuarioPorCorreoYContrasenha
 
 // Indexación para blogs
-exports.indexBlog = indexBlog
+exports.indexBlogAlgolia = indexBlogAlgolia

@@ -3,7 +3,7 @@ const router = Router()
 
 const {
     estaAutenticado
-} = require('../../../middlewares/usuario')
+} = require('../middlewares/usuario')
 
 const {
     obtenerDatosRoles,
@@ -11,7 +11,7 @@ const {
     obtenerSecciones,
     obtenerCategoriasPorSeccion,
     obtenerSubcategoriasPorSeccionCategoria
-} = require('../../../controllers/usuarios/miembroJekuaa/Roles')
+} = require('../controllers/Roles')
 
 router.post('/obtenerDatosRoles', estaAutenticado, obtenerDatosRoles)
 router.post('/obtenerDatosSecciones', estaAutenticado, obtenerDatosSecciones)

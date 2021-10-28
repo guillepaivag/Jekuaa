@@ -5,9 +5,6 @@
   "Loading": {
     "description": "Auto imported from components/Loading.vue"
   },
-  "Logo": {
-    "description": "Auto imported from components/Logo.vue"
-  },
   "NavigationDefault": {
     "description": "Auto imported from components/NavigationDefault.vue"
   },
@@ -19,9 +16,6 @@
   },
   "VideoPlayer": {
     "description": "Auto imported from components/VideoPlayer.vue"
-  },
-  "VuetifyLogo": {
-    "description": "Auto imported from components/VuetifyLogo.vue"
   },
   "AdminBuscadorUsuarios": {
     "description": "Auto imported from components/admin/buscadorUsuarios.vue"
@@ -46,6 +40,12 @@
   },
   "InicioSubpresentacion": {
     "description": "Auto imported from components/inicio/subpresentacion.vue"
+  },
+  "AdminFormsEditor": {
+    "description": "Auto imported from components/admin/forms/Editor.vue"
+  },
+  "AdminFormsFormBlog": {
+    "description": "Auto imported from components/admin/forms/FormBlog.vue"
   },
   "AdminFormsFormularioUsuario": {
     "description": "Auto imported from components/admin/forms/formularioUsuario.vue"

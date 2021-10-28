@@ -3,7 +3,14 @@ const router = Router()
 const fileMiddleware = require('express-multipart-file-parser')
 
 const {
-    
+    verificarCamposValidos,
+    verificadorDeDatosRequeridos,
+    verificadorDeTipoDeDatos,
+    verificadorDeDatosBlog,
+    verificacionExistenciaBlog,
+    esPropietarioDelBlog,
+    construirDatosBlog,
+    verificacionExistenciaArchivoBlog
 } = require('../../middlewares/blog')
 
 const {
@@ -14,29 +21,101 @@ const {
 
 const {
     crearBlog,
+    obtenerBlog,
     obtenerDatosBlog,
-    actualizarDatosBlog,
-    solicitarActualizacionDeContenido,
-    obtenerUrlFirmada,
     obtenerContenidoBlog,
-    obtenerContenidoBlogParaMiembrosJekuaa,
-    habilitarBlog,
-    aceptarActualizacion,
+    actualizarDatosBlog,
     eliminarBlog,
 } = require('../../controllers/Blog')
 
-// Operaciones para: Usuarios
-router.get('/obtenerContenido/:uid', obtenerContenidoBlog)
+// Operaciones para: Estudiantes
+router.get('/obtenerBlog/:uid', 
+    verificacionExistenciaBlog,
+    verificacionExistenciaArchivoBlog,
+    obtenerBlog)
 
-// Operaciones para: MiembrosJekuaa
-router.post('/miembroJekuaa/crearBlog', estaAutenticado, esMiembroJekuaa, crearBlog)
-router.post('/miembroJekuaa/obtenerDatosBlog/:uid', estaAutenticado, esMiembroJekuaa, obtenerDatosBlog)
-router.post('/miembroJekuaa/actualizarDatosBlog/:uid', estaAutenticado, esMiembroJekuaa, actualizarDatosBlog)
-router.post('/miembroJekuaa/solicitarActualizacionDeContenido/:uid', fileMiddleware, estaAutenticado, esMiembroJekuaa, solicitarActualizacionDeContenido)
-router.post('/miembroJekuaa/obtenerUrlFirmada/:uid', estaAutenticado, esMiembroJekuaa, obtenerUrlFirmada)
-router.post('/miembroJekuaa/obtenerContenido/:uid', estaAutenticado, esMiembroJekuaa, obtenerContenidoBlogParaMiembrosJekuaa)
-router.post('/miembroJekuaa/aceptarActualizacion/:uid', estaAutenticado, esMiembroJekuaa, aceptarActualizacion)
-router.post('/miembroJekuaa/habilitarBlog/:uid', estaAutenticado, esMiembroJekuaa, habilitarBlog)
-router.post('/miembroJekuaa/eliminarBlog/:uid', estaAutenticado, esMiembroJekuaa, eliminarBlog)
+router.get('/obtenerDatosBlog/:uid', 
+    verificacionExistenciaBlog,
+    obtenerDatosBlog)
+
+router.get('/obtenerContenido/:uid',
+    verificacionExistenciaBlog,
+    verificacionExistenciaArchivoBlog,
+    obtenerContenidoBlog)
+
+router.post('/MeGusta/:uid', 
+    estaAutenticado, 
+    obtenerContenidoBlog)
+
+router.post('/NoMeGusta/:uid', 
+    estaAutenticado, 
+    obtenerContenidoBlog)
+
+// // Este tiene que estar en otro archivo
+// router.post('/crearCarpetaGuardado/:nombreCarpeta', 
+//     estaAutenticado, 
+//     obtenerContenidoBlog)
+
+// router.post('/guardarBlog/:uid/:nombreCarpeta?', 
+//     estaAutenticado, 
+//     obtenerContenidoBlog)
+
+// Operaciones para: MiembrosJekuaa (limitado)
+router.post('/miembroJekuaa/crearBlog', 
+    estaAutenticado, 
+    esMiembroJekuaa, 
+    verificarCamposValidos,
+    verificadorDeDatosRequeridos,
+    verificadorDeTipoDeDatos,
+    verificadorDeDatosBlog,
+    construirDatosBlog,
+    crearBlog)
+
+router.put('/miembroJekuaa/actualizarDatosBlog/:uid', 
+    estaAutenticado, 
+    esMiembroJekuaa, 
+    verificacionExistenciaBlog,
+    esPropietarioDelBlog,
+    verificarCamposValidos,
+    verificadorDeTipoDeDatos,
+    verificadorDeDatosBlog,
+    construirDatosBlog,
+    actualizarDatosBlog)
+
+router.delete('/miembroJekuaa/eliminarBlog/:uid', 
+    estaAutenticado, 
+    esMiembroJekuaa, 
+    verificacionExistenciaBlog, 
+    esPropietarioDelBlog,
+    eliminarBlog)
+
+
+// Operaciones para: AdminJekuaa
+router.post('/adminJekuaa/crearBlog', 
+    estaAutenticado, 
+    esMiembroJekuaa, 
+    verificarCamposValidos,
+    verificadorDeDatosRequeridos,
+    verificadorDeTipoDeDatos,
+    verificadorDeDatosBlog,
+    construirDatosBlog,
+    crearBlog)
+
+router.put('/adminJekuaa/actualizarDatosBlog/:uid', 
+    estaAutenticado, 
+    esMiembroJekuaa, 
+    verificacionExistenciaBlog,
+    verificarCamposValidos,
+    verificadorDeTipoDeDatos,
+    verificadorDeDatosBlog,
+    construirDatosBlog,
+    actualizarDatosBlog)
+
+router.delete('/adminJekuaa/eliminarBlog/:uid', 
+    estaAutenticado, 
+    esMiembroJekuaa, 
+    verificacionExistenciaBlog, 
+    eliminarBlog)
+
 
 module.exports = router

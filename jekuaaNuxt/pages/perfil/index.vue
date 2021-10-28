@@ -1,10 +1,6 @@
 <template>
   <div>
-    {{ user }}
-
-    <hr>
-
-    {{ userClaims }}
+    Perfil
   </div>
 </template>
 
@@ -13,22 +9,12 @@ export default {
   name: 'Perfil',
   data () {
     return {
-      user: Object,
-      userClaims: Object
+      user: {},
+      userClaims: {}
     }
   },
   async mounted () {
-    let user = null
 
-    if(process.client) {
-      user = this.$firebase.auth().currentUser
-      this.user = user
-      console.log(user)
-    }
-
-    const getUserClaims = this.$firebase.functions().httpsCallable('getUserClaims')
-    this.userClaims = await getUserClaims()
-    console.log(this.userClaims)
   },
   methods: {
 

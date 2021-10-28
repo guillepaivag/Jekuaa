@@ -1,5 +1,5 @@
-const ErrorJekuaa = require("../ErroresJekuaa")
-const Respuesta = require("../../Respuesta")
+const ErrorJekuaa = require("../../models/Error/ErroresJekuaa")
+const Respuesta = require("../../models/Respuesta")
 
 const manejadorErroresFirebaseAuth = ( error ) => {
 

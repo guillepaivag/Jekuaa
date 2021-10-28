@@ -105,20 +105,6 @@
           <samp class="estiloTexto">Inicio</samp>
         </v-tab>
 
-        <v-tab to="/cursos">
-          <v-icon class="navItemIcon">
-            mdi-television-play
-          </v-icon>
-          <samp class="estiloTexto">Cursos</samp>
-        </v-tab>
-
-        <v-tab to="/planes">
-          <v-icon class="navItemIcon">
-            mdi-cards
-          </v-icon>
-          <samp class="estiloTexto">Planes</samp>
-        </v-tab>
-
         <v-tab to="/blog">
           <v-icon class="navItemIcon">
             mdi-book-open-variant
@@ -234,8 +220,6 @@ export default {
       drawer: null,
       items: [
         { title: 'Inicio', icon: 'mdi-home', to: '/' },
-        { title: 'Cursos', icon: 'mdi-television-play', to: '/cursos' },
-        { title: 'Planes', icon: 'mdi-cards', to: '/planes' },
         { title: 'Blog', icon: 'mdi-book-open-variant', to: '/blog' }
       ],
       itemsPerfil: [
@@ -267,7 +251,7 @@ export default {
     ...mapState('modules/usuarios', ['fotoPerfil', 'nombreUsuario', 'correo']),
     ...mapGetters('modules/usuarios', ['esMiembroJekuaa']),
     inicialNombreUsuario () {
-      return this.nombreUsuario[0].toUpperCase()
+      return this.nombreUsuario ? this.nombreUsuario[0].toUpperCase() : ''
     },
     correoUsuario () {
       return this.correo

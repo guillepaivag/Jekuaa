@@ -200,6 +200,12 @@ class Instructor {
     static datosValidosParaInstructor ( datosInstructor ) {
         
     }
+
+    static async permisoPorRol (rol) {
+        const doc = await db.collection('Roles').doc(this.rol).get()
+
+        return doc.data().permisoInstructor
+    }
 }
 
 module.exports = Instructor

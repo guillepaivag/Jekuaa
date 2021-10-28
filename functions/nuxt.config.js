@@ -17,7 +17,11 @@ module.exports = {
       { rel: 'stylesheet', href: 'https://vjs.zencdn.net/7.11.4/video-js.css' },
       { rel: 'stylesheet', href: 'https://unpkg.com/@videojs/themes@1/dist/forest/index.css' },
       { rel: 'preconnect', href: 'https://fonts.gstatic.com' },
-      { rel: 'stylesheet', href: 'https://fonts.googleapis.com/css2?family=Asap&display=swap' }
+      { rel: 'stylesheet', href: 'https://fonts.googleapis.com/css2?family=Asap&display=swap' },
+      // Iconfonts for Vuetify. You need to leave only which one you use
+      { rel: 'stylesheet', href: 'https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700,900|Material+Icons' },
+      { rel: 'stylesheet', href: 'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.min.css' },
+      { rel: 'stylesheet', href: 'https://cdnjs.cloudflare.com/ajax/libs/MaterialDesign-Webfont/4.4.95/css/materialdesignicons.min.css' }
     ],
     script: [
       { src: 'https://vjs.zencdn.net/7.11.4/video.min.js' }
@@ -25,16 +29,16 @@ module.exports = {
   },
 
   // Global CSS: https://go.nuxtjs.dev/config-css
-  css: [
-  ],
+  css: [],
 
-  // target: 'static',
-  ssr: true,
+  mode: "universal",
 
   // Plugins to run before rendering page: https://go.nuxtjs.dev/config-plugins
   plugins: [
-    './plugins/firebase.js'
+    { src: './plugins/firebase.js', },
+    { src: './plugins/TiptapVuetify.js' },
   ],
+  
 
   // Auto import components: https://go.nuxtjs.dev/config-components
   components: true,
@@ -57,8 +61,6 @@ module.exports = {
     '@nuxtjs/axios',
     // https://go.nuxtjs.dev/pwa
     '@nuxtjs/pwa',
-    // https://nuxtjs.org/blog/creating-blog-with-nuxt-content
-    '@nuxt/content'
   ],
 
   // Axios module configuration: https://go.nuxtjs.dev/config-axios
@@ -117,6 +119,7 @@ module.exports = {
 
   // Build Configuration: https://go.nuxtjs.dev/config-build
   build: {
+    transpile: ['vuetify/lib', 'tiptap-vuetify'],
     extractCSS: true,
     babel:{
       plugins: [

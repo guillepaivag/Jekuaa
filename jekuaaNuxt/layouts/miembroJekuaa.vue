@@ -41,15 +41,15 @@ export default {
     }
   },
   computed: {
-    ...mapGetters('modules/sistema', [
+    ...mapGetters('modules/system', [
       'getLoading',
     ]),
-    ...mapGetters('modules/usuarios', [
+    ...mapGetters('modules/user/user', [
       'uid',
       'datosPersonales',
       'autenticado'
     ]),
-    ...mapGetters('modules/sistema', [
+    ...mapGetters('modules/system', [
       'getLoading',
       'getError'
     ])

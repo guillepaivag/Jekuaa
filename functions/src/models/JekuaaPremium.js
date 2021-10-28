@@ -6,7 +6,7 @@ class JekuaaPremium {
 
     constructor ( datosPremium ) {
         
-        if ( !datosPremium || ( datosPremium && !datosPremium.plan ) ) {
+        if ( !datosPremium ) {
             this.plan = 'gratis'
             this.fechaCompra = null
             this.fechaHasta = null
@@ -178,14 +178,7 @@ class JekuaaPremium {
             })
         }
 
-        if ( this.esPlanGratis() ) {
-            if (this.fechaCompra || this.fechaHasta) {
-                throw new ErrorJekuaa({
-                    codigo: 'jekuaa/error/usuario_mala_solicitud',
-                    mensaje: 'El plan gratis no tiene fecha de compra/vencimiento.'
-                })
-            }
-        } else {
+        if ( !this.esPlanGratis() ) {
             if (!this.fechaCompra || !this.fechaHasta) {
                 throw new ErrorJekuaa({
                     codigo: 'jekuaa/error/usuario_mala_solicitud',

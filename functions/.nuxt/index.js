@@ -15,13 +15,12 @@ import { createStore } from './store.js'
 
 import nuxt_plugin_plugin_b113f146 from 'nuxt_plugin_plugin_b113f146' // Source: .\\components\\plugin.js (mode: 'all')
 import nuxt_plugin_plugin_501d39b7 from 'nuxt_plugin_plugin_501d39b7' // Source: .\\vuetify\\plugin.js (mode: 'all')
-import nuxt_plugin_pluginclient_28cb1cda from 'nuxt_plugin_pluginclient_28cb1cda' // Source: .\\content\\plugin.client.js (mode: 'client')
-import nuxt_plugin_pluginserver_5153e31b from 'nuxt_plugin_pluginserver_5153e31b' // Source: .\\content\\plugin.server.js (mode: 'server')
 import nuxt_plugin_workbox_5d96d7c8 from 'nuxt_plugin_workbox_5d96d7c8' // Source: .\\workbox.js (mode: 'client')
 import nuxt_plugin_metaplugin_9c70a6c8 from 'nuxt_plugin_metaplugin_9c70a6c8' // Source: .\\pwa\\meta.plugin.js (mode: 'all')
 import nuxt_plugin_iconplugin_93215be0 from 'nuxt_plugin_iconplugin_93215be0' // Source: .\\pwa\\icon.plugin.js (mode: 'all')
 import nuxt_plugin_axios_70404200 from 'nuxt_plugin_axios_70404200' // Source: .\\axios.js (mode: 'all')
 import nuxt_plugin_firebase_450a3d0a from 'nuxt_plugin_firebase_450a3d0a' // Source: ..\\..\\jekuaaNuxt\\plugins\\firebase.js (mode: 'all')
+import nuxt_plugin_TiptapVuetify_746217d7 from 'nuxt_plugin_TiptapVuetify_746217d7' // Source: ..\\..\\jekuaaNuxt\\plugins\\TiptapVuetify.js (mode: 'all')
 
 // Component: <ClientOnly>
 Vue.component(ClientOnly.name, ClientOnly)
@@ -50,7 +49,11 @@ Vue.component(Nuxt.name, Nuxt)
 
 Object.defineProperty(Vue.prototype, '$nuxt', {
   get() {
-    return this.$root.$options.$nuxt
+    const globalNuxt = this.$root.$options.$nuxt
+    if (process.client && !globalNuxt && typeof window !== 'undefined') {
+      return window.$nuxt
+    }
+    return globalNuxt
   },
   configurable: true
 })
@@ -85,7 +88,7 @@ async function createApp(ssrContext, config = {}) {
   // here we inject the router and store to all child components,
   // making them available everywhere as `this.$router` and `this.$store`.
   const app = {
-    head: {"titleTemplate":"%s - Jekuaa","title":"Jekuaa","meta":[{"charset":"utf-8"},{"name":"viewport","content":"width=device-width, initial-scale=1"},{"hid":"description","name":"description","content":""}],"link":[{"rel":"icon","type":"image\u002Fx-icon","href":"\u002Ffavicon.ico"},{"rel":"stylesheet","href":"https:\u002F\u002Fvjs.zencdn.net\u002F7.11.4\u002Fvideo-js.css"},{"rel":"stylesheet","href":"https:\u002F\u002Funpkg.com\u002F@videojs\u002Fthemes@1\u002Fdist\u002Fforest\u002Findex.css"},{"rel":"preconnect","href":"https:\u002F\u002Ffonts.gstatic.com"},{"rel":"stylesheet","href":"https:\u002F\u002Ffonts.googleapis.com\u002Fcss2?family=Asap&display=swap"},{"rel":"stylesheet","type":"text\u002Fcss","href":"https:\u002F\u002Ffonts.googleapis.com\u002Fcss?family=Roboto:100,300,400,500,700,900&display=swap"},{"rel":"stylesheet","type":"text\u002Fcss","href":"https:\u002F\u002Fcdn.jsdelivr.net\u002Fnpm\u002F@mdi\u002Ffont@latest\u002Fcss\u002Fmaterialdesignicons.min.css"}],"script":[{"src":"https:\u002F\u002Fvjs.zencdn.net\u002F7.11.4\u002Fvideo.min.js"}],"style":[]},
+    head: {"titleTemplate":"%s - Jekuaa","title":"Jekuaa","meta":[{"charset":"utf-8"},{"name":"viewport","content":"width=device-width, initial-scale=1"},{"hid":"description","name":"description","content":""}],"link":[{"rel":"icon","type":"image\u002Fx-icon","href":"\u002Ffavicon.ico"},{"rel":"stylesheet","href":"https:\u002F\u002Fvjs.zencdn.net\u002F7.11.4\u002Fvideo-js.css"},{"rel":"stylesheet","href":"https:\u002F\u002Funpkg.com\u002F@videojs\u002Fthemes@1\u002Fdist\u002Fforest\u002Findex.css"},{"rel":"preconnect","href":"https:\u002F\u002Ffonts.gstatic.com"},{"rel":"stylesheet","href":"https:\u002F\u002Ffonts.googleapis.com\u002Fcss2?family=Asap&display=swap"},{"rel":"stylesheet","href":"https:\u002F\u002Ffonts.googleapis.com\u002Fcss?family=Roboto:100,300,400,500,700,900|Material+Icons"},{"rel":"stylesheet","href":"https:\u002F\u002Fcdnjs.cloudflare.com\u002Fajax\u002Flibs\u002Ffont-awesome\u002F5.11.2\u002Fcss\u002Fall.min.css"},{"rel":"stylesheet","href":"https:\u002F\u002Fcdnjs.cloudflare.com\u002Fajax\u002Flibs\u002FMaterialDesign-Webfont\u002F4.4.95\u002Fcss\u002Fmaterialdesignicons.min.css"},{"rel":"stylesheet","type":"text\u002Fcss","href":"https:\u002F\u002Ffonts.googleapis.com\u002Fcss?family=Roboto:100,300,400,500,700,900&display=swap"},{"rel":"stylesheet","type":"text\u002Fcss","href":"https:\u002F\u002Fcdn.jsdelivr.net\u002Fnpm\u002F@mdi\u002Ffont@latest\u002Fcss\u002Fmaterialdesignicons.min.css"}],"script":[{"src":"https:\u002F\u002Fvjs.zencdn.net\u002F7.11.4\u002Fvideo.min.js"}],"style":[]},
 
     store,
     router,
@@ -222,14 +225,6 @@ async function createApp(ssrContext, config = {}) {
     await nuxt_plugin_plugin_501d39b7(app.context, inject)
   }
 
-  if (process.client && typeof nuxt_plugin_pluginclient_28cb1cda === 'function') {
-    await nuxt_plugin_pluginclient_28cb1cda(app.context, inject)
-  }
-
-  if (process.server && typeof nuxt_plugin_pluginserver_5153e31b === 'function') {
-    await nuxt_plugin_pluginserver_5153e31b(app.context, inject)
-  }
-
   if (process.client && typeof nuxt_plugin_workbox_5d96d7c8 === 'function') {
     await nuxt_plugin_workbox_5d96d7c8(app.context, inject)
   }
@@ -250,6 +245,10 @@ async function createApp(ssrContext, config = {}) {
     await nuxt_plugin_firebase_450a3d0a(app.context, inject)
   }
 
+  if (typeof nuxt_plugin_TiptapVuetify_746217d7 === 'function') {
+    await nuxt_plugin_TiptapVuetify_746217d7(app.context, inject)
+  }
+
   // Lock enablePreview in context
   if (process.static && process.client) {
     app.context.enablePreview = function () {
@@ -257,26 +256,33 @@ async function createApp(ssrContext, config = {}) {
     }
   }
 
-  // If server-side, wait for async component to be resolved first
-  if (process.server && ssrContext && ssrContext.url) {
-    await new Promise((resolve, reject) => {
-      router.push(ssrContext.url, resolve, (err) => {
-        // https://github.com/vuejs/vue-router/blob/v3.4.3/src/util/errors.js
-        if (!err._isRouter) return reject(err)
-        if (err.type !== 2 /* NavigationFailureType.redirected */) return resolve()
+  // Wait for async component to be resolved first
+  await new Promise((resolve, reject) => {
+    // Ignore 404s rather than blindly replacing URL in browser
+    if (process.client) {
+      const { route } = router.resolve(app.context.route.fullPath)
+      if (!route.matched.length) {
+        return resolve()
+      }
+    }
+    router.replace(app.context.route.fullPath, resolve, (err) => {
+      // https://github.com/vuejs/vue-router/blob/v3.4.3/src/util/errors.js
+      if (!err._isRouter) return reject(err)
+      if (err.type !== 2 /* NavigationFailureType.redirected */) return resolve()
 
-        // navigated to a different route in router guard
-        const unregister = router.afterEach(async (to, from) => {
+      // navigated to a different route in router guard
+      const unregister = router.afterEach(async (to, from) => {
+        if (process.server && ssrContext && ssrContext.url) {
           ssrContext.url = to.fullPath
-          app.context.route = await getRouteData(to)
-          app.context.params = to.params || {}
-          app.context.query = to.query || {}
-          unregister()
-          resolve()
-        })
+        }
+        app.context.route = await getRouteData(to)
+        app.context.params = to.params || {}
+        app.context.query = to.query || {}
+        unregister()
+        resolve()
       })
     })
-  }
+  })
 
   return {
     store,

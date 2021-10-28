@@ -1,12 +1,11 @@
-const admin = require('../../../../firebase-service')
-const db = require('../../../../db')
-const MiembroJekuaa = require('../../../models/TiposUsuarios/MiembroJekuaa')
-const utilsRoles = require('../../../utils/usuarios/RolesSecciones')
-const Usuario = require('../../../models/Usuario')
-const timestamp = require('../../../utils/Timestamp')
-const Respuesta = require('../../../models/Respuesta')
-const manejadorErrores = require('../../../models/Error/ManejoErrores/ManejadorErrores')
-const ErrorJekuaa = require('../../../models/Error/ErroresJekuaa')
+const admin = require('../../firebase-service')
+const db = require('../../db')
+const AdminJekuaa = require('../models/TiposUsuarios/AdminJekuaa')
+const Usuario = require('../models/Usuario')
+const timestamp = require('../utils/Timestamp')
+const Respuesta = require('../models/Respuesta')
+const manejadorErrores = require('../models/Error/ManejoErrores/ManejadorErrores')
+const ErrorJekuaa = require('../models/Error/ErroresJekuaa')
 const controller = {}
 
 controller.obtenerDatosRoles = async (req, res) => {

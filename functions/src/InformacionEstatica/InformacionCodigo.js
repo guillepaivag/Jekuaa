@@ -3,7 +3,6 @@
 const informacionCodigos = {
     jekuaa: {
         error: {
-
             usuario_mala_solicitud: {
                 codigo: 'jekuaa/error/usuario_mala_solicitud',
                 status: 400,

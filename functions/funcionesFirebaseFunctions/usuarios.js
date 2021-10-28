@@ -1,7 +1,7 @@
 const functions = require('firebase-functions')
 const Respuesta = require('../src/models/Respuesta')
 const Usuario = require('../src/models/Usuario')
-const manejadorErrores = require('../src/models/Error/ManejoErrores/ManejadorErrores')
+const manejadorErrores = require('../src/helpers/ManejoErrores')
 const ffUsuarios = {}
 
 ffUsuarios.registrarUsuarioPorCorreoYContrasenha = 

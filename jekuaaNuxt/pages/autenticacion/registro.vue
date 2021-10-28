@@ -35,8 +35,8 @@ export default {
     }
   },
   methods: {
-    ...mapActions('modules/user/user', ['firebaseRegistroUser_EmailAndPassword', 'firebaseInicioSesionUser_EmailAndPassword', 'login', 'firebaseFirestoreGetUser_UID']),
-    ...mapMutations('modules/system', ['setLoading', 'setError']),
+    ...mapActions('modules/usuarios', ['firebaseRegistroUser_EmailAndPassword', 'firebaseInicioSesionUser_EmailAndPassword', 'login', 'firebaseFirestoreGetUser_UID']),
+    ...mapMutations('modules/sistema', ['setLoading', 'setError']),
     async registroEmail (usuario) {
 
       try {
@@ -49,7 +49,6 @@ export default {
           contrasenha: usuario.contrasenha,
           nombreCompleto: usuario.nombreCompleto
         })
-        console.log('datosRegistroUsuario', datosRegistroUsuario)
 
         // INICIO DE SESION DEL USUARIO
         const userCredential = await this.firebaseInicioSesionUser_EmailAndPassword({
