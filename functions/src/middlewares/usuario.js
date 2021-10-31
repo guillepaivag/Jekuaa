@@ -270,25 +270,25 @@ middlewaresUser.verificarTipoDeDatosCliente = ( req, res, next ) => {
             jekuaaPoint
         } = datosUsuario
     
-        if ( nombreUsuario != undefined && typeof nombreUsuario != 'string' ) {
+        if ( nombreUsuario && typeof nombreUsuario != 'string' ) {
             throw new TypeError('El nombreUsuario debe ser de tipo string.', 'Usuario.js')
         }
     
-        if ( correo != undefined && typeof correo != 'string' ) {
+        if ( correo && typeof correo != 'string' ) {
             throw new TypeError('El correo debe ser de tipo string.', 'Usuario.js')
         }
     
-        if ( nombreCompleto != undefined && typeof nombreCompleto != 'string' ) {
+        if ( nombreCompleto && typeof nombreCompleto != 'string' ) {
             throw new TypeError('Debe de ser de tipo string el nombre completo del usuario.', 'Usuario.js')
         }
     
-        if ( fechaNacimiento != undefined && typeof fechaNacimiento != 'number' ) {
+        if ( fechaNacimiento && typeof fechaNacimiento != 'number' ) {
             throw new TypeError('La fecha de nacimiento debe ser de tipo number en milisegundos.', 'Usuario.js')
         }
     
         if (esRutaAdmin) {
 
-            if ( jekuaaPremium != undefined ) {
+            if ( jekuaaPremium ) {
                 if ( typeof jekuaaPremium != 'object' ) {
                     throw new TypeError('El campo jekuaaPremium debe ser un objeto.', 'Usuario.js')
                 }
@@ -296,24 +296,24 @@ middlewaresUser.verificarTipoDeDatosCliente = ( req, res, next ) => {
                 verificadorFormato.validarTodosLosTiposDeDatos('cliente')
             }
         
-            if ( jekuaaRol != undefined && typeof jekuaaRol != 'string' ) {
+            if ( jekuaaRol && typeof jekuaaRol != 'string' ) {
                 throw new TypeError('El rol debe de ser de tipo string.', 'Usuario.js')
             }
         
-            if ( instructor != undefined && typeof instructor != 'boolean' ) {
+            if ( instructor !== undefined && typeof instructor != 'boolean' ) {
                 throw new TypeError('El estado instructor debe ser de tipo boolean.', 'Usuario.js')
             }
         
-            if ( jekuaaPoint != undefined && typeof jekuaaPoint != 'number' ) {
+            if ( jekuaaPoint && typeof jekuaaPoint != 'number' ) {
                 throw new TypeError('El jekuaaPoint no es de tipo numerico.', 'Usuario.js')
             }
         }
     
-        if ( contrasenha != undefined && typeof contrasenha != 'string' ) {
+        if ( contrasenha && typeof contrasenha != 'string' ) {
             throw new TypeError('La contraseña debe ser de tipo string.', 'Usuario.js')
         }
     
-        if ( contrasenha != undefined && confirmacionContrasenha != undefined && typeof confirmacionContrasenha != 'string' ) {
+        if ( contrasenha && confirmacionContrasenha && typeof confirmacionContrasenha != 'string' ) {
             throw new TypeError('La confirmación de contraseña debe ser de tipo string.', 'Usuario.js')
         }
 
@@ -352,9 +352,9 @@ middlewaresUser.validarDatosExistentesCliente = async (req, res, next) => {
 
         const datosActualesUsuario = await admin.auth().getUser(params.uid)
     
-        if (datosUsuario != undefined) {
+        if (datosUsuario) {
             // Nombre de usuario
-            if ( nombreUsuario != undefined ) {
+            if ( nombreUsuario ) {
                 // Verificar que sea alfanumerico
                 if (!esAlfanumerico(nombreUsuario)) {
                     throw new ErrorJekuaa({
@@ -379,7 +379,7 @@ middlewaresUser.validarDatosExistentesCliente = async (req, res, next) => {
             }
     
             // Correo
-            if (correo != undefined) {
+            if (correo) {
                 cantidadCaracteresValido = correo.length >= 5 && correo.length <= 100
                 correoValido = validarEmail(correo)
                 valido = cantidadCaracteresValido && correoValido
@@ -392,7 +392,7 @@ middlewaresUser.validarDatosExistentesCliente = async (req, res, next) => {
             }
     
             // Nombre completo
-            if (nombreCompleto != undefined) {
+            if (nombreCompleto) {
                 cantidadCaracteresValido = nombreCompleto.length >= 1 && nombreCompleto.length <= 100
                 valido = cantidadCaracteresValido
                 if ( !valido ) {
@@ -404,7 +404,7 @@ middlewaresUser.validarDatosExistentesCliente = async (req, res, next) => {
             }
     
             // Fecha de nacimiento
-            if (fechaNacimiento != undefined) {
+            if (fechaNacimiento) {
                 // Solo si tiene 1 año de edad puede registrarse
                 fechaNacimientoValido = obtenerEdad(fechaNacimiento)
                 valido = fechaNacimientoValido >= 1
@@ -419,7 +419,7 @@ middlewaresUser.validarDatosExistentesCliente = async (req, res, next) => {
             if (esRutaAdmin) {
 
                 // Jekuaa Premium
-                if ( jekuaaPremium != undefined ) {
+                if ( jekuaaPremium ) {
                     const jekuaaPlan = new JekuaaPremium({
                         plan: jekuaaPremium.plan,
                         fechaCompra: jekuaaPremium.fechaCompra,
@@ -430,7 +430,7 @@ middlewaresUser.validarDatosExistentesCliente = async (req, res, next) => {
                 }
     
                 // Jekuaa Roles
-                if ( jekuaaRol != undefined ) {
+                if ( jekuaaRol ) {
                     let documentoRol = await JekuaaRoles.obtenerDocumentoRol(jekuaaRol)
                     
                     // Verificar rol valido
@@ -481,7 +481,7 @@ middlewaresUser.validarDatosExistentesCliente = async (req, res, next) => {
                 }
     
                 // Jekuaa Points
-                if (jekuaaPoint != undefined) {
+                if (jekuaaPoint) {
                     valido = jekuaaPoint >= 0
                     if ( !valido ) {
                         throw new ErrorJekuaa({
@@ -494,7 +494,7 @@ middlewaresUser.validarDatosExistentesCliente = async (req, res, next) => {
         }
     
         // Contraseñas
-        if ( contrasenha != undefined ) {
+        if ( contrasenha ) {
             cantidadCaracteresValido = contrasenha.length >= 6 && contrasenha.length <= 20
             valido = cantidadCaracteresValido
             if ( !valido ) {

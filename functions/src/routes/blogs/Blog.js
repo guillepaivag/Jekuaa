@@ -3,13 +3,13 @@ const router = Router()
 const fileMiddleware = require('express-multipart-file-parser')
 
 const {
-    verificarCamposValidos,
     verificadorDeDatosRequeridos,
     verificadorDeTipoDeDatos,
     verificadorDeDatosBlog,
     verificacionExistenciaBlog,
     esPropietarioDelBlog,
     construirDatosBlog,
+    velidarDatosMeGustaBlog,
     verificacionExistenciaArchivoBlog
 } = require('../../middlewares/blog')
 
@@ -24,6 +24,7 @@ const {
     obtenerBlog,
     obtenerDatosBlog,
     obtenerContenidoBlog,
+    darMeGusta,
     actualizarDatosBlog,
     eliminarBlog,
 } = require('../../controllers/Blog')
@@ -43,13 +44,11 @@ router.get('/obtenerContenido/:uid',
     verificacionExistenciaArchivoBlog,
     obtenerContenidoBlog)
 
-router.post('/MeGusta/:uid', 
+router.post('/meGusta/:uid', 
     estaAutenticado, 
-    obtenerContenidoBlog)
-
-router.post('/NoMeGusta/:uid', 
-    estaAutenticado, 
-    obtenerContenidoBlog)
+    verificacionExistenciaBlog,
+    velidarDatosMeGustaBlog,
+    darMeGusta)
 
 // // Este tiene que estar en otro archivo
 // router.post('/crearCarpetaGuardado/:nombreCarpeta', 
@@ -64,7 +63,6 @@ router.post('/NoMeGusta/:uid',
 router.post('/miembroJekuaa/crearBlog', 
     estaAutenticado, 
     esMiembroJekuaa, 
-    verificarCamposValidos,
     verificadorDeDatosRequeridos,
     verificadorDeTipoDeDatos,
     verificadorDeDatosBlog,
@@ -76,7 +74,6 @@ router.put('/miembroJekuaa/actualizarDatosBlog/:uid',
     esMiembroJekuaa, 
     verificacionExistenciaBlog,
     esPropietarioDelBlog,
-    verificarCamposValidos,
     verificadorDeTipoDeDatos,
     verificadorDeDatosBlog,
     construirDatosBlog,
@@ -94,7 +91,6 @@ router.delete('/miembroJekuaa/eliminarBlog/:uid',
 router.post('/adminJekuaa/crearBlog', 
     estaAutenticado, 
     esMiembroJekuaa, 
-    verificarCamposValidos,
     verificadorDeDatosRequeridos,
     verificadorDeTipoDeDatos,
     verificadorDeDatosBlog,
@@ -105,7 +101,6 @@ router.put('/adminJekuaa/actualizarDatosBlog/:uid',
     estaAutenticado, 
     esMiembroJekuaa, 
     verificacionExistenciaBlog,
-    verificarCamposValidos,
     verificadorDeTipoDeDatos,
     verificadorDeDatosBlog,
     construirDatosBlog,

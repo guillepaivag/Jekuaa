@@ -6,7 +6,6 @@ import scrollBehavior from './router.scrollBehavior.js'
 
 const _1161ae28 = () => interopDefault(import('..\\..\\jekuaaNuxt\\pages\\admin-jekuaa\\index.vue' /* webpackChunkName: "pages/admin-jekuaa/index" */))
 const _12112529 = () => interopDefault(import('..\\..\\jekuaaNuxt\\pages\\blog\\index.vue' /* webpackChunkName: "pages/blog/index" */))
-const _27423553 = () => interopDefault(import('..\\..\\jekuaaNuxt\\pages\\hola.vue' /* webpackChunkName: "pages/hola" */))
 const _ca494018 = () => interopDefault(import('..\\..\\jekuaaNuxt\\pages\\miembro-jekuaa\\index.vue' /* webpackChunkName: "pages/miembro-jekuaa/index" */))
 const _4118ef02 = () => interopDefault(import('..\\..\\jekuaaNuxt\\pages\\perfil\\index.vue' /* webpackChunkName: "pages/perfil/index" */))
 const _56db6346 = () => interopDefault(import('..\\..\\jekuaaNuxt\\pages\\admin-jekuaa\\blog\\index.vue' /* webpackChunkName: "pages/admin-jekuaa/blog/index" */))
@@ -39,10 +38,6 @@ export const routerOptions = {
     path: "/blog",
     component: _12112529,
     name: "blog"
-  }, {
-    path: "/hola",
-    component: _27423553,
-    name: "hola"
   }, {
     path: "/miembro-jekuaa",
     component: _ca494018,

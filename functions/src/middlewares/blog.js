@@ -6,60 +6,9 @@ const Usuario = require("../models/Usuario")
 const utils_blog = require("../utils/Blog")
 const esReferenciaBlog = require("../utils/esReferenciaBlog")
 const { v4: uuidv4 } = require('uuid')
+const { milliseconds_a_timestamp } = require('../utils/Timestamp')
 
 const middlewares = {}
-
-middlewares.verificarCamposValidos = (req, res, next) => {
-    try {
-        const { jekuaaDatos, body } = req
-        const { uidSolicitante, datosAuthSolicitante } = jekuaaDatos
-        const { datosBlog, contenidoBlog } = body
-
-        const esRutaAdmin = req.originalUrl.split('/')[2] === 'adminJekuaa'
-        const esOperacionAgregar = req.method === 'POST'
-        const keysDatosBlog = Object.keys(datosBlog)
-        let keysValidos = []
-
-        if (esRutaAdmin) {
-            if (esOperacionAgregar) {
-                keysValidos = ['referencia', 'titulo', 'descripcion', 'publicador', 
-                    'seccion', 'categoria', 'subCategorias', 'habilitado', 'publicado',
-                    'revision'
-                ]
-            } else {
-                keysValidos = ['referencia', 'titulo', 'descripcion',
-                    'seccion', 'categoria', 'subCategorias', 'habilitado', 'publicado',
-                    'revision'
-                ]
-            }
-        } else {
-            if (esOperacionAgregar) {
-                keysValidos = ['referencia', 'titulo', 'descripcion', 'publicador', 
-                    'seccion', 'categoria', 'subCategorias', 'publicado',
-                ]
-            } else {
-                keysValidos = ['referencia', 'titulo', 'descripcion',
-                    'seccion', 'categoria', 'subCategorias', 'publicado',
-                ]
-            }
-        }
-
-        for (let i = 0; i < keysDatosBlog.length; i++) {
-            const element = keysDatosBlog[i]
-            const incluye = keysValidos.includes(element)
-            if (!incluye) {
-                throw new ErrorJekuaa({
-                    codigo: 'jekuaa/error/usuario_mala_solicitud',
-                    mensaje: `El campo '${element}' no se utiliza.\nCampos disponibles: ${keysValidos}.`
-                })
-            }
-        }
-
-        next()
-    } catch (error) {
-        next(error)
-    }
-}
 
 middlewares.verificadorDeDatosRequeridos  = (req, res, next) => {
     try {
@@ -185,7 +134,7 @@ middlewares.verificadorDeTipoDeDatos = (req, res, next) => {
          * 
         */
 
-        if (datosBlog != undefined && typeof datosBlog != 'object') {
+        if (!!datosBlog && typeof datosBlog != 'object') {
             throw new ErrorJekuaa({
                 codigo: 'jekuaa/error/usuario_mala_solicitud',
                 mensaje: 'Los datosBlog debe ser un objecto.'
@@ -200,21 +149,21 @@ middlewares.verificadorDeTipoDeDatos = (req, res, next) => {
         //     })
         // }
 
-        if ( referencia != undefined && typeof referencia != 'string' ) {
+        if ( !!referencia && typeof referencia != 'string' ) {
             throw new ErrorJekuaa({
                 codigo: 'jekuaa/error/usuario_mala_solicitud',
                 mensaje: 'La referencia del blog debe ser string.'
             })
         }
     
-        if ( titulo != undefined && typeof titulo != 'string' ) {
+        if ( !!titulo && typeof titulo != 'string' ) {
             throw new ErrorJekuaa({
                 codigo: 'jekuaa/error/usuario_mala_solicitud',
                 mensaje: 'El titulo del blog debe ser string.'
             })
         }
     
-        if ( descripcion != undefined && typeof descripcion != 'string' ) {
+        if ( !!descripcion && typeof descripcion != 'string' ) {
             throw new ErrorJekuaa({
                 codigo: 'jekuaa/error/usuario_mala_solicitud',
                 mensaje: 'La descripción del blog debe ser string.'
@@ -222,28 +171,28 @@ middlewares.verificadorDeTipoDeDatos = (req, res, next) => {
         }
     
         // Constante
-        if ( esOperacionAgregar && publicador != undefined && typeof publicador != 'string' ) {
+        if ( esOperacionAgregar && !!publicador && typeof publicador != 'string' ) {
             throw new ErrorJekuaa({
                 codigo: 'jekuaa/error/usuario_mala_solicitud',
                 mensaje: 'El publicador del blog debe ser string.'
             })
         }
     
-        if ( seccion != undefined && typeof seccion != 'string' ) {
+        if ( !!seccion && typeof seccion != 'string' ) {
             throw new ErrorJekuaa({
                 codigo: 'jekuaa/error/usuario_mala_solicitud',
                 mensaje: 'La sección del blog debe ser string.'
             })
         }
     
-        if ( categoria != undefined && typeof categoria != 'string' ) {
+        if ( !!categoria && typeof categoria != 'string' ) {
             throw new ErrorJekuaa({
                 codigo: 'jekuaa/error/usuario_mala_solicitud',
                 mensaje: 'La categoría del blog debe ser string.'
             })
         }
     
-        if ( subCategorias != undefined ) {
+        if ( !!subCategorias ) {
             if (!(subCategorias instanceof Array)) {
                 throw new ErrorJekuaa({
                     codigo: 'jekuaa/error/usuario_mala_solicitud',
@@ -305,7 +254,7 @@ middlewares.verificadorDeTipoDeDatos = (req, res, next) => {
         //     })
         // }
     
-        if ( contenidoBlog != undefined && typeof contenidoBlog != 'string' ) {
+        if ( !!contenidoBlog && typeof contenidoBlog != 'string' ) {
             throw new ErrorJekuaa({
                 codigo: 'jekuaa/error/usuario_mala_solicitud',
                 mensaje: 'El contenido del blog debe ser string.'
@@ -360,8 +309,8 @@ middlewares.verificadorDeDatosBlog = async (req, res, next) => {
             var docBlog = await db.collection('Blogs').doc(params.uid).get()
         }
 
-        if (datosBlog) {
-            if ( referencia !== undefined ) {
+        if ( datosBlog ) {
+            if ( referencia ) {
                 if ( !esReferenciaBlog(referencia) ) {
                     throw new ErrorJekuaa({
                         codigo: 'jekuaa/error/usuario_mala_solicitud',
@@ -387,7 +336,7 @@ middlewares.verificadorDeDatosBlog = async (req, res, next) => {
                 }
             }
 
-            if ( titulo != undefined ) {
+            if ( titulo ) {
                 const valido = titulo.length >= 10 && titulo.length <= 100
                 if ( !valido ) {
                     throw new ErrorJekuaa({
@@ -397,7 +346,7 @@ middlewares.verificadorDeDatosBlog = async (req, res, next) => {
                 }
             }
 
-            if ( descripcion != undefined ) {
+            if ( descripcion ) {
                 const valido = descripcion.length >= 10 && descripcion.length <= 500
                 if ( !valido ) {
                     throw new ErrorJekuaa({
@@ -408,7 +357,7 @@ middlewares.verificadorDeDatosBlog = async (req, res, next) => {
             }
         
             // La uid del solicitante debe ser igual a la uid del dueño del blog
-            if ( publicador != undefined ) {
+            if ( publicador ) {
                 if (publicador != datosUsuario.uid) {
                     throw new ErrorJekuaa({
                         codigo: 'jekuaa/error/usuario_no_autorizado',
@@ -421,7 +370,7 @@ middlewares.verificadorDeDatosBlog = async (req, res, next) => {
                 })
             }
 
-            if ( subCategorias != undefined ) {
+            if ( subCategorias ) {
                 let valido = subCategorias.length >= 1 && subCategorias.length <= 3
                 if ( !valido ) {
                     throw new ErrorJekuaa({
@@ -446,15 +395,15 @@ middlewares.verificadorDeDatosBlog = async (req, res, next) => {
                         })
                     }
                 }
-            } else if (seccion !== undefined || categoria !== undefined || subCategorias !== undefined) {
-                if (seccion !== undefined && (categoria === undefined || subCategorias === undefined)) {
+            } else if (seccion || categoria || subCategorias) {
+                if (seccion && ( !categoria || !subCategorias )) {
                     throw new ErrorJekuaa({
                         codigo: 'jekuaa/error/usuario_mala_solicitud',
                         mensaje: 'No existe la categoria o la subcategoria.'
                     })
                 }
 
-                if (categoria !== undefined && subCategorias === undefined) {
+                if (categoria && !subCategorias) {
                     throw new ErrorJekuaa({
                         codigo: 'jekuaa/error/usuario_mala_solicitud',
                         mensaje: 'No existen las subCategorias.'
@@ -570,6 +519,58 @@ middlewares.esPropietarioDelBlog = async (req, res, next) => {
                 mensaje: `No puedes eliminar este blog.`
             })
         }
+
+        next()
+    } catch (error) {
+        next(error)
+    }
+}
+
+middlewares.velidarDatosMeGustaBlog = async (req, res, next) => {
+    try {
+        const { jekuaaDatos, body, params } = req
+        const { uidSolicitante, datosAuthSolicitante } = jekuaaDatos
+        const { uid } = params
+        const { meGusta } = body
+
+        if (meGusta === undefined) {
+            throw new ErrorJekuaa({
+                codigo: 'jekuaa/error/usuario_mala_solicitud',
+                mensaje: `Se requiere una operación.`
+            })
+        }
+
+        if (typeof meGusta !== 'boolean') {
+            throw new ErrorJekuaa({
+                codigo: 'jekuaa/error/usuario_mala_solicitud',
+                mensaje: `Debe ser un boolean al dar me gusta un blog.`
+            })
+        }
+
+        const ref = db.collection('Usuarios').doc(uidSolicitante)
+        .collection('BlogsMG').doc(uid)
+        const doc = await ref.get()
+
+        // Middleware me gusta
+        if (meGusta) {
+            if (doc.exists) {
+                throw new ErrorJekuaa({
+                    codigo: 'jekuaa/error/usuario_mala_solicitud',
+                    mensaje: `Ya haz indicado que te gusta el blog.`
+                })
+            }
+            
+        } else {
+            if (!doc.exists) {
+                throw new ErrorJekuaa({
+                    codigo: 'jekuaa/error/usuario_mala_solicitud',
+                    mensaje: `El blog no esta en tus gustos.`
+                })
+            }
+        }
+
+        jekuaaDatos.refBlogMG = ref
+        jekuaaDatos.docBlogMG = doc
 
         next()
     } catch (error) {

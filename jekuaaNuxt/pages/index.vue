@@ -1,22 +1,20 @@
 <template>
   <div>
     <presentacion />
-    <subpresentacion />
-    <atajos />
+
+    <div class="mt-10">
+      siuuu
+    </div>
   </div>
 </template>
 
 <script>
-import presentacion from '@/components/inicio/presentacion'
-import subpresentacion from '@/components/inicio/subpresentacion'
-import atajos from '@/components/inicio/atajos'
+import presentacion from '@/components/Presentacion'
 
 export default {
   name: 'InicioIndex',
   components: {
     presentacion,
-    subpresentacion,
-    atajos
   },
   data () {
     return {

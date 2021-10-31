@@ -2,7 +2,7 @@ const admin = require('../../firebase-service')
 const db = require('../../db')
 const timestamp = {}
 
-timestamp.milliseconds_a_timestamp = ( milliseconds ) => {
+timestamp.milliseconds_a_timestamp = ( milliseconds = Date.now() ) => {
     if ( !milliseconds ) {
         return null
     }

@@ -166,7 +166,7 @@
           <samp class="estiloTexto">Inicio</samp>
         </v-tab>
 
-        <v-tab to="/cursos">
+        <!-- <v-tab to="/cursos">
           <v-icon class="navItemIcon">
             mdi-television-play
           </v-icon>
@@ -178,7 +178,7 @@
             mdi-cards
           </v-icon>
           <samp class="estiloTexto">Planes</samp>
-        </v-tab>
+        </v-tab> -->
 
         <v-tab to="/blog">
           <v-icon class="navItemIcon">
@@ -255,8 +255,6 @@ export default {
     drawer: null,
     items: [
       { title: 'Inicio', icon: 'mdi-home', to: '/' },
-      { title: 'Cursos', icon: 'mdi-television-play', to: '/cursos' },
-      { title: 'Planes', icon: 'mdi-cards', to: '/planes' },
       { title: 'Blog', icon: 'mdi-book-open-variant', to: '/blog' }
     ],
     user: {

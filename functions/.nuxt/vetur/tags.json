@@ -14,6 +14,9 @@
   "NotFound": {
     "description": "Auto imported from components/notFound.vue"
   },
+  "Presentacion": {
+    "description": "Auto imported from components/Presentacion.vue"
+  },
   "VideoPlayer": {
     "description": "Auto imported from components/VideoPlayer.vue"
   },
@@ -31,15 +34,6 @@
   },
   "AuthEmail": {
     "description": "Auto imported from components/auth/authEmail.vue"
-  },
-  "InicioAtajos": {
-    "description": "Auto imported from components/inicio/atajos.vue"
-  },
-  "InicioPresentacion": {
-    "description": "Auto imported from components/inicio/presentacion.vue"
-  },
-  "InicioSubpresentacion": {
-    "description": "Auto imported from components/inicio/subpresentacion.vue"
   },
   "AdminFormsEditor": {
     "description": "Auto imported from components/admin/forms/Editor.vue"

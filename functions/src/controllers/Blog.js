@@ -1,3 +1,5 @@
+const admin = require('../../firebase-service')
+const db = require('../../db')
 const Blog = require("../models/Blog")
 const manejadorErrores = require("../helpers/ManejoErrores")
 const Respuesta = require("../models/Respuesta")
@@ -97,61 +99,6 @@ controller.obtenerDatosBlog = async (req, res) => {
     }
 }
 
-controller.actualizarDatosBlog = async (req, res) => {
-    try {
-        const { jekuaaDatos, body, params } = req
-        const { uidSolicitante, datosAuthSolicitante } = jekuaaDatos
-        const { datosBlog, nombreBlogTemp, rutaArchivoTemp } = body
-        const { uid } = params
-
-        const respuesta = new Respuesta()
-        let codigo = 'jekuaa/exito'
-
-        // Actualizar a Firestore
-        let blogRespuesta
-        if (datosBlog && Object.keys(datosBlog).length) {
-            blogRespuesta = await Blog.actualizarBlog( uid, datosBlog )
-        }
-
-        // Actualizar archivo blog (contenido)
-        let archivoCreado
-        if (rutaArchivoTemp) {
-            archivoCreado = await Blog.subirArchivoAStorage( rutaArchivoTemp, uid )
-        }
-
-        // Borrar el archivo creado en el servidor
-        fs.unlink(rutaArchivoTemp, (err => {
-            if ( err ) {
-                console.log('Error al eliminar el archivo temporal: ', err)
-                return
-            }
-        }))
-
-        const data = {}
-        blogRespuesta ? data.blogRespuesta = blogRespuesta : ''
-        archivoCreado ? data.archivoCreado = archivoCreado : ''
-
-        // Retornar respuesta
-        respuesta.setRespuestaPorCodigo(codigo, {
-            mensaje: '¡Se actualizó los datos del blog de forma exitosa!',
-            resultado: data
-        })
-        const status = respuesta.getStatusCode()
-        
-        return res.status( status ).json( respuesta.getRespuesta() )
-
-    } catch (error) {
-        console.log('Error - actualizarDatosBlog: ', error)
-
-        const {
-            status,
-            respuesta
-        } = manejadorErrores( error )
-
-        return res.status( status ).json( respuesta )
-    }
-}
-
 controller.obtenerContenidoBlog = async ( req, res ) => {
     try {
         const { params, body } = req
@@ -227,6 +174,61 @@ controller.obtenerBlog = async ( req, res ) => {
     }
 }
 
+controller.actualizarDatosBlog = async (req, res) => {
+    try {
+        const { jekuaaDatos, body, params } = req
+        const { uidSolicitante, datosAuthSolicitante } = jekuaaDatos
+        const { datosBlog, nombreBlogTemp, rutaArchivoTemp } = body
+        const { uid } = params
+
+        const respuesta = new Respuesta()
+        let codigo = 'jekuaa/exito'
+
+        // Actualizar a Firestore
+        let blogRespuesta
+        if (datosBlog && Object.keys(datosBlog).length) {
+            blogRespuesta = await Blog.actualizarBlog( uid, datosBlog )
+        }
+
+        // Actualizar archivo blog (contenido)
+        let archivoCreado
+        if (rutaArchivoTemp) {
+            archivoCreado = await Blog.subirArchivoAStorage( rutaArchivoTemp, uid )
+        }
+
+        // Borrar el archivo creado en el servidor
+        fs.unlink(rutaArchivoTemp, (err => {
+            if ( err ) {
+                console.log('Error al eliminar el archivo temporal: ', err)
+                return
+            }
+        }))
+
+        const data = {}
+        blogRespuesta ? data.blogRespuesta = blogRespuesta : ''
+        archivoCreado ? data.archivoCreado = archivoCreado : ''
+
+        // Retornar respuesta
+        respuesta.setRespuestaPorCodigo(codigo, {
+            mensaje: '¡Se actualizó los datos del blog de forma exitosa!',
+            resultado: data
+        })
+        const status = respuesta.getStatusCode()
+        
+        return res.status( status ).json( respuesta.getRespuesta() )
+
+    } catch (error) {
+        console.log('Error - actualizarDatosBlog: ', error)
+
+        const {
+            status,
+            respuesta
+        } = manejadorErrores( error )
+
+        return res.status( status ).json( respuesta )
+    }
+}
+
 controller.eliminarBlog = async (req, res) => {
     try {
         const { jekuaaDatos, params } = req
@@ -253,6 +255,69 @@ controller.eliminarBlog = async (req, res) => {
 
     } catch (error) {
         console.log('Error - eliminarBlog: ', error)
+
+        const {
+            status,
+            respuesta
+        } = manejadorErrores( error )
+
+        return res.status( status ).json( respuesta )
+    }
+}
+
+controller.darMeGusta = async (req, res) => {
+    try {
+        const { jekuaaDatos, body, params } = req
+        const { uidSolicitante, datosAuthSolicitante, refBlogMG, docBlogMG } = jekuaaDatos
+        const { uid } = params
+        const { meGusta } = body
+
+        const respuesta = new Respuesta()
+        let codigo = 'jekuaa/exito'
+
+        const blog = new Blog()
+        await blog.importarDatosBlogPorUID(uid)
+
+        if (blog.getBlog().cantidadMeGusta === 0 && !meGusta) {
+            // Retornar respuesta
+            respuesta.setRespuestaPorCodigo('jekuaa/error/usuario_mala_solicitud', {
+                mensaje: '¡No hay me gusta en este blog!',
+                resultado: null
+            })
+            const status = respuesta.getStatusCode()
+            
+            return res.status( status ).json( respuesta.getRespuesta() )
+        }
+        
+        // Crear Me gusta del usuario
+        if (meGusta) {
+            refBlogMG.set({
+                uid: uid,
+                fechaMeGusta: milliseconds_a_timestamp( Date.now() )
+            })
+        } else {
+            refBlogMG.delete()
+        }
+
+        const cantidadActual = blog.getBlog().cantidadMeGusta + (meGusta ? 1 : -1)
+        const mensaje = meGusta ? '¡Haz dado un me gusta a este blog!' : 'Haz indicado que no te gusta este blog.'
+
+        // Aumentar el contador de MeGustas
+        blog.actualizarBlog({
+            cantidadMeGusta: cantidadActual
+        })
+
+        // Retornar respuesta
+        respuesta.setRespuestaPorCodigo(codigo, {
+            mensaje,
+            resultado: null
+        })
+        const status = respuesta.getStatusCode()
+        
+        return res.status( status ).json( respuesta.getRespuesta() )
+
+    } catch (error) {
+        console.log('Error - darMeGusta: ', error)
 
         const {
             status,
