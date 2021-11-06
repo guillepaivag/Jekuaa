@@ -193,14 +193,28 @@ middlewaresUser.permisoParaOperarUnRol = async ( req, res, next ) => {
 
 middlewaresUser.verificarDatosRequeridos = ( req, res, next ) => {
     const { jekuaaDatos, body } = req
-    const { datosUsuario, contrasenha, confirmacionContrasenha } = body
     const { uidSolicitante, datosAuthSolicitante } = jekuaaDatos
+    const { datosUsuario, contrasenha, confirmacionContrasenha } = body
     
     try {
-        if ( !datosUsuario || typeof datosUsuario != 'object' ) {
+        if ( !datosUsuario ) {
             throw new ErrorJekuaa({
                 codigo: 'jekuaa/error/usuario_mala_solicitud',
                 mensaje: 'No hay datos para crear un usuario.'
+            })
+        }
+
+        if ( !contrasenha ) {
+            throw new ErrorJekuaa({
+                codigo: 'jekuaa/error/usuario_mala_solicitud',
+                mensaje: 'No existe la contraseña.'
+            })
+        }
+    
+        if ( !confirmacionContrasenha ) {
+            throw new ErrorJekuaa({
+                codigo: 'jekuaa/error/usuario_mala_solicitud',
+                mensaje: 'No existe la confirmación de contraseña.'
             })
         }
     
@@ -227,20 +241,6 @@ middlewaresUser.verificarDatosRequeridos = ( req, res, next ) => {
             throw new ErrorJekuaa({
                 codigo: 'jekuaa/error/usuario_mala_solicitud',
                 mensaje: 'No existe el correo.'
-            })
-        }
-    
-        if ( !contrasenha ) {
-            throw new ErrorJekuaa({
-                codigo: 'jekuaa/error/usuario_mala_solicitud',
-                mensaje: 'No existe la contraseña.'
-            })
-        }
-    
-        if ( !confirmacionContrasenha ) {
-            throw new ErrorJekuaa({
-                codigo: 'jekuaa/error/usuario_mala_solicitud',
-                mensaje: 'No existe la confirmación de contraseña.'
             })
         }
         

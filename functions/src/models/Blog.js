@@ -231,6 +231,25 @@ class Blog {
         return this
     }
 
+    async importarDatosBlogPorReferencia ( referencia ) {
+        const documentsBlog = await db.collection(COLECCION_BLOG).where('referencia', '==', referencia).get()
+
+        if (documentsBlog.empty) {
+            throw new ErrorJekuaa({
+                codigo: 'jekuaa/error/usuario_mala_solicitud',
+                mensaje: `El blog con la referencia ${referencia} no existe.`
+            })
+        }
+
+        const doc = documentsBlog.docs[0]
+
+        const blog = doc.data()
+
+        this.setBLOG( blog )
+
+        return this
+    }
+
     async crearBlog () {
         const blog = this.getBlog()
         if ( !blog || typeof blog != 'object' ) {
@@ -479,6 +498,41 @@ class Blog {
             })
         }
 
+    }
+
+    static async errorBlogPorReferencia ( referencia, operacion ) {
+        const blogsDocs = await db.collection(COLECCION_BLOG).where('referencia', '==', referencia).get()
+
+        if ( operacion === 'existe' && !blogsDocs.empty ) {
+            throw new ErrorJekuaa({
+                codigo: 'jekuaa/error/usuario_mala_solicitud',
+                mensaje: `Existe el blog.`
+            })
+
+        } else if ( operacion === 'no-existe' && blogsDocs.empty ) {
+            throw new ErrorJekuaa({
+                codigo: 'jekuaa/error/usuario_mala_solicitud',
+                mensaje: `No existe el blog.`
+            })
+        }
+
+    }
+    
+    static async obtenerImagenDelBlog(blog = new Blog()) {
+        // These options will allow temporary read access to the file
+        const options = {
+            version: 'v4',
+            action: 'read',
+            expires: Date.now() + (24 * 60) * 60 * 1000, // 15 minutes
+        }
+
+        // Get a v4 signed URL for reading the file
+        const [url] = await storage
+            .bucket(`jekuaa-py.appspot.com`)
+            .file(`imagenes-secciones/${blog.seccion}.png`)
+            .getSignedUrl(options);
+            
+        return url
     }
 }
 

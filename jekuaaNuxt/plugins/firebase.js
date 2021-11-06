@@ -8,9 +8,11 @@ import 'firebase/auth'
 
 export default ({ env, store }, inject) => {
 
+  let esComienzo = firebase.apps.length === 0
+
   // Initialize Firebase
   !firebase.apps.length ? firebase.initializeApp(firebaseConfig) : ''
-  
+
   if (process.client) {
 
     if(window.location.hostname === 'localhost') {
@@ -35,7 +37,14 @@ export default ({ env, store }, inject) => {
       await store.dispatch('modules/sistema/setLoading', false)
     })
 
+  } else {
+    if(esComienzo) {
+      firebase.auth().useEmulator('http://localhost:9099')
+      firebase.firestore().useEmulator('localhost', 8080)
+      firebase.functions().useEmulator('localhost', 5001)
+      // firebase.storage().useEmulator('localhost', 9199)
+    }
   }
-  
+
   inject('firebase', firebase)
 }

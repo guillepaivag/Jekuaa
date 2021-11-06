@@ -378,7 +378,8 @@ export const actions = {
   async firebaseFirestoreGetUser_UID ({ dispatch, state }, uid) {
     console.log('[STORE ACTIONS] - firebaseFirestoreGetUser_UID', uid)
     
-    const userDoc = await this.$firebase.firestore().collection(collectionName).doc(uid).get()
+    const ref = this.$firebase.firestore().collection(collectionName).doc(uid)
+    const userDoc = await ref.get()
 
     return userDoc
   },

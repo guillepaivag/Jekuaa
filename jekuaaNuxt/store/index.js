@@ -7,7 +7,6 @@ export const actions = {
   async nuxtServerInit ({ dispatch, commit }, { store, route, req, res, app, beforeNuxtRender }) {
     
     try {
-
       await dispatch('modules/sistema/setLoading', true)
 
       const user = getUserFromCookie(req)

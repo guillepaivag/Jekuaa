@@ -2,6 +2,12 @@
   "FooterDefault": {
     "description": "Auto imported from components/FooterDefault.vue"
   },
+  "ListaBlogs": {
+    "description": "Auto imported from components/ListaBlogs.vue"
+  },
+  "ListaCategorias": {
+    "description": "Auto imported from components/ListaCategorias.vue"
+  },
   "Loading": {
     "description": "Auto imported from components/Loading.vue"
   },
@@ -16,6 +22,9 @@
   },
   "Presentacion": {
     "description": "Auto imported from components/Presentacion.vue"
+  },
+  "Spinner": {
+    "description": "Auto imported from components/Spinner.vue"
   },
   "VideoPlayer": {
     "description": "Auto imported from components/VideoPlayer.vue"

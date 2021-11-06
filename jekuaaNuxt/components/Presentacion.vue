@@ -16,13 +16,13 @@
                 <v-icon>
                     mdi-book-open-variant
                 </v-icon>
-                <span>Ver información</span>
+                <span class="ml-3">Ver información</span>
             </v-btn>
             <v-btn depressed id="buttonInfo" :to="to">
                 <v-icon>
                     mdi-book-open-variant
                 </v-icon>
-                <span>Más contenido</span>
+                <span class="ml-3">Más contenido</span>
             </v-btn>
         </div>
     </div>
@@ -31,22 +31,22 @@
 <script>
 
 export default {
-  name: "Presentacion",
-  data() {
-    return {
-        titulo: 'Desarrollo web en 2021',
-        descripcion: `Contrary to popular belief, Lorem Ipsum is not simply random text. 
-            It has roots in a piece of classical Latin literature from 45 BC, making it over 2000 years old. 
-            Richard McClintock, a Latin professor at Hampden-Sydney College in Virginia.`,
-        to: '/blog/desarrollo-web-en-2021',
-        srcImg: 'http://www.icorp.com.mx/blog/wp-content/uploads/2021/01/gestion_activos_software.jpg'
+    name: "Presentacion",
+    data() {
+        return {
+            
+        }
+    },
+    props: {
+        titulo: String,
+        descripcion: String,
+        to: String,
+        srcImg: String,
+    },
+    components: {
 
-    };
-  },
-  components: {
-
-  }
-};
+    },
+}
 </script>
 
 <style scoped>
@@ -85,7 +85,6 @@ export default {
 }
 
 .containerReleases {
-    z-index: 5;
     padding: 20px;
     width: 550px;
     margin-left: 40px;
@@ -107,7 +106,6 @@ export default {
     text-shadow: #e9e9e9 0em 0em 0em;
     font-size: 15px;
     margin-bottom: 30px;
-    text-align: justify;
 }
 
 .containerReleases button {
@@ -122,12 +120,8 @@ export default {
 
 .containerReleases button:hover {
     border: none;
-    transform: scale(1.1);
+    /* transform: scale(1.1) !important; */
     cursor: pointer;
-}
-
-.containerReleases button span {
-    padding-left: 10px;
 }
 
 #buttonPlay {
@@ -145,7 +139,16 @@ export default {
 
 @media only screen and (max-width: 900px) {
     .nextReleasesContainer {
-        height: 50vh;
+        height: 70vh;
+    }
+    .containerReleases {
+        padding-top: 150px;
+        margin-left: 0;
+        width: 100%;
+        text-align: center;
+    }
+    .containerReleases h1 {
+        font-size: 40px;
     }
 }
 @media only screen and (max-width: 790px) {
@@ -155,67 +158,102 @@ export default {
 }
 @media only screen and (max-width: 699px) {
     .nextReleasesContainer {
-        height: 40vh;
+        height: 50vh;
+    }
+    .containerReleases {
+        padding-top: 90px;
+        margin-left: 0;
+        width: 100%;
+        text-align: center;
     }
     .containerReleases p {
         font-size: 13px;
     }
 }
 @media only screen and (max-width: 599px) {
+    .nextReleasesContainer {
+        height: 50vh;
+    }
     .containerReleases {
-        width: 400px;
+        padding-top: 70px;
+        margin-left: 0;
+        width: 100%;
+        text-align: center;
     }
     .containerReleases p {
         font-size: 13px;
     }
+}
+@media only screen and (max-width: 516px) {
     #buttonPlay {
-        width: 120px;
+        margin-right: 0;
+        width: 250px;
+        margin-top: 10px;
     }
     #buttonInfo {
-        width: 170px;
+        width: 250px;
+        margin-top: 10px;
     }
 }
 @media only screen and (max-width: 470px) {
+    .nextReleasesContainer {
+        height: 50vh;
+    }
     .containerReleases {
-        width: 350px;
-        margin-left: 20px;
+        padding-top: 40px;
+        margin-left: 0;
+        width: 100%;
+        text-align: center;
+    }
+    #buttonPlay {
+        font-size: 12px;
+    }
+    #buttonInfo {
+        font-size: 12px;
+    }
+}
+@media only screen and (max-width: 399px) {
+    .nextReleasesContainer {
+        height: 50vh;
+    }
+    .containerReleases {
+        padding-top: 40px;
+        margin-left: 0;
+        width: 100%;
+        text-align: center;
     }
     .containerReleases h1 {
         font-size: 30px;
     }
     .containerReleases p {
-        font-size: 11px;
-    }
-    #buttonPlay {
-        font-size: 12px;
-    }
-    #buttonInfo {
-        font-size: 12px;
-    }
-    .nextReleasesContainer {
-        height: 41vh;
+        font-size: 20px;
     }
 }
-@media only screen and (max-width: 399px) {
+@media only screen and (max-width: 310px) {
+    .nextReleasesContainer {
+        height: 47vh;
+    }
     .containerReleases {
-        width: 270px;
+        padding-top: 40px;
+        margin-left: 0;
+        width: 100%;
+        text-align: center;
     }
     .containerReleases h1 {
-        font-size: 17px;
+        font-size: 20px;
     }
     .containerReleases p {
-        font-size: 12px;
-    }
-    button span {
-        padding-bottom: 300px;
+        font-size: 15px;
     }
     #buttonPlay {
-        font-size: 7px;
-        width: 70px;
+        width: 190px;
+        font-size: 10px;
+        margin-top: 10px;
     }
     #buttonInfo {
-        font-size: 7px;
-        width: 90px;
+        width: 190px;
+        font-size: 10px;
+        margin-top: 10px;
     }
 }
 </style>

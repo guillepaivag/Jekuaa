@@ -1,5 +1,5 @@
 const colors = require('vuetify/es5/util/colors')
-// const baseURL = ''
+
 const baseURL = 'http://localhost:5001/jekuaa-py/southamerica-east1/apiJekuaa'
 
 module.exports = {
@@ -37,6 +37,7 @@ module.exports = {
   plugins: [
     { src: './plugins/firebase.js', },
     { src: './plugins/TiptapVuetify.js' },
+    { src: './plugins/vue-observe-visibility.js', ssr: false }
   ],
   
 

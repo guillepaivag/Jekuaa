@@ -23,6 +23,8 @@ const {
     crearBlog,
     obtenerBlog,
     obtenerDatosBlog,
+    listaBlogsPorMG,
+    blogConMasMeGusta,
     obtenerContenidoBlog,
     darMeGusta,
     actualizarDatosBlog,
@@ -30,6 +32,12 @@ const {
 } = require('../../controllers/Blog')
 
 // Operaciones para: Estudiantes
+router.get('/blogConMasMeGusta', 
+    blogConMasMeGusta)
+
+router.post('/listaBlogsPorMG', 
+    listaBlogsPorMG)
+
 router.get('/obtenerBlog/:uid', 
     verificacionExistenciaBlog,
     verificacionExistenciaArchivoBlog,
@@ -44,7 +52,7 @@ router.get('/obtenerContenido/:uid',
     verificacionExistenciaArchivoBlog,
     obtenerContenidoBlog)
 
-router.post('/meGusta/:uid', 
+router.post('/estudiante/meGusta/:uid', 
     estaAutenticado, 
     verificacionExistenciaBlog,
     velidarDatosMeGustaBlog,

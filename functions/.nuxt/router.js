@@ -16,7 +16,7 @@ const _01cdbbed = () => interopDefault(import('..\\..\\jekuaaNuxt\\pages\\autent
 const _1cd3dbd8 = () => interopDefault(import('..\\..\\jekuaaNuxt\\pages\\admin-jekuaa\\usuarios\\lista-usuarios\\index.vue' /* webpackChunkName: "pages/admin-jekuaa/usuarios/lista-usuarios/index" */))
 const _55050a4e = () => interopDefault(import('..\\..\\jekuaaNuxt\\pages\\admin-jekuaa\\usuarios\\_uidUsuario.vue' /* webpackChunkName: "pages/admin-jekuaa/usuarios/_uidUsuario" */))
 const _da154b10 = () => interopDefault(import('..\\..\\jekuaaNuxt\\pages\\bienvenido-a-jekuaa\\_nombreUsuario.vue' /* webpackChunkName: "pages/bienvenido-a-jekuaa/_nombreUsuario" */))
-const _47ce9638 = () => interopDefault(import('..\\..\\jekuaaNuxt\\pages\\blog\\_uid\\index.vue' /* webpackChunkName: "pages/blog/_uid/index" */))
+const _2003454c = () => interopDefault(import('..\\..\\jekuaaNuxt\\pages\\blog\\_referencia\\index.vue' /* webpackChunkName: "pages/blog/_referencia/index" */))
 const _50fb564b = () => interopDefault(import('..\\..\\jekuaaNuxt\\pages\\index.vue' /* webpackChunkName: "pages/index" */))
 
 const emptyFn = () => {}
@@ -79,9 +79,9 @@ export const routerOptions = {
     component: _da154b10,
     name: "bienvenido-a-jekuaa-nombreUsuario"
   }, {
-    path: "/blog/:uid",
-    component: _47ce9638,
-    name: "blog-uid"
+    path: "/blog/:referencia",
+    component: _2003454c,
+    name: "blog-referencia"
   }, {
     path: "/",
     component: _50fb564b,

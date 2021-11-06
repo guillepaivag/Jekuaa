@@ -18,6 +18,7 @@ const os = require('os')
 const path = require('path')
 const fs = require('fs')
 const JekuaaRoles = require("../models/JekuaaRoles")
+const Usuario = require('../models/Usuario')
 
 const controller = {}
 
@@ -101,8 +102,7 @@ controller.obtenerDatosBlog = async (req, res) => {
 
 controller.obtenerContenidoBlog = async ( req, res ) => {
     try {
-        const { params, body } = req
-        const { opciones } = body
+        const { params } = req
         const { uid } = params
 
         const respuesta = new Respuesta()
@@ -110,6 +110,9 @@ controller.obtenerContenidoBlog = async ( req, res ) => {
 
         const blog = new Blog()
         await blog.importarDatosBlogPorUID( uid )
+        const opciones = {
+            extensionArchivo: 'md'
+        }
 
         // Obtener archivo
         const contenido = await blog.obtenerContenido( opciones )
@@ -137,12 +140,14 @@ controller.obtenerContenidoBlog = async ( req, res ) => {
 
 controller.obtenerBlog = async ( req, res ) => {
     try {
-        const { params, body } = req
-        const { opciones } = body
+        const { params } = req
         const { uid } = params
 
         const respuesta = new Respuesta()
         let codigo = 'jekuaa/exito'
+        const opciones = {
+            extensionArchivo: 'md'
+        }
 
         const blog = new Blog()
         await blog.importarDatosBlogPorUID( uid )
@@ -164,6 +169,95 @@ controller.obtenerBlog = async ( req, res ) => {
 
     } catch (error) {
         console.log('Error - obtenerContenidoBlog: ', error)
+
+        const {
+            status,
+            respuesta
+        } = manejadorErrores( error )
+
+        return res.status( status ).json( respuesta )
+    }
+}
+
+controller.listaBlogsPorMG = async (req, res) => {
+    try {
+        const { body } = req
+        const { seccion, categoria, cantidad } = body
+        
+        const respuesta = new Respuesta()
+        let codigo = 'jekuaa/exito'
+
+        let listaBlogs = []
+        const ref = db.collection('Blogs')
+            .where('seccion', '==', seccion)
+            .where('categoria', '==', categoria)
+            .orderBy('cantidadMeGusta', 'desc')
+            .limit(cantidad)
+
+        const documentsBlogs = await ref.get()
+
+        for (let i = 0; i < documentsBlogs.docs.length; i++) {
+            const doc = documentsBlogs.docs[i]
+            const uidPublicador = doc.data().publicador
+            const datosAuthPublicador = await Usuario.verDatosAuthPorUID( uidPublicador )
+            const imgBlog = await Blog.obtenerImagenDelBlog(new Blog(doc.data()))
+            const datosBlog = {
+                imgBlog: imgBlog,
+                blog: doc.data(),
+                publicador: {
+                    nombreUsuario: datosAuthPublicador.displayName
+                }
+            }
+            listaBlogs.push(datosBlog)
+        }
+        
+        // Retornar respuesta
+        respuesta.setRespuestaPorCodigo(codigo, {
+            mensaje: '¡Lista de blogs creada!',
+            resultado: listaBlogs
+        })
+        const status = respuesta.getStatusCode()
+        
+        return res.status( status ).json( respuesta.getRespuesta() )
+
+    } catch (error) {
+        console.log('Error - listaBlogsPorMG: ', error)
+
+        const {
+            status,
+            respuesta
+        } = manejadorErrores( error )
+
+        return res.status( status ).json( respuesta )
+    }
+}
+
+controller.blogConMasMeGusta = async (req, res) => {
+    try {
+        const respuesta = new Respuesta()
+        let codigo = 'jekuaa/exito'
+
+        const ref = db.collection('Blogs')
+            .orderBy('cantidadMeGusta', 'desc')
+            .limit(1)
+
+        const docs = await ref.get()
+
+        const doc = docs.docs[0]
+
+        const blogMasMeGusta = doc.data()
+        
+        // Retornar respuesta
+        respuesta.setRespuestaPorCodigo(codigo, {
+            mensaje: '¡Blog con mas me gusta!',
+            resultado: blogMasMeGusta
+        })
+        const status = respuesta.getStatusCode()
+        
+        return res.status( status ).json( respuesta.getRespuesta() )
+
+    } catch (error) {
+        console.log('Error - blogConMasMeGusta: ', error)
 
         const {
             status,

@@ -3,84 +3,98 @@
     "name": "admin-jekuaa",
     "path": "/admin-jekuaa",
     "component": "C:\\\\Users\\\\i3\\\\Desktop\\\\PDGP\\\\WebDevelopment\\\\Proyectos\\\\Jekuaa\\\\jekuaa\\\\jekuaaNuxt\\\\pages\\\\admin-jekuaa\\\\index.vue",
-    "chunkName": "pages/admin-jekuaa/index"
+    "chunkName": "pages/admin-jekuaa/index",
+    "_name": "_1161ae28"
   },
   {
     "name": "blog",
     "path": "/blog",
     "component": "C:\\\\Users\\\\i3\\\\Desktop\\\\PDGP\\\\WebDevelopment\\\\Proyectos\\\\Jekuaa\\\\jekuaa\\\\jekuaaNuxt\\\\pages\\\\blog\\\\index.vue",
-    "chunkName": "pages/blog/index"
+    "chunkName": "pages/blog/index",
+    "_name": "_12112529"
   },
   {
     "name": "miembro-jekuaa",
     "path": "/miembro-jekuaa",
     "component": "C:\\\\Users\\\\i3\\\\Desktop\\\\PDGP\\\\WebDevelopment\\\\Proyectos\\\\Jekuaa\\\\jekuaa\\\\jekuaaNuxt\\\\pages\\\\miembro-jekuaa\\\\index.vue",
-    "chunkName": "pages/miembro-jekuaa/index"
+    "chunkName": "pages/miembro-jekuaa/index",
+    "_name": "_ca494018"
   },
   {
     "name": "perfil",
     "path": "/perfil",
     "component": "C:\\\\Users\\\\i3\\\\Desktop\\\\PDGP\\\\WebDevelopment\\\\Proyectos\\\\Jekuaa\\\\jekuaa\\\\jekuaaNuxt\\\\pages\\\\perfil\\\\index.vue",
-    "chunkName": "pages/perfil/index"
+    "chunkName": "pages/perfil/index",
+    "_name": "_4118ef02"
   },
   {
     "name": "admin-jekuaa-blog",
     "path": "/admin-jekuaa/blog",
     "component": "C:\\\\Users\\\\i3\\\\Desktop\\\\PDGP\\\\WebDevelopment\\\\Proyectos\\\\Jekuaa\\\\jekuaa\\\\jekuaaNuxt\\\\pages\\\\admin-jekuaa\\\\blog\\\\index.vue",
-    "chunkName": "pages/admin-jekuaa/blog/index"
+    "chunkName": "pages/admin-jekuaa/blog/index",
+    "_name": "_56db6346"
   },
   {
     "name": "admin-jekuaa-cursos",
     "path": "/admin-jekuaa/cursos",
     "component": "C:\\\\Users\\\\i3\\\\Desktop\\\\PDGP\\\\WebDevelopment\\\\Proyectos\\\\Jekuaa\\\\jekuaa\\\\jekuaaNuxt\\\\pages\\\\admin-jekuaa\\\\cursos\\\\index.vue",
-    "chunkName": "pages/admin-jekuaa/cursos/index"
+    "chunkName": "pages/admin-jekuaa/cursos/index",
+    "_name": "_605534f1"
   },
   {
     "name": "admin-jekuaa-usuarios",
     "path": "/admin-jekuaa/usuarios",
     "component": "C:\\\\Users\\\\i3\\\\Desktop\\\\PDGP\\\\WebDevelopment\\\\Proyectos\\\\Jekuaa\\\\jekuaa\\\\jekuaaNuxt\\\\pages\\\\admin-jekuaa\\\\usuarios\\\\index.vue",
-    "chunkName": "pages/admin-jekuaa/usuarios/index"
+    "chunkName": "pages/admin-jekuaa/usuarios/index",
+    "_name": "_4d5a6503"
   },
   {
     "name": "autenticacion-inicioSesion",
     "path": "/autenticacion/inicioSesion",
     "component": "C:\\\\Users\\\\i3\\\\Desktop\\\\PDGP\\\\WebDevelopment\\\\Proyectos\\\\Jekuaa\\\\jekuaa\\\\jekuaaNuxt\\\\pages\\\\autenticacion\\\\inicioSesion.vue",
-    "chunkName": "pages/autenticacion/inicioSesion"
+    "chunkName": "pages/autenticacion/inicioSesion",
+    "_name": "_77ba35f4"
   },
   {
     "name": "autenticacion-registro",
     "path": "/autenticacion/registro",
     "component": "C:\\\\Users\\\\i3\\\\Desktop\\\\PDGP\\\\WebDevelopment\\\\Proyectos\\\\Jekuaa\\\\jekuaa\\\\jekuaaNuxt\\\\pages\\\\autenticacion\\\\registro.vue",
-    "chunkName": "pages/autenticacion/registro"
+    "chunkName": "pages/autenticacion/registro",
+    "_name": "_01cdbbed"
   },
   {
     "name": "admin-jekuaa-usuarios-lista-usuarios",
     "path": "/admin-jekuaa/usuarios/lista-usuarios",
     "component": "C:\\\\Users\\\\i3\\\\Desktop\\\\PDGP\\\\WebDevelopment\\\\Proyectos\\\\Jekuaa\\\\jekuaa\\\\jekuaaNuxt\\\\pages\\\\admin-jekuaa\\\\usuarios\\\\lista-usuarios\\\\index.vue",
-    "chunkName": "pages/admin-jekuaa/usuarios/lista-usuarios/index"
+    "chunkName": "pages/admin-jekuaa/usuarios/lista-usuarios/index",
+    "_name": "_1cd3dbd8"
   },
   {
     "name": "admin-jekuaa-usuarios-uidUsuario",
     "path": "/admin-jekuaa/usuarios/:uidUsuario",
     "component": "C:\\\\Users\\\\i3\\\\Desktop\\\\PDGP\\\\WebDevelopment\\\\Proyectos\\\\Jekuaa\\\\jekuaa\\\\jekuaaNuxt\\\\pages\\\\admin-jekuaa\\\\usuarios\\\\_uidUsuario.vue",
-    "chunkName": "pages/admin-jekuaa/usuarios/_uidUsuario"
+    "chunkName": "pages/admin-jekuaa/usuarios/_uidUsuario",
+    "_name": "_55050a4e"
   },
   {
     "name": "bienvenido-a-jekuaa-nombreUsuario",
     "path": "/bienvenido-a-jekuaa/:nombreUsuario?",
     "component": "C:\\\\Users\\\\i3\\\\Desktop\\\\PDGP\\\\WebDevelopment\\\\Proyectos\\\\Jekuaa\\\\jekuaa\\\\jekuaaNuxt\\\\pages\\\\bienvenido-a-jekuaa\\\\_nombreUsuario.vue",
-    "chunkName": "pages/bienvenido-a-jekuaa/_nombreUsuario"
+    "chunkName": "pages/bienvenido-a-jekuaa/_nombreUsuario",
+    "_name": "_da154b10"
   },
   {
-    "name": "blog-uid",
-    "path": "/blog/:uid",
-    "component": "C:\\\\Users\\\\i3\\\\Desktop\\\\PDGP\\\\WebDevelopment\\\\Proyectos\\\\Jekuaa\\\\jekuaa\\\\jekuaaNuxt\\\\pages\\\\blog\\\\_uid\\\\index.vue",
-    "chunkName": "pages/blog/_uid/index"
+    "name": "blog-referencia",
+    "path": "/blog/:referencia",
+    "component": "C:\\\\Users\\\\i3\\\\Desktop\\\\PDGP\\\\WebDevelopment\\\\Proyectos\\\\Jekuaa\\\\jekuaa\\\\jekuaaNuxt\\\\pages\\\\blog\\\\_referencia\\\\index.vue",
+    "chunkName": "pages/blog/_referencia/index",
+    "_name": "_2003454c"
   },
   {
     "name": "index",
     "path": "/",
     "component": "C:\\\\Users\\\\i3\\\\Desktop\\\\PDGP\\\\WebDevelopment\\\\Proyectos\\\\Jekuaa\\\\jekuaa\\\\jekuaaNuxt\\\\pages\\\\index.vue",
-    "chunkName": "pages/index"
+    "chunkName": "pages/index",
+    "_name": "_50fb564b"
   }
 ]
