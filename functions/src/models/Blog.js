@@ -4,6 +4,7 @@ const ErrorJekuaa = require('./Error/ErroresJekuaa')
 const storage = require('../../GoogleStorage')
 const fs = require('fs')
 const showdown  = require('showdown')
+const Usuario = require('./Usuario')
 
 const COLECCION_BLOG = 'Blogs'
 const COLECCION_BLOG_ACTUALIZACIONES = 'Actualizaciones'
@@ -533,6 +534,127 @@ class Blog {
             .getSignedUrl(options);
             
         return url
+    }
+
+    static async inicializarListaBlogs (opciones) {
+        let { maximoPorPagina, filtros } = opciones
+        
+        !maximoPorPagina ? maximoPorPagina = 5 : ''
+        
+        let blogs = []
+
+        let ref = db.collection('Blogs')
+        ref = Blog.filtrar( ref, filtros )
+        ref = ref.orderBy('uid').limit( maximoPorPagina )
+        const documentSnapshots = await ref.get()
+        
+        let ultimoDocumento = documentSnapshots.docs[documentSnapshots.docs.length-1]
+        let ultimaUID = ultimoDocumento.id
+        for (let i = 0; i < documentSnapshots.docs.length; i++) {
+            const element = documentSnapshots.docs[i]
+            
+            const uidPublicador = element.data().publicador
+            const blogObject = new Blog(element.data())
+
+            const datosAuthPublicador = await Usuario.verDatosAuthPorUID( uidPublicador )
+            const imgBlog = await Blog.obtenerImagenDelBlog(blogObject)
+
+            const datosBlog = {
+                imgBlog: imgBlog,
+                blog: element.data(),
+                publicador: {
+                    nombreUsuario: datosAuthPublicador.displayName,
+                }
+            }
+            
+            blogs.push( datosBlog )
+        }
+        
+        const existeMasDatos = blogs.length ? await Blog.verificarSiHayMasDatos({
+            ultimaUID,
+            filtros,
+        }) : false
+        
+        return {
+            blogs,
+            ultimaUID,
+            existeMasDatos,
+        }
+    }
+
+    static async paginarListaBlogs (opciones) {
+        let { ultimaUID, maximoPorPagina, filtros, } = opciones
+        
+        !maximoPorPagina ? maximoPorPagina = 5 : ''
+
+        let blogs = []
+        
+        let ref = db.collection('Blogs')
+        ref = Blog.filtrar( ref, filtros )
+        ref = ref.orderBy('uid').startAfter(ultimaUID).limit(maximoPorPagina)
+        const documentSnapshots = await ref.get()
+        
+        let ultimoDocumento = documentSnapshots.docs[documentSnapshots.docs.length-1]
+        ultimaUID = ultimoDocumento.id
+        for (let i = 0; i < documentSnapshots.docs.length; i++) {
+            const element = documentSnapshots.docs[i]
+            
+            const uidPublicador = element.data().publicador
+            const blogObject = new Blog(element.data())
+
+            const datosAuthPublicador = await Usuario.verDatosAuthPorUID( uidPublicador )
+            const imgBlog = await Blog.obtenerImagenDelBlog(blogObject)
+
+            const datosBlog = {
+                imgBlog: imgBlog,
+                blog: element.data(),
+                publicador: {
+                    nombreUsuario: datosAuthPublicador.displayName,
+                }
+            }
+            
+            blogs.push( datosBlog )
+        }
+        const existeMasDatos = await Blog.verificarSiHayMasDatos({
+            ultimaUID,
+            filtros,
+        })
+
+        return {
+            blogs,
+            ultimaUID,
+            existeMasDatos,
+        }
+    }
+
+    static async verificarSiHayMasDatos (opciones) {
+        let { ultimaUID, filtros, } = opciones
+
+        let ref = db.collection('Blogs')
+        ref = Blog.filtrar( ref, filtros )
+        ref = ref.orderBy('uid').startAfter(ultimaUID).limit(1)
+        const siguienteDato = await ref.get()
+        const existeMasDatos = !siguienteDato.empty
+
+        return existeMasDatos
+    }
+
+    static filtrar ( ref, filtros ) {
+        if (!filtros || !Object.keys(filtros).length) {
+            return ref
+        }
+
+        if ( filtros.seccion ) {
+            ref = ref.where('seccion', '==', filtros.seccion)
+        }
+        if ( filtros.categoria ) {
+            ref = ref.where('categoria', '==', filtros.categoria)
+        }
+        if ( filtros.subCategorias ) {
+            ref = ref.where('subCategorias', 'array-contains-any', filtros.subCategorias)
+        }
+
+        return ref
     }
 }
 

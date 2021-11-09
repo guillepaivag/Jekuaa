@@ -6,7 +6,6 @@
       :to="`/blog/${blogMasMeGusta.referencia}`" 
       :srcImg="srcImg" 
     />
-    
 
     <div class="mt-10 mb-10">
       <ListaBlogs 

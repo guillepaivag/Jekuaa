@@ -6,6 +6,7 @@ import scrollBehavior from './router.scrollBehavior.js'
 
 const _1161ae28 = () => interopDefault(import('..\\..\\jekuaaNuxt\\pages\\admin-jekuaa\\index.vue' /* webpackChunkName: "pages/admin-jekuaa/index" */))
 const _12112529 = () => interopDefault(import('..\\..\\jekuaaNuxt\\pages\\blog\\index.vue' /* webpackChunkName: "pages/blog/index" */))
+const _5163fa38 = () => interopDefault(import('..\\..\\jekuaaNuxt\\pages\\blogs\\index.vue' /* webpackChunkName: "pages/blogs/index" */))
 const _ca494018 = () => interopDefault(import('..\\..\\jekuaaNuxt\\pages\\miembro-jekuaa\\index.vue' /* webpackChunkName: "pages/miembro-jekuaa/index" */))
 const _4118ef02 = () => interopDefault(import('..\\..\\jekuaaNuxt\\pages\\perfil\\index.vue' /* webpackChunkName: "pages/perfil/index" */))
 const _56db6346 = () => interopDefault(import('..\\..\\jekuaaNuxt\\pages\\admin-jekuaa\\blog\\index.vue' /* webpackChunkName: "pages/admin-jekuaa/blog/index" */))
@@ -13,10 +14,11 @@ const _605534f1 = () => interopDefault(import('..\\..\\jekuaaNuxt\\pages\\admin-
 const _4d5a6503 = () => interopDefault(import('..\\..\\jekuaaNuxt\\pages\\admin-jekuaa\\usuarios\\index.vue' /* webpackChunkName: "pages/admin-jekuaa/usuarios/index" */))
 const _77ba35f4 = () => interopDefault(import('..\\..\\jekuaaNuxt\\pages\\autenticacion\\inicioSesion.vue' /* webpackChunkName: "pages/autenticacion/inicioSesion" */))
 const _01cdbbed = () => interopDefault(import('..\\..\\jekuaaNuxt\\pages\\autenticacion\\registro.vue' /* webpackChunkName: "pages/autenticacion/registro" */))
+const _24eebbef = () => interopDefault(import('..\\..\\jekuaaNuxt\\pages\\blogs\\buscador\\index.vue' /* webpackChunkName: "pages/blogs/buscador/index" */))
 const _1cd3dbd8 = () => interopDefault(import('..\\..\\jekuaaNuxt\\pages\\admin-jekuaa\\usuarios\\lista-usuarios\\index.vue' /* webpackChunkName: "pages/admin-jekuaa/usuarios/lista-usuarios/index" */))
 const _55050a4e = () => interopDefault(import('..\\..\\jekuaaNuxt\\pages\\admin-jekuaa\\usuarios\\_uidUsuario.vue' /* webpackChunkName: "pages/admin-jekuaa/usuarios/_uidUsuario" */))
 const _da154b10 = () => interopDefault(import('..\\..\\jekuaaNuxt\\pages\\bienvenido-a-jekuaa\\_nombreUsuario.vue' /* webpackChunkName: "pages/bienvenido-a-jekuaa/_nombreUsuario" */))
-const _2003454c = () => interopDefault(import('..\\..\\jekuaaNuxt\\pages\\blog\\_referencia\\index.vue' /* webpackChunkName: "pages/blog/_referencia/index" */))
+const _9d048bb0 = () => interopDefault(import('..\\..\\jekuaaNuxt\\pages\\blog\\_referencia.vue' /* webpackChunkName: "pages/blog/_referencia" */))
 const _50fb564b = () => interopDefault(import('..\\..\\jekuaaNuxt\\pages\\index.vue' /* webpackChunkName: "pages/index" */))
 
 const emptyFn = () => {}
@@ -38,6 +40,10 @@ export const routerOptions = {
     path: "/blog",
     component: _12112529,
     name: "blog"
+  }, {
+    path: "/blogs",
+    component: _5163fa38,
+    name: "blogs"
   }, {
     path: "/miembro-jekuaa",
     component: _ca494018,
@@ -67,6 +73,10 @@ export const routerOptions = {
     component: _01cdbbed,
     name: "autenticacion-registro"
   }, {
+    path: "/blogs/buscador",
+    component: _24eebbef,
+    name: "blogs-buscador"
+  }, {
     path: "/admin-jekuaa/usuarios/lista-usuarios",
     component: _1cd3dbd8,
     name: "admin-jekuaa-usuarios-lista-usuarios"
@@ -80,7 +90,7 @@ export const routerOptions = {
     name: "bienvenido-a-jekuaa-nombreUsuario"
   }, {
     path: "/blog/:referencia",
-    component: _2003454c,
+    component: _9d048bb0,
     name: "blog-referencia"
   }, {
     path: "/",

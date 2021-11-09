@@ -205,7 +205,7 @@ controller.listaBlogsPorMG = async (req, res) => {
                 imgBlog: imgBlog,
                 blog: doc.data(),
                 publicador: {
-                    nombreUsuario: datosAuthPublicador.displayName
+                    nombreUsuario: datosAuthPublicador.displayName,
                 }
             }
             listaBlogs.push(datosBlog)
@@ -258,6 +258,51 @@ controller.blogConMasMeGusta = async (req, res) => {
 
     } catch (error) {
         console.log('Error - blogConMasMeGusta: ', error)
+
+        const {
+            status,
+            respuesta
+        } = manejadorErrores( error )
+
+        return res.status( status ).json( respuesta )
+    }
+}
+
+controller.paginarListaBlogs = async (req, res) => {
+    try {
+        const { body, params } = req
+        const {  } = params
+        let { ultimaUID, maximoPorPagina, filtros } = body
+
+        const respuesta = new Respuesta()
+        let codigo = 'jekuaa/exito'
+
+        let resultado = null
+
+        if (!ultimaUID) {
+            resultado = await Blog.inicializarListaBlogs({
+                maximoPorPagina,
+                filtros
+            })
+        } else {
+            resultado = await Blog.paginarListaBlogs({
+                ultimaUID, 
+                maximoPorPagina,
+                filtros,
+            })
+        }
+
+        // Retornar respuesta
+        respuesta.setRespuestaPorCodigo(codigo, {
+            mensaje: 'Se obtuvieron los blogs de forma correcta.',
+            resultado
+        })
+        const status = respuesta.getStatusCode()
+        
+        return res.status( status ).json( respuesta.getRespuesta() )
+
+    } catch (error) {
+        console.log('Error - paginarBlogs: ', error)
 
         const {
             status,

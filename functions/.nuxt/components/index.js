@@ -12,6 +12,8 @@ export { default as AdminBuscadorUsuarios } from '../..\\..\\jekuaaNuxt\\compone
 export { default as AdminConfirmacionAccionPorUID } from '../..\\..\\jekuaaNuxt\\components\\admin\\confirmacionAccionPorUID.vue'
 export { default as AdminFiltroUsuarios } from '../..\\..\\jekuaaNuxt\\components\\admin\\filtroUsuarios.vue'
 export { default as AdminListaUsuarios } from '../..\\..\\jekuaaNuxt\\components\\admin\\listaUsuarios.vue'
+export { default as BlogsFiltroBlogs } from '../..\\..\\jekuaaNuxt\\components\\blogs\\filtro-blogs.vue'
+export { default as BlogsListaBlogs } from '../..\\..\\jekuaaNuxt\\components\\blogs\\lista-blogs.vue'
 export { default as AuthEmail } from '../..\\..\\jekuaaNuxt\\components\\auth\\authEmail.vue'
 export { default as AdminFormsEditor } from '../..\\..\\jekuaaNuxt\\components\\admin\\forms\\Editor.vue'
 export { default as AdminFormsFormBlog } from '../..\\..\\jekuaaNuxt\\components\\admin\\forms\\FormBlog.vue'

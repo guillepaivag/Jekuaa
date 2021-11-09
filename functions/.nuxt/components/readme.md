@@ -20,6 +20,8 @@ You can directly use them in pages and other components without the need to impo
 - `<AdminConfirmacionAccionPorUID>` | `<admin-confirmacion-accion-por-u-i-d>` (components/admin/confirmacionAccionPorUID.vue)
 - `<AdminFiltroUsuarios>` | `<admin-filtro-usuarios>` (components/admin/filtroUsuarios.vue)
 - `<AdminListaUsuarios>` | `<admin-lista-usuarios>` (components/admin/listaUsuarios.vue)
+- `<BlogsFiltroBlogs>` | `<blogs-filtro-blogs>` (components/blogs/filtro-blogs.vue)
+- `<BlogsListaBlogs>` | `<blogs-lista-blogs>` (components/blogs/lista-blogs.vue)
 - `<AuthEmail>` | `<auth-email>` (components/auth/authEmail.vue)
 - `<AdminFormsEditor>` | `<admin-forms-editor>` (components/admin/forms/Editor.vue)
 - `<AdminFormsFormBlog>` | `<admin-forms-form-blog>` (components/admin/forms/FormBlog.vue)

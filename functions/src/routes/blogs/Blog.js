@@ -26,6 +26,7 @@ const {
     listaBlogsPorMG,
     blogConMasMeGusta,
     obtenerContenidoBlog,
+    paginarListaBlogs,
     darMeGusta,
     actualizarDatosBlog,
     eliminarBlog,
@@ -51,6 +52,9 @@ router.get('/obtenerContenido/:uid',
     verificacionExistenciaBlog,
     verificacionExistenciaArchivoBlog,
     obtenerContenidoBlog)
+
+router.post('/paginarListaBlogs',
+    paginarListaBlogs)
 
 router.post('/estudiante/meGusta/:uid', 
     estaAutenticado, 

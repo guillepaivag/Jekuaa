@@ -180,11 +180,11 @@
           <samp class="estiloTexto">Planes</samp>
         </v-tab> -->
 
-        <v-tab to="/blog">
+        <v-tab to="/blogs">
           <v-icon class="navItemIcon">
             mdi-book-open-variant
           </v-icon>
-          <samp class="estiloTexto">Blog</samp>
+          <samp class="estiloTexto">Blogs</samp>
         </v-tab>
       </v-tabs>
 
@@ -255,7 +255,7 @@ export default {
     drawer: null,
     items: [
       { title: 'Inicio', icon: 'mdi-home', to: '/' },
-      { title: 'Blog', icon: 'mdi-book-open-variant', to: '/blog' }
+      { title: 'Blogs', icon: 'mdi-book-open-variant', to: '/blogs' }
     ],
     user: {
       initials: 'GP',

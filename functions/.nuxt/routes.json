@@ -14,6 +14,13 @@
     "_name": "_12112529"
   },
   {
+    "name": "blogs",
+    "path": "/blogs",
+    "component": "C:\\\\Users\\\\i3\\\\Desktop\\\\PDGP\\\\WebDevelopment\\\\Proyectos\\\\Jekuaa\\\\jekuaa\\\\jekuaaNuxt\\\\pages\\\\blogs\\\\index.vue",
+    "chunkName": "pages/blogs/index",
+    "_name": "_5163fa38"
+  },
+  {
     "name": "miembro-jekuaa",
     "path": "/miembro-jekuaa",
     "component": "C:\\\\Users\\\\i3\\\\Desktop\\\\PDGP\\\\WebDevelopment\\\\Proyectos\\\\Jekuaa\\\\jekuaa\\\\jekuaaNuxt\\\\pages\\\\miembro-jekuaa\\\\index.vue",
@@ -63,6 +70,13 @@
     "_name": "_01cdbbed"
   },
   {
+    "name": "blogs-buscador",
+    "path": "/blogs/buscador",
+    "component": "C:\\\\Users\\\\i3\\\\Desktop\\\\PDGP\\\\WebDevelopment\\\\Proyectos\\\\Jekuaa\\\\jekuaa\\\\jekuaaNuxt\\\\pages\\\\blogs\\\\buscador\\\\index.vue",
+    "chunkName": "pages/blogs/buscador/index",
+    "_name": "_24eebbef"
+  },
+  {
     "name": "admin-jekuaa-usuarios-lista-usuarios",
     "path": "/admin-jekuaa/usuarios/lista-usuarios",
     "component": "C:\\\\Users\\\\i3\\\\Desktop\\\\PDGP\\\\WebDevelopment\\\\Proyectos\\\\Jekuaa\\\\jekuaa\\\\jekuaaNuxt\\\\pages\\\\admin-jekuaa\\\\usuarios\\\\lista-usuarios\\\\index.vue",
@@ -86,9 +100,9 @@
   {
     "name": "blog-referencia",
     "path": "/blog/:referencia",
-    "component": "C:\\\\Users\\\\i3\\\\Desktop\\\\PDGP\\\\WebDevelopment\\\\Proyectos\\\\Jekuaa\\\\jekuaa\\\\jekuaaNuxt\\\\pages\\\\blog\\\\_referencia\\\\index.vue",
-    "chunkName": "pages/blog/_referencia/index",
-    "_name": "_2003454c"
+    "component": "C:\\\\Users\\\\i3\\\\Desktop\\\\PDGP\\\\WebDevelopment\\\\Proyectos\\\\Jekuaa\\\\jekuaa\\\\jekuaaNuxt\\\\pages\\\\blog\\\\_referencia.vue",
+    "chunkName": "pages/blog/_referencia",
+    "_name": "_9d048bb0"
   },
   {
     "name": "index",

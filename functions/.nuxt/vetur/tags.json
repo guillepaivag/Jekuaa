@@ -41,6 +41,12 @@
   "AdminListaUsuarios": {
     "description": "Auto imported from components/admin/listaUsuarios.vue"
   },
+  "BlogsFiltroBlogs": {
+    "description": "Auto imported from components/blogs/filtro-blogs.vue"
+  },
+  "BlogsListaBlogs": {
+    "description": "Auto imported from components/blogs/lista-blogs.vue"
+  },
   "AuthEmail": {
     "description": "Auto imported from components/auth/authEmail.vue"
   },
