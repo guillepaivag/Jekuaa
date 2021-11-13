@@ -187,7 +187,28 @@ middlewaresUser.permisoParaOperarUnRol = async ( req, res, next ) => {
     
 }
 
+middlewaresUser.construirDatosInformacionUsuario = async ( req, res, next ) => {
+    
+    try {
+        const { body, jekuaaDatos } = req
+        const { uidSolicitante, datosAuthSolicitante } = jekuaaDatos
+        const { descripcion, especializaciones, intereses, redesSociales, } = body
 
+        req.body.datosActualizados = {}
+
+        descripcion ? req.body.datosActualizados.descripcion = descripcion : ''
+        especializaciones ? req.body.datosActualizados.especializaciones = especializaciones : ''
+        intereses ? req.body.datosActualizados.intereses = intereses : ''
+        redesSociales && redesSociales.length ? req.body.datosActualizados.redesSociales = redesSociales : ''
+
+        return next()
+
+    } catch (error) {
+        next(error)
+
+    }
+    
+}
 
 
 

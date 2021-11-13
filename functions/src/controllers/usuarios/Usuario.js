@@ -84,6 +84,38 @@ controllerUsuario.actualizarMiUsuario = async (req, res) => {
     }
 }
 
+controllerUsuario.actualizarMiInformacion = async (req, res) => {
+    try {
+        const { jekuaaDatos, body } = req
+        const { uidSolicitante, datosAuthSolicitante } = jekuaaDatos
+        const { datosActualizados } = body
+        
+        const respuesta = new Respuesta()
+        let codigo = 'jekuaa/exito'
+
+        // Actualizar usuario
+        const actualizacion = await Usuario.actualizarInformacion(uidSolicitante, datosActualizados)
+
+        respuesta.setRespuestaPorCodigo(codigo, {
+            mensaje: '¡La información del usuario se actualizó de forma exitosa!',
+            resultado: actualizacion
+        })
+        const status = respuesta.getStatusCode()
+        
+        return res.status( status ).json( respuesta.getRespuesta() )
+        
+    } catch ( error ) {
+        console.log('Error - actualizarMiInformacion: ', error)
+
+        const {
+            status,
+            respuesta
+        } = manejadorErrores( error )
+
+        return res.status( status ).json( respuesta )
+    }
+}
+
 controllerUsuario.eliminarMiUsuario = async (req, res) => {
     try {
         const { jekuaaDatos } = req

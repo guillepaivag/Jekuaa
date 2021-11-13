@@ -5,6 +5,7 @@ const {
     validarDatosActualizacionUsuario,
     validarDatosCreacionUsuarioAdmin,
     validarDatosActualizacionUsuarioAdmin,
+    validarDatosActualizacionInformacionUsuario,
 } = require('../../validators/Usuarios')
 
 const {
@@ -15,6 +16,7 @@ const {
     verificarTipoDeDatosCliente,
     validarDatosExistentesCliente,
     construirDatosUsuario,
+    construirDatosInformacionUsuario,
     sePuedeEliminarPropietario,
 } = require('../../middlewares/usuario')
 
@@ -30,6 +32,7 @@ const {
 const {
     obtenerMiUsuario,
     actualizarMiUsuario,
+    actualizarMiInformacion,
     eliminarMiUsuario,
 } = require('../../controllers/usuarios/Usuario')
 
@@ -45,6 +48,12 @@ router.put('/estudiante/actualizarUsuario',
     validarDatosExistentesCliente,
     construirDatosUsuario,
     actualizarMiUsuario)
+
+router.put('/estudiante/actualizarMiInformacion', 
+    estaAutenticado, 
+    validarDatosActualizacionInformacionUsuario,
+    construirDatosInformacionUsuario,
+    actualizarMiInformacion)
 
 router.delete('/estudiante/eliminarUsuario', 
     estaAutenticado, 

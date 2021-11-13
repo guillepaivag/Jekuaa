@@ -14,11 +14,13 @@ const _605534f1 = () => interopDefault(import('..\\..\\jekuaaNuxt\\pages\\admin-
 const _4d5a6503 = () => interopDefault(import('..\\..\\jekuaaNuxt\\pages\\admin-jekuaa\\usuarios\\index.vue' /* webpackChunkName: "pages/admin-jekuaa/usuarios/index" */))
 const _77ba35f4 = () => interopDefault(import('..\\..\\jekuaaNuxt\\pages\\autenticacion\\inicioSesion.vue' /* webpackChunkName: "pages/autenticacion/inicioSesion" */))
 const _01cdbbed = () => interopDefault(import('..\\..\\jekuaaNuxt\\pages\\autenticacion\\registro.vue' /* webpackChunkName: "pages/autenticacion/registro" */))
-const _24eebbef = () => interopDefault(import('..\\..\\jekuaaNuxt\\pages\\blogs\\buscador\\index.vue' /* webpackChunkName: "pages/blogs/buscador/index" */))
 const _1cd3dbd8 = () => interopDefault(import('..\\..\\jekuaaNuxt\\pages\\admin-jekuaa\\usuarios\\lista-usuarios\\index.vue' /* webpackChunkName: "pages/admin-jekuaa/usuarios/lista-usuarios/index" */))
 const _55050a4e = () => interopDefault(import('..\\..\\jekuaaNuxt\\pages\\admin-jekuaa\\usuarios\\_uidUsuario.vue' /* webpackChunkName: "pages/admin-jekuaa/usuarios/_uidUsuario" */))
 const _da154b10 = () => interopDefault(import('..\\..\\jekuaaNuxt\\pages\\bienvenido-a-jekuaa\\_nombreUsuario.vue' /* webpackChunkName: "pages/bienvenido-a-jekuaa/_nombreUsuario" */))
 const _9d048bb0 = () => interopDefault(import('..\\..\\jekuaaNuxt\\pages\\blog\\_referencia.vue' /* webpackChunkName: "pages/blog/_referencia" */))
+const _707244fe = () => interopDefault(import('..\\..\\jekuaaNuxt\\pages\\blogs\\_seccion\\index.vue' /* webpackChunkName: "pages/blogs/_seccion/index" */))
+const _280c634d = () => interopDefault(import('..\\..\\jekuaaNuxt\\pages\\blogs\\_seccion\\_categoria\\index.vue' /* webpackChunkName: "pages/blogs/_seccion/_categoria/index" */))
+const _31ed6c2d = () => interopDefault(import('..\\..\\jekuaaNuxt\\pages\\blogs\\_seccion\\_categoria\\_subCategoria.vue' /* webpackChunkName: "pages/blogs/_seccion/_categoria/_subCategoria" */))
 const _50fb564b = () => interopDefault(import('..\\..\\jekuaaNuxt\\pages\\index.vue' /* webpackChunkName: "pages/index" */))
 
 const emptyFn = () => {}
@@ -73,10 +75,6 @@ export const routerOptions = {
     component: _01cdbbed,
     name: "autenticacion-registro"
   }, {
-    path: "/blogs/buscador",
-    component: _24eebbef,
-    name: "blogs-buscador"
-  }, {
     path: "/admin-jekuaa/usuarios/lista-usuarios",
     component: _1cd3dbd8,
     name: "admin-jekuaa-usuarios-lista-usuarios"
@@ -92,6 +90,18 @@ export const routerOptions = {
     path: "/blog/:referencia",
     component: _9d048bb0,
     name: "blog-referencia"
+  }, {
+    path: "/blogs/:seccion",
+    component: _707244fe,
+    name: "blogs-seccion"
+  }, {
+    path: "/blogs/:seccion/:categoria",
+    component: _280c634d,
+    name: "blogs-seccion-categoria"
+  }, {
+    path: "/blogs/:seccion/:categoria/:subCategoria",
+    component: _31ed6c2d,
+    name: "blogs-seccion-categoria-subCategoria"
   }, {
     path: "/",
     component: _50fb564b,

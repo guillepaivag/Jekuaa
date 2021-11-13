@@ -331,6 +331,10 @@ class Usuario {
         return uidUsuario 
     }
 
+    static async actualizarInformacion ( uid, datos ) {
+        return db.collection('InformacionUsuarios').doc(uid).update(datos)
+    }
+
     static async verDatosUsuarioPorUID ( uidUsuario ) {
         const usuario = new Usuario()
         await usuario.importarDatosUsuarioPorUID( uidUsuario )

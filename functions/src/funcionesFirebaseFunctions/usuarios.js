@@ -1,7 +1,9 @@
 const functions = require('firebase-functions')
-const Respuesta = require('../src/models/Respuesta')
-const Usuario = require('../src/models/Usuario')
-const manejadorErrores = require('../src/helpers/ManejoErrores')
+const admin = require('../../firebase-service')
+const db = require('../../db')
+const Respuesta = require('../models/Respuesta')
+const Usuario = require('../models/Usuario')
+const manejadorErrores = require('../helpers/ManejoErrores')
 const ffUsuarios = {}
 
 ffUsuarios.registrarUsuarioPorCorreoYContrasenha = 
@@ -70,5 +72,31 @@ functions.region('southamerica-east1').https.onCall( async (data, context) => {
     }
 
 }) 
+
+functions.region('southamerica-east1').auth.user().onCreate((user) => {
+    const incrementar = admin.firestore.FieldValue.increment(1)
+
+    db.collection('Contadores').doc('usuarios').update({
+        cantidad: incrementar
+    })
+
+    db.collection('InformacionUsuarios').doc(user.uid).set({
+        uid,
+        descripcion: '',
+        especializaciones: '',
+        intereses: '',
+        redesSociales: [],
+    })
+})
+
+functions.region('southamerica-east1').auth.user().onDelete((user) => {
+    const decrementar = admin.firestore.FieldValue.increment(-1)
+
+    db.collection('Contadores').doc('usuarios').update({
+        cantidad: decrementar
+    })
+
+    db.collection('InformacionUsuarios').doc(user.uid).delete()
+})
 
 module.exports = ffUsuarios

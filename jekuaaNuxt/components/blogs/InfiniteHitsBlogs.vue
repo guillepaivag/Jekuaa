@@ -1,0 +1,36 @@
+<template>
+    <ol v-if="state">
+        <li v-for="hit in state.hits" :key="hit.objectID">
+            <nuxt-link :to="`/blog/${hit.referencia}`">
+                <slot name="item" :item="hit"> </slot>
+            </nuxt-link>
+        </li>
+        <li class="sentinel" v-observe-visibility="visibilityChanged" />
+    </ol>
+</template>
+
+<script>
+import { createWidgetMixin } from 'vue-instantsearch';
+import { connectInfiniteHits } from 'instantsearch.js/es/connectors';
+import { ObserveVisibility } from 'vue-observe-visibility'
+
+export default {
+    mixins: [createWidgetMixin({ connector: connectInfiniteHits })],
+    directives: {
+        ObserveVisibility
+    },
+    methods: {
+        visibilityChanged(isVisible) {
+            if (isVisible && !this.state.isLastPage) {
+                this.state.showMore();
+            }
+        },
+    },
+};
+</script>
+
+<style scoped>
+.sentinel {
+  list-style-type: none;
+}
+</style>

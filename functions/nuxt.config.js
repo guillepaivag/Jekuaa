@@ -37,7 +37,7 @@ module.exports = {
   plugins: [
     { src: './plugins/firebase.js', },
     { src: './plugins/TiptapVuetify.js' },
-    { src: './plugins/vue-observe-visibility.js', ssr: false }
+    { src: './plugins/vue-observe-visibility.js', mode: 'client' },
   ],
   
 
@@ -120,7 +120,7 @@ module.exports = {
 
   // Build Configuration: https://go.nuxtjs.dev/config-build
   build: {
-    transpile: ['vuetify/lib', 'tiptap-vuetify'],
+    transpile: ['vuetify/lib', 'tiptap-vuetify', 'vue-instantsearch', 'instantsearch.js/es'],
     extractCSS: true,
     babel:{
       plugins: [
@@ -128,6 +128,6 @@ module.exports = {
         ["@babel/plugin-proposal-private-methods", { "loose": true }],
         ["@babel/plugin-proposal-private-property-in-object", { "loose": true }]
       ]
-    }
+    },
   }
 }

@@ -9,10 +9,10 @@ const apiJekuaa = require('./apiJekuaa')
 // Funciones Cloud Functions
 const {
   registrarUsuarioPorCorreoYContrasenha
-} = require('./funcionesFirebaseFunctions/usuarios')
+} = require('./src/funcionesFirebaseFunctions/usuarios')
 const {
   indexBlogAlgolia
-} = require('./funcionesFirebaseFunctions/algolia')
+} = require('./src/funcionesFirebaseFunctions/algolia')
 
 /*
  * FUNCIONES - FIREBASE CLOUD FUNCTIONS

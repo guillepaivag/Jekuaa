@@ -41,14 +41,26 @@
   "AdminListaUsuarios": {
     "description": "Auto imported from components/admin/listaUsuarios.vue"
   },
+  "AuthEmail": {
+    "description": "Auto imported from components/auth/authEmail.vue"
+  },
+  "BlogsBuscadorBlogs": {
+    "description": "Auto imported from components/blogs/buscador-blogs.vue"
+  },
+  "BlogsBuscadorInfinitoBlogs": {
+    "description": "Auto imported from components/blogs/buscador-infinito-blogs.vue"
+  },
   "BlogsFiltroBlogs": {
     "description": "Auto imported from components/blogs/filtro-blogs.vue"
+  },
+  "BlogsInfiniteHitsBlogs": {
+    "description": "Auto imported from components/blogs/InfiniteHitsBlogs.vue"
   },
   "BlogsListaBlogs": {
     "description": "Auto imported from components/blogs/lista-blogs.vue"
   },
-  "AuthEmail": {
-    "description": "Auto imported from components/auth/authEmail.vue"
+  "UsuariosCartaPresentacion": {
+    "description": "Auto imported from components/usuarios/CartaPresentacion.vue"
   },
   "AdminFormsEditor": {
     "description": "Auto imported from components/admin/forms/Editor.vue"

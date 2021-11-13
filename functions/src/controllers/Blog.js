@@ -116,11 +116,15 @@ controller.obtenerContenidoBlog = async ( req, res ) => {
 
         // Obtener archivo
         const contenido = await blog.obtenerContenido( opciones )
+        const imgBlog = await Blog.obtenerImagenDelBlog(blog)
 
         // Retornar respuesta
         respuesta.setRespuestaPorCodigo(codigo, {
             mensaje: '¡El contenido del archivo se obtuvo con exito!',
-            resultado: contenido
+            resultado: {
+                contenido, 
+                imgBlog,
+            }
         })
         const status = respuesta.getStatusCode()
         

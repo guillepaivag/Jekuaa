@@ -76,9 +76,9 @@ export default {
             buscando: false,
             maximoPorPagina: maximoPorPagina,
             filtros: {
-                seccion: '',
-                categoria: '',
-                subCategorias: '',
+                seccion: this.$route.params.seccion,
+                categoria: this.$route.params.categoria,
+                subCategorias: [this.$route.params.subCategoria],
             },
             dialogBuscadorBlog: false,
         }
@@ -146,7 +146,11 @@ export default {
         let body = {
             ultimaUID: null, 
             maximoPorPagina: 5,
-            filtros: {}
+            filtros: {
+                seccion: params.seccion,
+                categoria: params.categoria,
+                subCategorias: [params.subCategoria],
+            }
         }
 
         let config = {

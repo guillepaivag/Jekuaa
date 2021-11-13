@@ -153,17 +153,17 @@
                     <div
                     >
                       <v-card-text>
-                        Sección: <nuxt-link class="link-detalle" to=""> {{ seccion.nombre }} </nuxt-link>
+                        Sección: <nuxt-link class="link-detalle" :to="`/blogs/${seccion.uid}`"> {{ seccion.nombre }} </nuxt-link>
                       </v-card-text>
                       <v-card-text>
-                        Categoria: <nuxt-link class="link-detalle" to=""> {{ categoria.nombre }} </nuxt-link>
+                        Categoria: <nuxt-link class="link-detalle" :to="`/blogs/${seccion.uid}/${categoria.uid}`"> {{ categoria.nombre }} </nuxt-link>
                       </v-card-text>
                       <v-card-text>
                         Sub-categorias: <div style="display: inline;" v-for="(subCategoria, index) in datosBlog.blog.subCategorias" :key="index">
-                          <nuxt-link class="link-detalle" to="/blogs" v-if="index < datosBlog.blog.subCategorias.length - 1">
+                          <nuxt-link class="link-detalle" :to="`/blogs/${seccion.uid}/${categoria.uid}/${subCategoria}`" v-if="index < datosBlog.blog.subCategorias.length - 1">
                             {{ subCategoria }}, 
                           </nuxt-link>
-                          <nuxt-link class="link-detalle" to="/blogs" v-else>
+                          <nuxt-link class="link-detalle" :to="`/blogs/${seccion.uid}/${categoria.uid}/${subCategoria}`" v-else>
                             {{ subCategoria }}
                           </nuxt-link>
                         </div>
