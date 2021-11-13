@@ -192,7 +192,10 @@ middlewaresUser.construirDatosInformacionUsuario = async ( req, res, next ) => {
     try {
         const { body, jekuaaDatos } = req
         const { uidSolicitante, datosAuthSolicitante } = jekuaaDatos
-        const { descripcion, especializaciones, intereses, redesSociales, } = body
+        const { descripcion, especializaciones, intereses, redesSociales, rolDescriptivo } = body
+
+        const esRutaAdmin = req.originalUrl.split('/')[2] === 'adminJekuaa'
+        const esRolPropietario = datosAuthSolicitante.customClaims.jekuaaRol
 
         req.body.datosActualizados = {}
 
@@ -200,6 +203,7 @@ middlewaresUser.construirDatosInformacionUsuario = async ( req, res, next ) => {
         especializaciones ? req.body.datosActualizados.especializaciones = especializaciones : ''
         intereses ? req.body.datosActualizados.intereses = intereses : ''
         redesSociales && redesSociales.length ? req.body.datosActualizados.redesSociales = redesSociales : ''
+        esRutaAdmin && esRolPropietario && rolDescriptivo ? req.body.datosActualizados.redesSociales = rolDescriptivo : ''
 
         return next()
 

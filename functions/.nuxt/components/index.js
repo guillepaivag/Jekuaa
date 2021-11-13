@@ -19,10 +19,10 @@ export { default as BlogsFiltroBlogs } from '../..\\..\\jekuaaNuxt\\components\\
 export { default as BlogsInfiniteHitsBlogs } from '../..\\..\\jekuaaNuxt\\components\\blogs\\InfiniteHitsBlogs.vue'
 export { default as BlogsListaBlogs } from '../..\\..\\jekuaaNuxt\\components\\blogs\\lista-blogs.vue'
 export { default as UsuariosCartaPresentacion } from '../..\\..\\jekuaaNuxt\\components\\usuarios\\CartaPresentacion.vue'
+export { default as FilterAdminUser } from '../..\\..\\jekuaaNuxt\\components\\filter\\admin\\User.vue'
 export { default as AdminFormsEditor } from '../..\\..\\jekuaaNuxt\\components\\admin\\forms\\Editor.vue'
 export { default as AdminFormsFormBlog } from '../..\\..\\jekuaaNuxt\\components\\admin\\forms\\FormBlog.vue'
 export { default as AdminFormsFormularioUsuario } from '../..\\..\\jekuaaNuxt\\components\\admin\\forms\\formularioUsuario.vue'
-export { default as FilterAdminUser } from '../..\\..\\jekuaaNuxt\\components\\filter\\admin\\User.vue'
 export { default as ListsAdminUser } from '../..\\..\\jekuaaNuxt\\components\\lists\\admin\\User.vue'
 
 // nuxt/nuxt.js#8607

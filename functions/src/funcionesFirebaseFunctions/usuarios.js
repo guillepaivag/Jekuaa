@@ -75,6 +75,7 @@ functions.region('southamerica-east1').https.onCall( async (data, context) => {
 
 functions.region('southamerica-east1').auth.user().onCreate((user) => {
     const incrementar = admin.firestore.FieldValue.increment(1)
+    const esEstudiante = user.customClaims.jekuaaRol === 'estudiante'
 
     db.collection('Contadores').doc('usuarios').update({
         cantidad: incrementar
@@ -85,6 +86,7 @@ functions.region('southamerica-east1').auth.user().onCreate((user) => {
         descripcion: '',
         especializaciones: '',
         intereses: '',
+        rolDescriptivo: esEstudiante ? 'Estudiante de Jekuaa' : 'Miembro Jekuaa',
         redesSociales: [],
     })
 })

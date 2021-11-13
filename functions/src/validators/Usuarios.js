@@ -650,6 +650,23 @@ validaciones.validarDatosActualizacionInformacionUsuario = [
                 mensaje: 'La longitud de los intereses debe estar en un rango de 1 y 1000.'
             })
         }),
+    check('rolDescriptivo')
+        .if(body('rolDescriptivo').exists())
+        .if(body('rolDescriptivo').notEmpty())
+        .isString()
+        .withMessage((value, { req, location, path }) => {
+            throw new ErrorJekuaa({
+                codigo: 'jekuaa/error/usuario_mala_solicitud',
+                mensaje: 'El rol debe ser string.'
+            })
+        })
+        .isLength({ min: 1, max: 50 })
+        .withMessage((value, { req, location, path }) => {
+            throw new ErrorJekuaa({
+                codigo: 'jekuaa/error/usuario_mala_solicitud',
+                mensaje: 'La longitud de los intereses debe estar en un rango de 1 y 1000.'
+            })
+        }),
     check('redesSociales')
         .if(body('redesSociales').exists())
         .if(body('redesSociales').notEmpty())

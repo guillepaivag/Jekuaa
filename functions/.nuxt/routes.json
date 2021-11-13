@@ -28,11 +28,33 @@
     "_name": "_ca494018"
   },
   {
-    "name": "perfil",
     "path": "/perfil",
-    "component": "C:\\\\Users\\\\i3\\\\Desktop\\\\PDGP\\\\WebDevelopment\\\\Proyectos\\\\Jekuaa\\\\jekuaa\\\\jekuaaNuxt\\\\pages\\\\perfil\\\\index.vue",
-    "chunkName": "pages/perfil/index",
-    "_name": "_4118ef02"
+    "component": "C:\\\\Users\\\\i3\\\\Desktop\\\\PDGP\\\\WebDevelopment\\\\Proyectos\\\\Jekuaa\\\\jekuaa\\\\jekuaaNuxt\\\\pages\\\\perfil.vue",
+    "chunkName": "pages/perfil",
+    "children": [
+      {
+        "name": "perfil",
+        "path": "",
+        "component": "C:\\\\Users\\\\i3\\\\Desktop\\\\PDGP\\\\WebDevelopment\\\\Proyectos\\\\Jekuaa\\\\jekuaa\\\\jekuaaNuxt\\\\pages\\\\perfil\\\\index.vue",
+        "chunkName": "pages/perfil/index",
+        "_name": "_4118ef02"
+      },
+      {
+        "name": "perfil-informacion",
+        "path": "informacion",
+        "component": "C:\\\\Users\\\\i3\\\\Desktop\\\\PDGP\\\\WebDevelopment\\\\Proyectos\\\\Jekuaa\\\\jekuaa\\\\jekuaaNuxt\\\\pages\\\\perfil\\\\informacion.vue",
+        "chunkName": "pages/perfil/informacion",
+        "_name": "_95710d6c"
+      },
+      {
+        "name": "perfil-seguridad",
+        "path": "seguridad",
+        "component": "C:\\\\Users\\\\i3\\\\Desktop\\\\PDGP\\\\WebDevelopment\\\\Proyectos\\\\Jekuaa\\\\jekuaa\\\\jekuaaNuxt\\\\pages\\\\perfil\\\\seguridad.vue",
+        "chunkName": "pages/perfil/seguridad",
+        "_name": "_1d940d5d"
+      }
+    ],
+    "_name": "_12f09ea3"
   },
   {
     "name": "admin-jekuaa-blog",
@@ -103,6 +125,13 @@
     "component": "C:\\\\Users\\\\i3\\\\Desktop\\\\PDGP\\\\WebDevelopment\\\\Proyectos\\\\Jekuaa\\\\jekuaa\\\\jekuaaNuxt\\\\pages\\\\blogs\\\\_seccion\\\\index.vue",
     "chunkName": "pages/blogs/_seccion/index",
     "_name": "_707244fe"
+  },
+  {
+    "name": "usuario-jekuaa-nombreUsuario",
+    "path": "/usuario-jekuaa/:nombreUsuario?",
+    "component": "C:\\\\Users\\\\i3\\\\Desktop\\\\PDGP\\\\WebDevelopment\\\\Proyectos\\\\Jekuaa\\\\jekuaa\\\\jekuaaNuxt\\\\pages\\\\usuario-jekuaa\\\\_nombreUsuario.vue",
+    "chunkName": "pages/usuario-jekuaa/_nombreUsuario",
+    "_name": "_4565887e"
   },
   {
     "name": "blogs-seccion-categoria",

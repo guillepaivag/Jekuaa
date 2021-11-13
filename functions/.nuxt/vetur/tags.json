@@ -62,6 +62,9 @@
   "UsuariosCartaPresentacion": {
     "description": "Auto imported from components/usuarios/CartaPresentacion.vue"
   },
+  "FilterAdminUser": {
+    "description": "Auto imported from components/filter/admin/User.vue"
+  },
   "AdminFormsEditor": {
     "description": "Auto imported from components/admin/forms/Editor.vue"
   },
@@ -70,9 +73,6 @@
   },
   "AdminFormsFormularioUsuario": {
     "description": "Auto imported from components/admin/forms/formularioUsuario.vue"
-  },
-  "FilterAdminUser": {
-    "description": "Auto imported from components/filter/admin/User.vue"
   },
   "ListsAdminUser": {
     "description": "Auto imported from components/lists/admin/User.vue"

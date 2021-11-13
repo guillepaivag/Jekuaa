@@ -8,7 +8,10 @@ const _1161ae28 = () => interopDefault(import('..\\..\\jekuaaNuxt\\pages\\admin-
 const _12112529 = () => interopDefault(import('..\\..\\jekuaaNuxt\\pages\\blog\\index.vue' /* webpackChunkName: "pages/blog/index" */))
 const _5163fa38 = () => interopDefault(import('..\\..\\jekuaaNuxt\\pages\\blogs\\index.vue' /* webpackChunkName: "pages/blogs/index" */))
 const _ca494018 = () => interopDefault(import('..\\..\\jekuaaNuxt\\pages\\miembro-jekuaa\\index.vue' /* webpackChunkName: "pages/miembro-jekuaa/index" */))
+const _12f09ea3 = () => interopDefault(import('..\\..\\jekuaaNuxt\\pages\\perfil.vue' /* webpackChunkName: "pages/perfil" */))
 const _4118ef02 = () => interopDefault(import('..\\..\\jekuaaNuxt\\pages\\perfil\\index.vue' /* webpackChunkName: "pages/perfil/index" */))
+const _95710d6c = () => interopDefault(import('..\\..\\jekuaaNuxt\\pages\\perfil\\informacion.vue' /* webpackChunkName: "pages/perfil/informacion" */))
+const _1d940d5d = () => interopDefault(import('..\\..\\jekuaaNuxt\\pages\\perfil\\seguridad.vue' /* webpackChunkName: "pages/perfil/seguridad" */))
 const _56db6346 = () => interopDefault(import('..\\..\\jekuaaNuxt\\pages\\admin-jekuaa\\blog\\index.vue' /* webpackChunkName: "pages/admin-jekuaa/blog/index" */))
 const _605534f1 = () => interopDefault(import('..\\..\\jekuaaNuxt\\pages\\admin-jekuaa\\cursos\\index.vue' /* webpackChunkName: "pages/admin-jekuaa/cursos/index" */))
 const _4d5a6503 = () => interopDefault(import('..\\..\\jekuaaNuxt\\pages\\admin-jekuaa\\usuarios\\index.vue' /* webpackChunkName: "pages/admin-jekuaa/usuarios/index" */))
@@ -19,6 +22,7 @@ const _55050a4e = () => interopDefault(import('..\\..\\jekuaaNuxt\\pages\\admin-
 const _da154b10 = () => interopDefault(import('..\\..\\jekuaaNuxt\\pages\\bienvenido-a-jekuaa\\_nombreUsuario.vue' /* webpackChunkName: "pages/bienvenido-a-jekuaa/_nombreUsuario" */))
 const _9d048bb0 = () => interopDefault(import('..\\..\\jekuaaNuxt\\pages\\blog\\_referencia.vue' /* webpackChunkName: "pages/blog/_referencia" */))
 const _707244fe = () => interopDefault(import('..\\..\\jekuaaNuxt\\pages\\blogs\\_seccion\\index.vue' /* webpackChunkName: "pages/blogs/_seccion/index" */))
+const _4565887e = () => interopDefault(import('..\\..\\jekuaaNuxt\\pages\\usuario-jekuaa\\_nombreUsuario.vue' /* webpackChunkName: "pages/usuario-jekuaa/_nombreUsuario" */))
 const _280c634d = () => interopDefault(import('..\\..\\jekuaaNuxt\\pages\\blogs\\_seccion\\_categoria\\index.vue' /* webpackChunkName: "pages/blogs/_seccion/_categoria/index" */))
 const _31ed6c2d = () => interopDefault(import('..\\..\\jekuaaNuxt\\pages\\blogs\\_seccion\\_categoria\\_subCategoria.vue' /* webpackChunkName: "pages/blogs/_seccion/_categoria/_subCategoria" */))
 const _50fb564b = () => interopDefault(import('..\\..\\jekuaaNuxt\\pages\\index.vue' /* webpackChunkName: "pages/index" */))
@@ -52,8 +56,20 @@ export const routerOptions = {
     name: "miembro-jekuaa"
   }, {
     path: "/perfil",
-    component: _4118ef02,
-    name: "perfil"
+    component: _12f09ea3,
+    children: [{
+      path: "",
+      component: _4118ef02,
+      name: "perfil"
+    }, {
+      path: "informacion",
+      component: _95710d6c,
+      name: "perfil-informacion"
+    }, {
+      path: "seguridad",
+      component: _1d940d5d,
+      name: "perfil-seguridad"
+    }]
   }, {
     path: "/admin-jekuaa/blog",
     component: _56db6346,
@@ -94,6 +110,10 @@ export const routerOptions = {
     path: "/blogs/:seccion",
     component: _707244fe,
     name: "blogs-seccion"
+  }, {
+    path: "/usuario-jekuaa/:nombreUsuario?",
+    component: _4565887e,
+    name: "usuario-jekuaa-nombreUsuario"
   }, {
     path: "/blogs/:seccion/:categoria",
     component: _280c634d,

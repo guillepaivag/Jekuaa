@@ -18,14 +18,14 @@
                 </v-card-title>
 
                 <v-card-subtitle>
-                    {{usuario.nombreUsuario}}
+                    {{usuario.nombreUsuario}} - {{informacionUsuario.rolDescriptivo}}
                 </v-card-subtitle>
 
                 <v-card-actions>
                 <v-btn
                     color="#683bce"
                     text
-                    :to="`/perfil/${usuario.nombreUsuario}`"
+                    :to="`/usuario-jekuaa/${usuario.nombreUsuario}`"
                 >
                     Mi perfil
                 </v-btn>
