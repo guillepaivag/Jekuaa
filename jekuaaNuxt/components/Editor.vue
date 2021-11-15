@@ -59,7 +59,7 @@ export default {
         HorizontalRule,
         Paragraph,
         HardBreak,
-        Image
+        Image,
       ],
       content: `
         <h1>Yay Headlines!</h1>

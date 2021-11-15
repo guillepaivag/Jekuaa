@@ -359,7 +359,6 @@ middlewaresUser.validarDatosExistentesCliente = async (req, res, next) => {
         const esOperacionAgregar = req.method === 'POST'
         
         const {
-            uid,
             nombreUsuario,
             correo,
             nombreCompleto,
@@ -375,7 +374,9 @@ middlewaresUser.validarDatosExistentesCliente = async (req, res, next) => {
         let fechaNacimientoValido
         let valido
 
-        const datosActualesUsuario = await admin.auth().getUser(params.uid)
+        const uid = esRutaAdmin ? params.uid : uidSolicitante
+
+        const datosActualesUsuario = await admin.auth().getUser(uid)
     
         if (datosUsuario) {
             // Nombre de usuario

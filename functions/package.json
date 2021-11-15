@@ -23,6 +23,7 @@
     "algoliasearch": "^4.11.0",
     "axios": "^0.21.1",
     "busboy": "^0.3.1",
+    "busboy-firebase": "^1.0.8",
     "codemirror": "^5.63.3",
     "cookieparser": "^0.1.0",
     "core-js": "^3.9.1",

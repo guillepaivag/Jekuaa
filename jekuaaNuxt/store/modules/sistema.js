@@ -1,10 +1,6 @@
 export const state = {
   loading: false,
-  error: {
-    codigo: '',
-    mensaje: '',
-    resultado: null
-  }
+  error: null
 }
 
 export const getters = {
@@ -31,21 +27,39 @@ export const actions = {
     commit('setError', error)
   },
   errorHandler ( { dispatch, commit }, error ) {
+    console.log('error', error)
 
     if ( error.response ) { 
-      // 
-      commit('setError', error.response)
+      console.log('error.response', error.response)
 
-      if ( responseError.codigo.includes('usuario_no_autorizado') || responseError.codigo.includes('sistema') ) {
-        return 'redireccion-error'
+      const responseError = error.response.data
+      commit('setError', {
+        tipo: 'response',
+        error
+      })
+
+      // Manejo de errores
+      if ( responseError.codigo.includes('usuario_no_autorizado') ) {
+        return this.app.$nuxt.error({
+          statusCode: error.response.status
+        })
       } else if ( responseError.codigo.includes('usuario_no_autenticado') ) {
-        return 'redireccion-login'
-      } else if ( responseError.codigo.includes('usuario_mala_solicitud') ) {
-        return ''
+        return this.app.router.push('/autenticacion/inicioSesion')
+      } else if ( responseError.codigo.includes('usuario_mala_solicitud') || responseError.codigo.includes('sistema') ) {
+        return 'mensaje-error'
       }
-    } else if (err.request) { 
+
+    } else if (error.request) { 
+      commit('setError', {
+        tipo: 'request',
+        error
+      })
       // client never received a response, or request never left 
     } else { 
+      commit('setError', {
+        tipo: 'otro',
+        error
+      })
       // anything else 
     } 
 
@@ -62,7 +76,5 @@ export const mutations = {
   setError (state, error) {
     console.log('[STORE MUTATIONS] - setError:', error)
     state.error = error
-
-    return error
   }
 }

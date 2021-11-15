@@ -1,6 +1,10 @@
 const {Router} = require('express')
 const router = Router()
 
+const fileMiddleware = require('express-multipart-file-parser')
+const fileUploadMiddleware = require('busboy-firebase')
+const busboyMiddleware = require('../../middlewares/busboy-middleware')
+
 const {
     validarDatosActualizacionUsuario,
     validarDatosCreacionUsuarioAdmin,
@@ -33,6 +37,8 @@ const {
     obtenerMiUsuario,
     actualizarMiUsuario,
     actualizarMiInformacion,
+    actualizarFotoPerfil,
+    eliminarFotoPerfil,
     eliminarMiUsuario,
 } = require('../../controllers/usuarios/Usuario')
 
@@ -49,11 +55,20 @@ router.put('/estudiante/actualizarUsuario',
     construirDatosUsuario,
     actualizarMiUsuario)
 
-router.put('/estudiante/actualizarMiInformacion', 
+router.put('/estudiante/actualizarInformacion', 
     estaAutenticado, 
     validarDatosActualizacionInformacionUsuario,
     construirDatosInformacionUsuario,
     actualizarMiInformacion)
+
+router.put('/estudiante/actualizarFotoPerfil', 
+    estaAutenticado, 
+    busboyMiddleware,
+    actualizarFotoPerfil)
+
+router.delete('/estudiante/eliminarFotoPerfil', 
+    estaAutenticado, 
+    eliminarFotoPerfil)
 
 router.delete('/estudiante/eliminarUsuario', 
     estaAutenticado, 

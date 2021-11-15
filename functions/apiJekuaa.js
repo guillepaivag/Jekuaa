@@ -41,7 +41,6 @@ apiJekuaa.use('/blog', require('./src/routes/blogs/Blog'))
 
 apiJekuaa.use((err, req, res, next) => { 
   console.log('err', err)
-  console.log('err.errors', err.errors[0])
   
   const {
       status,

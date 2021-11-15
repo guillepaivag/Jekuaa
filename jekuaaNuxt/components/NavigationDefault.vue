@@ -136,7 +136,7 @@
         </v-toolbar> -->
 
     <v-app-bar
-      height="100"
+      height="70"
       fixed
       app
       style="background: #ffffff;"
@@ -145,7 +145,7 @@
         <nuxt-link to="/">
           <v-app-bar-nav-icon @click="sidebar = !sidebar">
             <v-avatar
-              size="100"
+              size="80"
               tile
             >
               <v-img

@@ -7,7 +7,7 @@
     >
       <v-list-item to="/perfil">
         <v-list-item-avatar color="#683bce">
-          <v-img v-if="!!fotoPerfil" src="https://randomuser.me/api/portraits/men/78.jpg" />
+          <v-img v-if="!!fotoPerfil" :src="fotoPerfil" />
           <span v-else class="white--text headline">
             {{ inicialNombreUsuario }}
           </span>
@@ -75,7 +75,7 @@
     </v-navigation-drawer>
 
     <v-app-bar
-      height="100"
+      height="70"
       fixed
       app
       style="background: #ffffff;"
@@ -84,7 +84,7 @@
         <nuxt-link to="/">
           <v-app-bar-nav-icon @click="sidebar = !sidebar">
             <v-avatar
-              size="100"
+              size="80"
               tile
             >
               <v-img
@@ -138,10 +138,12 @@
             >
               <v-avatar
                 color="#683bce"
-                size="48"
+                size="40"
               >
-                <v-img v-if="!!fotoPerfil" src="https://randomuser.me/api/portraits/men/78.jpg" />
-                <span v-else class="white--text headline">{{ inicialNombreUsuario }}</span>
+                <v-img v-if="!!fotoPerfil" :src="fotoPerfil" />
+                <span v-else class="white--text headline">
+                  {{ inicialNombreUsuario }}
+                </span>
               </v-avatar>
             </v-btn>
           </template>
@@ -153,8 +155,12 @@
               <div class="mx-auto text-center mt-3">
                 <v-avatar
                   color="#683bce"
+                  size="55"
                 >
-                  <span class="estiloTexto white--text headline">{{ inicialNombreUsuario }}</span>
+                  <v-img v-if="!!fotoPerfil" :src="fotoPerfil" />
+                  <span v-else class="estiloTexto white--text headline">
+                    {{ inicialNombreUsuario }}
+                  </span>
                 </v-avatar>
                 <h3 class="estiloTexto mt-2">
                   {{ nombreUsuario }}

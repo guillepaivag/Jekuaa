@@ -4,6 +4,7 @@ const JekuaaPremium = require('./JekuaaPremium')
 const JekuaaRoles = require('./JekuaaRoles')
 const ErrorJekuaa = require('./Error/ErroresJekuaa')
 const utilsUsuario = require('../utils/Usuario')
+const storage = require('../../GoogleStorage')
 
 const COLECCION_USUARIO = 'Usuarios'
 
@@ -351,6 +352,73 @@ class Usuario {
     static async habilitarUsuarioPorUID ( uidUsuario, habilitar ) {
         let resultado = await admin.auth().updateUser(uidUsuario, {
             disabled: !habilitar,
+        })
+
+        return resultado
+    }
+
+    static async actualizarFotoPerfilPorUID ( uidUsuario, fotoPerfil ) {
+        let resultado = await admin.auth().updateUser(uidUsuario, {
+            photoURL: fotoPerfil ? fotoPerfil : null
+        })
+
+        return resultado
+    }
+
+    static async subirFotoPerfil ( opciones = { rutaArchivo, uidSolicitante, extensionArchivo } ) {
+        const bucket = storage.bucket('jekuaa-fotoperfil')
+
+        const rutaModo = process.env.NODE_ENV ? 'prod' : 'dev'
+        const response = await bucket.upload(opciones.rutaArchivo, {
+            destination: `${rutaModo}/${opciones.uidSolicitante}.${opciones.extensionArchivo}`,
+            uploadType: 'media',
+            metadata: {
+                metadata: {
+                    contentType: `.${opciones.extensionArchivo}`
+                }
+            }
+        })
+
+        return response
+    }
+
+    static async obtenerFotoPerfilURL ( nombreArchivo ) {
+
+        // opcionesBlog: pendiente, segundosValidos
+        const action = 'read'
+        const cienAnhos = (31557600 * 1000)
+        const expires = Date.now() + cienAnhos * 1000
+        const rutaModo = process.env.NODE_ENV ? 'prod' : 'dev'
+        const rutaArchivo = `${rutaModo}/${nombreArchivo}`
+
+        const bucket = storage.bucket('jekuaa-fotoperfil')
+        const file = bucket.file(rutaArchivo)
+
+        const existe = (await file.exists())[0]
+
+        if ( !existe ) {
+            throw new ErrorJekuaa({
+                codigo: 'jekuaa/error/usuario_mala_solicitud',
+                mensaje: `No existe la foto de perfil ${rutaArchivo}`
+            })
+        }
+        
+        const links = await file.getSignedUrl({
+            action,
+            expires
+        })
+        
+        return links[0]
+    }
+
+    static async eliminarFotoPerfilPorUID ( uidUsuario ) {
+        console.log('process.env.NODE_ENV', process.env.NODE_ENV)
+
+        const rutaModo = process.env.NODE_ENV ? 'prod' : 'dev'
+
+        const bucket = admin.storage().bucket('jekuaa-fotoperfil')
+        const resultado = await bucket.deleteFiles({
+            prefix: `${rutaModo}/${uidUsuario}.`
         })
 
         return resultado

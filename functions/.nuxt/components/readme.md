@@ -6,7 +6,10 @@ You can directly use them in pages and other components without the need to impo
 
 **Tip:** If a component is conditionally rendered with `v-if` and is big, it is better to use `Lazy` or `lazy-` prefix to lazy load.
 
+- `<Editor>` | `<editor>` (components/Editor.vue)
+- `<EditorInformation>` | `<editor-information>` (components/EditorInformation.vue)
 - `<FooterDefault>` | `<footer-default>` (components/FooterDefault.vue)
+- `<ImageInput>` | `<image-input>` (components/ImageInput.vue)
 - `<ListaBlogs>` | `<lista-blogs>` (components/ListaBlogs.vue)
 - `<ListaCategorias>` | `<lista-categorias>` (components/ListaCategorias.vue)
 - `<Loading>` | `<loading>` (components/Loading.vue)
@@ -14,6 +17,7 @@ You can directly use them in pages and other components without the need to impo
 - `<NavigationUser>` | `<navigation-user>` (components/NavigationUser.vue)
 - `<NotFound>` | `<not-found>` (components/notFound.vue)
 - `<Presentacion>` | `<presentacion>` (components/Presentacion.vue)
+- `<SnackbarError>` | `<snackbar-error>` (components/SnackbarError.vue)
 - `<Spinner>` | `<spinner>` (components/Spinner.vue)
 - `<VideoPlayer>` | `<video-player>` (components/VideoPlayer.vue)
 - `<AdminBuscadorUsuarios>` | `<admin-buscador-usuarios>` (components/admin/buscadorUsuarios.vue)
@@ -26,9 +30,8 @@ You can directly use them in pages and other components without the need to impo
 - `<BlogsFiltroBlogs>` | `<blogs-filtro-blogs>` (components/blogs/filtro-blogs.vue)
 - `<BlogsInfiniteHitsBlogs>` | `<blogs-infinite-hits-blogs>` (components/blogs/InfiniteHitsBlogs.vue)
 - `<BlogsListaBlogs>` | `<blogs-lista-blogs>` (components/blogs/lista-blogs.vue)
-- `<UsuariosCartaPresentacion>` | `<usuarios-carta-presentacion>` (components/usuarios/CartaPresentacion.vue)
-- `<FilterAdminUser>` | `<filter-admin-user>` (components/filter/admin/User.vue)
-- `<AdminFormsEditor>` | `<admin-forms-editor>` (components/admin/forms/Editor.vue)
 - `<AdminFormsFormBlog>` | `<admin-forms-form-blog>` (components/admin/forms/FormBlog.vue)
 - `<AdminFormsFormularioUsuario>` | `<admin-forms-formulario-usuario>` (components/admin/forms/formularioUsuario.vue)
+- `<UsuariosCartaPresentacion>` | `<usuarios-carta-presentacion>` (components/usuarios/CartaPresentacion.vue)
+- `<FilterAdminUser>` | `<filter-admin-user>` (components/filter/admin/User.vue)
 - `<ListsAdminUser>` | `<lists-admin-user>` (components/lists/admin/User.vue)
