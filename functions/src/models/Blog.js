@@ -524,7 +524,7 @@ class Blog {
         const options = {
             version: 'v4',
             action: 'read',
-            expires: Date.now() + (24 * 60) * 60 * 1000, // 15 minutes
+            expires: Date.now() + (24 * 60) * 60 * 1000, // 24 horas
         }
 
         // Get a v4 signed URL for reading the file

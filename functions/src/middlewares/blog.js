@@ -7,6 +7,7 @@ const utils_blog = require("../utils/Blog")
 const esReferenciaBlog = require("../utils/esReferenciaBlog")
 const { v4: uuidv4 } = require('uuid')
 const { milliseconds_a_timestamp } = require('../utils/Timestamp')
+const showdown = require('showdown')
 
 const middlewares = {}
 
@@ -431,7 +432,21 @@ middlewares.verificadorDeDatosBlog = async (req, res, next) => {
         }
 
         if (contenidoBlog) {
+            let converter = new showdown.Converter()
+            let html = converter.makeHtml(contenidoBlog)
+
+            let soloTexto = html.replace(/(<([^>]+)>)/ig,"")
+            soloTexto =  soloTexto.replace(/[\n\r]+/g, '')
+            soloTexto = soloTexto.replace(/\s{2,10}/g, ' ')
+            soloTexto = soloTexto.trim()
             
+            const valido = soloTexto.length >= 50
+            if ( !valido ) {
+                throw new ErrorJekuaa({
+                    codigo: 'jekuaa/error/usuario_mala_solicitud',
+                    mensaje: 'El tamaño del blog debe ser mayor a 50 carácteres.'
+                })
+            }
         }
 
         next()

@@ -21,9 +21,9 @@ const _ac831f22 = () => interopDefault(import('..\\..\\jekuaaNuxt\\pages\\miembr
 const _1cd3dbd8 = () => interopDefault(import('..\\..\\jekuaaNuxt\\pages\\admin-jekuaa\\usuarios\\lista-usuarios\\index.vue' /* webpackChunkName: "pages/admin-jekuaa/usuarios/lista-usuarios/index" */))
 const _ed3fda90 = () => interopDefault(import('..\\..\\jekuaaNuxt\\pages\\miembro-jekuaa\\blogs\\mis-blogs.vue' /* webpackChunkName: "pages/miembro-jekuaa/blogs/mis-blogs" */))
 const _90b2c058 = () => interopDefault(import('..\\..\\jekuaaNuxt\\pages\\miembro-jekuaa\\blogs\\nuevo.vue' /* webpackChunkName: "pages/miembro-jekuaa/blogs/nuevo" */))
+const _7f06e921 = () => interopDefault(import('..\\..\\jekuaaNuxt\\pages\\miembro-jekuaa\\blog\\actualizar\\_referencia.vue' /* webpackChunkName: "pages/miembro-jekuaa/blog/actualizar/_referencia" */))
 const _55050a4e = () => interopDefault(import('..\\..\\jekuaaNuxt\\pages\\admin-jekuaa\\usuarios\\_uidUsuario.vue' /* webpackChunkName: "pages/admin-jekuaa/usuarios/_uidUsuario" */))
 const _3b178e51 = () => interopDefault(import('..\\..\\jekuaaNuxt\\pages\\miembro-jekuaa\\blog\\_referencia.vue' /* webpackChunkName: "pages/miembro-jekuaa/blog/_referencia" */))
-const _3a33c88a = () => interopDefault(import('..\\..\\jekuaaNuxt\\pages\\miembro-jekuaa\\blog\\_refenrecia\\actualizar.vue' /* webpackChunkName: "pages/miembro-jekuaa/blog/_refenrecia/actualizar" */))
 const _da154b10 = () => interopDefault(import('..\\..\\jekuaaNuxt\\pages\\bienvenido-a-jekuaa\\_nombreUsuario.vue' /* webpackChunkName: "pages/bienvenido-a-jekuaa/_nombreUsuario" */))
 const _9d048bb0 = () => interopDefault(import('..\\..\\jekuaaNuxt\\pages\\blog\\_referencia.vue' /* webpackChunkName: "pages/blog/_referencia" */))
 const _707244fe = () => interopDefault(import('..\\..\\jekuaaNuxt\\pages\\blogs\\_seccion\\index.vue' /* webpackChunkName: "pages/blogs/_seccion/index" */))
@@ -112,6 +112,10 @@ export const routerOptions = {
     component: _90b2c058,
     name: "miembro-jekuaa-blogs-nuevo"
   }, {
+    path: "/miembro-jekuaa/blog/actualizar/:referencia?",
+    component: _7f06e921,
+    name: "miembro-jekuaa-blog-actualizar-referencia"
+  }, {
     path: "/admin-jekuaa/usuarios/:uidUsuario",
     component: _55050a4e,
     name: "admin-jekuaa-usuarios-uidUsuario"
@@ -119,10 +123,6 @@ export const routerOptions = {
     path: "/miembro-jekuaa/blog/:referencia",
     component: _3b178e51,
     name: "miembro-jekuaa-blog-referencia"
-  }, {
-    path: "/miembro-jekuaa/blog/:refenrecia/actualizar",
-    component: _3a33c88a,
-    name: "miembro-jekuaa-blog-refenrecia-actualizar"
   }, {
     path: "/bienvenido-a-jekuaa/:nombreUsuario?",
     component: _da154b10,

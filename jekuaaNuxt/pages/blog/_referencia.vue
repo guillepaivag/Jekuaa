@@ -198,8 +198,8 @@ export default {
             let response = await app.$axios.get(`/blog/obtenerContenido/${blog.uid}`, config)
 
             const converter = new showdown.Converter()
-            contenidoBlog = converter.makeHtml(response.data.contenido)
-            imgBlog = response.data.imgBlog
+            contenidoBlog = converter.makeHtml(response.data.resultado.contenido)
+            imgBlog = response.data.resultado.imgBlog
 
             return {
                 referenciaBlog,

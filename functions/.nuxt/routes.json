@@ -120,6 +120,13 @@
     "_name": "_90b2c058"
   },
   {
+    "name": "miembro-jekuaa-blog-actualizar-referencia",
+    "path": "/miembro-jekuaa/blog/actualizar/:referencia?",
+    "component": "C:\\\\Users\\\\i3\\\\Desktop\\\\PDGP\\\\WebDevelopment\\\\Proyectos\\\\Jekuaa\\\\jekuaa\\\\jekuaaNuxt\\\\pages\\\\miembro-jekuaa\\\\blog\\\\actualizar\\\\_referencia.vue",
+    "chunkName": "pages/miembro-jekuaa/blog/actualizar/_referencia",
+    "_name": "_7f06e921"
+  },
+  {
     "name": "admin-jekuaa-usuarios-uidUsuario",
     "path": "/admin-jekuaa/usuarios/:uidUsuario",
     "component": "C:\\\\Users\\\\i3\\\\Desktop\\\\PDGP\\\\WebDevelopment\\\\Proyectos\\\\Jekuaa\\\\jekuaa\\\\jekuaaNuxt\\\\pages\\\\admin-jekuaa\\\\usuarios\\\\_uidUsuario.vue",
@@ -132,13 +139,6 @@
     "component": "C:\\\\Users\\\\i3\\\\Desktop\\\\PDGP\\\\WebDevelopment\\\\Proyectos\\\\Jekuaa\\\\jekuaa\\\\jekuaaNuxt\\\\pages\\\\miembro-jekuaa\\\\blog\\\\_referencia.vue",
     "chunkName": "pages/miembro-jekuaa/blog/_referencia",
     "_name": "_3b178e51"
-  },
-  {
-    "name": "miembro-jekuaa-blog-refenrecia-actualizar",
-    "path": "/miembro-jekuaa/blog/:refenrecia/actualizar",
-    "component": "C:\\\\Users\\\\i3\\\\Desktop\\\\PDGP\\\\WebDevelopment\\\\Proyectos\\\\Jekuaa\\\\jekuaa\\\\jekuaaNuxt\\\\pages\\\\miembro-jekuaa\\\\blog\\\\_refenrecia\\\\actualizar.vue",
-    "chunkName": "pages/miembro-jekuaa/blog/_refenrecia/actualizar",
-    "_name": "_3a33c88a"
   },
   {
     "name": "bienvenido-a-jekuaa-nombreUsuario",

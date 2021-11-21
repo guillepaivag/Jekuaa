@@ -77,10 +77,10 @@ export default {
   computed: {
     computedContent: {
       get: function () {
-        return this.value+''
+        return this.value
       },
       set: function (v) {
-        this.$emit('setContent', v)
+        this.$emit('input', v)
       },
     }
   },

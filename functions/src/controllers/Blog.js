@@ -128,7 +128,7 @@ controller.obtenerContenidoBlog = async ( req, res ) => {
         })
         const status = respuesta.getStatusCode()
         
-        return res.status( status ).send( respuesta.getResultado() )
+        return res.status( status ).json( respuesta.getRespuesta() )
 
     } catch (error) {
         console.log('Error - obtenerContenidoBlog: ', error)
@@ -169,7 +169,7 @@ controller.obtenerBlog = async ( req, res ) => {
         })
         const status = respuesta.getStatusCode()
         
-        return res.status( status ).send( respuesta.getResultado() )
+        return res.status( status ).json( respuesta.getRespuesta() )
 
     } catch (error) {
         console.log('Error - obtenerContenidoBlog: ', error)

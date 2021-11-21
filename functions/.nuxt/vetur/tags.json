@@ -41,9 +41,6 @@
   "VideoPlayer": {
     "description": "Auto imported from components/VideoPlayer.vue"
   },
-  "AuthEmail": {
-    "description": "Auto imported from components/auth/authEmail.vue"
-  },
   "AdminBuscadorUsuarios": {
     "description": "Auto imported from components/admin/buscadorUsuarios.vue"
   },
@@ -79,6 +76,9 @@
   },
   "BlogsListaBlogs": {
     "description": "Auto imported from components/blogs/lista-blogs.vue"
+  },
+  "AuthEmail": {
+    "description": "Auto imported from components/auth/authEmail.vue"
   },
   "UsuariosCartaPresentacion": {
     "description": "Auto imported from components/usuarios/CartaPresentacion.vue"

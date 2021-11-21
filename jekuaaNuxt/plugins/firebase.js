@@ -6,7 +6,7 @@ import firebaseConfig from '../config/configEnv'
 import 'firebase/firestore'
 import 'firebase/auth'
 
-export default ({ env, store }, inject) => {
+export default async ({ env, store }, inject) => {
 
   let esComienzo = firebase.apps.length === 0
 
@@ -45,6 +45,6 @@ export default ({ env, store }, inject) => {
       // firebase.storage().useEmulator('localhost', 9199)
     }
   }
-
+  
   inject('firebase', firebase)
 }

@@ -1,31 +1,12 @@
 <template>
     <div class="container">
 
-        <div class="mt-5">
-            <v-btn
-                depressed
-                color="#683bce"
-                class="white--text"
-                :to="`/miembro-jekuaa/blog/actualizar/${$route.params.referencia}`"
-            >
-                Actualizar
-            </v-btn>
-            <v-btn
-                depressed
-                color="red"
-                class="white--text"
-            >
-                Eliminar
-            </v-btn>
-        </div>
-
-        <v-divider class="mt-5 mb-5"></v-divider>
-
         <div>
             <formulario-blog 
                 :datosBlog="datosBlog" 
                 :contenidoBlog="contenidoBlog" 
-                :accion="'leer'" 
+                :accion="'actualizar'" 
+                @actualizarBlog="actualizarBlog($event)"
             />
 
         </div>
@@ -47,7 +28,9 @@ export default {
         'formulario-blog': FormularioBlog
     },
     methods: {
-        
+        actualizarBlog(datos) {
+
+        }
     },
     watch: {
         
