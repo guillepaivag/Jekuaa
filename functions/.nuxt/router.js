@@ -17,15 +17,20 @@ const _605534f1 = () => interopDefault(import('..\\..\\jekuaaNuxt\\pages\\admin-
 const _4d5a6503 = () => interopDefault(import('..\\..\\jekuaaNuxt\\pages\\admin-jekuaa\\usuarios\\index.vue' /* webpackChunkName: "pages/admin-jekuaa/usuarios/index" */))
 const _77ba35f4 = () => interopDefault(import('..\\..\\jekuaaNuxt\\pages\\autenticacion\\inicioSesion.vue' /* webpackChunkName: "pages/autenticacion/inicioSesion" */))
 const _01cdbbed = () => interopDefault(import('..\\..\\jekuaaNuxt\\pages\\autenticacion\\registro.vue' /* webpackChunkName: "pages/autenticacion/registro" */))
+const _ac831f22 = () => interopDefault(import('..\\..\\jekuaaNuxt\\pages\\miembro-jekuaa\\blogs\\index.vue' /* webpackChunkName: "pages/miembro-jekuaa/blogs/index" */))
 const _1cd3dbd8 = () => interopDefault(import('..\\..\\jekuaaNuxt\\pages\\admin-jekuaa\\usuarios\\lista-usuarios\\index.vue' /* webpackChunkName: "pages/admin-jekuaa/usuarios/lista-usuarios/index" */))
+const _ed3fda90 = () => interopDefault(import('..\\..\\jekuaaNuxt\\pages\\miembro-jekuaa\\blogs\\mis-blogs.vue' /* webpackChunkName: "pages/miembro-jekuaa/blogs/mis-blogs" */))
+const _90b2c058 = () => interopDefault(import('..\\..\\jekuaaNuxt\\pages\\miembro-jekuaa\\blogs\\nuevo.vue' /* webpackChunkName: "pages/miembro-jekuaa/blogs/nuevo" */))
 const _55050a4e = () => interopDefault(import('..\\..\\jekuaaNuxt\\pages\\admin-jekuaa\\usuarios\\_uidUsuario.vue' /* webpackChunkName: "pages/admin-jekuaa/usuarios/_uidUsuario" */))
+const _3b178e51 = () => interopDefault(import('..\\..\\jekuaaNuxt\\pages\\miembro-jekuaa\\blog\\_referencia.vue' /* webpackChunkName: "pages/miembro-jekuaa/blog/_referencia" */))
+const _3a33c88a = () => interopDefault(import('..\\..\\jekuaaNuxt\\pages\\miembro-jekuaa\\blog\\_refenrecia\\actualizar.vue' /* webpackChunkName: "pages/miembro-jekuaa/blog/_refenrecia/actualizar" */))
 const _da154b10 = () => interopDefault(import('..\\..\\jekuaaNuxt\\pages\\bienvenido-a-jekuaa\\_nombreUsuario.vue' /* webpackChunkName: "pages/bienvenido-a-jekuaa/_nombreUsuario" */))
 const _9d048bb0 = () => interopDefault(import('..\\..\\jekuaaNuxt\\pages\\blog\\_referencia.vue' /* webpackChunkName: "pages/blog/_referencia" */))
 const _707244fe = () => interopDefault(import('..\\..\\jekuaaNuxt\\pages\\blogs\\_seccion\\index.vue' /* webpackChunkName: "pages/blogs/_seccion/index" */))
-const _4565887e = () => interopDefault(import('..\\..\\jekuaaNuxt\\pages\\usuario-jekuaa\\_nombreUsuario.vue' /* webpackChunkName: "pages/usuario-jekuaa/_nombreUsuario" */))
 const _280c634d = () => interopDefault(import('..\\..\\jekuaaNuxt\\pages\\blogs\\_seccion\\_categoria\\index.vue' /* webpackChunkName: "pages/blogs/_seccion/_categoria/index" */))
 const _31ed6c2d = () => interopDefault(import('..\\..\\jekuaaNuxt\\pages\\blogs\\_seccion\\_categoria\\_subCategoria.vue' /* webpackChunkName: "pages/blogs/_seccion/_categoria/_subCategoria" */))
 const _50fb564b = () => interopDefault(import('..\\..\\jekuaaNuxt\\pages\\index.vue' /* webpackChunkName: "pages/index" */))
+const _3f35b1fd = () => interopDefault(import('..\\..\\jekuaaNuxt\\pages\\_nombreUsuario.vue' /* webpackChunkName: "pages/_nombreUsuario" */))
 
 const emptyFn = () => {}
 
@@ -91,13 +96,33 @@ export const routerOptions = {
     component: _01cdbbed,
     name: "autenticacion-registro"
   }, {
+    path: "/miembro-jekuaa/blogs",
+    component: _ac831f22,
+    name: "miembro-jekuaa-blogs"
+  }, {
     path: "/admin-jekuaa/usuarios/lista-usuarios",
     component: _1cd3dbd8,
     name: "admin-jekuaa-usuarios-lista-usuarios"
   }, {
+    path: "/miembro-jekuaa/blogs/mis-blogs",
+    component: _ed3fda90,
+    name: "miembro-jekuaa-blogs-mis-blogs"
+  }, {
+    path: "/miembro-jekuaa/blogs/nuevo",
+    component: _90b2c058,
+    name: "miembro-jekuaa-blogs-nuevo"
+  }, {
     path: "/admin-jekuaa/usuarios/:uidUsuario",
     component: _55050a4e,
     name: "admin-jekuaa-usuarios-uidUsuario"
+  }, {
+    path: "/miembro-jekuaa/blog/:referencia",
+    component: _3b178e51,
+    name: "miembro-jekuaa-blog-referencia"
+  }, {
+    path: "/miembro-jekuaa/blog/:refenrecia/actualizar",
+    component: _3a33c88a,
+    name: "miembro-jekuaa-blog-refenrecia-actualizar"
   }, {
     path: "/bienvenido-a-jekuaa/:nombreUsuario?",
     component: _da154b10,
@@ -111,10 +136,6 @@ export const routerOptions = {
     component: _707244fe,
     name: "blogs-seccion"
   }, {
-    path: "/usuario-jekuaa/:nombreUsuario?",
-    component: _4565887e,
-    name: "usuario-jekuaa-nombreUsuario"
-  }, {
     path: "/blogs/:seccion/:categoria",
     component: _280c634d,
     name: "blogs-seccion-categoria"
@@ -126,6 +147,10 @@ export const routerOptions = {
     path: "/",
     component: _50fb564b,
     name: "index"
+  }, {
+    path: "/:nombreUsuario",
+    component: _3f35b1fd,
+    name: "nombreUsuario"
   }],
 
   fallback: false

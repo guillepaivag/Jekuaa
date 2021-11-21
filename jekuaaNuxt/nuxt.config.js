@@ -36,7 +36,7 @@ module.exports = {
   // Plugins to run before rendering page: https://go.nuxtjs.dev/config-plugins
   plugins: [
     { src: './plugins/firebase.js', },
-    { src: './plugins/TiptapVuetify.js' },
+    { src: './plugins/TiptapVuetify.js', mode: 'client' },
     { src: './plugins/vue-observe-visibility.js', mode: 'client' },
   ],
   

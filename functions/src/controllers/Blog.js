@@ -210,6 +210,7 @@ controller.listaBlogsPorMG = async (req, res) => {
                 blog: doc.data(),
                 publicador: {
                     nombreUsuario: datosAuthPublicador.displayName,
+                    fotoPerfil: datosAuthPublicador.photoURL ? datosAuthPublicador.photoURL : '',
                 }
             }
             listaBlogs.push(datosBlog)
@@ -255,6 +256,46 @@ controller.blogConMasMeGusta = async (req, res) => {
         respuesta.setRespuestaPorCodigo(codigo, {
             mensaje: '¡Blog con mas me gusta!',
             resultado: blogMasMeGusta
+        })
+        const status = respuesta.getStatusCode()
+        
+        return res.status( status ).json( respuesta.getRespuesta() )
+
+    } catch (error) {
+        console.log('Error - blogConMasMeGusta: ', error)
+
+        const {
+            status,
+            respuesta
+        } = manejadorErrores( error )
+
+        return res.status( status ).json( respuesta )
+    }
+}
+
+controller.ultimosBlogsPorPublicador = async (req, res) => {
+    try {
+        const { params } = req
+        const { uid } = params
+
+        const respuesta = new Respuesta()
+        let codigo = 'jekuaa/exito'
+
+        const ref = db.collection('Blogs').where('publicador', '==', uid).orderBy('fechaCreacion', 'desc').limit(3)
+
+        const docs = await (await ref.get()).docs
+        let blogs = []
+
+        for (let index = 0; index < docs.length; index++) {
+            const doc = docs[index]
+            
+            blogs.push(doc.data())
+        }
+        
+        // Retornar respuesta
+        respuesta.setRespuestaPorCodigo(codigo, {
+            mensaje: '¡Lista de blogs más recientes por usuario!',
+            resultado: blogs
         })
         const status = respuesta.getStatusCode()
         

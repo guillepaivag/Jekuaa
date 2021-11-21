@@ -5,6 +5,7 @@ const ErrorJekuaa = require('../models/Error/ErroresJekuaa')
 const JekuaaPremium = require("../models/JekuaaPremium")
 const JekuaaRoles = require("../models/JekuaaRoles")
 const Instructor = require("../models/TiposUsuarios/Instructor")
+const datosRedesSociales = require("../InformacionEstatica/datosRedesSociales")
 
 const validaciones = {}
 
@@ -672,7 +673,7 @@ validaciones.validarDatosActualizacionInformacionUsuario = [
         .if(body('redesSociales').notEmpty())
         .isArray({
             min: 0,
-            max: 10
+            max: 7
         })
         .withMessage((value, { req, location, path }) => {
             throw new ErrorJekuaa({
@@ -693,6 +694,21 @@ validaciones.validarDatosActualizacionInformacionUsuario = [
                             mensaje: 'Solo se admite redSocial y urlPerfil.'
                         })
                     }
+                }
+
+                if (!datosRedesSociales.lista_codigo.includes(datosRedSocial.redSocial)) {
+                    throw new ErrorJekuaa({
+                        codigo: 'jekuaa/error/usuario_mala_solicitud',
+                        mensaje: `No es permitido esta red social ${datosRedSocial.redSocial}.`
+                    })
+                }
+
+                const rsUrl = datosRedesSociales.lista_url_por_codigo.find(x => x.codigo === datosRedSocial.redSocial)
+                if ( !datosRedSocial.urlPerfil.includes(rsUrl.url) && !datosRedSocial.urlPerfil.includes(rsUrl.url_www) ) {
+                    throw new ErrorJekuaa({
+                        codigo: 'jekuaa/error/usuario_mala_solicitud',
+                        mensaje: `No es permitido esta url ${datosRedSocial.urlPerfil} para la red social ${datosRedSocial.redSocial}.`
+                    })
                 }
 
                 if (typeof datosRedSocial.redSocial !== 'string') {

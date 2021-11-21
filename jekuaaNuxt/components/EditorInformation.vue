@@ -4,7 +4,8 @@
     <tiptap-vuetify 
       v-model="content" 
       :extensions="extensions"
-      :toolbar-attributes="{ color: '#683bce' }"  
+      :toolbar-attributes="{ color: '#683bce', dark: true }"
+      :card-props="{ flat: false, color: '#ffffff' }"
     />
 
     <template #placeholder>
@@ -32,6 +33,7 @@ import {
   HardBreak,
   HorizontalRule,
   History,
+  Image,
 } from 'tiptap-vuetify'
 
 export default {
@@ -60,10 +62,10 @@ export default {
         Link,
         HorizontalRule,
         HardBreak,
+        Image,
       ],
       content: `
-        <h1>Yay Headlines!</h1>
-        <p>All these <strong>cool tags</strong> are working now.</p>
+        <blockquote><h1>Comenzando con la lógica</h1></blockquote><ul><li><p><em>ontrary to popular belief, Lorem Ipsum is not simply random text. It has roots in a piece of classical Latin literature from 45 BC, making it over 2000 years old. Richard McClintock</em>, a Latin professor at Hampden-Sydney College in Virginia, <s>looked up one of the more obscure Latin words, consectetur</s>, from a Lorem Ipsum passage, and going through the cites of the word in classical literature, discovered the undoubtable source.</p></li><li><p><u>ontrary to popular belief, Lorem Ipsum is not simply random text.</u> It has roots in a piece of classical Latin literature from 45 BC, making it over 2000 years old. Richard McClintock, a Latin professor at Hampden-Sydney College in Virginia, looked up one of the more obscure Latin words, consectetur, from a Lorem Ipsum passage, and going through the cites of the word in classical literature, discovered the undoubtable source.</p><br><hr></li></ul><blockquote><h1>Comenzando con los algoritmos</h1></blockquote><ol><li><p><strong>ontrary to popular belief, Lorem Ipsum is not simply random text.</strong> <a href="https://es.wikipedia.org/wiki/Literatura_en_lat%C3%ADn" rel="noopener noreferrer nofollow">It has roots in a piece of classical Latin literature from 45 BC</a>, making it over 2000 years old. Richard McClintock, a Latin professor at Hampden-Sydney College in Virginia, looked up one of the more obscure Latin words, consectetur, from a Lorem Ipsum passage, and going through the cites of the word in classical literature, discovered the undoubtable source.</p></li><li><p>ontrary to popular belief, Lorem Ipsum is not simply random text. It has roots in a piece of classical Latin literature from 45 BC, making it over 2000 years old. Richard McClintock, a Latin professor at Hampden-Sydney College in Virginia, looked up one of the more obscure Latin words, consectetur, from a Lorem Ipsum passage, and going through the cites of the word in classical literature, discovered the undoubtable source.</p></li></ol><br><hr><p>ontrary to popular belief, Lorem Ipsum is not simply random text. It has roots in a piece of classical Latin literature from 45 BC, making it over 2000 years old. Richard McClintock, a Latin professor at Hampden-Sydney College in Virginia, looked up one of the more obscure Latin words, consectetur, from a Lorem Ipsum passage, and going through the cites of the word in classical literature, discovered the undoubtable source.</p><br><p>ontrary to popular belief, Lorem Ipsum is not simply random text. It has roots in a piece of classical Latin literature from 45 BC, making it over 2000 years old. Richard McClintock, a Latin professor at Hampden-Sydney College in Virginia, looked up one of the more obscure Latin words, consectetur, from a Lorem Ipsum passage, and going through the cites of the word in classical literature, discovered the undoubtable source.</p><br>
       `
     }
   },

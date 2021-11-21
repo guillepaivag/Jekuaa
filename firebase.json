@@ -4,6 +4,7 @@
     "source": "functions"
   },
   "hosting": {
+    "site": "jekuaa",
     "public": "public",
     "ignore": [
       "firebase.json",

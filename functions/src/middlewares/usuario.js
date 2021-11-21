@@ -214,7 +214,50 @@ middlewaresUser.construirDatosInformacionUsuario = async ( req, res, next ) => {
     
 }
 
+middlewaresUser.validarFotoPerfil = async ( req, res, next ) => {
+    
+    try {
+        const { jekuaaDatos, body, files } = req
+        const { uidSolicitante, datosAuthSolicitante } = jekuaaDatos
+        const {  } = body
 
+        const esRutaAdmin = req.originalUrl.split('/')[2] === 'adminJekuaa'
+        const esRolPropietario = datosAuthSolicitante.customClaims.jekuaaRol
+
+        if (files.length <= 0) {
+            throw new ErroresJekuaa({
+                codigo: 'jekuaa/error/usuario_mala_solicitud',
+                mensaje: 'No hay foto de perfil para actualizar.',
+            })
+        }
+        const file = files[0]
+        const fileMB = file.size * 0.000001
+
+        const condicionTipo = file.mimetype.includes('image') && 
+        ( file.mimetype.includes('png') || file.mimetype.includes('jpg') || file.mimetype.includes('jpeg') )
+        
+        if (!condicionTipo) {
+            throw new ErroresJekuaa({
+                codigo: 'jekuaa/error/usuario_mala_solicitud',
+                mensaje: 'La foto de perfil tiene que ser imagen del tipo: png, jpg o jpeg.',
+            })
+        }
+
+        if (fileMB > 1) {
+            throw new ErroresJekuaa({
+                codigo: 'jekuaa/error/usuario_mala_solicitud',
+                mensaje: 'La foto de perfil no puede ser mayor a 1MB.',
+            })
+        }
+
+        return next()
+
+    } catch (error) {
+        next(error)
+
+    }
+    
+}
 
 middlewaresUser.verificarDatosRequeridos = ( req, res, next ) => {
     const { jekuaaDatos, body } = req

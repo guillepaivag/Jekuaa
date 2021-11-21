@@ -44,6 +44,7 @@
     "nuxt": "^2.15.3",
     "showdown": "^1.9.1",
     "tiptap-vuetify": "^2.8.0",
+    "turndown": "^7.1.1",
     "uuid": "^8.3.2",
     "video.js": "^7.14.3",
     "vue-instantsearch": "^4.1.1",

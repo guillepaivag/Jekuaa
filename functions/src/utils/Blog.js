@@ -30,8 +30,7 @@ utils_blog.construirDatosParaNuevoBlog = ( datosBlog, contenidoBlog, esRutaAdmin
             fs.mkdirSync(dirVerificacion)
         }
     }
-    const separador = `~`
-    const nombreBlogTemp = `${Date.now()}${separador}${datosBlog.uid}.md`
+    const nombreBlogTemp = `${Date.now()}~${datosBlog.uid}.md`
     const rutaArchivoTemp = path.join(__dirname, '..', 'temp', 'blogs', nombreBlogTemp)
 
     fs.writeFileSync(rutaArchivoTemp, contenidoBlog)
@@ -102,8 +101,7 @@ utils_blog.construirDatosParaActualizacionBlog = ( uidBlog, datosBlog, contenido
                 fs.mkdirSync(dirVerificacion)
             }
         }
-        const separador = `~`
-        const nombreBlogTemp = `${Date.now()}${separador}${uidBlog}.md`
+        const nombreBlogTemp = `${Date.now()}~${uidBlog}.md`
         const rutaArchivoTemp = path.join(__dirname, '..', 'temp', 'blogs', nombreBlogTemp)
 
         fs.writeFileSync(rutaArchivoTemp, contenidoBlog)

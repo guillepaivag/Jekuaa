@@ -35,7 +35,7 @@
             {{ blog.cantidadMeGusta }}
 
             <v-divider class="" />
-            <div class="mt-5 mb-5" v-html="contenidoBlog"></div>
+            <div class="tiptap-vuetify-editor__content mt-5 mb-5" v-html="contenidoBlog"></div>
             <v-divider class="" />
 
             <v-btn

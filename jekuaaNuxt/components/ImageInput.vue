@@ -3,10 +3,10 @@
         <!-- slot for parent component to activate the file changer -->
         <div>
             <div slot="activator">
-                <v-avatar @click="launchFilePicker()" size="210px" v-ripple v-if="!value.imageURL" class="grey lighten-3 mb-3">
-                    <span>Agregue una foto de perfil</span>
+                <v-avatar @click="launchFilePicker()" size="210px" v-ripple v-if="!value.imageURL" class="mb-3 avatar-img">
+                    <span class="white--text">Agregue una foto de perfil</span>
                 </v-avatar>
-                <v-avatar @click="launchFilePicker()" size="210px" v-ripple v-else class="mb-3">
+                <v-avatar @click="launchFilePicker()" size="210px" v-ripple v-else class="mb-3 avatar-img">
                     <img :src="value.imageURL" alt="avatar">
                 </v-avatar>
             </div>
@@ -60,29 +60,42 @@ export default {
             
             if (files.length > 0) {
                 let size = imageFile.size / maxSize / maxSize
-                if (!imageFile.type.match('image.png') && !imageFile.type.match('image.jpg') && !imageFile.type.match('image.jpeg')) {
-                    // check whether the upload is an image
-                    this.errorDialog = true 
-                    this.errorText = 'Se debe elegir un archivo imagen jpg o png.'
-                } else if (size > 1) {
-                    // check whether the size is greater than the size limit
-                    this.errorDialog = true
-                    this.errorText = 'El archivo es muy grande, favor elegir un archivo de hasta 1MB.'
-                } else {
-                    // Append file into FormData and turn file into image URL
-                    let formData = new FormData()
-                    let imageURL = URL.createObjectURL(imageFile)
-                    formData.append('image', imageFile)
+                // if (!imageFile.type.match('image.png') && !imageFile.type.match('image.jpg') && !imageFile.type.match('image.jpeg')) {
+                //     // check whether the upload is an image
+                //     this.errorDialog = true 
+                //     this.errorText = 'Se debe elegir un archivo imagen jpg o png.'
 
-                    console.log('formData', formData)
-                    console.log('imageURL', imageURL)
-                    console.log('imageFile', imageFile)
-                    
-                    // Emit the FormData and image URL to the parent component
-                    this.$emit('input', { formData, imageURL })
-                }
+                //     return
+                // } 
+                
+                // if (size > 1) {
+                //     // check whether the size is greater than the size limit
+                //     this.errorDialog = true
+                //     this.errorText = 'El archivo es muy grande, favor elegir un archivo de hasta 1MB.'
+
+                //     return
+                // }
+
+                // Append file into FormData and turn file into image URL
+                let formData = new FormData()
+                let imageURL = URL.createObjectURL(imageFile)
+                formData.append('image', imageFile)
+
+                console.log('formData', formData)
+                console.log('imageURL', imageURL)
+                console.log('imageFile', imageFile)
+                
+                // Emit the FormData and image URL to the parent component
+                this.$emit('input', { formData, imageURL })
             }
         }
     }
 }
 </script>
+
+<style scoped>
+.avatar-img {
+    background: #683bce;
+    cursor: pointer;
+}
+</style>

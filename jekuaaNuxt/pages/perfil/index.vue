@@ -3,7 +3,15 @@
     <form>
       <v-row class="mb-10">
         <v-col cols="12">
-          <h1>Mi perfil</h1>
+          <h1 class="titulo">Mi perfil</h1>
+          <v-btn
+            class="ml-4 mb-3"
+            outlined
+            color="#683bce"
+            :to="`/${$store.state.modules.usuarios.nombreUsuario}`"
+          >
+            Ver mi perfil
+          </v-btn>
         </v-col>
 
         <v-col
@@ -107,7 +115,6 @@
             ></v-date-picker>
           </v-menu>
 
-<!-- :disabled="$v.$anyError" -->
           <div class="botones mt-5">
             <v-btn
               
@@ -115,6 +122,7 @@
               color="#683bce"
               class="mr-4"
               @click="actualizar"
+              :disabled="$v.$anyError"
             >
               Actualizar mis datos
             </v-btn>
@@ -243,15 +251,6 @@ export default {
         console.log('error', error)
 
         const accion = await this.$store.dispatch('modules/sistema/errorHandler', error)
-
-        // if ( accion.includes('error') ) {
-        //   this.$nuxt.error({
-        //     statusCode: error.response.status
-        //   })
-        // } else if ( accion.includes('login') ) {
-        //   this.$router.push('/autenticacion/inicioSesion')
-        // }
-
       }
     },
 
@@ -381,5 +380,9 @@ export default {
 <style scoped>
 .imagenAvatar {
   text-align: center;
+}
+
+.titulo {
+  display: inline;
 }
 </style>

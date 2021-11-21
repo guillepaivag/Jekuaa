@@ -1,4 +1,4 @@
-let listaInformacionSecciones = [
+let secciones = [
     {
         uid: 'informatica',
         nombre: 'Informática',
@@ -6,27 +6,7 @@ let listaInformacionSecciones = [
     {
         uid: 'matematica',
         nombre: 'Matemática',
-    },
-    {
-        uid: 'informatica',
-        nombre: 'Informática',
-    },
-    {
-        uid: 'matematica',
-        nombre: 'Matemática',
-    },
-    {
-        uid: 'informatica',
-        nombre: 'Informática',
-    },
-    {
-        uid: 'matematica',
-        nombre: 'Matemática',
-    },
-    {
-        uid: 'informatica',
-        nombre: 'Informática',
     },
 ]
 
-export default listaInformacionSecciones
+export default secciones

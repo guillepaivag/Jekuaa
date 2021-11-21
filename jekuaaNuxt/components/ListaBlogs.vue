@@ -31,18 +31,22 @@
                   <span class="text-h6 ml-1 font-weight-light">Jekuaa</span>
                 </v-card-title>
 
-                <v-card-text class="text-h5 font-weight-bold">
+                <v-card-text class="text-h5 font-weight titulo">
                   {{dato.blog.titulo}}
                 </v-card-text>
 
                 <v-card-actions>
                   <v-list-item class="grow">
-                    <v-list-item-avatar color="grey darken-3">
+                    <v-list-item-avatar color="#ffffff">
                       <v-img
+                        v-if="!!dato.publicador.fotoPerfil"
                         class="elevation-6"
                         alt=""
-                        src="https://avataaars.io/?avatarStyle=Transparent&topType=ShortHairShortCurly&accessoriesType=Prescription02&hairColor=Black&facialHairType=Blank&clotheType=Hoodie&clotheColor=White&eyeType=Default&eyebrowType=DefaultNatural&mouthType=Default&skinColor=Light"
+                        :src="dato.publicador.fotoPerfil"
                       ></v-img>
+                      <span v-else class="headline inicialNombreUsuario">
+                        {{ inicialNombreUsuario(dato.publicador.nombreUsuario) }}
+                      </span>
                     </v-list-item-avatar>
 
                     <v-list-item-content>
@@ -52,6 +56,7 @@
                     </v-list-item-content>
 
                     <v-row
+                      class="mr-0"
                       align="center"
                       justify="end"
                     >
@@ -272,7 +277,10 @@ export default {
       const ta = new TimeAgo('es-ES')
       const taResult = ta.format(timestamp._seconds * 1000)
       return taResult
-    }
+    },
+    inicialNombreUsuario (nombreUsuario) {
+      return nombreUsuario ? nombreUsuario[0].toUpperCase() : ''
+    },
   },
   computed: {
     listarSubCategorias: function () {
@@ -287,7 +295,7 @@ export default {
       }
 
       return lista
-    }
+    },
   },
   watch: {
     dialogDatosBlog: function (nuevo, viejo) {
@@ -335,7 +343,7 @@ export default {
 </script>
 
 
-<style>
+<style scoped>
 .slick-list {
   width: 97%;
 }
@@ -386,6 +394,10 @@ export default {
   text-decoration: none;
   font-style: oblique;
   color: #683bce !important;
+}
+
+.titulo {
+  color: #ffffff !important;
 }
 
 .arrow-prev {
@@ -456,6 +468,10 @@ export default {
 .imagemPosterSlide:hover {
   transform: scale(1.1);
   cursor: pointer;
+}
+
+.inicialNombreUsuario {
+  color: #683bce !important;
 }
 
 .VueCarousel-navigation-button[data-v-453ad8cd] {

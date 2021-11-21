@@ -25,6 +25,7 @@ const {
     obtenerDatosBlog,
     listaBlogsPorMG,
     blogConMasMeGusta,
+    ultimosBlogsPorPublicador,
     obtenerContenidoBlog,
     paginarListaBlogs,
     darMeGusta,
@@ -38,6 +39,9 @@ router.get('/blogConMasMeGusta',
 
 router.post('/listaBlogsPorMG', 
     listaBlogsPorMG)
+
+router.get('/ultimosBlogsPorPublicador/:uid', 
+    ultimosBlogsPorPublicador)
 
 router.get('/obtenerBlog/:uid', 
     verificacionExistenciaBlog,
@@ -61,15 +65,7 @@ router.post('/estudiante/meGusta/:uid',
     verificacionExistenciaBlog,
     velidarDatosMeGustaBlog,
     darMeGusta)
-
-// // Este tiene que estar en otro archivo
-// router.post('/crearCarpetaGuardado/:nombreCarpeta', 
-//     estaAutenticado, 
-//     obtenerContenidoBlog)
-
-// router.post('/guardarBlog/:uid/:nombreCarpeta?', 
-//     estaAutenticado, 
-//     obtenerContenidoBlog)
+    
 
 // Operaciones para: MiembrosJekuaa (limitado)
 router.post('/miembroJekuaa/crearBlog', 

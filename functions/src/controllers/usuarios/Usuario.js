@@ -9,25 +9,216 @@ const path = require('path')
 
 const controllerUsuario = {}
 
-controllerUsuario.obtenerMiUsuario = async (req, res) => {
+controllerUsuario.obtenerUsuario = async (req, res) => {
     try {
-        const { jekuaaDatos, params } = req
+        const { jekuaaDatos, body } = req
         const { uidSolicitante, datosAuthSolicitante } = jekuaaDatos
 
-        // Obtener datos del usuario
-        const datosUsuario = await Usuario.verDatosUsuarioPorUID( params.uid )
+        let datosUsuario 
 
-        if (params.uid !== uidSolicitante) {
-            delete datosUsuario.uid
+        if (body.nombreUsuario) {
+            const doc = await db.collection('Usuarios').where('nombreUsuario', '==', body.nombreUsuario).get()
+            
+            if (doc.empty) {
+                throw new ErrorJekuaa({
+                    codigo: 'jekuaa/error/usuario_mala_solicitud',
+                    mensaje: `No existe el usuario.`
+                })
+            }
+
+            datosUsuario = doc.docs[0].data()
+        } else if (body.correo) {
+            const doc = await db.collection('Usuarios').where('correo', '==', body.correo).get()
+            
+            if (doc.empty) {
+                throw new ErrorJekuaa({
+                    codigo: 'jekuaa/error/usuario_mala_solicitud',
+                    mensaje: `No existe el usuario.`
+                })
+            }
+
+            datosUsuario = doc.docs[0].data()
+        } else if (body.uid) {
+            datosUsuario = await Usuario.verDatosUsuarioPorUID( body.uid )
+
+        } else {
+            throw new ErrorJekuaa({
+                codigo: 'jekuaa/error/usuario_mala_solicitud',
+                mensaje: `No hay datos para buscar el usuario.`
+            })
+        }
+
+        if (datosUsuario.uid !== uidSolicitante) {
             delete datosUsuario.jekuaaPremium
             delete datosUsuario.jekuaaRol
             delete datosUsuario.jekuaaPoint
+            delete datosUsuario.correo
         }
 
         let codigo = 'jekuaa/exito'
         const respuesta = new Respuesta().setRespuestaPorCodigo(codigo, {
             mensaje: 'Los datos de los usuarios se enviaron de forma exitosa!',
             resultado: datosUsuario
+        })
+        const status = respuesta.getStatusCode()
+        
+        return res.status( status ).json( respuesta.getRespuesta() )
+        
+    } catch ( error ) {
+        console.log('Error - obtenerMiUsuario: ', error)
+
+        const {
+            status,
+            respuesta
+        } = manejadorErrores( error )
+
+        return res.status( status ).json( respuesta )
+
+    }
+}
+
+controllerUsuario.obtenerUsuarioAuth = async (req, res) => {
+    try {
+        const { jekuaaDatos, body } = req
+        const { uidSolicitante, datosAuthSolicitante } = jekuaaDatos
+        
+        let datosAuth 
+        let uid
+
+        if (body.nombreUsuario) {
+            const doc = await db.collection('Usuarios').where('nombreUsuario', '==', body.nombreUsuario).get()
+            
+            if (doc.empty) {
+                throw new ErrorJekuaa({
+                    codigo: 'jekuaa/error/usuario_mala_solicitud',
+                    mensaje: `No existe el usuario.`
+                })
+            }
+
+            let datosUsuario = doc.docs[0].data()
+
+            uid = datosUsuario.uid
+        } else if (body.correo) {
+            const doc = await db.collection('Usuarios').where('correo', '==', body.correo).get()
+            
+            if (doc.empty) {
+                throw new ErrorJekuaa({
+                    codigo: 'jekuaa/error/usuario_mala_solicitud',
+                    mensaje: `No existe el usuario.`
+                })
+            }
+
+            let datosUsuario = doc.docs[0].data()
+
+            uid = datosUsuario.uid
+        } else if (body.uid) {
+            uid = body.uid
+
+        } else {
+            throw new ErrorJekuaa({
+                codigo: 'jekuaa/error/usuario_mala_solicitud',
+                mensaje: `No hay datos para buscar el usuario.`
+            })
+        }
+
+        let responseDatosAuth = await Usuario.verDatosAuthPorUID( uid )
+        datosAuth = JSON.parse( JSON.stringify(responseDatosAuth) )
+
+        if (uid !== uidSolicitante) {
+            delete datosAuth.email
+            delete datosAuth.emailVerified
+            delete datosAuth.disabled
+            delete datosAuth.passwordHash
+            delete datosAuth.passwordSalt
+            delete datosAuth.customClaims.jekuaaPremium
+            delete datosAuth.customClaims.jekuaaRol
+            delete datosAuth.tokensValidAfterTime
+            delete datosAuth.providerData
+        }
+        
+        let codigo = 'jekuaa/exito'
+        const respuesta = new Respuesta().setRespuestaPorCodigo(codigo, {
+            mensaje: 'Los datos de los usuarios se enviaron de forma exitosa!',
+            resultado: datosAuth
+        })
+        const status = respuesta.getStatusCode()
+        
+        return res.status( status ).json( respuesta.getRespuesta() )
+        
+    } catch ( error ) {
+        console.log('Error - obtenerMiUsuario: ', error)
+
+        const {
+            status,
+            respuesta
+        } = manejadorErrores( error )
+
+        return res.status( status ).json( respuesta )
+
+    }
+}
+
+controllerUsuario.obtenerUsuarioInfo = async (req, res) => {
+    try {
+        const { jekuaaDatos, body } = req
+        const { uidSolicitante, datosAuthSolicitante } = jekuaaDatos
+        
+        let datosInfo 
+        let uid
+
+        if (body.nombreUsuario) {
+            const doc = await db.collection('Usuarios').where('nombreUsuario', '==', body.nombreUsuario).get()
+            
+            if (doc.empty) {
+                throw new ErrorJekuaa({
+                    codigo: 'jekuaa/error/usuario_mala_solicitud',
+                    mensaje: `No existe el usuario.`
+                })
+            }
+
+            let datosUsuario = doc.docs[0].data()
+
+            uid = datosUsuario.uid
+        } else if (body.correo) {
+            const doc = await db.collection('Usuarios').where('correo', '==', body.correo).get()
+            
+            if (doc.empty) {
+                throw new ErrorJekuaa({
+                    codigo: 'jekuaa/error/usuario_mala_solicitud',
+                    mensaje: `No existe el usuario.`
+                })
+            }
+
+            let datosUsuario = doc.docs[0].data()
+
+            uid = datosUsuario.uid
+        } else if (body.uid) {
+            uid = body.uid
+
+        } else {
+            throw new ErrorJekuaa({
+                codigo: 'jekuaa/error/usuario_mala_solicitud',
+                mensaje: `No hay datos para buscar el usuario.`
+            })
+        }
+
+        datosInfo = await Usuario.obtenerInformacionUsuarioPorUID ( uid )
+
+        if (!datosInfo.exists) {
+            throw new ErrorJekuaa({
+                codigo: 'jekuaa/error/usuario_mala_solicitud',
+                mensaje: `No existe datos de este usuario.`
+            })
+        }
+
+        if (uid !== uidSolicitante) {
+            
+        }
+        
+        let codigo = 'jekuaa/exito'
+        const respuesta = new Respuesta().setRespuestaPorCodigo(codigo, {
+            mensaje: 'Los datos de los usuarios se enviaron de forma exitosa!',
+            resultado: datosInfo.data()
         })
         const status = respuesta.getStatusCode()
         

@@ -1,12 +1,17 @@
 <template>
-  <ClientOnly>
-    <!-- Use the component in the right place of the template -->
-    <tiptap-vuetify v-model="content" :extensions="extensions"/>
+  <div>
+    <ClientOnly>
+      <!-- Use the component in the right place of the template -->
+      <tiptap-vuetify 
+        v-model="computedContent" 
+        :extensions="extensions"
+      />
 
-    <template #placeholder>
-      Loading...
-    </template>
-  </ClientOnly>
+      <template #placeholder>
+        Loading...
+      </template>
+    </ClientOnly>
+  </div>
 </template>
 
 <script>
@@ -61,19 +66,26 @@ export default {
         HardBreak,
         Image,
       ],
-      content: `
-        <h1>Yay Headlines!</h1>
-        <p>All these <strong>cool tags</strong> are working now.</p>
-      `
     }
   },
+  props: {
+    value: String,
+  },
   watch: {
-    'content': function(nuevo, viejo) {
-      this.$emit('content', this.content)
+    
+  },
+  computed: {
+    computedContent: {
+      get: function () {
+        return this.value+''
+      },
+      set: function (v) {
+        this.$emit('setContent', v)
+      },
     }
   },
   mounted() {
-    this.$emit('content', this.content)
+    
   }
 }
 </script>

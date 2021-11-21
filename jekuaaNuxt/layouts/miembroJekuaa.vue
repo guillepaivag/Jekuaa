@@ -7,9 +7,7 @@
 
     <div v-else>
       <v-app>
-
         <NavigationUser v-if="autenticado" />
-        <NavigationDefault v-else />
 
         <v-main>
           <nuxt />
@@ -17,6 +15,8 @@
 
         <FooterDefault />
       </v-app>
+    
+      <snackbar-error v-model="getError" />
     </div>
 
   </div>
@@ -28,12 +28,14 @@ import loading from '@/components/Loading'
 import NavigationDefault from '@/components/NavigationDefault'
 import NavigationUser from '@/components/NavigationUser'
 import FooterDefault from '@/components/FooterDefault'
+import SnackbarError from '@/components/SnackbarError'
 
 export default {
   components: {
     NavigationDefault,
     NavigationUser,
-    FooterDefault
+    FooterDefault,
+    'snackbar-error': SnackbarError
   },
   data () {
     return {
@@ -41,15 +43,15 @@ export default {
     }
   },
   computed: {
-    ...mapGetters('modules/system', [
+    ...mapGetters('modules/sistema', [
       'getLoading',
     ]),
-    ...mapGetters('modules/user/user', [
+    ...mapGetters('modules/usuarios', [
       'uid',
       'datosPersonales',
       'autenticado'
     ]),
-    ...mapGetters('modules/system', [
+    ...mapGetters('modules/sistema', [
       'getLoading',
       'getError'
     ])

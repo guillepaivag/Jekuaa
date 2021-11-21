@@ -375,7 +375,7 @@ middlewares.verificadorDeDatosBlog = async (req, res, next) => {
                 if ( !valido ) {
                     throw new ErrorJekuaa({
                         codigo: 'jekuaa/error/usuario_mala_solicitud',
-                        mensaje: 'Solo puede haber hasta 3 sub-categorias.'
+                        mensaje: 'Por blog puede haber de 1 a 3 sub-categorias.'
                     })
                 }
             }

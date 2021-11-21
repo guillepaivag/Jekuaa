@@ -22,6 +22,7 @@ const {
     construirDatosUsuario,
     construirDatosInformacionUsuario,
     sePuedeEliminarPropietario,
+    validarFotoPerfil,
 } = require('../../middlewares/usuario')
 
 const {
@@ -34,7 +35,9 @@ const {
 } = require('../../controllers/usuarios/AdminJekuaa')
 
 const {
-    obtenerMiUsuario,
+    obtenerUsuario,
+    obtenerUsuarioAuth,
+    obtenerUsuarioInfo,
     actualizarMiUsuario,
     actualizarMiInformacion,
     actualizarFotoPerfil,
@@ -44,9 +47,17 @@ const {
 
 
 // Operaciones para: Usuarios (Estudiantes, MiembroJeuaa, Moderador, Propietario)
-router.get('/estudiante/leerUsuario/:uid', 
+router.post('/estudiante/datosUsuario', 
     estaAutenticado, 
-    obtenerMiUsuario)
+    obtenerUsuario)
+
+router.post('/estudiante/authUsuario', 
+    estaAutenticado, 
+    obtenerUsuarioAuth)
+
+router.post('/estudiante/informacionUsuario', 
+    estaAutenticado, 
+    obtenerUsuarioInfo)
 
 router.put('/estudiante/actualizarUsuario', 
     estaAutenticado, 
@@ -64,6 +75,7 @@ router.put('/estudiante/actualizarInformacion',
 router.put('/estudiante/actualizarFotoPerfil', 
     estaAutenticado, 
     busboyMiddleware,
+    validarFotoPerfil,
     actualizarFotoPerfil)
 
 router.delete('/estudiante/eliminarFotoPerfil', 

@@ -82,6 +82,9 @@ export const getters = {
     return !!state.jekuaaPremium
   },
 
+  esMiembroJekuaa (state) {
+    return state.jekuaaRol !== 'estudiante'
+  },
 }
 
 

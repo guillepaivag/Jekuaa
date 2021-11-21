@@ -114,10 +114,17 @@
 
         <v-tab v-if="esMiembroJekuaa" to="/miembro-jekuaa">
           <v-icon class="navItemIcon">
+            mdi-alpha-j-box-outline
+          </v-icon>
+          <samp class="estiloTexto">Miembro Jekuaa</samp>
+        </v-tab>
+
+        <!-- <v-tab v-if="esMiembroJekuaa" to="/miembro-jekuaa">
+          <v-icon class="navItemIcon">
             mdi-account-supervisor-circle-outline
           </v-icon>
           <samp class="estiloTexto">Administración</samp>
-        </v-tab>
+        </v-tab> -->
       </v-tabs>
 
       <v-spacer />

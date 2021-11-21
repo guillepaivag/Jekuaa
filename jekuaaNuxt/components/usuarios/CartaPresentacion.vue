@@ -25,7 +25,7 @@
                 <v-btn
                     color="#683bce"
                     text
-                    :to="`/usuario-jekuaa/${usuario.nombreUsuario}`"
+                    :to="`/${usuario.nombreUsuario}`"
                 >
                     Mi perfil
                 </v-btn>
