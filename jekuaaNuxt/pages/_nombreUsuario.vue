@@ -262,7 +262,7 @@ export default {
             response.datosUsuario = await $axios.$post(`/usuarios/estudiante/datosUsuario`, body, config)
             response.authUsuario = await $axios.$post(`/usuarios/estudiante/authUsuario`, body, config)
             response.informacionUsuario = await $axios.$post(`/usuarios/estudiante/informacionUsuario`, body, config)
-            response.ultimosBlogs = await $axios.$get(`/blog/ultimosBlogsPorPublicador/${response.datosUsuario.resultado.uid}`, body, config)
+            response.ultimosBlogs = await $axios.$get(`/blog/estudiante/ultimosBlogsPorPublicador/${response.datosUsuario.resultado.uid}`, body, config)
 
             datosUsuario = response.datosUsuario.resultado
             authUsuario = response.authUsuario.resultado

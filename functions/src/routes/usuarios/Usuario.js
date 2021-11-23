@@ -18,7 +18,8 @@ const {
     esDeMayorNivel,
     verificarDatosRequeridos,
     verificarTipoDeDatosCliente,
-    validarDatosExistentesCliente,
+    validarDatosExistentesClienteCrear,
+    validarDatosExistentesClienteActualizar,
     construirDatosUsuario,
     construirDatosInformacionUsuario,
     sePuedeEliminarPropietario,
@@ -47,6 +48,13 @@ const {
 
 
 // Operaciones para: Usuarios (Estudiantes, MiembroJeuaa, Moderador, Propietario)
+router.post('/estudiante/crearUsuario', 
+    verificarDatosRequeridos, 
+    verificarTipoDeDatosCliente, 
+    validarDatosExistentesClienteCrear,
+    construirDatosUsuario, 
+    crearUsuario)
+
 router.post('/estudiante/datosUsuario', 
     estaAutenticado, 
     obtenerUsuario)
@@ -61,8 +69,9 @@ router.post('/estudiante/informacionUsuario',
 
 router.put('/estudiante/actualizarUsuario', 
     estaAutenticado, 
+    verificarDatosRequeridos, 
     verificarTipoDeDatosCliente,
-    validarDatosExistentesCliente,
+    validarDatosExistentesClienteActualizar,
     construirDatosUsuario,
     actualizarMiUsuario)
 
@@ -96,7 +105,7 @@ router.post('/adminJekuaa/crearUsuario',
     esAdmin, 
     verificarDatosRequeridos, 
     verificarTipoDeDatosCliente, 
-    validarDatosExistentesCliente,
+    validarDatosExistentesClienteCrear,
     construirDatosUsuario, 
     crearUsuario)
 
@@ -114,8 +123,9 @@ router.put('/adminJekuaa/actualizarUsuarioPorUID/:uid',
     estaAutenticado, 
     esAdmin, 
     esDeMayorNivel, 
+    verificarDatosRequeridos, 
     verificarTipoDeDatosCliente,
-    validarDatosExistentesCliente,
+    validarDatosExistentesClienteActualizar,
     sePuedeEliminarPropietario,
     construirDatosUsuario,
     actualizarUsuarioPorUID)

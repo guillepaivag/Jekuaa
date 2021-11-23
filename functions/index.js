@@ -8,11 +8,18 @@ const apiJekuaa = require('./apiJekuaa')
 
 // Funciones Cloud Functions
 const {
-  registrarUsuarioPorCorreoYContrasenha
-} = require('./src/funcionesFirebaseFunctions/usuarios')
-const {
   indexBlogAlgolia
 } = require('./src/funcionesFirebaseFunctions/algolia')
+
+const {
+  eventoCreacionBlog,
+  eventoEliminacionBlog,
+} = require('./src/funcionesFirebaseFunctions/blogs')
+
+const {
+  eventoCreacionUsuario,
+  eventoEliminacionUsuario,
+} = require('./src/funcionesFirebaseFunctions/usuarios')
 
 /*
  * FUNCIONES - FIREBASE CLOUD FUNCTIONS
@@ -29,8 +36,13 @@ exports.nuxtssr = functions.region('southamerica-east1').https.onRequest(appNuxt
 // REST-API de Jekuaa
 exports.apiJekuaa = functions.region('southamerica-east1').https.onRequest(apiJekuaa)
 
-// Función de registro de usuarios de Jekuaa
-exports.registrarUsuarioPorCorreoYContrasenha = registrarUsuarioPorCorreoYContrasenha
+// Funciones para usuarios de Jekuaa
+exports.eventoCreacionUsuario = eventoCreacionUsuario
+exports.eventoEliminacionUsuario = eventoEliminacionUsuario
+
+// Funciones para blogs de Jekuaa
+exports.eventoCreacionBlog = eventoCreacionBlog
+exports.eventoEliminacionBlog = eventoEliminacionBlog
 
 // Indexación para blogs
 exports.indexBlogAlgolia = indexBlogAlgolia

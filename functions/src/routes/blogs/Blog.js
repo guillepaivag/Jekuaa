@@ -34,30 +34,30 @@ const {
 } = require('../../controllers/Blog')
 
 // Operaciones para: Estudiantes
-router.get('/blogConMasMeGusta', 
+router.get('/estudiante/blogConMasMeGusta', 
     blogConMasMeGusta)
 
-router.post('/listaBlogsPorMG', 
+router.post('/estudiante/listaBlogsPorMG', 
     listaBlogsPorMG)
 
-router.get('/ultimosBlogsPorPublicador/:uid', 
+router.get('/estudiante/ultimosBlogsPorPublicador/:uid', 
     ultimosBlogsPorPublicador)
 
-router.get('/obtenerBlog/:uid', 
+router.get('/estudiante/obtenerBlog/:uid', 
     verificacionExistenciaBlog,
     verificacionExistenciaArchivoBlog,
     obtenerBlog)
 
-router.get('/obtenerDatosBlog/:uid', 
+router.get('/estudiante/obtenerDatosBlog/:uid', 
     verificacionExistenciaBlog,
     obtenerDatosBlog)
 
-router.get('/obtenerContenido/:uid',
+router.get('/estudiante/obtenerContenido/:uid',
     verificacionExistenciaBlog,
     verificacionExistenciaArchivoBlog,
     obtenerContenidoBlog)
 
-router.post('/paginarListaBlogs',
+router.post('/estudiante/paginarListaBlogs',
     paginarListaBlogs)
 
 router.post('/estudiante/meGusta/:uid', 
@@ -77,11 +77,12 @@ router.post('/miembroJekuaa/crearBlog',
     construirDatosBlog,
     crearBlog)
 
-router.put('/miembroJekuaa/actualizarDatosBlog/:uid', 
+router.put('/miembroJekuaa/actualizarBlog/:uid', 
     estaAutenticado, 
     esMiembroJekuaa, 
     verificacionExistenciaBlog,
     esPropietarioDelBlog,
+    verificadorDeDatosRequeridos,
     verificadorDeTipoDeDatos,
     verificadorDeDatosBlog,
     construirDatosBlog,
@@ -105,10 +106,11 @@ router.post('/adminJekuaa/crearBlog',
     construirDatosBlog,
     crearBlog)
 
-router.put('/adminJekuaa/actualizarDatosBlog/:uid', 
+router.put('/adminJekuaa/actualizarBlog/:uid', 
     estaAutenticado, 
     esMiembroJekuaa, 
     verificacionExistenciaBlog,
+    verificadorDeDatosRequeridos,
     verificadorDeTipoDeDatos,
     verificadorDeDatosBlog,
     construirDatosBlog,

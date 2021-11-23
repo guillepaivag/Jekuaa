@@ -41,20 +41,16 @@ export default {
   methods: {
     async inicioSesionEmail (user) {
       try {
-        this.$store.dispatch('modules/sistema/setLoading', true)
-
-        const userCredential = await this.$store.dispatch('modules/usuarios/firebaseInicioSesionUser_EmailAndPassword', {
+        await this.$store.dispatch('modules/usuarios/firebaseInicioSesionUser_EmailAndPassword', {
           correo: user.correo,
           contrasenha: user.contrasenha
         })
-        console.log('userCredential', userCredential)
 
         this.$router.push('/')
       } catch (error) {
         console.log('Error - inicioSesionEmail', error)
+        const accion = await this.$store.dispatch('modules/sistema/errorHandler', error)
         
-      } finally {
-        this.$store.dispatch('modules/sistema/setLoading', false)
       }
     }
   }

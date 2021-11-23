@@ -50,10 +50,6 @@
         </v-tab>
       </v-tabs>
 
-      <!-- {{listaSecciones}}
-      {{listaCategorias}}
-      {{listaSubCategorias}} -->
-
       <form >
         <v-tabs-items v-model="tabs">
           <v-tab-item
@@ -520,18 +516,67 @@ export default {
 
       return html
     },
-    enviarDatos () {
-      if (this.accion === 'actualziar') {
-        
+    filtroDeDatosActualizados () {
+      let datosBlog = {}
+      let contenidoBlog = {}
 
-        this.$emit('actualizarBlog', {
-          datosBlog: this.datosBlogAux,
-          contenidoBlog: {
-            html: this.contenidoBlogHTML,
-            md: this.contenidoBlogMD,
-          },
-        })
-        
+      if (this.datosBlogAux.referencia !== this.datosBlog.referencia) {
+        datosBlog.referencia = this.datosBlogAux.referencia
+      }
+
+      if (this.datosBlogAux.titulo !== this.datosBlog.titulo) {
+        datosBlog.titulo = this.datosBlogAux.titulo
+      }
+
+      if (this.datosBlogAux.descripcion !== this.datosBlog.descripcion) {
+        datosBlog.descripcion = this.datosBlogAux.descripcion
+      }
+
+      if (this.datosBlogAux.seccion !== this.datosBlog.seccion) {
+        datosBlog.seccion = this.datosBlogAux.seccion
+      }
+
+      if (this.datosBlogAux.categoria !== this.datosBlog.categoria) {
+        datosBlog.categoria = this.datosBlogAux.categoria
+      }
+
+      if (this.datosBlogAux.subCategorias.length !== this.datosBlog.subCategorias.length) {
+        datosBlog.subCategorias = this.datosBlogAux.subCategorias
+      } else {
+        let cambio = false
+        for (let i = 0; i < this.datosBlogAux.subCategorias.length; i++) {
+          const newElement = this.datosBlogAux.subCategorias[i]
+          cambio = !this.datosBlog.subCategorias.includes(newElement)
+          if (cambio) {
+            datosBlog.subCategorias = this.datosBlogAux.subCategorias
+            break
+          }
+        }
+      }
+
+      if (this.datosBlogAux.publicado !== this.datosBlog.publicado) {
+        datosBlog.publicado = this.datosBlogAux.publicado
+      }
+
+      if (this.contenidoBlogHTML !== this.contenidoBlog) {
+        contenidoBlog = {
+          html: this.contenidoBlogHTML,
+          md: this.contenidoBlogMD,
+        }
+      }
+
+      return {
+        datosBlog,
+        contenidoBlog,
+      }
+    },
+    enviarDatos () {
+      if (this.accion === 'actualizar') {
+        const actualizados = {
+          uidBlog: this.datosBlog.uid,
+          ...this.filtroDeDatosActualizados()
+        }
+        this.$emit('actualizarBlog', actualizados)
         return
       }
 
@@ -590,13 +635,11 @@ export default {
           uid: this.informacionSecciones[this.datosBlog.seccion].uid,
           nombre: this.informacionSecciones[this.datosBlog.seccion].nombre,
         }
-        this.setListaCategorias(this.datosBlog.seccion)
         
         this.categoriaSelected = {
           uid: this.informacionSecciones[this.datosBlog.seccion].categorias[this.datosBlog.categoria].uid,
           nombre: this.informacionSecciones[this.datosBlog.seccion].categorias[this.datosBlog.categoria].nombre,
         }
-        this.setListaSubCategorias(this.datosBlog.seccion, this.datosBlog.categoria)
 
         for (let i = 0; i < this.datosBlog.subCategorias.length; i++) {
           const element = this.datosBlog.subCategorias[i]
@@ -655,6 +698,11 @@ export default {
 
   watch: {
     tabs: function (n, v) {
+      if (!n) {
+        this.tabs = v
+        return
+      }
+
       if (n === 'mobile-tabs-5-1') return
 
       // MD -> HTML: Lo realizado en MD, actualizar al HTML

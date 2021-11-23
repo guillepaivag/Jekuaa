@@ -99,7 +99,7 @@ export default {
                 }
             }
 
-            const response = await this.$axios.post('/blog/paginarListaBlogs', body, config)
+            const response = await this.$axios.post('/blog/estudiante/paginarListaBlogs', body, config)
             this.blogs = response.data.resultado.blogs
             this.ultimaUID = response.data.resultado.ultimaUID
             this.existeMasDatos = response.data.resultado.existeMasDatos
@@ -125,7 +125,7 @@ export default {
                 }
             }
 
-            const response = await this.$axios.post('/blog/paginarListaBlogs', body, config)
+            const response = await this.$axios.post('/blog/estudiante/paginarListaBlogs', body, config)
             const nuevosBlogs = response.data.resultado.blogs
 
             this.blogs.push(...nuevosBlogs)
@@ -159,7 +159,7 @@ export default {
             }
         }
 
-        const response = await $axios.post('/blog/paginarListaBlogs', body, config)
+        const response = await $axios.post('/blog/estudiante/paginarListaBlogs', body, config)
         let blogs = response.data.resultado.blogs
         let ultimaUID = response.data.resultado.ultimaUID
         let existeMasDatos = response.data.resultado.existeMasDatos

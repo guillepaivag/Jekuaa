@@ -53,6 +53,9 @@
   "AdminListaUsuarios": {
     "description": "Auto imported from components/admin/listaUsuarios.vue"
   },
+  "AuthEmail": {
+    "description": "Auto imported from components/auth/authEmail.vue"
+  },
   "BlogsBuscadorBlogs": {
     "description": "Auto imported from components/blogs/buscador-blogs.vue"
   },
@@ -62,12 +65,6 @@
   "BlogsFiltroBlogs": {
     "description": "Auto imported from components/blogs/filtro-blogs.vue"
   },
-  "BlogsFormularioBlogHtml": {
-    "description": "Auto imported from components/blogs/formulario-blog-html.vue"
-  },
-  "BlogsFormularioBlogMd": {
-    "description": "Auto imported from components/blogs/formulario-blog-md.vue"
-  },
   "BlogsFormularioBlog": {
     "description": "Auto imported from components/blogs/formulario-blog.vue"
   },
@@ -76,9 +73,6 @@
   },
   "BlogsListaBlogs": {
     "description": "Auto imported from components/blogs/lista-blogs.vue"
-  },
-  "AuthEmail": {
-    "description": "Auto imported from components/auth/authEmail.vue"
   },
   "UsuariosCartaPresentacion": {
     "description": "Auto imported from components/usuarios/CartaPresentacion.vue"

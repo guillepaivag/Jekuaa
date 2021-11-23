@@ -323,7 +323,7 @@ export default {
           }
         }
         
-        let response = await this.$axios.post('/blog/listaBlogsPorMG', body, config)
+        let response = await this.$axios.post('/blog/estudiante/listaBlogsPorMG', body, config)
         const listaDatosBlogs = response.data.resultado
 
         this.listaDatosBlogs = []

@@ -94,23 +94,18 @@ export default {
       let data = {}
 
       if (this.action == 'r') {
-        
-        if ( this.contrasenha === this.confirmacionContrasenha ) {
-          data = {
-            nombreUsuario: this.nombreUsuario,
-            nombreCompleto: this.nombreCompleto,
-            correo: this.correo,
-            contrasenha: this.contrasenha,
-            // fechaNacimiento: this.$firebase.firestore.Timestamp.fromDate(new Date(this.fechaNacimiento.replace('-', '/').replace('-', '/')))
-          }
-        } else {
-          
+        data = {
+          nombreUsuario: this.nombreUsuario,
+          nombreCompleto: this.nombreCompleto,
+          correo: this.correo,
+          contrasenha: this.contrasenha,
+          confirmacionContrasenha: this.confirmacionContrasenha,
         }
 
       } else {
         data = {
           correo: this.correo,
-          contrasenha: this.contrasenha
+          contrasenha: this.contrasenha,
         }
       }
 

@@ -351,17 +351,17 @@ export const actions = {
   async firebaseRegistroUser_EmailAndPassword ({ dispatch, state }, usuario) {
     console.log('[STORE ACTIONS] - firebaseRegistroUser_EmailAndPassword')
 
-    const registrarUsuarioPorCorreoYContrasenha = this.$firebase.functions().httpsCallable('registrarUsuarioPorCorreoYContrasenha')
-
-    const datosRegistroUsuario = await registrarUsuarioPorCorreoYContrasenha({
-      correo: usuario.correo,
+    const datosRegistroUsuario = await this.$axios.$post('/usuarios/estudiante/crearUsuario', {
+      datosUsuario: {
+        nombreUsuario: usuario.nombreUsuario,
+        correo: usuario.correo,
+        nombreCompleto: usuario.nombreCompleto,
+      },
       contrasenha: usuario.contrasenha,
-      nombreUsuario: usuario.nombreUsuario,
-      nombreCompleto: usuario.nombreCompleto
+      confirmacionContrasenha: usuario.confirmacionContrasenha,
     })
-
-    // Retornar datos de registro del usuario
-    return datosRegistroUsuario.data.respuesta.resultado
+    
+    return datosRegistroUsuario.resultado
   },
 
   async firebaseInicioSesionUser_EmailAndPassword ({ dispatch, state }, usuario) {

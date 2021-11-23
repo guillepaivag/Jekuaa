@@ -95,7 +95,6 @@ controllerMiembroJekuaa.crearUsuario = async (req, res) => {
     try {
         const { jekuaaDatos, body } = req
         const { datosUsuario, contrasenha } = body
-        const { uidSolicitante, datosAuthSolicitante } = jekuaaDatos
 
         // Crear usuario
         const datosUsuarioNuevo = await Usuario.crearNuevoUsuario( datosUsuario, contrasenha )

@@ -45,7 +45,7 @@
                                 size="155"
                                 tile
                             >
-                                <v-img src="https://carlofarucci.com/wp-content/uploads/2016/10/como-crear-blog-2019.jpg"></v-img>
+                                <v-img src="https://firebasestorage.googleapis.com/v0/b/jekuaa-py.appspot.com/o/vecteezy_write-to-computer-on-background_.jpg?alt=media&token=1c1589f4-c48b-4e9c-839c-e7be1e7600be"></v-img>
                             </v-avatar>
                             </div>
                         </v-card>
@@ -81,7 +81,7 @@
             <v-divider></v-divider>
 
             <v-row
-                class="mt-5"
+                class="mt-5 mb-5"
                 no-gutters
             >
                 <v-col

@@ -86,25 +86,7 @@ agregarSubCategorias([
 
 export default secciones
 
-
-function agregarSeccion (seccion) {
-    secciones[seccion.uid] = {
-        ...seccion,
-        categorias: {}
-    }
-}
-
-function agregarCategoria (categoria, idSeccion) {
-    secciones[idSeccion].categorias[categoria.uid] = {
-        ...categoria,
-        subCategorias: {}
-    }
-}
-
-function agregarSubCategoria (subCategoria, idSeccion, idCategoria) {
-    secciones[idSeccion].categorias[idCategoria].subCategorias[subCategoria.uid] = subCategoria
-}
-
+// Funciones para agregar varios elementos
 function agregarSecciones (secciones) {
     for (let i = 0; i < secciones.length; i++) {
         const seccion = secciones[i]
@@ -124,4 +106,24 @@ function agregarSubCategorias (subCategorias, idSeccion, idCategoria) {
         const subCategoria = subCategorias[i]
         agregarSubCategoria(subCategoria, idSeccion, idCategoria)
     }
+}
+
+
+// Funciones para agregar un elemento
+function agregarSeccion (seccion) {
+    secciones[seccion.uid] = {
+        ...seccion,
+        categorias: {}
+    }
+}
+
+function agregarCategoria (categoria, idSeccion) {
+    secciones[idSeccion].categorias[categoria.uid] = {
+        ...categoria,
+        subCategorias: {}
+    }
+}
+
+function agregarSubCategoria (subCategoria, idSeccion, idCategoria) {
+    secciones[idSeccion].categorias[idCategoria].subCategorias[subCategoria.uid] = subCategoria
 }

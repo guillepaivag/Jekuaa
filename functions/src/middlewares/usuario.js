@@ -260,56 +260,81 @@ middlewaresUser.validarFotoPerfil = async ( req, res, next ) => {
 }
 
 middlewaresUser.verificarDatosRequeridos = ( req, res, next ) => {
-    const { jekuaaDatos, body } = req
-    const { uidSolicitante, datosAuthSolicitante } = jekuaaDatos
-    const { datosUsuario, contrasenha, confirmacionContrasenha } = body
-    
     try {
-        if ( !datosUsuario ) {
+        const { jekuaaDatos, body } = req
+        const { datosUsuario, contrasenha, confirmacionContrasenha } = body
+        
+        const esOperacionAgregar = req.method === 'POST'
+
+        if (!Object.keys(body).length) {
             throw new ErrorJekuaa({
                 codigo: 'jekuaa/error/usuario_mala_solicitud',
                 mensaje: 'No hay datos para crear un usuario.'
             })
         }
 
-        if ( !contrasenha ) {
+        if ( (!datosUsuario || !Object.keys(datosUsuario).length) && !contrasenha ) {
             throw new ErrorJekuaa({
                 codigo: 'jekuaa/error/usuario_mala_solicitud',
-                mensaje: 'No existe la contraseña.'
+                mensaje: 'No hay datos para crear un usuario.'
             })
         }
+
+        if (esOperacionAgregar) {
+
+            if (Object.keys(body).length !== 3) {
+                throw new ErrorJekuaa({
+                    codigo: 'jekuaa/error/usuario_mala_solicitud',
+                    mensaje: 'No hay datos para crear un usuario.'
+                })
+            }
+
+            if ( !datosUsuario ) {
+                throw new ErrorJekuaa({
+                    codigo: 'jekuaa/error/usuario_mala_solicitud',
+                    mensaje: 'No hay datos para crear un usuario.'
+                })
+            }
     
-        if ( !confirmacionContrasenha ) {
-            throw new ErrorJekuaa({
-                codigo: 'jekuaa/error/usuario_mala_solicitud',
-                mensaje: 'No existe la confirmación de contraseña.'
-            })
-        }
-    
-        const {
-            uid,
-            nombreUsuario,
-            correo,
-            nombreCompleto,
-            fechaNacimiento,
-            jekuaaPremium,
-            jekuaaRol,
-            instructor,
-            jekuaaPoint
-        } = datosUsuario
-    
-        if ( !nombreUsuario ) {
-            throw new ErrorJekuaa({
-                codigo: 'jekuaa/error/usuario_mala_solicitud',
-                mensaje: 'No existe el nombre de usuario.'
-            })
-        }
-    
-        if ( !correo ) {
-            throw new ErrorJekuaa({
-                codigo: 'jekuaa/error/usuario_mala_solicitud',
-                mensaje: 'No existe el correo.'
-            })
+            if ( !contrasenha ) {
+                throw new ErrorJekuaa({
+                    codigo: 'jekuaa/error/usuario_mala_solicitud',
+                    mensaje: 'No existe la contraseña.'
+                })
+            }
+        
+            if ( !confirmacionContrasenha ) {
+                throw new ErrorJekuaa({
+                    codigo: 'jekuaa/error/usuario_mala_solicitud',
+                    mensaje: 'No existe la confirmación de contraseña.'
+                })
+            }
+
+            const {
+                uid,
+                nombreUsuario,
+                correo,
+                nombreCompleto,
+                fechaNacimiento,
+                jekuaaPremium,
+                jekuaaRol,
+                instructor,
+                jekuaaPoint
+            } = datosUsuario
+        
+            if ( !nombreUsuario ) {
+                throw new ErrorJekuaa({
+                    codigo: 'jekuaa/error/usuario_mala_solicitud',
+                    mensaje: 'No existe el nombre de usuario.'
+                })
+            }
+        
+            if ( !correo ) {
+                throw new ErrorJekuaa({
+                    codigo: 'jekuaa/error/usuario_mala_solicitud',
+                    mensaje: 'No existe el correo.'
+                })
+            }
         }
         
         next()
@@ -319,70 +344,80 @@ middlewaresUser.verificarDatosRequeridos = ( req, res, next ) => {
 }
 
 middlewaresUser.verificarTipoDeDatosCliente = ( req, res, next ) => {
-    const { jekuaaDatos, body } = req
-    const { datosUsuario, contrasenha, confirmacionContrasenha } = body
-    const { uidSolicitante, datosAuthSolicitante } = jekuaaDatos
-
     try {
+        const { jekuaaDatos, body } = req
+        const { datosUsuario, contrasenha, confirmacionContrasenha } = body
+
         const esRutaAdmin = req.originalUrl.split('/')[2] === 'adminJekuaa'
 
-        const {
-            uid,
-            nombreUsuario,
-            correo,
-            nombreCompleto,
-            fechaNacimiento,
-            jekuaaPremium,
-            jekuaaRol,
-            instructor,
-            jekuaaPoint
-        } = datosUsuario
-    
-        if ( nombreUsuario && typeof nombreUsuario != 'string' ) {
-            throw new TypeError('El nombreUsuario debe ser de tipo string.', 'Usuario.js')
-        }
-    
-        if ( correo && typeof correo != 'string' ) {
-            throw new TypeError('El correo debe ser de tipo string.', 'Usuario.js')
-        }
-    
-        if ( nombreCompleto && typeof nombreCompleto != 'string' ) {
-            throw new TypeError('Debe de ser de tipo string el nombre completo del usuario.', 'Usuario.js')
-        }
-    
-        if ( fechaNacimiento && typeof fechaNacimiento != 'number' ) {
-            throw new TypeError('La fecha de nacimiento debe ser de tipo number en milisegundos.', 'Usuario.js')
-        }
-    
-        if (esRutaAdmin) {
+        if (datosUsuario) {
+            if (typeof datosUsuario != 'object') {
+                throw new ErrorJekuaa({
+                    codigo: 'jekuaa/error/usuario_mala_solicitud',
+                    mensaje: 'Los datos usuario debe ser un objecto.'
+                })
+            }
 
-            if ( jekuaaPremium ) {
-                if ( typeof jekuaaPremium != 'object' ) {
-                    throw new TypeError('El campo jekuaaPremium debe ser un objeto.', 'Usuario.js')
+            const {
+                uid,
+                nombreUsuario,
+                correo,
+                nombreCompleto,
+                fechaNacimiento,
+                jekuaaPremium,
+                jekuaaRol,
+                instructor,
+                jekuaaPoint
+            } = datosUsuario
+        
+            if ( nombreUsuario && typeof nombreUsuario != 'string' ) {
+                throw new TypeError('El nombreUsuario debe ser de tipo string.', 'Usuario.js')
+            }
+        
+            if ( correo && typeof correo != 'string' ) {
+                throw new TypeError('El correo debe ser de tipo string.', 'Usuario.js')
+            }
+        
+            if ( nombreCompleto && typeof nombreCompleto != 'string' ) {
+                throw new TypeError('Debe de ser de tipo string el nombre completo del usuario.', 'Usuario.js')
+            }
+        
+            if ( fechaNacimiento && typeof fechaNacimiento != 'number' ) {
+                throw new TypeError('La fecha de nacimiento debe ser de tipo number en milisegundos.', 'Usuario.js')
+            }
+        
+            if (esRutaAdmin) {
+    
+                if ( jekuaaPremium ) {
+                    if ( typeof jekuaaPremium != 'object' ) {
+                        throw new TypeError('El campo jekuaaPremium debe ser un objeto.', 'Usuario.js')
+                    }
+                    const verificadorFormato = new JekuaaPremium(jekuaaPremium)
+                    verificadorFormato.validarTodosLosTiposDeDatos('cliente')
                 }
-                const verificadorFormato = new JekuaaPremium(jekuaaPremium)
-                verificadorFormato.validarTodosLosTiposDeDatos('cliente')
-            }
-        
-            if ( jekuaaRol && typeof jekuaaRol != 'string' ) {
-                throw new TypeError('El rol debe de ser de tipo string.', 'Usuario.js')
-            }
-        
-            if ( instructor !== undefined && typeof instructor != 'boolean' ) {
-                throw new TypeError('El estado instructor debe ser de tipo boolean.', 'Usuario.js')
-            }
-        
-            if ( jekuaaPoint && typeof jekuaaPoint != 'number' ) {
-                throw new TypeError('El jekuaaPoint no es de tipo numerico.', 'Usuario.js')
+            
+                if ( jekuaaRol && typeof jekuaaRol != 'string' ) {
+                    throw new TypeError('El rol debe de ser de tipo string.', 'Usuario.js')
+                }
+            
+                if ( instructor !== undefined && typeof instructor != 'boolean' ) {
+                    throw new TypeError('El estado instructor debe ser de tipo boolean.', 'Usuario.js')
+                }
+            
+                if ( jekuaaPoint && typeof jekuaaPoint != 'number' ) {
+                    throw new TypeError('El jekuaaPoint no es de tipo numerico.', 'Usuario.js')
+                }
             }
         }
-    
-        if ( contrasenha && typeof contrasenha != 'string' ) {
-            throw new TypeError('La contraseña debe ser de tipo string.', 'Usuario.js')
-        }
-    
-        if ( contrasenha && confirmacionContrasenha && typeof confirmacionContrasenha != 'string' ) {
-            throw new TypeError('La confirmación de contraseña debe ser de tipo string.', 'Usuario.js')
+
+        if (contrasenha) {
+            if ( typeof contrasenha != 'string' ) {
+                throw new TypeError('La contraseña debe ser de tipo string.', 'Usuario.js')
+            }
+        
+            if ( typeof confirmacionContrasenha != 'string' ) {
+                throw new TypeError('La confirmación de contraseña debe ser de tipo string.', 'Usuario.js')
+            }
         }
 
         next()
@@ -392,36 +427,34 @@ middlewaresUser.verificarTipoDeDatosCliente = ( req, res, next ) => {
     }
 }
 
-middlewaresUser.validarDatosExistentesCliente = async (req, res, next) => {
+middlewaresUser.validarDatosExistentesClienteCrear = async (req, res, next) => {
     const { jekuaaDatos, params, body } = req
     const { datosUsuario, contrasenha, confirmacionContrasenha } = body
-    const { uidSolicitante, datosAuthSolicitante } = jekuaaDatos
     
     try {
         const esRutaAdmin = req.originalUrl.split('/')[2] === 'adminJekuaa'
-        const esOperacionAgregar = req.method === 'POST'
-        
-        const {
-            nombreUsuario,
-            correo,
-            nombreCompleto,
-            fechaNacimiento,
-            jekuaaPremium,
-            jekuaaRol,
-            instructor,
-            jekuaaPoint
-        } = datosUsuario
+
+        if  (esRutaAdmin) {
+            var { uidSolicitante, datosAuthSolicitante } = jekuaaDatos
+        }
     
         let cantidadCaracteresValido
         let correoValido
         let fechaNacimientoValido
         let valido
-
-        const uid = esRutaAdmin ? params.uid : uidSolicitante
-
-        const datosActualesUsuario = await admin.auth().getUser(uid)
     
         if (datosUsuario) {
+            const {
+                nombreUsuario,
+                correo,
+                nombreCompleto,
+                fechaNacimiento,
+                jekuaaPremium,
+                jekuaaRol,
+                instructor,
+                jekuaaPoint
+            } = datosUsuario
+
             // Nombre de usuario
             if ( nombreUsuario ) {
                 // Verificar que sea alfanumerico
@@ -527,12 +560,206 @@ middlewaresUser.validarDatosExistentesCliente = async (req, res, next) => {
                 // Instructor
                 if ( instructor != undefined ) {
     
-                    let rol = jekuaaRol
-
-                    if (!jekuaaRol) {
-                        rol = esOperacionAgregar ? 
-                        'estudiante' : datosActualesUsuario.customClaims.jekuaaRol
+                    let rol = jekuaaRol ? jekuaaRol : 'estudiante' 
+                    
+                    // Verificar si tiene permiso
+                    const permisoInstructor = await Instructor.permisoPorRol(rol)
+                    if (instructor && permisoInstructor === 'no-permitido') {
+                        throw new ErrorJekuaa({
+                            codigo: 'jekuaa/error/usuario_mala_solicitud',
+                            mensaje: 'Este rol no tiene permisos de instructor.'
+                        })
+                    } else if (!instructor && permisoInstructor === 'requerido') {
+                        throw new ErrorJekuaa({
+                            codigo: 'jekuaa/error/usuario_mala_solicitud',
+                            mensaje: 'Este rol necesita ser instructor.'
+                        })
                     }
+                }
+    
+                // Jekuaa Points
+                if (jekuaaPoint) {
+                    valido = jekuaaPoint >= 0
+                    if ( !valido ) {
+                        throw new ErrorJekuaa({
+                            codigo: 'jekuaa/error/usuario_mala_solicitud',
+                            mensaje: 'El Jekuaa Point debe ser mayor o igual a 0.'
+                        })
+                    }
+                }
+            }
+        }
+    
+        // Contraseñas
+        if ( contrasenha ) {
+            cantidadCaracteresValido = contrasenha.length >= 6 && contrasenha.length <= 20
+            valido = cantidadCaracteresValido
+            if ( !valido ) {
+                throw new ErrorJekuaa({
+                    codigo: 'jekuaa/error/usuario_mala_solicitud',
+                    mensaje: 'La contraseña debe ser mayor o igual a 6 y menor o igual a 20.'
+                })
+            }
+        
+            cantidadCaracteresValido = confirmacionContrasenha.length >= 6 && confirmacionContrasenha.length <= 20
+            valido = cantidadCaracteresValido
+            if ( !valido ) {
+                throw new ErrorJekuaa({
+                    codigo: 'jekuaa/error/usuario_mala_solicitud',
+                    mensaje: 'La confirmación de contraseña debe ser mayor o igual a 6 y menor o igual a 20.'
+                })
+            }
+        
+            if (contrasenha !== confirmacionContrasenha) {
+                throw new ErrorJekuaa({
+                    codigo: 'jekuaa/error/usuario_mala_solicitud',
+                    mensaje: 'La contraseña debe ser igual a la confirmación de contraseña.'
+                })
+            }
+        }
+
+        next()
+
+    } catch (error) {
+        next(error)
+    }
+}
+
+middlewaresUser.validarDatosExistentesClienteActualizar = async (req, res, next) => {
+    try {
+        const { jekuaaDatos, params, body } = req
+        const { datosUsuario, contrasenha, confirmacionContrasenha } = body
+        const { uidSolicitante, datosAuthSolicitante } = jekuaaDatos
+
+        const esRutaAdmin = req.originalUrl.split('/')[2] === 'adminJekuaa'
+    
+        let cantidadCaracteresValido
+        let correoValido
+        let fechaNacimientoValido
+        let valido
+
+        const uid = esRutaAdmin ? params.uid : uidSolicitante
+
+        const datosActualesUsuario = await admin.auth().getUser(uid)
+    
+        if (datosUsuario) {
+            const {
+                nombreUsuario,
+                correo,
+                nombreCompleto,
+                fechaNacimiento,
+                jekuaaPremium,
+                jekuaaRol,
+                instructor,
+                jekuaaPoint
+            } = datosUsuario
+
+            // Nombre de usuario
+            if ( nombreUsuario ) {
+                // Verificar que sea alfanumerico
+                if (!esAlfanumerico(nombreUsuario)) {
+                    throw new ErrorJekuaa({
+                        codigo: 'jekuaa/error/usuario_mala_solicitud',
+                        mensaje: 'El nombre de usuario solo puede tener (a-z) (A-Z) (0-9) (_).'
+                    })
+                }
+                
+                // Verificar tamaño
+                cantidadCaracteresValido = nombreUsuario.length >= 1 && nombreUsuario.length <= 20
+                valido = cantidadCaracteresValido
+                if ( !valido ) {
+                    throw new ErrorJekuaa({
+                        codigo: 'jekuaa/error/usuario_mala_solicitud',
+                        mensaje: 'El nombre de usuario debe ser mayor a 0 y menor a 21.'
+                    })
+                }
+
+                await Usuario.errorExisteUsuario({
+                    nombreUsuario: datosUsuario.nombreUsuario
+                })
+            }
+    
+            // Correo
+            if (correo) {
+                cantidadCaracteresValido = correo.length >= 5 && correo.length <= 100
+                correoValido = validarEmail(correo)
+                valido = cantidadCaracteresValido && correoValido
+                if ( !valido ) {
+                    throw new ErrorJekuaa({
+                        codigo: 'jekuaa/error/usuario_mala_solicitud',
+                        mensaje: 'El correo debe ser válido y entre 5 a 100 carácteres.'
+                    })
+                }
+            }
+    
+            // Nombre completo
+            if (nombreCompleto) {
+                cantidadCaracteresValido = nombreCompleto.length >= 1 && nombreCompleto.length <= 100
+                valido = cantidadCaracteresValido
+                if ( !valido ) {
+                    throw new ErrorJekuaa({
+                        codigo: 'jekuaa/error/usuario_mala_solicitud',
+                        mensaje: 'El nombre completo debe ser mayor a 0 y menor a 101.'
+                    })
+                }
+            }
+    
+            // Fecha de nacimiento
+            if (fechaNacimiento) {
+                // Solo si tiene 1 año de edad puede registrarse
+                fechaNacimientoValido = obtenerEdad(fechaNacimiento)
+                valido = fechaNacimientoValido >= 1
+                if ( !valido ) {
+                    throw new ErrorJekuaa({
+                        codigo: 'jekuaa/error/usuario_mala_solicitud',
+                        mensaje: 'El usuario debe tener al menos 1 año de edad.'
+                    })
+                }
+            }
+    
+            if (esRutaAdmin) {
+
+                // Jekuaa Premium
+                if ( jekuaaPremium ) {
+                    const jekuaaPlan = new JekuaaPremium({
+                        plan: jekuaaPremium.plan,
+                        fechaCompra: jekuaaPremium.fechaCompra,
+                        fechaHasta: jekuaaPremium.fechaHasta,
+                    })
+    
+                    await jekuaaPlan.validarDatosCliente()
+                }
+    
+                // Jekuaa Roles
+                if ( jekuaaRol ) {
+                    let documentoRol = await JekuaaRoles.obtenerDocumentoRol(jekuaaRol)
+                    
+                    // Verificar rol valido
+                    if (!documentoRol.exists) {
+                        throw new ErrorJekuaa({
+                            codigo: 'jekuaa/error/usuario_mala_solicitud',
+                            mensaje: 'No existe este rol.'
+                        })
+                    }
+
+                    // Verificar permiso para operar el rol
+                    if ( datosAuthSolicitante.customClaims.jekuaaRol !== 'propietario' ) {
+                        const diferenciaNivelRol = await JekuaaRoles.compararNivelRoles(datosAuthSolicitante.customClaims.jekuaaRol, 
+                            jekuaaRol)
+                
+                        if ( diferenciaNivelRol <= 0 ) {
+                            // No autorizado
+                            throw new ErrorJekuaa({
+                                codigo: 'jekuaa/error/usuario_no_autorizado'
+                            })
+                        }
+                    }
+                }
+    
+                // Instructor
+                if ( instructor != undefined ) {
+    
+                    let rol = jekuaaRol ? jekuaaRol : datosActualesUsuario.customClaims.jekuaaRol
                     
                     // Verificar si tiene permiso
                     const permisoInstructor = await Instructor.permisoPorRol(rol)
@@ -601,7 +828,6 @@ middlewaresUser.construirDatosUsuario = ( req, res, next ) => {
     
     const { jekuaaDatos, body } = req
     const { datosUsuario, contrasenha } = body
-    const { uidSolicitante, datosAuthSolicitante } = jekuaaDatos
 
     try {        
         const esRutaAdmin = req.originalUrl.split('/')[2] === 'adminJekuaa'
@@ -645,6 +871,10 @@ middlewaresUser.sePuedeEliminarPropietario = async ( req, res, next ) => {
     const { uidSolicitante, datosAuthSolicitante } = jekuaaDatos
 
     try {      
+        if (!datosUsuario) {
+            return next()
+        }
+
         if (req.method === 'PUT' && datosUsuario.jekuaaRol === undefined) {
             return next()
         }

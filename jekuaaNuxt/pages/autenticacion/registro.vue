@@ -40,35 +40,27 @@ export default {
     async registroEmail (usuario) {
 
       try {
-        this.setLoading(true)
-
         // REGISTRAMOS UN USUARIO
-        const datosRegistroUsuario = await this.firebaseRegistroUser_EmailAndPassword({
+        const datosUsuario = await this.firebaseRegistroUser_EmailAndPassword({
           nombreUsuario: usuario.nombreUsuario,
           correo: usuario.correo,
+          nombreCompleto: usuario.nombreCompleto,
           contrasenha: usuario.contrasenha,
-          nombreCompleto: usuario.nombreCompleto
+          confirmacionContrasenha: usuario.confirmacionContrasenha,
         })
 
         // INICIO DE SESION DEL USUARIO
         const userCredential = await this.firebaseInicioSesionUser_EmailAndPassword({
           correo: usuario.correo,
-          contrasenha: usuario.contrasenha
+          contrasenha: usuario.contrasenha,
         })
 
-        this.$router.push(`/bienvenido-a-jekuaa/${datosRegistroUsuario.nombreUsuario}`)
+        // REDIRECCIÓN AL USUARIO
+        this.$router.push(`/bienvenido-a-jekuaa/${usuario.nombreUsuario}`)
 
       } catch (error) {
-        this.setError({
-          existe: true,
-          titulo: 'Hubo un error al registrarse',
-          mensaje: 'Hubo un error al registrarse en Jekuaa con correo.',
-          error
-        })
+        const accion = await this.$store.dispatch('modules/sistema/errorHandler', error)
 
-        this.setLoading(false)
-      } finally {
-        // this.setLoading(false)
       }
     }
   },

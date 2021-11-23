@@ -43,53 +43,54 @@ utils_blog.construirDatosParaNuevoBlog = ( datosBlog, contenidoBlog, esRutaAdmin
 }
 
 utils_blog.construirDatosParaActualizacionBlog = ( uidBlog, datosBlog, contenidoBlog, esRutaAdmin ) => {
-    const {
-        uid,                    // constante
-        referencia,             // usuario
-        titulo,                 // usuario
-        descripcion,            // usuario
-        publicador,             // constante
-        seccion,                // usuario
-        categoria,              // usuario
-        subCategorias,          // usuario
-        cantidadMeGusta,        // automatico
-        habilitado,             // adminJk
-        publicado,              // usuario
-        revision,               // adminJk
-        fechaCreacion,          // constante
-        fechaActualizacion,     // automatico
-    } = datosBlog
 
     const datosActualizados = {}
     const resultado = {}
 
-    if (datosBlog != undefined) {
+    if (datosBlog) {
+        const {
+            uid,                    // constante
+            referencia,             // usuario
+            titulo,                 // usuario
+            descripcion,            // usuario
+            publicador,             // constante
+            seccion,                // usuario
+            categoria,              // usuario
+            subCategorias,          // usuario
+            cantidadMeGusta,        // automatico
+            habilitado,             // adminJk
+            publicado,              // usuario
+            revision,               // adminJk
+            fechaCreacion,          // constante
+            fechaActualizacion,     // automatico
+        } = datosBlog
+
         // Referencia del blog
         if (esRutaAdmin && Object.keys(datosBlog).length) {
-            referencia != undefined ? datosActualizados.referencia = referencia : ''
-            titulo != undefined ? datosActualizados.titulo = titulo : ''
-            descripcion != undefined ? datosActualizados.descripcion = descripcion : ''
-            seccion != undefined ? datosActualizados.seccion = seccion : ''
-            categoria != undefined ? datosActualizados.categoria = categoria : ''
-            subCategorias != undefined ? datosActualizados.subCategorias = subCategorias : ''
+            referencia ? datosActualizados.referencia = referencia : ''
+            titulo ? datosActualizados.titulo = titulo : ''
+            descripcion ? datosActualizados.descripcion = descripcion : ''
+            seccion ? datosActualizados.seccion = seccion : ''
+            categoria ? datosActualizados.categoria = categoria : ''
+            subCategorias ? datosActualizados.subCategorias = subCategorias : ''
             habilitado != undefined ? datosActualizados.habilitado = habilitado : ''
             publicado != undefined ? datosActualizados.publicado = publicado : ''
             revision != undefined ? datosActualizados.revision = revision : ''
         }
 
         if (!esRutaAdmin && Object.keys(datosBlog).length) {
-            referencia != undefined ? datosActualizados.referencia = referencia : ''
-            titulo != undefined ? datosActualizados.titulo = titulo : ''
-            descripcion != undefined ? datosActualizados.descripcion = descripcion : ''
-            seccion != undefined ? datosActualizados.seccion = seccion : ''
-            categoria != undefined ? datosActualizados.categoria = categoria : ''
-            subCategorias != undefined ? datosActualizados.subCategorias = subCategorias : ''
+            referencia ? datosActualizados.referencia = referencia : ''
+            titulo ? datosActualizados.titulo = titulo : ''
+            descripcion ? datosActualizados.descripcion = descripcion : ''
+            seccion ? datosActualizados.seccion = seccion : ''
+            categoria ? datosActualizados.categoria = categoria : ''
+            subCategorias ? datosActualizados.subCategorias = subCategorias : ''
             publicado != undefined ? datosActualizados.publicado = publicado : ''
         }
     }
     
     // Archivo del blog
-    if (contenidoBlog != undefined) {
+    if (contenidoBlog) {
         let dirArray = ['..', 'temp', 'blogs']
         let dirVerificacion = path.join(__dirname)
         for (let i = 0; i < dirArray.length; i++) {
@@ -110,7 +111,7 @@ utils_blog.construirDatosParaActualizacionBlog = ( uidBlog, datosBlog, contenido
         resultado.rutaArchivoTemp = rutaArchivoTemp
     }
 
-    if ((datosBlog && Object.keys(datosBlog).length) || contenidoBlog) {
+    if ((datosActualizados && Object.keys(datosActualizados).length) || contenidoBlog) {
         datosActualizados.fechaActualizacion = milliseconds_a_timestamp( Date.now() )
         resultado.datosBlog = datosActualizados
     } else {

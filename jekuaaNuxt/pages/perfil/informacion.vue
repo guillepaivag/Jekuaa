@@ -264,7 +264,6 @@ export default {
     },
     seleccionar(codigo) {
       if (!codigo) return
-      console.log('this.redesSociales', this.redesSociales)
       const existe = !!this.redesSociales.find(x => x.redSocial === codigo)
 
       if (existe) return

@@ -1,10 +1,9 @@
 <template>
     <div>
-
         <div class="titulos">
             <b class="titulo-text">{{ seccion.nombre }} / </b> 
             <b class="titulo-text categoria-text" v-on:click="dialog = !dialog">
-            {{categoriaSeleccionada.nombre}}
+                {{categoriaSeleccionada.nombre}}
             </b>
         </div>
 
@@ -44,14 +43,14 @@
                 </v-card-text>
                 <v-divider></v-divider>
                 <v-card-actions class="justify-center">
-                    <v-btn
+                    <!-- <v-btn
                         v-if="existeMasCategorias"
                         color="blue darken-1"
                         text
                         @click="paginarCategorias"
                     >
                         Mostrar más
-                    </v-btn>
+                    </v-btn> -->
                 </v-card-actions>
             </v-card>
         </v-dialog>
@@ -60,19 +59,18 @@
 </template>
 
 <script>
+import informacionSecciones from '@/helpers/informacionSecciones'
+
 export default {
     data: () => ({
         categorias: [],
-        ultimoDocumentoCategoria: null,
         categoriaSeleccionada: {
             uid: '',
             nombre: '',
         },
         dialog: false,
-        cantidadCategoriasMaxima: 3,
-        existeMasCategorias: true,
-        buscandoCategorias: false,
         hoverCategoria: null,
+        informacionSecciones: informacionSecciones,
     }),
     props: {
         seccion: Object
@@ -81,95 +79,30 @@ export default {
         
     },
     computed: {
-        listaNombreCategorias () {
-            const listaCategorias = []
-            for (let i = 0; i < this.categorias.length; i++) {
-                const element = this.categorias[i]
-                listaCategorias.push(element.nombre)
-            }
 
-            return listaCategorias
-        },
-        categoriaNombreSeleccionada: {
-            set (nombre) {
-                this.categoriaSeleccionada = this.categorias.find(categoria => categoria.nombre === nombre )            
-            },
-            get () {
-                return this.categoriaSeleccionada.nombre
-            },
-        },
     },
     watch: {
         categoriaSeleccionada: function (nuevo, viejo) {
-            if (nuevo.uid === viejo.uid) {
-                return
-            }
-            
+            if (nuevo.uid === viejo.uid) return
             this.$emit('categoriaSeleccionada', nuevo)
         }
     },
     methods: {
-        async inicializarListaCategorias () {
-            const categoriasAux = []
-            this.categorias = []
-            this.ultimoDocumentoCategoria = null
-
-            this.buscandoCategorias = true
-
-            const db = this.$firebase.firestore()
-            let ref = db.collection('Secciones').doc(this.seccion.uid).collection('Categorias')
-            ref = ref.limit( this.cantidadCategoriasMaxima )
-            const documentSnapshots = await ref.get()
-            this.ultimoDocumentoCategoria = documentSnapshots.docs[documentSnapshots.docs.length-1]
-            for (let i = 0; i < documentSnapshots.docs.length; i++) {
-                const element = documentSnapshots.docs[i]
-                categoriasAux.push( element.data() )
-            }
-            if (categoriasAux.length) {
-                await this.verificarSiHayMasCategorias()
-                this.categorias = categoriasAux
+        inicializarListaCategorias () {
+            let arr = Object.keys(this.informacionSecciones[this.seccion.uid].categorias)
+            for (let i = 0; i < arr.length; i++) {
+                const element = arr[i]
+                this.categorias.push({
+                    uid: this.informacionSecciones[this.seccion.uid].categorias[element].uid,
+                    nombre: this.informacionSecciones[this.seccion.uid].categorias[element].nombre,
+                })
             }
 
-            this.buscandoCategorias = false
-        },
-        async paginarCategorias () {
-            // const categoriasAux = JSON.parse( JSON.stringify( this.categorias ) )
-            this.buscandoCategorias = true
-            
-            const db = this.$firebase.firestore()
-            let ref = db.collection('Secciones').doc(this.seccion.uid).collection('Categorias')
-                .startAfter(this.ultimoDocumentoCategoria)
-            ref = ref.limit(this.cantidadCategoriasMaxima)
-            const documentSnapshots = await ref.get()
-            this.ultimoDocumentoCategoria = documentSnapshots.docs[documentSnapshots.docs.length-1]
-            await this.verificarSiHayMasCategorias()
-            for (let i = 0; i < documentSnapshots.docs.length; i++) {
-                const element = documentSnapshots.docs[i]
-                // categoriasAux.push( element.data() )
-                this.categorias.push( element.data() )
-            }
-            // await this.verificarSiHayMasCategorias()
-            // this.categorias = categoriasAux
-
-            this.buscandoCategorias = false
-        },
-        async verificarSiHayMasCategorias (inicio) {
-            const db = this.$firebase.firestore()
-            let ref = db.collection('Secciones').doc(this.seccion.uid).collection('Categorias')
-            if (!inicio) {
-                ref = ref.startAfter(this.ultimoDocumentoCategoria)
-            }
-            ref = ref.limit(1)
-            const siguienteDato = await ref.get()
-            this.existeMasCategorias = !siguienteDato.empty
+            this.categoriaSeleccionada = this.categorias[0]
         },
     },
-    async created() {
-        await this.verificarSiHayMasCategorias(true)
-        if (this.existeMasCategorias) {
-            await this.inicializarListaCategorias()
-            this.categoriaSeleccionada = this.categorias[0]
-        }
+    created() {
+        this.inicializarListaCategorias()
     },
 };
 </script>

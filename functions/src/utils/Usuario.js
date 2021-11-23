@@ -159,77 +159,80 @@ funciones.construirDatosParaNuevoUsuario = ( datosUsuario, contrasenha, esRutaAd
 
 funciones.construirDatosParaActualizarUsuario = ( datosUsuario, contrasenha, esRutaAdmin ) => {
     
-    const {
-        uid,
-        nombreUsuario,
-        correo,
-        nombreCompleto,
-        fechaNacimiento,
-        jekuaaPremium,
-        jekuaaRol,
-        instructor,
-        jekuaaPoint
-    } = datosUsuario
-
     // Cambiamos el formato del cliente al formato servidor
     let resultados = {}
     let datosUsuarioProduccion = {}
     let contrasenhaProduccion = ''
 
-    // Nombre de usuario
-    nombreUsuario ? 
-    datosUsuarioProduccion.nombreUsuario = nombreUsuario.trim() : ''
-
-    // Correo
-    correo ? 
-    datosUsuarioProduccion.correo = correo.trim() : ''
-
-    // Nombre completo
-    nombreCompleto ? 
-    datosUsuarioProduccion.nombreCompleto = nombreCompleto.trim() : ''
-
-    // Fecha de nacimiento
-    fechaNacimiento ? 
-    datosUsuarioProduccion.fechaNacimiento = timestamp.milliseconds_a_timestamp(fechaNacimiento) : null
-
-    if (esRutaAdmin) {
-
-        // Jekuaa Premium
-        if ( jekuaaPremium ) {
-            datosUsuarioProduccion.jekuaaPremium = {}
-            if (JekuaaPremium.esPlanGratis(jekuaaPremium.plan)) {
-                // Datos por defectos
-                datosUsuarioProduccion.jekuaaPremium.plan = 'gratis'
-                datosUsuarioProduccion.jekuaaPremium.fechaCompra = null
-                datosUsuarioProduccion.jekuaaPremium.fechaHasta = null
-            } else {
-                datosUsuarioProduccion.jekuaaPremium.plan = jekuaaPremium.plan.trim()
-                datosUsuarioProduccion.jekuaaPremium.fechaCompra = timestamp.milliseconds_a_timestamp(jekuaaPremium.fechaCompra)
-                datosUsuarioProduccion.jekuaaPremium.fechaHasta = timestamp.milliseconds_a_timestamp(jekuaaPremium.fechaHasta)
-            }  
-        } 
-        
-        // Rol usuario
-        jekuaaRol ? 
-        datosUsuarioProduccion.jekuaaRol = jekuaaRol : ''
-
-        // Instructor
-        instructor ? 
-        datosUsuarioProduccion.instructor = instructor : ''
-
-        // Jekuaa Point
-        jekuaaPoint ? 
-        datosUsuarioProduccion.jekuaaPoint = jekuaaPoint : ''
+    if (datosUsuario) {
+        const {
+            uid,
+            nombreUsuario,
+            correo,
+            nombreCompleto,
+            fechaNacimiento,
+            jekuaaPremium,
+            jekuaaRol,
+            instructor,
+            jekuaaPoint
+        } = datosUsuario
+    
+        // Nombre de usuario
+        nombreUsuario ? 
+        datosUsuarioProduccion.nombreUsuario = nombreUsuario.trim() : ''
+    
+        // Correo
+        correo ? 
+        datosUsuarioProduccion.correo = correo.trim() : ''
+    
+        // Nombre completo
+        nombreCompleto ? 
+        datosUsuarioProduccion.nombreCompleto = nombreCompleto.trim() : ''
+    
+        // Fecha de nacimiento
+        fechaNacimiento ? 
+        datosUsuarioProduccion.fechaNacimiento = timestamp.milliseconds_a_timestamp(fechaNacimiento) : null
+    
+        if (esRutaAdmin) {
+    
+            // Jekuaa Premium
+            if ( jekuaaPremium ) {
+                datosUsuarioProduccion.jekuaaPremium = {}
+                if (JekuaaPremium.esPlanGratis(jekuaaPremium.plan)) {
+                    // Datos por defectos
+                    datosUsuarioProduccion.jekuaaPremium.plan = 'gratis'
+                    datosUsuarioProduccion.jekuaaPremium.fechaCompra = null
+                    datosUsuarioProduccion.jekuaaPremium.fechaHasta = null
+                } else {
+                    datosUsuarioProduccion.jekuaaPremium.plan = jekuaaPremium.plan.trim()
+                    datosUsuarioProduccion.jekuaaPremium.fechaCompra = timestamp.milliseconds_a_timestamp(jekuaaPremium.fechaCompra)
+                    datosUsuarioProduccion.jekuaaPremium.fechaHasta = timestamp.milliseconds_a_timestamp(jekuaaPremium.fechaHasta)
+                }  
+            } 
+            
+            // Rol usuario
+            jekuaaRol ? 
+            datosUsuarioProduccion.jekuaaRol = jekuaaRol : ''
+    
+            // Instructor
+            instructor ? 
+            datosUsuarioProduccion.instructor = instructor : ''
+    
+            // Jekuaa Point
+            jekuaaPoint ? 
+            datosUsuarioProduccion.jekuaaPoint = jekuaaPoint : ''
+        }
     }
 
     // Contraseña
     contrasenha ? contrasenhaProduccion = contrasenha.trim() : ''
 
+    // Obtener datos
     if ( Object.keys(datosUsuarioProduccion).length ) {
         resultados.datosUsuario = datosUsuarioProduccion
     }
 
-    if ( contrasenha ) {
+    if ( contrasenhaProduccion ) {
         resultados.contrasenha = contrasenhaProduccion
     }
 

@@ -248,6 +248,13 @@ controller.blogConMasMeGusta = async (req, res) => {
 
         const docs = await ref.get()
 
+        if (!docs.docs.length) {
+            throw new ErrorJekuaa({
+                codigo: 'jekuaa/error/usuario_mala_solicitud',
+                mensaje: `No hay blogs disponibles.`
+            })
+        }
+
         const doc = docs.docs[0]
 
         const blogMasMeGusta = doc.data()
@@ -378,15 +385,15 @@ controller.actualizarDatosBlog = async (req, res) => {
         let archivoCreado
         if (rutaArchivoTemp) {
             archivoCreado = await Blog.subirArchivoAStorage( rutaArchivoTemp, uid )
+            
+            // Borrar el archivo creado en el servidor
+            fs.unlink(rutaArchivoTemp, (err => {
+                if ( err ) {
+                    console.log('Error al eliminar el archivo temporal: ', err)
+                    return
+                }
+            }))
         }
-
-        // Borrar el archivo creado en el servidor
-        fs.unlink(rutaArchivoTemp, (err => {
-            if ( err ) {
-                console.log('Error al eliminar el archivo temporal: ', err)
-                return
-            }
-        }))
 
         const data = {}
         blogRespuesta ? data.blogRespuesta = blogRespuesta : ''

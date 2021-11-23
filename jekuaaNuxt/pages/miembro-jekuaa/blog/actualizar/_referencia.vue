@@ -28,8 +28,41 @@ export default {
         'formulario-blog': FormularioBlog
     },
     methods: {
-        actualizarBlog(datos) {
+        async actualizarBlog(datos) {
+            try {
+                const { uidBlog, datosBlog, contenidoBlog } = datos
 
+                let token = this.$firebase.auth().currentUser
+
+                token = token ? await token.getIdToken() : ''
+
+                let cambioDatosBlog = !!Object.keys(datosBlog).length
+                let cambioContenidoBlog = !!Object.keys(contenidoBlog).length
+
+                let body = {}
+
+                if (cambioDatosBlog) {
+                    body.datosBlog = datosBlog
+                }
+
+                if (cambioContenidoBlog) {
+                    body.contenidoBlog = contenidoBlog.md
+                }
+
+                let config = {
+                    headers: {
+                        'Content-Type': 'application/json',
+                        Authorization: `Bearer ${token}`
+                    }
+                }
+
+                const respuesta = await this.$axios.$put(`/blog/miembroJekuaa/actualizarBlog/${uidBlog}`, body, config)
+                
+            } catch (error) {
+                console.log('error', error)
+
+                const accion = await this.$store.dispatch('modules/sistema/errorHandler', error)
+            }
         }
     },
     watch: {
@@ -50,7 +83,7 @@ export default {
         datosBlog = docs.docs[0].data()
         
         // Obtener contenido del blog desde la api de Jekuaa
-        const response = await $axios.get(`/blog/obtenerContenido/${datosBlog.uid}`, {
+        const response = await $axios.get(`/blog/estudiante/obtenerContenido/${datosBlog.uid}`, {
             headers: {
                 'Content-Type': 'application/json'
             }

@@ -25,7 +25,7 @@
 import firebase from '@/plugins/firebase'
 import presentacion from '@/components/Presentacion'
 import ListaBlogs from '@/components/ListaBlogs'
-import listaInformacionSecciones from '@/helpers/listaSecciones'
+import informacionSecciones from '@/helpers/informacionSecciones'
 import { ObserveVisibility } from 'vue-observe-visibility'
 
 export default {
@@ -39,11 +39,6 @@ export default {
   },
   data () {
     return {
-      titulo: 'Desarrollo web en 2021',
-      descripcion: `Contrary to popular belief, Lorem Ipsum is not simply random text. 
-        It has roots in a piece of classical Latin literature from 45 BC, making it over 2000 years old. 
-        Richard McClintock, a Latin professor at Hampden-Sydney College in Virginia.`,
-      to: '/blog/desarrollo-web-en-2021',
       srcImg: 'http://www.icorp.com.mx/blog/wp-content/uploads/2021/01/gestion_activos_software.jpg',
     }
   },
@@ -65,7 +60,7 @@ export default {
     }
   },
   async asyncData({app, $axios, isDev, route, store, env, params, query, req, res, redirect, error}) {
-    const response = await $axios.get('/blog/blogConMasMeGusta', {
+    const response = await $axios.get('/blog/estudiante/blogConMasMeGusta', {
       headers: {
         'Content-Type': 'application/json'
       }
@@ -74,6 +69,16 @@ export default {
 
     let pagina = 0
     let secciones = []
+    let listaInformacionSecciones = []
+
+    let arr = Object.keys(informacionSecciones)
+    for (let i = 0; i < arr.length; i++) {
+      const element = arr[i]
+      listaInformacionSecciones.push({
+        uid: informacionSecciones[element].uid,
+        nombre: informacionSecciones[element].nombre,
+      })
+    }
 
     secciones.push(listaInformacionSecciones[pagina*2])
     secciones.push(listaInformacionSecciones[(pagina*2)+1])

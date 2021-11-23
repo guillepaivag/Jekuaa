@@ -195,7 +195,7 @@ export default {
                 }
             }
 
-            let response = await app.$axios.get(`/blog/obtenerContenido/${blog.uid}`, config)
+            let response = await app.$axios.get(`/blog/estudiante/obtenerContenido/${blog.uid}`, config)
 
             const converter = new showdown.Converter()
             contenidoBlog = converter.makeHtml(response.data.resultado.contenido)
