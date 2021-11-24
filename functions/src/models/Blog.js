@@ -5,6 +5,7 @@ const storage = require('../../GoogleStorage')
 const fs = require('fs')
 const showdown  = require('showdown')
 const Usuario = require('./Usuario')
+const configJekuaa = require('../../configJekuaa')
 
 const COLECCION_BLOG = 'Blogs'
 const COLECCION_BLOG_ACTUALIZACIONES = 'Actualizaciones'
@@ -302,7 +303,7 @@ class Blog {
     }
 
     async obtenerContenido ( opciones ) {
-        let rutaCloudStorage = process.env.NODE_ENV ? 'blogs/prod' : 'blogs/dev'
+        let rutaCloudStorage = configJekuaa.environment.mode === 'production' ? 'blogs/prod' : 'blogs/dev'
 
         const bucket = storage.bucket('jekuaa-blogs')
 
@@ -402,7 +403,7 @@ class Blog {
     static async subirArchivoAStorage ( rutaArchivo, uid ) {
         const bucket = storage.bucket('jekuaa-blogs')
 
-        const rutaModo = process.env.NODE_ENV ? 'prod' : 'dev'
+        const rutaModo = configJekuaa.environment.mode === 'production' ? 'prod' : 'dev'
         const response = await bucket.upload(rutaArchivo, {
             destination: `blogs/${rutaModo}/${uid}.md`,
             uploadType: 'media',
@@ -473,7 +474,7 @@ class Blog {
 
     static async eliminarArchivoBlog ( nombreArchivo ) {
         const bucket = storage.bucket('jekuaa-blogs')
-        const modo = process.env.NODE_ENV ? 'prod' : 'dev'
+        const modo = configJekuaa.environment.mode === 'production' ? 'prod' : 'dev'
         const file = bucket.file(`blogs/${modo}/${nombreArchivo}.md`)
 
         const existe = (await file.exists())[0]
@@ -537,14 +538,15 @@ class Blog {
     }
 
     static async inicializarListaBlogs (opciones) {
-        let { maximoPorPagina, filtros } = opciones
+        let { maximoPorPagina, filtros, ruta, } = opciones
         
         !maximoPorPagina ? maximoPorPagina = 5 : ''
         
         let blogs = []
 
         let ref = db.collection('Blogs')
-        ref = Blog.filtrar( ref, filtros )
+
+        ref = Blog.filtrar( ref, filtros, ruta )
         ref = ref.orderBy('uid').limit( maximoPorPagina )
         const documentSnapshots = await ref.get()
         
@@ -572,6 +574,7 @@ class Blog {
         const existeMasDatos = blogs.length ? await Blog.verificarSiHayMasDatos({
             ultimaUID,
             filtros,
+            ruta,
         }) : false
         
         return {
@@ -582,14 +585,15 @@ class Blog {
     }
 
     static async paginarListaBlogs (opciones) {
-        let { ultimaUID, maximoPorPagina, filtros, } = opciones
+        let { ultimaUID, maximoPorPagina, filtros, ruta, } = opciones
         
         !maximoPorPagina ? maximoPorPagina = 5 : ''
 
         let blogs = []
         
         let ref = db.collection('Blogs')
-        ref = Blog.filtrar( ref, filtros )
+
+        ref = Blog.filtrar( ref, filtros, ruta )
         ref = ref.orderBy('uid').startAfter(ultimaUID).limit(maximoPorPagina)
         const documentSnapshots = await ref.get()
         
@@ -617,6 +621,7 @@ class Blog {
         const existeMasDatos = await Blog.verificarSiHayMasDatos({
             ultimaUID,
             filtros,
+            ruta,
         })
 
         return {
@@ -627,10 +632,10 @@ class Blog {
     }
 
     static async verificarSiHayMasDatos (opciones) {
-        let { ultimaUID, filtros, } = opciones
+        let { ultimaUID, filtros, ruta, } = opciones
 
         let ref = db.collection('Blogs')
-        ref = Blog.filtrar( ref, filtros )
+        ref = Blog.filtrar( ref, filtros, ruta )
         ref = ref.orderBy('uid').startAfter(ultimaUID).limit(1)
         const siguienteDato = await ref.get()
         const existeMasDatos = !siguienteDato.empty
@@ -638,7 +643,11 @@ class Blog {
         return existeMasDatos
     }
 
-    static filtrar ( ref, filtros ) {
+    static filtrar ( ref, filtros, ruta ) {
+        if (ruta === 'estudiante') {
+            ref = ref.where('habilitado', '==', true).where('publicado', '==', true)
+        }
+
         if (!filtros || !Object.keys(filtros).length) {
             return ref
         }
@@ -651,6 +660,18 @@ class Blog {
         }
         if ( filtros.subCategorias ) {
             ref = ref.where('subCategorias', 'array-contains-any', filtros.subCategorias)
+        }
+        if ( filtros.publicador && ruta !== 'estudiante' ) {
+            ref = ref.where('publicador', '==', filtros.publicador)
+        }
+        if ( filtros.habilitado !== undefined && ruta !== 'estudiante' ) {
+            ref = ref.where('habilitado ', '==', filtros.habilitado)
+        }
+        if ( filtros.publicado !== undefined && ruta !== 'estudiante' ) {
+            ref = ref.where('publicado ', '==', filtros.publicado)
+        }
+        if ( filtros.revision !== undefined && ruta !== 'estudiante' ) {
+            ref = ref.where('revision  ', '==', filtros.revision )
         }
 
         return ref

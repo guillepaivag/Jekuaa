@@ -331,6 +331,7 @@ export default {
 
       } catch (error) {
         console.error(error)
+        const accion = await this.$store.dispatch('modules/sistema/errorHandler', error)
       } finally {
         this.mostrarCarga = false
       }

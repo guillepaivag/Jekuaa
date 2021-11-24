@@ -1,12 +1,18 @@
 <template>
   <div class="">
     <div class="row">
-      <div class="col-md-8 presentacion">
-
+      <div class="col-md-8 presentacion_contenedor">
+        <img 
+          class="imagen"
+          :src="imagen" 
+          alt="Logotipo de cdlibre.org" 
+        >
+        <b class="frase">¡Nunca es tarde para hacer un cambio!</b>
       </div>
       <div class="col-md-4">
         <authEmail
           action="r"
+          :cargando="cargando"
           :data="data"  
           v-on:process="registroEmail($event)"
         />
@@ -30,16 +36,19 @@ export default {
     return {
       data: {
         title: 'Registrarme',
-        btnMessage: 'Registrarme'
-      }
+        btnMessage: 'Registrarme',
+      },
+      cargando: false,
+      imagen: 'https://firebasestorage.googleapis.com/v0/b/jekuaa-py.appspot.com/o/working-at-home.png?alt=media&token=51b948bb-7f3b-483e-bef1-88ed04e7d694',
     }
   },
   methods: {
     ...mapActions('modules/usuarios', ['firebaseRegistroUser_EmailAndPassword', 'firebaseInicioSesionUser_EmailAndPassword', 'login', 'firebaseFirestoreGetUser_UID']),
     ...mapMutations('modules/sistema', ['setLoading', 'setError']),
     async registroEmail (usuario) {
-
       try {
+        this.cargando = true
+
         // REGISTRAMOS UN USUARIO
         const datosUsuario = await this.firebaseRegistroUser_EmailAndPassword({
           nombreUsuario: usuario.nombreUsuario,
@@ -61,6 +70,8 @@ export default {
       } catch (error) {
         const accion = await this.$store.dispatch('modules/sistema/errorHandler', error)
 
+      } finally {
+        this.cargando = false
       }
     }
   },
@@ -69,17 +80,83 @@ export default {
 </script>
 
 <style scoped>
+@import url('https://fonts.googleapis.com/css2?family=Srisakdi&display=swap');
 
-@media (min-width: 0px) and (max-width: 959px) { 
-  .presentacion {
-    display: none;
+.imagen {
+  width: 350px;
+}
+
+.frase {
+  font-weight: normal; 
+  font-family: 'Srisakdi', cursive;
+  margin-left: 40px;
+  font-size: 30px;
+  color: #ffffff;
+}
+
+.presentacion_contenedor {
+  width: 50%;
+  height: 100vh;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #683bce;
+  background-image: linear-gradient(43deg, #683bce 43%, #ff1d89 91%);
+
+}
+
+@media (min-width: 0px) and (max-width: 1430px) { 
+  .imagen {
+    width: 300px;
+  }
+  .frase {
+    margin-left: 40px;
+    font-size: 27px;
   }
 }
 
-.presentacion {
-  width: 50%;
-  height: 100vh;
-  background-color: #683bce; 
+@media (min-width: 0px) and (max-width: 1370px) { 
+  .imagen {
+    width: 250px;
+  }
 }
 
+@media (min-width: 0px) and (max-width: 1190px) { 
+  .imagen {
+    width: 250px;
+  }
+}
+
+@media (min-width: 0px) and (max-width: 1150px) { 
+  .imagen {
+    width: 200px;
+  }
+  .frase {
+    margin-left: 30px;
+    font-size: 24px;
+  }
+}
+
+@media (min-width: 0px) and (max-width: 1040px) { 
+  .imagen {
+    width: 200px;
+  }
+  .frase {
+    margin-left: 35px;
+    font-size: 20px;
+  }
+}
+
+@media (min-width: 0px) and (max-width: 1000px) { 
+  .frase {
+    margin-left: 10px;
+  }
+}
+
+@media (min-width: 0px) and (max-width: 959px) { 
+  .presentacion_contenedor {
+    display: none !important;
+  }
+}
 </style>

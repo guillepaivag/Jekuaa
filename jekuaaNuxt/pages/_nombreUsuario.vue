@@ -244,16 +244,13 @@ export default {
         const nombreUsuario = params.nombreUsuario
 
         try {
-            let token = store.state.modules.usuarios.token
-
             let body = {
                 nombreUsuario
             }
 
             let config = {
                 headers: {
-                    'Content-Type': 'application/json',
-                    Authorization: `Bearer ${token}`
+                    'Content-Type': 'application/json'
                 }
             }
 

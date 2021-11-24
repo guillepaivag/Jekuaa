@@ -5,6 +5,7 @@ const JekuaaRoles = require('./JekuaaRoles')
 const ErrorJekuaa = require('./Error/ErroresJekuaa')
 const utilsUsuario = require('../utils/Usuario')
 const storage = require('../../GoogleStorage')
+const configJekuaa = require('../../configJekuaa')
 
 const COLECCION_USUARIO = 'Usuarios'
 
@@ -378,7 +379,7 @@ class Usuario {
     static async subirFotoPerfil ( opciones = { rutaArchivo, uidSolicitante, extensionArchivo } ) {
         const bucket = storage.bucket('jekuaa-fotoperfil')
 
-        const rutaModo = process.env.NODE_ENV ? 'prod' : 'dev'
+        const rutaModo = configJekuaa.environment.mode === 'production' ? 'prod' : 'dev'
         const response = await bucket.upload(opciones.rutaArchivo, {
             destination: `${rutaModo}/${opciones.uidSolicitante}.${opciones.extensionArchivo}`,
             uploadType: 'media',
@@ -398,7 +399,7 @@ class Usuario {
         const action = 'read'
         const cienAnhos = (31557600 * 1000)
         const expires = Date.now() + cienAnhos * 1000
-        const rutaModo = process.env.NODE_ENV ? 'prod' : 'dev'
+        const rutaModo = configJekuaa.environment.mode === 'production' ? 'prod' : 'dev'
         const rutaArchivo = `${rutaModo}/${nombreArchivo}`
 
         const bucket = storage.bucket('jekuaa-fotoperfil')
@@ -422,9 +423,7 @@ class Usuario {
     }
 
     static async eliminarFotoPerfilPorUID ( uidUsuario ) {
-        console.log('process.env.NODE_ENV', process.env.NODE_ENV)
-
-        const rutaModo = process.env.NODE_ENV ? 'prod' : 'dev'
+        const rutaModo = configJekuaa.environment.mode === 'production' ? 'prod' : 'dev'
 
         const bucket = admin.storage().bucket('jekuaa-fotoperfil')
         const resultado = await bucket.deleteFiles({

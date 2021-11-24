@@ -1,14 +1,14 @@
 <template>
     <div class="container">
-
-        <div>
+        <div v-if="datosBlog">
             <formulario-blog 
                 :datosBlog="datosBlog" 
                 :contenidoBlog="contenidoBlog" 
                 :accion="'actualizar'" 
                 @actualizarBlog="actualizarBlog($event)"
             />
-
+        </div>
+        <div v-else>
         </div>
     </div>
 </template>
@@ -21,7 +21,9 @@ export default {
     name: '',
     data() {
         return {
-            
+            datosBlog: null,
+            contenidoBlog: '',
+            imgBlog: '',
         }
     },
     components: {
@@ -35,6 +37,7 @@ export default {
                 let token = this.$firebase.auth().currentUser
 
                 token = token ? await token.getIdToken() : ''
+                this.$store.commit('modules/usuarios/setTOKEN', token)
 
                 let cambioDatosBlog = !!Object.keys(datosBlog).length
                 let cambioContenidoBlog = !!Object.keys(contenidoBlog).length
@@ -60,7 +63,6 @@ export default {
                 
             } catch (error) {
                 console.log('error', error)
-
                 const accion = await this.$store.dispatch('modules/sistema/errorHandler', error)
             }
         }
@@ -68,38 +70,95 @@ export default {
     watch: {
         
     },
-    async asyncData({isDev, route, $firebase, $axios, store, env, params, query, req, res, redirect, error}) {
-        // Variables
-        let datosBlog = null
-        let contenidoBlog = ''
-        let imgBlog = ''
-        
-        // Obtener datos de blog desde firebase
-        const db = $firebase.firestore()
+    async created() {
+        try {
+            // Variables
+            let datosBlog = null
+            let contenidoBlog = ''
+            let imgBlog = ''
+            
+            // Obtener datos de blog desde firebase
+            const db = this.$firebase.firestore()
 
-        const ref = db.collection('Blogs').where('referencia', '==', params.referencia)
-        const docs = await ref.get()
-        
-        datosBlog = docs.docs[0].data()
-        
-        // Obtener contenido del blog desde la api de Jekuaa
-        const response = await $axios.get(`/blog/estudiante/obtenerContenido/${datosBlog.uid}`, {
-            headers: {
-                'Content-Type': 'application/json'
+            const ref = db.collection('Blogs').where('referencia', '==', this.$route.params.referencia).limit(1)
+            const docs = await ref.get()
+            const doc = docs.docs[0]
+
+            if (!doc.exists) {
+                this.$router.push('/miembro-jekuaa/blogs/mis-blogs')
             }
-        })
+            
+            datosBlog = doc.data()
 
-        let converter = new showdown.Converter()
+            // Obtener contenido del blog desde la api de Jekuaa
+            let token = this.$firebase.auth().currentUser
+            token = token ? await token.getIdToken() : ''
+            this.$store.commit('modules/usuarios/setTOKEN', token)
+            const response = await this.$axios.get(`/blog/miembroJekuaa/obtenerContenido/${datosBlog.uid}`, {
+                headers: {
+                    'Content-Type': 'application/json',
+                    Authorization: `Bearer ${token}`
+                }
+            })
 
-        contenidoBlog = converter.makeHtml(response.data.resultado.contenido)
-        imgBlog = response.data.resultado.imgBlog
+            let converter = new showdown.Converter()
 
-        return {
-            datosBlog,
-            contenidoBlog,
-            imgBlog,
+            contenidoBlog = converter.makeHtml(response.data.resultado.contenido)
+            imgBlog = response.data.resultado.imgBlog
+
+            this.datosBlog = datosBlog
+            this.contenidoBlog = contenidoBlog
+            this.imgBlog = imgBlog
+        } catch (error) {
+            console.log('error', error)
+            const accion = await this.$store.dispatch('modules/sistema/errorHandler', error)
+            this.$router.push('/miembro-jekuaa/blogs/mis-blogs')
         }
     },
+    // async asyncData({isDev, route, $firebase, $axios, store, env, params, query, req, res, redirect, error}) {
+    //     try {
+    //         // Variables
+    //         let datosBlog = null
+    //         let contenidoBlog = ''
+    //         let imgBlog = ''
+            
+    //         // Obtener datos de blog desde firebase
+    //         const db = $firebase.firestore()
+
+    //         const ref = db.collection('Blogs').where('referencia', '==', params.referencia)
+    //         const docs = await ref.get()
+    //         const doc = docs.docs[0]
+
+    //         if (!doc.exists) {
+    //             redirect('/miembro-jekuaa/blogs/mis-blogs')
+    //         }
+            
+    //         datosBlog = doc.data()
+            
+    //         // Obtener contenido del blog desde la api de Jekuaa
+    //         const token = store.state.modules.usuarios.token
+    //         const response = await $axios.get(`/blog/miembroJekuaa/obtenerContenido/${datosBlog.uid}`, {
+    //             headers: {
+    //                 'Content-Type': 'application/json',
+    //                 Authorization: `Bearer ${token}`
+    //             }
+    //         })
+
+    //         let converter = new showdown.Converter()
+
+    //         contenidoBlog = converter.makeHtml(response.data.resultado.contenido)
+    //         imgBlog = response.data.resultado.imgBlog
+
+    //         return {
+    //             datosBlog,
+    //             contenidoBlog,
+    //             imgBlog,
+    //         }
+    //     } catch (error) {
+    //         console.log('err', error)
+    //         redirect('/miembro-jekuaa/blogs/mis-blogs')
+    //     }
+    // },
 }
 </script>
 

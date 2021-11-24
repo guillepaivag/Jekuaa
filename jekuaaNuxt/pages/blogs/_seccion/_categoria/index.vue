@@ -29,7 +29,7 @@
             </v-card>
         </v-dialog>
 
-        <div class="mt-15">
+        <div class="mt-5 container">
             <v-btn
                 class="btnBuscador mb-3"
                 color="#683bce"
@@ -106,32 +106,37 @@ export default {
             this.buscando = false
         },
         async paginar () {
-            this.buscando = true
+            try {
+                this.buscando = true
 
-            if (!this.existeMasDatos) {
-                return
-            }
-
-            let body = {
-                ultimaUID: this.ultimaUID, 
-                maximoPorPagina: 5,
-                filtros: this.filtros
-            }
-
-            let config = {
-                headers: {
-                    'Content-Type': 'application/json'
+                if (!this.existeMasDatos) {
+                    this.buscando = false
+                    return
                 }
+
+                let body = {
+                    ultimaUID: this.ultimaUID, 
+                    maximoPorPagina: 5,
+                    filtros: this.filtros
+                }
+
+                let config = {
+                    headers: {
+                        'Content-Type': 'application/json'
+                    }
+                }
+
+                const response = await this.$axios.post('/blog/estudiante/paginarListaBlogs', body, config)
+                const nuevosBlogs = response.data.resultado.blogs
+
+                this.blogs.push(...nuevosBlogs)
+                this.ultimaUID = response.data.resultado.ultimaUID
+                this.existeMasDatos = response.data.resultado.existeMasDatos
+            } catch (error) {
+                const accion = await this.$store.dispatch('modules/sistema/errorHandler', error)
+            } finally {
+                this.buscando = false
             }
-
-            const response = await this.$axios.post('/blog/estudiante/paginarListaBlogs', body, config)
-            const nuevosBlogs = response.data.resultado.blogs
-
-            this.blogs.push(...nuevosBlogs)
-            this.ultimaUID = response.data.resultado.ultimaUID
-            this.existeMasDatos = response.data.resultado.existeMasDatos
-
-            this.buscando = false
         },
         async cargarBlogs (data) {
             if (!data.visible || this.buscando || !this.existeMasDatos) {

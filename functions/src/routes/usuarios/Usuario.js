@@ -56,15 +56,12 @@ router.post('/estudiante/crearUsuario',
     crearUsuario)
 
 router.post('/estudiante/datosUsuario', 
-    estaAutenticado, 
     obtenerUsuario)
 
 router.post('/estudiante/authUsuario', 
-    estaAutenticado, 
     obtenerUsuarioAuth)
 
 router.post('/estudiante/informacionUsuario', 
-    estaAutenticado, 
     obtenerUsuarioInfo)
 
 router.put('/estudiante/actualizarUsuario', 

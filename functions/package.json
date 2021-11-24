@@ -7,7 +7,8 @@
     "start": "npm run shell",
     "deploy": "firebase deploy --only functions",
     "logs": "firebase functions:log",
-    "fe": "cd .. && firebase emulators:start --only hosting,functions,firestore,auth,ui --import=./emulator-data --export-on-exit=./emulator-data"
+    "environmentDev": "firebase functions:config:set environment.mode=development && firebase functions:config:get > config_dev.json && firebase functions:config:get",
+    "fe": "npm run environmentDev && cd .. && firebase emulators:start --only hosting,functions,firestore,auth,ui --import=./emulator-data --export-on-exit=./emulator-data"
   },
   "engines": {
     "node": "14"

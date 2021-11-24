@@ -31,7 +31,7 @@
                             color="#683bce"
                             text
                             block
-                            :to="`/blog/${blog.blog.referencia}`"
+                            :to="getURL(blog.blog.referencia)"
                         >
                             Ver blog
                         </v-btn>
@@ -81,6 +81,13 @@ export default {
             this.$emit('cargarBlogs', {
                 visible
             })
+        },
+        getURL (referencia) {
+            if (window.location.href.includes('miembro-jekuaa')) {
+                return `/miembro-jekuaa/blog/${referencia}`
+            } else {
+                return `/blog/${referencia}`
+            }
         }
     },
     watch: {

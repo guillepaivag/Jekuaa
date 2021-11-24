@@ -20,17 +20,21 @@
             </v-btn>
         </div>
 
-        <v-divider class="mt-5 mb-5"></v-divider>
+        <v-divider class="mt-5 mb-0"></v-divider>
 
-        <div>
+        <div v-if="datosBlog">
             <formulario-blog 
                 :datosBlog="datosBlog" 
                 :contenidoBlog="contenidoBlog" 
                 :accion="'leer'" 
             />
         </div>
+        <div v-else>
+
+        </div>
 
         <v-dialog
+            v-if="datosBlog"
             v-model="estadoDialogEliminacion"
             max-width="800px"
         >
@@ -86,6 +90,9 @@ export default {
     name: '',
     data() {
         return {
+            datosBlog: null,
+            contenidoBlog: '',
+            imgBlog: '',
             estadoDialogEliminacion: false,
             uidConfirmacion: '',
             eliminando: false,
@@ -117,7 +124,6 @@ export default {
                 
             } catch (error) {
                 console.log('error', error)
-
                 const accion = await this.$store.dispatch('modules/sistema/errorHandler', error)
             
             } finally {
@@ -128,7 +134,7 @@ export default {
     watch: {
         
     },
-    async asyncData({isDev, route, $firebase, $axios, store, env, params, query, req, res, redirect, error}) {
+    async created() {
         try {
             // Variables
             let datosBlog = null
@@ -136,22 +142,26 @@ export default {
             let imgBlog = ''
             
             // Obtener datos de blog desde firebase
-            const db = $firebase.firestore()
+            const db = this.$firebase.firestore()
 
-            const ref = db.collection('Blogs').where('referencia', '==', params.referencia)
+            const ref = db.collection('Blogs').where('referencia', '==', this.$route.params.referencia)
             const docs = await ref.get()
             const doc = docs.docs[0]
 
             if (!doc.exists) {
-                redirect('/miembro-jekuaa/blogs/mis-blogs')
+                this.$router.push('/miembro-jekuaa/blogs/mis-blogs')
             }
             
             datosBlog = doc.data()
-            
+
             // Obtener contenido del blog desde la api de Jekuaa
-            const response = await $axios.get(`/blog/estudiante/obtenerContenido/${datosBlog.uid}`, {
+            let token = this.$firebase.auth().currentUser
+            token = token ? await token.getIdToken() : ''
+            this.$store.commit('modules/usuarios/setTOKEN', token)
+            const response = await this.$axios.get(`/blog/miembroJekuaa/obtenerContenido/${datosBlog.uid}`, {
                 headers: {
-                    'Content-Type': 'application/json'
+                    'Content-Type': 'application/json',
+                    Authorization: `Bearer ${token}`
                 }
             })
 
@@ -160,14 +170,13 @@ export default {
             contenidoBlog = converter.makeHtml(response.data.resultado.contenido)
             imgBlog = response.data.resultado.imgBlog
 
-            return {
-                datosBlog,
-                contenidoBlog,
-                imgBlog,
-            }
+            this.datosBlog = datosBlog
+            this.contenidoBlog = contenidoBlog
+            this.imgBlog = imgBlog
         } catch (error) {
-            console.log('err', error)
-            redirect('/miembro-jekuaa/blogs/mis-blogs')
+            console.log('error', error)
+            const accion = await this.$store.dispatch('modules/sistema/errorHandler', error)
+            this.$router.push('/miembro-jekuaa/blogs/mis-blogs')
         }
     },
 }

@@ -533,8 +533,21 @@ middlewares.verificacionExistenciaBlog = async (req, res, next) => {
         const { params } = req
         const { uid } = params
 
+        const esRutaEstudiante = req.originalUrl.split('/')[2] === 'estudiante'
+
         await Blog.errorBlogPorUID(uid, 'no-existe')
 
+        if (esRutaEstudiante) {
+            const blog = new Blog()
+            await blog.importarDatosBlogPorUID( uid )
+            if (!blog.publicado || !blog.habilitado) {
+                throw new ErrorJekuaa({
+                    codigo: 'jekuaa/error/usuario_mala_solicitud',
+                    mensaje: `El blog esta deshabilitado.`
+                })
+            }
+        }
+        
         next()
     } catch (error) {
         next(error)
@@ -546,7 +559,7 @@ middlewares.verificacionExistenciaArchivoBlog = async (req, res, next) => {
         const { params } = req
         const { uid } = params
 
-        const rutaModo = process.env.NODE_ENV ? 'prod' : 'dev'
+        const rutaModo = configJekuaa.environment.mode === 'production' ? 'prod' : 'dev'
         const ruta = `blogs/${rutaModo}/${uid}.md`
 
         // Verificacion de existencia de archivo

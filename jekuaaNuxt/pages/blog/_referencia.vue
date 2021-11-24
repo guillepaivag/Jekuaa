@@ -185,9 +185,6 @@ export default {
             const docBlog = docsBlogs.docs[0]
             
             blog = docBlog.data()
-            if (!blog.habilitado || !blog.publicado) {
-                redirect('/blog')
-            }
 
             let config = {
                 headers: {

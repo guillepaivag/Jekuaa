@@ -7,7 +7,6 @@ You can directly use them in pages and other components without the need to impo
 **Tip:** If a component is conditionally rendered with `v-if` and is big, it is better to use `Lazy` or `lazy-` prefix to lazy load.
 
 - `<Editor>` | `<editor>` (components/Editor.vue)
-- `<EditorInformation>` | `<editor-information>` (components/EditorInformation.vue)
 - `<FooterDefault>` | `<footer-default>` (components/FooterDefault.vue)
 - `<ImageInput>` | `<image-input>` (components/ImageInput.vue)
 - `<ListaBlogs>` | `<lista-blogs>` (components/ListaBlogs.vue)
@@ -20,11 +19,11 @@ You can directly use them in pages and other components without the need to impo
 - `<SnackbarError>` | `<snackbar-error>` (components/SnackbarError.vue)
 - `<Spinner>` | `<spinner>` (components/Spinner.vue)
 - `<VideoPlayer>` | `<video-player>` (components/VideoPlayer.vue)
+- `<AuthEmail>` | `<auth-email>` (components/auth/authEmail.vue)
 - `<AdminBuscadorUsuarios>` | `<admin-buscador-usuarios>` (components/admin/buscadorUsuarios.vue)
 - `<AdminConfirmacionAccionPorUID>` | `<admin-confirmacion-accion-por-u-i-d>` (components/admin/confirmacionAccionPorUID.vue)
 - `<AdminFiltroUsuarios>` | `<admin-filtro-usuarios>` (components/admin/filtroUsuarios.vue)
 - `<AdminListaUsuarios>` | `<admin-lista-usuarios>` (components/admin/listaUsuarios.vue)
-- `<AuthEmail>` | `<auth-email>` (components/auth/authEmail.vue)
 - `<BlogsBuscadorBlogs>` | `<blogs-buscador-blogs>` (components/blogs/buscador-blogs.vue)
 - `<BlogsBuscadorInfinitoBlogs>` | `<blogs-buscador-infinito-blogs>` (components/blogs/buscador-infinito-blogs.vue)
 - `<BlogsFiltroBlogs>` | `<blogs-filtro-blogs>` (components/blogs/filtro-blogs.vue)

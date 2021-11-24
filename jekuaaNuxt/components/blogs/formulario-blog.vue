@@ -639,11 +639,13 @@ export default {
             uid: this.informacionSecciones[this.datosBlog.seccion].uid,
             nombre: this.informacionSecciones[this.datosBlog.seccion].nombre,
           }
+          await this.$nextTick()
           
           this.categoriaSelected = {
             uid: this.informacionSecciones[this.datosBlog.seccion].categorias[this.datosBlog.categoria].uid,
             nombre: this.informacionSecciones[this.datosBlog.seccion].categorias[this.datosBlog.categoria].nombre,
           }
+          await this.$nextTick()
 
           for (let i = 0; i < this.datosBlog.subCategorias.length; i++) {
             const element = this.datosBlog.subCategorias[i]
@@ -755,7 +757,7 @@ export default {
       this.subCategoriasSelected = []
       this.listaSubCategorias = []
 
-      this.setListaSubCategorias(this.seccionSelected.uid, n.uid)
+      this.seccionSelected.uid && n.uid ? this.setListaSubCategorias(this.seccionSelected.uid, n.uid) : ''
     },
     subCategoriasSelected: function (n, v) {
       if (n.length === v.length) return

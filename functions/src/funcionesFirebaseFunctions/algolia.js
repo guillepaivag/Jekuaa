@@ -2,11 +2,11 @@ const functions = require('firebase-functions')
 const admin = require('../../firebase-service')
 const algoliasearch = require('algoliasearch')
 
-const config = require('../../config')
+const configJekuaa = require('../../configJekuaa')
 
 const algoliaControllers = {}
 
-const INDEX_NAME = config.environment.mode === 'production' ? 'blogs_prod' : 'blogs_dev'
+const INDEX_NAME = configJekuaa.environment.mode === 'production' ? 'blogs_prod' : 'blogs_dev'
 
 algoliaControllers.indexBlogAlgolia = 
 functions.region('southamerica-east1').firestore.document('Blogs/{blogId}').onWrite(async ( change, context ) => {
@@ -20,8 +20,8 @@ functions.region('southamerica-east1').firestore.document('Blogs/{blogId}').onWr
 
     // The API ID and key are stored using Cloud Functions config variables.
     // @see https://firebase.google.com/docs/functions/config-env
-    const ALGOLIA_APP_ID = config.algolia_service.app_id
-    const ALGOLIA_API_KEY = config.algolia_service.api_key
+    const ALGOLIA_APP_ID = configJekuaa.algolia_service.app_id
+    const ALGOLIA_API_KEY = configJekuaa.algolia_service.api_key
 
     // Create an Algolia Search API client.
     const client = algoliasearch.default(ALGOLIA_APP_ID, ALGOLIA_API_KEY)
@@ -104,11 +104,15 @@ function huboCambio (documentoNuevo, documentoViejo) {
             
             element1 !== element2 ? huboCambio = true : ''
 
-            if (huboCambio) {
-                break
-            }
+            if (huboCambio) break
         }
     }
+
+    !huboCambio && datosNuevos.habilitado !== datosViejos.habilitado ? 
+    huboCambio = true : ''
+
+    !huboCambio && datosNuevos.publicado !== datosViejos.publicado ? 
+    huboCambio = true : ''
 
     return huboCambio
 }

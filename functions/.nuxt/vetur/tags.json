@@ -2,9 +2,6 @@
   "Editor": {
     "description": "Auto imported from components/Editor.vue"
   },
-  "EditorInformation": {
-    "description": "Auto imported from components/EditorInformation.vue"
-  },
   "FooterDefault": {
     "description": "Auto imported from components/FooterDefault.vue"
   },
@@ -41,6 +38,9 @@
   "VideoPlayer": {
     "description": "Auto imported from components/VideoPlayer.vue"
   },
+  "AuthEmail": {
+    "description": "Auto imported from components/auth/authEmail.vue"
+  },
   "AdminBuscadorUsuarios": {
     "description": "Auto imported from components/admin/buscadorUsuarios.vue"
   },
@@ -52,9 +52,6 @@
   },
   "AdminListaUsuarios": {
     "description": "Auto imported from components/admin/listaUsuarios.vue"
-  },
-  "AuthEmail": {
-    "description": "Auto imported from components/auth/authEmail.vue"
   },
   "BlogsBuscadorBlogs": {
     "description": "Auto imported from components/blogs/buscador-blogs.vue"

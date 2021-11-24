@@ -68,7 +68,9 @@ export default {
 .presentacion {
   width: 50%;
   height: 100vh;
-  background-color: #683bce; 
+  /* background-color: #683bce;  */
+  background-color: #ff1d89;
+  background-image: linear-gradient(43deg, #ff1d89 38%, #683bce 79%);
 }
 
 </style>

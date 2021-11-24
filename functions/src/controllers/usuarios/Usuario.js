@@ -12,7 +12,6 @@ const controllerUsuario = {}
 controllerUsuario.obtenerUsuario = async (req, res) => {
     try {
         const { jekuaaDatos, body } = req
-        const { uidSolicitante, datosAuthSolicitante } = jekuaaDatos
 
         let datosUsuario 
 
@@ -48,12 +47,10 @@ controllerUsuario.obtenerUsuario = async (req, res) => {
             })
         }
 
-        if (datosUsuario.uid !== uidSolicitante) {
-            delete datosUsuario.jekuaaPremium
-            delete datosUsuario.jekuaaRol
-            delete datosUsuario.jekuaaPoint
-            delete datosUsuario.correo
-        }
+        delete datosUsuario.jekuaaPremium
+        delete datosUsuario.jekuaaRol
+        delete datosUsuario.jekuaaPoint
+        delete datosUsuario.correo
 
         let codigo = 'jekuaa/exito'
         const respuesta = new Respuesta().setRespuestaPorCodigo(codigo, {
@@ -80,7 +77,6 @@ controllerUsuario.obtenerUsuario = async (req, res) => {
 controllerUsuario.obtenerUsuarioAuth = async (req, res) => {
     try {
         const { jekuaaDatos, body } = req
-        const { uidSolicitante, datosAuthSolicitante } = jekuaaDatos
         
         let datosAuth 
         let uid
@@ -124,17 +120,15 @@ controllerUsuario.obtenerUsuarioAuth = async (req, res) => {
         let responseDatosAuth = await Usuario.verDatosAuthPorUID( uid )
         datosAuth = JSON.parse( JSON.stringify(responseDatosAuth) )
 
-        if (uid !== uidSolicitante) {
-            delete datosAuth.email
-            delete datosAuth.emailVerified
-            delete datosAuth.disabled
-            delete datosAuth.passwordHash
-            delete datosAuth.passwordSalt
-            delete datosAuth.customClaims.jekuaaPremium
-            delete datosAuth.customClaims.jekuaaRol
-            delete datosAuth.tokensValidAfterTime
-            delete datosAuth.providerData
-        }
+        delete datosAuth.email
+        delete datosAuth.emailVerified
+        delete datosAuth.disabled
+        delete datosAuth.passwordHash
+        delete datosAuth.passwordSalt
+        delete datosAuth.customClaims.jekuaaPremium
+        delete datosAuth.customClaims.jekuaaRol
+        delete datosAuth.tokensValidAfterTime
+        delete datosAuth.providerData
         
         let codigo = 'jekuaa/exito'
         const respuesta = new Respuesta().setRespuestaPorCodigo(codigo, {
@@ -161,7 +155,6 @@ controllerUsuario.obtenerUsuarioAuth = async (req, res) => {
 controllerUsuario.obtenerUsuarioInfo = async (req, res) => {
     try {
         const { jekuaaDatos, body } = req
-        const { uidSolicitante, datosAuthSolicitante } = jekuaaDatos
         
         let datosInfo 
         let uid
@@ -209,10 +202,6 @@ controllerUsuario.obtenerUsuarioInfo = async (req, res) => {
                 codigo: 'jekuaa/error/usuario_mala_solicitud',
                 mensaje: `No existe datos de este usuario.`
             })
-        }
-
-        if (uid !== uidSolicitante) {
-            
         }
         
         let codigo = 'jekuaa/exito'

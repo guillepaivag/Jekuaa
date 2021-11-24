@@ -193,6 +193,8 @@ controller.listaBlogsPorMG = async (req, res) => {
 
         let listaBlogs = []
         const ref = db.collection('Blogs')
+            .where('habilitado', '==', true)
+            .where('publicado', '==', true)
             .where('seccion', '==', seccion)
             .where('categoria', '==', categoria)
             .orderBy('cantidadMeGusta', 'desc')
@@ -243,6 +245,8 @@ controller.blogConMasMeGusta = async (req, res) => {
         let codigo = 'jekuaa/exito'
 
         const ref = db.collection('Blogs')
+            .where('habilitado', '==', true)
+            .where('publicado', '==', true)
             .orderBy('cantidadMeGusta', 'desc')
             .limit(1)
 
@@ -288,7 +292,12 @@ controller.ultimosBlogsPorPublicador = async (req, res) => {
         const respuesta = new Respuesta()
         let codigo = 'jekuaa/exito'
 
-        const ref = db.collection('Blogs').where('publicador', '==', uid).orderBy('fechaCreacion', 'desc').limit(3)
+        const ref = db.collection('Blogs')
+        .where('habilitado', '==', true)
+        .where('publicado', '==', true)
+        .where('publicador', '==', uid)
+        .orderBy('fechaCreacion', 'desc')
+        .limit(3)
 
         const docs = await (await ref.get()).docs
         let blogs = []
@@ -326,6 +335,8 @@ controller.paginarListaBlogs = async (req, res) => {
         const {  } = params
         let { ultimaUID, maximoPorPagina, filtros } = body
 
+        const ruta = req.originalUrl.split('/')[2]
+
         const respuesta = new Respuesta()
         let codigo = 'jekuaa/exito'
 
@@ -334,13 +345,15 @@ controller.paginarListaBlogs = async (req, res) => {
         if (!ultimaUID) {
             resultado = await Blog.inicializarListaBlogs({
                 maximoPorPagina,
-                filtros
+                filtros,
+                ruta,
             })
         } else {
             resultado = await Blog.paginarListaBlogs({
                 ultimaUID, 
                 maximoPorPagina,
                 filtros,
+                ruta,
             })
         }
 
