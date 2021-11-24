@@ -12,6 +12,11 @@ utils_blog.construirDatosParaNuevoBlog = ( datosBlog, contenidoBlog, esRutaAdmin
     const blog = new Blog(datosBlog)
     const datosBlogFormateado = blog.formatearDatos().getBlog()
 
+    if (!datosBlogFormateado.seccion) {
+        datosBlogFormateado.seccion = ''
+        datosBlogFormateado.categoria = ''
+        datosBlogFormateado.subCategorias = []
+    }
     datosBlogFormateado.cantidadMeGusta = 0
     !esRutaAdmin ? datosBlogFormateado.habilitado = true : ''
     !esRutaAdmin ? datosBlogFormateado.revision = true : ''
@@ -70,9 +75,17 @@ utils_blog.construirDatosParaActualizacionBlog = ( uidBlog, datosBlog, contenido
             referencia ? datosActualizados.referencia = referencia : ''
             titulo ? datosActualizados.titulo = titulo : ''
             descripcion ? datosActualizados.descripcion = descripcion : ''
-            seccion ? datosActualizados.seccion = seccion : ''
-            categoria ? datosActualizados.categoria = categoria : ''
-            subCategorias ? datosActualizados.subCategorias = subCategorias : ''
+
+            if (seccion === '') {
+                datosActualizados.seccion = ''
+                datosActualizados.categoria = ''
+                datosActualizados.subCategorias = []
+            } else {
+                seccion ? datosActualizados.seccion = seccion : ''
+                categoria ? datosActualizados.categoria = categoria : ''
+                subCategorias && subCategorias.length ? datosActualizados.subCategorias = subCategorias : ''
+            }
+
             habilitado != undefined ? datosActualizados.habilitado = habilitado : ''
             publicado != undefined ? datosActualizados.publicado = publicado : ''
             revision != undefined ? datosActualizados.revision = revision : ''
@@ -82,9 +95,15 @@ utils_blog.construirDatosParaActualizacionBlog = ( uidBlog, datosBlog, contenido
             referencia ? datosActualizados.referencia = referencia : ''
             titulo ? datosActualizados.titulo = titulo : ''
             descripcion ? datosActualizados.descripcion = descripcion : ''
-            seccion ? datosActualizados.seccion = seccion : ''
-            categoria ? datosActualizados.categoria = categoria : ''
-            subCategorias ? datosActualizados.subCategorias = subCategorias : ''
+            if (seccion === '') {
+                datosActualizados.seccion = ''
+                datosActualizados.categoria = ''
+                datosActualizados.subCategorias = []
+            } else {
+                seccion ? datosActualizados.seccion = seccion : ''
+                categoria ? datosActualizados.categoria = categoria : ''
+                subCategorias && subCategorias.length ? datosActualizados.subCategorias = subCategorias : ''
+            }
             publicado != undefined ? datosActualizados.publicado = publicado : ''
         }
     }

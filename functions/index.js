@@ -13,6 +13,7 @@ const {
 
 const {
   eventoCreacionBlog,
+  eventoActualizacionBlog,
   eventoEliminacionBlog,
 } = require('./src/funcionesFirebaseFunctions/blogs')
 
@@ -42,6 +43,7 @@ exports.eventoEliminacionUsuario = eventoEliminacionUsuario
 
 // Funciones para blogs de Jekuaa
 exports.eventoCreacionBlog = eventoCreacionBlog
+exports.eventoActualizacionBlog = eventoActualizacionBlog
 exports.eventoEliminacionBlog = eventoEliminacionBlog
 
 // Indexación para blogs

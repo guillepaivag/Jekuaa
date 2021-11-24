@@ -519,7 +519,7 @@ class Blog {
 
     }
     
-    static async obtenerImagenDelBlog(blog = new Blog()) {
+    static async obtenerImagenPorSeccion(seccion) {
         // These options will allow temporary read access to the file
         const options = {
             version: 'v4',
@@ -530,7 +530,7 @@ class Blog {
         // Get a v4 signed URL for reading the file
         const [url] = await storage
             .bucket(`jekuaa-py.appspot.com`)
-            .file(`imagenes-secciones/${blog.seccion}.png`)
+            .file(`imagenes-secciones/${seccion}.png`)
             .getSignedUrl(options);
             
         return url
@@ -554,10 +554,9 @@ class Blog {
             const element = documentSnapshots.docs[i]
             
             const uidPublicador = element.data().publicador
-            const blogObject = new Blog(element.data())
 
             const datosAuthPublicador = await Usuario.verDatosAuthPorUID( uidPublicador )
-            const imgBlog = await Blog.obtenerImagenDelBlog(blogObject)
+            const imgBlog = await Blog.obtenerImagenPorSeccion(element.data().seccion)
 
             const datosBlog = {
                 imgBlog: imgBlog,
@@ -600,10 +599,9 @@ class Blog {
             const element = documentSnapshots.docs[i]
             
             const uidPublicador = element.data().publicador
-            const blogObject = new Blog(element.data())
 
             const datosAuthPublicador = await Usuario.verDatosAuthPorUID( uidPublicador )
-            const imgBlog = await Blog.obtenerImagenDelBlog(blogObject)
+            const imgBlog = await Blog.obtenerImagenPorSeccion(element.data().seccion)
 
             const datosBlog = {
                 imgBlog: imgBlog,
@@ -615,6 +613,7 @@ class Blog {
             
             blogs.push( datosBlog )
         }
+        
         const existeMasDatos = await Blog.verificarSiHayMasDatos({
             ultimaUID,
             filtros,

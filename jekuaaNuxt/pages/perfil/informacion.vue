@@ -2,11 +2,12 @@
   <div>
     <div class="mb-15">
         <!-- <div class="tiptap-vuetify-editor__content" v-html="contentHTML"/> -->
-        <div class="mt-2 mb-5">
+        <h3 class="mt-4 subtitulos"> Rol descriptivo: </h3>
+        <v-divider/>
+        <div class="mt-0 mb-5">
           <v-text-field
             v-model="rolDescriptivo"
-            disabled
-            label="Rol"
+            readonly
           ></v-text-field>
         </div>
 

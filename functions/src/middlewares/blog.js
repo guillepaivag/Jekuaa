@@ -93,25 +93,20 @@ middlewares.verificadorDeDatosRequeridos  = (req, res, next) => {
                 })
             }
         
-            if ( !seccion ) {
-                throw new ErrorJekuaa({
-                    codigo: 'jekuaa/error/usuario_mala_solicitud',
-                    mensaje: 'La sección debe existir.'
-                })
-            }
-        
-            if ( !categoria ) {
-                throw new ErrorJekuaa({
-                    codigo: 'jekuaa/error/usuario_mala_solicitud',
-                    mensaje: 'La categoría debe existir.'
-                })
-            }
-        
-            if ( !subCategorias || !subCategorias.length ) {
-                throw new ErrorJekuaa({
-                    codigo: 'jekuaa/error/usuario_mala_solicitud',
-                    mensaje: 'Debe haber al menos una sub-categoria.'
-                })
+            if ( seccion ) {
+                if ( !categoria ) {
+                    throw new ErrorJekuaa({
+                        codigo: 'jekuaa/error/usuario_mala_solicitud',
+                        mensaje: 'La categoría debe existir.'
+                    })
+                }
+            
+                if ( !subCategorias || !subCategorias.length ) {
+                    throw new ErrorJekuaa({
+                        codigo: 'jekuaa/error/usuario_mala_solicitud',
+                        mensaje: 'Debe haber al menos una sub-categoria.'
+                    })
+                }
             }
         
             if ( !contenidoBlog ) {
@@ -195,54 +190,83 @@ middlewares.verificadorDeTipoDeDatos = (req, res, next) => {
                     mensaje: 'La descripción del blog debe ser string.'
                 })
             }
-        
-            // Constante
-            if ( esOperacionAgregar && !!publicador && typeof publicador != 'string' ) {
-                throw new ErrorJekuaa({
-                    codigo: 'jekuaa/error/usuario_mala_solicitud',
-                    mensaje: 'El publicador del blog debe ser string.'
-                })
-            }
-        
-            if ( !!seccion && typeof seccion != 'string' ) {
-                throw new ErrorJekuaa({
-                    codigo: 'jekuaa/error/usuario_mala_solicitud',
-                    mensaje: 'La sección del blog debe ser string.'
-                })
-            }
-        
-            if ( !!categoria && typeof categoria != 'string' ) {
-                throw new ErrorJekuaa({
-                    codigo: 'jekuaa/error/usuario_mala_solicitud',
-                    mensaje: 'La categoría del blog debe ser string.'
-                })
-            }
-        
-            if ( !!subCategorias ) {
-                if (!(subCategorias instanceof Array)) {
+
+            if (esOperacionAgregar) {
+                if ( typeof publicador != 'string' ) {
                     throw new ErrorJekuaa({
                         codigo: 'jekuaa/error/usuario_mala_solicitud',
-                        mensaje: 'Las subCategorias del blog debe ser un arreglo de string.'
+                        mensaje: 'El publicador del blog debe ser string.'
                     })
                 }
+
+                if (seccion) {
+                    if (typeof seccion != 'string' ) {
+                        throw new ErrorJekuaa({
+                            codigo: 'jekuaa/error/usuario_mala_solicitud',
+                            mensaje: 'La sección del blog debe ser string.'
+                        })
+                    } 
+
+                    if ( typeof categoria != 'string' ) {
+                        throw new ErrorJekuaa({
+                            codigo: 'jekuaa/error/usuario_mala_solicitud',
+                            mensaje: 'La categoría del blog debe ser string.'
+                        })
+                    }
                 
-                for (let i = 0; i < subCategorias.length; i++) {
-                    const subCategoria = subCategorias[i]
-                    if (typeof subCategoria != 'string') {
+                    if (!(subCategorias instanceof Array)) {
                         throw new ErrorJekuaa({
                             codigo: 'jekuaa/error/usuario_mala_solicitud',
                             mensaje: 'Las subCategorias del blog debe ser un arreglo de string.'
                         })
                     }
+                    
+                    for (let i = 0; i < subCategorias.length; i++) {
+                        const subCategoria = subCategorias[i]
+                        if (typeof subCategoria != 'string') {
+                            throw new ErrorJekuaa({
+                                codigo: 'jekuaa/error/usuario_mala_solicitud',
+                                mensaje: 'Las subCategorias del blog debe ser un arreglo de string.'
+                            })
+                        }
+                    }
+                }
+            } else {
+                if (seccion !== '') {
+                    if ( !!seccion && typeof seccion !== 'string' ) {
+                        throw new ErrorJekuaa({
+                            codigo: 'jekuaa/error/usuario_mala_solicitud',
+                            mensaje: 'La sección del blog debe ser string.'
+                        })
+                    }
+    
+                    if ( !!categoria && typeof categoria !== 'string' ) {
+                        throw new ErrorJekuaa({
+                            codigo: 'jekuaa/error/usuario_mala_solicitud',
+                            mensaje: 'La categoría del blog debe ser string.'
+                        })
+                    }
+                
+                    if ( !!subCategorias ) {
+                        if (!(subCategorias instanceof Array)) {
+                            throw new ErrorJekuaa({
+                                codigo: 'jekuaa/error/usuario_mala_solicitud',
+                                mensaje: 'Las subCategorias del blog debe ser un arreglo de string.'
+                            })
+                        }
+                        
+                        for (let i = 0; i < subCategorias.length; i++) {
+                            const subCategoria = subCategorias[i]
+                            if (typeof subCategoria != 'string') {
+                                throw new ErrorJekuaa({
+                                    codigo: 'jekuaa/error/usuario_mala_solicitud',
+                                    mensaje: 'Las subCategorias del blog debe ser un arreglo de string.'
+                                })
+                            }
+                        }
+                    }
                 }
             }
-        
-            // if ( esRutaAdmin && cantidadMeGusta && typeof cantidadMeGusta != 'number' ) {
-            //     throw new ErrorJekuaa({
-            //         codigo: 'jekuaa/error/usuario_mala_solicitud',
-            //         mensaje: 'La cantidad de "me gustas" de un blog debe ser numerico.'
-            //     })
-            // }
         
             if ( esRutaAdmin && habilitado != undefined && typeof habilitado != 'boolean' ) {
                 throw new ErrorJekuaa({
@@ -264,21 +288,6 @@ middlewares.verificadorDeTipoDeDatos = (req, res, next) => {
                     mensaje: 'El estado revision del blog debe ser boolean.'
                 })
             }
-        
-            // // Constante
-            // if ( esOperacionAgregar && fechaCreacion && typeof fechaCreacion != 'number' ) {
-            //     throw new ErrorJekuaa({
-            //         codigo: 'jekuaa/error/usuario_mala_solicitud',
-            //         mensaje: 'La fecha de creación del blog debe ser numerico en milisegundos.'
-            //     })
-            // }
-        
-            // if ( fechaActualizacion && typeof fechaActualizacion != 'number' ) {
-            //     throw new ErrorJekuaa({
-            //         codigo: 'jekuaa/error/usuario_mala_solicitud',
-            //         mensaje: 'La fecha de actualización del blog debe ser numerico en milisegundos.'
-            //     })
-            // }   
         }
     
         if ( !!contenidoBlog && typeof contenidoBlog != 'string' ) {
@@ -390,61 +399,77 @@ middlewares.verificadorDeDatosBlog = async (req, res, next) => {
                 })
             }
 
-            if ( subCategorias ) {
-                let valido = subCategorias.length >= 1 && subCategorias.length <= 3
-                if ( !valido ) {
-                    throw new ErrorJekuaa({
-                        codigo: 'jekuaa/error/usuario_mala_solicitud',
-                        mensaje: 'Por blog puede haber de 1 a 3 sub-categorias.'
-                    })
-                }
-            }
-
             if (esOperacionAgregar) {
-                let ref = db.collection('Secciones').doc(seccion)
-                ref = ref.collection('Categorias').doc(categoria)
+                /* Descripción de la verificacion de sección, categorias y subcategorias: (creación)
+                 * ---------------------------------------------------------------------------------------
+                 * Si la sección es: string vacio ('') o undefined no se verificara nada, por el hecho de que
+                 * cuando la sección es string vacio ('') o undefined el blog pasa a ser un blog normal sin sección,
+                 * entonces, la categoria y subcategorias se eliminan por tanto no es necesario realizar
+                 * una verificación. 
+                */
 
-                for (let i = 0; i < subCategorias.length; i++) {
-                    const subCategoria = subCategorias[i];
-                    
-                    doc = await ref.collection('SubCategorias').doc(subCategoria).get()
-                    if (!doc.exists) {
+                if (seccion) {
+                    let valido = subCategorias.length >= 1 && subCategorias.length <= 3
+                    if ( !valido ) {
                         throw new ErrorJekuaa({
                             codigo: 'jekuaa/error/usuario_mala_solicitud',
-                            mensaje: `Hubo un problema al encontrar los datos de sección: ${seccion}/${categoria}/${subCategoria}.`
+                            mensaje: 'Por blog puede haber de 1 a 3 sub-categorias.'
                         })
                     }
+                    
+                    let ref = db.collection('Secciones').doc(seccion)
+                    ref = ref.collection('Categorias').doc(categoria)
+
+                    for (let i = 0; i < subCategorias.length; i++) {
+                        const subCategoria = subCategorias[i]
+                        
+                        doc = await ref.collection('SubCategorias').doc(subCategoria).get()
+                        if (!doc.exists) {
+                            throw new ErrorJekuaa({
+                                codigo: 'jekuaa/error/usuario_mala_solicitud',
+                                mensaje: `Hubo un problema al encontrar los datos de sección: ${seccion}/${categoria}/${subCategoria}.`
+                            })
+                        }
+                    }
                 }
-            } else if (seccion || categoria || subCategorias) {
-                if (seccion && ( !categoria || !subCategorias )) {
-                    throw new ErrorJekuaa({
-                        codigo: 'jekuaa/error/usuario_mala_solicitud',
-                        mensaje: 'No existe la categoria o la subcategoria.'
-                    })
-                }
 
-                if (categoria && !subCategorias) {
-                    throw new ErrorJekuaa({
-                        codigo: 'jekuaa/error/usuario_mala_solicitud',
-                        mensaje: 'No existen las subCategorias.'
-                    })
-                }
+                
+            } else if (seccion !== undefined || categoria || (subCategorias && subCategorias.length)) {
+                /* Descripción de la verificacion de sección, categorias y subcategorias: (actualización)
+                 * ---------------------------------------------------------------------------------------
+                 * Si la sección es: string vacio ('') no se verificara nada, por el hecho de que
+                 * cuando la sección es string vacio ('') el blog pasa a ser un blog normal sin sección,
+                 * entonces, la categoria y subcategorias se eliminan por tanto no es necesario realizar
+                 * una verificación. 
+                */
 
-                const seccionSeleccionada = seccion != undefined ? seccion : docBlog.data().seccion
-                const categoriaSeleccionada = categoria != undefined ? categoria : docBlog.data().categoria
+                if (seccion !== '') {
+                    let seccionSeleccionada = seccion ? seccion : docBlog.data().seccion
+                    let categoriaSeleccionada = categoria ? categoria : docBlog.data().categoria
+                    if (subCategorias) {
+                        let valido = subCategorias.length >= 1 && subCategorias.length <= 3
+                        if ( !valido ) {
+                            throw new ErrorJekuaa({
+                                codigo: 'jekuaa/error/usuario_mala_solicitud',
+                                mensaje: 'Por blog puede haber de 1 a 3 sub-categorias.'
+                            })
+                        }
+                    }
+                    let subCategoriasSeleccionadas = subCategorias ? subCategorias : docBlog.data().subCategorias
 
-                let ref = db.collection('Secciones').doc(seccionSeleccionada)
-                ref = ref.collection('Categorias').doc(categoriaSeleccionada)
+                    let ref = db.collection('Secciones').doc(seccionSeleccionada)
+                    ref = ref.collection('Categorias').doc(categoriaSeleccionada)
 
-                for (let i = 0; i < subCategorias.length; i++) {
-                    const subCategoria = subCategorias[i]
-                    const doc = await ref.collection('SubCategorias').doc(subCategoria).get()
+                    for (let i = 0; i < subCategoriasSeleccionadas.length; i++) {
+                        const subCategoria = subCategoriasSeleccionadas[i]
+                        const doc = await ref.collection('SubCategorias').doc(subCategoria).get()
 
-                    if (!doc.exists) {
-                        throw new ErrorJekuaa({
-                            codigo: 'jekuaa/error/usuario_mala_solicitud',
-                            mensaje: `Hubo un problema al encontrar los datos de sección: ${seccionSeleccionada}/${categoriaSeleccionada}/${subCategoria}.`
-                        })
+                        if (!doc.exists) {
+                            throw new ErrorJekuaa({
+                                codigo: 'jekuaa/error/usuario_mala_solicitud',
+                                mensaje: `Hubo un problema al encontrar los datos de sección: ${seccionSeleccionada}/${categoriaSeleccionada}/${subCategoria}.`
+                            })
+                        }
                     }
                 }
             }
@@ -486,7 +511,8 @@ middlewares.construirDatosBlog = (req, res, next) => {
         const esOperacionAgregar = req.method === 'POST'
 
         if (esOperacionAgregar) {
-            datosBlog.uid = uuidv4()
+            // datosBlog.uid = uuidv4()
+            datosBlog.uid = admin.firestore().collection('Blogs').doc().id
             datosBlogFormateado = utils_blog.construirDatosParaNuevoBlog(datosBlog, contenidoBlog, esRutaAdmin)
         } else {
             datosBlogFormateado = utils_blog.construirDatosParaActualizacionBlog(uid, datosBlog, contenidoBlog, esRutaAdmin)

@@ -132,9 +132,8 @@
                 >
                   <v-select
                     v-model="seccionSelected"
-                    :hint="`${seccionSelected.nombre ? `Sección: ${seccionSelected.nombre}` : 'No se seleccionó nada'}`"
+                    :hint="seccionSelected.uid ? `Sección: ${seccionSelected.nombre}` : `Se seleccionó: ${seccionSelected.nombre}`"
                     :items="listaSecciones"
-                    :error-messages="seccionErr"
                     item-text="nombre"
                     item-value="uid"
                     label="Seleccionar una sección"
@@ -142,8 +141,6 @@
                     return-object
                     single-line
                     :readonly="accion === 'leer'"
-                    @input="$v.datosBlogAux.seccion.$touch()"
-                    @blur="$v.datosBlogAux.seccion.$touch()"
                     class="mt-1"
                   ></v-select>
 
@@ -151,8 +148,7 @@
                     v-model="categoriaSelected"
                     :hint="`${categoriaSelected.nombre ? `Categoría: ${categoriaSelected.nombre}` : 'No se seleccionó nada'}`"
                     :items="listaCategorias"
-                    :error-messages="categoriaErr"
-                    :disabled="!seccionSelected.uid"
+                    :disabled="!listaCategorias.length"
                     item-text="nombre"
                     item-value="uid"
                     label="Seleccionar una categoria"
@@ -160,8 +156,6 @@
                     return-object
                     single-line
                     :readonly="accion === 'leer'"
-                    @input="$v.datosBlogAux.categoria.$touch()"
-                    @blur="$v.datosBlogAux.categoria.$touch()"
                     class="mt-7"
                   ></v-select>
 
@@ -169,8 +163,7 @@
                     v-model="subCategoriasSelected"
                     :hint="`${subCategoriasSelected.length ? `Se seleccionó ${subCategoriasSelected.length} sub-categorias.` : 'No se seleccionó nada.'}`"
                     :items="listaSubCategorias"
-                    :error-messages="subCategoriaErr"
-                    :disabled="!categoriaSelected.uid"
+                    :disabled="!listaSubCategorias.length"
                     item-text="nombre"
                     item-value="uid"
                     label="Seleccionar una sub-categoria"
@@ -178,8 +171,6 @@
                     return-object
                     single-line
                     :readonly="accion === 'leer'"
-                    @input="$v.datosBlogAux.subCategorias.$touch()"
-                    @blur="$v.datosBlogAux.subCategorias.$touch()"
                     attach
                     chips
                     multiple
@@ -421,8 +412,14 @@ export default {
       listaSecciones: [],
       listaCategorias: [],
       listaSubCategorias: [],
-      seccionSelected: {},
-      categoriaSelected: {},
+      seccionSelected: {
+        uid: '', 
+        nombre: 'Blog normal'
+      },
+      categoriaSelected: {
+        uid: '', 
+        nombre: ''
+      },
       subCategoriasSelected: [],
       cantidadCaracteres: 0,
       errorContenidoBlog: 'La longitud mínima para un blog es 50.',
@@ -451,26 +448,26 @@ export default {
       !this.$v.datosBlogAux.descripcion.required && errors.push('La descripción es requerida.')
       return errors
     },
-    seccionErr () {
-      const errors = []
-      if (!this.$v.datosBlogAux.seccion.$dirty) return errors
-      !this.$v.datosBlogAux.seccion.required && errors.push('La sección es requerida.')
-      return errors
-    },
-    categoriaErr () {
-      const errors = []
-      if (!this.$v.datosBlogAux.categoria.$dirty) return errors
-      !this.$v.datosBlogAux.categoria.required && errors.push('La categoría es requerida.')
-      return errors
-    },
-    subCategoriaErr () {
-      const errors = []
-      if (!this.$v.datosBlogAux.subCategorias.$dirty) return errors
-      !this.$v.datosBlogAux.subCategorias.required && errors.push('Las sub-categorias son requeridas.')
-      !this.$v.datosBlogAux.subCategorias.minLength && errors.push('Las sub-categorias son requeridas.')
-      !this.$v.datosBlogAux.subCategorias.maxLength && errors.push('Un blog solo puede tener 3 sub-categorias.')
-      return errors
-    },
+    // seccionErr () {
+    //   const errors = []
+    //   if (!this.$v.datosBlogAux.seccion.$dirty) return errors
+    //   !this.$v.datosBlogAux.seccion.required && errors.push('La sección es requerida.')
+    //   return errors
+    // },
+    // categoriaErr () {
+    //   const errors = []
+    //   if (!this.$v.datosBlogAux.categoria.$dirty) return errors
+    //   !this.$v.datosBlogAux.categoria.required && errors.push('La categoría es requerida.')
+    //   return errors
+    // },
+    // subCategoriaErr () {
+    //   const errors = []
+    //   if (!this.$v.datosBlogAux.subCategorias.$dirty) return errors
+    //   !this.$v.datosBlogAux.subCategorias.required && errors.push('Las sub-categorias son requeridas.')
+    //   !this.$v.datosBlogAux.subCategorias.minLength && errors.push('Las sub-categorias son requeridas.')
+    //   !this.$v.datosBlogAux.subCategorias.maxLength && errors.push('Un blog solo puede tener 3 sub-categorias.')
+    //   return errors
+    // },
     contenidoMarkdown: {
       // getter
       get: function () {
@@ -607,8 +604,14 @@ export default {
       this.listaCategorias = []
       this.listaSubCategorias = []
 
-      this.seccionSelected = {}
-      this.categoriaSelected = {}
+      this.seccionSelected = {
+        uid: '', 
+        nombre: 'Blog normal'
+      }
+      this.categoriaSelected = {
+        uid: '', 
+        nombre: ''
+      }
       this.subCategoriasSelected = []
 
       this.cantidadCaracteres = 0
@@ -630,23 +633,25 @@ export default {
           this.datosBlogAux.fechaCreacion = (new Date(fechaC.getTime() - (new Date()).getTimezoneOffset() * 60000)).toISOString().substr(0, 10)
           this.datosBlogAux.fechaActualizacion = (new Date(fechaA.getTime() - (new Date()).getTimezoneOffset() * 60000)).toISOString().substr(0, 10)
         }
-        
-        this.seccionSelected = {
-          uid: this.informacionSecciones[this.datosBlog.seccion].uid,
-          nombre: this.informacionSecciones[this.datosBlog.seccion].nombre,
-        }
-        
-        this.categoriaSelected = {
-          uid: this.informacionSecciones[this.datosBlog.seccion].categorias[this.datosBlog.categoria].uid,
-          nombre: this.informacionSecciones[this.datosBlog.seccion].categorias[this.datosBlog.categoria].nombre,
-        }
 
-        for (let i = 0; i < this.datosBlog.subCategorias.length; i++) {
-          const element = this.datosBlog.subCategorias[i]
-          this.subCategoriasSelected.push({
-            uid: this.informacionSecciones[this.datosBlog.seccion].categorias[this.datosBlog.categoria].subCategorias[element].uid,
-            nombre: this.informacionSecciones[this.datosBlog.seccion].categorias[this.datosBlog.categoria].subCategorias[element].nombre,
-          })
+        if (this.datosBlog.seccion) {
+          this.seccionSelected = {
+            uid: this.informacionSecciones[this.datosBlog.seccion].uid,
+            nombre: this.informacionSecciones[this.datosBlog.seccion].nombre,
+          }
+          
+          this.categoriaSelected = {
+            uid: this.informacionSecciones[this.datosBlog.seccion].categorias[this.datosBlog.categoria].uid,
+            nombre: this.informacionSecciones[this.datosBlog.seccion].categorias[this.datosBlog.categoria].nombre,
+          }
+
+          for (let i = 0; i < this.datosBlog.subCategorias.length; i++) {
+            const element = this.datosBlog.subCategorias[i]
+            this.subCategoriasSelected.push({
+              uid: this.informacionSecciones[this.datosBlog.seccion].categorias[this.datosBlog.categoria].subCategorias[element].uid,
+              nombre: this.informacionSecciones[this.datosBlog.seccion].categorias[this.datosBlog.categoria].subCategorias[element].nombre,
+            })
+          }
         }
 
         this.cantidadCaracteres = this.cantidadCaracteresHtml(this.contenidoBlog)
@@ -656,6 +661,10 @@ export default {
     },
     setListaSecciones () {
       let arr = Object.keys(this.informacionSecciones)
+      this.listaSecciones.push({
+        uid: '',
+        nombre: 'Blog normal'
+      })  
       for (let i = 0; i < arr.length; i++) {
         const element = arr[i]
         this.listaSecciones.push({
@@ -723,35 +732,34 @@ export default {
     },
     seccionSelected: function (n, v) {
       if (n.uid == v.uid) return
-      if (!this.seccionSelected.uid) return
       
       this.datosBlogAux.seccion = n.uid
 
-      if (v.uid !== undefined) {
-        this.categoriaSelected = {uid: '', nombre: ''}
-        this.listaCategorias = []
-        
-        this.subCategoriasSelected = []
-        this.listaSubCategorias = []
+      this.categoriaSelected = {
+        uid: '', 
+        nombre: ''
       }
+      this.listaCategorias = []
+      
+      this.subCategoriasSelected = []
+      this.listaSubCategorias = []
 
-      this.setListaCategorias(n.uid)
+      n.uid ? this.setListaCategorias(n.uid) : ''
     },
     categoriaSelected: function (n, v) {
       if (n.uid === v.uid) return
-      if (!this.seccionSelected.uid || !this.categoriaSelected.uid) return
+      if (!this.seccionSelected.uid) return
 
       this.datosBlogAux.categoria = n.uid
 
-      if (v.uid !== undefined) {
-        this.subCategoriasSelected = []
-        this.listaSubCategorias = []
-      }
+      this.subCategoriasSelected = []
+      this.listaSubCategorias = []
 
       this.setListaSubCategorias(this.seccionSelected.uid, n.uid)
     },
     subCategoriasSelected: function (n, v) {
       if (n.length === v.length) return
+      if (!this.seccionSelected.uid) return
 
       this.datosBlogAux.subCategorias = []
       for (let i = 0; i < n.length; i++) {

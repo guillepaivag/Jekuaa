@@ -116,7 +116,7 @@ controller.obtenerContenidoBlog = async ( req, res ) => {
 
         // Obtener archivo
         const contenido = await blog.obtenerContenido( opciones )
-        const imgBlog = await Blog.obtenerImagenDelBlog(blog)
+        const imgBlog = await Blog.obtenerImagenPorSeccion(blog.seccion)
 
         // Retornar respuesta
         respuesta.setRespuestaPorCodigo(codigo, {
@@ -204,7 +204,7 @@ controller.listaBlogsPorMG = async (req, res) => {
             const doc = documentsBlogs.docs[i]
             const uidPublicador = doc.data().publicador
             const datosAuthPublicador = await Usuario.verDatosAuthPorUID( uidPublicador )
-            const imgBlog = await Blog.obtenerImagenDelBlog(new Blog(doc.data()))
+            const imgBlog = await Blog.obtenerImagenPorSeccion(doc.data().seccion)
             const datosBlog = {
                 imgBlog: imgBlog,
                 blog: doc.data(),

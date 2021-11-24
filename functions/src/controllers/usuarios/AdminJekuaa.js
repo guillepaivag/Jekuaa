@@ -143,6 +143,7 @@ controllerMiembroJekuaa.actualizarUsuarioPorUID = async (req, res) => {
         // Actualizacion de contraseña
         if ( contrasenha ) {
             console.log('Actualizando contraseña del usuario...')
+            await Usuario.actualizarContrasenhaPorUID( uid, contrasenha )
         }
 
         respuesta.setRespuestaPorCodigo( codigo, {

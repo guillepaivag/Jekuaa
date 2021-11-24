@@ -332,6 +332,12 @@ class Usuario {
         return uidUsuario 
     }
 
+    static async actualizarContrasenhaPorUID ( uidUsuario, contrasenha ) {
+        return admin.auth().updateUser(uidUsuario, {
+            password: contrasenha,
+        })
+    }
+
     static async actualizarInformacion ( uid, datos ) {
         return db.collection('InformacionUsuarios').doc(uid).update(datos)
     }

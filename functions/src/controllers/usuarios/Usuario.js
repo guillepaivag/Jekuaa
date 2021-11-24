@@ -255,12 +255,13 @@ controllerUsuario.actualizarMiUsuario = async (req, res) => {
         // Actualizacion de contraseña
         if ( contrasenha ) {
             console.log('Actualizando contraseña del usuario...')
+            await Usuario.actualizarContrasenhaPorUID( uidSolicitante, contrasenha )
         }
 
-        respuesta.setRespuestaPorCodigo( codigo, {
+        respuesta.setRespuestaPorCodigo(codigo, {
             mensaje: 'El usuario se actualizó de forma exitosa!',
             resultado: datosUsuario
-        } )
+        })
         const status = respuesta.getStatusCode()
         
         return res.status( status ).json( respuesta.getRespuesta() )
