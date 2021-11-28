@@ -7,12 +7,10 @@ export const actions = {
   async nuxtServerInit ({ dispatch, commit }, { store, route, req, res, app, beforeNuxtRender }) {
     
     try {
-      await dispatch('modules/sistema/setLoading', true)
-
       const user = getUserFromCookie(req)
 
       if ( !(user && user.decodedToken) ) {
-        await dispatch('modules/usuarios/setDatosUsuario', null)
+        dispatch('modules/usuarios/setDatosUsuario', null)
         return 
       }
 
@@ -29,17 +27,13 @@ export const actions = {
       const nombreCompleto = datosUsuarioDB.data().nombreCompleto ? datosUsuarioDB.data().nombreCompleto : null
       const fechaNacimiento = datosUsuarioDB.data().fechaNacimiento ? new Date(datosUsuarioDB.data().fechaNacimiento.seconds * 1000) : null
 
-      const jekuaaPremium = datosUsuarioDB.data().jekuaaPremium ? 
-                                  datosUsuarioDB.data().jekuaaPremium : null
+      const jekuaaPremium = datosUsuarioDB.data().jekuaaPremium ? datosUsuarioDB.data().jekuaaPremium : null
 
-      const jekuaaRol = datosUsuarioDB.data().jekuaaRol ? 
-                      datosUsuarioDB.data().jekuaaRol : null
+      const jekuaaRol = user.decodedToken.jekuaaRol ? user.decodedToken.jekuaaRol : null
+      
+      const instructor = user.decodedToken.instructor ? user.decodedToken.instructor : null
 
-      const instructor = datosUsuarioDB.data().instructor ? 
-                      datosUsuarioDB.data().instructor : null
-
-      const jekuaaPoint = datosUsuarioDB.data().jekuaaPoint ? 
-                      datosUsuarioDB.data().jekuaaPoint : null
+      const jekuaaPoint = datosUsuarioDB.data().jekuaaPoint ? datosUsuarioDB.data().jekuaaPoint : null
 
       // Creamos un objeto a insertar
       const datosUsuario = {
@@ -56,7 +50,7 @@ export const actions = {
         jekuaaPoint
       }
 
-      await dispatch('modules/usuarios/setDatosUsuario', datosUsuario)
+      dispatch('modules/usuarios/setDatosUsuario', datosUsuario)
 
     } catch (error) {
       console.log('Error - nuxtServerInit: ', error)

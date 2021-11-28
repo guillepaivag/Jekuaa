@@ -8,6 +8,7 @@ const esReferenciaBlog = require("../utils/esReferenciaBlog")
 const { v4: uuidv4 } = require('uuid')
 const { milliseconds_a_timestamp } = require('../utils/Timestamp')
 const showdown = require('showdown')
+const configJekuaa = require('../../configJekuaa')
 
 const middlewares = {}
 
@@ -502,7 +503,6 @@ middlewares.verificadorDeDatosBlog = async (req, res, next) => {
 middlewares.construirDatosBlog = (req, res, next) => {
     try {
         const { jekuaaDatos, body, params } = req
-        const { uidSolicitante, datosAuthSolicitante } = jekuaaDatos
         const { uid } = params
         const { datosBlog, contenidoBlog } = body
 
@@ -535,12 +535,10 @@ middlewares.verificacionExistenciaBlog = async (req, res, next) => {
 
         const esRutaEstudiante = req.originalUrl.split('/')[2] === 'estudiante'
 
-        await Blog.errorBlogPorUID(uid, 'no-existe')
-
+        const docBlog = await Blog.errorBlogPorUID(uid, 'no-existe')
+        
         if (esRutaEstudiante) {
-            const blog = new Blog()
-            await blog.importarDatosBlogPorUID( uid )
-            if (!blog.publicado || !blog.habilitado) {
+            if (!docBlog.data().publicado || !docBlog.data().habilitado) {
                 throw new ErrorJekuaa({
                     codigo: 'jekuaa/error/usuario_mala_solicitud',
                     mensaje: `El blog esta deshabilitado.`

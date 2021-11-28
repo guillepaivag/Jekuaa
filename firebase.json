@@ -9,7 +9,14 @@
     "ignore": [
       "firebase.json",
       "**/.*",
-      "**/node_modules/**"
+      "**/node_modules/**",
+      "**/emulator-data/**"
+    ],
+    "rewrites": [
+      {
+        "source": "**",
+        "function": "defaultJekuaaNuxtSSR"
+      }
     ]
   },
   "emulators": {
@@ -30,8 +37,7 @@
     }
   },
   "firestore": {
-    "rules": "firestore.rules",
-    "indexes": "firestore.indexes.json"
+    "rules": "firestore.rules"
   },
   "storage": {
     "rules": "storage.rules"

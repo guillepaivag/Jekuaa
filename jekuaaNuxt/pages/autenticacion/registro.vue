@@ -9,7 +9,7 @@
         >
         <b class="frase">¡Nunca es tarde para hacer un cambio!</b>
       </div>
-      <div class="col-md-4">
+      <div class="col-md-4 formulario">
         <authEmail
           action="r"
           :cargando="cargando"
@@ -83,7 +83,18 @@ export default {
 @import url('https://fonts.googleapis.com/css2?family=Srisakdi&display=swap');
 
 .imagen {
+  -webkit-animation: action .5s infinite  alternate;
+  animation: action .5s infinite  alternate;
   width: 350px;
+}
+
+@-webkit-keyframes action {
+    0% { transform: translateY(0); }
+    100% { transform: translateY(-10px); }
+}
+@keyframes action {
+    0% { transform: translateY(0); }
+    100% { transform: translateY(-10px); }
 }
 
 .frase {
@@ -94,16 +105,16 @@ export default {
   color: #ffffff;
 }
 
-.presentacion_contenedor {
-  width: 50%;
-  height: 100vh;
+.formulario {
+  
+}
 
+.presentacion_contenedor {
+  height: 100vh;
   display: flex;
   justify-content: center;
   align-items: center;
-  background-color: #683bce;
   background-image: linear-gradient(43deg, #683bce 43%, #ff1d89 91%);
-
 }
 
 @media (min-width: 0px) and (max-width: 1430px) { 

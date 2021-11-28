@@ -2,21 +2,16 @@ import jwtDecode from 'jwt-decode'
 const cookieparser = require('cookieparser')
 
 export function getUserFromCookie (req) {
-  if (req.headers.cookie) {
-    const parsed = cookieparser.parse(req.headers.cookie)
-    const accessTokenCookie = parsed.__session
-    if (!accessTokenCookie) { return }
+  if (!req.headers.cookie) return null
 
-    const decodedToken = jwtDecode(accessTokenCookie)
-    if (!decodedToken) { return }
+  const parsed = cookieparser.parse(req.headers.cookie)
+  const accessTokenCookie = parsed.__session
+  if (!accessTokenCookie) return null
 
-    return {
-      decodedToken,
-      accessTokenCookie
-    }
-  }
+  const decodedToken = jwtDecode(accessTokenCookie)
+  if (!decodedToken) return null
 
-  return null
+  return { decodedToken, accessTokenCookie }
 }
 
 export function getUserFromSession (req) {

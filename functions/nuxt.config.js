@@ -1,6 +1,8 @@
 const colors = require('vuetify/es5/util/colors')
 
-const baseURL = 'http://localhost:5001/jekuaa-py/southamerica-east1/apiJekuaa'
+const baseURL = process.env.NODE_ENV === 'production' ? 
+'https://southamerica-east1-jekuaa-py.cloudfunctions.net/apiJekuaa' : 
+'http://localhost:5001/jekuaa-py/southamerica-east1/apiJekuaa'
 
 module.exports = {
   // Global page headers: https://go.nuxtjs.dev/config-head
@@ -31,15 +33,12 @@ module.exports = {
   // Global CSS: https://go.nuxtjs.dev/config-css
   css: [],
 
-  mode: "universal",
-
   // Plugins to run before rendering page: https://go.nuxtjs.dev/config-plugins
   plugins: [
-    { src: './plugins/firebase.js', },
-    { src: './plugins/TiptapVuetify.js', mode: 'client' },
-    { src: './plugins/vue-observe-visibility.js', mode: 'client' },
+    { src: './plugins/firebase.js' },
+    { src: './plugins/TiptapVuetify.js', ssr: false },
+    { src: './plugins/vue-observe-visibility.js', ssr: false },
   ],
-  
 
   // Auto import components: https://go.nuxtjs.dev/config-components
   components: true,
@@ -53,8 +52,23 @@ module.exports = {
   // Modules for dev and build (recommended): https://go.nuxtjs.dev/config-modules
   buildModules: [
     // https://go.nuxtjs.dev/vuetify
-    '@nuxtjs/vuetify'
+    '@nuxtjs/vuetify',
+    // // https://vite.nuxtjs.org/
+    // 'nuxt-vite',
+    // https://github.com/harlan-zw/nuxt-webpack-optimisations
+    'nuxt-webpack-optimisations',
   ],
+
+  webpackOptimisations: {
+    // hard source is the riskiest, if you have issues don't enable it
+    // hardSourcePlugin: process.env.NODE_ENV === 'development',
+    // parallelPlugin: process.env.NODE_ENV === 'development',
+  },
+
+  // vite: {
+  //   build: true,
+  //   ssr: true,
+  // },
 
   // Modules: https://go.nuxtjs.dev/config-modules
   modules: [

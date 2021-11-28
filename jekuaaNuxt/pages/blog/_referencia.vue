@@ -2,7 +2,7 @@
     <div>
         <v-parallax
             dark
-            :src="imgBlog"
+            :src="computed_imgBlog"
             height="300"
         >
             <v-row
@@ -66,6 +66,10 @@ export default {
     name: '',
     data() {
         return {
+            referenciaBlog: '',
+            blog: {},
+            contenidoBlog: '',
+            imgBlog: '',
             meGustaEsteBlog: false
         }
     },
@@ -148,13 +152,20 @@ export default {
             return !!usuario.uid
         }
     },
+    computed: {
+        computed_imgBlog: {
+            get: function () {
+                if (!this.imgBlog) return 'http://www.icorp.com.mx/blog/wp-content/uploads/2021/01/gestion_activos_software.jpg'
+                
+                return this.imgBlog
+            }
+        }
+    },
     async created() {
 
         const usuario = this.$store.state.modules.usuarios
 
-        if (!usuario.uid) {
-            return
-        }
+        if (!usuario.uid) return
 
         const doc = await this.$firebase.firestore()
             .collection('Usuarios')
@@ -166,21 +177,20 @@ export default {
         this.meGustaEsteBlog = !!doc.exists
         
     },
-    async asyncData({ app, $firebase, redirect, params }) {
+    async asyncData({ app, $firebase, $axios, redirect, params }) {
+        // Variables
+        let referenciaBlog = params.referencia
+        let blog = {}
+        let contenidoBlog = ''
+        let imgBlog = ''
+        
         try {
-            // Variables
-            let referenciaBlog
-            let blog
-            let contenidoBlog
-            let imgBlog
-
-            referenciaBlog = params.referencia
             const ref = $firebase.firestore().collection('Blogs').where('referencia', '==', referenciaBlog)
             const docsBlogs = await ref.get()
 
-            if (docsBlogs.empty) {
-                redirect('/blog')
-            }
+            const docX = await $firebase.firestore().collection('Blogs').doc('5DWvbg4RfNKuZJtLA9rJ').get()
+
+            if (docsBlogs.empty) redirect('/blog')
             
             const docBlog = docsBlogs.docs[0]
             
@@ -192,11 +202,11 @@ export default {
                 }
             }
 
-            let response = await app.$axios.get(`/blog/estudiante/obtenerContenido/${blog.uid}`, config)
+            let response = await $axios.get(`/blog/estudiante/obtenerContenido/${blog.uid}`, config)
 
             const converter = new showdown.Converter()
-            contenidoBlog = converter.makeHtml(response.data.resultado.contenido)
-            imgBlog = response.data.resultado.imgBlog
+            contenidoBlog = converter.makeHtml(response.data.resultado)
+            imgBlog = ''
 
             return {
                 referenciaBlog,
@@ -208,6 +218,7 @@ export default {
             console.log('err', err)
             redirect('/blog')
         }
+
     },
 }
 </script>

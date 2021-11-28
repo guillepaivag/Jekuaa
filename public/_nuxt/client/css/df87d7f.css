@@ -1,0 +1,9 @@
+@import url(https://fonts.googleapis.com/css2?family=Righteous&display=swap);
+@import url(https://fonts.googleapis.com/css2?family=Nixie+One&display=swap);
+.mensaje[data-v-f2eb3cb0]{color:#fff;font-family:"Nixie One",cursive}.mensaje_posicion[data-v-f2eb3cb0]{margin-top:40px}.presentacion[data-v-f2eb3cb0]{padding:65px}.imgNotFound[data-v-f2eb3cb0]{max-width:50%;height:auto}.not_found_container[data-v-f2eb3cb0]{background-color:#683bce}.notFoundNumber[data-v-f2eb3cb0]{color:#fff;font-size:150px;font-family:"Nixie One",cursive}
+h1[data-v-0e2d8744]{font-size:20px}
+.nuxt-progress{position:fixed;top:0;left:0;right:0;height:2px;width:0;opacity:1;transition:width .1s,opacity .4s;background-color:#000;z-index:999999}.nuxt-progress.nuxt-progress-notransition{transition:none}.nuxt-progress-failed{background-color:red}
+.containerLogo,.navButtons{margin-left:10px}.containerIcono,.navItemIcon{margin-right:10px}.containerItems{margin-left:20px}.estiloTexto{font-family:"Asap",sans-serif;font-weight:700}
+.containerLogo,.navButtons{margin-left:10px}.containerIcono,.navItemIcon{margin-right:10px}.estiloTexto{font-family:"Asap",sans-serif;font-weight:700}
+.footerTextTamanho{font-size:15px}.backgroundFooterLila{background:#683bce}.backgroundFooterRojo{background:#ff1d89}
+.textoError[data-v-1066e29e]{color:#fff}

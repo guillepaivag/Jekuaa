@@ -90,7 +90,7 @@
               <v-img
                 contain
                 max-height="60%"
-                src="https://firebasestorage.googleapis.com/v0/b/jekuaa-py.appspot.com/o/JekuaaLogo.png?alt=media&token=26851757-faff-48da-8e6f-e21f3c2c1e96"
+                src="https://firebasestorage.googleapis.com/v0/b/jekuaa-py.appspot.com/o/JekuaaLogo48x48.png?alt=media&token=1eaf2b06-2e17-4c34-97cd-793de7fc9d46"
               />
             </v-avatar>
           </v-app-bar-nav-icon>

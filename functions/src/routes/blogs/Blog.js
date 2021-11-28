@@ -43,17 +43,11 @@ router.post('/estudiante/listaBlogsPorMG',
 router.get('/estudiante/ultimosBlogsPorPublicador/:uid', 
     ultimosBlogsPorPublicador)
 
-router.get('/estudiante/obtenerBlog/:uid', 
-    verificacionExistenciaBlog,
-    verificacionExistenciaArchivoBlog,
-    obtenerBlog)
-
 router.get('/estudiante/obtenerDatosBlog/:uid', 
     verificacionExistenciaBlog,
     obtenerDatosBlog)
 
 router.get('/estudiante/obtenerContenido/:uid',
-    verificacionExistenciaBlog,
     verificacionExistenciaArchivoBlog,
     obtenerContenidoBlog)
 
@@ -68,13 +62,6 @@ router.post('/estudiante/meGusta/:uid',
     
 
 // Operaciones para: MiembrosJekuaa (limitado)
-router.get('/miembroJekuaa/obtenerBlog/:uid', 
-    estaAutenticado, 
-    esMiembroJekuaa, 
-    verificacionExistenciaBlog,
-    verificacionExistenciaArchivoBlog,
-    obtenerBlog)
-
 router.get('/miembroJekuaa/obtenerDatosBlog/:uid', 
     estaAutenticado, 
     esMiembroJekuaa, 
@@ -84,7 +71,6 @@ router.get('/miembroJekuaa/obtenerDatosBlog/:uid',
 router.get('/miembroJekuaa/obtenerContenido/:uid',
     estaAutenticado, 
     esMiembroJekuaa, 
-    verificacionExistenciaBlog,
     verificacionExistenciaArchivoBlog,
     obtenerContenidoBlog)
 

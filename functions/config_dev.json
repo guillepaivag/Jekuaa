@@ -1,7 +1,7 @@
 {
   "algolia_service": {
-    "api_key": "c5421ff3ce360d6478059e96317448db",
-    "app_id": "RNRNTDZS3N"
+    "app_id": "RNRNTDZS3N",
+    "api_key": "c5421ff3ce360d6478059e96317448db"
   },
   "environment": {
     "mode": "development"

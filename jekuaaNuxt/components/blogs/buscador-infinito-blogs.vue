@@ -3,7 +3,7 @@
     <div class="container">
       <ais-instant-search
         :search-client="searchClient"
-        index-name="blogs_dev"
+        :index-name="indexName"
       >
         <div class="search-panel">
           <div class="search-panel__results">
@@ -45,7 +45,11 @@ export default {
         'RNRNTDZS3N',
         'af4d4e9d36a7ceb75e258007c3ceccf2'
       ),
+      indexName: process.env.NODE_ENV === 'production' ? 'blogs_prod' : 'blogs_dev',
     };
+  },
+  created() {
+
   },
 };
 </script>

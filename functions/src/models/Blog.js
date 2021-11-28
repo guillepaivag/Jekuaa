@@ -303,6 +303,7 @@ class Blog {
     }
 
     async obtenerContenido ( opciones ) {
+        console.log('configJekuaa.environment.mode', configJekuaa.environment.mode)
         let rutaCloudStorage = configJekuaa.environment.mode === 'production' ? 'blogs/prod' : 'blogs/dev'
 
         const bucket = storage.bucket('jekuaa-blogs')
@@ -403,6 +404,9 @@ class Blog {
     static async subirArchivoAStorage ( rutaArchivo, uid ) {
         const bucket = storage.bucket('jekuaa-blogs')
 
+        console.log('configJekuaa', configJekuaa)
+        console.log('configJekuaa.environment', configJekuaa.environment)
+        console.log('configJekuaa.environment.mode', configJekuaa.environment.mode)
         const rutaModo = configJekuaa.environment.mode === 'production' ? 'prod' : 'dev'
         const response = await bucket.upload(rutaArchivo, {
             destination: `blogs/${rutaModo}/${uid}.md`,
@@ -485,7 +489,8 @@ class Blog {
     }
 
     static async errorBlogPorUID ( uid, operacion ) {
-        const existe = (await db.collection(COLECCION_BLOG).doc(uid).get()).exists
+        const doc = await db.collection(COLECCION_BLOG).doc(uid).get()
+        const existe = doc.exists
 
         if ( operacion === 'existe' && existe ) {
             throw new ErrorJekuaa({
@@ -500,6 +505,7 @@ class Blog {
             })
         }
 
+        return doc
     }
 
     static async errorBlogPorReferencia ( referencia, operacion ) {
@@ -554,21 +560,7 @@ class Blog {
         let ultimaUID = ultimoDocumento.id
         for (let i = 0; i < documentSnapshots.docs.length; i++) {
             const element = documentSnapshots.docs[i]
-            
-            const uidPublicador = element.data().publicador
-
-            const datosAuthPublicador = await Usuario.verDatosAuthPorUID( uidPublicador )
-            const imgBlog = await Blog.obtenerImagenPorSeccion(element.data().seccion)
-
-            const datosBlog = {
-                imgBlog: imgBlog,
-                blog: element.data(),
-                publicador: {
-                    nombreUsuario: datosAuthPublicador.displayName,
-                }
-            }
-            
-            blogs.push( datosBlog )
+            blogs.push( element.data() )
         }
         
         const existeMasDatos = blogs.length ? await Blog.verificarSiHayMasDatos({
@@ -601,21 +593,7 @@ class Blog {
         ultimaUID = ultimoDocumento.id
         for (let i = 0; i < documentSnapshots.docs.length; i++) {
             const element = documentSnapshots.docs[i]
-            
-            const uidPublicador = element.data().publicador
-
-            const datosAuthPublicador = await Usuario.verDatosAuthPorUID( uidPublicador )
-            const imgBlog = await Blog.obtenerImagenPorSeccion(element.data().seccion)
-
-            const datosBlog = {
-                imgBlog: imgBlog,
-                blog: element.data(),
-                publicador: {
-                    nombreUsuario: datosAuthPublicador.displayName,
-                }
-            }
-            
-            blogs.push( datosBlog )
+            blogs.push( element.data() )
         }
         
         const existeMasDatos = await Blog.verificarSiHayMasDatos({
@@ -658,7 +636,7 @@ class Blog {
         if ( filtros.categoria ) {
             ref = ref.where('categoria', '==', filtros.categoria)
         }
-        if ( filtros.subCategorias ) {
+        if ( filtros.subCategorias && filtros.subCategorias.length ) {
             ref = ref.where('subCategorias', 'array-contains-any', filtros.subCategorias)
         }
         if ( filtros.publicador && ruta !== 'estudiante' ) {

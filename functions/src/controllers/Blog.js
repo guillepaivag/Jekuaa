@@ -26,7 +26,6 @@ controller.crearBlog = async (req, res) => {
     
     try {
         const { jekuaaDatos, body } = req
-        const { uidSolicitante, datosAuthSolicitante } = jekuaaDatos
         const { datosBlog, nombreBlogTemp, rutaArchivoTemp } = body
 
         const respuesta = new Respuesta()
@@ -109,22 +108,17 @@ controller.obtenerContenidoBlog = async ( req, res ) => {
         let codigo = 'jekuaa/exito'
 
         const blog = new Blog()
-        await blog.importarDatosBlogPorUID( uid )
-        const opciones = {
-            extensionArchivo: 'md'
-        }
+        blog.setUID(uid)
 
         // Obtener archivo
-        const contenido = await blog.obtenerContenido( opciones )
-        const imgBlog = await Blog.obtenerImagenPorSeccion(blog.seccion)
+        const contenido = await blog.obtenerContenido({
+            extensionArchivo: 'md'
+        })
 
         // Retornar respuesta
         respuesta.setRespuestaPorCodigo(codigo, {
             mensaje: '¡El contenido del archivo se obtuvo con exito!',
-            resultado: {
-                contenido, 
-                imgBlog,
-            }
+            resultado: contenido
         })
         const status = respuesta.getStatusCode()
         
@@ -204,18 +198,7 @@ controller.listaBlogsPorMG = async (req, res) => {
 
         for (let i = 0; i < documentsBlogs.docs.length; i++) {
             const doc = documentsBlogs.docs[i]
-            const uidPublicador = doc.data().publicador
-            const datosAuthPublicador = await Usuario.verDatosAuthPorUID( uidPublicador )
-            const imgBlog = await Blog.obtenerImagenPorSeccion(doc.data().seccion)
-            const datosBlog = {
-                imgBlog: imgBlog,
-                blog: doc.data(),
-                publicador: {
-                    nombreUsuario: datosAuthPublicador.displayName,
-                    fotoPerfil: datosAuthPublicador.photoURL ? datosAuthPublicador.photoURL : '',
-                }
-            }
-            listaBlogs.push(datosBlog)
+            listaBlogs.push(doc.data())
         }
         
         // Retornar respuesta
@@ -299,12 +282,11 @@ controller.ultimosBlogsPorPublicador = async (req, res) => {
         .orderBy('fechaCreacion', 'desc')
         .limit(3)
 
-        const docs = await (await ref.get()).docs
+        const docs = (await ref.get()).docs
         let blogs = []
 
         for (let index = 0; index < docs.length; index++) {
             const doc = docs[index]
-            
             blogs.push(doc.data())
         }
         

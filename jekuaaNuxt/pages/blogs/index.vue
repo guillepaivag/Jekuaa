@@ -47,19 +47,23 @@
 
             <v-divider class="mt-1 mb-5"></v-divider>
 
-            <lista-blogs 
-                :blogs="blogs"
-                :existeMasDatos="existeMasDatos"
-                :buscando="buscando"
-                @cargarBlogs="cargarBlogs($event)"
-            />
+            <div v-if="blogs.length">
+                <lista-blogs 
+                    :blogs="blogs"
+                    :existeMasDatos="existeMasDatos"
+                    :buscando="buscando"
+                    @cargarBlogs="cargarBlogs($event)"
+                />
+            </div>
+            <div v-else-if="buscando">
+                Cargando blogs...
+            </div>
         </div>
     </div>
 </template>
 
 <script>
 import listaBlogs from '@/components/blogs/lista-blogs'
-import buscadorBlogs from '@/components/blogs/buscador-blogs'
 import buscadorInfinitoBlogs from '@/components/blogs/buscador-infinito-blogs'
 
 const maximoPorPagina = 3
@@ -68,43 +72,66 @@ export default {
     name: 'blogs',
     components: {
         'lista-blogs': listaBlogs,
-        'buscador-blogs': buscadorBlogs,
         'buscador-infinito-blogs': buscadorInfinitoBlogs,
     },
     data() {
         return {
+            blogs: [],
+            ultimaUID: '',
+            existeMasDatos: false,
             buscando: false,
             maximoPorPagina: maximoPorPagina,
             filtros: {
-                seccion: '',
-                categoria: '',
-                subCategorias: '',
+                seccion: this.$route.params.seccion ? this.$route.params.seccion : '',
+                categoria: this.$route.params.categoria ? this.$route.params.categoria : '',
+                subCategorias: this.$route.params.subCategoria ? [this.$route.params.subCategoria] : [],
             },
             dialogBuscadorBlog: false,
         }
     },
     methods: {
         async inicializarLista () {
-            this.buscando = true
+            try {
+                this.buscando = true
+                this.ultimaUID = ''
 
-            let body = {
-                ultimaUID: null, 
-                maximoPorPagina: 5,
-                filtros: this.filtros
-            }
-
-            let config = {
-                headers: {
-                    'Content-Type': 'application/json'
+                let body = {
+                    ultimaUID: this.ultimaUID, 
+                    maximoPorPagina: 5,
+                    filtros: this.filtros
                 }
+
+                let config = {
+                    headers: {
+                        'Content-Type': 'application/json'
+                    }
+                }
+
+                const response = await this.$axios.post('/blog/estudiante/paginarListaBlogs', body, config)
+
+                this.blogs = []
+                let aux = []
+                for (let i = 0; i < response.data.resultado.blogs.length; i++) {
+                    const blog = response.data.resultado.blogs[i]
+                    aux.push({
+                        blog: blog,
+                        publicador: {
+                            nombreUsuario: '',
+                            fotoPerfil: '',
+                        },
+                        imgBlog: '',
+                    })
+                }
+
+                this.blogs.push(...aux)
+                this.ultimaUID = response.data.resultado.ultimaUID
+                this.existeMasDatos = response.data.resultado.existeMasDatos
+
+            } catch (error) {
+                const accion = await this.$store.dispatch('modules/sistema/errorHandler', error)                
+            } finally {
+                this.buscando = false
             }
-
-            const response = await this.$axios.post('/blog/estudiante/paginarListaBlogs', body, config)
-            this.blogs = response.data.resultado.blogs
-            this.ultimaUID = response.data.resultado.ultimaUID
-            this.existeMasDatos = response.data.resultado.existeMasDatos
-
-            this.buscando = false
         },
         async paginar () {
             try {
@@ -130,10 +157,22 @@ export default {
                 const response = await this.$axios.post('/blog/estudiante/paginarListaBlogs', body, config)
                 const nuevosBlogs = response.data.resultado.blogs
 
-                this.blogs.push(...nuevosBlogs)
+                let aux = []
+                for (let i = 0; i < nuevosBlogs.length; i++) {
+                    const blog = nuevosBlogs[i]
+                    aux.push({
+                        blog: blog,
+                        publicador: {
+                            nombreUsuario: '',
+                            fotoPerfil: '',
+                        },
+                        imgBlog: '',
+                    })
+                }
+                
+                this.blogs.push(...aux)
                 this.ultimaUID = response.data.resultado.ultimaUID
                 this.existeMasDatos = response.data.resultado.existeMasDatos
-
                 
             } catch (error) {
                 const accion = await this.$store.dispatch('modules/sistema/errorHandler', error)
@@ -149,29 +188,34 @@ export default {
             await this.paginar()
         }
     },
-    async asyncData({app, $axios, isDev, route, store, env, params, query, req, res, redirect, error}) {
-        let body = {
-            ultimaUID: null, 
-            maximoPorPagina: 5,
-            filtros: {}
-        }
+    watch: {
+        blogs: async function (n, v) {
+            let config = {
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            }
+            
+            for (let i = 0; i < n.length; i++) {
+                const infoBlog = n[i]
+                
+                if (!infoBlog.publicador.nombreUsuario) {
+                    const body = {
+                        uid: infoBlog.blog.publicador
+                    }
+                    const response = await this.$axios.post('/usuarios/estudiante/authUsuario', body, config)
+                    this.blogs[i].publicador.nombreUsuario = response.data.resultado.displayName
+                    this.blogs[i].publicador.fotoPerfil = response.data.resultado.photoURL
+                }
 
-        let config = {
-            headers: {
-                'Content-Type': 'application/json'
+                if (!infoBlog.imgBlog) {
+                    this.blogs[i].imgBlog = 'http://www.icorp.com.mx/blog/wp-content/uploads/2021/01/gestion_activos_software.jpg'
+                }
             }
         }
-
-        const response = await $axios.post('/blog/estudiante/paginarListaBlogs', body, config)
-        let blogs = response.data.resultado.blogs
-        let ultimaUID = response.data.resultado.ultimaUID
-        let existeMasDatos = response.data.resultado.existeMasDatos
-
-        return {
-            blogs,
-            ultimaUID,
-            existeMasDatos,
-        }
+    },
+    async created() {
+        await this.inicializarLista()
     },
 }
 </script>

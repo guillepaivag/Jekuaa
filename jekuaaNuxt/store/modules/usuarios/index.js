@@ -200,18 +200,9 @@ export const actions = {
     console.log('[STORE ACTIONS] - login')
 
     try {
-      // Mostrar pantalla de carga
-
-      // Obtenemos los datos del usuario por medio de la uid
-      // Insertamos los datos de los usuarios en la store
       await dispatch('setDatosUsuarioPorUID', uid)
-
     } catch (error) {
-      
       console.log('error login', error)
-
-    } finally {
-      // Finalizar pantalla de carga
     }
     
   },
@@ -224,7 +215,7 @@ export const actions = {
     await dispatch('setDatosUsuario', null)
   },
 
-  async setDatosUsuario ({ dispatch, commit }, datosUsuario) {
+  async setDatosUsuario ({ state, dispatch, commit }, datosUsuario) {
 
     let uid
     if (datosUsuario) {
@@ -258,6 +249,7 @@ export const actions = {
       await dispatch('setJekuaaPoint', null)
     }
 
+    console.log('stateeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee: ', state)
     // await dispatch('modules/user/misCursos/setDatosMisCursosPorUID', uid, { root: true })
 
   },
@@ -389,24 +381,18 @@ export const actions = {
 
   async getUsuarioDatosPorUID ({ dispatch, commit, state }, uid) {
     
-    if (!uid) {
-      return null
-    }
+    if (!uid) return null
     
     const usuarioDoc = await dispatch('firebaseFirestoreGetUser_UID', uid)
 
-    if ( !usuarioDoc.exists ) {
-      return null
-    } 
+    if ( !usuarioDoc.exists ) return null
 
     const usuario = usuarioDoc.data()
     
     // Obtener los datos
     const userCurrent = this.$firebase.auth().currentUser
 
-    if (!userCurrent) {
-      return null
-    }
+    if (!userCurrent) return null
 
     // Token del usuario
     const token = await userCurrent.getIdToken(true)

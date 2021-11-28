@@ -15,7 +15,6 @@
 
 <script>
 import listaBlogs from '@/components/blogs/lista-blogs'
-import buscadorBlogs from '@/components/blogs/buscador-blogs'
 
 const maximoPorPagina = 3
 
@@ -23,7 +22,6 @@ export default {
     name: 'blogs',
     components: {
         'lista-blogs': listaBlogs,
-        'buscador-blogs': buscadorBlogs,
     },
     data() {
         return {

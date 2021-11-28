@@ -15,7 +15,7 @@ export default async ({ env, store }, inject) => {
 
   if (process.client) {
 
-    if(window.location.hostname === 'localhost') {
+    if(window.location.hostname === 'localhost' || process.env.NODE_ENV === 'development') {
       firebase.auth().useEmulator('http://localhost:9099')
       firebase.firestore().useEmulator('localhost', 8080)
       firebase.functions().useEmulator('localhost', 5001)
@@ -23,22 +23,19 @@ export default async ({ env, store }, inject) => {
     }
 
     firebase.auth().onAuthStateChanged(async (user) => {
-      await store.dispatch('modules/sistema/setLoading', true)
-
       if (user) {
-        console.log('signed in', user)
-        await store.dispatch('modules/usuarios/login', user.uid)
-
+        store.dispatch('modules/usuarios/login', user.uid)
+        // if (!store.state.modules.usuarios.uid) {
+        //   await store.dispatch('modules/usuarios/login', user.uid)
+        // }
       } else {
-        console.log('signed out')
         await store.dispatch('modules/usuarios/logout')
       }
-
-      await store.dispatch('modules/sistema/setLoading', false)
+      console.log('store.state.modules.usuarios', store.state.modules.usuarios)
     })
 
   } else {
-    if(esComienzo) {
+    if(esComienzo && process.env.NODE_ENV === 'development') {
       firebase.auth().useEmulator('http://localhost:9099')
       firebase.firestore().useEmulator('localhost', 8080)
       firebase.functions().useEmulator('localhost', 5001)

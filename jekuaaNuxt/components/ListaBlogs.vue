@@ -44,14 +44,20 @@
                         alt=""
                         :src="dato.publicador.fotoPerfil"
                       ></v-img>
-                      <span v-else class="headline inicialNombreUsuario">
+                      <span v-else-if="!!dato.publicador.nombreUsuario" class="headline inicialNombreUsuario">
                         {{ inicialNombreUsuario(dato.publicador.nombreUsuario) }}
+                      </span>
+                      <span v-else class="headline inicialNombreUsuario">
+                        ...
                       </span>
                     </v-list-item-avatar>
 
                     <v-list-item-content>
-                      <v-list-item-title>
+                      <v-list-item-title v-if="!!dato.publicador.nombreUsuario">
                         {{dato.publicador.nombreUsuario}}
+                      </v-list-item-title>
+                      <v-list-item-title v-else>
+                        Cargando...
                       </v-list-item-title>
                     </v-list-item-content>
 
@@ -304,9 +310,7 @@ export default {
       }
     },
     categoria: async function (nuevo, viejo) {
-      if (nuevo.uid === viejo.uid) {
-        return
-      }
+      if (nuevo.uid === viejo.uid) return
 
       try {
         this.mostrarCarga = true
@@ -326,8 +330,18 @@ export default {
         let response = await this.$axios.post('/blog/estudiante/listaBlogsPorMG', body, config)
         const listaDatosBlogs = response.data.resultado
 
-        this.listaDatosBlogs = []
-        listaDatosBlogs.length ? this.listaDatosBlogs = listaDatosBlogs : ''
+        let listaAux = []
+        for (let i = 0; i < listaDatosBlogs.length; i++) {
+          const datosBlog = listaDatosBlogs[i]
+          listaAux.push({
+            blog: datosBlog,
+            publicador: {
+              fotoPerfil: '',
+              nombreUsuario: '',
+            }
+          })
+        }
+        this.listaDatosBlogs = listaAux
 
       } catch (error) {
         console.error(error)
@@ -335,6 +349,24 @@ export default {
       } finally {
         this.mostrarCarga = false
       }
+    },
+    listaDatosBlogs: async function (n, v) {
+      let config = {
+        headers: {
+          'Content-Type': 'application/json'
+        }
+      }
+      
+      for (let i = 0; i < n.length; i++) {
+        const infoBlog = n[i]
+        const body = {
+          uid: infoBlog.blog.publicador
+        }
+        const response = await this.$axios.post('/usuarios/estudiante/authUsuario', body, config)
+        this.listaDatosBlogs[i].publicador.nombreUsuario = response.data.resultado.displayName
+        this.listaDatosBlogs[i].publicador.fotoPerfil = response.data.resultado.photoURL
+      }
+
     }
   },
   async mounted() {

@@ -49,8 +49,6 @@ export default {
       'getLoading',
     ]),
     ...mapGetters('modules/usuarios', [
-      'uid',
-      'datosPersonales',
       'autenticado'
     ]),
     ...mapGetters('modules/sistema', [

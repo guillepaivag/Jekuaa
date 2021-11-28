@@ -3,9 +3,10 @@ const express = require('express')
 
 const appNuxt = express()
 
-const nuxt = new Nuxt({
-  dev: true
-})
+const config = {
+  dev: false
+}
+const nuxt = new Nuxt(config)
 
 let isReady = false
 const readyPromise = nuxt.ready()
@@ -17,14 +18,19 @@ const readyPromise = nuxt.ready()
 })
 
 async function handleRequest(req, res) {
-  if (!isReady) {
-    await readyPromise
+  try {
+    if (!isReady) {
+      await readyPromise
+    }
+    res.set('Cache-Control', 'public, max-age=300, s-maxage=600')
+    await nuxt.render(req, res)
+  } catch (error) {
+    console.log('handleRequest-error: ')
+    console.log(error)
   }
-  res.set('Cache-Control', 'public, max-age=1, s-maxage=1')
-  await nuxt.render(req, res)
 }
 
-appNuxt.get('*', handleRequest)
 appNuxt.use(handleRequest)
+appNuxt.get('*', handleRequest)
 
 module.exports = appNuxt

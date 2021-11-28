@@ -4,8 +4,8 @@ const { Nuxt, Builder } = require('nuxt')
 const app = express()
 
 // Import and Set Nuxt.js options
-const config = require('../nuxt.config.js')
-config.dev = !(process.env.NODE_ENV === 'production')
+const config = require('../nuxt.config')
+config.dev = process.env.NODE_ENV !== 'production'
 
 async function start() {
   // Init Nuxt.js
@@ -32,6 +32,5 @@ async function start() {
     badge: true
   })
 }
-
 
 start()

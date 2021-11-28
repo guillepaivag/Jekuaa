@@ -32,7 +32,7 @@ const {
  */ 
 
 // SSR Para el cliente con Nuxt.js
-exports.nuxtssr = functions.region('southamerica-east1').https.onRequest(appNuxt)
+exports.defaultJekuaaNuxtSSR = functions.region('us-central1').https.onRequest(appNuxt)
 
 // REST-API de Jekuaa
 exports.apiJekuaa = functions.region('southamerica-east1').https.onRequest(apiJekuaa)
