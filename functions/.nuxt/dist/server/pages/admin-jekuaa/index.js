@@ -1,3 +1,0 @@
-exports.ids=[26],exports.modules={550:function(c,a,r){"use strict";r.r(a);var t=function(){var e=this,d=e.$createElement,m=e._self._c||d;return m("div",[])},o=[],s={name:"AdminIndex",layout:"admin",middleware:"esMiembroJekuaa",data(){return{adminElements:[{color:"#683bce",title:"Usuarios",description:"Administra a los usuarios.",to:"/miembro-jekuaa/usuarios"},{color:"#ff1d89",title:"Blog",description:"Administra los blogs de Jekuaa.",to:"/miembro-jekuaa/blog"},{color:"#683bce",title:"Cursos",description:"Administra los cursos de Jekuaa.",to:"/miembro-jekuaa/cursos"}]}}},i=s,n=r(7);function u(e){}var l=Object(n.a)(i,t,o,!1,u,null,"4973a986"),v=a.default=l.exports}};
-
-//# sourceMappingURL=index.js.map

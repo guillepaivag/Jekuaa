@@ -253,9 +253,9 @@
                 <div class="mt-15 mb-5">
                   <h2> Vista del contenido del blog </h2>
                   <v-divider></v-divider>
-                  <v-card class="mt-5 mb-5">
-                    <div class="pl-5 pt-5 pr-5 pb-5" v-html="contenidoBlogHTML"></div>
-                  </v-card>
+                  <div class="pl-5 pt-5 pr-5 pb-5">
+                    <visualizador-blog :contenidoBlog="contenidoBlogHTML" />
+                  </div>
                 </div>
 
                 <v-divider class="mt-10 mb-5"></v-divider>
@@ -290,9 +290,9 @@
                 <div class="mt-15 mb-5">
                   <h2> Vista del contenido del blog </h2>
                   <v-divider></v-divider>
-                  <v-card class="mt-5 mb-5">
-                    <div class="pl-5 pt-5 pr-5 pb-5" v-html="contenidoBlogHTML"></div>
-                  </v-card>
+                  <div class="pl-5 pt-5 pr-5 pb-5">
+                    <visualizador-blog :contenidoBlog="contenidoBlogHTML" />
+                  </div>
                 </div>
 
                 <v-divider class="mt-10 mb-5"></v-divider>
@@ -311,9 +311,9 @@
                 <div class="mt-15 mb-5">
                   <h2> Vista del contenido del blog </h2>
                   <v-divider></v-divider>
-                  <v-card class="mt-5 mb-5">
-                    <div class="pl-5 pt-5 pr-5 pb-5" v-html="contenidoBlogHTML"></div>
-                  </v-card>
+                  <div class="pl-5 pt-5 pr-5 pb-5">
+                    <visualizador-blog :contenidoBlog="contenidoBlogHTML" />
+                  </div>
                 </div>
 
               </section>
@@ -354,6 +354,7 @@
 <script>
 import { validationMixin } from 'vuelidate'
 import { required, minLength, maxLength, email } from 'vuelidate/lib/validators'
+import VisualizadorBlog from '@/components/blogs/Visualizador'
 import Editor from '@/components/Editor'
 import informacionSecciones from '@/helpers/informacionSecciones'
 import showdown from 'showdown'
@@ -362,6 +363,7 @@ import TurndownService from 'turndown'
 export default {
   components: {
     'editor': Editor,
+    'visualizador-blog': VisualizadorBlog,
   },
 
   mixins: [validationMixin],

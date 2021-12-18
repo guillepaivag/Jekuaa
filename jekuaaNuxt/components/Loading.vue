@@ -1,6 +1,8 @@
 <template>
-  <div>
-      Cargando...
+  <div class="contenedor">
+    <div class="contenido">
+      <Spinner />
+    </div>
   </div>
 </template>
 
@@ -10,6 +12,13 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
+.contenedor {
+  display: flex;
+  align-items: center;
+}
 
+.contenido {
+  margin: 23% auto;
+}
 </style>

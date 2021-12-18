@@ -4,7 +4,7 @@
     "source": "functions"
   },
   "hosting": {
-    "site": "jekuaa",
+    "site": "jekuaa-py",
     "public": "public",
     "ignore": [
       "firebase.json",

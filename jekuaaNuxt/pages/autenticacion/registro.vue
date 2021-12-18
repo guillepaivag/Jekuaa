@@ -4,7 +4,7 @@
       <div class="col-md-8 presentacion_contenedor">
         <img 
           class="imagen"
-          :src="imagen" 
+          :src="require(`~/assets/img/working-at-home.png`)"
           alt="Logotipo de cdlibre.org" 
         >
         <b class="frase">¡Nunca es tarde para hacer un cambio!</b>
@@ -39,7 +39,6 @@ export default {
         btnMessage: 'Registrarme',
       },
       cargando: false,
-      imagen: 'https://firebasestorage.googleapis.com/v0/b/jekuaa-py.appspot.com/o/working-at-home.png?alt=media&token=51b948bb-7f3b-483e-bef1-88ed04e7d694',
     }
   },
   methods: {
@@ -48,6 +47,7 @@ export default {
     async registroEmail (usuario) {
       try {
         this.cargando = true
+        this.$store.commit('modules/sistema/setLoading', true)
 
         // REGISTRAMOS UN USUARIO
         const datosUsuario = await this.firebaseRegistroUser_EmailAndPassword({
@@ -65,13 +65,14 @@ export default {
         })
 
         // REDIRECCIÓN AL USUARIO
-        this.$router.push(`/bienvenido-a-jekuaa/${usuario.nombreUsuario}`)
+        this.$router.push(`/bienvenido-a-jekuaapy/${usuario.nombreUsuario}`)
 
       } catch (error) {
         const accion = await this.$store.dispatch('modules/sistema/errorHandler', error)
 
       } finally {
         this.cargando = false
+        this.$store.commit('modules/sistema/setLoading', false)
       }
     }
   },

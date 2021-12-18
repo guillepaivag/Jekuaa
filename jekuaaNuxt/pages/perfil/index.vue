@@ -8,7 +8,7 @@
             class="ml-4 mb-3"
             outlined
             color="#683bce"
-            :to="`/${$store.state.modules.usuarios.nombreUsuario}`"
+            :to="`/estudiante/${$store.state.modules.usuarios.nombreUsuario}`"
           >
             Ver mi perfil
           </v-btn>

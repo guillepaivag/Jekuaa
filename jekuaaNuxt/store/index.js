@@ -10,8 +10,10 @@ export const actions = {
       const user = getUserFromCookie(req)
 
       if ( !(user && user.decodedToken) ) {
-        dispatch('modules/usuarios/setDatosUsuario', null)
+        await dispatch('modules/usuarios/setDatosUsuario', null)
         return 
+      } else {
+        commit('modules/sistema/setLoading', true)
       }
 
       const token = user.accessTokenCookie
@@ -28,12 +30,25 @@ export const actions = {
       const fechaNacimiento = datosUsuarioDB.data().fechaNacimiento ? new Date(datosUsuarioDB.data().fechaNacimiento.seconds * 1000) : null
 
       const jekuaaPremium = datosUsuarioDB.data().jekuaaPremium ? datosUsuarioDB.data().jekuaaPremium : null
-
       const jekuaaRol = user.decodedToken.jekuaaRol ? user.decodedToken.jekuaaRol : null
-      
       const instructor = user.decodedToken.instructor ? user.decodedToken.instructor : null
-
       const jekuaaPoint = datosUsuarioDB.data().jekuaaPoint ? datosUsuarioDB.data().jekuaaPoint : null
+
+
+      // // Objetos a insertar
+      // const fotoPerfil = user.decodedToken.picture ? user.decodedToken.picture : null
+      // const nombreUsuario = user.decodedToken.name ? user.decodedToken.name : null
+      // const correo = user.decodedToken.email ? user.decodedToken.email : null
+      // const nombreCompleto = null
+      // const fechaNacimiento = null
+      // const jekuaaPremium = {
+      //   plan: user.decodedToken.jekuaaPremium,
+      //   fechaCompra: null,
+      //   fechaHasta: null,
+      // }
+      // const jekuaaRol = user.decodedToken.jekuaaRol ? user.decodedToken.jekuaaRol : null
+      // const instructor = user.decodedToken.instructor ? user.decodedToken.instructor : null
+      // const jekuaaPoint = null
 
       // Creamos un objeto a insertar
       const datosUsuario = {
@@ -50,7 +65,7 @@ export const actions = {
         jekuaaPoint
       }
 
-      dispatch('modules/usuarios/setDatosUsuario', datosUsuario)
+      await dispatch('modules/usuarios/setDatosUsuario', datosUsuario)
 
     } catch (error) {
       console.log('Error - nuxtServerInit: ', error)

@@ -18,7 +18,7 @@ const busboyMiddleware = async (req, res, next) => {
     const fileWrites = []
     // Note: os.tmpdir() points to an in-memory file system on GCF
     // Thus, any files in it must fit in the instance's memory.
-    const tmpdir = path.join(__dirname, '..', 'temp')
+    const tmpdir = path.join(os.tmpdir())
 
     busboy.on('field', (key, value) => {
         // You could do additional deserialization logic here, values will just be

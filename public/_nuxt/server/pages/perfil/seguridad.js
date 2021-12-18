@@ -1,5 +1,609 @@
-var le=Object.defineProperty,ce=Object.defineProperties;var de=Object.getOwnPropertyDescriptors;var te=Object.getOwnPropertySymbols;var me=Object.prototype.hasOwnProperty,ie=Object.prototype.propertyIsEnumerable;var se=(l,_,e)=>_ in l?le(l,_,{enumerable:!0,configurable:!0,writable:!0,value:e}):l[_]=e,v=(l,_)=>{for(var e in _||(_={}))me.call(_,e)&&se(l,e,_[e]);if(te)for(var e of te(_))ie.call(_,e)&&se(l,e,_[e]);return l},h=(l,_)=>ce(l,de(_));exports.ids=[49],exports.modules={256:function(l,_){l.exports={}},267:function(l,_,e){"use strict";var L=e(178),S=e.n(L),g=e(179),f=e.n(g),x=e(180),V=e.n(x),A=e(181),N=e.n(A),B=e(182),G=e.n(B),T=e(183),z=e.n(T),R=e(184),F=e.n(R),O=e(185),w=e.n(O),t=e(186),P=e.n(t),r=e(187),d=e.n(r),J=e(188),ne=e.n(J),H=e(189),_e=e.n(H),Q=e(190),ae=e.n(Q),X=e(256),oe=e.n(X),Y=e(1),Z=e.n(Y),b=e(30),$=e(0);const I=["sm","md","lg","xl"],j=(()=>I.reduce((o,s)=>(o[s]={type:[Boolean,String,Number],default:!1},o),{}))(),M=(()=>I.reduce((o,s)=>(o["offset"+Object($.J)(s)]={type:[String,Number],default:null},o),{}))(),K=(()=>I.reduce((o,s)=>(o["order"+Object($.J)(s)]={type:[String,Number],default:null},o),{}))(),U={col:Object.keys(j),offset:Object.keys(M),order:Object.keys(K)};function p(o,s,m){let E=o;if(!(m==null||m===!1))return s&&(E+=`-${s.replace(o,"")}`),o==="col"&&(m===""||m===!0)||(E+=`-${m}`),E.toLowerCase()}const W=new Map;_.a=Z.a.extend({name:"v-col",functional:!0,props:h(v(h(v(h(v({cols:{type:[Boolean,String,Number],default:!1}},j),{offset:{type:[String,Number],default:null}}),M),{order:{type:[String,Number],default:null}}),K),{alignSelf:{type:String,default:null,validator:o=>["auto","start","end","center","baseline","stretch"].includes(o)},tag:{type:String,default:"div"}}),render(o,{props:s,data:m,children:E,parent:k}){let D="";for(const n in s)D+=String(s[n]);let a=W.get(D);if(!a){a=[];let n;for(n in U)U[n].forEach(c=>{const C=s[c],u=p(n,c,C);u&&a.push(u)});const i=a.some(c=>c.startsWith("col-"));a.push({col:!i||!s.cols,[`col-${s.cols}`]:s.cols,[`offset-${s.offset}`]:s.offset,[`order-${s.order}`]:s.order,[`align-self-${s.alignSelf}`]:s.alignSelf}),W.set(D,a)}return o(s.tag,Object(b.a)(m,{class:a}),E)}})},268:function(l,_,e){"use strict";var L=e(178),S=e.n(L),g=e(179),f=e.n(g),x=e(180),V=e.n(x),A=e(181),N=e.n(A),B=e(182),G=e.n(B),T=e(183),z=e.n(T),R=e(184),F=e.n(R),O=e(185),w=e.n(O),t=e(186),P=e.n(t),r=e(187),d=e.n(r),J=e(188),ne=e.n(J),H=e(189),_e=e.n(H),Q=e(190),ae=e.n(Q),X=e(256),oe=e.n(X),Y=e(1),Z=e.n(Y),b=e(30),$=e(0);const I=["sm","md","lg","xl"],j=["start","end","center"];function M(a,n){return I.reduce((i,c)=>(i[a+Object($.J)(c)]=n(),i),{})}const K=a=>[...j,"baseline","stretch"].includes(a),U=M("align",()=>({type:String,default:null,validator:K})),p=a=>[...j,"space-between","space-around"].includes(a),W=M("justify",()=>({type:String,default:null,validator:p})),o=a=>[...j,"space-between","space-around","stretch"].includes(a),s=M("alignContent",()=>({type:String,default:null,validator:o})),m={align:Object.keys(U),justify:Object.keys(W),alignContent:Object.keys(s)},E={align:"align",justify:"justify",alignContent:"align-content"};function k(a,n,i){let c=E[a];if(i!=null)return n&&(c+=`-${n.replace(a,"")}`),c+=`-${i}`,c.toLowerCase()}const D=new Map;_.a=Z.a.extend({name:"v-row",functional:!0,props:v(h(v(h(v({tag:{type:String,default:"div"},dense:Boolean,noGutters:Boolean,align:{type:String,default:null,validator:K}},U),{justify:{type:String,default:null,validator:p}}),W),{alignContent:{type:String,default:null,validator:o}}),s),render(a,{props:n,data:i,children:c}){let C="";for(const y in n)C+=String(n[y]);let u=D.get(C);if(!u){u=[];let y;for(y in m)m[y].forEach(q=>{const re=n[q],ee=k(y,q,re);ee&&u.push(ee)});u.push({"no-gutters":n.noGutters,"row--dense":n.dense,[`align-${n.align}`]:n.align,[`justify-${n.justify}`]:n.justify,[`align-content-${n.alignContent}`]:n.alignContent}),D.set(C,u)}return a(n.tag,Object(b.a)(i,{staticClass:"row",class:u}),c)}})},557:function(l,_,e){"use strict";e.r(_);var L=function(){var t=this,P=t.$createElement,r=t._self._c||P;return r("div",{},[t._ssrNode("<form>","</form>",[r("v-row",{staticClass:"mb-3"},[r("v-col",{attrs:{cols:"12"}},[r("h1",[t._v("Contrase\xF1a")])]),t._v(" "),r("v-col",{attrs:{cols:"12",lg:"6"}},[r("v-text-field",{staticClass:"mt-5 mb-5",attrs:{"error-messages":t.erroresContrasenha,counter:20,label:"Nueva contrase\xF1a",required:""},on:{input:function(d){return t.$v.contrasenha.$touch()},blur:function(d){return t.$v.contrasenha.$touch()}},model:{value:t.contrasenha,callback:function(d){t.contrasenha=d},expression:"contrasenha"}})],1),t._v(" "),r("v-col",{attrs:{cols:"12",lg:"6"}},[r("v-text-field",{staticClass:"mt-5 mb-5",attrs:{"error-messages":t.erroresConfirmacionContrasenha,counter:20,label:"Confirmaci\xF3n de contrase\xF1a",required:""},on:{input:function(d){return t.$v.confirmacionContrasenha.$touch()},blur:function(d){return t.$v.confirmacionContrasenha.$touch()}},model:{value:t.confirmacionContrasenha,callback:function(d){t.confirmacionContrasenha=d},expression:"confirmacionContrasenha"}})],1)],1),t._ssrNode(" "),t._ssrNode('<div class="botones">',"</div>",[r("v-btn",{staticClass:"mr-4",attrs:{disabled:t.$v.$anyError||!t.contrasenha||!t.confirmacionContrasenha,text:"",color:"#683bce"},on:{click:t.actualizar}},[t._v(`
-                Actualizar contrase\xF1a
-            `)]),t._ssrNode(" "),r("v-btn",{attrs:{text:"",color:"#ff1d89"},on:{click:t.reiniciar}},[t._v(" Reiniciar ")])],2)],2)])},S=[],g=e(202),f=e(203),x={mixins:[g.validationMixin],validations:{contrasenha:{minLength:Object(f.minLength)(6),maxLength:Object(f.maxLength)(20)},confirmacionContrasenha:{minLength:Object(f.minLength)(6),maxLength:Object(f.maxLength)(20),sameAsPassword:Object(f.sameAs)("contrasenha")}},data(){return{contrasenha:"",confirmacionContrasenha:""}},methods:{reiniciar(){this.contrasenha="",this.confirmacionContrasenha=""},async actualizar(){try{let t=this.$firebase.auth().currentUser;t=t?await t.getIdToken():"";let P={contrasenha:this.contrasenha,confirmacionContrasenha:this.confirmacionContrasenha},r={headers:{"Content-Type":"application/json",Authorization:`Bearer ${t}`}};const d=await this.$axios.$put("/usuarios/estudiante/actualizarUsuario",P,r)}catch(t){const P=await this.$store.dispatch("modules/sistema/errorHandler",t)}}},computed:{erroresContrasenha(){const t=[];return this.$v.contrasenha.$dirty&&(!this.$v.contrasenha.maxLength&&t.push("La contrase\xF1a debe ser menor a 20 car\xE1cteres."),!this.$v.contrasenha.minLength&&t.push("La contrase\xF1a debe tener al menos 6 car\xE1cteres.")),t},erroresConfirmacionContrasenha(){const t=[];return this.$v.confirmacionContrasenha.$model&&(!this.$v.confirmacionContrasenha.maxLength&&t.push("La contrase\xF1a debe ser menor a 20 car\xE1cteres."),!this.$v.confirmacionContrasenha.minLength&&t.push("La contrase\xF1a debe tener al menos 6 car\xE1cteres."),!this.$v.confirmacionContrasenha.sameAsPassword&&t.push("\xA1Ambas contrase\xF1as deben ser iguales!")),t}},created(){this.$v.$reset()}},V=x,A=e(7),N=e(8),B=e.n(N),G=e(52),T=e(267),z=e(268),R=e(191);function F(t){}var O=Object(A.a)(V,L,S,!1,F,null,"2adf75ad"),w=_.default=O.exports;B()(O,{VBtn:G.a,VCol:T.a,VRow:z.a,VTextField:R.a})}};
+exports.ids = [35];
+exports.modules = {
 
+/***/ 262:
+/***/ (function(module, exports) {
+
+// Exports
+module.exports = {
+
+};
+
+
+/***/ }),
+
+/***/ 277:
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony import */ var core_js_modules_esnext_map_delete_all_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(187);
+/* harmony import */ var core_js_modules_esnext_map_delete_all_js__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(core_js_modules_esnext_map_delete_all_js__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var core_js_modules_esnext_map_every_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(188);
+/* harmony import */ var core_js_modules_esnext_map_every_js__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(core_js_modules_esnext_map_every_js__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var core_js_modules_esnext_map_filter_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(189);
+/* harmony import */ var core_js_modules_esnext_map_filter_js__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(core_js_modules_esnext_map_filter_js__WEBPACK_IMPORTED_MODULE_2__);
+/* harmony import */ var core_js_modules_esnext_map_find_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(190);
+/* harmony import */ var core_js_modules_esnext_map_find_js__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(core_js_modules_esnext_map_find_js__WEBPACK_IMPORTED_MODULE_3__);
+/* harmony import */ var core_js_modules_esnext_map_find_key_js__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(191);
+/* harmony import */ var core_js_modules_esnext_map_find_key_js__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(core_js_modules_esnext_map_find_key_js__WEBPACK_IMPORTED_MODULE_4__);
+/* harmony import */ var core_js_modules_esnext_map_includes_js__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(192);
+/* harmony import */ var core_js_modules_esnext_map_includes_js__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(core_js_modules_esnext_map_includes_js__WEBPACK_IMPORTED_MODULE_5__);
+/* harmony import */ var core_js_modules_esnext_map_key_of_js__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(193);
+/* harmony import */ var core_js_modules_esnext_map_key_of_js__WEBPACK_IMPORTED_MODULE_6___default = /*#__PURE__*/__webpack_require__.n(core_js_modules_esnext_map_key_of_js__WEBPACK_IMPORTED_MODULE_6__);
+/* harmony import */ var core_js_modules_esnext_map_map_keys_js__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(194);
+/* harmony import */ var core_js_modules_esnext_map_map_keys_js__WEBPACK_IMPORTED_MODULE_7___default = /*#__PURE__*/__webpack_require__.n(core_js_modules_esnext_map_map_keys_js__WEBPACK_IMPORTED_MODULE_7__);
+/* harmony import */ var core_js_modules_esnext_map_map_values_js__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(195);
+/* harmony import */ var core_js_modules_esnext_map_map_values_js__WEBPACK_IMPORTED_MODULE_8___default = /*#__PURE__*/__webpack_require__.n(core_js_modules_esnext_map_map_values_js__WEBPACK_IMPORTED_MODULE_8__);
+/* harmony import */ var core_js_modules_esnext_map_merge_js__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(196);
+/* harmony import */ var core_js_modules_esnext_map_merge_js__WEBPACK_IMPORTED_MODULE_9___default = /*#__PURE__*/__webpack_require__.n(core_js_modules_esnext_map_merge_js__WEBPACK_IMPORTED_MODULE_9__);
+/* harmony import */ var core_js_modules_esnext_map_reduce_js__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(197);
+/* harmony import */ var core_js_modules_esnext_map_reduce_js__WEBPACK_IMPORTED_MODULE_10___default = /*#__PURE__*/__webpack_require__.n(core_js_modules_esnext_map_reduce_js__WEBPACK_IMPORTED_MODULE_10__);
+/* harmony import */ var core_js_modules_esnext_map_some_js__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(198);
+/* harmony import */ var core_js_modules_esnext_map_some_js__WEBPACK_IMPORTED_MODULE_11___default = /*#__PURE__*/__webpack_require__.n(core_js_modules_esnext_map_some_js__WEBPACK_IMPORTED_MODULE_11__);
+/* harmony import */ var core_js_modules_esnext_map_update_js__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(199);
+/* harmony import */ var core_js_modules_esnext_map_update_js__WEBPACK_IMPORTED_MODULE_12___default = /*#__PURE__*/__webpack_require__.n(core_js_modules_esnext_map_update_js__WEBPACK_IMPORTED_MODULE_12__);
+/* harmony import */ var _src_components_VGrid_VGrid_sass__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(262);
+/* harmony import */ var _src_components_VGrid_VGrid_sass__WEBPACK_IMPORTED_MODULE_13___default = /*#__PURE__*/__webpack_require__.n(_src_components_VGrid_VGrid_sass__WEBPACK_IMPORTED_MODULE_13__);
+/* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(1);
+/* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_14___default = /*#__PURE__*/__webpack_require__.n(vue__WEBPACK_IMPORTED_MODULE_14__);
+/* harmony import */ var _util_mergeData__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(28);
+/* harmony import */ var _util_helpers__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(0);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+ // no xs
+
+const breakpoints = ['sm', 'md', 'lg', 'xl'];
+
+const breakpointProps = (() => {
+  return breakpoints.reduce((props, val) => {
+    props[val] = {
+      type: [Boolean, String, Number],
+      default: false
+    };
+    return props;
+  }, {});
+})();
+
+const offsetProps = (() => {
+  return breakpoints.reduce((props, val) => {
+    props['offset' + Object(_util_helpers__WEBPACK_IMPORTED_MODULE_16__[/* upperFirst */ "K"])(val)] = {
+      type: [String, Number],
+      default: null
+    };
+    return props;
+  }, {});
+})();
+
+const orderProps = (() => {
+  return breakpoints.reduce((props, val) => {
+    props['order' + Object(_util_helpers__WEBPACK_IMPORTED_MODULE_16__[/* upperFirst */ "K"])(val)] = {
+      type: [String, Number],
+      default: null
+    };
+    return props;
+  }, {});
+})();
+
+const propMap = {
+  col: Object.keys(breakpointProps),
+  offset: Object.keys(offsetProps),
+  order: Object.keys(orderProps)
+};
+
+function breakpointClass(type, prop, val) {
+  let className = type;
+
+  if (val == null || val === false) {
+    return undefined;
+  }
+
+  if (prop) {
+    const breakpoint = prop.replace(type, '');
+    className += `-${breakpoint}`;
+  } // Handling the boolean style prop when accepting [Boolean, String, Number]
+  // means Vue will not convert <v-col sm></v-col> to sm: true for us.
+  // Since the default is false, an empty string indicates the prop's presence.
+
+
+  if (type === 'col' && (val === '' || val === true)) {
+    // .col-md
+    return className.toLowerCase();
+  } // .order-md-6
+
+
+  className += `-${val}`;
+  return className.toLowerCase();
+}
+
+const cache = new Map();
+/* harmony default export */ __webpack_exports__["a"] = (vue__WEBPACK_IMPORTED_MODULE_14___default.a.extend({
+  name: 'v-col',
+  functional: true,
+  props: {
+    cols: {
+      type: [Boolean, String, Number],
+      default: false
+    },
+    ...breakpointProps,
+    offset: {
+      type: [String, Number],
+      default: null
+    },
+    ...offsetProps,
+    order: {
+      type: [String, Number],
+      default: null
+    },
+    ...orderProps,
+    alignSelf: {
+      type: String,
+      default: null,
+      validator: str => ['auto', 'start', 'end', 'center', 'baseline', 'stretch'].includes(str)
+    },
+    tag: {
+      type: String,
+      default: 'div'
+    }
+  },
+
+  render(h, {
+    props,
+    data,
+    children,
+    parent
+  }) {
+    // Super-fast memoization based on props, 5x faster than JSON.stringify
+    let cacheKey = '';
+
+    for (const prop in props) {
+      cacheKey += String(props[prop]);
+    }
+
+    let classList = cache.get(cacheKey);
+
+    if (!classList) {
+      classList = []; // Loop through `col`, `offset`, `order` breakpoint props
+
+      let type;
+
+      for (type in propMap) {
+        propMap[type].forEach(prop => {
+          const value = props[prop];
+          const className = breakpointClass(type, prop, value);
+          if (className) classList.push(className);
+        });
+      }
+
+      const hasColClasses = classList.some(className => className.startsWith('col-'));
+      classList.push({
+        // Default to .col if no other col-{bp}-* classes generated nor `cols` specified.
+        col: !hasColClasses || !props.cols,
+        [`col-${props.cols}`]: props.cols,
+        [`offset-${props.offset}`]: props.offset,
+        [`order-${props.order}`]: props.order,
+        [`align-self-${props.alignSelf}`]: props.alignSelf
+      });
+      cache.set(cacheKey, classList);
+    }
+
+    return h(props.tag, Object(_util_mergeData__WEBPACK_IMPORTED_MODULE_15__[/* default */ "a"])(data, {
+      class: classList
+    }), children);
+  }
+
+}));
+
+/***/ }),
+
+/***/ 278:
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony import */ var core_js_modules_esnext_map_delete_all_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(187);
+/* harmony import */ var core_js_modules_esnext_map_delete_all_js__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(core_js_modules_esnext_map_delete_all_js__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var core_js_modules_esnext_map_every_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(188);
+/* harmony import */ var core_js_modules_esnext_map_every_js__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(core_js_modules_esnext_map_every_js__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var core_js_modules_esnext_map_filter_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(189);
+/* harmony import */ var core_js_modules_esnext_map_filter_js__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(core_js_modules_esnext_map_filter_js__WEBPACK_IMPORTED_MODULE_2__);
+/* harmony import */ var core_js_modules_esnext_map_find_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(190);
+/* harmony import */ var core_js_modules_esnext_map_find_js__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(core_js_modules_esnext_map_find_js__WEBPACK_IMPORTED_MODULE_3__);
+/* harmony import */ var core_js_modules_esnext_map_find_key_js__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(191);
+/* harmony import */ var core_js_modules_esnext_map_find_key_js__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(core_js_modules_esnext_map_find_key_js__WEBPACK_IMPORTED_MODULE_4__);
+/* harmony import */ var core_js_modules_esnext_map_includes_js__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(192);
+/* harmony import */ var core_js_modules_esnext_map_includes_js__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(core_js_modules_esnext_map_includes_js__WEBPACK_IMPORTED_MODULE_5__);
+/* harmony import */ var core_js_modules_esnext_map_key_of_js__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(193);
+/* harmony import */ var core_js_modules_esnext_map_key_of_js__WEBPACK_IMPORTED_MODULE_6___default = /*#__PURE__*/__webpack_require__.n(core_js_modules_esnext_map_key_of_js__WEBPACK_IMPORTED_MODULE_6__);
+/* harmony import */ var core_js_modules_esnext_map_map_keys_js__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(194);
+/* harmony import */ var core_js_modules_esnext_map_map_keys_js__WEBPACK_IMPORTED_MODULE_7___default = /*#__PURE__*/__webpack_require__.n(core_js_modules_esnext_map_map_keys_js__WEBPACK_IMPORTED_MODULE_7__);
+/* harmony import */ var core_js_modules_esnext_map_map_values_js__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(195);
+/* harmony import */ var core_js_modules_esnext_map_map_values_js__WEBPACK_IMPORTED_MODULE_8___default = /*#__PURE__*/__webpack_require__.n(core_js_modules_esnext_map_map_values_js__WEBPACK_IMPORTED_MODULE_8__);
+/* harmony import */ var core_js_modules_esnext_map_merge_js__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(196);
+/* harmony import */ var core_js_modules_esnext_map_merge_js__WEBPACK_IMPORTED_MODULE_9___default = /*#__PURE__*/__webpack_require__.n(core_js_modules_esnext_map_merge_js__WEBPACK_IMPORTED_MODULE_9__);
+/* harmony import */ var core_js_modules_esnext_map_reduce_js__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(197);
+/* harmony import */ var core_js_modules_esnext_map_reduce_js__WEBPACK_IMPORTED_MODULE_10___default = /*#__PURE__*/__webpack_require__.n(core_js_modules_esnext_map_reduce_js__WEBPACK_IMPORTED_MODULE_10__);
+/* harmony import */ var core_js_modules_esnext_map_some_js__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(198);
+/* harmony import */ var core_js_modules_esnext_map_some_js__WEBPACK_IMPORTED_MODULE_11___default = /*#__PURE__*/__webpack_require__.n(core_js_modules_esnext_map_some_js__WEBPACK_IMPORTED_MODULE_11__);
+/* harmony import */ var core_js_modules_esnext_map_update_js__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(199);
+/* harmony import */ var core_js_modules_esnext_map_update_js__WEBPACK_IMPORTED_MODULE_12___default = /*#__PURE__*/__webpack_require__.n(core_js_modules_esnext_map_update_js__WEBPACK_IMPORTED_MODULE_12__);
+/* harmony import */ var _src_components_VGrid_VGrid_sass__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(262);
+/* harmony import */ var _src_components_VGrid_VGrid_sass__WEBPACK_IMPORTED_MODULE_13___default = /*#__PURE__*/__webpack_require__.n(_src_components_VGrid_VGrid_sass__WEBPACK_IMPORTED_MODULE_13__);
+/* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(1);
+/* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_14___default = /*#__PURE__*/__webpack_require__.n(vue__WEBPACK_IMPORTED_MODULE_14__);
+/* harmony import */ var _util_mergeData__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(28);
+/* harmony import */ var _util_helpers__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(0);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+ // no xs
+
+const breakpoints = ['sm', 'md', 'lg', 'xl'];
+const ALIGNMENT = ['start', 'end', 'center'];
+
+function makeProps(prefix, def) {
+  return breakpoints.reduce((props, val) => {
+    props[prefix + Object(_util_helpers__WEBPACK_IMPORTED_MODULE_16__[/* upperFirst */ "K"])(val)] = def();
+    return props;
+  }, {});
+}
+
+const alignValidator = str => [...ALIGNMENT, 'baseline', 'stretch'].includes(str);
+
+const alignProps = makeProps('align', () => ({
+  type: String,
+  default: null,
+  validator: alignValidator
+}));
+
+const justifyValidator = str => [...ALIGNMENT, 'space-between', 'space-around'].includes(str);
+
+const justifyProps = makeProps('justify', () => ({
+  type: String,
+  default: null,
+  validator: justifyValidator
+}));
+
+const alignContentValidator = str => [...ALIGNMENT, 'space-between', 'space-around', 'stretch'].includes(str);
+
+const alignContentProps = makeProps('alignContent', () => ({
+  type: String,
+  default: null,
+  validator: alignContentValidator
+}));
+const propMap = {
+  align: Object.keys(alignProps),
+  justify: Object.keys(justifyProps),
+  alignContent: Object.keys(alignContentProps)
+};
+const classMap = {
+  align: 'align',
+  justify: 'justify',
+  alignContent: 'align-content'
+};
+
+function breakpointClass(type, prop, val) {
+  let className = classMap[type];
+
+  if (val == null) {
+    return undefined;
+  }
+
+  if (prop) {
+    // alignSm -> Sm
+    const breakpoint = prop.replace(type, '');
+    className += `-${breakpoint}`;
+  } // .align-items-sm-center
+
+
+  className += `-${val}`;
+  return className.toLowerCase();
+}
+
+const cache = new Map();
+/* harmony default export */ __webpack_exports__["a"] = (vue__WEBPACK_IMPORTED_MODULE_14___default.a.extend({
+  name: 'v-row',
+  functional: true,
+  props: {
+    tag: {
+      type: String,
+      default: 'div'
+    },
+    dense: Boolean,
+    noGutters: Boolean,
+    align: {
+      type: String,
+      default: null,
+      validator: alignValidator
+    },
+    ...alignProps,
+    justify: {
+      type: String,
+      default: null,
+      validator: justifyValidator
+    },
+    ...justifyProps,
+    alignContent: {
+      type: String,
+      default: null,
+      validator: alignContentValidator
+    },
+    ...alignContentProps
+  },
+
+  render(h, {
+    props,
+    data,
+    children
+  }) {
+    // Super-fast memoization based on props, 5x faster than JSON.stringify
+    let cacheKey = '';
+
+    for (const prop in props) {
+      cacheKey += String(props[prop]);
+    }
+
+    let classList = cache.get(cacheKey);
+
+    if (!classList) {
+      classList = []; // Loop through `align`, `justify`, `alignContent` breakpoint props
+
+      let type;
+
+      for (type in propMap) {
+        propMap[type].forEach(prop => {
+          const value = props[prop];
+          const className = breakpointClass(type, prop, value);
+          if (className) classList.push(className);
+        });
+      }
+
+      classList.push({
+        'no-gutters': props.noGutters,
+        'row--dense': props.dense,
+        [`align-${props.align}`]: props.align,
+        [`justify-${props.justify}`]: props.justify,
+        [`align-content-${props.alignContent}`]: props.alignContent
+      });
+      cache.set(cacheKey, classList);
+    }
+
+    return h(props.tag, Object(_util_mergeData__WEBPACK_IMPORTED_MODULE_15__[/* default */ "a"])(data, {
+      staticClass: 'row',
+      class: classList
+    }), children);
+  }
+
+}));
+
+/***/ }),
+
+/***/ 547:
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+// ESM COMPAT FLAG
+__webpack_require__.r(__webpack_exports__);
+
+// CONCATENATED MODULE: ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/@nuxt/components/dist/loader.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./pages/perfil/seguridad.vue?vue&type=template&id=3ac8644c&
+var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{},[_vm._ssrNode("<form>","</form>",[_c('v-row',{staticClass:"mb-3"},[_c('v-col',{attrs:{"cols":"12"}},[_c('h1',[_vm._v("Contraseña")])]),_vm._v(" "),_c('v-col',{attrs:{"cols":"12","lg":"6"}},[_c('v-text-field',{staticClass:"mt-5 mb-5",attrs:{"error-messages":_vm.erroresContrasenha,"counter":20,"label":"Nueva contraseña","required":""},on:{"input":function($event){return _vm.$v.contrasenha.$touch()},"blur":function($event){return _vm.$v.contrasenha.$touch()}},model:{value:(_vm.contrasenha),callback:function ($$v) {_vm.contrasenha=$$v},expression:"contrasenha"}})],1),_vm._v(" "),_c('v-col',{attrs:{"cols":"12","lg":"6"}},[_c('v-text-field',{staticClass:"mt-5 mb-5",attrs:{"error-messages":_vm.erroresConfirmacionContrasenha,"counter":20,"label":"Confirmación de contraseña","required":""},on:{"input":function($event){return _vm.$v.confirmacionContrasenha.$touch()},"blur":function($event){return _vm.$v.confirmacionContrasenha.$touch()}},model:{value:(_vm.confirmacionContrasenha),callback:function ($$v) {_vm.confirmacionContrasenha=$$v},expression:"confirmacionContrasenha"}})],1)],1),_vm._ssrNode(" "),_vm._ssrNode("<div class=\"botones\">","</div>",[_c('v-btn',{staticClass:"mr-4",attrs:{"disabled":_vm.$v.$anyError || !_vm.contrasenha || !_vm.confirmacionContrasenha,"text":"","color":"#683bce"},on:{"click":_vm.actualizar}},[_vm._v("\n                Actualizar contraseña\n            ")]),_vm._ssrNode(" "),_c('v-btn',{attrs:{"text":"","color":"#ff1d89"},on:{"click":_vm.reiniciar}},[_vm._v(" Reiniciar ")])],2)],2)])}
+var staticRenderFns = []
+
+
+// CONCATENATED MODULE: ./pages/perfil/seguridad.vue?vue&type=template&id=3ac8644c&
+
+// EXTERNAL MODULE: external "vuelidate"
+var external_vuelidate_ = __webpack_require__(236);
+
+// EXTERNAL MODULE: external "vuelidate/lib/validators"
+var validators_ = __webpack_require__(237);
+
+// CONCATENATED MODULE: ./node_modules/babel-loader/lib??ref--2-0!./node_modules/@nuxt/components/dist/loader.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./pages/perfil/seguridad.vue?vue&type=script&lang=js&
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+
+/* harmony default export */ var seguridadvue_type_script_lang_js_ = ({
+  mixins: [external_vuelidate_["validationMixin"]],
+  validations: {
+    contrasenha: {
+      minLength: Object(validators_["minLength"])(6),
+      maxLength: Object(validators_["maxLength"])(20)
+    },
+    confirmacionContrasenha: {
+      minLength: Object(validators_["minLength"])(6),
+      maxLength: Object(validators_["maxLength"])(20),
+      sameAsPassword: Object(validators_["sameAs"])('contrasenha')
+    }
+  },
+
+  data() {
+    return {
+      contrasenha: '',
+      confirmacionContrasenha: ''
+    };
+  },
+
+  methods: {
+    reiniciar() {
+      this.contrasenha = '';
+      this.confirmacionContrasenha = '';
+    },
+
+    async actualizar() {
+      try {
+        let token = this.$firebase.auth().currentUser;
+        token = token ? await token.getIdToken() : '';
+        let body = {
+          contrasenha: this.contrasenha,
+          confirmacionContrasenha: this.confirmacionContrasenha
+        };
+        let config = {
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`
+          }
+        };
+        const respuesta = await this.$axios.$put(`/usuarios/estudiante/actualizarUsuario`, body, config);
+      } catch (error) {
+        const accion = await this.$store.dispatch('modules/sistema/errorHandler', error);
+      }
+    }
+
+  },
+  computed: {
+    erroresContrasenha() {
+      const errors = [];
+      if (!this.$v.contrasenha.$dirty) return errors;
+      !this.$v.contrasenha.maxLength && errors.push('La contraseña debe ser menor a 20 carácteres.');
+      !this.$v.contrasenha.minLength && errors.push('La contraseña debe tener al menos 6 carácteres.');
+      return errors;
+    },
+
+    erroresConfirmacionContrasenha() {
+      const errors = [];
+      if (!this.$v.confirmacionContrasenha.$model) return errors;
+      !this.$v.confirmacionContrasenha.maxLength && errors.push('La contraseña debe ser menor a 20 carácteres.');
+      !this.$v.confirmacionContrasenha.minLength && errors.push('La contraseña debe tener al menos 6 carácteres.');
+      !this.$v.confirmacionContrasenha.sameAsPassword && errors.push("¡Ambas contraseñas deben ser iguales!");
+      return errors;
+    }
+
+  },
+
+  created() {
+    this.$v.$reset();
+  }
+
+});
+// CONCATENATED MODULE: ./pages/perfil/seguridad.vue?vue&type=script&lang=js&
+ /* harmony default export */ var perfil_seguridadvue_type_script_lang_js_ = (seguridadvue_type_script_lang_js_); 
+// EXTERNAL MODULE: ./node_modules/vue-loader/lib/runtime/componentNormalizer.js
+var componentNormalizer = __webpack_require__(6);
+
+// EXTERNAL MODULE: ./node_modules/vuetify-loader/lib/runtime/installComponents.js
+var installComponents = __webpack_require__(10);
+var installComponents_default = /*#__PURE__*/__webpack_require__.n(installComponents);
+
+// EXTERNAL MODULE: ./node_modules/vuetify/lib/components/VBtn/VBtn.js
+var VBtn = __webpack_require__(51);
+
+// EXTERNAL MODULE: ./node_modules/vuetify/lib/components/VGrid/VCol.js
+var VCol = __webpack_require__(277);
+
+// EXTERNAL MODULE: ./node_modules/vuetify/lib/components/VGrid/VRow.js
+var VRow = __webpack_require__(278);
+
+// EXTERNAL MODULE: ./node_modules/vuetify/lib/components/VTextField/VTextField.js
+var VTextField = __webpack_require__(201);
+
+// CONCATENATED MODULE: ./pages/perfil/seguridad.vue
+
+
+
+function injectStyles (context) {
+  
+  
+}
+
+/* normalize component */
+
+var component = Object(componentNormalizer["a" /* default */])(
+  perfil_seguridadvue_type_script_lang_js_,
+  render,
+  staticRenderFns,
+  false,
+  injectStyles,
+  null,
+  "2adf75ad"
+  
+)
+
+/* harmony default export */ var seguridad = __webpack_exports__["default"] = (component.exports);
+
+/* vuetify-loader */
+
+
+
+
+
+installComponents_default()(component, {VBtn: VBtn["a" /* default */],VCol: VCol["a" /* default */],VRow: VRow["a" /* default */],VTextField: VTextField["a" /* default */]})
+
+
+/***/ })
+
+};;
 //# sourceMappingURL=seguridad.js.map

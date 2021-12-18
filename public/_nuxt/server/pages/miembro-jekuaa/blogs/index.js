@@ -1,27 +1,661 @@
-var d_=Object.defineProperty,r_=Object.defineProperties;var c_=Object.getOwnPropertyDescriptors;var s_=Object.getOwnPropertySymbols;var i_=Object.prototype.hasOwnProperty,u_=Object.prototype.propertyIsEnumerable;var e_=(d,a,_)=>a in d?d_(d,a,{enumerable:!0,configurable:!0,writable:!0,value:_}):d[a]=_,j=(d,a)=>{for(var _ in a||(a={}))i_.call(a,_)&&e_(d,_,a[_]);if(s_)for(var _ of s_(a))u_.call(a,_)&&e_(d,_,a[_]);return d},x=(d,a)=>r_(d,c_(a));exports.ids=[42],exports.modules={256:function(d,a){d.exports={}},267:function(d,a,_){"use strict";var i=_(178),p=_.n(i),v=_(179),O=_.n(v),L=_(180),G=_.n(L),y=_(181),J=_.n(y),I=_(182),M=_.n(I),B=_(183),b=_.n(B),W=_(184),F=_.n(W),h=_(185),V=_.n(h),S=_(186),s=_.n(S),E=_(187),e=_.n(E),H=_(188),t_=_.n(H),z=_(189),a_=_.n(z),Q=_(190),n_=_.n(Q),X=_(256),o_=_.n(X),Z=_(1),Y=_.n(Z),k=_(30),N=_(0);const T=["sm","md","lg","xl"],P=(()=>T.reduce((l,t)=>(l[t]={type:[Boolean,String,Number],default:!1},l),{}))(),D=(()=>T.reduce((l,t)=>(l["offset"+Object(N.J)(t)]={type:[String,Number],default:null},l),{}))(),R=(()=>T.reduce((l,t)=>(l["order"+Object(N.J)(t)]={type:[String,Number],default:null},l),{}))(),A={col:Object.keys(P),offset:Object.keys(D),order:Object.keys(R)};function $(l,t,c){let f=l;if(!(c==null||c===!1))return t&&(f+=`-${t.replace(l,"")}`),l==="col"&&(c===""||c===!0)||(f+=`-${c}`),f.toLowerCase()}const K=new Map;a.a=Y.a.extend({name:"v-col",functional:!0,props:x(j(x(j(x(j({cols:{type:[Boolean,String,Number],default:!1}},P),{offset:{type:[String,Number],default:null}}),D),{order:{type:[String,Number],default:null}}),R),{alignSelf:{type:String,default:null,validator:l=>["auto","start","end","center","baseline","stretch"].includes(l)},tag:{type:String,default:"div"}}),render(l,{props:t,data:c,children:f,parent:w}){let C="";for(const n in t)C+=String(t[n]);let o=K.get(C);if(!o){o=[];let n;for(n in A)A[n].forEach(r=>{const g=t[r],m=$(n,r,g);m&&o.push(m)});const u=o.some(r=>r.startsWith("col-"));o.push({col:!u||!t.cols,[`col-${t.cols}`]:t.cols,[`offset-${t.offset}`]:t.offset,[`order-${t.order}`]:t.order,[`align-self-${t.alignSelf}`]:t.alignSelf}),K.set(C,o)}return l(t.tag,Object(k.a)(c,{class:o}),f)}})},268:function(d,a,_){"use strict";var i=_(178),p=_.n(i),v=_(179),O=_.n(v),L=_(180),G=_.n(L),y=_(181),J=_.n(y),I=_(182),M=_.n(I),B=_(183),b=_.n(B),W=_(184),F=_.n(W),h=_(185),V=_.n(h),S=_(186),s=_.n(S),E=_(187),e=_.n(E),H=_(188),t_=_.n(H),z=_(189),a_=_.n(z),Q=_(190),n_=_.n(Q),X=_(256),o_=_.n(X),Z=_(1),Y=_.n(Z),k=_(30),N=_(0);const T=["sm","md","lg","xl"],P=["start","end","center"];function D(o,n){return T.reduce((u,r)=>(u[o+Object(N.J)(r)]=n(),u),{})}const R=o=>[...P,"baseline","stretch"].includes(o),A=D("align",()=>({type:String,default:null,validator:R})),$=o=>[...P,"space-between","space-around"].includes(o),K=D("justify",()=>({type:String,default:null,validator:$})),l=o=>[...P,"space-between","space-around","stretch"].includes(o),t=D("alignContent",()=>({type:String,default:null,validator:l})),c={align:Object.keys(A),justify:Object.keys(K),alignContent:Object.keys(t)},f={align:"align",justify:"justify",alignContent:"align-content"};function w(o,n,u){let r=f[o];if(u!=null)return n&&(r+=`-${n.replace(o,"")}`),r+=`-${u}`,r.toLowerCase()}const C=new Map;a.a=Y.a.extend({name:"v-row",functional:!0,props:j(x(j(x(j({tag:{type:String,default:"div"},dense:Boolean,noGutters:Boolean,align:{type:String,default:null,validator:R}},A),{justify:{type:String,default:null,validator:$}}),K),{alignContent:{type:String,default:null,validator:l}}),t),render(o,{props:n,data:u,children:r}){let g="";for(const U in n)g+=String(n[U]);let m=C.get(g);if(!m){m=[];let U;for(U in c)c[U].forEach(q=>{const l_=n[q],__=w(U,q,l_);__&&m.push(__)});m.push({"no-gutters":n.noGutters,"row--dense":n.dense,[`align-${n.align}`]:n.align,[`justify-${n.justify}`]:n.justify,[`align-content-${n.alignContent}`]:n.alignContent}),C.set(g,m)}return o(n.tag,Object(k.a)(u,{staticClass:"row",class:m}),r)}})},516:function(d,a){d.exports={}},539:function(d,a,_){"use strict";_.r(a);var i=_(516),p=_.n(i);for(var v in i)["default"].indexOf(v)<0&&function(O){_.d(a,O,function(){return i[O]})}(v)},563:function(d,a,_){"use strict";_.r(a);var i=function(){var s=this,E=s.$createElement,e=s._self._c||E;return e("div",{},[s._ssrNode('<div class="container" data-v-fcaad444>',"</div>",[s._ssrNode('<h3 class="titulo-presentacion" data-v-fcaad444>Crea un blog en Jekuaa</h3> <p data-v-fcaad444>Contrary to popular belief, Lorem Ipsum is not simply random text. It has roots in a piece of classical Latin literature from 45 BC, making it over 2000 years old. Richard McClintock, a Latin professor at Hampden-Sydney College in Virginia, looked up one of the more obscure Latin words, consectetur, from a Lorem Ipsum passage, and going through the cites of the word in classical literature, discovered the undoubtable source.</p> <p data-v-fcaad444>The standard chunk of Lorem Ipsum used since the 1500s is reproduced below for those interested. Sections 1.10.32 and 1.10.33 from &quot;de Finibus Bonorum et Malorum&quot; by Cicero are also reproduced in their exact original form, accompanied by English versions from the 1914 translation by H. Rackham.</p> '),e("v-btn",{staticClass:"ml-2 mt-5",attrs:{outlined:"",rounded:"",color:"#683bce",to:"/miembro-jekuaa/blogs/nuevo"}},[s._v(`
-            Crear un blog
-        `)]),s._ssrNode(" "),e("v-btn",{staticClass:"ml-2 mt-5",attrs:{outlined:"",rounded:"",color:"#ff1d89",to:"/miembro-jekuaa/blogs/mis-blogs"}},[s._v(`
-            Mis blogs
-        `)]),s._ssrNode(` <h3 class="titulo-presentacion mt-15" data-v-fcaad444>
-            Recomendaciones
-        </h3> `),e("v-divider"),s._ssrNode(" "),e("v-row",{staticClass:"mt-5",attrs:{"no-gutters":""}},[e("v-col",{attrs:{cols:"12",md:"5"}},[e("div",{staticClass:"contenedor-l"},[e("v-card",{staticClass:"mx-auto"},[e("v-img",{staticClass:"white--text align-end",attrs:{height:"200px",src:"https://cdn.vuetifyjs.com/images/cards/docks.jpg"}},[e("v-card-title",[s._v("Top 10 Australian beaches")])],1),s._v(" "),e("v-card-subtitle",{staticClass:"pb-0"},[s._v(`
-                        Number 10
-                        `)]),s._v(" "),e("v-card-text",{staticClass:"text--primary"},[e("div",[s._v("Whitehaven Beach")]),s._v(" "),e("div",[s._v("Whitsunday Island, Whitsunday Islands")])]),s._v(" "),e("v-card-actions",[e("v-btn",{attrs:{color:"orange",text:""}},[s._v(`
-                            Share
-                        `)]),s._v(" "),e("v-btn",{attrs:{color:"orange",text:""}},[s._v(`
-                            Explore
-                        `)])],1)],1)],1)]),s._v(" "),e("v-col",{attrs:{cols:"12",md:"7"}},[e("div",{staticClass:"contenedor-r"},[e("v-card",{staticClass:"mx-auto"},[e("v-img",{staticClass:"white--text align-end",attrs:{height:"200px",src:"https://cdn.vuetifyjs.com/images/cards/docks.jpg"}},[e("v-card-title",[s._v("Top 10 Australian beaches")])],1),s._v(" "),e("v-card-subtitle",{staticClass:"pb-0"},[s._v(`
-                        Number 10
-                        `)]),s._v(" "),e("v-card-text",{staticClass:"text--primary"},[e("div",[s._v("Whitehaven Beach")]),s._v(" "),e("div",[s._v("Whitsunday Island, Whitsunday Islands")])]),s._v(" "),e("v-card-actions",[e("v-btn",{attrs:{color:"orange",text:""}},[s._v(`
-                            Share
-                        `)]),s._v(" "),e("v-btn",{attrs:{color:"orange",text:""}},[s._v(`
-                            Explore
-                        `)])],1)],1)],1)])],1),s._ssrNode(" "),e("v-card",{staticClass:"mx-auto mt-8"},[e("v-img",{staticClass:"white--text align-end",attrs:{height:"200px",src:"https://cdn.vuetifyjs.com/images/cards/docks.jpg"}},[e("v-card-title",[s._v("Top 10 Australian beaches")])],1),s._v(" "),e("v-card-subtitle",{staticClass:"pb-0"},[s._v(`
-            Number 10
-            `)]),s._v(" "),e("v-card-text",{staticClass:"text--primary"},[e("div",[s._v("Whitehaven Beach")]),s._v(" "),e("div",[s._v("Whitsunday Island, Whitsunday Islands")])]),s._v(" "),e("v-card-actions",[e("v-btn",{attrs:{color:"orange",text:""}},[s._v(`
-                Share
-            `)]),s._v(" "),e("v-btn",{attrs:{color:"orange",text:""}},[s._v(`
-                Explore
-            `)])],1)],1)],2)])},p=[],v={name:"",layout:"miembroJekuaa",middleware:"esMiembroJekuaa",data(){return{}}},O=v,L=_(7),G=_(8),y=_.n(G),J=_(52),I=_(82),M=_(34),B=_(267),b=_(196),W=_(62),F=_(268);function h(s){var E=_(539);E.__inject__&&E.__inject__(s)}var V=Object(L.a)(O,i,p,!1,h,"fcaad444","2808b7af"),S=a.default=V.exports;y()(V,{VBtn:J.a,VCard:I.a,VCardActions:M.b,VCardSubtitle:M.c,VCardText:M.d,VCardTitle:M.e,VCol:B.a,VDivider:b.a,VImg:W.a,VRow:F.a})}};
+exports.ids = [28];
+exports.modules = {
 
+/***/ 262:
+/***/ (function(module, exports) {
+
+// Exports
+module.exports = {
+
+};
+
+
+/***/ }),
+
+/***/ 277:
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony import */ var core_js_modules_esnext_map_delete_all_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(187);
+/* harmony import */ var core_js_modules_esnext_map_delete_all_js__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(core_js_modules_esnext_map_delete_all_js__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var core_js_modules_esnext_map_every_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(188);
+/* harmony import */ var core_js_modules_esnext_map_every_js__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(core_js_modules_esnext_map_every_js__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var core_js_modules_esnext_map_filter_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(189);
+/* harmony import */ var core_js_modules_esnext_map_filter_js__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(core_js_modules_esnext_map_filter_js__WEBPACK_IMPORTED_MODULE_2__);
+/* harmony import */ var core_js_modules_esnext_map_find_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(190);
+/* harmony import */ var core_js_modules_esnext_map_find_js__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(core_js_modules_esnext_map_find_js__WEBPACK_IMPORTED_MODULE_3__);
+/* harmony import */ var core_js_modules_esnext_map_find_key_js__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(191);
+/* harmony import */ var core_js_modules_esnext_map_find_key_js__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(core_js_modules_esnext_map_find_key_js__WEBPACK_IMPORTED_MODULE_4__);
+/* harmony import */ var core_js_modules_esnext_map_includes_js__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(192);
+/* harmony import */ var core_js_modules_esnext_map_includes_js__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(core_js_modules_esnext_map_includes_js__WEBPACK_IMPORTED_MODULE_5__);
+/* harmony import */ var core_js_modules_esnext_map_key_of_js__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(193);
+/* harmony import */ var core_js_modules_esnext_map_key_of_js__WEBPACK_IMPORTED_MODULE_6___default = /*#__PURE__*/__webpack_require__.n(core_js_modules_esnext_map_key_of_js__WEBPACK_IMPORTED_MODULE_6__);
+/* harmony import */ var core_js_modules_esnext_map_map_keys_js__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(194);
+/* harmony import */ var core_js_modules_esnext_map_map_keys_js__WEBPACK_IMPORTED_MODULE_7___default = /*#__PURE__*/__webpack_require__.n(core_js_modules_esnext_map_map_keys_js__WEBPACK_IMPORTED_MODULE_7__);
+/* harmony import */ var core_js_modules_esnext_map_map_values_js__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(195);
+/* harmony import */ var core_js_modules_esnext_map_map_values_js__WEBPACK_IMPORTED_MODULE_8___default = /*#__PURE__*/__webpack_require__.n(core_js_modules_esnext_map_map_values_js__WEBPACK_IMPORTED_MODULE_8__);
+/* harmony import */ var core_js_modules_esnext_map_merge_js__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(196);
+/* harmony import */ var core_js_modules_esnext_map_merge_js__WEBPACK_IMPORTED_MODULE_9___default = /*#__PURE__*/__webpack_require__.n(core_js_modules_esnext_map_merge_js__WEBPACK_IMPORTED_MODULE_9__);
+/* harmony import */ var core_js_modules_esnext_map_reduce_js__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(197);
+/* harmony import */ var core_js_modules_esnext_map_reduce_js__WEBPACK_IMPORTED_MODULE_10___default = /*#__PURE__*/__webpack_require__.n(core_js_modules_esnext_map_reduce_js__WEBPACK_IMPORTED_MODULE_10__);
+/* harmony import */ var core_js_modules_esnext_map_some_js__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(198);
+/* harmony import */ var core_js_modules_esnext_map_some_js__WEBPACK_IMPORTED_MODULE_11___default = /*#__PURE__*/__webpack_require__.n(core_js_modules_esnext_map_some_js__WEBPACK_IMPORTED_MODULE_11__);
+/* harmony import */ var core_js_modules_esnext_map_update_js__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(199);
+/* harmony import */ var core_js_modules_esnext_map_update_js__WEBPACK_IMPORTED_MODULE_12___default = /*#__PURE__*/__webpack_require__.n(core_js_modules_esnext_map_update_js__WEBPACK_IMPORTED_MODULE_12__);
+/* harmony import */ var _src_components_VGrid_VGrid_sass__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(262);
+/* harmony import */ var _src_components_VGrid_VGrid_sass__WEBPACK_IMPORTED_MODULE_13___default = /*#__PURE__*/__webpack_require__.n(_src_components_VGrid_VGrid_sass__WEBPACK_IMPORTED_MODULE_13__);
+/* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(1);
+/* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_14___default = /*#__PURE__*/__webpack_require__.n(vue__WEBPACK_IMPORTED_MODULE_14__);
+/* harmony import */ var _util_mergeData__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(28);
+/* harmony import */ var _util_helpers__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(0);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+ // no xs
+
+const breakpoints = ['sm', 'md', 'lg', 'xl'];
+
+const breakpointProps = (() => {
+  return breakpoints.reduce((props, val) => {
+    props[val] = {
+      type: [Boolean, String, Number],
+      default: false
+    };
+    return props;
+  }, {});
+})();
+
+const offsetProps = (() => {
+  return breakpoints.reduce((props, val) => {
+    props['offset' + Object(_util_helpers__WEBPACK_IMPORTED_MODULE_16__[/* upperFirst */ "K"])(val)] = {
+      type: [String, Number],
+      default: null
+    };
+    return props;
+  }, {});
+})();
+
+const orderProps = (() => {
+  return breakpoints.reduce((props, val) => {
+    props['order' + Object(_util_helpers__WEBPACK_IMPORTED_MODULE_16__[/* upperFirst */ "K"])(val)] = {
+      type: [String, Number],
+      default: null
+    };
+    return props;
+  }, {});
+})();
+
+const propMap = {
+  col: Object.keys(breakpointProps),
+  offset: Object.keys(offsetProps),
+  order: Object.keys(orderProps)
+};
+
+function breakpointClass(type, prop, val) {
+  let className = type;
+
+  if (val == null || val === false) {
+    return undefined;
+  }
+
+  if (prop) {
+    const breakpoint = prop.replace(type, '');
+    className += `-${breakpoint}`;
+  } // Handling the boolean style prop when accepting [Boolean, String, Number]
+  // means Vue will not convert <v-col sm></v-col> to sm: true for us.
+  // Since the default is false, an empty string indicates the prop's presence.
+
+
+  if (type === 'col' && (val === '' || val === true)) {
+    // .col-md
+    return className.toLowerCase();
+  } // .order-md-6
+
+
+  className += `-${val}`;
+  return className.toLowerCase();
+}
+
+const cache = new Map();
+/* harmony default export */ __webpack_exports__["a"] = (vue__WEBPACK_IMPORTED_MODULE_14___default.a.extend({
+  name: 'v-col',
+  functional: true,
+  props: {
+    cols: {
+      type: [Boolean, String, Number],
+      default: false
+    },
+    ...breakpointProps,
+    offset: {
+      type: [String, Number],
+      default: null
+    },
+    ...offsetProps,
+    order: {
+      type: [String, Number],
+      default: null
+    },
+    ...orderProps,
+    alignSelf: {
+      type: String,
+      default: null,
+      validator: str => ['auto', 'start', 'end', 'center', 'baseline', 'stretch'].includes(str)
+    },
+    tag: {
+      type: String,
+      default: 'div'
+    }
+  },
+
+  render(h, {
+    props,
+    data,
+    children,
+    parent
+  }) {
+    // Super-fast memoization based on props, 5x faster than JSON.stringify
+    let cacheKey = '';
+
+    for (const prop in props) {
+      cacheKey += String(props[prop]);
+    }
+
+    let classList = cache.get(cacheKey);
+
+    if (!classList) {
+      classList = []; // Loop through `col`, `offset`, `order` breakpoint props
+
+      let type;
+
+      for (type in propMap) {
+        propMap[type].forEach(prop => {
+          const value = props[prop];
+          const className = breakpointClass(type, prop, value);
+          if (className) classList.push(className);
+        });
+      }
+
+      const hasColClasses = classList.some(className => className.startsWith('col-'));
+      classList.push({
+        // Default to .col if no other col-{bp}-* classes generated nor `cols` specified.
+        col: !hasColClasses || !props.cols,
+        [`col-${props.cols}`]: props.cols,
+        [`offset-${props.offset}`]: props.offset,
+        [`order-${props.order}`]: props.order,
+        [`align-self-${props.alignSelf}`]: props.alignSelf
+      });
+      cache.set(cacheKey, classList);
+    }
+
+    return h(props.tag, Object(_util_mergeData__WEBPACK_IMPORTED_MODULE_15__[/* default */ "a"])(data, {
+      class: classList
+    }), children);
+  }
+
+}));
+
+/***/ }),
+
+/***/ 278:
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony import */ var core_js_modules_esnext_map_delete_all_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(187);
+/* harmony import */ var core_js_modules_esnext_map_delete_all_js__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(core_js_modules_esnext_map_delete_all_js__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var core_js_modules_esnext_map_every_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(188);
+/* harmony import */ var core_js_modules_esnext_map_every_js__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(core_js_modules_esnext_map_every_js__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var core_js_modules_esnext_map_filter_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(189);
+/* harmony import */ var core_js_modules_esnext_map_filter_js__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(core_js_modules_esnext_map_filter_js__WEBPACK_IMPORTED_MODULE_2__);
+/* harmony import */ var core_js_modules_esnext_map_find_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(190);
+/* harmony import */ var core_js_modules_esnext_map_find_js__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(core_js_modules_esnext_map_find_js__WEBPACK_IMPORTED_MODULE_3__);
+/* harmony import */ var core_js_modules_esnext_map_find_key_js__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(191);
+/* harmony import */ var core_js_modules_esnext_map_find_key_js__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(core_js_modules_esnext_map_find_key_js__WEBPACK_IMPORTED_MODULE_4__);
+/* harmony import */ var core_js_modules_esnext_map_includes_js__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(192);
+/* harmony import */ var core_js_modules_esnext_map_includes_js__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(core_js_modules_esnext_map_includes_js__WEBPACK_IMPORTED_MODULE_5__);
+/* harmony import */ var core_js_modules_esnext_map_key_of_js__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(193);
+/* harmony import */ var core_js_modules_esnext_map_key_of_js__WEBPACK_IMPORTED_MODULE_6___default = /*#__PURE__*/__webpack_require__.n(core_js_modules_esnext_map_key_of_js__WEBPACK_IMPORTED_MODULE_6__);
+/* harmony import */ var core_js_modules_esnext_map_map_keys_js__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(194);
+/* harmony import */ var core_js_modules_esnext_map_map_keys_js__WEBPACK_IMPORTED_MODULE_7___default = /*#__PURE__*/__webpack_require__.n(core_js_modules_esnext_map_map_keys_js__WEBPACK_IMPORTED_MODULE_7__);
+/* harmony import */ var core_js_modules_esnext_map_map_values_js__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(195);
+/* harmony import */ var core_js_modules_esnext_map_map_values_js__WEBPACK_IMPORTED_MODULE_8___default = /*#__PURE__*/__webpack_require__.n(core_js_modules_esnext_map_map_values_js__WEBPACK_IMPORTED_MODULE_8__);
+/* harmony import */ var core_js_modules_esnext_map_merge_js__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(196);
+/* harmony import */ var core_js_modules_esnext_map_merge_js__WEBPACK_IMPORTED_MODULE_9___default = /*#__PURE__*/__webpack_require__.n(core_js_modules_esnext_map_merge_js__WEBPACK_IMPORTED_MODULE_9__);
+/* harmony import */ var core_js_modules_esnext_map_reduce_js__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(197);
+/* harmony import */ var core_js_modules_esnext_map_reduce_js__WEBPACK_IMPORTED_MODULE_10___default = /*#__PURE__*/__webpack_require__.n(core_js_modules_esnext_map_reduce_js__WEBPACK_IMPORTED_MODULE_10__);
+/* harmony import */ var core_js_modules_esnext_map_some_js__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(198);
+/* harmony import */ var core_js_modules_esnext_map_some_js__WEBPACK_IMPORTED_MODULE_11___default = /*#__PURE__*/__webpack_require__.n(core_js_modules_esnext_map_some_js__WEBPACK_IMPORTED_MODULE_11__);
+/* harmony import */ var core_js_modules_esnext_map_update_js__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(199);
+/* harmony import */ var core_js_modules_esnext_map_update_js__WEBPACK_IMPORTED_MODULE_12___default = /*#__PURE__*/__webpack_require__.n(core_js_modules_esnext_map_update_js__WEBPACK_IMPORTED_MODULE_12__);
+/* harmony import */ var _src_components_VGrid_VGrid_sass__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(262);
+/* harmony import */ var _src_components_VGrid_VGrid_sass__WEBPACK_IMPORTED_MODULE_13___default = /*#__PURE__*/__webpack_require__.n(_src_components_VGrid_VGrid_sass__WEBPACK_IMPORTED_MODULE_13__);
+/* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(1);
+/* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_14___default = /*#__PURE__*/__webpack_require__.n(vue__WEBPACK_IMPORTED_MODULE_14__);
+/* harmony import */ var _util_mergeData__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(28);
+/* harmony import */ var _util_helpers__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(0);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+ // no xs
+
+const breakpoints = ['sm', 'md', 'lg', 'xl'];
+const ALIGNMENT = ['start', 'end', 'center'];
+
+function makeProps(prefix, def) {
+  return breakpoints.reduce((props, val) => {
+    props[prefix + Object(_util_helpers__WEBPACK_IMPORTED_MODULE_16__[/* upperFirst */ "K"])(val)] = def();
+    return props;
+  }, {});
+}
+
+const alignValidator = str => [...ALIGNMENT, 'baseline', 'stretch'].includes(str);
+
+const alignProps = makeProps('align', () => ({
+  type: String,
+  default: null,
+  validator: alignValidator
+}));
+
+const justifyValidator = str => [...ALIGNMENT, 'space-between', 'space-around'].includes(str);
+
+const justifyProps = makeProps('justify', () => ({
+  type: String,
+  default: null,
+  validator: justifyValidator
+}));
+
+const alignContentValidator = str => [...ALIGNMENT, 'space-between', 'space-around', 'stretch'].includes(str);
+
+const alignContentProps = makeProps('alignContent', () => ({
+  type: String,
+  default: null,
+  validator: alignContentValidator
+}));
+const propMap = {
+  align: Object.keys(alignProps),
+  justify: Object.keys(justifyProps),
+  alignContent: Object.keys(alignContentProps)
+};
+const classMap = {
+  align: 'align',
+  justify: 'justify',
+  alignContent: 'align-content'
+};
+
+function breakpointClass(type, prop, val) {
+  let className = classMap[type];
+
+  if (val == null) {
+    return undefined;
+  }
+
+  if (prop) {
+    // alignSm -> Sm
+    const breakpoint = prop.replace(type, '');
+    className += `-${breakpoint}`;
+  } // .align-items-sm-center
+
+
+  className += `-${val}`;
+  return className.toLowerCase();
+}
+
+const cache = new Map();
+/* harmony default export */ __webpack_exports__["a"] = (vue__WEBPACK_IMPORTED_MODULE_14___default.a.extend({
+  name: 'v-row',
+  functional: true,
+  props: {
+    tag: {
+      type: String,
+      default: 'div'
+    },
+    dense: Boolean,
+    noGutters: Boolean,
+    align: {
+      type: String,
+      default: null,
+      validator: alignValidator
+    },
+    ...alignProps,
+    justify: {
+      type: String,
+      default: null,
+      validator: justifyValidator
+    },
+    ...justifyProps,
+    alignContent: {
+      type: String,
+      default: null,
+      validator: alignContentValidator
+    },
+    ...alignContentProps
+  },
+
+  render(h, {
+    props,
+    data,
+    children
+  }) {
+    // Super-fast memoization based on props, 5x faster than JSON.stringify
+    let cacheKey = '';
+
+    for (const prop in props) {
+      cacheKey += String(props[prop]);
+    }
+
+    let classList = cache.get(cacheKey);
+
+    if (!classList) {
+      classList = []; // Loop through `align`, `justify`, `alignContent` breakpoint props
+
+      let type;
+
+      for (type in propMap) {
+        propMap[type].forEach(prop => {
+          const value = props[prop];
+          const className = breakpointClass(type, prop, value);
+          if (className) classList.push(className);
+        });
+      }
+
+      classList.push({
+        'no-gutters': props.noGutters,
+        'row--dense': props.dense,
+        [`align-${props.align}`]: props.align,
+        [`justify-${props.justify}`]: props.justify,
+        [`align-content-${props.alignContent}`]: props.alignContent
+      });
+      cache.set(cacheKey, classList);
+    }
+
+    return h(props.tag, Object(_util_mergeData__WEBPACK_IMPORTED_MODULE_15__[/* default */ "a"])(data, {
+      staticClass: 'row',
+      class: classList
+    }), children);
+  }
+
+}));
+
+/***/ }),
+
+/***/ 508:
+/***/ (function(module, exports, __webpack_require__) {
+
+module.exports = __webpack_require__.p + "img/letras-blog.ac07696.jpg";
+
+/***/ }),
+
+/***/ 509:
+/***/ (function(module, exports) {
+
+// Exports
+module.exports = {
+
+};
+
+
+/***/ }),
+
+/***/ 527:
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_css_loader_dist_cjs_js_ref_3_oneOf_1_0_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_3_oneOf_1_1_node_modules_nuxt_components_dist_loader_js_ref_0_0_node_modules_vue_loader_lib_index_js_vue_loader_options_index_vue_vue_type_style_index_0_id_5818be7a_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(509);
+/* harmony import */ var _node_modules_css_loader_dist_cjs_js_ref_3_oneOf_1_0_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_3_oneOf_1_1_node_modules_nuxt_components_dist_loader_js_ref_0_0_node_modules_vue_loader_lib_index_js_vue_loader_options_index_vue_vue_type_style_index_0_id_5818be7a_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_css_loader_dist_cjs_js_ref_3_oneOf_1_0_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_3_oneOf_1_1_node_modules_nuxt_components_dist_loader_js_ref_0_0_node_modules_vue_loader_lib_index_js_vue_loader_options_index_vue_vue_type_style_index_0_id_5818be7a_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_0__);
+/* harmony reexport (unknown) */ for(var __WEBPACK_IMPORT_KEY__ in _node_modules_css_loader_dist_cjs_js_ref_3_oneOf_1_0_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_3_oneOf_1_1_node_modules_nuxt_components_dist_loader_js_ref_0_0_node_modules_vue_loader_lib_index_js_vue_loader_options_index_vue_vue_type_style_index_0_id_5818be7a_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_0__) if(["default"].indexOf(__WEBPACK_IMPORT_KEY__) < 0) (function(key) { __webpack_require__.d(__webpack_exports__, key, function() { return _node_modules_css_loader_dist_cjs_js_ref_3_oneOf_1_0_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_3_oneOf_1_1_node_modules_nuxt_components_dist_loader_js_ref_0_0_node_modules_vue_loader_lib_index_js_vue_loader_options_index_vue_vue_type_style_index_0_id_5818be7a_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_0__[key]; }) }(__WEBPACK_IMPORT_KEY__));
+
+
+/***/ }),
+
+/***/ 550:
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+// ESM COMPAT FLAG
+__webpack_require__.r(__webpack_exports__);
+
+// CONCATENATED MODULE: ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/@nuxt/components/dist/loader.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./pages/miembro-jekuaa/blogs/index.vue?vue&type=template&id=5818be7a&scoped=true&
+var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{},[_vm._ssrNode("<div class=\"container\" data-v-5818be7a>","</div>",[_vm._ssrNode("<h3 class=\"titulo-presentacion\" data-v-5818be7a>Crea un blog en Jekuaapy</h3> <p data-v-5818be7a>Contrary to popular belief, Lorem Ipsum is not simply random text. It has roots in a piece of classical Latin literature from 45 BC, making it over 2000 years old. Richard McClintock, a Latin professor at Hampden-Sydney College in Virginia, looked up one of the more obscure Latin words, consectetur, from a Lorem Ipsum passage, and going through the cites of the word in classical literature, discovered the undoubtable source.</p> <p data-v-5818be7a>The standard chunk of Lorem Ipsum used since the 1500s is reproduced below for those interested. Sections 1.10.32 and 1.10.33 from &quot;de Finibus Bonorum et Malorum&quot; by Cicero are also reproduced in their exact original form, accompanied by English versions from the 1914 translation by H. Rackham.</p> "),_c('v-btn',{staticClass:"ml-2 mt-5",attrs:{"outlined":"","rounded":"","color":"#683bce","to":"/miembro-jekuaa/blogs/nuevo"}},[_vm._v("\n            Crear un blog\n        ")]),_vm._ssrNode(" "),_c('v-btn',{staticClass:"ml-2 mt-5",attrs:{"outlined":"","rounded":"","color":"#ff1d89","to":"/miembro-jekuaa/blogs/mis-blogs"}},[_vm._v("\n            Mis blogs\n        ")]),_vm._ssrNode(" <h3 class=\"titulo-presentacion mt-15\" data-v-5818be7a>\n            Recomendaciones\n        </h3> "),_c('v-divider'),_vm._ssrNode(" "),_c('v-row',{staticClass:"mt-5",attrs:{"no-gutters":""}},[_c('v-col',{attrs:{"cols":"12","md":"5"}},[_c('div',{staticClass:"contenedor-l"},[_c('v-card',{staticClass:"mx-auto"},[_c('v-img',{staticClass:"white--text align-end",attrs:{"height":"200px","src":__webpack_require__(508)}},[_c('v-card-title',[_vm._v("\n                            Recomendaciones general para blogs\n                        ")])],1),_vm._v(" "),_c('v-card-subtitle',{staticClass:"pb-0"},[_vm._v("\n                            Jekuaapy blog\n                        ")]),_vm._v(" "),_c('v-card-text',{staticClass:"text--primary"},[_c('div',[_vm._v("\n                            Si quieres que tu blog tenga una buena estructura, posicionamiento en las búsquedas de Google, y sea cómodo para los lectores, aquí te dejamos unas 4 pautas o recomendaciones para crear tu blog.\n                        ")])]),_vm._v(" "),_c('v-card-actions',[_c('v-btn',{attrs:{"color":"#683bce","text":"","to":"/blog/recomendaciones-para-crear-un-blog"}},[_vm._v("\n                                Ver recomendación\n                            ")])],1)],1)],1)]),_vm._v(" "),_c('v-col',{attrs:{"cols":"12","md":"7"}},[_c('div',{staticClass:"contenedor-r"},[_c('v-card',{staticClass:"mx-auto"},[_c('v-img',{staticClass:"white--text align-end",attrs:{"height":"200px","src":__webpack_require__(508)}},[_c('v-card-title',[_vm._v("\n                            Top 10 Australian beaches\n                        ")])],1),_vm._v(" "),_c('v-card-subtitle',{staticClass:"pb-0"},[_vm._v("\n                            Jekuaapy blog\n                        ")]),_vm._v(" "),_c('v-card-text',{staticClass:"text--primary"},[_c('div',[_vm._v("\n                                Whitsunday Island, Whitsunday Islands\n                            ")])]),_vm._v(" "),_c('v-card-actions',[_c('v-btn',{attrs:{"color":"#683bce","text":"","to":"/blog/recomendaciones-para-crear-un-blog"}},[_vm._v("\n                                Ver recomendación\n                            ")])],1)],1)],1)])],1)],2)])}
+var staticRenderFns = []
+
+
+// CONCATENATED MODULE: ./pages/miembro-jekuaa/blogs/index.vue?vue&type=template&id=5818be7a&scoped=true&
+
+// CONCATENATED MODULE: ./node_modules/babel-loader/lib??ref--2-0!./node_modules/@nuxt/components/dist/loader.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./pages/miembro-jekuaa/blogs/index.vue?vue&type=script&lang=js&
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+/* harmony default export */ var blogsvue_type_script_lang_js_ = ({
+  name: '',
+  layout: 'miembroJekuaa',
+  middleware: 'esMiembroJekuaa',
+
+  data() {
+    return {};
+  }
+
+});
+// CONCATENATED MODULE: ./pages/miembro-jekuaa/blogs/index.vue?vue&type=script&lang=js&
+ /* harmony default export */ var miembro_jekuaa_blogsvue_type_script_lang_js_ = (blogsvue_type_script_lang_js_); 
+// EXTERNAL MODULE: ./node_modules/vue-loader/lib/runtime/componentNormalizer.js
+var componentNormalizer = __webpack_require__(6);
+
+// EXTERNAL MODULE: ./node_modules/vuetify-loader/lib/runtime/installComponents.js
+var installComponents = __webpack_require__(10);
+var installComponents_default = /*#__PURE__*/__webpack_require__.n(installComponents);
+
+// EXTERNAL MODULE: ./node_modules/vuetify/lib/components/VBtn/VBtn.js
+var VBtn = __webpack_require__(51);
+
+// EXTERNAL MODULE: ./node_modules/vuetify/lib/components/VCard/VCard.js
+var VCard = __webpack_require__(82);
+
+// EXTERNAL MODULE: ./node_modules/vuetify/lib/components/VCard/index.js
+var components_VCard = __webpack_require__(31);
+
+// EXTERNAL MODULE: ./node_modules/vuetify/lib/components/VGrid/VCol.js
+var VCol = __webpack_require__(277);
+
+// EXTERNAL MODULE: ./node_modules/vuetify/lib/components/VDivider/VDivider.js
+var VDivider = __webpack_require__(210);
+
+// EXTERNAL MODULE: ./node_modules/vuetify/lib/components/VImg/VImg.js
+var VImg = __webpack_require__(63);
+
+// EXTERNAL MODULE: ./node_modules/vuetify/lib/components/VGrid/VRow.js
+var VRow = __webpack_require__(278);
+
+// CONCATENATED MODULE: ./pages/miembro-jekuaa/blogs/index.vue
+
+
+
+function injectStyles (context) {
+  
+  var style0 = __webpack_require__(527)
+if (style0.__inject__) style0.__inject__(context)
+
+}
+
+/* normalize component */
+
+var component = Object(componentNormalizer["a" /* default */])(
+  miembro_jekuaa_blogsvue_type_script_lang_js_,
+  render,
+  staticRenderFns,
+  false,
+  injectStyles,
+  "5818be7a",
+  "2808b7af"
+  
+)
+
+/* harmony default export */ var blogs = __webpack_exports__["default"] = (component.exports);
+
+/* vuetify-loader */
+
+
+
+
+
+
+
+
+
+
+
+installComponents_default()(component, {VBtn: VBtn["a" /* default */],VCard: VCard["a" /* default */],VCardActions: components_VCard["b" /* VCardActions */],VCardSubtitle: components_VCard["c" /* VCardSubtitle */],VCardText: components_VCard["d" /* VCardText */],VCardTitle: components_VCard["e" /* VCardTitle */],VCol: VCol["a" /* default */],VDivider: VDivider["a" /* default */],VImg: VImg["a" /* default */],VRow: VRow["a" /* default */]})
+
+
+/***/ })
+
+};;
 //# sourceMappingURL=index.js.map

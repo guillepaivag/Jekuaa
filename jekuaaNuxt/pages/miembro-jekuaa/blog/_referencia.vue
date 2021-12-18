@@ -1,6 +1,6 @@
 <template>
     <div class="container">
-
+        
         <div class="mt-5">
             <v-btn
                 depressed
@@ -29,8 +29,8 @@
                 :accion="'leer'" 
             />
         </div>
-        <div v-else>
-
+        <div class="loadingMovie" v-else>
+            <spinner />
         </div>
 
         <v-dialog
@@ -83,23 +83,26 @@
 </template>
 
 <script>
+import Spinner from '@/components/Spinner'
 import showdown from 'showdown'
 import FormularioBlog from '@/components/blogs/formulario-blog'
 
 export default {
     name: '',
+    layout: 'miembroJekuaa',
+    middleware: 'esMiembroJekuaa',
     data() {
         return {
             datosBlog: null,
             contenidoBlog: '',
-            imgBlog: '',
             estadoDialogEliminacion: false,
             uidConfirmacion: '',
             eliminando: false,
         }
     },
     components: {
-        'formulario-blog': FormularioBlog
+        'formulario-blog': FormularioBlog,
+        'spinner': Spinner,
     },
     methods: {
         async eliminarBlog () {
@@ -134,13 +137,8 @@ export default {
     watch: {
         
     },
-    async created() {
-        try {
-            // Variables
-            let datosBlog = null
-            let contenidoBlog = ''
-            let imgBlog = ''
-            
+    async mounted() {
+        try {     
             // Obtener datos de blog desde firebase
             const db = this.$firebase.firestore()
 
@@ -148,17 +146,14 @@ export default {
             const docs = await ref.get()
             const doc = docs.docs[0]
 
-            if (!doc.exists) {
-                this.$router.push('/miembro-jekuaa/blogs/mis-blogs')
-            }
-            
-            datosBlog = doc.data()
+            if (!doc.exists) this.$router.push('/miembro-jekuaa/blogs/mis-blogs')
 
             // Obtener contenido del blog desde la api de Jekuaa
-            let token = this.$firebase.auth().currentUser
-            token = token ? await token.getIdToken() : ''
+            let usuario = this.$firebase.auth().currentUser
+            let token = usuario ? await usuario.getIdToken() : ''
             this.$store.commit('modules/usuarios/setTOKEN', token)
-            const response = await this.$axios.get(`/blog/miembroJekuaa/obtenerContenido/${datosBlog.uid}`, {
+            
+            const response = await this.$axios.get(`/blog/miembroJekuaa/obtenerContenido/${doc.data().uid}`, {
                 headers: {
                     'Content-Type': 'application/json',
                     Authorization: `Bearer ${token}`
@@ -167,12 +162,8 @@ export default {
 
             let converter = new showdown.Converter()
 
-            contenidoBlog = converter.makeHtml(response.data.resultado.contenido)
-            imgBlog = response.data.resultado.imgBlog
-
-            this.datosBlog = datosBlog
-            this.contenidoBlog = contenidoBlog
-            this.imgBlog = imgBlog
+            this.datosBlog = doc.data()
+            this.contenidoBlog = converter.makeHtml(response.data.resultado)
         } catch (error) {
             console.log('error', error)
             const accion = await this.$store.dispatch('modules/sistema/errorHandler', error)
@@ -183,6 +174,13 @@ export default {
 </script>
 
 <style scoped>
+.loadingMovie {
+    margin-top: 25vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
 .informacionAccion {
     /* rgba(230, 62, 62, 0.159) */
     background-color: rgba(255, 29, 137, 0.159);

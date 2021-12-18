@@ -1,8 +1,10 @@
 <template>
-    <div class="mt-5">
-        <div class="container">
-            <h2>Mis blogs</h2>
-            <v-divider class="mt-3 mb-5"></v-divider>
+    <div class="container">
+        <h3 class="titulo-presentacion mt-5">
+            Mis blogs
+        </h3>
+        <v-divider></v-divider>
+        <div class="mt-10" v-if="blogs.length">
             <lista-blogs 
                 :blogs="blogs"
                 :existeMasDatos="existeMasDatos"
@@ -10,93 +12,144 @@
                 @cargarBlogs="cargarBlogs($event)"
             />
         </div>
+        <div v-else-if="buscando" class="loadingMovie">
+            <spinner />
+        </div>
     </div>
 </template>
 
 <script>
+import Spinner from '@/components/Spinner'
 import listaBlogs from '@/components/blogs/lista-blogs'
+import buscadorInfinitoBlogs from '@/components/blogs/buscador-infinito-blogs'
 
 const maximoPorPagina = 3
 
 export default {
     name: 'blogs',
+    layout: 'miembroJekuaa',
+    middleware: 'esMiembroJekuaa',
     components: {
         'lista-blogs': listaBlogs,
+        'buscador-infinito-blogs': buscadorInfinitoBlogs,
+        'spinner': Spinner,
     },
     data() {
         return {
             blogs: [],
-            ultimaUID: null,
+            ultimaUID: '',
             existeMasDatos: false,
             buscando: false,
             maximoPorPagina: maximoPorPagina,
             filtros: {
-                seccion: '',
-                categoria: '',
-                subCategorias: '',
-                publicador: '',
+                seccion: this.$route.params.seccion ? this.$route.params.seccion : '',
+                categoria: this.$route.params.categoria ? this.$route.params.categoria : '',
+                subCategorias: this.$route.params.subCategoria ? [this.$route.params.subCategoria] : [],
             },
+            dialogBuscadorBlog: false,
+            noTienePublicaciones: true,
         }
     },
     methods: {
         async inicializarLista () {
-            this.buscando = true
+            try {
+                this.buscando = true
+                this.ultimaUID = ''
 
-            let body = {
-                ultimaUID: null, 
-                maximoPorPagina: 5,
-                filtros: this.filtros
-            }
+                let usuario = this.$firebase.auth().currentUser
+                let token = await usuario.getIdToken()
+                this.$store.commit('modules/usuarios/setTOKEN', token)
 
-            let config = {
-                headers: {
-                    'Content-Type': 'application/json'
+                let body = {
+                    ultimaUID: this.ultimaUID, 
+                    maximoPorPagina: 5,
+                    filtros: this.filtros
                 }
+
+                let config = {
+                    headers: {
+                        'Content-Type': 'application/json',
+                        Authorization: `Bearer ${token}`,
+                    }
+                }
+
+                const response = await this.$axios.post('/blog/miembroJekuaa/paginarListaBlogs', body, config)
+
+                this.blogs = []
+                let aux = []
+                for (let i = 0; i < response.data.resultado.blogs.length; i++) {
+                    const blog = response.data.resultado.blogs[i]
+                    aux.push({
+                        blog: blog,
+                        publicador: {
+                            nombreUsuario: '',
+                            fotoPerfil: '',
+                        },
+                        imgBlog: '',
+                    })
+                }
+
+                this.blogs.push(...aux)
+                this.ultimaUID = response.data.resultado.ultimaUID
+                this.existeMasDatos = response.data.resultado.existeMasDatos
+
+            } catch (error) {
+                const accion = await this.$store.dispatch('modules/sistema/errorHandler', error)
+            } finally {
+                this.buscando = false
             }
-
-            const response = await this.$axios.post('/blog/estudiante/paginarListaBlogs', body, config)
-            this.blogs = response.data.resultado.blogs
-            this.ultimaUID = response.data.resultado.ultimaUID
-            this.existeMasDatos = response.data.resultado.existeMasDatos
-
-            this.buscando = false
         },
         async paginar () {
-            this.buscando = true
+            try {
+                this.buscando = true
 
-            if (!this.existeMasDatos) {
+                if (!this.existeMasDatos) {
+                    this.buscando = false
+                    return
+                }
+
+                let usuario = this.$firebase.auth().currentUser
+                let token = usuario ? await usuario.getIdToken() : ''
+                this.$store.commit('modules/usuarios/setTOKEN', token)
+
+                let body = {
+                    ultimaUID: this.ultimaUID, 
+                    maximoPorPagina: 5,
+                    filtros: this.filtros
+                }
+
+                let config = {
+                    headers: {
+                        'Content-Type': 'application/json',
+                        Authorization: `Bearer ${token}`,
+                    }
+                }
+
+                const response = await this.$axios.post('/blog/estudiante/paginarListaBlogs', body, config)
+                const nuevosBlogs = response.data.resultado.blogs
+
+                let aux = []
+                for (let i = 0; i < nuevosBlogs.length; i++) {
+                    const blog = nuevosBlogs[i]
+                    aux.push({
+                        blog: blog,
+                        publicador: {
+                            nombreUsuario: '',
+                            fotoPerfil: '',
+                        },
+                        imgBlog: '',
+                    })
+                }
+                
+                this.blogs.push(...aux)
+                this.ultimaUID = response.data.resultado.ultimaUID
+                this.existeMasDatos = response.data.resultado.existeMasDatos
+                
+            } catch (error) {
+                const accion = await this.$store.dispatch('modules/sistema/errorHandler', error)
+            } finally {
                 this.buscando = false
-                return
             }
-
-            let token = this.$firebase.auth().currentUser
-            token = token ? await token.getIdToken() : ''
-            this.$store.commit('modules/usuarios/setTOKEN', token)
-
-            let body = {
-                ultimaUID: this.ultimaUID, 
-                maximoPorPagina: 5,
-                filtros: {
-                    ...this.filtros,
-                    publicador: this.$store.state.modules.usuarios.uid,
-                }
-            }
-
-            let config = {
-                headers: {
-                    'Content-Type': 'application/json',
-                    Authorization: `Bearer ${token}`,
-                }
-            }
-
-            const response = await this.$axios.post('/blog/miembroJekuaa/paginarListaBlogs', body, config)
-            const nuevosBlogs = response.data.resultado.blogs
-
-            this.blogs.push(...nuevosBlogs)
-            this.ultimaUID = response.data.resultado.ultimaUID
-            this.existeMasDatos = response.data.resultado.existeMasDatos
-
-            this.buscando = false
         },
         async cargarBlogs (data) {
             if (!data.visible || this.buscando || !this.existeMasDatos) {
@@ -106,52 +159,75 @@ export default {
             await this.paginar()
         }
     },
-    async created() {
-        try {
-            let token = this.$firebase.auth().currentUser
-            token = token ? await token.getIdToken() : ''
-            this.$store.commit('modules/usuarios/setTOKEN', token)
-
-            let body = {
-                ultimaUID: null, 
-                maximoPorPagina: 5,
-                filtros: {
-                    publicador: this.$store.state.modules.usuarios.uid,
-                }
-            }
-
+    watch: {
+        blogs: async function (n, v) {
             let config = {
                 headers: {
-                    'Content-Type': 'application/json',
-                    Authorization: `Bearer ${token}`,
+                    'Content-Type': 'application/json'
                 }
             }
-
-            const response = await this.$axios.post('/blog/miembroJekuaa/paginarListaBlogs', body, config)
-            let blogs = response.data.resultado.blogs
-            let ultimaUID = response.data.resultado.ultimaUID
-            let existeMasDatos = response.data.resultado.existeMasDatos
-
-            this.blogs = blogs
-            this.ultimaUID = ultimaUID
-            this.existeMasDatos = existeMasDatos
-        } catch (error) {
-            console.log('error', error)
-            const accion = await this.$store.dispatch('modules/sistema/errorHandler', error)
-            this.$router.push('/miembro-jekuaa/blogs/mis-blogs')
+            
+            for (let i = 0; i < n.length; i++) {
+                const infoBlog = n[i]
+                
+                if (!infoBlog.publicador.nombreUsuario) {
+                    const body = {
+                        uid: infoBlog.blog.publicador
+                    }
+                    const response = await this.$axios.post('/usuarios/estudiante/authUsuario', body, config)
+                    this.blogs[i].publicador.nombreUsuario = response.data.resultado.displayName
+                    this.blogs[i].publicador.fotoPerfil = response.data.resultado.photoURL
+                }
+            }
         }
+    },
+    async mounted() {
+        await this.inicializarLista()
     },
 }
 </script>
 
 <style scoped>
+.titulo-presentacion {
+    color: #683bce;
+    font-size: 25px;
+    margin-bottom: 10px;
+}
+
+.loadingMovie {
+    margin-top: 25vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.cabecera {
+    margin-left: 50px;
+    margin-right: 50px;
+}
+
 .btnBuscador {
-    margin: 0 0 0 29px;
+    margin: 0;
     transition: 600ms;
 }
 
 .btnBuscador:hover {
-    padding-right: 80px !important;
+    padding-right: 100px !important;
     transition: 600ms;
+}
+
+@media (min-width: 0px) and (max-width: 410px) { 
+    .btnBuscador {
+        margin-left: 0;
+        display: block;
+        width: 100%;
+    }
+}
+
+@media (min-width: 0px) and (max-width: 350px) { 
+    .cabecera {
+        margin-left: 10px;
+        margin-right: 10px;
+    }
 }
 </style>

@@ -2,14 +2,14 @@
   "name": "functions",
   "description": "Cloud Functions for Firebase",
   "scripts": {
-    "serve": "firebase emulators:start --only functions",
+    "serve": "npm run environmentDev && cd .. && firebase emulators:start --only hosting,functions,firestore,auth,ui --import=./emulator-data --export-on-exit=./emulator-data",
+    "serveProd": "npm run environmentProd && cd .. && firebase emulators:start --only functions,ui",
     "shell": "firebase functions:shell",
     "start": "npm run shell",
     "deploy": "firebase deploy --only functions",
     "logs": "firebase functions:log",
-    "environmentProd": "firebase functions:config:set environment.mode=production && firebase functions:config:get",
-    "environmentDev": "firebase functions:config:set environment.mode=development && firebase functions:config:get > config_dev.json && firebase functions:config:get",
-    "fe": "npm run environmentDev && cd .. && firebase emulators:start --only hosting,functions,firestore,auth,ui --import=./emulator-data --export-on-exit=./emulator-data"
+    "environmentProd": "firebase functions:config:set environment.mode=production && firebase functions:config:get > config.json && firebase functions:config:get",
+    "environmentDev": "firebase functions:config:set environment.mode=development && firebase functions:config:get > config.json && firebase functions:config:get"
   },
   "engines": {
     "node": "14"
@@ -19,8 +19,7 @@
     "@google-cloud/storage": "^5.14.3",
     "@nuxtjs/axios": "^5.13.6",
     "@nuxtjs/pwa": "^3.3.5",
-    "@tiptap/starter-kit": "^2.0.0-beta.127",
-    "@tiptap/vue-2": "^2.0.0-beta.60",
+    "@nuxtjs/sitemap": "^2.4.0",
     "algoliasearch": "^4.11.0",
     "axios": "^0.21.1",
     "busboy": "^0.3.1",
@@ -43,20 +42,17 @@
     "js-cookie": "^3.0.0",
     "jwt-decode": "^3.1.2",
     "nuxt": "^2.15.3",
-    "nuxt-webpack-optimisations": "^2.0.4",
     "showdown": "^1.9.1",
     "tiptap-vuetify": "^2.8.0",
     "turndown": "^7.1.1",
-    "uuid": "^8.3.2",
-    "video.js": "^7.14.3",
     "vue-instantsearch": "^4.1.1",
     "vue-observe-visibility": "^1.0.0",
-    "vue-slick-carousel": "^1.0.6",
-    "vuelidate": "^0.7.6",
-    "vuetify": "^2.5.8",
-    "vuetify-loader": "^1.7.3"
+    "vuelidate": "^0.7.6"
   },
   "devDependencies": {
+    "@babel/cli": "^7.16.0",
+    "@babel/core": "^7.16.5",
+    "@babel/preset-env": "^7.16.5",
     "@nuxtjs/vuetify": "^1.12.1",
     "firebase-functions-test": "^0.2.0"
   },

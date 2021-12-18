@@ -13,7 +13,7 @@
 
         <v-list-item-content>
           <v-list-item-title class="estiloTexto">
-            Jekuaa
+            Jekuaapy
           </v-list-item-title>
         </v-list-item-content>
       </v-list-item>
@@ -151,7 +151,7 @@
               <v-img
                 contain
                 max-height="60%"
-                src="https://firebasestorage.googleapis.com/v0/b/jekuaa-py.appspot.com/o/JekuaaLogo48x48.png?alt=media&token=1eaf2b06-2e17-4c34-97cd-793de7fc9d46"
+                :src="require(`~/assets/img/JekuaaLogo48x48.png`)"
               />
             </v-avatar>
           </v-app-bar-nav-icon>
@@ -266,7 +266,7 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
 
 .containerLogo {
     margin-left: 10px;

@@ -7,7 +7,6 @@
 
     <div v-else>
       <v-app>
-
         <NavigationUser v-if="autenticado" />
         <NavigationDefault v-else />
 

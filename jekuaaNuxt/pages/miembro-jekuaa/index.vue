@@ -25,7 +25,7 @@
                                 </v-card-title>
 
                                 <v-card-subtitle class="mt-0">
-                                    ¡Crea un blog con nosotros!
+                                    ¡Crea un blog con Jekuaapy!
                                 </v-card-subtitle>
 
                                 <v-card-actions>
@@ -57,7 +57,7 @@
                     md="7"
                 >
                     <div class="contenedor-r">
-                        <h3 class="titulo-presentacion">¡Blogs con Jekuaa!</h3>
+                        <h3 class="titulo-presentacion">¡Blogs con Jekuaapy!</h3>
 
                         <p>Contrary to popular belief, Lorem Ipsum is not simply random text. It has roots in a piece of classical Latin literature from 45 BC, making it over 2000 years old. Richard McClintock, a Latin professor at Hampden-Sydney College in Virginia, looked up one of the more obscure Latin words, consectetur, from a Lorem Ipsum passage, and going through the cites of the word in classical literature, discovered the undoubtable source.</p>
 
@@ -70,7 +70,7 @@
                             color="#683bce"
                             to="/miembro-jekuaa/blogs"
                         >
-                            Comenzar jekuaa-blogs
+                            Comenzar jekuaapy blogs
                         </v-btn>
                     </div>
                 </v-col>
@@ -94,11 +94,11 @@
                         >
                             <v-img
                                 class="white--text align-end"
-                                height="200px"
-                                src="https://cdn.vuetifyjs.com/images/cards/docks.jpg"
+                                height="250px"
+                                :src="require(`~/assets/img/mesa-trabajo.jpg`)"
                             >
                                 <v-card-title>
-                                    ¡Blogs con Jekuaa!
+                                    ¡Blogs con Jekuaapy!
                                 </v-card-title>
                             </v-img>
 

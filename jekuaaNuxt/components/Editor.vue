@@ -24,6 +24,7 @@ import {
   Strike,
   Underline,
   Code,
+  CodeBlock,
   Paragraph,
   BulletList,
   OrderedList,
@@ -33,12 +34,16 @@ import {
   HardBreak,
   HorizontalRule,
   History,
-  Image
+  Image,
 } from 'tiptap-vuetify'
+import ImagenURL from '@/components/tiptap/vuetify/ImagenURL'
 
 export default {
   // specify TiptapVuetify component in "components"
-  components: { TiptapVuetify },
+  components: {
+    TiptapVuetify,
+    ImagenURL,
+  },
   data() {
     return {
       extensions: [
@@ -61,10 +66,18 @@ export default {
         Bold,
         Link,
         Code,
+        CodeBlock,
         HorizontalRule,
         Paragraph,
         HardBreak,
-        Image,
+        [Image, {
+          options: {
+            imageSourcesOverride: true,
+            imageSources: [
+              { component: ImagenURL, name: 'Ingresar URL' },
+            ]
+          }
+        }],
       ],
     }
   },

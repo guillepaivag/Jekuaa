@@ -27,6 +27,7 @@ apiJekuaa.use(express.urlencoded({
 // RUTAS
 apiJekuaa.use('/usuarios', require('./src/routes/usuarios/Usuario'))
 apiJekuaa.use('/blog', require('./src/routes/blogs/Blog'))
+apiJekuaa.use('/sitemap', require('./src/routes/sitemap'))
 
 // MANEJO DE ERRORES
 apiJekuaa.use((err, req, res, next) => { 

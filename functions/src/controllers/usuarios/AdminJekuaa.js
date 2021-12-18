@@ -136,13 +136,11 @@ controllerMiembroJekuaa.actualizarUsuarioPorUID = async (req, res) => {
 
         // Actualizar usuario
         if ( datosUsuario ) {
-            console.log('Actualizando datos del usuario...')
             await Usuario.actalizarDatosUsuarioPorUID( uid, datosUsuario )
         }
 
         // Actualizacion de contraseña
         if ( contrasenha ) {
-            console.log('Actualizando contraseña del usuario...')
             await Usuario.actualizarContrasenhaPorUID( uid, contrasenha )
         }
 

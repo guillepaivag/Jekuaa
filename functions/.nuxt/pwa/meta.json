@@ -1,5 +1,5 @@
 {
-  "title": "Jekuaa",
+  "title": "Jekuaapy",
   "meta": [
     {
       "hid": "charset",
@@ -18,12 +18,7 @@
     {
       "hid": "apple-mobile-web-app-title",
       "name": "apple-mobile-web-app-title",
-      "content": "Jekuaa"
-    },
-    {
-      "hid": "description",
-      "name": "description",
-      "content": "## Build Setup"
+      "content": "Jekuaapy"
     },
     {
       "hid": "og:type",
@@ -35,19 +30,13 @@
       "hid": "og:title",
       "name": "og:title",
       "property": "og:title",
-      "content": "Jekuaa"
+      "content": "Jekuaapy"
     },
     {
       "hid": "og:site_name",
       "name": "og:site_name",
       "property": "og:site_name",
-      "content": "Jekuaa"
-    },
-    {
-      "hid": "og:description",
-      "name": "og:description",
-      "property": "og:description",
-      "content": "## Build Setup"
+      "content": "Jekuaapy"
     }
   ],
   "link": [
@@ -64,7 +53,7 @@
     },
     {
       "rel": "manifest",
-      "href": "/_nuxt/manifest.df1b8d21.json",
+      "href": "/_nuxt/manifest.a1276bbc.json",
       "hid": "manifest"
     }
   ],

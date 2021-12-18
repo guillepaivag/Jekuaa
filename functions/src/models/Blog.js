@@ -279,31 +279,7 @@ class Blog {
         return this
     }
 
-    async subirArchivoAStorage ( datosArchivo ) {
-
-        const {
-            filepath,
-            filename,
-            mimetype
-        } = datosArchivo
-        const rutaArchivo = `blogs/${filename}`
-        
-        const bucket = storage.bucket('jekuaa-py.appspot.com')
-        const response = await bucket.upload(filepath, {
-            destination: rutaArchivo,
-            uploadType: 'media',
-            metadata: {
-                metadata: {
-                    contentType: mimetype
-                }
-            }
-        })
-
-        return response
-    }
-
     async obtenerContenido ( opciones ) {
-        console.log('configJekuaa.environment.mode', configJekuaa.environment.mode)
         let rutaCloudStorage = configJekuaa.environment.mode === 'production' ? 'blogs/prod' : 'blogs/dev'
 
         const bucket = storage.bucket('jekuaa-blogs')
@@ -314,45 +290,25 @@ class Blog {
         return await new Promise((resolve, reject) => {
             let contenido = ''
             archivo
-                .on('data', contenidoObtenido => {
-                    // Obtener el contenido del archivo
-                    contenido += contenidoObtenido
-                })
-                .on('end', () => {
-                    // Formatear de acuerdo a lo que se pide
-                    // Formato por defecto: Markdown (md)
-                    if ( opciones.extensionArchivo === 'html' ) {
-                        const converter = new showdown.Converter()
-                        contenido = converter.makeHtml(contenido)
-                    }
-                    
-                    resolve(contenido)
-                })
-                .on('error', err => {
-                    reject(err)
-                })
+            .on('data', contenidoObtenido => {
+                // Obtener el contenido del archivo
+                contenido += contenidoObtenido
+            })
+            .on('end', () => {
+                // Formatear de acuerdo a lo que se pide
+                // Formato por defecto: Markdown (md)
+                if ( opciones.extensionArchivo === 'html' ) {
+                    const converter = new showdown.Converter()
+                    contenido = converter.makeHtml(contenido)
+                }
+                
+                resolve(contenido)
+            })
+            .on('error', err => {
+                reject(err)
+            })
         })
 
-    }
-
-    async borrarArchivoBlog ( opciones ) {
-        let rutaCloudStorage = opciones && opciones.pendiente ? 'blogs/pendientes' : 'blogs/publicados'
-
-        const bucket = storage.bucket('jekuaa-py.appspot.com')
-
-        const file = bucket.file(`${rutaCloudStorage}/${this.uid}.md`)
-
-        const existe = (await file.exists())[0]
-
-        if ( !existe ) {
-            throw new ErrorJekuaa({
-                codigo: 'jekuaa/error/usuario_mala_solicitud',
-                mensaje: `No existe el blog.`
-            })
-        }
-
-        const data = await file.delete()
-        const apiResponse = data[0]
     }
 
     formatearDatos ( ) {
@@ -404,9 +360,6 @@ class Blog {
     static async subirArchivoAStorage ( rutaArchivo, uid ) {
         const bucket = storage.bucket('jekuaa-blogs')
 
-        console.log('configJekuaa', configJekuaa)
-        console.log('configJekuaa.environment', configJekuaa.environment)
-        console.log('configJekuaa.environment.mode', configJekuaa.environment.mode)
         const rutaModo = configJekuaa.environment.mode === 'production' ? 'prod' : 'dev'
         const response = await bucket.upload(rutaArchivo, {
             destination: `blogs/${rutaModo}/${uid}.md`,
@@ -419,56 +372,6 @@ class Blog {
         })
 
         return response
-    }
-
-    static async obtenerURL ( nombreArchivo, opcionesBlog ) {
-
-        // opcionesBlog: pendiente, segundosValidos
-        const action = 'read'
-        const expires = new Date().getTime() + opcionesBlog.segundosValidos * 1000
-        const rutaArchivo = `blogs/${nombreArchivo}.md`
-
-        const bucket = storage.bucket('jekuaa-py.appspot.com')
-        const file = bucket.file(rutaArchivo)
-
-        const existe = (await file.exists())[0]
-
-        if ( !existe ) {
-            throw new ErrorJekuaa({
-                codigo: 'jekuaa/error/usuario_mala_solicitud',
-                mensaje: `No existe el blog ${nombreArchivo}`
-            })
-        }
-        
-        const links = await file.getSignedUrl({
-            action,
-            expires
-        })
-        
-        return links[0]
-    }
-
-    static async obtenerContenidoPorUID ( nombreArchivo, opciones ) {
-        let rutaCloudStorage = opciones.pendiente ? 'blogs/pendientes' : 'blogs/publicados'
-
-        const myBucket = storage.bucket('jekuaa-py.appspot.com')
-
-        const file = myBucket.file(`${rutaCloudStorage}/${nombreArchivo}.md`)
-
-        const archivo = file.createReadStream()
-
-        let contenido = ''
-        archivo.on('data', function(contenidoObtenido) {
-            contenido += contenidoObtenido;
-        })
-        
-        archivo.on('end', function() {
-            return contenido
-        })
-
-        archivo.on('error', function(err) {
-            console.log('err', err)
-        })
     }
 
     static async eliminarBlog ( uid ) {
@@ -525,23 +428,6 @@ class Blog {
         }
 
     }
-    
-    static async obtenerImagenPorSeccion(seccion) {
-        // These options will allow temporary read access to the file
-        const options = {
-            version: 'v4',
-            action: 'read',
-            expires: Date.now() + (24 * 60) * 60 * 1000, // 24 horas
-        }
-
-        // Get a v4 signed URL for reading the file
-        const [url] = await storage
-            .bucket(`jekuaa-py.appspot.com`)
-            .file(`imagenes-secciones/${seccion}.png`)
-            .getSignedUrl(options);
-            
-        return url
-    }
 
     static async inicializarListaBlogs (opciones) {
         let { maximoPorPagina, filtros, ruta, } = opciones
@@ -556,6 +442,13 @@ class Blog {
         ref = ref.orderBy('uid').limit( maximoPorPagina )
         const documentSnapshots = await ref.get()
         
+        if (!documentSnapshots.docs.length) {
+            throw new ErrorJekuaa({
+                codigo: 'jekuaa/error/usuario_mala_solicitud',
+                mensaje: `¡Todavía no tienes blogs publicados!`
+            })
+        }
+
         let ultimoDocumento = documentSnapshots.docs[documentSnapshots.docs.length-1]
         let ultimaUID = ultimoDocumento.id
         for (let i = 0; i < documentSnapshots.docs.length; i++) {

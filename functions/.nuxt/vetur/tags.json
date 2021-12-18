@@ -35,21 +35,6 @@
   "Spinner": {
     "description": "Auto imported from components/Spinner.vue"
   },
-  "VideoPlayer": {
-    "description": "Auto imported from components/VideoPlayer.vue"
-  },
-  "AdminBuscadorUsuarios": {
-    "description": "Auto imported from components/admin/buscadorUsuarios.vue"
-  },
-  "AdminConfirmacionAccionPorUID": {
-    "description": "Auto imported from components/admin/confirmacionAccionPorUID.vue"
-  },
-  "AdminFiltroUsuarios": {
-    "description": "Auto imported from components/admin/filtroUsuarios.vue"
-  },
-  "AdminListaUsuarios": {
-    "description": "Auto imported from components/admin/listaUsuarios.vue"
-  },
   "AuthEmail": {
     "description": "Auto imported from components/auth/authEmail.vue"
   },
@@ -68,19 +53,13 @@
   "BlogsListaBlogs": {
     "description": "Auto imported from components/blogs/lista-blogs.vue"
   },
+  "BlogsVisualizador": {
+    "description": "Auto imported from components/blogs/Visualizador.vue"
+  },
   "UsuariosCartaPresentacion": {
     "description": "Auto imported from components/usuarios/CartaPresentacion.vue"
   },
-  "AdminFormsFormBlog": {
-    "description": "Auto imported from components/admin/forms/FormBlog.vue"
-  },
-  "AdminFormsFormularioUsuario": {
-    "description": "Auto imported from components/admin/forms/formularioUsuario.vue"
-  },
-  "FilterAdminUser": {
-    "description": "Auto imported from components/filter/admin/User.vue"
-  },
-  "ListsAdminUser": {
-    "description": "Auto imported from components/lists/admin/User.vue"
+  "TiptapVuetifyImagenURL": {
+    "description": "Auto imported from components/tiptap/vuetify/ImagenURL.vue"
   }
 }

@@ -7,7 +7,29 @@
                 :accion="'crear'" 
                 @crearBlog="crearBlog($event)"
             />
+        </div>
 
+        <div v-if="datosCreacion.visible && datosCreacion.creado">
+            <v-snackbar
+                v-model="datosCreacion.visible"
+                :multi-line="multiLine"
+                :timeout="-1"
+                :value="true"
+                color="#683BCE"
+                elevation="24"
+            >
+                ¡Se creo el blog de forma exitosa!
+
+                <template v-slot:action="{ attrs }">
+                    <v-btn
+                    color="#ff1d89"
+                    v-bind="attrs"
+                    @click="datosCreacion.visible = false"
+                    >
+                        Cerrar
+                    </v-btn>
+                </template>
+            </v-snackbar>
         </div>
     </div>
 </template>
@@ -19,6 +41,8 @@ import FormularioBlog from '@/components/blogs/formulario-blog'
 
 export default {
     name: '',
+    layout: 'miembroJekuaa',
+    middleware: 'esMiembroJekuaa',
     data() {
         return {
             datosBlog: {
@@ -32,6 +56,10 @@ export default {
                 publicado: true,                                    // opcional
             },
             contenidoBlog: ``,
+            datosCreacion: {
+                visible: false,
+                creado: false,
+            },
         }
     },
     components: {
@@ -60,6 +88,9 @@ export default {
                 }
 
                 const respuesta = await this.$axios.$post(`/blog/miembroJekuaa/crearBlog`, body, config)
+
+                this.datosCreacion.visible = true
+                this.datosCreacion.creado = true
                 
             } catch (error) {
                 console.log('error', error)

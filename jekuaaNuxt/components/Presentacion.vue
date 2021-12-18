@@ -1,31 +1,39 @@
 <template>
-    <div class="nextReleasesContainer">
-        <div class="contentContainer">
-            <!-- <video class="contentVideo" autoplay muted loop src="../assets/video2.mp4" type="video/mp4"></video> -->
-            <img class="contentImg" :src="srcImg" alt="">
-        </div>
-
-        <div class="containerReleases">
-            <h1>
-                {{ titulo }}
+    <v-parallax 
+        :src="require(`~/assets/img/seccion/${seccion ? seccion : 'sinSeccion'}.jpg`)"
+        height="100%"
+    >
+        <div class="contenedor_contenido">
+            <h1 class="titulo" style="">
+                {{titulo}}
             </h1>
-            <p>
-                {{ descripcion }}
-            </p>
-            <v-btn depressed id="buttonPlay">
+            
+            <div class="descripcion" style="">
+                {{descripcion}}
+            </div>
+            
+            <v-btn
+                class="verInformacion"
+                color="#ffffff"
+            >
                 <v-icon>
                     mdi-book-open-variant
                 </v-icon>
                 <span class="ml-3">Ver información</span>
             </v-btn>
-            <v-btn depressed id="buttonInfo" :to="to">
+
+            <v-btn
+                class="verContenido"
+                color="#ffffff"
+                :to="to"
+            >
                 <v-icon>
                     mdi-book-open-variant
                 </v-icon>
-                <span class="ml-3">Más contenido</span>
+                <span class="ml-3">Ver contenido</span>
             </v-btn>
         </div>
-    </div>
+    </v-parallax>
 </template>
 
 <script>
@@ -41,7 +49,7 @@ export default {
         titulo: String,
         descripcion: String,
         to: String,
-        srcImg: String,
+        seccion: String,
     },
     components: {
 
@@ -50,210 +58,90 @@ export default {
 </script>
 
 <style scoped>
-.nextReleasesContainer {
-    width: 100%;
-    height: 70vh;
-    position: relative;
-    background: #000000;
-    display: block;
-    align-items: center;
+.v-parallax {
+    margin-top: -19px;
+    height: 650px !important;
+    background: #000000 !important;
 }
 
-.nextReleasesContainer > .contentContainer {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    overflow: hidden;
+.v-parallax__image-container {
+    opacity: .72 !important;
 }
 
-.nextReleasesContainer > .contentContainer > .contentImg {
-    opacity: .72;
-    height: 100%;
-    width: 100%;
-    background-attachment: fixed;
-    background-size: cover;
+.contenedor_contenido {
+    background-color: rgba(0, 0, 0, 0.72);
+    padding: 22px;
+    margin-top: -150px;
+    margin-left: 50px;
+    max-width: 600px;
 }
 
-.nextReleasesContainer > .contentContainer > .contentVideo {
-    opacity: .72;
-    height: auto;
-    width: 100%;
-    background-attachment: fixed;
-    background-size: cover;
-}
-
-.containerReleases {
-    padding: 20px;
-    width: 550px;
-    margin-left: 40px;
-    padding-top: 70px;
-    position: relative;
-}
-
-.containerReleases h1 {
-    color: #e9e9e9;
-    text-shadow: black 0.1em 0.1em 0.2em;
+.titulo {
     font-size: 50px;
-    font-family: Arial, Helvetica, sans-serif;
     margin-bottom: 30px;
 }
 
-.containerReleases p {
-    color: #e9e9e9;
-    font-family: Arial, Helvetica, sans-serif;
-    text-shadow: #e9e9e9 0em 0em 0em;
-    font-size: 15px;
+.descripcion {
+    font-size: 20px;
     margin-bottom: 30px;
 }
 
-.containerReleases button {
-    border: none;
-    background: rgba(78, 78, 78, 0.562);
-    color: #e9e9e9;
-    font-size: 15px;
-    font-weight: bold;
-    text-align: center;
-    transition: transform 0.5s;
-}
-
-.containerReleases button:hover {
-    border: none;
-    /* transform: scale(1.1) !important; */
-    cursor: pointer;
-}
-
-#buttonPlay {
-    background: rgb(255, 255, 255);
+.verInformacion {
     color: #ff1d89;
-    padding: 10px 20px 10px 20px;
-    margin-right: 20px;
 }
 
-#buttonInfo {
-    background: rgb(255, 255, 255);
+.verContenido {
     color: #683bce;
-    padding: 10px 20px 10px 20px;
 }
 
-@media only screen and (max-width: 900px) {
-    .nextReleasesContainer {
-        height: 70vh;
-    }
-    .containerReleases {
-        padding-top: 150px;
+@media (max-width: 700px) { 
+    .contenedor_contenido {
         margin-left: 0;
-        width: 100%;
         text-align: center;
+        justify-content: center;
     }
-    .containerReleases h1 {
+}
+
+@media (min-width: 0px) and (max-width: 600px) { 
+    .titulo {
         font-size: 40px;
+        margin-bottom: 30px;
+    }
+
+    .descripcion {
+        font-size: 17px;
+        margin-bottom: 30px;
     }
 }
-@media only screen and (max-width: 790px) {
-    .containerReleases h1 {
-        font-size: 40px;
-    }
-}
-@media only screen and (max-width: 699px) {
-    .nextReleasesContainer {
-        height: 50vh;
-    }
-    .containerReleases {
-        padding-top: 90px;
-        margin-left: 0;
-        width: 100%;
-        text-align: center;
-    }
-    .containerReleases p {
-        font-size: 13px;
-    }
-}
-@media only screen and (max-width: 599px) {
-    .nextReleasesContainer {
-        height: 50vh;
-    }
-    .containerReleases {
-        padding-top: 70px;
-        margin-left: 0;
-        width: 100%;
-        text-align: center;
-    }
-    .containerReleases p {
-        font-size: 13px;
-    }
-}
-@media only screen and (max-width: 516px) {
-    #buttonPlay {
-        margin-right: 0;
-        width: 250px;
+
+@media (min-width: 0px) and (max-width: 522px) { 
+    .contenedor_contenido {
         margin-top: 10px;
     }
-    #buttonInfo {
-        width: 250px;
-        margin-top: 10px;
-    }
-}
-@media only screen and (max-width: 470px) {
-    .nextReleasesContainer {
-        height: 50vh;
-    }
-    .containerReleases {
-        padding-top: 40px;
-        margin-left: 0;
-        width: 100%;
-        text-align: center;
-    }
-    #buttonPlay {
-        font-size: 12px;
-    }
-    #buttonInfo {
-        font-size: 12px;
-    }
-}
-@media only screen and (max-width: 399px) {
-    .nextReleasesContainer {
-        height: 50vh;
-    }
-    .containerReleases {
-        padding-top: 40px;
-        margin-left: 0;
-        width: 100%;
-        text-align: center;
-    }
-    .containerReleases h1 {
+    
+    .titulo {
         font-size: 30px;
+        margin-bottom: 30px;
     }
-    .containerReleases p {
-        font-size: 20px;
+
+    .descripcion {
+        font-size: 17px;
+        margin-bottom: 30px;
     }
-}
-@media only screen and (max-width: 310px) {
-    .nextReleasesContainer {
-        height: 47vh;
+    
+    button {
+        display: block;
     }
-    .containerReleases {
-        padding-top: 40px;
-        margin-left: 0;
+    
+    .verInformacion {
+        margin: 6px 0 6px 0;
         width: 100%;
-        text-align: center;
     }
-    .containerReleases h1 {
-        font-size: 20px;
-    }
-    .containerReleases p {
-        font-size: 15px;
-    }
-    #buttonPlay {
-        width: 190px;
-        font-size: 10px;
-        margin-top: 10px;
-    }
-    #buttonInfo {
-        width: 190px;
-        font-size: 10px;
-        margin-top: 10px;
+
+    .verContenido {
+        margin: 6px 0 6px 0;
+        width: 100%;
     }
 }
+
 </style>

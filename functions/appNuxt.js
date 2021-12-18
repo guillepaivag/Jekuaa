@@ -4,8 +4,9 @@ const express = require('express')
 const appNuxt = express()
 
 const config = {
-  dev: false
+  dev: false,
 }
+
 const nuxt = new Nuxt(config)
 
 let isReady = false
@@ -19,9 +20,8 @@ const readyPromise = nuxt.ready()
 
 async function handleRequest(req, res) {
   try {
-    if (!isReady) {
-      await readyPromise
-    }
+    if (!isReady) await readyPromise
+
     res.set('Cache-Control', 'public, max-age=300, s-maxage=600')
     await nuxt.render(req, res)
   } catch (error) {

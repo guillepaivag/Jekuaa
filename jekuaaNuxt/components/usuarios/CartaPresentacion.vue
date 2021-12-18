@@ -9,7 +9,7 @@
                 class="mx-auto"
             >
                 <v-img
-                src="https://cdn.vuetifyjs.com/images/cards/sunshine.jpg"
+                :src="require(`~/assets/img/portada-usuario.jpg`)"
                 height="200px"
                 ></v-img>
 
@@ -25,7 +25,7 @@
                 <v-btn
                     color="#683bce"
                     text
-                    :to="`/${usuario.nombreUsuario}`"
+                    :to="`/estudiante/${usuario.nombreUsuario}`"
                 >
                     Mi perfil
                 </v-btn>

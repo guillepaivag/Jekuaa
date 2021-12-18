@@ -39,6 +39,7 @@ middlewaresUser.estaAutenticado = (req, res, next) => {
             return next()
     
         } catch ( error ) {
+            console.log('estaAutenticado: ', error)
             next(error)
         }
     }
@@ -64,6 +65,7 @@ middlewaresUser.esMiembroJekuaa = async (req, res, next) => {
         return next()
 
     } catch ( error ) {
+        console.log('error', error)
         next(error)
 
     }
@@ -253,8 +255,8 @@ middlewaresUser.validarFotoPerfil = async ( req, res, next ) => {
         return next()
 
     } catch (error) {
+        console.log('ERROR MIDDLEWARE: validarFotoPerfil ', error)
         next(error)
-
     }
     
 }

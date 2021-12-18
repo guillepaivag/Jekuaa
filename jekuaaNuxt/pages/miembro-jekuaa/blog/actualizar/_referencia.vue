@@ -7,27 +7,59 @@
                 :accion="'actualizar'" 
                 @actualizarBlog="actualizarBlog($event)"
             />
+
+            <div v-if="datosActualizacion.visible && datosActualizacion.actualizado">
+                <v-snackbar
+                    v-model="datosActualizacion.visible"
+                    :multi-line="multiLine"
+                    :timeout="-1"
+                    :value="true"
+                    color="#683BCE"
+                    elevation="24"
+                >
+                    ¡Se actualizó el blog de forma exitosa!
+
+                    <template v-slot:action="{ attrs }">
+                        <v-btn
+                        color="#ff1d89"
+                        v-bind="attrs"
+                        @click="datosActualizacion.visible = false"
+                        >
+                            Cerrar
+                        </v-btn>
+                    </template>
+                </v-snackbar>
+            </div>
         </div>
-        <div v-else>
+        <div class="loadingMovie" v-else>
+            <spinner />
         </div>
     </div>
 </template>
 
 <script>
+import Spinner from '@/components/Spinner'
 import showdown from 'showdown'
 import FormularioBlog from '@/components/blogs/formulario-blog'
 
 export default {
     name: '',
+    layout: 'miembroJekuaa',
+    middleware: 'esMiembroJekuaa',
     data() {
         return {
             datosBlog: null,
             contenidoBlog: '',
             imgBlog: '',
+            datosActualizacion: {
+                visible: false,
+                actualizado: false,
+            },
         }
     },
     components: {
-        'formulario-blog': FormularioBlog
+        'formulario-blog': FormularioBlog,
+        'spinner': Spinner,
     },
     methods: {
         async actualizarBlog(datos) {
@@ -44,13 +76,9 @@ export default {
 
                 let body = {}
 
-                if (cambioDatosBlog) {
-                    body.datosBlog = datosBlog
-                }
+                if (cambioDatosBlog) body.datosBlog = datosBlog
 
-                if (cambioContenidoBlog) {
-                    body.contenidoBlog = contenidoBlog.md
-                }
+                if (cambioContenidoBlog) body.contenidoBlog = contenidoBlog.md
 
                 let config = {
                     headers: {
@@ -60,6 +88,9 @@ export default {
                 }
 
                 const respuesta = await this.$axios.$put(`/blog/miembroJekuaa/actualizarBlog/${uidBlog}`, body, config)
+
+                this.datosActualizacion.visible = true
+                this.datosActualizacion.actualizado = true
                 
             } catch (error) {
                 console.log('error', error)
@@ -70,31 +101,23 @@ export default {
     watch: {
         
     },
-    async created() {
+    async mounted() {
         try {
-            // Variables
-            let datosBlog = null
-            let contenidoBlog = ''
-            let imgBlog = ''
-            
             // Obtener datos de blog desde firebase
             const db = this.$firebase.firestore()
 
-            const ref = db.collection('Blogs').where('referencia', '==', this.$route.params.referencia).limit(1)
+            const ref = db.collection('Blogs').where('referencia', '==', this.$route.params.referencia)
             const docs = await ref.get()
             const doc = docs.docs[0]
 
-            if (!doc.exists) {
-                this.$router.push('/miembro-jekuaa/blogs/mis-blogs')
-            }
-            
-            datosBlog = doc.data()
+            if (!doc.exists) this.$router.push('/miembro-jekuaa/blogs/mis-blogs')
 
             // Obtener contenido del blog desde la api de Jekuaa
-            let token = this.$firebase.auth().currentUser
-            token = token ? await token.getIdToken() : ''
+            let usuario = this.$firebase.auth().currentUser
+            let token = usuario ? await usuario.getIdToken() : ''
             this.$store.commit('modules/usuarios/setTOKEN', token)
-            const response = await this.$axios.get(`/blog/miembroJekuaa/obtenerContenido/${datosBlog.uid}`, {
+            
+            const response = await this.$axios.get(`/blog/miembroJekuaa/obtenerContenido/${doc.data().uid}`, {
                 headers: {
                     'Content-Type': 'application/json',
                     Authorization: `Bearer ${token}`
@@ -103,12 +126,8 @@ export default {
 
             let converter = new showdown.Converter()
 
-            contenidoBlog = converter.makeHtml(response.data.resultado.contenido)
-            imgBlog = response.data.resultado.imgBlog
-
-            this.datosBlog = datosBlog
-            this.contenidoBlog = contenidoBlog
-            this.imgBlog = imgBlog
+            this.datosBlog = doc.data()
+            this.contenidoBlog = converter.makeHtml(response.data.resultado)
         } catch (error) {
             console.log('error', error)
             const accion = await this.$store.dispatch('modules/sistema/errorHandler', error)
@@ -162,6 +181,11 @@ export default {
 }
 </script>
 
-<style>
-
+<style scoped>
+.loadingMovie {
+    margin-top: 25vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
 </style>

@@ -16,7 +16,7 @@
 
         <img 
           class="imagen"
-          :src="imagen" 
+          :src="require(`~/assets/img/working-at-home.png`)"
           alt="Logotipo de cdlibre.org" 
         >
 
@@ -42,7 +42,6 @@ export default {
         title: 'Iniciar Sesión',
         btnMessage: 'Iniciar sesión'
       },
-      imagen: 'https://firebasestorage.googleapis.com/v0/b/jekuaa-py.appspot.com/o/working-at-home.png?alt=media&token=51b948bb-7f3b-483e-bef1-88ed04e7d694',
     }
   },
   methods: {
@@ -52,8 +51,6 @@ export default {
           correo: user.correo,
           contrasenha: user.contrasenha
         })
-
-        this.$router.push('/')
       } catch (error) {
         console.log('Error - inicioSesionEmail', error)
         const accion = await this.$store.dispatch('modules/sistema/errorHandler', error)

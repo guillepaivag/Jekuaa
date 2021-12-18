@@ -48,12 +48,6 @@ export default {
 }
 </script>
 
-<style scoped>
-.v-bottom-navigation {
-    
-}
+<style>
 
-.v-item-group{
-    
-}
 </style>

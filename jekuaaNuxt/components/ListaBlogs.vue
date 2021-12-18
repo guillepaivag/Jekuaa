@@ -7,101 +7,76 @@
           :seccion="seccion" 
           @categoriaSeleccionada="categoria = $event" 
         />
-
-        <!-- <div v-observe-visibility="obtenerMasCategorias"> -->
-        <div v-show="mostrarCarga" id="loadingMovie">
+        
+        <div class="mt-5 mb-5" v-show="mostrarCarga" id="loadingMovie">
           <Spinner />
         </div>
         
-        <div class="custom-carousel" v-if="!mostrarCarga && categoria.uid && listaDatosBlogs.length">
-          <VueSlickCarousel v-bind="settings">
-            <div
-              class="movieDiv"
-              v-for="(dato, index) in listaDatosBlogs" 
-              :key="index + Date.now()"
+        <div class="custom-carousel mt-5 mb-5" v-if="!mostrarCarga && categoria.uid && listaDatosBlogs.length">
+          <!-- {{listaDatosBlogs}} -->
+          <v-carousel hide-delimiters height="auto">
+            <v-carousel-item
+              v-for="(dato,i) in listaDatosBlogs"
+              :key="i"
             >
               <v-card
-                class="mx-auto imagemPosterSlide"
-                color="#683bce"
-                dark
-                max-width="400"
-                @click="mostrarDatosBlog(index)"
+                class="carta-blog mx-auto mt-5 mb-5"
+                max-width="700"
               >
-                <v-card-title>
-                  <span class="text-h6 ml-1 font-weight-light">Jekuaa</span>
-                </v-card-title>
+                <v-card-text>
+                  <div>Jekuaapy blog</div>
+                  <p class="text-h4 text--primary">
+                    {{dato.blog.titulo}}
+                  </p>
+                  <div class="text--primary">
+                    {{dato.blog.descripcion}}
+                  </div>
 
-                <v-card-text class="text-h5 font-weight titulo">
-                  {{dato.blog.titulo}}
+                  <div class="mt-3" v-if="dato.publicador.nombreUsuario">
+                    <nuxt-link :to="`/estudiante/${dato.publicador.nombreUsuario}`">
+                      <v-avatar color="#ffffff">
+                        <v-img
+                          v-if="!!dato.publicador.fotoPerfil"
+                          class="elevation-6"
+                          alt=""
+                          :src="dato.publicador.fotoPerfil"
+                        ></v-img>
+                        <span v-else class="headline inicialNombreUsuario">
+                          {{ inicialNombreUsuario(dato.publicador.nombreUsuario) }}
+                        </span>
+                      </v-avatar>
+
+                      <b class="ml-3">
+                        {{dato.publicador.nombreUsuario}} 
+                      </b>
+                    </nuxt-link>
+                  </div>
+                  <span v-else class="headline inicialNombreUsuario">
+                    ...
+                  </span>
+
                 </v-card-text>
-
                 <v-card-actions>
-                  <v-list-item class="grow">
-                    <v-list-item-avatar color="#ffffff">
-                      <v-img
-                        v-if="!!dato.publicador.fotoPerfil"
-                        class="elevation-6"
-                        alt=""
-                        :src="dato.publicador.fotoPerfil"
-                      ></v-img>
-                      <span v-else-if="!!dato.publicador.nombreUsuario" class="headline inicialNombreUsuario">
-                        {{ inicialNombreUsuario(dato.publicador.nombreUsuario) }}
-                      </span>
-                      <span v-else class="headline inicialNombreUsuario">
-                        ...
-                      </span>
-                    </v-list-item-avatar>
+                  <v-btn
+                    text
+                    color="#ff1d89"
+                    v-on:click="mostrarDatosBlog(i)"
+                  >
+                    Ver información
+                  </v-btn>
 
-                    <v-list-item-content>
-                      <v-list-item-title v-if="!!dato.publicador.nombreUsuario">
-                        {{dato.publicador.nombreUsuario}}
-                      </v-list-item-title>
-                      <v-list-item-title v-else>
-                        Cargando...
-                      </v-list-item-title>
-                    </v-list-item-content>
-
-                    <v-row
-                      class="mr-0"
-                      align="center"
-                      justify="end"
-                    >
-                      <v-icon class="mr-1">
-                        mdi-heart
-                      </v-icon>
-                      <span class="subheading mr-2">
-                        {{dato.blog.cantidadMeGusta}}
-                      </span>
-                    </v-row>
-                  </v-list-item>
+                  <v-btn
+                    text
+                    color="#683bce"
+                    :to="`/blog/${dato.blog.referencia}`" 
+                  >
+                    Ver blog
+                  </v-btn>
                 </v-card-actions>
               </v-card>
-            </div>
-            <template #prevArrow="arrowOption">
-              <div class="custom-arrow arrow-prev">
-                <v-icon
-                  color="#683bce"
-                  class="only-arrow"
-                  right
-                  dark
-                >
-                  mdi-skip-backward
-                </v-icon>
-              </div>
-            </template>
-            <template #nextArrow="arrowOption">
-              <div class="custom-arrow arrow-next">
-                <v-icon
-                  color="#683bce"
-                  class="only-arrow"
-                  right
-                  dark
-                >
-                  mdi-skip-forward
-                </v-icon>
-              </div>
-            </template>
-          </VueSlickCarousel>
+            </v-carousel-item>
+          </v-carousel>
+          
         </div>
 
         <v-dialog
@@ -110,7 +85,7 @@
         >
           <v-card v-if="datosBlog">
             <v-img
-              :src="datosBlog.imgBlog"
+              :src="require(`~/assets/img/seccion/${datosBlog.blog.seccion ? datosBlog.blog.seccion : 'sinSeccion'}.jpg`)"
               height="200px"
               class="white--text"
             >
@@ -206,9 +181,6 @@
 </template>
 
 <script>
-import VueSlickCarousel from 'vue-slick-carousel'
-import 'vue-slick-carousel/dist/vue-slick-carousel.css'
-import 'vue-slick-carousel/dist/vue-slick-carousel-theme.css'
 import ListaCategorias from '@/components/ListaCategorias'
 import TimeAgo from 'javascript-time-ago'
 import es from 'javascript-time-ago/locale/es.json'
@@ -231,38 +203,6 @@ export default {
       },
       dialogDatosBlog: false,
       datosBlog: null,
-      settings: {
-        infinite: false,
-        arrows: true,
-        slidesPerRow: 5,
-        speed: 1000,
-        responsive: [
-          {
-            breakpoint: 1930,
-            settings: {
-              slidesPerRow: 4,
-            }
-          },
-          {
-            breakpoint: 1550,
-            settings: {
-              slidesPerRow: 3,
-            }
-          },
-          {
-            breakpoint: 1180,
-            settings: {
-              slidesPerRow: 2,
-            }
-          },
-          {
-            breakpoint: 800,
-            settings: {
-              slidesPerRow: 1,
-            }
-          }
-        ]
-      }
     };
   },
   props: {
@@ -270,7 +210,6 @@ export default {
   },
   components: {
     Spinner,
-    VueSlickCarousel,
     ListaCategorias,
   },
   methods: {
@@ -377,50 +316,9 @@ export default {
 
 
 <style scoped>
-.slick-list {
-  width: 97%;
-}
-
-/* .slide {
-  width: 90%;
-  height: 100%;
-  margin: auto;
-} */
-.slick-disabled {
-  display: none;
-}
-
-.custom-arrow {
-  background: #ffffff;
-  opacity: 0.0;
-  height: 100%;
-  padding-right: 60px;
-  width: 50px;
-  z-index: 1;
-  transition: 500ms;
-}
-
-.custom-arrow:hover {
-  background: #ffffff;
-  opacity: 1;
-  height: 100%;
-  width: 50px;
-}
-
-.only-arrow {
-  font-size: 5px;
-  z-index: 6;
-  transition: 500ms;
-}
-
-.custom-arrow:hover > .only-arrow {
-  font-size: 35px;
-  display: block;
-  color: #683bce;
-  margin-top: 115px;
-  z-index: 6;
-  opacity: 1;
-  transition: 500ms;
+a {
+  text-decoration: none;
+  color: #383838;
 }
 
 .link-detalle {
@@ -429,119 +327,21 @@ export default {
   color: #683bce !important;
 }
 
-.titulo {
-  color: #ffffff !important;
-}
-
-.arrow-prev {
-  margin-left: 25px;
-}
-
-.arrow-next {
-  margin-right: 25px;
-}
-
-/* .custom-arrow .arrow-next .slick-arrow .slick-next.no-before::before {
-  content: none;
-} */
-
-.custom-arrow::before {
-  content: none;
-}
-
-/* .slide .slick-slider .slick-arrow {
-  z-index: -1;
-} */
-
-.newMovies {
-  width: 100%;
-  height: 100%;
-  /* text-align: center; */
-  margin: auto;
-}
-/* #buttonNexts {
-  color: #f1f;
-} */
-.newMovies h1 {
-  color: #683bce;
-  font-family: Arial, Helvetica, sans-serif;
-  font-size: 22px;
-  font-weight: bold;
-  margin-bottom: 10px;
-  margin-top: 15px;
-  padding-left: 20px;
-  display: flex;
-  justify-content: flex-start;
-  align-items: center;
-}
-
-.custom-carousel {
-  width: 100%;
-}
-
 #loadingMovie {
   display: flex;
   justify-content: center;
   align-items: center;
 }
-.movieDiv {
-  margin-top: 30px;
-  padding-left: 10px;
-  padding-right: 10px;
-  flex: 1;
-}
-.imagemPosterSlide {
-  border-radius: 15px;
-  transition: 0.5s;
-  height: 200px;
-  margin-bottom: 20px;
-  width: 380px;
-}
 
-.imagemPosterSlide:hover {
-  transform: scale(1.1);
-  cursor: pointer;
-}
-
-.inicialNombreUsuario {
-  color: #683bce !important;
-}
-
-.VueCarousel-navigation-button[data-v-453ad8cd] {
-  /* color: #e9e9e9 !important; */
-  outline: none !important;
-}
-
-@media only screen and (max-width: 2140px) {
-  .imagemPosterSlide {
-    width: 340px;
+@media (max-width: 850px) { 
+  .carta-blog {
+    width: 400px !important;
   }
 }
 
-
-@media only screen and (max-width: 1850px) {
-  .custom-arrow {
-    width: 20px;
-  }
-  .custom-arrow:hover {
-    background: #ffffff;
-    opacity: 1;
-    height: 100%;
-    width: 20px;
-  }
-}
-
-@media only screen and (max-width: 800px) {
-  .imagemPosterSlide {
-    width: 100%;
-  }
-}
-
-@media only screen and (max-width: 599px) {
-  .newMovies h1 {
-    font-size: 15px;
-    margin-bottom: 5px;
-    margin-top: 5px;
+@media (max-width: 490px) { 
+  .carta-blog {
+    width: 300px !important;
   }
 }
 </style>

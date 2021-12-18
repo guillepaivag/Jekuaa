@@ -62,7 +62,7 @@ router.post('/estudiante/authUsuario',
     obtenerUsuarioAuth)
 
 router.post('/estudiante/informacionUsuario', 
-    obtenerUsuarioInfo)
+    obtenerUsuarioInfo) 
 
 router.put('/estudiante/actualizarUsuario', 
     estaAutenticado, 

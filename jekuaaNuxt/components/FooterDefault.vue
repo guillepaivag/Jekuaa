@@ -10,26 +10,22 @@
         tile
       >
         <v-card-title style="background: #683bce;">
-          <strong class="subheading">Siguenos y aprende con nosotros!</strong>
+          <strong class="subheading">¡Nunca es tarde para hacer un cambio!</strong>
 
           <v-spacer />
 
-          <v-btn
-            v-for="icon in icons"
-            :key="icon"
-            class="mx-4"
-            dark
-            icon
-          >
-            <v-icon size="24px">
-              {{ icon }}
-            </v-icon>
-          </v-btn>
+          <div v-for="(social, index) in socials" :key="index" class="mx-4">
+            <a :href="social.to" target="_blank" class="iconlink">
+              <v-icon size="24px">
+                {{ social.icon }}
+              </v-icon>
+            </a>
+          </div>
         </v-card-title>
 
         <v-card-text class="py-1 white--text text-center backgroundFooterRojo">
           <samp class="footerTextTamanho">
-            {{ new Date().getFullYear() }} — <strong>Jekuaa</strong>
+            {{ new Date().getFullYear() }} — <strong>Jekuaapy</strong>
           </samp>
         </v-card-text>
       </v-card>
@@ -43,18 +39,30 @@ export default {
   data () {
     return {
       fixed: false,
-      icons: [
-        'mdi-facebook',
-        'mdi-twitter',
-        'mdi-linkedin',
-        'mdi-instagram'
+      socials: [
+        {
+          icon: 'mdi-instagram',
+          to: 'https://instagram.com/jekuaapy/',
+        },
+        {
+          icon: 'mdi-facebook',
+          to: 'https://www.facebook.com/Jekuaapy-103578552181580',
+        },
+        {
+          icon: 'mdi-twitter',
+          to: 'https://twitter.com/Jekuaapy?t=WNEg3lgbFV3z9pEmqebUaA&s=08',
+        },
+        {
+          icon: 'mdi-linkedin',
+          to: '',
+        },      
       ]
     }
   }
 }
 </script>
 
-<style>
+<style scoped>
 .footerTextTamanho {
     font-size: 15px;
 }
@@ -64,5 +72,9 @@ export default {
 }
 .backgroundFooterRojo {
     background: #ff1d89;
+}
+
+.iconlink {
+  text-decoration: none;
 }
 </style>

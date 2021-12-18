@@ -2,7 +2,7 @@
     <div>
         <v-parallax
             dark
-            :src="computed_imgBlog"
+            :src="require(`~/assets/img/seccion/${blog.seccion ? blog.seccion : 'sinSeccion'}.jpg`)"
             height="300"
         >
             <v-row
@@ -14,7 +14,7 @@
                     cols="12"
                 >
                     <h1 class="text-h4 font-weight-thin mb-4">
-                        Jekuaa
+                        Jekuaapy
                     </h1>
                     <h4 class="subheading">
                         {{blog.titulo}}
@@ -24,6 +24,13 @@
         </v-parallax>
         
         <div class="container mt-10 mb-5">
+
+            <div class="mb-10">
+                <h2 class="subtitulos"> Descripción </h2>
+                <v-divider class="mt-3 mb-3"/>
+                {{ blog.descripcion }}
+            </div>
+
             <v-btn
                 class="iconoMeGusta"
                 icon
@@ -35,7 +42,7 @@
             {{ blog.cantidadMeGusta }}
 
             <v-divider class="" />
-            <div class="tiptap-vuetify-editor__content mt-5 mb-5" v-html="contenidoBlog"></div>
+            <visualizador-blog :contenidoBlog="contenidoBlog" />
             <v-divider class="" />
 
             <v-btn
@@ -47,6 +54,24 @@
               <v-icon>mdi-heart</v-icon>
             </v-btn>
             {{ blog.cantidadMeGusta }}
+
+            <v-row no-gutters class="mt-10 mb-10">
+                <v-col cols="12" sm="6">
+                    <div class="contenido-l">
+                        <h2 class="subtitulos"> Fecha creación: </h2>
+                        <v-divider class="mt-3 mb-3"/>
+                        {{ new Date(blog.fechaCreacion.seconds * 1000).toISOString().substr(0, 10) }}
+                    </div>
+                </v-col>
+
+                <v-col cols="12" sm="6">
+                    <div class="contenido-d">
+                        <h2 class="subtitulos"> Fecha actualización: </h2>
+                        <v-divider class="mt-3 mb-3"/>
+                        {{ new Date(blog.fechaActualizacion.seconds * 1000).toISOString().substr(0, 10) }}
+                    </div>
+                </v-col>
+            </v-row>
         </div>
 
         <div class="mb-15">
@@ -54,12 +79,43 @@
                 :uidUsuario="blog.publicador" 
             />
         </div>
+
+        <v-dialog
+            v-model="dialogRegistro"
+            width="500"
+        >
+            <v-card>
+                <v-card-title class="text-h6 cabecera_registro">
+                    Primero debes iniciar sesión
+                </v-card-title>
+
+                <v-card-text>
+                    <p>Para dar <b>me gusta</b> a este blog de Jekuaapy debes registrarte o iniciar sesión.</p>
+                    <v-divider class="mb-6"></v-divider>
+                    <p>Si tienes una cuenta en Jekuaapy puedes iniciar sesión <nuxt-link to="/autenticacion/inicioSesion">aquí</nuxt-link>.</p>
+                    <p>En caso que no tengas una cuenta en Jekuaapy puedes registrarte <nuxt-link to="/autenticacion/registro">aquí</nuxt-link></p>
+                </v-card-text>
+
+                <v-divider></v-divider>
+
+                <v-card-actions>
+                <v-spacer></v-spacer>
+                <v-btn
+                    color="#683bce"
+                    text
+                    @click="dialogRegistro = false"
+                >
+                    Cerrar
+                </v-btn>
+                </v-card-actions>
+            </v-card>
+        </v-dialog>
     </div>
 </template>
 
 <script>
 import showdown from 'showdown'
-
+import VisualizadorBlog from '@/components/blogs/Visualizador'
 import CartaPresentacion from '@/components/usuarios/CartaPresentacion'
 
 export default {
@@ -69,16 +125,18 @@ export default {
             referenciaBlog: '',
             blog: {},
             contenidoBlog: '',
-            imgBlog: '',
-            meGustaEsteBlog: false
+            meGustaEsteBlog: false,
+            dialogRegistro: false
         }
     },
     components: {
-        'carta-presentacion': CartaPresentacion
+        'carta-presentacion': CartaPresentacion,
+        'visualizador-blog': VisualizadorBlog,
     },
     methods: {
         async accionMeGusta () {
             if (!this.verificarSiInicioSesion()) {
+                this.dialogRegistro = true
                 return
             }
 
@@ -153,13 +211,7 @@ export default {
         }
     },
     computed: {
-        computed_imgBlog: {
-            get: function () {
-                if (!this.imgBlog) return 'http://www.icorp.com.mx/blog/wp-content/uploads/2021/01/gestion_activos_software.jpg'
-                
-                return this.imgBlog
-            }
-        }
+        
     },
     async created() {
 
@@ -182,13 +234,10 @@ export default {
         let referenciaBlog = params.referencia
         let blog = {}
         let contenidoBlog = ''
-        let imgBlog = ''
         
         try {
             const ref = $firebase.firestore().collection('Blogs').where('referencia', '==', referenciaBlog)
             const docsBlogs = await ref.get()
-
-            const docX = await $firebase.firestore().collection('Blogs').doc('5DWvbg4RfNKuZJtLA9rJ').get()
 
             if (docsBlogs.empty) redirect('/blog')
             
@@ -206,33 +255,25 @@ export default {
 
             const converter = new showdown.Converter()
             contenidoBlog = converter.makeHtml(response.data.resultado)
-            imgBlog = ''
 
             return {
                 referenciaBlog,
                 blog,
                 contenidoBlog,
-                imgBlog,
             }
         } catch (err) {
             console.log('err', err)
-            redirect('/blog')
+            // redirect('/blog')
         }
 
     },
 }
 </script>
 
-<style>
-.nuxt-content h2 {
-    font-weight: bold;
-    font-size: 28px;
-}
-.nuxt-content h3 {
-    font-weight: bold;
-    font-size: 22px;
-}
-.nuxt-content p {
+<style scoped>
+.cabecera_registro {
+    background: #683bce;
+    color: #ffffff;
     margin-bottom: 20px;
 }
 
@@ -248,4 +289,27 @@ export default {
     color: #683bce !important;
 }
 
+.subtitulos {
+    font-size: 25px;
+    color: #683bce;
+}
+
+.contenido-l {
+    padding: 10px;
+}
+
+.contenido-d {
+    padding: 10px;
+}
+
+@media (min-width: 0px) and (max-width: 599px) { 
+    .contenido-l {
+        padding: 0;
+        margin-bottom: 20px;
+    }
+
+    .contenido-d {
+        padding: 0;
+    }
+}
 </style>

@@ -22,7 +22,7 @@
                             class="ma-2 white--text"
                             block
                             :disabled="categoriaSeleccionada.uid == categoria.uid"
-                            v-on:click="categoriaSeleccionada = categoria"
+                            v-on:click="seleccionarCategoria(categoria)"
                             @mouseover="hoverCategoria = categoria.uid"
                             @mouseleave="hoverCategoria = null"
                         >
@@ -100,6 +100,10 @@ export default {
 
             this.categoriaSeleccionada = this.categorias[0]
         },
+        seleccionarCategoria (categoria) {
+            this.categoriaSeleccionada = categoria
+            this.dialog = false
+        }
     },
     created() {
         this.inicializarListaCategorias()
@@ -135,5 +139,17 @@ export default {
 .categoria-text:hover {
   color: #ff1d89;
   transition: 0.4s;
+}
+
+@media (max-width: 420px) { 
+  .titulos {
+    margin-left: 20px;
+  }
+}
+
+@media (max-width: 324px) { 
+  .titulos {
+    margin-left: 10px;
+  }
 }
 </style>

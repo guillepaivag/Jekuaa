@@ -3,13 +3,12 @@
         <div class="flex-container">
             <div class="flex-item" v-for="(blog, index) in blogs" :key="index">
                 <v-card
-                    class="mx-auto"
-                    min-width="360px"
+                    class="mx-auto carta-blog"
                 >
                     <v-img
                         class="white--text align-end"
                         height="200px"
-                        :src="blog.imgBlog"
+                        :src="require(`~/assets/img/seccion/${blog.blog.seccion ? blog.blog.seccion : 'sinSeccion'}.jpg`)"
                     >
                         <v-card-title>
                             {{blog.blog.titulo}}
@@ -113,7 +112,7 @@ export default {
 }
 
 .flex-item {
-    width: 450px;
+    width: 400px;
     height: 100%;
     margin: 5px;
     flex: 1;
@@ -122,5 +121,44 @@ export default {
 .cargando {
     margin-top: 50px;
     text-align: center;
+}
+
+@media (min-width: 470px) and (max-width: 559px) { 
+    .carta-blog {
+        width: 400px;
+    }
+}
+
+@media (min-width: 411px) and (max-width: 500px) { 
+    .flex-container {
+        margin: 0 !important;
+    }
+    .carta-blog {
+        width: 350px;
+    }
+}
+
+@media (min-width: 351px) and (max-width: 410px) { 
+    .carta-blog {
+        width: 310px;
+    }
+}
+
+@media (min-width: 0px) and (max-width: 369px) { 
+    .flex-container {
+        margin: 0 5px 0 5px;
+    }
+}
+
+@media (min-width: 0px) and (max-width: 350px) { 
+    .carta-blog {
+        width: 250px;
+    }
+}
+
+@media (min-width: 0px) and (max-width: 290px) { 
+    .carta-blog {
+        width: 230px;
+    }
 }
 </style>

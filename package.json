@@ -4,20 +4,16 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "goProductionWindows": "cd \"functions\" && npm run environmentProd && cd .. && npm run build:firebase && npm run deployHostingFunctions",
-      "build:firebase": "npm run clean && npm run build:nuxt && npm run copy && cd \"functions\" && npm install && cd ..",
-      
-        "clean": "npm run clean:public && npm run clean:functions && npm run clean:static",
-        "clean:public": "rimraf \"public/**/*.*!(md)\" && rimraf \"public/_nuxt\"",
-        "clean:functions": "rimraf \"functions/node_modules\" && rimraf \"functions/.nuxt\"",
-        "clean:static": "rimraf \"jekuaaNuxt/static/sw.js\"",
-
-        "build:nuxt": "cd \"jekuaaNuxt\" && npm run build && cd ..",
-
-        "copy": "npm run copy:nuxt && npm run copy:static",
-        "copy:nuxt": "xcopy \"functions\\.nuxt\\dist\\*\" \"public\\_nuxt\\\" /E /Y",
-        "copy:static": "xcopy \"jekuaaNuxt\\static\\*\" \"public\\\" /E /Y",
-
+    "dw": "cd \"functions\" && npm run environmentProd && cd .. && npm run build:firebase && npm run deployHostingFunctions",
+    "build:firebase": "npm run clean && npm run build:nuxt && npm run copy && cd \"functions\" && npm install && cd ..",
+    "clean": "npm run clean:public && npm run clean:functions && npm run clean:static",
+    "clean:public": "rimraf \"public/**/*.*!(md)\" && rimraf \"public/_nuxt\"",
+    "clean:functions": "rimraf \"functions/node_modules\" && rimraf \"functions/.nuxt\"",
+    "clean:static": "rimraf \"jekuaaNuxt/static/sw.js\"",
+    "build:nuxt": "cd \"jekuaaNuxt\" && npm run build && cd ..",
+    "copy": "npm run copy:nuxt && npm run copy:static",
+    "copy:nuxt": "xcopy \"functions\\.nuxt\\dist\\*\" \"public\\_nuxt\\\" /E /Y",
+    "copy:static": "xcopy \"jekuaaNuxt\\static\\*\" \"public\\\" /E /Y",
     "deployHostingFunctions": "firebase deploy --only functions,hosting"
   },
   "repository": {
@@ -30,5 +26,6 @@
   "bugs": {
     "url": "https://github.com/guillepaivag1605/Jekuaa/issues"
   },
-  "homepage": "https://github.com/guillepaivag1605/Jekuaa#readme"
+  "homepage": "https://github.com/guillepaivag1605/Jekuaa#readme",
+  "dependencies": {}
 }

@@ -2,7 +2,7 @@
     <div class="">
         
         <div class="container">
-            <h3 class="titulo-presentacion">Crea un blog en Jekuaa</h3>
+            <h3 class="titulo-presentacion">Crea un blog en Jekuaapy</h3>
 
             <p>Contrary to popular belief, Lorem Ipsum is not simply random text. It has roots in a piece of classical Latin literature from 45 BC, making it over 2000 years old. Richard McClintock, a Latin professor at Hampden-Sydney College in Virginia, looked up one of the more obscure Latin words, consectetur, from a Lorem Ipsum passage, and going through the cites of the word in classical literature, discovered the undoubtable source.</p>
 
@@ -46,37 +46,33 @@
                             class="mx-auto"
                         >
                             <v-img
-                            class="white--text align-end"
-                            height="200px"
-                            src="https://cdn.vuetifyjs.com/images/cards/docks.jpg"
+                                class="white--text align-end"
+                                height="200px"
+                                :src="require(`~/assets/img/letras-blog.jpg`)"
                             >
-                            <v-card-title>Top 10 Australian beaches</v-card-title>
+                            <v-card-title>
+                                Recomendaciones general para blogs
+                            </v-card-title>
                             </v-img>
 
                             <v-card-subtitle class="pb-0">
-                            Number 10
+                                Jekuaapy blog
                             </v-card-subtitle>
 
                             <v-card-text class="text--primary">
-                            <div>Whitehaven Beach</div>
-
-                            <div>Whitsunday Island, Whitsunday Islands</div>
+                            <div>
+                                Si quieres que tu blog tenga una buena estructura, posicionamiento en las búsquedas de Google, y sea cómodo para los lectores, aquí te dejamos unas 4 pautas o recomendaciones para crear tu blog.
+                            </div>
                             </v-card-text>
 
                             <v-card-actions>
-                            <v-btn
-                                color="orange"
-                                text
-                            >
-                                Share
-                            </v-btn>
-
-                            <v-btn
-                                color="orange"
-                                text
-                            >
-                                Explore
-                            </v-btn>
+                                <v-btn
+                                    color="#683bce"
+                                    text
+                                    to="/blog/recomendaciones-para-crear-un-blog"
+                                >
+                                    Ver recomendación
+                                </v-btn>
                             </v-card-actions>
                         </v-card>
                     </div>
@@ -91,80 +87,38 @@
                             class="mx-auto"
                         >
                             <v-img
-                            class="white--text align-end"
-                            height="200px"
-                            src="https://cdn.vuetifyjs.com/images/cards/docks.jpg"
+                                class="white--text align-end"
+                                height="200px"
+                                :src="require(`~/assets/img/letras-blog.jpg`)"
                             >
-                            <v-card-title>Top 10 Australian beaches</v-card-title>
+                            <v-card-title>
+                                Top 10 Australian beaches
+                            </v-card-title>
                             </v-img>
 
                             <v-card-subtitle class="pb-0">
-                            Number 10
+                                Jekuaapy blog
                             </v-card-subtitle>
 
                             <v-card-text class="text--primary">
-                            <div>Whitehaven Beach</div>
-
-                            <div>Whitsunday Island, Whitsunday Islands</div>
+                                <div>
+                                    Whitsunday Island, Whitsunday Islands
+                                </div>
                             </v-card-text>
 
                             <v-card-actions>
-                            <v-btn
-                                color="orange"
-                                text
-                            >
-                                Share
-                            </v-btn>
-
-                            <v-btn
-                                color="orange"
-                                text
-                            >
-                                Explore
-                            </v-btn>
+                                <v-btn
+                                    color="#683bce"
+                                    text
+                                    to="/blog/recomendaciones-para-crear-un-blog"
+                                >
+                                    Ver recomendación
+                                </v-btn>
                             </v-card-actions>
                         </v-card>
                     </div>
                 </v-col>
             </v-row>
-
-            <v-card
-                class="mx-auto mt-8"
-            >
-                <v-img
-                class="white--text align-end"
-                height="200px"
-                src="https://cdn.vuetifyjs.com/images/cards/docks.jpg"
-                >
-                <v-card-title>Top 10 Australian beaches</v-card-title>
-                </v-img>
-
-                <v-card-subtitle class="pb-0">
-                Number 10
-                </v-card-subtitle>
-
-                <v-card-text class="text--primary">
-                <div>Whitehaven Beach</div>
-
-                <div>Whitsunday Island, Whitsunday Islands</div>
-                </v-card-text>
-
-                <v-card-actions>
-                <v-btn
-                    color="orange"
-                    text
-                >
-                    Share
-                </v-btn>
-
-                <v-btn
-                    color="orange"
-                    text
-                >
-                    Explore
-                </v-btn>
-                </v-card-actions>
-            </v-card>
         </div>
         
     </div>

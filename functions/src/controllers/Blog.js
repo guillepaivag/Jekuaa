@@ -313,9 +313,12 @@ controller.ultimosBlogsPorPublicador = async (req, res) => {
 
 controller.paginarListaBlogs = async (req, res) => {
     try {
-        const { body, params } = req
-        const {  } = params
+        const { body, jekuaaDatos } = req
         let { ultimaUID, maximoPorPagina, filtros } = body
+
+        if ( jekuaaDatos ) {
+            var { uidSolicitante, datosAuthSolicitante } = jekuaaDatos
+        }
 
         const ruta = req.originalUrl.split('/')[2]
 
@@ -323,6 +326,10 @@ controller.paginarListaBlogs = async (req, res) => {
         let codigo = 'jekuaa/exito'
 
         let resultado = null
+
+        if ( ruta === 'miembroJekuaa' ) {
+            filtros.publicador = uidSolicitante
+        }
 
         if (!ultimaUID) {
             resultado = await Blog.inicializarListaBlogs({

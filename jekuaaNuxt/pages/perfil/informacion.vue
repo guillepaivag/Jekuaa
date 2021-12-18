@@ -187,7 +187,7 @@ export default {
       especializaciones: '',
       intereses: '',
       redesSociales: [],
-      rolDescriptivo: 'Estudiante de Jekuaa',
+      rolDescriptivo: 'Estudiante de Jekuaapy',
       listaRedesSocialesCodigoSeleccionado: [],
       listaRedesSociales: [
         {

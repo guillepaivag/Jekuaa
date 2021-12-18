@@ -10,9 +10,7 @@
             <ais-search-box placeholder="Busque los blogs" class="searchbox" />
             <app-infinite-hits-blogs>
               <template slot="item" slot-scope="{ item }">
-                <h1>
-                  <ais-highlight :hit="item" attribute="titulo" />
-                </h1>
+                <ais-highlight :hit="item" attribute="titulo" />
               </template>
             </app-infinite-hits-blogs>
           </div>
@@ -49,12 +47,12 @@ export default {
     };
   },
   created() {
-
+    
   },
 };
 </script>
 
-<style>
+<style scoped>
 body,
 h1 {
   margin: 0;

@@ -1,3 +1,0 @@
-exports.ids=[4],exports.modules={580:function(f,o,e){"use strict";e.r(o);var s=function(){var t=this,n=t.$createElement,c=t._self._c||n;return c("editor-content",{attrs:{editor:t.editor}})},a=[],r=e(251),i=e(252),d=e.n(i),l={components:{EditorContent:r.EditorContent},props:{modelValue:{type:String,default:""}},data(){return{editor:null}},watch:{modelValue(t){this.editor.getHTML()!==t&&this.editor.commands.setContent(t,!1)}},mounted(){this.editor=new r.Editor({extensions:[d.a],content:this.modelValue,onUpdate:()=>{this.$emit("update:modelValue",this.editor.getHTML())}})},beforeUnmount(){this.editor.destroy()}},m=l,u=e(7),v=Object(u.a)(m,s,a,!1,null,null,"004baf7e"),h=o.default=v.exports}};
-
-//# sourceMappingURL=admin-forms-form-blog.js.map

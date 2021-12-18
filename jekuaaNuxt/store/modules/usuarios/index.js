@@ -75,7 +75,7 @@ export const getters = {
   },
 
   autenticado (state) {
-    return !!state.token && !!state.uid
+    return !!state.token
   },
 
   esJekuaaPremium (state) {
@@ -217,7 +217,7 @@ export const actions = {
 
   async setDatosUsuario ({ state, dispatch, commit }, datosUsuario) {
 
-    let uid
+    let uid = null
     if (datosUsuario) {
       uid = datosUsuario.uid
       
@@ -234,8 +234,6 @@ export const actions = {
       await dispatch('setJekuaaPoint', datosUsuario.jekuaaPoint)
       
     } else {
-      uid = null
-
       await dispatch('setTOKEN', null)
       await dispatch('setFotoPerfil', null)
       await dispatch('saveUID', null)
@@ -248,8 +246,7 @@ export const actions = {
       await dispatch('setInstructor', null)
       await dispatch('setJekuaaPoint', null)
     }
-
-    console.log('stateeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee: ', state)
+    
     // await dispatch('modules/user/misCursos/setDatosMisCursosPorUID', uid, { root: true })
 
   },

@@ -5,6 +5,7 @@ const Respuesta = require('../../models/Respuesta')
 const manejadorErrores = require('../../helpers/ManejoErrores')
 const ErrorJekuaa = require('../../models/Error/ErroresJekuaa')
 const fs = require('fs')
+const os = require('os')
 const path = require('path')
 
 const controllerUsuario = {}
@@ -281,22 +282,17 @@ controllerUsuario.actualizarFotoPerfil = async (req, res) => {
         let extensionArchivo = file.mimetype.split('/')[1]
 
         // Crear ruta temporal para la foto de perfil
-        let dirArray = ['..', '..', 'temp', 'image', 'fotoPerfil']
-        let dirVerificacion = path.join(__dirname)
+        let dirArray = ['imagenes', 'fotoPerfil']
+        let dirVerificacion = path.join(os.tmpdir())
         for (let i = 0; i < dirArray.length; i++) {
             const element = dirArray[i]
-
             dirVerificacion = path.join(dirVerificacion, element)
-            
-            if ( element != '..' && !fs.existsSync(dirVerificacion) ){
-                fs.mkdirSync(dirVerificacion)
-            }
+            if ( !fs.existsSync(dirVerificacion) ) fs.mkdirSync(dirVerificacion)
         }
 
         // Crear archivo foto de peril
-        const separador = `~`
-        const nombreBlogTemp = `${Date.now()}${separador}${uidSolicitante}.${extensionArchivo}`
-        const rutaArchivoTemp = path.join(__dirname, '..', '..', 'temp', 'image', 'fotoPerfil', `${nombreBlogTemp}`)
+        const nombreTemp = `${Date.now()}~${uidSolicitante}.${extensionArchivo}`
+        const rutaArchivoTemp = path.join(os.tmpdir(), 'imagenes', 'fotoPerfil', `${nombreTemp}`)
         fs.writeFileSync(rutaArchivoTemp, data)
 
         // Eliminar la foto de perfil anterior

@@ -51,16 +51,14 @@
 
           <v-list-item-content>
             <v-list-item-title class="estiloTexto">
-              Administración
+              Miembro Jekuaa
             </v-list-item-title>
           </v-list-item-content>
         </v-list-item>
 
         <v-divider />
 
-        <v-list-item
-          @click="cerrarSesion"
-        >
+        <v-list-item @click="cerrarSesion">
           <v-list-item-icon>
             <v-icon> mdi-account-plus </v-icon>
           </v-list-item-icon>
@@ -81,7 +79,7 @@
       style="background: #ffffff;"
     >
       <div class="containerLogo">
-        <nuxt-link to="/">
+        <nuxt-link to="/inicio">
           <v-app-bar-nav-icon @click="sidebar = !sidebar">
             <v-avatar
               size="80"
@@ -90,7 +88,7 @@
               <v-img
                 contain
                 max-height="60%"
-                src="https://firebasestorage.googleapis.com/v0/b/jekuaa-py.appspot.com/o/JekuaaLogo48x48.png?alt=media&token=1eaf2b06-2e17-4c34-97cd-793de7fc9d46"
+                :src="require(`~/assets/img/JekuaaLogo48x48.png`)"
               />
             </v-avatar>
           </v-app-bar-nav-icon>
@@ -98,7 +96,7 @@
       </div>
 
       <v-tabs align-with-title class="d-none d-sm-none d-md-flex" optional color="#683bce">
-        <v-tab to="/">
+        <v-tab to="/inicio">
           <v-icon class="navItemIcon">
             mdi-home
           </v-icon>
@@ -232,7 +230,7 @@ export default {
       sidebar: false,
       drawer: null,
       items: [
-        { title: 'Inicio', icon: 'mdi-home', to: '/' },
+        { title: 'Inicio', icon: 'mdi-home', to: '/inicio' },
         { title: 'Blogs', icon: 'mdi-book-open-variant', to: '/blogs' }
       ],
       itemsPerfil: [
@@ -274,7 +272,7 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
 
 .containerLogo {
     margin-left: 10px;

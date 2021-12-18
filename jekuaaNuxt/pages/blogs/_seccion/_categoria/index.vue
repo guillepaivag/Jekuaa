@@ -12,7 +12,7 @@
                 >
                     <v-spacer></v-spacer>
                     <v-toolbar-title>
-                        Buscador de blogs de Jekuaa
+                        Buscador de blogs de Jekuaapy
                     </v-toolbar-title>
                     <v-btn
                         class="ml-5 mr-1"
@@ -29,23 +29,26 @@
             </v-card>
         </v-dialog>
 
-        <div class="mt-5 container">
-            <v-btn
-                class="btnBuscador mb-3"
-                color="#683bce"
-                dark
-                v-on:click="dialogBuscadorBlog = true"
-            >
-                <v-icon
-                    class="mr-2"
+        <div class="mt-5">
+            
+            <div class="cabecera">
+                <v-btn
+                    class="btnBuscador mb-3"
+                    color="#683bce"
                     dark
+                    v-on:click="dialogBuscadorBlog = true"
                 >
-                    mdi-magnify
-                </v-icon>
-                Buscar
-            </v-btn>
+                    <v-icon
+                        class="mr-2"
+                        dark
+                    >
+                        mdi-magnify
+                    </v-icon>
+                    Buscar
+                </v-btn>
 
-            <v-divider class="mt-1 mb-5"></v-divider>
+                <v-divider class="mt-1 mb-5"></v-divider>
+            </div>
 
             <div v-if="blogs.length">
                 <lista-blogs 
@@ -55,14 +58,15 @@
                     @cargarBlogs="cargarBlogs($event)"
                 />
             </div>
-            <div v-else-if="buscando">
-                Cargando blogs...
+            <div v-else-if="buscando" class="loadingMovie">
+                <spinner />
             </div>
         </div>
     </div>
 </template>
 
 <script>
+import Spinner from '@/components/Spinner'
 import listaBlogs from '@/components/blogs/lista-blogs'
 import buscadorInfinitoBlogs from '@/components/blogs/buscador-infinito-blogs'
 
@@ -73,6 +77,7 @@ export default {
     components: {
         'lista-blogs': listaBlogs,
         'buscador-infinito-blogs': buscadorInfinitoBlogs,
+        'spinner': Spinner,
     },
     data() {
         return {
@@ -207,10 +212,6 @@ export default {
                     this.blogs[i].publicador.nombreUsuario = response.data.resultado.displayName
                     this.blogs[i].publicador.fotoPerfil = response.data.resultado.photoURL
                 }
-
-                if (!infoBlog.imgBlog) {
-                    this.blogs[i].imgBlog = 'http://www.icorp.com.mx/blog/wp-content/uploads/2021/01/gestion_activos_software.jpg'
-                }
             }
         }
     },
@@ -221,13 +222,40 @@ export default {
 </script>
 
 <style scoped>
+.loadingMovie {
+    margin-top: 25vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.cabecera {
+    margin-left: 50px;
+    margin-right: 50px;
+}
+
 .btnBuscador {
-    margin: 0 0 0 29px;
+    margin: 0;
     transition: 600ms;
 }
 
 .btnBuscador:hover {
-    padding-right: 80px !important;
+    padding-right: 100px !important;
     transition: 600ms;
+}
+
+@media (min-width: 0px) and (max-width: 410px) { 
+    .btnBuscador {
+        margin-left: 0;
+        display: block;
+        width: 100%;
+    }
+}
+
+@media (min-width: 0px) and (max-width: 350px) { 
+    .cabecera {
+        margin-left: 10px;
+        margin-right: 10px;
+    }
 }
 </style>

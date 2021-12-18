@@ -2,6 +2,7 @@ const Blog = require("../models/Blog")
 const ErrorJekuaa = require("../models/Error/ErroresJekuaa")
 const path = require('path')
 const fs = require('fs')
+const os = require('os')
 const { milliseconds_a_timestamp } = require("./Timestamp")
 
 const utils_blog = {}
@@ -24,19 +25,16 @@ utils_blog.construirDatosParaNuevoBlog = ( datosBlog, contenidoBlog, esRutaAdmin
     datosBlogFormateado.fechaActualizacion = milliseconds_a_timestamp( Date.now() )
 
     // Archivo del blog
-    let dirArray = ['..', 'temp', 'blogs']
-    let dirVerificacion = path.join(__dirname)
+    let dirArray = ['jekuaa', 'blogs']
+    let dirVerificacion = path.join(os.tmpdir())
     for (let i = 0; i < dirArray.length; i++) {
         const element = dirArray[i]
-
         dirVerificacion = path.join(dirVerificacion, element)
-        
-        if ( element != '..' && !fs.existsSync(dirVerificacion) ){
-            fs.mkdirSync(dirVerificacion)
-        }
+        if ( !fs.existsSync(dirVerificacion) ) fs.mkdirSync(dirVerificacion)
+
     }
     const nombreBlogTemp = `${Date.now()}~${datosBlog.uid}.md`
-    const rutaArchivoTemp = path.join(__dirname, '..', 'temp', 'blogs', nombreBlogTemp)
+    const rutaArchivoTemp = path.join(os.tmpdir(), 'jekuaa', 'blogs', nombreBlogTemp)
 
     fs.writeFileSync(rutaArchivoTemp, contenidoBlog)
 
@@ -110,19 +108,15 @@ utils_blog.construirDatosParaActualizacionBlog = ( uidBlog, datosBlog, contenido
     
     // Archivo del blog
     if (contenidoBlog) {
-        let dirArray = ['..', 'temp', 'blogs']
-        let dirVerificacion = path.join(__dirname)
+        let dirArray = ['jekuaa', 'blogs']
+        let dirVerificacion = path.join(os.tmpdir())
         for (let i = 0; i < dirArray.length; i++) {
             const element = dirArray[i]
-
             dirVerificacion = path.join(dirVerificacion, element)
-            
-            if ( element != '..' && !fs.existsSync(dirVerificacion) ){
-                fs.mkdirSync(dirVerificacion)
-            }
+            if ( !fs.existsSync(dirVerificacion) ) fs.mkdirSync(dirVerificacion)
         }
         const nombreBlogTemp = `${Date.now()}~${uidBlog}.md`
-        const rutaArchivoTemp = path.join(__dirname, '..', 'temp', 'blogs', nombreBlogTemp)
+        const rutaArchivoTemp = path.join(os.tmpdir(), 'jekuaa', 'blogs', nombreBlogTemp)
 
         fs.writeFileSync(rutaArchivoTemp, contenidoBlog)
 

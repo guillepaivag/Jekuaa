@@ -4,12 +4,14 @@ import { decode, parsePath, withoutBase, withoutTrailingSlash, normalizeURL } fr
 import { getMatchedComponentsInstances, getChildrenComponentInstancesUsingFetch, promisify, globalHandleError, urlJoin, sanitizeComponent } from './utils'
 import NuxtError from '..\\..\\jekuaaNuxt\\layouts\\error.vue'
 import NuxtLoading from './components/nuxt-loading.vue'
+import NuxtBuildIndicator from './components/nuxt-build-indicator'
 
-import _4ce5d53e from '..\\..\\jekuaaNuxt\\layouts\\adminJekuaa.vue'
+import '..\\..\\jekuaaNuxt\\node_modules\\vuetify\\dist\\vuetify.css'
+
 import _6f6c098b from '..\\..\\jekuaaNuxt\\layouts\\default.vue'
 import _492dd2ca from '..\\..\\jekuaaNuxt\\layouts\\miembroJekuaa.vue'
 
-const layouts = { "_adminJekuaa": sanitizeComponent(_4ce5d53e),"_default": sanitizeComponent(_6f6c098b),"_miembroJekuaa": sanitizeComponent(_492dd2ca) }
+const layouts = { "_default": sanitizeComponent(_6f6c098b),"_miembroJekuaa": sanitizeComponent(_492dd2ca) }
 
 export default {
   render (h, props) {
@@ -44,7 +46,7 @@ export default {
       }
     }, [
       loadingEl,
-
+      h(NuxtBuildIndicator),
       transitionEl
     ])
   },
@@ -180,6 +182,10 @@ export default {
     },
 
     setLayout (layout) {
+      if(layout && typeof layout !== 'string') {
+        throw new Error('[nuxt] Avoid using non-string value as layout property.')
+      }
+
       if (!layout || !layouts['_' + layout]) {
         layout = 'default'
       }
