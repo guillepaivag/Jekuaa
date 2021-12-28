@@ -214,8 +214,8 @@ export default {
 
       try {
         let token = this.$firebase.auth().currentUser
-
         token = token ? await token.getIdToken() : ''
+        await this.$store.dispatch('modules/usuarios/setTOKEN', token)
 
         let body = {
           datosUsuario: datos
@@ -281,8 +281,8 @@ export default {
 
       try {
         let token = this.$firebase.auth().currentUser
-
         token = token ? await token.getIdToken() : ''
+        await this.$store.dispatch('modules/usuarios/setTOKEN', token)
 
         let body = this.avatar.formData
 
@@ -314,8 +314,8 @@ export default {
 
       try {
         let token = this.$firebase.auth().currentUser
-
         token = token ? await token.getIdToken() : ''
+        await this.$store.dispatch('modules/usuarios/setTOKEN', token)
 
         let config = {
           headers: {

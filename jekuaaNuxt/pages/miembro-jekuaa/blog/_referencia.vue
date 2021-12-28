@@ -111,8 +111,8 @@ export default {
                 this.estadoDialogEliminacion = false
 
                 let token = this.$firebase.auth().currentUser
-
                 token = token ? await token.getIdToken() : ''
+                await this.$store.dispatch('modules/usuarios/setTOKEN', token)
 
                 let config = {
                     headers: {
@@ -151,7 +151,7 @@ export default {
             // Obtener contenido del blog desde la api de Jekuaa
             let usuario = this.$firebase.auth().currentUser
             let token = usuario ? await usuario.getIdToken() : ''
-            this.$store.commit('modules/usuarios/setTOKEN', token)
+            await this.$store.dispatch('modules/usuarios/setTOKEN', token)
             
             const response = await this.$axios.get(`/blog/miembroJekuaa/obtenerContenido/${doc.data().uid}`, {
                 headers: {

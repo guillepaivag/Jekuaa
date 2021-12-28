@@ -2,7 +2,7 @@ const {Router} = require('express')
 const router = Router()
 const Respuesta = require('../models/Respuesta')
 
-const admin = require('../../firebase-service')
+const Sitemap = require('../models/Sitemap')
 
 router.post('/getSitemapRoutes', async (req, res) => {
     try {
@@ -10,32 +10,8 @@ router.post('/getSitemapRoutes', async (req, res) => {
 
         const respuesta = new Respuesta()
         let codigo = 'jekuaa/exito'
-        let listaSitemapRoutes = []
-        let snapshots
-        let docs
-
-        snapshots = await admin.firestore().collection('Blogs').get()
-        docs = snapshots.docs
-
-        for (let i = 0; i < docs.length; i++) {
-            const doc = docs[i]
-
-            listaSitemapRoutes.push({
-                tipo: 'blog',
-                referencia: doc.data().referencia
-            })
-        }
-
-        snapshots = await admin.firestore().collection('Usuarios').get()
-        docs = snapshots.docs
-
-        for (let i = 0; i < docs.length; i++) {
-            const doc = docs[i]
-            listaSitemapRoutes.push({
-                tipo: 'usuario',
-                referencia: doc.data().nombreUsuario
-            })
-        }
+        
+        let listaSitemapRoutes = await Sitemap.getReferencias()
 
         respuesta.setRespuestaPorCodigo(codigo, {
             mensaje: '¡Datos de sitemaps recuperados!',

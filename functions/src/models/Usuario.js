@@ -1,9 +1,8 @@
 const admin = require('../../firebase-service')
 const db = require('../../db')
 const JekuaaPremium = require('./JekuaaPremium')
-const JekuaaRoles = require('./JekuaaRoles')
 const ErrorJekuaa = require('./Error/ErroresJekuaa')
-const utilsUsuario = require('../utils/Usuario')
+const utilsUsuario = require('../utils/usuario')
 const storage = require('../../GoogleStorage')
 const configJekuaa = require('../../configJekuaa')
 
@@ -11,14 +10,12 @@ const COLECCION_USUARIO = 'Usuarios'
 
 class Usuario {
 
-    constructor ( datosUsuario ) {
-        if ( datosUsuario ) {
-            var { 
-                uid, nombreUsuario, correo, 
-                nombreCompleto, fechaNacimiento,
-                jekuaaPremium, jekuaaRol, instructor, jekuaaPoint
-            } = datosUsuario
-        }
+    constructor ( datosUsuario = {} ) {
+        const { 
+            uid, nombreUsuario, correo, 
+            nombreCompleto, fechaNacimiento,
+            jekuaaPremium, jekuaaRol, instructor, jekuaaPoint
+        } = datosUsuario
 
         this.uid = uid ? uid : ''
         this.nombreUsuario = nombreUsuario ? nombreUsuario : ''
@@ -265,7 +262,7 @@ class Usuario {
         })
 
         // Crear los datos en firestore para el nuevo usuario
-        await db.collection(COLECCION_USUARIO).doc(usuarioAuthNuevo.uid).set({
+        db.collection(COLECCION_USUARIO).doc(usuarioAuthNuevo.uid).set({
             ...datosUsuario,
             uid: usuarioAuthNuevo.uid
         })
@@ -286,7 +283,7 @@ class Usuario {
         return usuario
     }
 
-    static async actalizarDatosUsuarioPorUID ( uidUsuario, datosActualizados ) {
+    static async actalizarDatosUsuarioPorUID ( uidUsuario, datosActualizados = {} ) {
 
         const {
             nombreUsuario,
@@ -314,7 +311,7 @@ class Usuario {
 
         // Actualizar los datos de firestore del usuario
         Object.keys(datosActualizados).length ? 
-        await db.collection(COLECCION_USUARIO).doc(uidUsuario).update(datosActualizados) : ''
+        db.collection(COLECCION_USUARIO).doc(uidUsuario).update(datosActualizados) : ''
 
         // // Operar los datos de instructor en caso de cambio
         // const cambioInstructor = jekuaaRoles ? jekuaaRoles.instructor != datosUsuario.jekuaaRoles.instructor : false

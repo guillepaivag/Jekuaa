@@ -25,8 +25,11 @@ apiJekuaa.use(express.urlencoded({
 }))
 
 // RUTAS
-apiJekuaa.use('/usuarios', require('./src/routes/usuarios/Usuario'))
-apiJekuaa.use('/blog', require('./src/routes/blogs/Blog'))
+apiJekuaa.use('/usuario', require('./src/routes/usuario'))
+apiJekuaa.use('/estudiante', require('./src/routes/estudiante'))
+apiJekuaa.use('/miembroJekuaa', require('./src/routes/miembroJekuaa'))
+// apiJekuaa.use('/instructor', require('./src/routes/instructor'))
+apiJekuaa.use('/blog', require('./src/routes/blog'))
 apiJekuaa.use('/sitemap', require('./src/routes/sitemap'))
 
 // MANEJO DE ERRORES

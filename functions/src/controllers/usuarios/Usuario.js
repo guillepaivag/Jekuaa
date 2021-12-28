@@ -1,14 +1,44 @@
-const admin = require('../../../firebase-service')
 const db = require('../../../db')
 const Usuario = require('../../models/Usuario')
 const Respuesta = require('../../models/Respuesta')
 const manejadorErrores = require('../../helpers/ManejoErrores')
 const ErrorJekuaa = require('../../models/Error/ErroresJekuaa')
 const fs = require('fs')
-const os = require('os')
-const path = require('path')
 
 const controllerUsuario = {}
+
+controllerUsuario.crearUsuario = async (req, res) => {
+
+    try {
+        const { jekuaaDatos, body } = req
+        const { datosUsuario, contrasenha } = body
+
+        // Crear usuario
+        const datosUsuarioNuevo = await Usuario.crearNuevoUsuario( datosUsuario, contrasenha )
+
+        const respuesta = new Respuesta()
+        let codigo = 'jekuaa/exito'
+
+        respuesta.setRespuestaPorCodigo(codigo, {
+            mensaje: 'El usuario se creo de forma exitosa!',
+            resultado: datosUsuarioNuevo
+        })
+        const status = respuesta.getStatusCode()
+        
+        return res.status( status ).json( respuesta.getRespuesta() )
+        
+    } catch ( error ) {
+        console.log('Error - crearUsuario: ', error)
+
+        const {
+            status,
+            respuesta
+        } = manejadorErrores( error )
+
+        return res.status( status ).json( respuesta )
+    }
+
+}
 
 controllerUsuario.obtenerUsuario = async (req, res) => {
     try {
@@ -272,28 +302,10 @@ controllerUsuario.actualizarFotoPerfil = async (req, res) => {
     try {
         const { jekuaaDatos, body, files } = req
         const { uidSolicitante, datosAuthSolicitante } = jekuaaDatos
-        const { busboy } = body
+        const { busboy, extensionArchivo, rutaArchivoTemp } = body
         
         const respuesta = new Respuesta()
         let codigo = 'jekuaa/exito'
-
-        let file = files[0]
-        let data = Buffer.from(file.buffer)
-        let extensionArchivo = file.mimetype.split('/')[1]
-
-        // Crear ruta temporal para la foto de perfil
-        let dirArray = ['imagenes', 'fotoPerfil']
-        let dirVerificacion = path.join(os.tmpdir())
-        for (let i = 0; i < dirArray.length; i++) {
-            const element = dirArray[i]
-            dirVerificacion = path.join(dirVerificacion, element)
-            if ( !fs.existsSync(dirVerificacion) ) fs.mkdirSync(dirVerificacion)
-        }
-
-        // Crear archivo foto de peril
-        const nombreTemp = `${Date.now()}~${uidSolicitante}.${extensionArchivo}`
-        const rutaArchivoTemp = path.join(os.tmpdir(), 'imagenes', 'fotoPerfil', `${nombreTemp}`)
-        fs.writeFileSync(rutaArchivoTemp, data)
 
         // Eliminar la foto de perfil anterior
         await Usuario.eliminarFotoPerfilPorUID(uidSolicitante)

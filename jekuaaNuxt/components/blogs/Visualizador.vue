@@ -1,7 +1,5 @@
 <template>
-    <div class="contenedor_blog_padre">
-        <div class="contenedor_blog mt-5 mb-5" v-html="contenidoBlog"></div>
-    </div>
+    <div class="ProseMirror mt-5 mb-5" v-html="contenidoBlog"></div>
 </template>
 
 <script>
@@ -13,62 +11,16 @@ export default {
 }
 </script>
 
-<style scoped>
-.contenedor_blog_padre {
-    margin: 30px 0 30px 0;
-}
+<style lang="scss" scoped>
+// .contenedorVisualizador {
+//     max-width: 1200px;
+//     margin: 0 auto;
+// }
 
-.contenedor_blog {
-    margin: 0 125px 0 125px;
-}
-
-.contenedor_blog >>> h1 {
-    margin-bottom: 20px;
-    font-weight: bold;
-    font-size: 40px;
-}
-
-.contenedor_blog >>> h2 {
-    margin-bottom: 20px;
-    font-weight: bold;
-    font-size: 30px;
-}
-
-.contenedor_blog >>> h3 {
-    margin-bottom: 20px;
-    font-weight: bold;
-    font-size: 25px;
-}
-
-.contenedor_blog >>> p {
-    margin-bottom: 20px;
-    font-size: 20px;
-}
-
-.contenedor_blog >>> img {
-    width: 100%;
-}
-
-@media (min-width: 700px) and (max-width: 899px) { 
-    .contenedor_blog {
-        margin: 0 100px 0 100px;
-    }
-
-    .contenedor_blog >>> p {
-        margin-bottom: 20px;
-        font-size: 18px;
-    }
-}
-
-@media (min-width: 0) and (max-width: 699px) { 
-    .contenedor_blog {
-        margin: 0;
-    }
-
-    .contenedor_blog >>> p {
-        margin-bottom: 20px;
-        font-size: 18px;
-    }
-}
-
+// @media (min-width: 0px) and (max-width: 499px) { 
+//     .contenedorVisualizador {
+//         max-width: 1200px;
+//         margin: 0;
+//     }
+// }
 </style>

@@ -1,7 +1,4 @@
 {
-  "Editor": {
-    "description": "Auto imported from components/Editor.vue"
-  },
   "FooterDefault": {
     "description": "Auto imported from components/FooterDefault.vue"
   },
@@ -34,6 +31,9 @@
   },
   "Spinner": {
     "description": "Auto imported from components/Spinner.vue"
+  },
+  "Tiptap": {
+    "description": "Auto imported from components/Tiptap.vue"
   },
   "AuthEmail": {
     "description": "Auto imported from components/auth/authEmail.vue"

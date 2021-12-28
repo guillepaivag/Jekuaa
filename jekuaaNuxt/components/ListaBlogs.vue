@@ -85,7 +85,7 @@
         >
           <v-card v-if="datosBlog">
             <v-img
-              :src="require(`~/assets/img/seccion/${datosBlog.blog.seccion ? datosBlog.blog.seccion : 'sinSeccion'}.jpg`)"
+              :src="require(`~/assets/img/seccion/${datosBlog.blog.seccion ? datosBlog.blog.seccion : 'sinSeccion'}.webp`)"
               height="200px"
               class="white--text"
             >

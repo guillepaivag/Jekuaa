@@ -23,16 +23,10 @@ module.exports = {
       { hid: 'og:image:secure_url', property: 'og:image:secure_url', content: '/image-og-jekuaa-2021.png', },
       { hid: 'og:image:alt', property: 'og:image:alt', content: 'Jekuaapy aprendizaje online contigo', },
       { hid: 'og:type', property: 'og:type', content: 'website' },
-      { hid: 'og:url', property: 'og:url', content: 'https://jekuaa.web.app', },
+      { hid: 'og:url', property: 'og:url', content: 'https://jekuaapy.com', },
     ],
     link: [
       { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' },
-      { rel: 'preconnect', href: 'https://fonts.gstatic.com' },
-      { rel: 'stylesheet', href: 'https://fonts.googleapis.com/css2?family=Asap&display=swap' },
-      // Iconfonts for Vuetify. You need to leave only which one you use
-      { rel: 'stylesheet', href: 'https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700,900|Material+Icons' },
-      { rel: 'stylesheet', href: 'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.min.css' },
-      { rel: 'stylesheet', href: 'https://cdnjs.cloudflare.com/ajax/libs/MaterialDesign-Webfont/4.4.95/css/materialdesignicons.min.css' },
     ],
     script: [
       { src: '' },
@@ -45,7 +39,6 @@ module.exports = {
   // Plugins to run before rendering page: https://go.nuxtjs.dev/config-plugins
   plugins: [
     { src: './plugins/firebase.js' },
-    { src: './plugins/TiptapVuetify.js', ssr: false },
     { src: './plugins/vue-observe-visibility.js', ssr: false },
   ],
 
@@ -62,6 +55,8 @@ module.exports = {
   buildModules: [
     // https://go.nuxtjs.dev/vuetify
     '@nuxtjs/vuetify',
+    // 
+    'nuxt-webpack-optimisations',
   ],
 
   env: {
@@ -110,6 +105,10 @@ module.exports = {
     }]
   ],
 
+  router: {
+    prefetchLinks: false
+  },
+
   // Axios module configuration: https://go.nuxtjs.dev/config-axios
   axios: {
     baseURL: baseURL
@@ -139,41 +138,11 @@ module.exports = {
   // Vuetify module configuration: https://go.nuxtjs.dev/config-vuetify
   vuetify: {
     customVariables: ['~/assets/variables.scss'],
-    theme: {
-      dark: false,
-      themes: {
-        dark: {
-          primary: colors.default.blue.darken2,
-          accent: colors.default.grey.darken3,
-          secondary: colors.default.amber.darken3,
-          info: colors.default.teal.lighten1,
-          warning: colors.default.amber.base,
-          error: colors.default.deepOrange.accent4,
-          success: colors.default.green.accent3
-        },
-        light: {
-          primary: colors.default.blue.lighten1,
-          accent: colors.default.grey.lighten1,
-          secondary: colors.default.amber.lighten1,
-          info: colors.default.teal.lighten1,
-          warning: colors.default.amber.lighten1,
-          error: colors.default.deepOrange.lighten1,
-          success: colors.default.green.lighten1
-        }
-      }
-    }
   },
 
   // Build Configuration: https://go.nuxtjs.dev/config-build
   build: {
-    transpile: ['vuetify/lib', 'tiptap-vuetify', 'vue-instantsearch', 'instantsearch.js/es'],
+    transpile: ['vuetify/lib', 'vue-instantsearch', 'instantsearch.js/es'],
     extractCSS: true,
-    babel:{
-      plugins: [
-        ["@babel/plugin-proposal-class-properties", { "loose": true }],
-        ["@babel/plugin-proposal-private-methods", { "loose": true }],
-        ["@babel/plugin-proposal-private-property-in-object", { "loose": true }]
-      ]
-    },
   }
 }

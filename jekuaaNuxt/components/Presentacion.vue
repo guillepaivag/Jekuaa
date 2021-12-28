@@ -1,6 +1,6 @@
 <template>
     <v-parallax 
-        :src="require(`~/assets/img/seccion/${seccion ? seccion : 'sinSeccion'}.jpg`)"
+        :src="require(`~/assets/img/seccion/${seccion ? seccion : 'sinSeccion'}.webp`)"
         height="100%"
     >
         <div class="contenedor_contenido">
@@ -71,6 +71,7 @@ export default {
 .contenedor_contenido {
     background-color: rgba(0, 0, 0, 0.72);
     padding: 22px;
+    border-radius: 1.1rem;
     margin-top: -150px;
     margin-left: 50px;
     max-width: 600px;

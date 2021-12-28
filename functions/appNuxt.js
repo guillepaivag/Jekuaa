@@ -1,5 +1,6 @@
 const { Nuxt } = require('nuxt')
 const express = require('express')
+const { isSitemap } = require('./src/middlewares/sitemap')
 
 const appNuxt = express()
 
@@ -22,15 +23,13 @@ async function handleRequest(req, res) {
   try {
     if (!isReady) await readyPromise
 
-    res.set('Cache-Control', 'public, max-age=300, s-maxage=600')
+    res.set('Cache-Control', 'public, max-age=600, s-maxage=1200')
     await nuxt.render(req, res)
   } catch (error) {
-    console.log('handleRequest-error: ')
-    console.log(error)
+    console.log('handleRequest-error: ', error)
   }
 }
 
-appNuxt.use(handleRequest)
-appNuxt.get('*', handleRequest)
+appNuxt.get('*', isSitemap, handleRequest)
 
 module.exports = appNuxt

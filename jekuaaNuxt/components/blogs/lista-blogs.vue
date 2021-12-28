@@ -8,7 +8,7 @@
                     <v-img
                         class="white--text align-end"
                         height="200px"
-                        :src="require(`~/assets/img/seccion/${blog.blog.seccion ? blog.blog.seccion : 'sinSeccion'}.jpg`)"
+                        :src="require(`~/assets/img/seccion/${blog.blog.seccion ? blog.blog.seccion : 'sinSeccion'}.webp`)"
                     >
                         <v-card-title>
                             {{blog.blog.titulo}}

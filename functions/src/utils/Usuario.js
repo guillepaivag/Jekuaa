@@ -1,85 +1,7 @@
-const ErrorJekuaa = require("../models/Error/ErroresJekuaa")
 const JekuaaPremium = require("../models/JekuaaPremium")
-const JekuaaRoles = require("../models/JekuaaRoles")
-const timestamp = require('./Timestamp')
-const Instructor = require("../models/TiposUsuarios/Instructor")
-const Usuario = require("../models/Usuario")
-const validarEmail = require("./emailValido")
-const obtenerEdad = require("./obtenerEdad")
+const timestamp = require('./timestamp')
 
 const funciones = {}
-
-funciones.verificadorDeFormatoProduccion = ( datosUsuario ) => {
-        
-    const {
-        uid,
-        nombreUsuario,
-        correo,
-        nombreCompleto,
-        fechaNacimiento,
-        jekuaaPremium,
-        jekuaaRoles,
-        jekuaaPoint
-    } = datosUsuario
-
-    if ( nombreUsuario && typeof nombreUsuario != 'string' ) {
-        throw new TypeError('El nombreUsuario debe ser de tipo string.', 'Usuario.js')
-    }
-
-    if ( correo && typeof correo != 'string' ) {
-        throw new TypeError('El correo debe ser de tipo string.', 'Usuario.js')
-    }
-
-    if ( nombreCompleto && typeof nombreCompleto != 'string' ) {
-        throw new TypeError('Debe de ser de tipo string el nombre completo del usuario.', 'Usuario.js')
-    }
-
-    if ( fechaNacimiento && typeof fechaNacimiento != 'object' ) {
-        throw new TypeError('La fecha de nacimiento debe ser de tipo object (Timestamp).', 'Usuario.js')
-    }
-
-    if ( jekuaaPremium ) {
-
-        if ( typeof jekuaaPremium != 'object' ) {
-            throw new TypeError('El jekuaaPremium debe ser de tipo object.', 'Usuario.js')
-        }
-
-        const formatoJekuaaPremium = new JekuaaPremium()
-        formatoJekuaaPremium.setDatosPremium({
-            plan: jekuaaPremium.plan,
-            fechaCompra: jekuaaPremium.fechaCompra,
-            fechaHasta: jekuaaPremium.fechaHasta,
-        })
-
-        formatoJekuaaPremium.formatoValido()
-
-        formatoJekuaaPremium.cumpleCondiciones()
-
-    }
-
-    if ( jekuaaRoles ) {
-
-        if ( typeof jekuaaRoles != 'object' ) {
-            throw new Error('El jekuaaRoles debe ser de tipo object.')
-        }
-        
-        const formatoJekuaaRoles = new JekuaaRoles({
-            rol: jekuaaRoles.rol,
-            secciones: jekuaaRoles.secciones,
-            instructor: jekuaaRoles.instructor
-        })
-
-        formatoJekuaaRoles.formatoValido()
-
-        formatoJekuaaRoles.cumpleCondiciones()
-
-    }
-
-    if ( jekuaaPoint && typeof jekuaaPoint != 'number' ) {
-        throw new TypeError('El jekuaaPoint no es de tipo numerico.', 'Usuario.js')
-    }
-}
-
 
 /**
  * La verificacion de datos requeridos, es una función
@@ -90,7 +12,6 @@ funciones.verificadorDeFormatoProduccion = ( datosUsuario ) => {
  * @param {*} contrasenha 
  * @param {*} confirmacionContrasenha 
  */
-
 
 funciones.construirDatosParaNuevoUsuario = ( datosUsuario, contrasenha, esRutaAdmin ) => {
     

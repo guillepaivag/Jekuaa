@@ -183,7 +183,7 @@
                     v-if="accion === 'leer'"
                     :readonly="accion === 'leer'"
                     color="#683bce"
-                    :label="`Estado de habilitación`"
+                    :label="`Estado de habilitación (puedes cambiarlo luego)`"
                     class="mt-7"
                   ></v-checkbox>
 
@@ -244,7 +244,7 @@
                   <p class="mt-5">
                     Cantidad de carácteres: <strong>{{cantidadCaracteres}}</strong>
                   </p>
-                  <editor class="mb-5" v-model="contenidoHtml" />
+                  <Tiptap class="mb-5" v-model="contenidoHtml" />
                   <p style="color:red;" v-if="errorContenidoBlog">
                     {{errorContenidoBlog}}
                   </p>
@@ -253,7 +253,7 @@
                 <div class="mt-15 mb-5">
                   <h2> Vista del contenido del blog </h2>
                   <v-divider></v-divider>
-                  <div class="pl-5 pt-5 pr-5 pb-5">
+                  <div class="">
                     <visualizador-blog :contenidoBlog="contenidoBlogHTML" />
                   </div>
                 </div>
@@ -290,7 +290,7 @@
                 <div class="mt-15 mb-5">
                   <h2> Vista del contenido del blog </h2>
                   <v-divider></v-divider>
-                  <div class="pl-5 pt-5 pr-5 pb-5">
+                  <div class="">
                     <visualizador-blog :contenidoBlog="contenidoBlogHTML" />
                   </div>
                 </div>
@@ -311,7 +311,7 @@
                 <div class="mt-15 mb-5">
                   <h2> Vista del contenido del blog </h2>
                   <v-divider></v-divider>
-                  <div class="pl-5 pt-5 pr-5 pb-5">
+                  <div class="">
                     <visualizador-blog :contenidoBlog="contenidoBlogHTML" />
                   </div>
                 </div>
@@ -355,14 +355,14 @@
 import { validationMixin } from 'vuelidate'
 import { required, minLength, maxLength, email } from 'vuelidate/lib/validators'
 import VisualizadorBlog from '@/components/blogs/Visualizador'
-import Editor from '@/components/Editor'
+import Tiptap from '@/components/Tiptap'
 import informacionSecciones from '@/helpers/informacionSecciones'
 import showdown from 'showdown'
 import TurndownService from 'turndown'
 
 export default {
   components: {
-    'editor': Editor,
+    'Tiptap': Tiptap,
     'visualizador-blog': VisualizadorBlog,
   },
 
@@ -450,26 +450,6 @@ export default {
       !this.$v.datosBlogAux.descripcion.required && errors.push('La descripción es requerida.')
       return errors
     },
-    // seccionErr () {
-    //   const errors = []
-    //   if (!this.$v.datosBlogAux.seccion.$dirty) return errors
-    //   !this.$v.datosBlogAux.seccion.required && errors.push('La sección es requerida.')
-    //   return errors
-    // },
-    // categoriaErr () {
-    //   const errors = []
-    //   if (!this.$v.datosBlogAux.categoria.$dirty) return errors
-    //   !this.$v.datosBlogAux.categoria.required && errors.push('La categoría es requerida.')
-    //   return errors
-    // },
-    // subCategoriaErr () {
-    //   const errors = []
-    //   if (!this.$v.datosBlogAux.subCategorias.$dirty) return errors
-    //   !this.$v.datosBlogAux.subCategorias.required && errors.push('Las sub-categorias son requeridas.')
-    //   !this.$v.datosBlogAux.subCategorias.minLength && errors.push('Las sub-categorias son requeridas.')
-    //   !this.$v.datosBlogAux.subCategorias.maxLength && errors.push('Un blog solo puede tener 3 sub-categorias.')
-    //   return errors
-    // },
     contenidoMarkdown: {
       // getter
       get: function () {
@@ -779,61 +759,23 @@ export default {
 }
 </script>
 
-<style lang="scss" scoped>
-/* Basic editor styles */
-.ProseMirror {
-  > * + * {
-    margin-top: 0.75em;
-  }
+<style scoped>
+.botonesDeAcciones {
+  width: 500px;
+  margin: auto;
+}
 
-  code {
-    background-color: rgba(#616161, 0.1);
-    color: #616161;
+@media only screen and (max-width: 550px) {
+  .botonesDeAcciones {
+    width: 300px;
+    margin: auto;
   }
 }
 
-.content {
-  padding: 1rem 0 0;
-
-  h3 {
-    margin: 1rem 0 0.5rem;
-  }
-
-  pre {
-    border-radius: 5px;
-    color: #333;
-  }
-
-  code {
-    display: block;
-    white-space: pre-wrap;
-    font-size: 0.8rem;
-    padding: 0.75rem 1rem;
-    background-color:#e9ecef;
-    color: #495057;
-  }
-
+@media only screen and (max-width: 350px) {
   .botonesDeAcciones {
-    width: 500px;
+    width: 190px;
     margin: auto;
-  }
-
-  .contenedor_botonesDeAcciones {
-
-  }
-
-  @media only screen and (max-width: 550px) {
-    .botonesDeAcciones {
-      width: 300px;
-      margin: auto;
-    }
-  }
-
-  @media only screen and (max-width: 350px) {
-    .botonesDeAcciones {
-      width: 190px;
-      margin: auto;
-    }
   }
 }
 </style>

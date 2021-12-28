@@ -1,4 +1,3 @@
-import 'firebase'
 import Cookies from 'js-cookie'
 const COOKIE_NAME = '__session'
 const collectionName = 'Usuarios'
@@ -262,75 +261,6 @@ export const actions = {
     } else {
       await dispatch('setDatosUsuario', null)
     }
-  },
-
-  async setDatosUsuarioPorUID_RealTime ({ dispatch, commit, state }, uid) {
-    
-    if (!uid) {
-      return await dispatch('setDatosUsuario', null)
-    }
-    
-    this.$firebase.firestore().collection(collectionName).doc(uid).onSnapshot(async doc => {
-      
-      if (doc.exists) {
-        // Obtener los datos
-        const userCurrent = this.$firebase.auth().currentUser
-
-        if (!userCurrent) {
-          return await dispatch('setDatosUsuario', null)
-        }
-
-        const usuario = doc.data()
-
-        // Token del usuario
-        const token = await userCurrent.getIdToken(true)
-
-        // Objetos a insertar
-        const datosPersonales = {
-          nombreCompleto: usuario.nombreCompleto ? usuario.nombreCompleto : null,
-          nombreUsuario: userCurrent.displayName,
-          correo: userCurrent.email,
-          fechaNacimiento: usuario.fechaNacimiento ? new Date(usuario.fechaNacimiento.seconds * 1000) : null,
-          fotoPerfil: userCurrent.photoURL ? userCurrent.photoURL : ''
-        }
-
-        // Obtener datos de Jekuaa Premium
-        const jekuaaPremium = usuario.jekuaaPremium ?
-                                    usuario.jekuaaPremium : null
-
-        if (jekuaaPremium) {
-          jekuaaPremium.fechaCompra = jekuaaPremium.fechaCompra ? 
-                  new Date(jekuaaPremium.fechaCompra.seconds * 1000) : null
-        }
-
-        const jekuaaRoles = usuario.jekuaaRoles ?
-                      usuario.jekuaaRoles : null
-
-        const jekuaaPoint = usuario.jekuaaPoint ?
-                        usuario.jekuaaPoint : 0
-
-        // Creamos un objeto a insertar
-        const datosUsuario = {
-          token,
-          uid,
-          datosPersonales,
-          jekuaaPremium,
-          jekuaaRoles,
-          jekuaaPoint
-        }
-
-        // Insertamos los datos de los usuarios en la store
-        await dispatch('setDatosUsuario', datosUsuario)
-        
-      } else {
-        await dispatch('setDatosUsuario', null)
-      }
-      
-    }, async err => {
-        console.log(err)
-        await dispatch('setDatosUsuario', null)
-    })
-
   },
 
   /* 

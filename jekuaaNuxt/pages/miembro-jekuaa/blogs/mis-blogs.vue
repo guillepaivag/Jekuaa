@@ -58,7 +58,7 @@ export default {
 
                 let usuario = this.$firebase.auth().currentUser
                 let token = await usuario.getIdToken()
-                this.$store.commit('modules/usuarios/setTOKEN', token)
+                await this.$store.dispatch('modules/usuarios/setTOKEN', token)
 
                 let body = {
                     ultimaUID: this.ultimaUID, 
@@ -110,7 +110,7 @@ export default {
 
                 let usuario = this.$firebase.auth().currentUser
                 let token = usuario ? await usuario.getIdToken() : ''
-                this.$store.commit('modules/usuarios/setTOKEN', token)
+                await this.$store.dispatch('modules/usuarios/setTOKEN', token)
 
                 let body = {
                     ultimaUID: this.ultimaUID, 
@@ -125,7 +125,7 @@ export default {
                     }
                 }
 
-                const response = await this.$axios.post('/blog/estudiante/paginarListaBlogs', body, config)
+                const response = await this.$axios.post('/blog/miembroJekuaa/paginarListaBlogs', body, config)
                 const nuevosBlogs = response.data.resultado.blogs
 
                 let aux = []
@@ -152,6 +152,9 @@ export default {
             }
         },
         async cargarBlogs (data) {
+            console.log({
+                visible: !data.visible, buscando: this.buscando, existeMasDatos: !this.existeMasDatos
+            })
             if (!data.visible || this.buscando || !this.existeMasDatos) {
                 return
             }

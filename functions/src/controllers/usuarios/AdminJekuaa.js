@@ -1,7 +1,5 @@
 const admin = require('../../../firebase-service')
-const db = require('../../../db')
 const Usuario = require('../../models/Usuario')
-const timestamp = require('../../utils/Timestamp')
 const Respuesta = require('../../models/Respuesta')
 const manejadorErrores = require('../../helpers/ManejoErrores')
 const ErrorJekuaa = require('../../models/Error/ErroresJekuaa')
@@ -86,39 +84,6 @@ controllerMiembroJekuaa.verDatosAuthPorUID = async (req, res) => {
 
         return res.status( status ).json( respuesta )
 
-    }
-
-}
-
-controllerMiembroJekuaa.crearUsuario = async (req, res) => {
-
-    try {
-        const { jekuaaDatos, body } = req
-        const { datosUsuario, contrasenha } = body
-
-        // Crear usuario
-        const datosUsuarioNuevo = await Usuario.crearNuevoUsuario( datosUsuario, contrasenha )
-
-        const respuesta = new Respuesta()
-        let codigo = 'jekuaa/exito'
-
-        respuesta.setRespuestaPorCodigo(codigo, {
-            mensaje: 'El usuario se creo de forma exitosa!',
-            resultado: datosUsuarioNuevo
-        })
-        const status = respuesta.getStatusCode()
-        
-        return res.status( status ).json( respuesta.getRespuesta() )
-        
-    } catch ( error ) {
-        console.log('Error - crearUsuario: ', error)
-
-        const {
-            status,
-            respuesta
-        } = manejadorErrores( error )
-
-        return res.status( status ).json( respuesta )
     }
 
 }

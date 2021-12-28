@@ -41,7 +41,7 @@
         <v-divider />
 
         <v-list-item
-          to="/autenticacion/registro"
+          to="/registro"
           link
         >
           <v-list-item-icon>
@@ -56,7 +56,7 @@
         </v-list-item>
 
         <v-list-item
-          to="/autenticacion/inicioSesion"
+          to="/inicioSesion"
           link
         >
           <v-list-item-icon>
@@ -71,69 +71,6 @@
         </v-list-item>
       </v-list>
     </v-navigation-drawer>
-
-    <!-- <v-toolbar
-            height="100"
-            fixed
-        >
-            <div class="containerLogo">
-                <nuxt-link to="/">
-                    <v-app-bar-nav-icon @click="sidebar = !sidebar">
-                        <v-avatar
-                            size="100"
-                            tile
-                        >
-                            <v-img
-                            contain
-                            max-height="60%"
-                            src="https://firebasestorage.googleapis.com/v0/b/jekuaa-py.appspot.com/o/JekuaaLogo.png?alt=media&token=26851757-faff-48da-8e6f-e21f3c2c1e96"
-                            ></v-img>
-                        </v-avatar>
-                    </v-app-bar-nav-icon>
-                </nuxt-link>
-            </div>
-
-            <v-toolbar-items class="containerItems d-none d-sm-none d-md-flex">
-                <v-btn text to="/">Inicio</v-btn>
-                <v-btn text to="/cursos">Cursos</v-btn>
-                <v-btn text to="/planes">Planes</v-btn>
-                <v-btn text to="/blog">Blog</v-btn>
-            </v-toolbar-items>
-
-            <v-spacer/>
-
-            <div class="containerIcono d-none d-sm-none d-md-flex">
-                <v-btn
-                    tile
-                    color="#683bce"
-                    class="mr-2 white--text"
-                    rounded
-                    to="/autenticacion/registro"
-                >
-                    <v-icon left>
-                        mdi-account-plus
-                    </v-icon>
-                    Registrarme
-                </v-btn>
-
-                <v-btn
-                    tile
-                    color="#683bce"
-                    class="white--text"
-                    rounded
-                    to="/autenticacion/inicioSesion"
-                >
-                    <v-icon left>
-                        mdi-account-circle
-                    </v-icon>
-                    Iniciar sesión
-                </v-btn>
-            </div>
-
-            <div class="containerIcono d-flex d-sm-flex d-md-none">
-                <v-app-bar-nav-icon @click="drawer = true"></v-app-bar-nav-icon>
-            </div>
-        </v-toolbar> -->
 
     <v-app-bar
       height="70"
@@ -159,7 +96,7 @@
       </div>
 
       <v-tabs align-with-title class="d-none d-sm-none d-md-flex" optional color="#683bce">
-        <v-tab to="/">
+        <v-tab to="/inicio">
           <v-icon class="navItemIcon">
             mdi-home
           </v-icon>
@@ -195,7 +132,7 @@
           class="estiloTexto"
           color="#683bce"
           text
-          to="/autenticacion/registro"
+          to="/registro"
         >
           <v-icon left>
             mdi-account-plus
@@ -207,7 +144,7 @@
           class="estiloTexto"
           color="#683bce"
           text
-          to="/autenticacion/inicioSesion"
+          to="/inicioSesion"
         >
           <v-icon left>
             mdi-account-circle
@@ -254,7 +191,7 @@ export default {
     sidebar: false,
     drawer: null,
     items: [
-      { title: 'Inicio', icon: 'mdi-home', to: '/' },
+      { title: 'Inicio', icon: 'mdi-home', to: '/inicio' },
       { title: 'Blogs', icon: 'mdi-book-open-variant', to: '/blogs' }
     ],
     user: {
@@ -267,7 +204,6 @@ export default {
 </script>
 
 <style scoped>
-
 .containerLogo {
     margin-left: 10px;
 }

@@ -3,7 +3,7 @@ const ErrorJekuaa = require("../models/Error/ErroresJekuaa")
 const path = require('path')
 const fs = require('fs')
 const os = require('os')
-const { milliseconds_a_timestamp } = require("./Timestamp")
+const { milliseconds_a_timestamp } = require("./timestamp")
 
 const utils_blog = {}
 
@@ -69,27 +69,7 @@ utils_blog.construirDatosParaActualizacionBlog = ( uidBlog, datosBlog, contenido
         } = datosBlog
 
         // Referencia del blog
-        if (esRutaAdmin && Object.keys(datosBlog).length) {
-            referencia ? datosActualizados.referencia = referencia : ''
-            titulo ? datosActualizados.titulo = titulo : ''
-            descripcion ? datosActualizados.descripcion = descripcion : ''
-
-            if (seccion === '') {
-                datosActualizados.seccion = ''
-                datosActualizados.categoria = ''
-                datosActualizados.subCategorias = []
-            } else {
-                seccion ? datosActualizados.seccion = seccion : ''
-                categoria ? datosActualizados.categoria = categoria : ''
-                subCategorias && subCategorias.length ? datosActualizados.subCategorias = subCategorias : ''
-            }
-
-            habilitado != undefined ? datosActualizados.habilitado = habilitado : ''
-            publicado != undefined ? datosActualizados.publicado = publicado : ''
-            revision != undefined ? datosActualizados.revision = revision : ''
-        }
-
-        if (!esRutaAdmin && Object.keys(datosBlog).length) {
+        if (Object.keys(datosBlog).length) {
             referencia ? datosActualizados.referencia = referencia : ''
             titulo ? datosActualizados.titulo = titulo : ''
             descripcion ? datosActualizados.descripcion = descripcion : ''
@@ -103,6 +83,9 @@ utils_blog.construirDatosParaActualizacionBlog = ( uidBlog, datosBlog, contenido
                 subCategorias && subCategorias.length ? datosActualizados.subCategorias = subCategorias : ''
             }
             publicado != undefined ? datosActualizados.publicado = publicado : ''
+
+            esRutaAdmin && habilitado != undefined ? datosActualizados.habilitado = habilitado : ''
+            esRutaAdmin && revision != undefined ? datosActualizados.revision = revision : ''
         }
     }
     

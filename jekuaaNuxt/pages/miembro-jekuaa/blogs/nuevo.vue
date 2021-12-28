@@ -72,8 +72,8 @@ export default {
                 const { datosBlog, contenidoBlog } = datos
 
                 let token = this.$firebase.auth().currentUser
-
                 token = token ? await token.getIdToken() : ''
+                await this.$store.dispatch('modules/usuarios/setTOKEN', token)
 
                 let body = {
                     datosBlog,
@@ -108,6 +108,6 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
 
 </style>

@@ -79,7 +79,7 @@
       style="background: #ffffff;"
     >
       <div class="containerLogo">
-        <nuxt-link to="/inicio">
+        <nuxt-link to="/">
           <v-app-bar-nav-icon @click="sidebar = !sidebar">
             <v-avatar
               size="80"
@@ -273,7 +273,6 @@ export default {
 </script>
 
 <style scoped>
-
 .containerLogo {
     margin-left: 10px;
 }

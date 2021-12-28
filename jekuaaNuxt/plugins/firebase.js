@@ -28,11 +28,10 @@ export default async ({ env, store, redirect }, inject) => {
 
   if (process.client) {
     firebase.auth().onAuthStateChanged(async (user) => {
-      store.commit('modules/sistema/setLoading', true)
       if (user) {
+        store.commit('modules/sistema/setLoading', true)
         if ( !store.getters['modules/usuarios/autenticado'] ) {
           await store.dispatch('modules/usuarios/login', user.uid)
-          redirect('/inicio')
         }
       } else {
         await store.dispatch('modules/usuarios/logout')

@@ -198,7 +198,6 @@
 <script>
 export default {
     name: '',
-    middleware: 'accesoNoAutenticado',
     data() {
         return {
             listaSecciones: [

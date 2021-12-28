@@ -2,25 +2,19 @@
     <div>
         <v-parallax
             dark
-            :src="require(`~/assets/img/seccion/${blog.seccion ? blog.seccion : 'sinSeccion'}.jpg`)"
-            height="300"
+            :src="require(`~/assets/img/seccion/${blog.seccion ? blog.seccion : 'sinSeccion'}.webp`)"
+            height="350"
         >
-            <v-row
-                align="center"
-                justify="center"
-            >
-                <v-col
-                    class="text-center"
-                    cols="12"
-                >
+            <div class="contenedor_contenido_padre">
+                <div class="contenedor_contenido">
                     <h1 class="text-h4 font-weight-thin mb-4">
                         Jekuaapy
                     </h1>
                     <h4 class="subheading">
                         {{blog.titulo}}
                     </h4>
-                </v-col>
-            </v-row>
+                </div>
+            </div>
         </v-parallax>
         
         <div class="container mt-10 mb-5">
@@ -42,7 +36,9 @@
             {{ blog.cantidadMeGusta }}
 
             <v-divider class="" />
-            <visualizador-blog :contenidoBlog="contenidoBlog" />
+            <div class="">
+                <visualizador-blog :contenidoBlog="contenidoBlog" />
+            </div>
             <v-divider class="" />
 
             <v-btn
@@ -236,10 +232,13 @@ export default {
         let contenidoBlog = ''
         
         try {
-            const ref = $firebase.firestore().collection('Blogs').where('referencia', '==', referenciaBlog)
+            const ref = $firebase.firestore().collection('Blogs')
+            .where('referencia', '==', referenciaBlog)
+            .where('habilitado', '==', true)
+            .where('publicado', '==', true)
             const docsBlogs = await ref.get()
 
-            if (docsBlogs.empty) redirect('/blog')
+            if (docsBlogs.empty) redirect('/blogs')
             
             const docBlog = docsBlogs.docs[0]
             
@@ -263,7 +262,7 @@ export default {
             }
         } catch (err) {
             console.log('err', err)
-            // redirect('/blog')
+            redirect('/blogs')
         }
 
     },
@@ -275,6 +274,20 @@ export default {
     background: #683bce;
     color: #ffffff;
     margin-bottom: 20px;
+}
+
+.contenedor_contenido_padre {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.contenedor_contenido {
+    background-color: rgba(0, 0, 0, 0.72);
+    padding: 25px 35px 25px 35px;
+    border-radius: 1.1rem;
+    max-width: 600px;
+    text-align: center;
 }
 
 .v-parallax {

@@ -6,7 +6,6 @@ You can directly use them in pages and other components without the need to impo
 
 **Tip:** If a component is conditionally rendered with `v-if` and is big, it is better to use `Lazy` or `lazy-` prefix to lazy load.
 
-- `<Editor>` | `<editor>` (components/Editor.vue)
 - `<FooterDefault>` | `<footer-default>` (components/FooterDefault.vue)
 - `<ImageInput>` | `<image-input>` (components/ImageInput.vue)
 - `<ListaBlogs>` | `<lista-blogs>` (components/ListaBlogs.vue)
@@ -18,6 +17,7 @@ You can directly use them in pages and other components without the need to impo
 - `<Presentacion>` | `<presentacion>` (components/Presentacion.vue)
 - `<SnackbarError>` | `<snackbar-error>` (components/SnackbarError.vue)
 - `<Spinner>` | `<spinner>` (components/Spinner.vue)
+- `<Tiptap>` | `<tiptap>` (components/Tiptap.vue)
 - `<AuthEmail>` | `<auth-email>` (components/auth/authEmail.vue)
 - `<BlogsBuscadorInfinitoBlogs>` | `<blogs-buscador-infinito-blogs>` (components/blogs/buscador-infinito-blogs.vue)
 - `<BlogsFiltroBlogs>` | `<blogs-filtro-blogs>` (components/blogs/filtro-blogs.vue)

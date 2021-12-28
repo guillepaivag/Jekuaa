@@ -342,8 +342,8 @@ export default {
       
       try {
         let token = this.$firebase.auth().currentUser
-
         token = token ? await token.getIdToken() : ''
+        await this.$store.dispatch('modules/usuarios/setTOKEN', token)
 
         let body = actualizados
 

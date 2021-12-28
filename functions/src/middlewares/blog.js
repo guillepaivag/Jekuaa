@@ -3,10 +3,8 @@ const db = require('../../db')
 const Blog = require("../models/Blog")
 const ErrorJekuaa = require("../models/Error/ErroresJekuaa")
 const Usuario = require("../models/Usuario")
-const utils_blog = require("../utils/Blog")
+const utils_blog = require("../utils/blog")
 const esReferenciaBlog = require("../utils/esReferenciaBlog")
-const { v4: uuidv4 } = require('uuid')
-const { milliseconds_a_timestamp } = require('../utils/Timestamp')
 const showdown = require('showdown')
 const configJekuaa = require('../../configJekuaa')
 
@@ -507,7 +505,7 @@ middlewares.construirDatosBlog = (req, res, next) => {
         const { datosBlog, contenidoBlog } = body
 
         let datosBlogFormateado
-        const esRutaAdmin = req.originalUrl.split('/')[2] === 'adminJekuaa'
+        const esRutaAdmin = req.originalUrl.includes('adminJekuaa')
         const esOperacionAgregar = req.method === 'POST'
 
         if (esOperacionAgregar) {
@@ -533,18 +531,7 @@ middlewares.verificacionExistenciaBlog = async (req, res, next) => {
         const { params } = req
         const { uid } = params
 
-        const esRutaEstudiante = req.originalUrl.split('/')[2] === 'estudiante'
-
-        const docBlog = await Blog.errorBlogPorUID(uid, 'no-existe')
-        
-        if (esRutaEstudiante) {
-            if (!docBlog.data().publicado || !docBlog.data().habilitado) {
-                throw new ErrorJekuaa({
-                    codigo: 'jekuaa/error/usuario_mala_solicitud',
-                    mensaje: `El blog esta deshabilitado.`
-                })
-            }
-        }
+        await Blog.errorBlogPorUID(uid, 'no-existe')
         
         next()
     } catch (error) {
@@ -590,65 +577,6 @@ middlewares.esPropietarioDelBlog = async (req, res, next) => {
                 mensaje: `No puedes eliminar este blog.`
             })
         }
-
-        next()
-    } catch (error) {
-        next(error)
-    }
-}
-
-middlewares.velidarDatosMeGustaBlog = async (req, res, next) => {
-    try {
-        const { jekuaaDatos, body, params } = req
-        const { uidSolicitante, datosAuthSolicitante } = jekuaaDatos
-        const { uid } = params
-        const { meGusta } = body
-
-        if (!Object.keys(body).length) {
-            throw new ErrorJekuaa({
-                codigo: 'jekuaa/error/usuario_mala_solicitud',
-                mensaje: `Se requiere una operación.`
-            })
-        }
-
-        if (meGusta === undefined) {
-            throw new ErrorJekuaa({
-                codigo: 'jekuaa/error/usuario_mala_solicitud',
-                mensaje: `Se requiere una operación.`
-            })
-        }
-
-        if (typeof meGusta !== 'boolean') {
-            throw new ErrorJekuaa({
-                codigo: 'jekuaa/error/usuario_mala_solicitud',
-                mensaje: `Debe ser un boolean al dar me gusta un blog.`
-            })
-        }
-
-        const ref = db.collection('Usuarios').doc(uidSolicitante)
-        .collection('BlogsMG').doc(uid)
-        const doc = await ref.get()
-
-        // Middleware me gusta
-        if (meGusta) {
-            if (doc.exists) {
-                throw new ErrorJekuaa({
-                    codigo: 'jekuaa/error/usuario_mala_solicitud',
-                    mensaje: `Ya haz indicado que te gusta el blog.`
-                })
-            }
-            
-        } else {
-            if (!doc.exists) {
-                throw new ErrorJekuaa({
-                    codigo: 'jekuaa/error/usuario_mala_solicitud',
-                    mensaje: `El blog no esta en tus gustos.`
-                })
-            }
-        }
-
-        jekuaaDatos.refBlogMG = ref
-        jekuaaDatos.docBlogMG = doc
 
         next()
     } catch (error) {

@@ -86,6 +86,10 @@ agregarSubCategorias([
 
 export default secciones
 
+
+
+
+
 // Funciones para agregar varios elementos
 function agregarSecciones (secciones) {
     for (let i = 0; i < secciones.length; i++) {

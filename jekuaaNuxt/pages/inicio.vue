@@ -20,7 +20,11 @@
     </div>
 
     <client-only>
-      <div class="mt-15" v-if="secciones.length" v-observe-visibility="cargarSecciones"></div>
+      <div 
+        class="mt-15" 
+        v-if="secciones.length" 
+        v-observe-visibility="cargarSecciones"
+      ></div>
     </client-only>
   </div>
 </template>
@@ -34,7 +38,6 @@ import { ObserveVisibility } from 'vue-observe-visibility'
 
 export default {
   name: 'InicioIndex',
-  middleware: 'accesoAutenticado',
   components: {
     presentacion,
     ListaBlogs

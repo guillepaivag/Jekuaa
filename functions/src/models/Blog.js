@@ -1,32 +1,35 @@
-const admin = require('../../firebase-service')
 const db = require('../../db')
 const ErrorJekuaa = require('./Error/ErroresJekuaa')
 const storage = require('../../GoogleStorage')
-const fs = require('fs')
 const showdown  = require('showdown')
-const Usuario = require('./Usuario')
+const fs  = require('fs')
 const configJekuaa = require('../../configJekuaa')
 
 const COLECCION_BLOG = 'Blogs'
-const COLECCION_BLOG_ACTUALIZACIONES = 'Actualizaciones'
 
 class Blog {
 
-    constructor ( datosBlog ) {
-        this.uid = ( datosBlog && datosBlog.uid ) ? datosBlog.uid : ''
-        this.referencia = ( datosBlog && datosBlog.referencia ) ? datosBlog.referencia : ''
-        this.titulo = ( datosBlog && datosBlog.titulo ) ? datosBlog.titulo : ''
-        this.descripcion = ( datosBlog && datosBlog.descripcion ) ? datosBlog.descripcion : ''
-        this.publicador = ( datosBlog && datosBlog.publicador ) ? datosBlog.publicador : ''
-        this.seccion = ( datosBlog && datosBlog.seccion ) ? datosBlog.seccion : ''
-        this.categoria = ( datosBlog && datosBlog.categoria ) ? datosBlog.categoria : ''
-        this.subCategorias = ( datosBlog && datosBlog.subCategorias ) ? datosBlog.subCategorias : []
-        this.cantidadMeGusta = ( datosBlog && datosBlog.cantidadMeGusta ) ? datosBlog.cantidadMeGusta : 0
-        this.habilitado = ( datosBlog && datosBlog.habilitado ) ? datosBlog.habilitado : true
-        this.publicado = ( datosBlog && datosBlog.publicado ) ? datosBlog.publicado : true
-        this.revision = ( datosBlog && datosBlog.revision ) ? datosBlog.revision : true
-        this.fechaCreacion = ( datosBlog && datosBlog.fechaCreacion ) ? datosBlog.fechaCreacion : null
-        this.fechaActualizacion = ( datosBlog && datosBlog.fechaActualizacion ) ? datosBlog.fechaActualizacion : null
+    constructor ( datosBlog = {} ) {
+        const {
+            uid, referencia, titulo, descripcion, publicador,
+            seccion, categoria, subCategorias, cantidadMeGusta, habilitado,
+            publicado, revision, fechaCreacion, fechaActualizacion
+        } = datosBlog
+
+        this.uid = uid ? uid : db.collection(COLECCION_BLOG).doc().id
+        this.referencia = referencia ? referencia : ''
+        this.titulo = titulo ? titulo : ''
+        this.descripcion = descripcion ? descripcion : ''
+        this.publicador = publicador ? publicador : ''
+        this.seccion = seccion ? seccion : ''
+        this.categoria = categoria ? categoria : ''
+        this.subCategorias = subCategorias ? subCategorias : []
+        this.cantidadMeGusta = cantidadMeGusta ? cantidadMeGusta : 0
+        this.habilitado = habilitado ? habilitado : true
+        this.publicado = publicado ? publicado : true
+        this.revision = revision ? revision : true
+        this.fechaCreacion = fechaCreacion ? fechaCreacion : null
+        this.fechaActualizacion = fechaActualizacion ? fechaActualizacion : null
     }
 
 
@@ -78,129 +81,59 @@ class Blog {
         this.setFECHA_ACTUALIZACION( ( blog && blog.fechaActualizacion ) ? blog.fechaActualizacion : null )
     }
 
-    setUID ( uid ) {
-        if ( !uid ) {
-            this.uid = ''
-            return
-        }
-
+    setUID ( uid = db.collection(COLECCION_BLOG).doc().id ) {
         this.uid = uid
     }
 
-    setREFERENCIA ( referencia ) {
-        if ( !referencia ) {
-            this.referencia = ''
-            return
-        }
-
+    setREFERENCIA ( referencia = '' ) {
         this.referencia = referencia
     }
 
-    setTITULO ( titulo ) {
-        if ( !titulo ) {
-            this.titulo = ''
-            return
-        }
-
+    setTITULO ( titulo = '' ) {
         this.titulo = titulo
     }
 
-    setDESCRIPCION ( descripcion ) {
-        if ( !descripcion ) {
-            this.descripcion = ''
-            return
-        }
-
+    setDESCRIPCION ( descripcion = '' ) {
         this.descripcion = descripcion
     }
 
-    setPUBLICADOR ( publicador ) {
-        if ( !publicador ) {
-            this.publicador = ''
-            return
-        }
-
+    setPUBLICADOR ( publicador = '' ) {
         this.publicador = publicador
     }
 
-    setSECCION ( seccion ) {
-        if ( !seccion ) {
-            this.seccion = ''
-            return
-        }
-
+    setSECCION ( seccion = '' ) {
         this.seccion = seccion
     }
 
-    setCATEGORIA ( categoria ) {
-        if ( !categoria ) {
-            this.categoria = ''
-            return
-        }
-
+    setCATEGORIA ( categoria = '' ) {
         this.categoria = categoria
     }
 
-    setSUB_CATEGORIAS ( subCategorias ) {
-        if ( !subCategorias ) {
-            this.subCategorias = []
-            return
-        }
-
+    setSUB_CATEGORIAS ( subCategorias = [] ) {
         this.subCategorias = subCategorias
     }
 
-    setCANTIDAD_ME_GUSTA ( cantidadMeGusta ) {
-        if ( !cantidadMeGusta ) {
-            this.cantidadMeGusta = 0
-            return
-        }
-
+    setCANTIDAD_ME_GUSTA ( cantidadMeGusta = 0 ) {
         this.cantidadMeGusta = cantidadMeGusta
     }
 
-    setHABILITADO ( habilitado ) {
-        if ( !habilitado ) {
-            this.habilitado = true
-            return
-        }
-
+    setHABILITADO ( habilitado = true ) {
         this.habilitado = habilitado
     }
 
-    setPUBLICADO ( publicado ) {
-        if ( !publicado ) {
-            this.publicado = true
-            return
-        }
-
+    setPUBLICADO ( publicado = true ) {
         this.publicado = publicado
     }
 
-    setREVISION ( revision ) {
-        if ( !revision ) {
-            this.revision = true
-            return
-        }
-
+    setREVISION ( revision = true ) {
         this.revision = revision
     }
 
-    setFECHA_CREACION ( fechaCreacion ) {
-        if ( !fechaCreacion ) {
-            this.fechaCreacion = null
-            return
-        }
-
+    setFECHA_CREACION ( fechaCreacion = null ) {
         this.fechaCreacion = fechaCreacion
     }
 
-    setFECHA_ACTUALIZACION ( fechaActualizacion ) {
-        if ( !fechaActualizacion ) {
-            this.fechaActualizacion = null
-            return
-        }
-
+    setFECHA_ACTUALIZACION ( fechaActualizacion = null ) {
         this.fechaActualizacion = fechaActualizacion
     }
 
@@ -254,13 +187,6 @@ class Blog {
 
     async crearBlog () {
         const blog = this.getBlog()
-        if ( !blog || typeof blog != 'object' ) {
-            throw new ErrorJekuaa({
-                codigo: 'jekuaa/error/usuario_mala_solicitud',
-                mensaje: `No hay datos para crear un blog.`
-            })
-        }
-        
         await db.collection(COLECCION_BLOG).doc(this.uid).set(blog)
 
         return this
@@ -348,6 +274,11 @@ class Blog {
         return datosBlog
     }
 
+    static async eliminarBlog ( uid ) {
+        const result = await db.collection(COLECCION_BLOG).doc(uid).delete()
+        return result
+    }
+
     static async existeArchivoBlog ( rutaArchivo ) {
         const bucket = storage.bucket('jekuaa-blogs')
         const file = bucket.file(rutaArchivo)
@@ -357,7 +288,7 @@ class Blog {
         return existe
     }
 
-    static async subirArchivoAStorage ( rutaArchivo, uid ) {
+    static async subirArchivoBlogAStorage ( rutaArchivo, uid, mantenerArchivo ) {
         const bucket = storage.bucket('jekuaa-blogs')
 
         const rutaModo = configJekuaa.environment.mode === 'production' ? 'prod' : 'dev'
@@ -371,12 +302,17 @@ class Blog {
             }
         })
 
-        return response
-    }
+        if (!mantenerArchivo) {
+            // Borrar el archivo creado en el servidor
+            fs.unlink(rutaArchivo, (err => {
+                if ( err ) {
+                    console.log('Error al eliminar el archivo temporal: ', err)
+                    return
+                }
+            }))
+        }
 
-    static async eliminarBlog ( uid ) {
-        const result = await db.collection(COLECCION_BLOG).doc(uid).delete()
-        return result
+        return response
     }
 
     static async eliminarArchivoBlog ( nombreArchivo ) {
@@ -430,7 +366,7 @@ class Blog {
     }
 
     static async inicializarListaBlogs (opciones) {
-        let { maximoPorPagina, filtros, ruta, } = opciones
+        let { maximoPorPagina, filtros, esRutaMiembroJekuaa, } = opciones
         
         !maximoPorPagina ? maximoPorPagina = 5 : ''
         
@@ -438,7 +374,10 @@ class Blog {
 
         let ref = db.collection('Blogs')
 
-        ref = Blog.filtrar( ref, filtros, ruta )
+        if (!esRutaMiembroJekuaa) 
+            ref = ref.where('habilitado', '==', true).where('publicado', '==', true)
+        
+        ref = Blog.filtrar( ref, filtros )
         ref = ref.orderBy('uid').limit( maximoPorPagina )
         const documentSnapshots = await ref.get()
         
@@ -459,7 +398,6 @@ class Blog {
         const existeMasDatos = blogs.length ? await Blog.verificarSiHayMasDatos({
             ultimaUID,
             filtros,
-            ruta,
         }) : false
         
         return {
@@ -470,7 +408,7 @@ class Blog {
     }
 
     static async paginarListaBlogs (opciones) {
-        let { ultimaUID, maximoPorPagina, filtros, ruta, } = opciones
+        let { ultimaUID, maximoPorPagina, filtros, esRutaMiembroJekuaa, } = opciones
         
         !maximoPorPagina ? maximoPorPagina = 5 : ''
 
@@ -478,7 +416,11 @@ class Blog {
         
         let ref = db.collection('Blogs')
 
-        ref = Blog.filtrar( ref, filtros, ruta )
+        if (!esRutaMiembroJekuaa) {
+            ref = ref.where('habilitado', '==', true).where('publicado', '==', true)
+        }
+
+        ref = Blog.filtrar( ref, filtros )
         ref = ref.orderBy('uid').startAfter(ultimaUID).limit(maximoPorPagina)
         const documentSnapshots = await ref.get()
         
@@ -492,9 +434,8 @@ class Blog {
         const existeMasDatos = await Blog.verificarSiHayMasDatos({
             ultimaUID,
             filtros,
-            ruta,
         })
-
+        
         return {
             blogs,
             ultimaUID,
@@ -503,10 +444,10 @@ class Blog {
     }
 
     static async verificarSiHayMasDatos (opciones) {
-        let { ultimaUID, filtros, ruta, } = opciones
+        let { ultimaUID, filtros, } = opciones
 
         let ref = db.collection('Blogs')
-        ref = Blog.filtrar( ref, filtros, ruta )
+        ref = Blog.filtrar( ref, filtros )
         ref = ref.orderBy('uid').startAfter(ultimaUID).limit(1)
         const siguienteDato = await ref.get()
         const existeMasDatos = !siguienteDato.empty
@@ -514,35 +455,38 @@ class Blog {
         return existeMasDatos
     }
 
-    static filtrar ( ref, filtros, ruta ) {
-        if (ruta === 'estudiante') {
-            ref = ref.where('habilitado', '==', true).where('publicado', '==', true)
-        }
-
+    static filtrar ( ref, filtros ) {
         if (!filtros || !Object.keys(filtros).length) {
             return ref
         }
 
-        if ( filtros.seccion ) {
-            ref = ref.where('seccion', '==', filtros.seccion)
+        const {
+            seccion, categoria, subCategorias,
+            publicador, habilitado, publicado,
+            revision,
+        } = filtros
+
+        if ( seccion ) {
+            ref = ref.where('seccion', '==', seccion)
         }
-        if ( filtros.categoria ) {
-            ref = ref.where('categoria', '==', filtros.categoria)
+        if ( categoria ) {
+            ref = ref.where('categoria', '==', categoria)
         }
-        if ( filtros.subCategorias && filtros.subCategorias.length ) {
-            ref = ref.where('subCategorias', 'array-contains-any', filtros.subCategorias)
+        if ( subCategorias && subCategorias.length ) {
+            ref = ref.where('subCategorias', 'array-contains-any', subCategorias)
         }
-        if ( filtros.publicador && ruta !== 'estudiante' ) {
-            ref = ref.where('publicador', '==', filtros.publicador)
+        if ( publicador ) {
+            ref = ref.where('publicador', '==', publicador)
         }
-        if ( filtros.habilitado !== undefined && ruta !== 'estudiante' ) {
-            ref = ref.where('habilitado ', '==', filtros.habilitado)
+
+        if ( habilitado !== undefined ) {
+            ref = ref.where('habilitado ', '==', habilitado)
         }
-        if ( filtros.publicado !== undefined && ruta !== 'estudiante' ) {
-            ref = ref.where('publicado ', '==', filtros.publicado)
+        if ( publicado !== undefined ) {
+            ref = ref.where('publicado ', '==', publicado)
         }
-        if ( filtros.revision !== undefined && ruta !== 'estudiante' ) {
-            ref = ref.where('revision  ', '==', filtros.revision )
+        if ( revision !== undefined ) {
+            ref = ref.where('revision  ', '==', revision )
         }
 
         return ref

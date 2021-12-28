@@ -10,7 +10,10 @@ const Usuario = require('../models/Usuario')
 const validarEmail = require('../utils/emailValido')
 const esAlfanumerico = require('../utils/esAlfanumerico')
 const obtenerEdad = require('../utils/obtenerEdad')
-const utilsUsuarios = require('../utils/Usuario')
+const utilsUsuarios = require('../utils/usuario')
+const fs = require('fs')
+const os = require('os')
+const path = require('path')
 const middlewaresUser = {}
 
 const COLECCION_USUARIO = 'Usuarios'
@@ -46,30 +49,6 @@ middlewaresUser.estaAutenticado = (req, res, next) => {
 
     getAuthToken(req, res, myNext)
     
-}
-
-middlewaresUser.esMiembroJekuaa = async (req, res, next) => {
-    
-    try {
-        const { uidSolicitante, datosAuthSolicitante } = req.jekuaaDatos
-        
-        const docRol = await JekuaaRoles.obtenerDocumentoRol(datosAuthSolicitante.customClaims.jekuaaRol)
-        
-        if ( !docRol.data().esMiembroJekuaa ) {
-            // No autorizado
-            throw new ErrorJekuaa({
-                codigo: 'jekuaa/error/usuario_no_autorizado'
-            })
-        }
-
-        return next()
-
-    } catch ( error ) {
-        console.log('error', error)
-        next(error)
-
-    }
-
 }
 
 middlewaresUser.esAdmin = async (req, res, next) => {
@@ -196,7 +175,7 @@ middlewaresUser.construirDatosInformacionUsuario = async ( req, res, next ) => {
         const { uidSolicitante, datosAuthSolicitante } = jekuaaDatos
         const { descripcion, especializaciones, intereses, redesSociales, rolDescriptivo } = body
 
-        const esRutaAdmin = req.originalUrl.split('/')[2] === 'adminJekuaa'
+        const esRutaAdmin = req.originalUrl.includes('adminJekuaa')
         const esRolPropietario = datosAuthSolicitante.customClaims.jekuaaRol
 
         req.body.datosActualizados = {}
@@ -222,9 +201,6 @@ middlewaresUser.validarFotoPerfil = async ( req, res, next ) => {
         const { jekuaaDatos, body, files } = req
         const { uidSolicitante, datosAuthSolicitante } = jekuaaDatos
         const {  } = body
-
-        const esRutaAdmin = req.originalUrl.split('/')[2] === 'adminJekuaa'
-        const esRolPropietario = datosAuthSolicitante.customClaims.jekuaaRol
 
         if (files.length <= 0) {
             throw new ErroresJekuaa({
@@ -256,6 +232,43 @@ middlewaresUser.validarFotoPerfil = async ( req, res, next ) => {
 
     } catch (error) {
         console.log('ERROR MIDDLEWARE: validarFotoPerfil ', error)
+        next(error)
+    }
+    
+}
+
+middlewaresUser.construirFotoPerfil = async ( req, res, next ) => {
+    
+    try {
+        const { jekuaaDatos, body, files } = req
+        const { uidSolicitante, datosAuthSolicitante } = jekuaaDatos
+        const { busboy } = body
+
+        let file = files[0]
+        let data = Buffer.from(file.buffer)
+        let extensionArchivo = file.mimetype.split('/')[1]
+
+        // Crear ruta temporal para la foto de perfil
+        let dirArray = ['imagenes', 'fotoPerfil']
+        let dirVerificacion = path.join(os.tmpdir())
+        for (let i = 0; i < dirArray.length; i++) {
+            const element = dirArray[i]
+            dirVerificacion = path.join(dirVerificacion, element)
+            if ( !fs.existsSync(dirVerificacion) ) fs.mkdirSync(dirVerificacion)
+        }
+
+        // Crear archivo foto de peril
+        const nombreTemp = `${Date.now()}~${uidSolicitante}.${extensionArchivo}`
+        const rutaArchivoTemp = path.join(os.tmpdir(), 'imagenes', 'fotoPerfil', `${nombreTemp}`)
+        fs.writeFileSync(rutaArchivoTemp, data)
+
+        req.body.extensionArchivo = extensionArchivo
+        req.body.rutaArchivoTemp = rutaArchivoTemp
+
+        return next()
+
+    } catch (error) {
+        console.log('ERROR MIDDLEWARE: construirFotoPerfil ', error)
         next(error)
     }
     
@@ -350,7 +363,7 @@ middlewaresUser.verificarTipoDeDatosCliente = ( req, res, next ) => {
         const { jekuaaDatos, body } = req
         const { datosUsuario, contrasenha, confirmacionContrasenha } = body
 
-        const esRutaAdmin = req.originalUrl.split('/')[2] === 'adminJekuaa'
+        const esRutaAdmin = req.originalUrl.includes('adminJekuaa')
 
         if (datosUsuario) {
             if (typeof datosUsuario != 'object') {
@@ -430,15 +443,12 @@ middlewaresUser.verificarTipoDeDatosCliente = ( req, res, next ) => {
 }
 
 middlewaresUser.validarDatosExistentesClienteCrear = async (req, res, next) => {
-    const { jekuaaDatos, params, body } = req
+    const { jekuaaDatos = {}, params, body } = req
+    const { uidSolicitante, datosAuthSolicitante } = jekuaaDatos
     const { datosUsuario, contrasenha, confirmacionContrasenha } = body
     
     try {
-        const esRutaAdmin = req.originalUrl.split('/')[2] === 'adminJekuaa'
-
-        if  (esRutaAdmin) {
-            var { uidSolicitante, datosAuthSolicitante } = jekuaaDatos
-        }
+        const esRutaAdmin = req.originalUrl.includes('adminJekuaa')
     
         let cantidadCaracteresValido
         let correoValido
@@ -633,7 +643,7 @@ middlewaresUser.validarDatosExistentesClienteActualizar = async (req, res, next)
         const { datosUsuario, contrasenha, confirmacionContrasenha } = body
         const { uidSolicitante, datosAuthSolicitante } = jekuaaDatos
 
-        const esRutaAdmin = req.originalUrl.split('/')[2] === 'adminJekuaa'
+        const esRutaAdmin = req.originalUrl.includes('adminJekuaa')
     
         let cantidadCaracteresValido
         let correoValido
@@ -832,7 +842,7 @@ middlewaresUser.construirDatosUsuario = ( req, res, next ) => {
     const { datosUsuario, contrasenha } = body
 
     try {        
-        const esRutaAdmin = req.originalUrl.split('/')[2] === 'adminJekuaa'
+        const esRutaAdmin = req.originalUrl.includes('adminJekuaa')
         const esOperacionAgregar = req.method === 'POST'
         let datos = null
 
@@ -881,7 +891,7 @@ middlewaresUser.sePuedeEliminarPropietario = async ( req, res, next ) => {
             return next()
         }
         
-        const esRutaAdmin = req.originalUrl.split('/')[2] === 'adminJekuaa'
+        const esRutaAdmin = req.originalUrl.includes('adminJekuaa')
         const uid = esRutaAdmin ? params.uid : uidSolicitante
         const datosAuth = await admin.auth().getUser(uid)
 

@@ -6,7 +6,7 @@ const COLECCION_INSTRUCTOR = 'Instructores'
 class Instructor {
     
     
-    constructor ( datosInstructor ) {
+    constructor ( datosInstructor = {} ) {
         const { 
             uid, fechaComienzoInstructor, cantidadCursos, 
             cantidadEstudiantes, links, informacionInstructor,
@@ -51,7 +51,7 @@ class Instructor {
 
     // Metodo
 
-    setDatosInstructor ( datosInstructor ) {
+    setDatosInstructor ( datosInstructor = {} ) {
         const { 
             uid, fechaComienzoInstructor, cantidadCursos, 
             cantidadEstudiantes, links, informacionInstructor,
@@ -67,66 +67,31 @@ class Instructor {
         this.setEspecializacionesIntereses(especializacionesIntereses)
     }
 
-    setUID ( uid ) {
-        if ( !uid ) {
-            this.uid = ''
-            return 
-        }
-
+    setUID ( uid = db.collection(COLECCION_INSTRUCTOR).doc().id ) {
         this.uid = uid
     }
 
-    setFechaComienzoInstructor ( fechaComienzoInstructor ) {
-        if ( !fechaComienzoInstructor ) {
-            this.fechaComienzoInstructor = null
-            return 
-        }
-
+    setFechaComienzoInstructor ( fechaComienzoInstructor = null ) {
         this.fechaComienzoInstructor = fechaComienzoInstructor
     }
 
-    setCantidadCursos ( cantidadCursos ) {
-        if ( !cantidadCursos ) {
-            this.cantidadCursos = 0
-            return 
-        }
-
+    setCantidadCursos ( cantidadCursos = 0 ) {
         this.cantidadCursos = cantidadCursos
     }
 
-    setCantidadEstudiantes ( cantidadEstudiantes ) {
-        if ( !cantidadEstudiantes ) {
-            this.cantidadEstudiantes = 0
-            return 
-        }
-
+    setCantidadEstudiantes ( cantidadEstudiantes = 0 ) {
         this.cantidadEstudiantes = cantidadEstudiantes
     }
 
-    setLinks ( links ) {
-        if ( !links ) {
-            this.links = []
-            return 
-        }
-
+    setLinks ( links = [] ) {
         this.links = links
     }
 
-    setInformacionInstructor ( informacionInstructor ) {
-        if ( !informacionInstructor ) {
-            this.informacionInstructor = ''
-            return 
-        }
-
+    setInformacionInstructor ( informacionInstructor = '' ) {
         this.informacionInstructor = informacionInstructor
     }
 
-    setEspecializacionesIntereses ( especializacionesIntereses ) {
-        if ( !especializacionesIntereses ) {
-            this.especializacionesIntereses = []
-            return 
-        }
-
+    setEspecializacionesIntereses ( especializacionesIntereses = [] ) {
         this.especializacionesIntereses = especializacionesIntereses
     }
 
@@ -142,12 +107,8 @@ class Instructor {
             ###############################
         */
 
-    // Metodo
-
-    async guardarInstructor () {
-
+    async crearInstructor () {
         await this.crearNuevoInstructor(this.getInstructor())
-
         return this
     }
 
@@ -158,7 +119,7 @@ class Instructor {
             ###############################
         */
 
-    static async crearNuevoInstructor ( datosInstructor ) {
+    static async crearNuevoInstructor ( datosInstructor = {} ) {
 
         const { 
             uid, fechaComienzoInstructor, cantidadCursos, 
@@ -166,26 +127,6 @@ class Instructor {
             especializacionesIntereses
         } = datosInstructor
 
-        if ( cantidadCursos && typeof cantidadCursos != 'number' ) {
-            throw new Error('La cantidadCursos debe ser de tipo number.')
-        }
-
-        if ( cantidadEstudiantes && typeof cantidadEstudiantes != 'number' ) {
-            throw new Error('La cantidadEstudiantes debe ser de tipo number.')
-        }
-
-        if ( links && ( typeof links != 'object' || !(links instanceof Array) ) ) {
-            throw new Error('Los links debe ser de tipo object (Array).')
-        }
-
-        if ( informacionInstructor && typeof informacionInstructor != 'string' ) {
-            throw new Error('La informacionInstructor debe ser de tipo string.')
-        }
-
-        if ( especializacionesIntereses && ( typeof especializacionesIntereses != 'object' || !(especializacionesIntereses instanceof Array) ) ) {
-            throw new Error('Las especializacionesIntereses debe ser de tipo object (Array).')
-        }
-        
         return await db.collection(COLECCION_INSTRUCTOR).doc(uid).set({ 
             uid,
             fechaComienzoInstructor: admin.firestore.Timestamp.fromDate( new Date() ),

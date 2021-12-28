@@ -12,37 +12,14 @@ let store = {};
 
   // If store is an exported method = classic mode (deprecated)
 
-  if (typeof store === 'function') {
-    return console.warn('Classic mode for store/ is deprecated and will be removed in Nuxt 3.')
-  }
-
   // Enforce store modules
   store.modules = store.modules || {}
 
   resolveStoreModules(require('..\\..\\jekuaaNuxt\\store\\modules\\sistema.js'), 'modules/sistema.js')
   resolveStoreModules(require('..\\..\\jekuaaNuxt\\store\\modules\\usuarios\\index.js'), 'modules/usuarios/index.js')
   resolveStoreModules(require('..\\..\\jekuaaNuxt\\store\\modules\\blogs\\index.js'), 'modules/blogs/index.js')
-  resolveStoreModules(require('..\\..\\jekuaaNuxt\\store\\modules\\usuarios\\instructor.js'), 'modules/usuarios/instructor.js')
-  resolveStoreModules(require('..\\..\\jekuaaNuxt\\store\\modules\\usuarios\\misCursos.js'), 'modules/usuarios/misCursos.js')
 
   // If the environment supports hot reloading...
-
-  if (process.client && module.hot) {
-    // Whenever any Vuex module is updated...
-    module.hot.accept([
-      '..\\..\\jekuaaNuxt\\store\\index.js',
-      '..\\..\\jekuaaNuxt\\store\\modules\\sistema.js',
-      '..\\..\\jekuaaNuxt\\store\\modules\\usuarios\\index.js',
-      '..\\..\\jekuaaNuxt\\store\\modules\\blogs\\index.js',
-      '..\\..\\jekuaaNuxt\\store\\modules\\usuarios\\instructor.js',
-      '..\\..\\jekuaaNuxt\\store\\modules\\usuarios\\misCursos.js',
-    ], () => {
-      // Update `root.modules` with the latest definitions.
-      updateModules()
-      // Trigger a hot update in the store.
-      window.$nuxt.$store.hotUpdate(store)
-    })
-  }
 })()
 
 // createStore

@@ -1,28 +1,30 @@
 const admin = require('../../firebase-service')
 const db = require('../../db')
+const DatosHabilitado_Curso = require('./ComponentesCursos/helpers/DatosHabilitado_Curso')
+const DatosPrecio_Curso = require('./ComponentesCursos/helpers/DatosPrecio_Curso')
+const Unidad = require('./ComponentesCursos/Unidad')
+const Clase = require('./ComponentesCursos/Clase')
 
 const COLECCION_CURSOS = 'Cursos'
 
 class Curso {
 
-    constructor ( datosCurso = {}, 
-                datosUnidades = [], 
-                datosClases = [] ) 
-    {
+    constructor ( datosCurso = {} ) {
        
         const {
             uid,
             uidInstructor,
-            habilitado,
+            datosHabilitado,
             titulo,
+            referencia,
             descripcion,
             requisitos,
             objetivos,
             nivel,
-            costo,
             seccion,
             categoria,
             subCategorias,
+            datosPrecio,
             cantidadEstudiantes,
             duracionCurso,
             idioma,
@@ -32,35 +34,39 @@ class Curso {
             fechaActualizacion,
         } = datosCurso
 
-        this.uid = uid
-        this.uidInstructor = uidInstructor
-        this.estado = estado
-        this.fechaHabilitado = fechaHabilitado
-        this.cantidadEstudiantes = cantidadEstudiantes
-        this.fechaSolicitud = fechaSolicitud
-        this.fechaUltimaActualizacion = fechaUltimaActualizacion
-        this.duracionCurso = duracionCurso
-        this.idioma = idioma
-        this.subTitulos = subTitulos
-        this.nivel = nivel
-        this.certificado = certificado
-        this.descripcion = descripcion
-        this.costo = costo
-        this.requisitos = requisitos
-        this.objetivos = objetivos
-        this.nombre = nombre
-        this.seccion = seccion
-        this.subseccion = subseccion
-
-        this.datosUnidades = datosUnidades
-        this.datosClases = datosClases
+        this.uid = uid ? uid : db.collection(COLECCION_CURSOS).doc().id
+        this.uidInstructor = uidInstructor ? uidInstructor : ''
+        this.datosHabilitado = datosHabilitado ? datosHabilitado : new DatosHabilitado_Curso()
+        this.titulo = titulo ? titulo : ''
+        this.referencia = referencia ? referencia : ''
+        this.descripcion = descripcion ? descripcion : ''
+        this.requisitos = requisitos ? requisitos : []
+        this.objetivos = objetivos ? objetivos : []
+        this.nivel = nivel ? nivel : 'basico'
+        this.seccion = seccion ? seccion : ''
+        this.categoria = categoria ? categoria : ''
+        this.subCategorias = subCategorias ? subCategorias : []
+        this.datosPrecio = datosPrecio ? datosPrecio : new DatosPrecio_Curso()
+        this.cantidadEstudiantes = cantidadEstudiantes ? cantidadEstudiantes : 0
+        this.duracionCurso = duracionCurso ? duracionCurso : 0
+        this.idioma = idioma ? idioma : 'español'
+        this.subTitulos = subTitulos ? subTitulos : []
+        this.certificado = certificado !== undefined ? certificado : false
+        this.fechaCreacion = fechaCreacion ? fechaCreacion : null
+        this.fechaActualizacion = fechaActualizacion ? fechaActualizacion : null
     }
 
     /* 
         GETTERS: Se obtienen los datos de los atributos
     */
 
+    getCurso ( getJSON = false ) {
+        if ( getJSON ) {
+            return JSON.parse( JSON.stringify( this ) )
+        }
 
+        return this
+    }
 
 
     
@@ -68,135 +74,140 @@ class Curso {
         SETTERS: Se agregan los datos que se desee a los atributos
     */
 
-    setDatosCurso ( datosCurso, datosUnidades = [], datosClases = [] ) {
+    setDatosCurso ( datosCurso ) {
         const {
             uid,
             uidInstructor,
-            estado,
-            fechaHabilitado,
+            datosHabilitado,
+            titulo,
+            referencia,
+            descripcion,
+            requisitos,
+            objetivos,
+            nivel,
+            seccion,
+            categoria,
+            subCategorias,
+            datosPrecio,
             cantidadEstudiantes,
-            fechaSolicitud,
-            fechaUltimaActualizacion,
             duracionCurso,
             idioma,
             subTitulos,
-            nivel,
             certificado,
-            descripcion,
-            costo,
-            requisitos,
-            objetivos,
-            nombre,
-            seccion,
-            subseccion
+            fechaCreacion,
+            fechaActualizacion,
         } = datosCurso
 
         this.setUID( uid )
         this.setUIDInstructor( uidInstructor )
-        this.setEstado( estado )
-        this.setFechaHabilitado( fechaHabilitado )
+        this.setDatosHabilitado( datosHabilitado )
+        this.setTitulo( titulo )
+        this.setReferencia( referencia )
+        this.setDescripcion( descripcion )
+        this.setRequisitos( requisitos )
+        this.setObjetivos( objetivos )
+        this.setNivel( nivel )
+        this.setSeccion( seccion )
+        this.setCategoria( categoria )
+        this.setSubCategorias( subCategorias )
+        this.setDatosPrecio( datosPrecio )
         this.setCantidadEstudiante( cantidadEstudiantes )
-        this.setFechaSolicitud( fechaSolicitud )
-        this.setFechaUltimaActualizacion( fechaUltimaActualizacion )
         this.setDuracionCurso( duracionCurso )
         this.setIdioma( idioma )
         this.setSubTitulos( subTitulos )
-        this.setNivel( nivel )
         this.setCertificado( certificado )
-        this.setDescripcion( descripcion )
-        this.setCosto( costo )
-        this.setRequisitos( requisitos )
-        this.setObjetivos( objetivos )
-        this.setNombre( nombre )
-        this.setSeccion( seccion )
-        this.setSubseccion( subseccion )
-
-        this.setDatosUnidades( datosUnidades )
-        this.setDatosClases( datosClases )
+        this.setFechaCreacion( fechaCreacion )
+        this.setFechaActualizacion( fechaActualizacion )
     }
 
-    setUID ( uid ) {
+    setUID ( uid = db.collection(COLECCION_CURSOS).doc().id ) {
         this.uid = uid
     }
 
-    setUIDInstructor ( uidInstructor ) {
+    setUIDInstructor ( uidInstructor = '' ) {
         this.uidInstructor = uidInstructor
     }
 
-    setEstado ( estado ) {
-        this.estado = estado
+    setDatosHabilitado ( datosHabilitado = new DatosHabilitado_Curso() ) {
+        if (datosHabilitado instanceof DatosHabilitado_Curso) {
+            this.datosHabilitado = datosHabilitado
+            return
+        }
+
+        this.datosHabilitado = new DatosHabilitado_Curso(datosHabilitado)
     }
 
-    setFechaHabilitado ( fechaHabilitado ) {
-        this.fechaHabilitado = fechaHabilitado
-    } 
-
-    setCantidadEstudiante ( cantidadEstudiantes ) {
-        this.cantidadEstudiantes = cantidadEstudiantes
+    setTitulo ( titulo = '' ) {
+        this.titulo = titulo
     }
 
-    setFechaSolicitud ( fechaSolicitud ) {
-        this.fechaSolicitud = fechaSolicitud
+    setReferencia ( referencia = '' ) {
+        this.referencia = referencia
     }
 
-    setFechaUltimaActualizacion ( fechaUltimaActualizacion ) {
-        this.fechaUltimaActualizacion = fechaUltimaActualizacion
-    }
-
-    setDuracionCurso ( duracionCurso ) {
-        this.duracionCurso = duracionCurso
-    }
-
-    setIdioma ( idioma ) {
-        this.idioma = idioma
-    }
-
-    setSubTitulos ( subTitulos ) {
-        this.subTitulos = subTitulos
-    }
-
-    setNivel ( nivel ) {
-        this.nivel = nivel
-    }
-
-    setCertificado ( certificado ) {
-        this.certificado = certificado
-    }
-
-    setDescripcion ( descripcion ) {
+    setDescripcion ( descripcion = '' ) {
         this.descripcion = descripcion
     }
 
-    setCosto ( costo ) {
-        this.costo = costo
-    }
-
-    setRequisitos ( requisitos ) {
+    setRequisitos ( requisitos = [] ) {
         this.requisitos = requisitos
     }
 
-    setObjetivos ( objetivos ) {
+    setObjetivos ( objetivos = [] ) {
         this.objetivos = objetivos
     }
 
-    setNombre ( nombre ) {
-        this.nombre = nombre
+    setNivel ( nivel = 'basico' ) {
+        this.nivel = nivel
     }
 
-    setSeccion ( seccion ) {
+    setSeccion ( seccion = '' ) {
         this.seccion = seccion
     }
 
-    setSubseccion ( subseccion ) {
-        this.subseccion = subseccion
+    setCategoria ( categoria = '' ) {
+        this.categoria = categoria
     }
 
-    setDatosUnidades ( datosUnidades ) {
-        this.datosUnidades = datosUnidades
+    setSubCategorias ( subCategorias = [] ) {
+        this.subCategorias = subCategorias
     }
 
-    setDatosClases ( datosClases ) {
-        this.datosClases = datosClases
+    setDatosPrecio ( datosPrecio = new DatosPrecio_Curso() ) {
+        if (datosPrecio instanceof DatosPrecio_Curso) {
+            this.datosPrecio = datosPrecio
+            return
+        }
+
+        this.datosPrecio = new DatosPrecio_Curso(datosPrecio)
+    }
+
+    setCantidadEstudiante ( cantidadEstudiantes = 0 ) {
+        this.cantidadEstudiantes = cantidadEstudiantes
+    }
+
+    setDuracionCurso ( duracionCurso = 0 ) {
+        this.duracionCurso = duracionCurso
+    }
+
+    setIdioma ( idioma = 'español' ) {
+        this.idioma = idioma
+    }
+
+    setSubTitulos ( subTitulos = [] ) {
+        this.subTitulos = subTitulos
+    }
+
+    setCertificado ( certificado = false ) {
+        this.certificado = certificado
+    }
+
+    setFechaCreacion ( fechaCreacion = null ) {
+        this.fechaCreacion = fechaCreacion
+    }
+
+    setFechaActualizacion ( fechaActualizacion = null ) {
+        this.fechaActualizacion = fechaActualizacion
     }
 
 
@@ -215,141 +226,100 @@ class Curso {
     async importarDatosDeUnCurso ( uidCurso ) {
         
         const refCurso = db.collection(COLECCION_CURSOS).doc(uidCurso)
+        const docCurso = await refCurso.get()
+        const datosCurso = docCurso.data()
 
-        const datosCurso = (await refCurso.get()).data()
+        this.setDatosCurso ( datosCurso )
 
-        const datosUnidades
-
-        const datosClases
-
-        this.setDatosCurso(datosCurso, datosUnidades, datosClases)
-
-        return true
-    }
-    
-
-    async habilitarCurso ( habilitar ) {
-        
+        return this
     }
 
 
     // CRUD Curso
-    async crearCurso (  ) {
-
-        const datosCurso = {
-            uid: '',
-            uidInstructor: this.uidInstructor,
-            estado: this.estado,
-            fechaHabilitado: this.fechaHabilitado,
-            cantidadEstudiantes: this.cantidadEstudiantes,
-            fechaSolicitud: this.fechaSolicitud,
-            fechaUltimaActualizacion: this.fechaUltimaActualizacion,
-            duracionCurso: this.duracionCurso,
-            idioma: this.idioma,
-            subTitulos: this.subTitulos,
-            nivel: this.nivel,
-            certificado: this.certificado,
-            descripcion: this.descripcion,
-            costo: this.costo,
-            requisitos: this.requisitos,
-            objetivos: this.objetivos,
-            nombre: this.nombre,
-            seccion: this.seccion,
-            subseccion: this.subseccion
-        }
-
-        this.uid = (await db.collection(COLECCION_CURSOS).add(datosCurso)).id
-
-        await db.collection(COLECCION_CURSOS).doc(this.uid).update({
-            uid: this.uid
-        })
-
-        datosCurso.uid = this.uid
-
-        const curso = new Curso(datosCurso)
-
-        return curso
-
-    }
-
-    verCurso (  ) {
+    async agregarCurso (  ) {
+        const datosCurso = this.getCurso ( true )
+        await db.collection(COLECCION_CURSOS).add(datosCurso)
         return this
     }
 
-    async actualizarCurso (  ) {
-        const datosCurso = {
-            uid: this.uid,
-            uidInstructor: this.uidInstructor,
-            estado: this.estado,
-            fechaHabilitado: this.fechaHabilitado,
-            cantidadEstudiantes: this.cantidadEstudiantes,
-            fechaSolicitud: this.fechaSolicitud,
-            fechaUltimaActualizacion: this.fechaUltimaActualizacion,
-            duracionCurso: this.duracionCurso,
-            idioma: this.idioma,
-            subTitulos: this.subTitulos,
-            nivel: this.nivel,
-            certificado: this.certificado,
-            descripcion: this.descripcion,
-            costo: this.costo,
-            requisitos: this.requisitos,
-            objetivos: this.objetivos,
-            nombre: this.nombre,
-            seccion: this.seccion,
-            subseccion: this.subseccion
-        }
-
-        await db.collection(COLECCION_CURSOS).doc(this.uid).update(datosCurso)
-
-        return true
+    async actualizarCurso ( datosActualizados ) {
+        await db.collection(COLECCION_CURSOS).doc(this.uid).update(datosActualizados)
+        return this
     }
 
     async eliminarCurso (  ) {
         await db.collection(COLECCION_CURSOS).doc(this.uid).delete()
-
-        return true
+        return this
     }
 
 
     // CRUD Unidades
-    agregarUnidad ( datosUnidad ) {
+    async agregarUnidad ( datosUnidad ) {
+        const unidad = new Unidad( datosUnidad )
+        
+        await unidad.agregar(this.uid)
 
+        return this
     }
 
-    verUnidades ( uidCurso ) {
-
+    async obtenerUnidades (  ) {
+        return await Unidad.obtenerUnidades(this.uid)
     }
 
-    editarUnidad ( uidCurso, unidad, datosUnidad ) {
+    async actualizarUnidad ( uidUnidad, datosActualizados ) {
+        const unidad = new Unidad()
+        unidad.setUid(uidUnidad)
 
+        await unidad.actualizar(this.uid, datosActualizados)
+
+        return this
     }
 
-    eliminarUnidad ( uidCurso, unidad ) {
+    async eliminarUnidad ( uidUnidad ) {
+        const unidad = new Unidad()
+        unidad.setUid(uidUnidad)
 
+        await unidad.eliminar(this.uid)
+
+        return this
     }
 
 
     // CRUD Clases
-    agregarClase ( unidad, datosClase ) {
+    async agregarClase ( datosClase ) {
+        const clase = new Clase( datosClase )
+        
+        await clase.agregar(this.uid)
 
+        return this
     }
 
-    verClases ( uidCurso, unidad ) {
-
+    async obtenerClases ( ) {
+        return await Clase.obtenerClases(this.uid)
     }
 
-    editarClase ( uidCurso, unidad, uidClase, datosClase ) {
+    async actualizarClase ( uidClase, datosActualizados ) {
+        const clase = new Clase()
+        clase.setUid(uidClase)
 
+        await clase.actualizar(this.uid, datosActualizados)
+
+        return this
     }
 
-    eliminarClase ( uidCurso, unidad, uidClase ) {
+    async eliminarClase ( uidClase ) {
+        const clase = new Clase()
+        clase.setUid(uidClase)
 
+        await clase.eliminar(this.uid)
+
+        return this
     }
 
 
     // 
     asignarCursoAUsuario ( uidUsuario ) {
-
+        
     }
 
         /* 

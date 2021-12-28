@@ -67,9 +67,8 @@ export default {
                 const { uidBlog, datosBlog, contenidoBlog } = datos
 
                 let token = this.$firebase.auth().currentUser
-
                 token = token ? await token.getIdToken() : ''
-                this.$store.commit('modules/usuarios/setTOKEN', token)
+                await this.$store.dispatch('modules/usuarios/setTOKEN', token)
 
                 let cambioDatosBlog = !!Object.keys(datosBlog).length
                 let cambioContenidoBlog = !!Object.keys(contenidoBlog).length
@@ -115,7 +114,7 @@ export default {
             // Obtener contenido del blog desde la api de Jekuaa
             let usuario = this.$firebase.auth().currentUser
             let token = usuario ? await usuario.getIdToken() : ''
-            this.$store.commit('modules/usuarios/setTOKEN', token)
+            await this.$store.dispatch('modules/usuarios/setTOKEN', token)
             
             const response = await this.$axios.get(`/blog/miembroJekuaa/obtenerContenido/${doc.data().uid}`, {
                 headers: {
@@ -134,50 +133,6 @@ export default {
             this.$router.push('/miembro-jekuaa/blogs/mis-blogs')
         }
     },
-    // async asyncData({isDev, route, $firebase, $axios, store, env, params, query, req, res, redirect, error}) {
-    //     try {
-    //         // Variables
-    //         let datosBlog = null
-    //         let contenidoBlog = ''
-    //         let imgBlog = ''
-            
-    //         // Obtener datos de blog desde firebase
-    //         const db = $firebase.firestore()
-
-    //         const ref = db.collection('Blogs').where('referencia', '==', params.referencia)
-    //         const docs = await ref.get()
-    //         const doc = docs.docs[0]
-
-    //         if (!doc.exists) {
-    //             redirect('/miembro-jekuaa/blogs/mis-blogs')
-    //         }
-            
-    //         datosBlog = doc.data()
-            
-    //         // Obtener contenido del blog desde la api de Jekuaa
-    //         const token = store.state.modules.usuarios.token
-    //         const response = await $axios.get(`/blog/miembroJekuaa/obtenerContenido/${datosBlog.uid}`, {
-    //             headers: {
-    //                 'Content-Type': 'application/json',
-    //                 Authorization: `Bearer ${token}`
-    //             }
-    //         })
-
-    //         let converter = new showdown.Converter()
-
-    //         contenidoBlog = converter.makeHtml(response.data.resultado.contenido)
-    //         imgBlog = response.data.resultado.imgBlog
-
-    //         return {
-    //             datosBlog,
-    //             contenidoBlog,
-    //             imgBlog,
-    //         }
-    //     } catch (error) {
-    //         console.log('err', error)
-    //         redirect('/miembro-jekuaa/blogs/mis-blogs')
-    //     }
-    // },
 }
 </script>
 
