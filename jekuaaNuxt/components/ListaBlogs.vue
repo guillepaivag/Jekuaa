@@ -25,9 +25,13 @@
               >
                 <v-card-text>
                   <div>Jekuaapy blog</div>
-                  <p class="text-h4 text--primary">
-                    {{dato.blog.titulo}}
-                  </p>
+                  <div class="mb-3 mt-2">
+                    <nuxt-link :to="`/blog/${dato.blog.referencia}`">
+                      <b class="text-h4 text--primary">
+                        {{dato.blog.titulo}}
+                      </b>
+                    </nuxt-link>
+                  </div>
                   <div class="text--primary">
                     {{dato.blog.descripcion}}
                   </div>
@@ -266,7 +270,7 @@ export default {
           }
         }
         
-        let response = await this.$axios.post('/blog/estudiante/listaBlogsPorMG', body, config)
+        let response = await this.$axios.post('/blog/blogsSeccionCategoriaPorMG', body, config)
         const listaDatosBlogs = response.data.resultado
 
         let listaAux = []
@@ -298,10 +302,7 @@ export default {
       
       for (let i = 0; i < n.length; i++) {
         const infoBlog = n[i]
-        const body = {
-          uid: infoBlog.blog.publicador
-        }
-        const response = await this.$axios.post('/usuarios/estudiante/authUsuario', body, config)
+        const response = await this.$axios.get(`/usuario/datosAuthentication/uid/${infoBlog.blog.publicador}`, config)
         this.listaDatosBlogs[i].publicador.nombreUsuario = response.data.resultado.displayName
         this.listaDatosBlogs[i].publicador.fotoPerfil = response.data.resultado.photoURL
       }

@@ -55,30 +55,17 @@ export default {
             try {
                 this.buscando = true
                 this.ultimaUID = ''
-
-                let usuario = this.$firebase.auth().currentUser
-                let token = await usuario.getIdToken()
-                await this.$store.dispatch('modules/usuarios/setTOKEN', token)
-
-                let body = {
+                
+                const { blogs, ultimaUID, existeMasDatos, } = await this.$store.dispatch('modules/blogs/paginarBlogs', {
                     ultimaUID: this.ultimaUID, 
-                    maximoPorPagina: 5,
-                    filtros: this.filtros
-                }
-
-                let config = {
-                    headers: {
-                        'Content-Type': 'application/json',
-                        Authorization: `Bearer ${token}`,
-                    }
-                }
-
-                const response = await this.$axios.post('/blog/miembroJekuaa/paginarListaBlogs', body, config)
+                    filtros: this.filtros, 
+                    esRutaEstudiante: true,
+                })
 
                 this.blogs = []
                 let aux = []
-                for (let i = 0; i < response.data.resultado.blogs.length; i++) {
-                    const blog = response.data.resultado.blogs[i]
+                for (let i = 0; i < blogs.length; i++) {
+                    const blog = blogs[i]
                     aux.push({
                         blog: blog,
                         publicador: {
@@ -90,8 +77,8 @@ export default {
                 }
 
                 this.blogs.push(...aux)
-                this.ultimaUID = response.data.resultado.ultimaUID
-                this.existeMasDatos = response.data.resultado.existeMasDatos
+                this.ultimaUID = ultimaUID
+                this.existeMasDatos = existeMasDatos
 
             } catch (error) {
                 const accion = await this.$store.dispatch('modules/sistema/errorHandler', error)
@@ -108,29 +95,15 @@ export default {
                     return
                 }
 
-                let usuario = this.$firebase.auth().currentUser
-                let token = usuario ? await usuario.getIdToken() : ''
-                await this.$store.dispatch('modules/usuarios/setTOKEN', token)
-
-                let body = {
+                const { blogs, ultimaUID, existeMasDatos, } = await this.$store.dispatch('modules/blogs/paginarBlogs', {
                     ultimaUID: this.ultimaUID, 
-                    maximoPorPagina: 5,
-                    filtros: this.filtros
-                }
-
-                let config = {
-                    headers: {
-                        'Content-Type': 'application/json',
-                        Authorization: `Bearer ${token}`,
-                    }
-                }
-
-                const response = await this.$axios.post('/blog/miembroJekuaa/paginarListaBlogs', body, config)
-                const nuevosBlogs = response.data.resultado.blogs
+                    filtros: this.filtros, 
+                    esRutaEstudiante: true,
+                })
 
                 let aux = []
-                for (let i = 0; i < nuevosBlogs.length; i++) {
-                    const blog = nuevosBlogs[i]
+                for (let i = 0; i < blogs.length; i++) {
+                    const blog = blogs[i]
                     aux.push({
                         blog: blog,
                         publicador: {
@@ -142,8 +115,8 @@ export default {
                 }
                 
                 this.blogs.push(...aux)
-                this.ultimaUID = response.data.resultado.ultimaUID
-                this.existeMasDatos = response.data.resultado.existeMasDatos
+                this.ultimaUID = ultimaUID
+                this.existeMasDatos = existeMasDatos
                 
             } catch (error) {
                 const accion = await this.$store.dispatch('modules/sistema/errorHandler', error)
@@ -174,10 +147,7 @@ export default {
                 const infoBlog = n[i]
                 
                 if (!infoBlog.publicador.nombreUsuario) {
-                    const body = {
-                        uid: infoBlog.blog.publicador
-                    }
-                    const response = await this.$axios.post('/usuarios/estudiante/authUsuario', body, config)
+                    const response = await this.$axios.get(`/usuario/datosAuthentication/uid/${infoBlog.blog.publicador}`, config)
                     this.blogs[i].publicador.nombreUsuario = response.data.resultado.displayName
                     this.blogs[i].publicador.fotoPerfil = response.data.resultado.photoURL
                 }

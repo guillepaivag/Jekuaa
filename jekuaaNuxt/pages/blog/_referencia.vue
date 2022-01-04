@@ -163,7 +163,7 @@ export default {
                     }
                 }
 
-                this.$axios.post(`/blog/estudiante/meGusta/${this.blog.uid}`, body, config)
+                this.$axios.post(`/estudiante/meGustaBlog/${this.blog.uid}`, body, config)
 
                 this.meGustaEsteBlog = true
                 this.blog.cantidadMeGusta++
@@ -192,7 +192,7 @@ export default {
                     }
                 }
 
-                this.$axios.post(`/blog/estudiante/meGusta/${this.blog.uid}`, body, config)
+                this.$axios.post(`/estudiante/meGustaBlog/${this.blog.uid}`, body, config)
 
                 this.meGustaEsteBlog = false
                 this.blog.cantidadMeGusta--
@@ -250,7 +250,7 @@ export default {
                 }
             }
 
-            let response = await $axios.get(`/blog/estudiante/obtenerContenido/${blog.uid}`, config)
+            let response = await $axios.get(`/blog/obtenerContenido/${blog.uid}`, config)
 
             const converter = new showdown.Converter()
             contenidoBlog = converter.makeHtml(response.data.resultado)

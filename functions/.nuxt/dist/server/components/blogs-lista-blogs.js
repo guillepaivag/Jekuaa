@@ -6,9 +6,8 @@ exports.modules = {
 
 var map = {
 	"./informatica.webp": 281,
-	"./sinSeccion.webp": 282,
-	"./sinSeccion1.webp": 283,
-	"./sinSeccion2.webp": 284
+	"./matematica.webp": 282,
+	"./sinSeccion.webp": 283
 };
 
 
@@ -36,32 +35,25 @@ webpackContext.id = 262;
 /***/ 281:
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__.p + "img/informatica.292d832.webp";
+module.exports = __webpack_require__.p + "img/informatica.3ab6971.webp";
 
 /***/ }),
 
 /***/ 282:
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__.p + "img/sinSeccion.4de0f3c.webp";
+module.exports = __webpack_require__.p + "img/matematica.8a0c5ca.webp";
 
 /***/ }),
 
 /***/ 283:
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__.p + "img/sinSeccion1.0b4ce86.webp";
+module.exports = __webpack_require__.p + "img/sinSeccion.42c6954.webp";
 
 /***/ }),
 
-/***/ 284:
-/***/ (function(module, exports, __webpack_require__) {
-
-module.exports = __webpack_require__.p + "img/sinSeccion2.42c6954.webp";
-
-/***/ }),
-
-/***/ 349:
+/***/ 348:
 /***/ (function(module, exports) {
 
 // Exports
@@ -72,19 +64,19 @@ module.exports = {
 
 /***/ }),
 
-/***/ 370:
+/***/ 369:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _node_modules_css_loader_dist_cjs_js_ref_3_oneOf_1_0_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_3_oneOf_1_1_node_modules_nuxt_components_dist_loader_js_ref_0_0_node_modules_vue_loader_lib_index_js_vue_loader_options_lista_blogs_vue_vue_type_style_index_0_id_0fa8a992_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(349);
+/* harmony import */ var _node_modules_css_loader_dist_cjs_js_ref_3_oneOf_1_0_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_3_oneOf_1_1_node_modules_nuxt_components_dist_loader_js_ref_0_0_node_modules_vue_loader_lib_index_js_vue_loader_options_lista_blogs_vue_vue_type_style_index_0_id_0fa8a992_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(348);
 /* harmony import */ var _node_modules_css_loader_dist_cjs_js_ref_3_oneOf_1_0_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_3_oneOf_1_1_node_modules_nuxt_components_dist_loader_js_ref_0_0_node_modules_vue_loader_lib_index_js_vue_loader_options_lista_blogs_vue_vue_type_style_index_0_id_0fa8a992_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_css_loader_dist_cjs_js_ref_3_oneOf_1_0_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_3_oneOf_1_1_node_modules_nuxt_components_dist_loader_js_ref_0_0_node_modules_vue_loader_lib_index_js_vue_loader_options_lista_blogs_vue_vue_type_style_index_0_id_0fa8a992_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_0__);
 /* harmony reexport (unknown) */ for(var __WEBPACK_IMPORT_KEY__ in _node_modules_css_loader_dist_cjs_js_ref_3_oneOf_1_0_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_3_oneOf_1_1_node_modules_nuxt_components_dist_loader_js_ref_0_0_node_modules_vue_loader_lib_index_js_vue_loader_options_lista_blogs_vue_vue_type_style_index_0_id_0fa8a992_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_0__) if(["default"].indexOf(__WEBPACK_IMPORT_KEY__) < 0) (function(key) { __webpack_require__.d(__webpack_exports__, key, function() { return _node_modules_css_loader_dist_cjs_js_ref_3_oneOf_1_0_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_3_oneOf_1_1_node_modules_nuxt_components_dist_loader_js_ref_0_0_node_modules_vue_loader_lib_index_js_vue_loader_options_lista_blogs_vue_vue_type_style_index_0_id_0fa8a992_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_0__[key]; }) }(__WEBPACK_IMPORT_KEY__));
 
 
 /***/ }),
 
-/***/ 382:
+/***/ 381:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -231,7 +223,7 @@ var VProgressCircular = __webpack_require__(71);
 
 function injectStyles (context) {
   
-  var style0 = __webpack_require__(370)
+  var style0 = __webpack_require__(369)
 if (style0.__inject__) style0.__inject__(context)
 
 }

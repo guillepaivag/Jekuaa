@@ -40,13 +40,13 @@ router.get('/obtenerContenido/:uid',
     obtenerContenidoBlog)
 
 
-router.get('/miembroJekuaa/obtenerDatosBlog/:uid', 
+router.get('/miembroJekuaa/obtenerDatos/:uid', 
     estaAutenticado, 
     esMiembroJekuaa, 
     verificacionExistenciaBlog,
     obtenerDatosBlog)
 
-router.get('/miembroJekuaa/obtenerContenidoBlog/:uid',
+router.get('/miembroJekuaa/obtenerContenido/:uid',
     estaAutenticado, 
     esMiembroJekuaa, 
     verificacionExistenciaArchivoBlog,

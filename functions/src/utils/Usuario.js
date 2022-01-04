@@ -1,3 +1,4 @@
+const Authentication = require("../models/Authentication")
 const JekuaaPremium = require("../models/JekuaaPremium")
 const timestamp = require('./timestamp')
 
@@ -13,7 +14,7 @@ const funciones = {}
  * @param {*} confirmacionContrasenha 
  */
 
-funciones.construirDatosParaNuevoUsuario = ( datosUsuario, contrasenha, esRutaAdmin ) => {
+funciones.construirDatosParaCrearUsuario = ( datosUsuario, contrasenha, esRutaAdmin ) => {
     
     const {
         uid,
@@ -46,6 +47,7 @@ funciones.construirDatosParaNuevoUsuario = ( datosUsuario, contrasenha, esRutaAd
 
     // Jekuaa Premium
     const paraDatosPlanPorDefecto = !jekuaaPremium || JekuaaPremium.esPlanGratis(jekuaaPremium.plan)
+    
     datosUsuarioProduccion.jekuaaPremium = {}
     if ( !paraDatosPlanPorDefecto && esRutaAdmin ) {
         datosUsuarioProduccion.jekuaaPremium.plan = jekuaaPremium.plan.trim()
@@ -73,8 +75,8 @@ funciones.construirDatosParaNuevoUsuario = ( datosUsuario, contrasenha, esRutaAd
 
     // Retornar datos para produccion
     return {
-        datosUsuario: datosUsuarioProduccion, 
-        contrasenha: contrasenhaProduccion
+        datosUsuarioConstruido: datosUsuarioProduccion, 
+        contrasenhaConstruido: contrasenhaProduccion
     }
 }
 
@@ -149,60 +151,57 @@ funciones.construirDatosParaActualizarUsuario = ( datosUsuario, contrasenha, esR
     contrasenha ? contrasenhaProduccion = contrasenha.trim() : ''
 
     // Obtener datos
-    if ( Object.keys(datosUsuarioProduccion).length ) {
-        resultados.datosUsuario = datosUsuarioProduccion
-    }
+    if ( Object.keys(datosUsuarioProduccion).length ) 
+        resultados.datosUsuarioConstruido = datosUsuarioProduccion
 
-    if ( contrasenhaProduccion ) {
-        resultados.contrasenha = contrasenhaProduccion
-    }
+    if ( contrasenhaProduccion ) 
+        resultados.contrasenhaConstruido = contrasenhaProduccion
 
     // Retornar datos para produccion
     return resultados
 }
 
-funciones.construirDatosAutentication = (datosUsuario, datosViejos) => {
+funciones.construirDatosAutentication = (datosUsuario) => {
     const datosAutenticacion = {}
     
-    if ( datosUsuario.nombreUsuario && datosUsuario.nombreUsuario != datosViejos.displayName ) {
-        datosAutenticacion.displayName = datosUsuario.nombreUsuario
+    if ( datosUsuario ) {
+        if ( datosUsuario.nombreUsuario ) datosAutenticacion.displayName = datosUsuario.nombreUsuario
+        if ( datosUsuario.correo ) datosAutenticacion.email = datosUsuario.correo
     }
 
-    if ( datosUsuario.correo && datosUsuario.correo != datosViejos.email ) {
-        datosAutenticacion.email = datosUsuario.correo
-    }
-
-    return datosAutenticacion
+    return Object.keys(datosAutenticacion).length ? datosAutenticacion : null
 }
 
-funciones.construirDatosReclamosAutenticacion = (datosNuevos, datosReclamosViejos) => {
+funciones.construirDatosReclamosAutenticacion = async (datosNuevos, auth = new Authentication()) => {
     const datosReclamosAutenticacion = {}
+    let reclamosViejos = ''
 
-    if (datosNuevos.jekuaaPremium && datosNuevos.jekuaaPremium.plan != datosReclamosViejos.jekuaaPremium) {
+    if (datosNuevos.jekuaaPremium || datosNuevos.jekuaaRol || datosNuevos.instructor) {
+        const datosAuth = await auth.obtener()
+        reclamosViejos = datosAuth.customClaims
+    }
+
+    if (datosNuevos && datosNuevos.jekuaaPremium && datosNuevos.jekuaaPremium.plan != reclamosViejos.jekuaaPremium) 
         datosReclamosAutenticacion.jekuaaPremium = datosNuevos.jekuaaPremium.plan
-    }
 
-    if (datosNuevos.jekuaaRol && datosNuevos.jekuaaRol != datosReclamosViejos.jekuaaRol) {
+    if (datosNuevos && datosNuevos.jekuaaRol && datosNuevos.jekuaaRol != reclamosViejos.jekuaaRol) 
         datosReclamosAutenticacion.jekuaaRol = datosNuevos.jekuaaRol
-    }
-
-    if (datosNuevos.instructor != undefined && datosNuevos.instructor != datosReclamosViejos.instructor) {
+    
+    if (datosNuevos && datosNuevos.instructor != undefined && datosNuevos.instructor != reclamosViejos.instructor) 
         datosReclamosAutenticacion.instructor = datosNuevos.instructor
-    }
+    
+    if ( !Object.keys( datosReclamosAutenticacion ).length ) return null
 
-    if ( datosReclamosAutenticacion.jekuaaPremium === undefined ) {
-        datosReclamosAutenticacion.jekuaaPremium = datosReclamosViejos.jekuaaPremium
-    }
-
-    if ( datosReclamosAutenticacion.jekuaaRol === undefined ) {
-        datosReclamosAutenticacion.jekuaaRol = datosReclamosViejos.jekuaaRol
-    }
-
-    if ( datosReclamosAutenticacion.instructor === undefined ) {
-        datosReclamosAutenticacion.instructor = datosReclamosViejos.instructor
-    }
-
-    return datosReclamosAutenticacion
+    if ( datosReclamosAutenticacion.jekuaaPremium === undefined ) 
+        datosReclamosAutenticacion.jekuaaPremium = reclamosViejos.jekuaaPremium
+    
+    if ( datosReclamosAutenticacion.jekuaaRol === undefined ) 
+        datosReclamosAutenticacion.jekuaaRol = reclamosViejos.jekuaaRol
+    
+    if ( datosReclamosAutenticacion.instructor === undefined ) 
+        datosReclamosAutenticacion.instructor = reclamosViejos.instructor
+    
+    return Object.keys(datosReclamosAutenticacion).length ? datosReclamosAutenticacion : null
 }
 
 module.exports = funciones

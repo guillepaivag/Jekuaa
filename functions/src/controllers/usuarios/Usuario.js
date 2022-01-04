@@ -1,9 +1,11 @@
 const db = require('../../../db')
-const Usuario = require('../../models/Usuario')
+const Usuario = require('../../models/ComponentesUsuario/Usuario')
 const Respuesta = require('../../models/Respuesta')
 const manejadorErrores = require('../../helpers/ManejoErrores')
 const ErrorJekuaa = require('../../models/Error/ErroresJekuaa')
 const fs = require('fs')
+const Authentication = require('../../models/Authentication')
+const InformacionUsuario = require('../../models/ComponentesUsuario/InformacionUsuario')
 
 const controllerUsuario = {}
 
@@ -14,11 +16,15 @@ controllerUsuario.crearUsuario = async (req, res) => {
         const { datosUsuario, contrasenha } = body
 
         // Crear usuario
-        const datosUsuarioNuevo = await Usuario.crearNuevoUsuario( datosUsuario, contrasenha )
+        const auth = new Authentication()
+        const usuario = new Usuario(datosUsuario)
+        
+        const uid = await auth.crear(usuario, contrasenha)
+        usuario.setUID(uid)  
+        usuario.crearUsuarioDB()
 
         const respuesta = new Respuesta()
         let codigo = 'jekuaa/exito'
-
         respuesta.setRespuestaPorCodigo(codigo, {
             mensaje: 'El usuario se creo de forma exitosa!',
             resultado: datosUsuarioNuevo
@@ -42,12 +48,13 @@ controllerUsuario.crearUsuario = async (req, res) => {
 
 controllerUsuario.obtenerUsuario = async (req, res) => {
     try {
-        const { jekuaaDatos, body } = req
+        const { jekuaaDatos, params } = req
+        const { tipoIdentificador, valorIdentificador } = params
 
         let datosUsuario 
 
-        if (body.nombreUsuario) {
-            const doc = await db.collection('Usuarios').where('nombreUsuario', '==', body.nombreUsuario).get()
+        if ( tipoIdentificador === 'nombreUsuario' ) {
+            const doc = await db.collection('Usuarios').where('nombreUsuario', '==', valorIdentificador).get()
             
             if (doc.empty) {
                 throw new ErrorJekuaa({
@@ -57,8 +64,8 @@ controllerUsuario.obtenerUsuario = async (req, res) => {
             }
 
             datosUsuario = doc.docs[0].data()
-        } else if (body.correo) {
-            const doc = await db.collection('Usuarios').where('correo', '==', body.correo).get()
+        } else if ( tipoIdentificador === 'correo' ) {
+            const doc = await db.collection('Usuarios').where('correo', '==', valorIdentificador).get()
             
             if (doc.empty) {
                 throw new ErrorJekuaa({
@@ -68,8 +75,10 @@ controllerUsuario.obtenerUsuario = async (req, res) => {
             }
 
             datosUsuario = doc.docs[0].data()
-        } else if (body.uid) {
-            datosUsuario = await Usuario.verDatosUsuarioPorUID( body.uid )
+        } else if ( tipoIdentificador === 'uid' ) {
+            const usuario = new Usuario()
+            await usuario.importarDatosUsuarioPorUID(valorIdentificador)
+            datosUsuario = usuario.getDatosUsuario()
 
         } else {
             throw new ErrorJekuaa({
@@ -107,13 +116,14 @@ controllerUsuario.obtenerUsuario = async (req, res) => {
 
 controllerUsuario.obtenerUsuarioAuth = async (req, res) => {
     try {
-        const { jekuaaDatos, body } = req
+        const { jekuaaDatos, params } = req
+        const { tipoIdentificador, valorIdentificador } = params
         
         let datosAuth 
         let uid
 
-        if (body.nombreUsuario) {
-            const doc = await db.collection('Usuarios').where('nombreUsuario', '==', body.nombreUsuario).get()
+        if ( tipoIdentificador === 'nombreUsuario' ) {
+            const doc = await db.collection('Usuarios').where('nombreUsuario', '==', valorIdentificador).get()
             
             if (doc.empty) {
                 throw new ErrorJekuaa({
@@ -125,8 +135,8 @@ controllerUsuario.obtenerUsuarioAuth = async (req, res) => {
             let datosUsuario = doc.docs[0].data()
 
             uid = datosUsuario.uid
-        } else if (body.correo) {
-            const doc = await db.collection('Usuarios').where('correo', '==', body.correo).get()
+        } else if ( tipoIdentificador === 'correo' ) {
+            const doc = await db.collection('Usuarios').where('correo', '==', valorIdentificador).get()
             
             if (doc.empty) {
                 throw new ErrorJekuaa({
@@ -138,8 +148,8 @@ controllerUsuario.obtenerUsuarioAuth = async (req, res) => {
             let datosUsuario = doc.docs[0].data()
 
             uid = datosUsuario.uid
-        } else if (body.uid) {
-            uid = body.uid
+        } else if ( tipoIdentificador === 'uid' ) {
+            uid = valorIdentificador
 
         } else {
             throw new ErrorJekuaa({
@@ -148,8 +158,10 @@ controllerUsuario.obtenerUsuarioAuth = async (req, res) => {
             })
         }
 
-        let responseDatosAuth = await Usuario.verDatosAuthPorUID( uid )
-        datosAuth = JSON.parse( JSON.stringify(responseDatosAuth) )
+        const auth = new Authentication(uid)
+        let responseDatosAuth = await auth.obtener()
+        
+        datosAuth = JSON.parse( JSON.stringify( responseDatosAuth ) )
 
         delete datosAuth.email
         delete datosAuth.emailVerified
@@ -185,13 +197,14 @@ controllerUsuario.obtenerUsuarioAuth = async (req, res) => {
 
 controllerUsuario.obtenerUsuarioInfo = async (req, res) => {
     try {
-        const { jekuaaDatos, body } = req
+        const { jekuaaDatos, params } = req
+        const { tipoIdentificador, valorIdentificador } = params
         
         let datosInfo 
         let uid
 
-        if (body.nombreUsuario) {
-            const doc = await db.collection('Usuarios').where('nombreUsuario', '==', body.nombreUsuario).get()
+        if ( tipoIdentificador === 'nombreUsuario' ) {
+            const doc = await db.collection('Usuarios').where('nombreUsuario', '==', valorIdentificador).get()
             
             if (doc.empty) {
                 throw new ErrorJekuaa({
@@ -203,8 +216,8 @@ controllerUsuario.obtenerUsuarioInfo = async (req, res) => {
             let datosUsuario = doc.docs[0].data()
 
             uid = datosUsuario.uid
-        } else if (body.correo) {
-            const doc = await db.collection('Usuarios').where('correo', '==', body.correo).get()
+        } else if ( tipoIdentificador === 'correo' ) {
+            const doc = await db.collection('Usuarios').where('correo', '==', valorIdentificador).get()
             
             if (doc.empty) {
                 throw new ErrorJekuaa({
@@ -216,8 +229,8 @@ controllerUsuario.obtenerUsuarioInfo = async (req, res) => {
             let datosUsuario = doc.docs[0].data()
 
             uid = datosUsuario.uid
-        } else if (body.uid) {
-            uid = body.uid
+        } else if ( tipoIdentificador === 'uid' ) {
+            uid = valorIdentificador
 
         } else {
             throw new ErrorJekuaa({
@@ -225,20 +238,21 @@ controllerUsuario.obtenerUsuarioInfo = async (req, res) => {
                 mensaje: `No hay datos para buscar el usuario.`
             })
         }
+        const info = new InformacionUsuario()
+        await info.importarInformacionUsuario(uid)
+        datosInfo = info.getInformacionUsuario(true)
 
-        datosInfo = await Usuario.obtenerInformacionUsuarioPorUID ( uid )
-
-        if (!datosInfo.exists) {
-            throw new ErrorJekuaa({
-                codigo: 'jekuaa/error/usuario_mala_solicitud',
-                mensaje: `No existe datos de este usuario.`
-            })
-        }
+        // if (!datosInfo.exists) {
+        //     throw new ErrorJekuaa({
+        //         codigo: 'jekuaa/error/usuario_mala_solicitud',
+        //         mensaje: `No existe datos de este usuario.`
+        //     })
+        // }
         
         let codigo = 'jekuaa/exito'
         const respuesta = new Respuesta().setRespuestaPorCodigo(codigo, {
             mensaje: 'Los datos de los usuarios se enviaron de forma exitosa!',
-            resultado: datosInfo.data()
+            resultado: datosInfo
         })
         const status = respuesta.getStatusCode()
         
@@ -261,22 +275,24 @@ controllerUsuario.actualizarMiUsuario = async (req, res) => {
     try {
         const { jekuaaDatos, body } = req
         const { uidSolicitante, datosAuthSolicitante } = jekuaaDatos
-        const { datosUsuario, contrasenha } = body
-        
-        const respuesta = new Respuesta()
-        let codigo = 'jekuaa/exito'
+        const { datosUsuario, contrasenha, datosAuth, datosClaims } = body
 
+        const auth = new Authentication(uidSolicitante)
+
+        // Actualizar authenticacion
+        if (datosAuth || datosClaims) 
+            auth.actualizar({ auth: datosAuth, claims: datosClaims })
+        
         // Actualizar usuario
-        if ( datosUsuario ) {
-            console.log('Actualizando datos del usuario...')
-            await Usuario.actalizarDatosUsuarioPorUID( uidSolicitante, datosUsuario )
-        }
+        if ( datosUsuario ) 
+            Usuario.actalizarDatosUsuarioPorUID( uidSolicitante, datosUsuario )
 
         // Actualizacion de contraseña
-        if ( contrasenha ) {
-            console.log('Actualizando contraseña del usuario...')
-            await Usuario.actualizarContrasenhaPorUID( uidSolicitante, contrasenha )
-        }
+        if ( contrasenha ) 
+            auth.actualizarContrasenha( contrasenha )
+
+        const respuesta = new Respuesta()
+        let codigo = 'jekuaa/exito'
 
         respuesta.setRespuestaPorCodigo(codigo, {
             mensaje: 'El usuario se actualizó de forma exitosa!',
@@ -307,19 +323,8 @@ controllerUsuario.actualizarFotoPerfil = async (req, res) => {
         const respuesta = new Respuesta()
         let codigo = 'jekuaa/exito'
 
-        // Eliminar la foto de perfil anterior
-        await Usuario.eliminarFotoPerfilPorUID(uidSolicitante)
-        
-        // Subir a Firebase Storage
-        await Usuario.subirFotoPerfil({
-            rutaArchivo: rutaArchivoTemp,
-            uidSolicitante,
-            extensionArchivo
-        })
-
-        // Obtener la url de la foto de perfil y actualizar la foto de perfil
-        const url = await Usuario.obtenerFotoPerfilURL(`${uidSolicitante}.${extensionArchivo}`)
-        Usuario.actualizarFotoPerfilPorUID(uidSolicitante, url)
+        const auth = new Authentication(uidSolicitante)
+        const url = await auth.actualizarFotoPerfil(rutaArchivoTemp, extensionArchivo)
 
         // Borrar el archivo creado en el servidor
         fs.unlink(rutaArchivoTemp, (err => {
@@ -357,20 +362,12 @@ controllerUsuario.eliminarFotoPerfil = async (req, res) => {
         const respuesta = new Respuesta()
         let codigo = 'jekuaa/exito'
 
-        // Actualizar usuario
-        const response = await Usuario.eliminarFotoPerfilPorUID(uidSolicitante)
-        Usuario.actualizarFotoPerfilPorUID(uidSolicitante, '')
-
-        if (!response) {
-            throw new ErrorJekuaa({
-                codigo: 'jekuaa/error/usuario_mala_solicitud',
-                mensaje: `No existe la foto de perfil.`
-            })
-        }
+        const auth = new Authentication(uidSolicitante)
+        auth.eliminarFotoPerfil()
 
         respuesta.setRespuestaPorCodigo(codigo, {
             mensaje: '¡Se eliminó la foto de perfil!',
-            resultado: response
+            resultado: ''
         })
         const status = respuesta.getStatusCode()
         
@@ -398,11 +395,11 @@ controllerUsuario.actualizarMiInformacion = async (req, res) => {
         let codigo = 'jekuaa/exito'
 
         // Actualizar usuario
-        const actualizacion = await Usuario.actualizarInformacion(uidSolicitante, datosActualizados)
+        InformacionUsuario.actualizar(uidSolicitante, datosActualizados)
 
         respuesta.setRespuestaPorCodigo(codigo, {
             mensaje: '¡La información del usuario se actualizó de forma exitosa!',
-            resultado: actualizacion
+            resultado: null
         })
         const status = respuesta.getStatusCode()
         

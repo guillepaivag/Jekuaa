@@ -1,7 +1,7 @@
-exports.ids = [28];
+exports.ids = [27];
 exports.modules = {
 
-/***/ 336:
+/***/ 335:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -33,7 +33,7 @@ exports.modules = {
 
 /***/ }),
 
-/***/ 423:
+/***/ 421:
 /***/ (function(module, exports) {
 
 // Exports
@@ -44,7 +44,7 @@ module.exports = {
 
 /***/ }),
 
-/***/ 446:
+/***/ 442:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -115,13 +115,13 @@ var installComponents = __webpack_require__(9);
 var installComponents_default = /*#__PURE__*/__webpack_require__.n(installComponents);
 
 // EXTERNAL MODULE: ./node_modules/vuetify/src/components/VBottomNavigation/VBottomNavigation.sass
-var VBottomNavigation = __webpack_require__(423);
+var VBottomNavigation = __webpack_require__(421);
 
 // EXTERNAL MODULE: ./node_modules/vuetify/lib/mixins/applicationable/index.js
 var applicationable = __webpack_require__(38);
 
 // EXTERNAL MODULE: ./node_modules/vuetify/lib/mixins/button-group/index.js
-var button_group = __webpack_require__(336);
+var button_group = __webpack_require__(335);
 
 // EXTERNAL MODULE: ./node_modules/vuetify/lib/mixins/colorable/index.js
 var colorable = __webpack_require__(5);

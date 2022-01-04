@@ -1,4 +1,4 @@
-exports.ids = [19];
+exports.ids = [18];
 exports.modules = {
 
 /***/ 248:
@@ -403,7 +403,7 @@ const cache = new Map();
 
 /***/ }),
 
-/***/ 416:
+/***/ 415:
 /***/ (function(module, exports) {
 
 // Exports
@@ -414,47 +414,47 @@ module.exports = {
 
 /***/ }),
 
-/***/ 435:
+/***/ 433:
 /***/ (function(module, exports, __webpack_require__) {
 
 module.exports = __webpack_require__.p + "videos/videoPresentacion.b631d49.mp4";
 
 /***/ }),
 
-/***/ 436:
+/***/ 434:
 /***/ (function(module, exports, __webpack_require__) {
 
 module.exports = __webpack_require__.p + "img/pantallaPresentacion.f238a7e.jpg";
 
 /***/ }),
 
-/***/ 437:
+/***/ 435:
 /***/ (function(module, exports, __webpack_require__) {
 
 module.exports = __webpack_require__.p + "img/presentacion1.cd77e1b.jpg";
 
 /***/ }),
 
-/***/ 438:
+/***/ 436:
 /***/ (function(module, exports, __webpack_require__) {
 
 module.exports = __webpack_require__.p + "img/presentacion3.705d370.jpg";
 
 /***/ }),
 
-/***/ 439:
+/***/ 437:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _node_modules_css_loader_dist_cjs_js_ref_3_oneOf_1_0_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_3_oneOf_1_1_node_modules_nuxt_components_dist_loader_js_ref_0_0_node_modules_vue_loader_lib_index_js_vue_loader_options_index_vue_vue_type_style_index_0_id_a7aa60b4_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(416);
-/* harmony import */ var _node_modules_css_loader_dist_cjs_js_ref_3_oneOf_1_0_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_3_oneOf_1_1_node_modules_nuxt_components_dist_loader_js_ref_0_0_node_modules_vue_loader_lib_index_js_vue_loader_options_index_vue_vue_type_style_index_0_id_a7aa60b4_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_css_loader_dist_cjs_js_ref_3_oneOf_1_0_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_3_oneOf_1_1_node_modules_nuxt_components_dist_loader_js_ref_0_0_node_modules_vue_loader_lib_index_js_vue_loader_options_index_vue_vue_type_style_index_0_id_a7aa60b4_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_0__);
-/* harmony reexport (unknown) */ for(var __WEBPACK_IMPORT_KEY__ in _node_modules_css_loader_dist_cjs_js_ref_3_oneOf_1_0_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_3_oneOf_1_1_node_modules_nuxt_components_dist_loader_js_ref_0_0_node_modules_vue_loader_lib_index_js_vue_loader_options_index_vue_vue_type_style_index_0_id_a7aa60b4_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_0__) if(["default"].indexOf(__WEBPACK_IMPORT_KEY__) < 0) (function(key) { __webpack_require__.d(__webpack_exports__, key, function() { return _node_modules_css_loader_dist_cjs_js_ref_3_oneOf_1_0_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_3_oneOf_1_1_node_modules_nuxt_components_dist_loader_js_ref_0_0_node_modules_vue_loader_lib_index_js_vue_loader_options_index_vue_vue_type_style_index_0_id_a7aa60b4_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_0__[key]; }) }(__WEBPACK_IMPORT_KEY__));
+/* harmony import */ var _node_modules_css_loader_dist_cjs_js_ref_3_oneOf_1_0_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_3_oneOf_1_1_node_modules_nuxt_components_dist_loader_js_ref_0_0_node_modules_vue_loader_lib_index_js_vue_loader_options_index_vue_vue_type_style_index_0_id_0b353242_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(415);
+/* harmony import */ var _node_modules_css_loader_dist_cjs_js_ref_3_oneOf_1_0_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_3_oneOf_1_1_node_modules_nuxt_components_dist_loader_js_ref_0_0_node_modules_vue_loader_lib_index_js_vue_loader_options_index_vue_vue_type_style_index_0_id_0b353242_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_css_loader_dist_cjs_js_ref_3_oneOf_1_0_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_3_oneOf_1_1_node_modules_nuxt_components_dist_loader_js_ref_0_0_node_modules_vue_loader_lib_index_js_vue_loader_options_index_vue_vue_type_style_index_0_id_0b353242_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_0__);
+/* harmony reexport (unknown) */ for(var __WEBPACK_IMPORT_KEY__ in _node_modules_css_loader_dist_cjs_js_ref_3_oneOf_1_0_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_3_oneOf_1_1_node_modules_nuxt_components_dist_loader_js_ref_0_0_node_modules_vue_loader_lib_index_js_vue_loader_options_index_vue_vue_type_style_index_0_id_0b353242_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_0__) if(["default"].indexOf(__WEBPACK_IMPORT_KEY__) < 0) (function(key) { __webpack_require__.d(__webpack_exports__, key, function() { return _node_modules_css_loader_dist_cjs_js_ref_3_oneOf_1_0_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_3_oneOf_1_1_node_modules_nuxt_components_dist_loader_js_ref_0_0_node_modules_vue_loader_lib_index_js_vue_loader_options_index_vue_vue_type_style_index_0_id_0b353242_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_0__[key]; }) }(__WEBPACK_IMPORT_KEY__));
 
 
 /***/ }),
 
-/***/ 440:
+/***/ 438:
 /***/ (function(module, exports) {
 
 // Exports
@@ -465,19 +465,19 @@ module.exports = {
 
 /***/ }),
 
-/***/ 444:
+/***/ 440:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 // ESM COMPAT FLAG
 __webpack_require__.r(__webpack_exports__);
 
-// CONCATENATED MODULE: ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/@nuxt/components/dist/loader.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./pages/index.vue?vue&type=template&id=a7aa60b4&scoped=true&
-var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{},[_vm._ssrNode("<section class=\"container presentacion\" data-v-a7aa60b4>","</section>",[_c('v-row',{attrs:{"no-gutters":""}},[_c('v-col',{staticClass:"contenedor-i",attrs:{"cols":"12","md":"7"}},[_c('div',{staticClass:"main-i"},[_c('h1',{staticClass:"titulo"},[_vm._v("¡Bienvenido a Jekuaapy!")]),_vm._v(" "),_c('v-divider'),_vm._v(" "),_c('div',{staticClass:"mt-10 descripcion"},[_vm._v("\n                        Bienvenidos a Jekuaapy, una plataforma educativa para que \n                        aprendas sobre los temas y contenidos que te gusten, \n                        de manera rápida y divertida!\n                    ")]),_vm._v(" "),_c('div',{staticClass:"mt-5"},[_c('v-btn',{attrs:{"color":"#ff1d89","outlined":"","to":"/blogs"}},[_c('v-icon',{attrs:{"left":"","dark":""}},[_vm._v("\n                                mdi-alpha-j-box\n                            ")]),_vm._v("\n                            ¡Descubre más contenido!\n                        ")],1)],1)],1)]),_vm._v(" "),_c('v-col',{staticClass:"contenedor-d",attrs:{"cols":"12","md":"5"}},[_c('div',{staticClass:"main-d"},[_c('video',{attrs:{"src":__webpack_require__(435),"autoplay":"","loop":"","muted":"","type":"mp"},domProps:{"muted":true}}),_vm._v(" "),_c('img',{staticClass:"mask",attrs:{"src":__webpack_require__(436)}})])])],1)],1),_vm._ssrNode(" "),_vm._ssrNode("<div class=\"container contenedor-descripciones\" data-v-a7aa60b4>","</div>",[_c('v-row',{attrs:{"no-gutters":""}},[_c('v-col',{attrs:{"cols":"12","md":"7"}},[_c('v-img',{attrs:{"height":"270px","src":__webpack_require__(437)}})],1),_vm._v(" "),_c('v-col',{staticClass:"contenedor-descripcion",attrs:{"cols":"12","md":"5"}},[_c('div',{staticClass:"font-weight-bold contenedor-descripcion-titulo contenedor-descripcion-titulo-d"},[_vm._v("\n                    ¡Jekuaapy blogs!\n                ")]),_vm._v(" "),_c('div',{staticClass:"font-weight contenedor-descripcion-mensaje"},[_vm._v("\n                    ¡Puedes aprender sobre varios temas como programación, desarrollo web, linux y más en Jekuaapy blogs!\n                ")])])],1)],1),_vm._ssrNode(" "),_c('v-divider'),_vm._ssrNode(" "),_vm._ssrNode("<div class=\"container contenedor-descripciones\" style=\"padding-bottom: 50px;\" data-v-a7aa60b4>","</div>",[_c('v-row',{attrs:{"no-gutters":""}},[_c('v-col',{staticClass:"contenedor-descripcion",attrs:{"cols":"12","md":"5"}},[_c('div',{staticClass:"font-weight-bold contenedor-descripcion-titulo contenedor-descripcion-titulo-i"},[_vm._v("\n                    ¡Diversos temas!\n                ")]),_vm._v(" "),_c('div',{staticClass:"font-weight contenedor-descripcion-mensaje contenedor-descripcion-mensaje-i"},[_vm._v("\n                    En Jekuaapy existen secciones, que se dividen en:\n                ")])]),_vm._v(" "),_c('v-col',{attrs:{"cols":"12","md":"7"}},[_c('v-expansion-panels',{attrs:{"focusable":""}},_vm._l((_vm.listaSecciones),function(seccion,i){return _c('v-expansion-panel',{key:i},[_c('v-expansion-panel-header',[_c('div',{staticStyle:{"font-size":"22px"}},[_vm._v("\n                            "+_vm._s(seccion.nombre)+"\n                        ")])]),_vm._v(" "),_c('v-expansion-panel-content',[_c('div',{staticClass:"mt-3",staticStyle:{"font-size":"18px"}},[_vm._v("\n                            "+_vm._s(seccion.descripcion)+"\n                        ")])])],1)}),1)],1)],1)],1),_vm._ssrNode(" "),_c('v-divider'),_vm._ssrNode(" "),_vm._ssrNode("<div class=\"container contenedor-descripciones\" data-v-a7aa60b4>","</div>",[_c('v-row',{attrs:{"no-gutters":""}},[_c('v-col',{attrs:{"cols":"12","md":"7"}},[_c('v-img',{attrs:{"height":"270px","src":__webpack_require__(438)}})],1),_vm._v(" "),_c('v-col',{staticClass:"contenedor-descripcion",attrs:{"cols":"12","md":"5"}},[_c('div',{staticClass:"font-weight-bold contenedor-descripcion-titulo contenedor-descripcion-titulo-d"},[_vm._v("\n                    ¡Forma parte de la comunidad Jekuaapy!\n                ")]),_vm._v(" "),_c('div',{staticClass:"font-weight contenedor-descripcion-mensaje"},[_vm._v("\n                    Puedes create una cuenta gratis en Jekuaapy y comenzar con esta ¡aventura de conocimiento!\n                ")])])],1)],1),_vm._ssrNode(" "),_c('v-divider'),_vm._ssrNode(" "),_vm._ssrNode("<div class=\"container mt-10 mb-10\" data-v-a7aa60b4>","</div>",[_vm._ssrNode("<div style=\"text-align: center;\" data-v-a7aa60b4>","</div>",[_vm._ssrNode("<h1 class=\"titulo\" data-v-a7aa60b4>Preguntas frecuentes</h1> "),_c('v-divider',{staticClass:"mb-7"})],2),_vm._ssrNode(" "),_c('v-expansion-panels',{attrs:{"focusable":""}},_vm._l((_vm.listaPreguntasFrecuentes),function(item,i){return _c('v-expansion-panel',{key:i},[_c('v-expansion-panel-header',[_c('div',{staticStyle:{"font-size":"22px"}},[_vm._v("\n                    "+_vm._s(item.nombre)+"\n                ")])]),_vm._v(" "),_c('v-expansion-panel-content',[_c('div',{staticClass:"mt-3",staticStyle:{"font-size":"18px"}},[_vm._v("\n                    "+_vm._s(item.descripcion)+"\n                ")])])],1)}),1)],2)],2)}
+// CONCATENATED MODULE: ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/@nuxt/components/dist/loader.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./pages/index.vue?vue&type=template&id=0b353242&scoped=true&
+var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{},[_vm._ssrNode("<section class=\"container presentacion\" data-v-0b353242>","</section>",[_c('v-row',{attrs:{"no-gutters":""}},[_c('v-col',{staticClass:"contenedor-i",attrs:{"cols":"12","md":"7"}},[_c('div',{staticClass:"main-i"},[_c('h1',{staticClass:"titulo"},[_vm._v("¡Bienvenido a Jekuaapy!")]),_vm._v(" "),_c('v-divider'),_vm._v(" "),_c('div',{staticClass:"mt-10 descripcion"},[_vm._v("\n                        Bienvenidos a Jekuaapy, una plataforma educativa para que \n                        aprendas sobre los temas y contenidos que te gusten, \n                        de manera rápida y divertida!\n                    ")]),_vm._v(" "),_c('div',{staticClass:"mt-5"},[_c('v-btn',{attrs:{"color":"#ff1d89","outlined":"","to":"/blogs"}},[_c('v-icon',{attrs:{"left":"","dark":""}},[_vm._v("\n                                mdi-alpha-j-box\n                            ")]),_vm._v("\n                            ¡Descubre más contenido!\n                        ")],1)],1)],1)]),_vm._v(" "),_c('v-col',{staticClass:"contenedor-d",attrs:{"cols":"12","md":"5"}},[_c('div',{staticClass:"main-d"},[_c('video',{attrs:{"src":__webpack_require__(433),"autoplay":"","loop":"","muted":"","type":"mp"},domProps:{"muted":true}}),_vm._v(" "),_c('img',{staticClass:"mask",attrs:{"src":__webpack_require__(434)}})])])],1)],1),_vm._ssrNode(" "),_vm._ssrNode("<div class=\"container contenedor-descripciones\" data-v-0b353242>","</div>",[_c('v-row',{attrs:{"no-gutters":""}},[_c('v-col',{attrs:{"cols":"12","md":"7"}},[_c('v-img',{attrs:{"height":"270px","src":__webpack_require__(435)}})],1),_vm._v(" "),_c('v-col',{staticClass:"contenedor-descripcion",attrs:{"cols":"12","md":"5"}},[_c('div',{staticClass:"font-weight-bold contenedor-descripcion-titulo contenedor-descripcion-titulo-d"},[_vm._v("\n                    ¡Jekuaapy blogs!\n                ")]),_vm._v(" "),_c('div',{staticClass:"font-weight contenedor-descripcion-mensaje"},[_vm._v("\n                    ¡Puedes aprender sobre varios temas como programación, desarrollo web, linux y más en Jekuaapy blogs!\n                ")])])],1)],1),_vm._ssrNode(" "),_c('v-divider'),_vm._ssrNode(" "),_vm._ssrNode("<div class=\"container contenedor-descripciones\" style=\"padding-bottom: 50px;\" data-v-0b353242>","</div>",[_c('v-row',{attrs:{"no-gutters":""}},[_c('v-col',{staticClass:"contenedor-descripcion",attrs:{"cols":"12","md":"5"}},[_c('div',{staticClass:"font-weight-bold contenedor-descripcion-titulo contenedor-descripcion-titulo-i"},[_vm._v("\n                    ¡Diversos temas!\n                ")]),_vm._v(" "),_c('div',{staticClass:"font-weight contenedor-descripcion-mensaje contenedor-descripcion-mensaje-i"},[_vm._v("\n                    En Jekuaapy existen secciones, que se dividen en:\n                ")])]),_vm._v(" "),_c('v-col',{attrs:{"cols":"12","md":"7"}},[_c('v-expansion-panels',{attrs:{"focusable":""}},_vm._l((_vm.listaSecciones),function(seccion,i){return _c('v-expansion-panel',{key:i},[_c('v-expansion-panel-header',[_c('div',{staticStyle:{"font-size":"22px"}},[_vm._v("\n                            "+_vm._s(seccion.nombre)+"\n                        ")])]),_vm._v(" "),_c('v-expansion-panel-content',[_c('div',{staticClass:"mt-3",staticStyle:{"font-size":"18px"}},[_vm._v("\n                            "+_vm._s(seccion.descripcion)+"\n                        ")])])],1)}),1)],1)],1)],1),_vm._ssrNode(" "),_c('v-divider'),_vm._ssrNode(" "),_vm._ssrNode("<div class=\"container contenedor-descripciones\" data-v-0b353242>","</div>",[_c('v-row',{attrs:{"no-gutters":""}},[_c('v-col',{attrs:{"cols":"12","md":"7"}},[_c('v-img',{attrs:{"height":"270px","src":__webpack_require__(436)}})],1),_vm._v(" "),_c('v-col',{staticClass:"contenedor-descripcion",attrs:{"cols":"12","md":"5"}},[_c('div',{staticClass:"font-weight-bold contenedor-descripcion-titulo contenedor-descripcion-titulo-d"},[_vm._v("\n                    ¡Forma parte de la comunidad Jekuaapy!\n                ")]),_vm._v(" "),_c('div',{staticClass:"font-weight contenedor-descripcion-mensaje"},[_vm._v("\n                    Puedes create una cuenta gratis en Jekuaapy y comenzar con esta ¡aventura de conocimiento!\n                ")])])],1)],1),_vm._ssrNode(" "),_c('v-divider'),_vm._ssrNode(" "),_vm._ssrNode("<div class=\"container mt-10 mb-10\" data-v-0b353242>","</div>",[_vm._ssrNode("<div style=\"text-align: center;\" data-v-0b353242>","</div>",[_vm._ssrNode("<h1 class=\"titulo\" data-v-0b353242>Preguntas frecuentes</h1> "),_c('v-divider',{staticClass:"mb-7"})],2),_vm._ssrNode(" "),_c('v-expansion-panels',{attrs:{"focusable":""}},_vm._l((_vm.listaPreguntasFrecuentes),function(item,i){return _c('v-expansion-panel',{key:i},[_c('v-expansion-panel-header',[_c('div',{staticStyle:{"font-size":"22px"}},[_vm._v("\n                    "+_vm._s(item.nombre)+"\n                ")])]),_vm._v(" "),_c('v-expansion-panel-content',[_c('div',{staticClass:"mt-3",staticStyle:{"font-size":"18px"}},[_vm._v("\n                    "+_vm._s(item.descripcion)+"\n                ")])])],1)}),1)],2)],2)}
 var staticRenderFns = []
 
 
-// CONCATENATED MODULE: ./pages/index.vue?vue&type=template&id=a7aa60b4&scoped=true&
+// CONCATENATED MODULE: ./pages/index.vue?vue&type=template&id=0b353242&scoped=true&
 
 // CONCATENATED MODULE: ./node_modules/babel-loader/lib??ref--2-0!./node_modules/@nuxt/components/dist/loader.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./pages/index.vue?vue&type=script&lang=js&
 //
@@ -691,7 +691,7 @@ var staticRenderFns = []
       }],
       listaPreguntasFrecuentes: [{
         nombre: '¿Qué es Jekuaapy?',
-        descripcion: 'Jekuaapy es una plataforma de enseñanza de varios temas, ahora mismo la plataforma cuenta con blogs, vamos ir agregando y actualizando funcionalidades, cursos, retos y de esa forma ir formando a los futuros estudiantes de Jekuaapy y ¡divulgar información! 🌎'
+        descripcion: 'Jekuaapy es una plataforma de enseñanza de varios temas, por el momento la plataforma solamente cuenta con blogs, se irá agregando y actualizando funcionalidades, cursos, retos y de esa forma ir formando a los futuros estudiantes de Jekuaapy y ¡divulgar información! 🌎'
       }]
     };
   }
@@ -991,7 +991,7 @@ const VExpansionPanelHeader_baseMixins = Object(mixins["a" /* default */])(color
 
 }));
 // EXTERNAL MODULE: ./node_modules/vuetify/src/components/VExpansionPanel/VExpansionPanel.sass
-var VExpansionPanel_VExpansionPanel = __webpack_require__(440);
+var VExpansionPanel_VExpansionPanel = __webpack_require__(438);
 
 // EXTERNAL MODULE: ./node_modules/vuetify/lib/components/VItemGroup/VItemGroup.js
 var VItemGroup = __webpack_require__(17);
@@ -1082,7 +1082,7 @@ var VRow = __webpack_require__(257);
 
 function injectStyles (context) {
   
-  var style0 = __webpack_require__(439)
+  var style0 = __webpack_require__(437)
 if (style0.__inject__) style0.__inject__(context)
 
 }
@@ -1095,7 +1095,7 @@ var component = Object(componentNormalizer["a" /* default */])(
   staticRenderFns,
   false,
   injectStyles,
-  "a7aa60b4",
+  "0b353242",
   "7c3ed795"
   
 )

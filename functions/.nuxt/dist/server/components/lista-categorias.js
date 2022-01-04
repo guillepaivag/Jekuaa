@@ -119,7 +119,7 @@ module.exports = {
 
 /***/ }),
 
-/***/ 285:
+/***/ 284:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -266,7 +266,7 @@ var VCard = __webpack_require__(78);
 var components_VCard = __webpack_require__(31);
 
 // EXTERNAL MODULE: ./node_modules/vuetify/lib/components/VDialog/VDialog.js
-var VDialog = __webpack_require__(347);
+var VDialog = __webpack_require__(346);
 
 // EXTERNAL MODULE: ./node_modules/vuetify/lib/components/VDivider/VDivider.js
 var VDivider = __webpack_require__(193);
@@ -280,7 +280,7 @@ var VIcon = __webpack_require__(72);
 
 function injectStyles (context) {
   
-  var style0 = __webpack_require__(335)
+  var style0 = __webpack_require__(334)
 if (style0.__inject__) style0.__inject__(context)
 
 }
@@ -315,7 +315,7 @@ installComponents_default()(component, {VBtn: VBtn["a" /* default */],VCard: VCa
 
 /***/ }),
 
-/***/ 335:
+/***/ 334:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -327,7 +327,7 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
-/***/ 347:
+/***/ 346:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";

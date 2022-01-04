@@ -7,7 +7,7 @@
                     <span class="white--text">Agregue una foto de perfil</span>
                 </v-avatar>
                 <v-avatar @click="launchFilePicker()" size="210px" v-ripple v-else class="mb-3 avatar-img">
-                    <img :src="value.imageURL" alt="avatar">
+                    <img :src="value.imageURL" alt="">
                 </v-avatar>
             </div>
         </div>
@@ -80,10 +80,6 @@ export default {
                 let formData = new FormData()
                 let imageURL = URL.createObjectURL(imageFile)
                 formData.append('image', imageFile)
-
-                console.log('formData', formData)
-                console.log('imageURL', imageURL)
-                console.log('imageFile', imageFile)
                 
                 // Emit the FormData and image URL to the parent component
                 this.$emit('input', { formData, imageURL })

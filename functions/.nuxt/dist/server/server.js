@@ -43,7 +43,7 @@ module.exports =
 /******/
 /******/ 		// "0" is the signal for "already loaded"
 /******/ 		if(installedChunks[chunkId] !== 0) {
-/******/ 			var chunk = require("./" + ({"1":"components/auth-email","2":"components/blogs-buscador-infinito-blogs","3":"components/blogs-filtro-blogs","4":"components/blogs-formulario-blog","5":"components/blogs-infinite-hits-blogs","6":"components/blogs-lista-blogs","7":"components/blogs-visualizador","8":"components/image-input","9":"components/lista-blogs","10":"components/lista-categorias","11":"components/presentacion","12":"components/tiptap","13":"components/tiptap-vuetify-imagen-u-r-l","14":"components/usuarios-carta-presentacion","15":"pages/bienvenido-a-jekuaapy/_nombreUsuario","16":"pages/blog/_referencia","17":"pages/blogs/_seccion/_categoria/_subCategoria","18":"pages/estudiante/_nombreUsuario","19":"pages/index","20":"pages/inicio","21":"pages/inicioSesion","22":"pages/miembro-jekuaa/blog/_referencia","23":"pages/miembro-jekuaa/blog/actualizar/_referencia","24":"pages/miembro-jekuaa/blogs/index","25":"pages/miembro-jekuaa/blogs/mis-blogs","26":"pages/miembro-jekuaa/blogs/nuevo","27":"pages/miembro-jekuaa/index","28":"pages/perfil","29":"pages/perfil/index","30":"pages/perfil/informacion","31":"pages/perfil/seguridad","32":"pages/registro"}[chunkId]||chunkId) + ".js");
+/******/ 			var chunk = require("./" + ({"1":"components/auth-email","2":"components/blogs-buscador-infinito-blogs","3":"components/blogs-filtro-blogs","4":"components/blogs-formulario-blog","5":"components/blogs-infinite-hits-blogs","6":"components/blogs-lista-blogs","7":"components/blogs-visualizador","8":"components/image-input","9":"components/lista-blogs","10":"components/lista-categorias","11":"components/presentacion","12":"components/tiptap","13":"components/usuarios-carta-presentacion","14":"pages/bienvenido-a-jekuaapy/_nombreUsuario","15":"pages/blog/_referencia","16":"pages/blogs/_seccion/_categoria/_subCategoria","17":"pages/estudiante/_nombreUsuario","18":"pages/index","19":"pages/inicio","20":"pages/inicioSesion","21":"pages/miembro-jekuaa/blog/_referencia","22":"pages/miembro-jekuaa/blog/actualizar/_referencia","23":"pages/miembro-jekuaa/blogs/index","24":"pages/miembro-jekuaa/blogs/mis-blogs","25":"pages/miembro-jekuaa/blogs/nuevo","26":"pages/miembro-jekuaa/index","27":"pages/perfil","28":"pages/perfil/index","29":"pages/perfil/informacion","30":"pages/perfil/seguridad","31":"pages/registro"}[chunkId]||chunkId) + ".js");
 /******/ 			var moreModules = chunk.modules, chunkIds = chunk.ids;
 /******/ 			for(var moduleId in moreModules) {
 /******/ 				modules[moduleId] = moreModules[moduleId];
@@ -2484,12 +2484,6 @@ const Resize = {
 
 /***/ }),
 /* 22 */
-/***/ (function(module, exports) {
-
-module.exports = require("firebase");
-
-/***/ }),
-/* 23 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -2879,7 +2873,7 @@ const baseMixins = Object(mixins["a" /* default */])(binds_attrs["a" /* default 
 /* harmony default export */ var components_VInput = __webpack_exports__["a"] = (VInput_VInput);
 
 /***/ }),
-/* 24 */
+/* 23 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -2933,6 +2927,12 @@ const Intersect = {
   unbind
 };
 /* harmony default export */ __webpack_exports__["a"] = (Intersect);
+
+/***/ }),
+/* 24 */
+/***/ (function(module, exports) {
+
+module.exports = require("firebase");
 
 /***/ }),
 /* 25 */
@@ -7746,7 +7746,7 @@ installComponents(component, {Spinner: __webpack_require__(115).default})
 "use strict";
 /* harmony import */ var _src_components_VImg_VImg_sass__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(138);
 /* harmony import */ var _src_components_VImg_VImg_sass__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_src_components_VImg_VImg_sass__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _directives_intersect__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(24);
+/* harmony import */ var _directives_intersect__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(23);
 /* harmony import */ var _VResponsive__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(59);
 /* harmony import */ var _mixins_themeable__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(4);
 /* harmony import */ var _util_mixins__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(2);
@@ -8830,7 +8830,7 @@ function getUserFromSession(req) {
 "use strict";
 /* harmony import */ var _src_components_VProgressCircular_VProgressCircular_sass__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(135);
 /* harmony import */ var _src_components_VProgressCircular_VProgressCircular_sass__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_src_components_VProgressCircular_VProgressCircular_sass__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _directives_intersect__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(24);
+/* harmony import */ var _directives_intersect__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(23);
 /* harmony import */ var _mixins_colorable__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(5);
 /* harmony import */ var _util_helpers__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(0);
 // Styles
@@ -9672,7 +9672,7 @@ const VIcon = Object(_util_mixins__WEBPACK_IMPORTED_MODULE_7__[/* default */ "a"
 // UNUSED EXPORTS: fb
 
 // EXTERNAL MODULE: external "firebase"
-var external_firebase_ = __webpack_require__(22);
+var external_firebase_ = __webpack_require__(24);
 var external_firebase_default = /*#__PURE__*/__webpack_require__.n(external_firebase_);
 
 // CONCATENATED MODULE: ./config/configEnv.js
@@ -10571,7 +10571,7 @@ var VProgressLinear = __webpack_require__(143);
 var transitions = __webpack_require__(29);
 
 // EXTERNAL MODULE: ./node_modules/vuetify/lib/directives/intersect/index.js
-var intersect = __webpack_require__(24);
+var intersect = __webpack_require__(23);
 
 // EXTERNAL MODULE: ./node_modules/vuetify/lib/mixins/colorable/index.js
 var colorable = __webpack_require__(5);
@@ -11880,32 +11880,32 @@ const actions = {
       }
 
       const token = user.accessTokenCookie;
-      const uid = user.decodedToken.user_id; // const datosUsuarioDB = await dispatch('modules/usuarios/firebaseFirestoreGetUser_UID', uid)
-      // // Objetos a insertar
-      // const fotoPerfil = user.decodedToken.picture ? user.decodedToken.picture : null
-      // const nombreUsuario = user.decodedToken.name ? user.decodedToken.name : null
-      // const correo = user.decodedToken.email ? user.decodedToken.email : null
-      // const nombreCompleto = datosUsuarioDB.data().nombreCompleto ? datosUsuarioDB.data().nombreCompleto : null
-      // const fechaNacimiento = datosUsuarioDB.data().fechaNacimiento ? new Date(datosUsuarioDB.data().fechaNacimiento.seconds * 1000) : null
-      // const jekuaaPremium = datosUsuarioDB.data().jekuaaPremium ? datosUsuarioDB.data().jekuaaPremium : null
-      // const jekuaaRol = user.decodedToken.jekuaaRol ? user.decodedToken.jekuaaRol : null
-      // const instructor = user.decodedToken.instructor ? user.decodedToken.instructor : null
-      // const jekuaaPoint = datosUsuarioDB.data().jekuaaPoint ? datosUsuarioDB.data().jekuaaPoint : null
-      // Objetos a insertar
+      const uid = user.decodedToken.user_id;
+      const datosUsuarioDB = await dispatch('modules/usuarios/firebaseFirestoreGetUser_UID', uid); // Objetos a insertar
 
       const fotoPerfil = user.decodedToken.picture ? user.decodedToken.picture : null;
       const nombreUsuario = user.decodedToken.name ? user.decodedToken.name : null;
       const correo = user.decodedToken.email ? user.decodedToken.email : null;
-      const nombreCompleto = null;
-      const fechaNacimiento = null;
-      const jekuaaPremium = {
-        plan: user.decodedToken.jekuaaPremium,
-        fechaCompra: null,
-        fechaHasta: null
-      };
+      const nombreCompleto = datosUsuarioDB.data().nombreCompleto ? datosUsuarioDB.data().nombreCompleto : null;
+      const fechaNacimiento = datosUsuarioDB.data().fechaNacimiento ? new Date(datosUsuarioDB.data().fechaNacimiento.seconds * 1000) : null;
+      const jekuaaPremium = datosUsuarioDB.data().jekuaaPremium ? datosUsuarioDB.data().jekuaaPremium : null;
       const jekuaaRol = user.decodedToken.jekuaaRol ? user.decodedToken.jekuaaRol : null;
       const instructor = user.decodedToken.instructor ? user.decodedToken.instructor : null;
-      const jekuaaPoint = null; // Creamos un objeto a insertar
+      const jekuaaPoint = datosUsuarioDB.data().jekuaaPoint ? datosUsuarioDB.data().jekuaaPoint : null; // // Objetos a insertar
+      // const fotoPerfil = user.decodedToken.picture ? user.decodedToken.picture : null
+      // const nombreUsuario = user.decodedToken.name ? user.decodedToken.name : null
+      // const correo = user.decodedToken.email ? user.decodedToken.email : null
+      // const nombreCompleto = null
+      // const fechaNacimiento = null
+      // const jekuaaPremium = {
+      //   plan: user.decodedToken.jekuaaPremium,
+      //   fechaCompra: null,
+      //   fechaHasta: null,
+      // }
+      // const jekuaaRol = user.decodedToken.jekuaaRol ? user.decodedToken.jekuaaRol : null
+      // const instructor = user.decodedToken.instructor ? user.decodedToken.instructor : null
+      // const jekuaaPoint = null
+      // Creamos un objeto a insertar
 
       const datosUsuario = {
         token,
@@ -11990,7 +11990,7 @@ const actions = {
           statusCode: error.response.status
         });
       } else if (responseError.codigo.includes('usuario_no_autenticado')) {
-        return this.app.router.push('/autenticacion/inicioSesion');
+        return this.app.router.push('/inicioSesion');
       } else if (responseError.codigo.includes('usuario_mala_solicitud') || responseError.codigo.includes('sistema')) {
         return 'mensaje-error';
       }
@@ -12335,7 +12335,7 @@ const actions = {
     state
   }, usuario) {
     console.log('[STORE ACTIONS] - firebaseRegistroUser_EmailAndPassword');
-    const datosRegistroUsuario = await this.$axios.$post('/usuarios/estudiante/crearUsuario', {
+    const datosRegistroUsuario = await this.$axios.$post('/usuario/crearUsuario', {
       datosUsuario: {
         nombreUsuario: usuario.nombreUsuario,
         correo: usuario.correo,
@@ -12501,7 +12501,7 @@ const mutations = {
     if (jekuaaPremium) {
       state.jekuaaPremium = jekuaaPremium;
     } else {
-      state.jekuaaPremium = null;
+      state.jekuaaPremium = jekuaaPremiumDefault;
     }
   },
 
@@ -12547,13 +12547,120 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "getters", function() { return getters; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "actions", function() { return actions; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "mutations", function() { return mutations; });
-/* harmony import */ var firebase__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(22);
-/* harmony import */ var firebase__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(firebase__WEBPACK_IMPORTED_MODULE_0__);
-
 const collectionName = 'Blogs';
 const state = {};
 const getters = {};
-const actions = {};
+const actions = {
+  async paginarBlogs({
+    dispatch
+  }, data) {
+    const {
+      ultimaUID,
+      filtros,
+      esRutaEstudiante
+    } = data;
+    const db = this.$firebase.firestore();
+    let ref = db.collection(collectionName);
+    ref = await dispatch('filtrar', {
+      ref,
+      filtros,
+      esRutaEstudiante
+    });
+    ref = ref.orderBy('uid').limit(5);
+    if (ultimaUID) ref = ref.startAfter(ultimaUID);
+    const documentSnapshots = await ref.get();
+    if (!documentSnapshots.docs.length) throw new Error('No hay blogs');
+    let ultimoDocumento = documentSnapshots.docs[documentSnapshots.docs.length - 1];
+    let blogs = [];
+
+    for (let i = 0; i < documentSnapshots.docs.length; i++) {
+      const element = documentSnapshots.docs[i];
+      blogs.push(element.data());
+    }
+
+    const existeMasDatos = blogs.length ? await dispatch('verificarSiHayMasDatos', {
+      ultimaUID: ultimoDocumento.id,
+      filtros,
+      esRutaEstudiante
+    }) : false;
+    return {
+      blogs,
+      ultimaUID: ultimoDocumento.id,
+      existeMasDatos
+    };
+  },
+
+  filtrar({}, data) {
+    let {
+      ref,
+      filtros,
+      esRutaEstudiante
+    } = data;
+    if (esRutaEstudiante) ref = ref.where('habilitado', '==', true).where('publicado', '==', true);
+    if (!filtros || typeof filtros !== 'object') filtros = {};
+    const {
+      seccion,
+      categoria,
+      subCategorias,
+      publicador,
+      habilitado,
+      publicado,
+      revision
+    } = filtros;
+
+    if (seccion) {
+      ref = ref.where('seccion', '==', seccion);
+    }
+
+    if (categoria) {
+      ref = ref.where('categoria', '==', categoria);
+    }
+
+    if (subCategorias && subCategorias.length) {
+      ref = ref.where('subCategorias', 'array-contains-any', subCategorias);
+    }
+
+    if (publicador) {
+      ref = ref.where('publicador', '==', publicador);
+    }
+
+    if (!esRutaEstudiante && habilitado !== undefined) {
+      ref = ref.where('habilitado ', '==', habilitado);
+    }
+
+    if (!esRutaEstudiante && publicado !== undefined) {
+      ref = ref.where('publicado ', '==', publicado);
+    }
+
+    if (!esRutaEstudiante && revision !== undefined) {
+      ref = ref.where('revision  ', '==', revision);
+    }
+
+    return ref;
+  },
+
+  async verificarSiHayMasDatos({
+    dispatch
+  }, data) {
+    let {
+      ultimaUID,
+      filtros,
+      esRutaEstudiante
+    } = data;
+    const db = this.$firebase.firestore();
+    let ref = db.collection(collectionName);
+    ref = await dispatch('filtrar', {
+      ref,
+      filtros,
+      esRutaEstudiante
+    });
+    ref = ref.orderBy('uid').startAfter(ultimaUID).limit(1);
+    const siguienteDato = await ref.get();
+    const existeMasDatos = !siguienteDato.empty;
+    return existeMasDatos;
+  }
+
+};
 const mutations = {};
 
 /***/ }),
@@ -12599,7 +12706,6 @@ __webpack_require__.d(components_namespaceObject, "BlogsInfiniteHitsBlogs", func
 __webpack_require__.d(components_namespaceObject, "BlogsListaBlogs", function() { return BlogsListaBlogs; });
 __webpack_require__.d(components_namespaceObject, "BlogsVisualizador", function() { return BlogsVisualizador; });
 __webpack_require__.d(components_namespaceObject, "UsuariosCartaPresentacion", function() { return UsuariosCartaPresentacion; });
-__webpack_require__.d(components_namespaceObject, "TiptapVuetifyImagenURL", function() { return TiptapVuetifyImagenURL; });
 
 // EXTERNAL MODULE: external "vue"
 var external_vue_ = __webpack_require__(1);
@@ -13403,41 +13509,41 @@ function shouldScrollToTop(route) {
 
 
 
-const _55e36ebc = () => interopDefault(__webpack_require__.e(/* import() | pages/inicio */ 20).then(__webpack_require__.bind(null, 447)));
+const _55e36ebc = () => interopDefault(__webpack_require__.e(/* import() | pages/inicio */ 19).then(__webpack_require__.bind(null, 443)));
 
-const _23a3b863 = () => interopDefault(__webpack_require__.e(/* import() | pages/inicioSesion */ 21).then(__webpack_require__.bind(null, 448)));
+const _23a3b863 = () => interopDefault(__webpack_require__.e(/* import() | pages/inicioSesion */ 20).then(__webpack_require__.bind(null, 444)));
 
-const _ca494018 = () => interopDefault(__webpack_require__.e(/* import() | pages/miembro-jekuaa/index */ 27).then(__webpack_require__.bind(null, 449)));
+const _ca494018 = () => interopDefault(__webpack_require__.e(/* import() | pages/miembro-jekuaa/index */ 26).then(__webpack_require__.bind(null, 445)));
 
-const _12f09ea3 = () => interopDefault(__webpack_require__.e(/* import() | pages/perfil */ 28).then(__webpack_require__.bind(null, 446)));
+const _12f09ea3 = () => interopDefault(__webpack_require__.e(/* import() | pages/perfil */ 27).then(__webpack_require__.bind(null, 442)));
 
-const _4118ef02 = () => interopDefault(__webpack_require__.e(/* import() | pages/perfil/index */ 29).then(__webpack_require__.bind(null, 450)));
+const _4118ef02 = () => interopDefault(__webpack_require__.e(/* import() | pages/perfil/index */ 28).then(__webpack_require__.bind(null, 446)));
 
-const _95710d6c = () => interopDefault(__webpack_require__.e(/* import() | pages/perfil/informacion */ 30).then(__webpack_require__.bind(null, 451)));
+const _95710d6c = () => interopDefault(__webpack_require__.e(/* import() | pages/perfil/informacion */ 29).then(__webpack_require__.bind(null, 447)));
 
-const _1d940d5d = () => interopDefault(__webpack_require__.e(/* import() | pages/perfil/seguridad */ 31).then(__webpack_require__.bind(null, 452)));
+const _1d940d5d = () => interopDefault(__webpack_require__.e(/* import() | pages/perfil/seguridad */ 30).then(__webpack_require__.bind(null, 448)));
 
-const _e05e746c = () => interopDefault(__webpack_require__.e(/* import() | pages/registro */ 32).then(__webpack_require__.bind(null, 453)));
+const _e05e746c = () => interopDefault(__webpack_require__.e(/* import() | pages/registro */ 31).then(__webpack_require__.bind(null, 449)));
 
-const _ac831f22 = () => interopDefault(__webpack_require__.e(/* import() | pages/miembro-jekuaa/blogs/index */ 24).then(__webpack_require__.bind(null, 454)));
+const _ac831f22 = () => interopDefault(__webpack_require__.e(/* import() | pages/miembro-jekuaa/blogs/index */ 23).then(__webpack_require__.bind(null, 450)));
 
-const _ed3fda90 = () => interopDefault(__webpack_require__.e(/* import() | pages/miembro-jekuaa/blogs/mis-blogs */ 25).then(__webpack_require__.bind(null, 455)));
+const _ed3fda90 = () => interopDefault(__webpack_require__.e(/* import() | pages/miembro-jekuaa/blogs/mis-blogs */ 24).then(__webpack_require__.bind(null, 451)));
 
-const _90b2c058 = () => interopDefault(__webpack_require__.e(/* import() | pages/miembro-jekuaa/blogs/nuevo */ 26).then(__webpack_require__.bind(null, 456)));
+const _90b2c058 = () => interopDefault(__webpack_require__.e(/* import() | pages/miembro-jekuaa/blogs/nuevo */ 25).then(__webpack_require__.bind(null, 452)));
 
-const _7f06e921 = () => interopDefault(__webpack_require__.e(/* import() | pages/miembro-jekuaa/blog/actualizar/_referencia */ 23).then(__webpack_require__.bind(null, 457)));
+const _7f06e921 = () => interopDefault(__webpack_require__.e(/* import() | pages/miembro-jekuaa/blog/actualizar/_referencia */ 22).then(__webpack_require__.bind(null, 453)));
 
-const _3b178e51 = () => interopDefault(__webpack_require__.e(/* import() | pages/miembro-jekuaa/blog/_referencia */ 22).then(__webpack_require__.bind(null, 458)));
+const _3b178e51 = () => interopDefault(__webpack_require__.e(/* import() | pages/miembro-jekuaa/blog/_referencia */ 21).then(__webpack_require__.bind(null, 454)));
 
-const _2d566381 = () => interopDefault(__webpack_require__.e(/* import() | pages/bienvenido-a-jekuaapy/_nombreUsuario */ 15).then(__webpack_require__.bind(null, 459)));
+const _2d566381 = () => interopDefault(__webpack_require__.e(/* import() | pages/bienvenido-a-jekuaapy/_nombreUsuario */ 14).then(__webpack_require__.bind(null, 455)));
 
-const _9d048bb0 = () => interopDefault(__webpack_require__.e(/* import() | pages/blog/_referencia */ 16).then(__webpack_require__.bind(null, 460)));
+const _9d048bb0 = () => interopDefault(__webpack_require__.e(/* import() | pages/blog/_referencia */ 15).then(__webpack_require__.bind(null, 456)));
 
-const _048ec7cf = () => interopDefault(__webpack_require__.e(/* import() | pages/estudiante/_nombreUsuario */ 18).then(__webpack_require__.bind(null, 445)));
+const _048ec7cf = () => interopDefault(__webpack_require__.e(/* import() | pages/estudiante/_nombreUsuario */ 17).then(__webpack_require__.bind(null, 441)));
 
-const _31ed6c2d = () => interopDefault(__webpack_require__.e(/* import() | pages/blogs/_seccion/_categoria/_subCategoria */ 17).then(__webpack_require__.bind(null, 461)));
+const _31ed6c2d = () => interopDefault(__webpack_require__.e(/* import() | pages/blogs/_seccion/_categoria/_subCategoria */ 16).then(__webpack_require__.bind(null, 457)));
 
-const _50fb564b = () => interopDefault(__webpack_require__.e(/* import() | pages/index */ 19).then(__webpack_require__.bind(null, 444)));
+const _50fb564b = () => interopDefault(__webpack_require__.e(/* import() | pages/index */ 18).then(__webpack_require__.bind(null, 440)));
 
 const emptyFn = () => {};
 
@@ -14655,26 +14761,25 @@ function mergeProperty(storeModule, moduleData, property) {
 }
 // CONCATENATED MODULE: ../functions/.nuxt/components/index.js
 const components_FooterDefault = () => Promise.resolve(/* import() */).then(__webpack_require__.bind(null, 39)).then(c => wrapFunctional(c.default || c));
-const ImageInput = () => __webpack_require__.e(/* import() | components/image-input */ 8).then(__webpack_require__.bind(null, 400)).then(c => wrapFunctional(c.default || c));
-const ListaBlogs = () => __webpack_require__.e(/* import() | components/lista-blogs */ 9).then(__webpack_require__.bind(null, 363)).then(c => wrapFunctional(c.default || c));
-const ListaCategorias = () => __webpack_require__.e(/* import() | components/lista-categorias */ 10).then(__webpack_require__.bind(null, 285)).then(c => wrapFunctional(c.default || c));
+const ImageInput = () => __webpack_require__.e(/* import() | components/image-input */ 8).then(__webpack_require__.bind(null, 399)).then(c => wrapFunctional(c.default || c));
+const ListaBlogs = () => __webpack_require__.e(/* import() | components/lista-blogs */ 9).then(__webpack_require__.bind(null, 362)).then(c => wrapFunctional(c.default || c));
+const ListaCategorias = () => __webpack_require__.e(/* import() | components/lista-categorias */ 10).then(__webpack_require__.bind(null, 284)).then(c => wrapFunctional(c.default || c));
 const components_Loading = () => Promise.resolve(/* import() */).then(__webpack_require__.bind(null, 60)).then(c => wrapFunctional(c.default || c));
 const components_NavigationDefault = () => Promise.resolve(/* import() */).then(__webpack_require__.bind(null, 49)).then(c => wrapFunctional(c.default || c));
 const components_NavigationUser = () => Promise.resolve(/* import() */).then(__webpack_require__.bind(null, 40)).then(c => wrapFunctional(c.default || c));
 const NotFound = () => Promise.resolve(/* import() */).then(__webpack_require__.bind(null, 114)).then(c => wrapFunctional(c.default || c));
-const Presentacion = () => __webpack_require__.e(/* import() | components/presentacion */ 11).then(__webpack_require__.bind(null, 399)).then(c => wrapFunctional(c.default || c));
+const Presentacion = () => __webpack_require__.e(/* import() | components/presentacion */ 11).then(__webpack_require__.bind(null, 398)).then(c => wrapFunctional(c.default || c));
 const components_SnackbarError = () => Promise.resolve(/* import() */).then(__webpack_require__.bind(null, 41)).then(c => wrapFunctional(c.default || c));
 const Spinner = () => Promise.resolve(/* import() */).then(__webpack_require__.bind(null, 115)).then(c => wrapFunctional(c.default || c));
-const Tiptap = () => __webpack_require__.e(/* import() | components/tiptap */ 12).then(__webpack_require__.bind(null, 286)).then(c => wrapFunctional(c.default || c));
-const AuthEmail = () => __webpack_require__.e(/* import() | components/auth-email */ 1).then(__webpack_require__.bind(null, 380)).then(c => wrapFunctional(c.default || c));
-const BlogsBuscadorInfinitoBlogs = () => __webpack_require__.e(/* import() | components/blogs-buscador-infinito-blogs */ 2).then(__webpack_require__.bind(null, 383)).then(c => wrapFunctional(c.default || c));
-const BlogsFiltroBlogs = () => __webpack_require__.e(/* import() | components/blogs-filtro-blogs */ 3).then(__webpack_require__.bind(null, 462)).then(c => wrapFunctional(c.default || c));
-const BlogsFormularioBlog = () => __webpack_require__.e(/* import() | components/blogs-formulario-blog */ 4).then(__webpack_require__.bind(null, 365)).then(c => wrapFunctional(c.default || c));
-const BlogsInfiniteHitsBlogs = () => __webpack_require__.e(/* import() | components/blogs-infinite-hits-blogs */ 5).then(__webpack_require__.bind(null, 366)).then(c => wrapFunctional(c.default || c));
-const BlogsListaBlogs = () => __webpack_require__.e(/* import() | components/blogs-lista-blogs */ 6).then(__webpack_require__.bind(null, 382)).then(c => wrapFunctional(c.default || c));
-const BlogsVisualizador = () => __webpack_require__.e(/* import() | components/blogs-visualizador */ 7).then(__webpack_require__.bind(null, 334)).then(c => wrapFunctional(c.default || c));
-const UsuariosCartaPresentacion = () => __webpack_require__.e(/* import() | components/usuarios-carta-presentacion */ 14).then(__webpack_require__.bind(null, 418)).then(c => wrapFunctional(c.default || c));
-const TiptapVuetifyImagenURL = () => __webpack_require__.e(/* import() | components/tiptap-vuetify-imagen-u-r-l */ 13).then(__webpack_require__.bind(null, 463)).then(c => wrapFunctional(c.default || c)); // nuxt/nuxt.js#8607
+const Tiptap = () => __webpack_require__.e(/* import() | components/tiptap */ 12).then(__webpack_require__.bind(null, 285)).then(c => wrapFunctional(c.default || c));
+const AuthEmail = () => __webpack_require__.e(/* import() | components/auth-email */ 1).then(__webpack_require__.bind(null, 379)).then(c => wrapFunctional(c.default || c));
+const BlogsBuscadorInfinitoBlogs = () => __webpack_require__.e(/* import() | components/blogs-buscador-infinito-blogs */ 2).then(__webpack_require__.bind(null, 382)).then(c => wrapFunctional(c.default || c));
+const BlogsFiltroBlogs = () => __webpack_require__.e(/* import() | components/blogs-filtro-blogs */ 3).then(__webpack_require__.bind(null, 458)).then(c => wrapFunctional(c.default || c));
+const BlogsFormularioBlog = () => __webpack_require__.e(/* import() | components/blogs-formulario-blog */ 4).then(__webpack_require__.bind(null, 364)).then(c => wrapFunctional(c.default || c));
+const BlogsInfiniteHitsBlogs = () => __webpack_require__.e(/* import() | components/blogs-infinite-hits-blogs */ 5).then(__webpack_require__.bind(null, 365)).then(c => wrapFunctional(c.default || c));
+const BlogsListaBlogs = () => __webpack_require__.e(/* import() | components/blogs-lista-blogs */ 6).then(__webpack_require__.bind(null, 381)).then(c => wrapFunctional(c.default || c));
+const BlogsVisualizador = () => __webpack_require__.e(/* import() | components/blogs-visualizador */ 7).then(__webpack_require__.bind(null, 333)).then(c => wrapFunctional(c.default || c));
+const UsuariosCartaPresentacion = () => __webpack_require__.e(/* import() | components/usuarios-carta-presentacion */ 13).then(__webpack_require__.bind(null, 416)).then(c => wrapFunctional(c.default || c)); // nuxt/nuxt.js#8607
 
 function wrapFunctional(options) {
   if (!options || !options.functional) {
@@ -15881,7 +15986,7 @@ module.exports = require("vuelidate/lib/validators");
 var VTextField = __webpack_require__(116);
 
 // EXTERNAL MODULE: ./node_modules/vuetify/lib/components/VInput/index.js + 3 modules
-var VInput = __webpack_require__(23);
+var VInput = __webpack_require__(22);
 
 // EXTERNAL MODULE: ./node_modules/vuetify/src/components/VCounter/VCounter.sass
 var VCounter = __webpack_require__(144);
@@ -15937,7 +16042,7 @@ var mixins = __webpack_require__(2);
 var VLabel = __webpack_require__(64);
 
 // EXTERNAL MODULE: ./node_modules/vuetify/lib/directives/intersect/index.js
-var intersect = __webpack_require__(24);
+var intersect = __webpack_require__(23);
 
 // EXTERNAL MODULE: ./node_modules/vuetify/lib/util/console.js
 var console = __webpack_require__(3);

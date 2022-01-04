@@ -13,10 +13,12 @@ class Estado_CursoSolicitud {
         this.estado = estado ? estado : 'revision'
     }
 
-    getEstado_CursoSolicitud () {
-        return {
-            estado: this.estado
+    getEstado_CursoSolicitud ( getJSON = false ) {
+        if ( getJSON ) {
+            return JSON.parse( JSON.stringify( this ) )
         }
+
+        return this
     }
 }
 

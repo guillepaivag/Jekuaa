@@ -1,3 +1,6 @@
+const ErrorJekuaa = require("../models/Error/ErroresJekuaa")
+const JekuaaRoles = require("../models/JekuaaRoles")
+
 const middleware = {}
 
 middleware.esMiembroJekuaa = async (req, res, next) => {

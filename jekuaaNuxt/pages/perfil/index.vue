@@ -228,7 +228,7 @@ export default {
           }
         }
 
-        const respuesta = await this.$axios.$put(`/usuarios/estudiante/actualizarUsuario`, body, config)
+        const respuesta = await this.$axios.$put(`/usuario/actualizarUsuario`, body, config)
 
         const usuario = this.$store.state.modules.usuarios
 
@@ -293,7 +293,7 @@ export default {
           }
         }
 
-        const respuesta = await this.$axios.$put(`/usuarios/estudiante/actualizarFotoPerfil`, body, config)
+        const respuesta = await this.$axios.$put(`/usuario/actualizarFotoPerfil`, body, config)
 
         this.$store.commit('modules/usuarios/setFotoPerfil', respuesta.resultado)
         this.saved = true
@@ -324,7 +324,7 @@ export default {
           }
         }
 
-        await this.$axios.$delete(`/usuarios/estudiante/eliminarFotoPerfil`, config)
+        await this.$axios.$delete(`/usuario/eliminarFotoPerfil`, config)
 
         this.$store.commit('modules/usuarios/setFotoPerfil', null)
         this.saved = true

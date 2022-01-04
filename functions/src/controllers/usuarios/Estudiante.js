@@ -1,7 +1,7 @@
 const Blog = require("../../models/Blog")
 const ErrorJekuaa = require("../../models/Error/ErroresJekuaa")
 const Respuesta = require("../../models/Respuesta")
-const Estudiante = require("../../models/TiposUsuarios/Estudiante")
+const Estudiante = require("../../models/ComponentesUsuario/TiposUsuarios/Estudiante")
 
 const controller = {}
 

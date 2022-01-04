@@ -11,16 +11,6 @@
             <div class="descripcion" style="">
                 {{descripcion}}
             </div>
-            
-            <v-btn
-                class="verInformacion"
-                color="#ffffff"
-            >
-                <v-icon>
-                    mdi-book-open-variant
-                </v-icon>
-                <span class="ml-3">Ver información</span>
-            </v-btn>
 
             <v-btn
                 class="verContenido"
@@ -60,7 +50,7 @@ export default {
 <style scoped>
 .v-parallax {
     margin-top: -19px;
-    height: 650px !important;
+    height: 450px !important;
     background: #000000 !important;
 }
 
@@ -72,7 +62,7 @@ export default {
     background-color: rgba(0, 0, 0, 0.72);
     padding: 22px;
     border-radius: 1.1rem;
-    margin-top: -150px;
+    margin-top: 0px;
     margin-left: 50px;
     max-width: 600px;
 }
@@ -85,10 +75,6 @@ export default {
 .descripcion {
     font-size: 20px;
     margin-bottom: 30px;
-}
-
-.verInformacion {
-    color: #ff1d89;
 }
 
 .verContenido {
@@ -132,11 +118,6 @@ export default {
     
     button {
         display: block;
-    }
-    
-    .verInformacion {
-        margin: 6px 0 6px 0;
-        width: 100%;
     }
 
     .verContenido {

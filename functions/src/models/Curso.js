@@ -12,8 +12,8 @@ class Curso {
     constructor ( datosCurso = {} ) {
        
         const {
-            uid,
-            uidInstructor,
+            uid,// r
+            uidInstructor,// r
             datosHabilitado,
             titulo,
             referencia,
@@ -21,15 +21,16 @@ class Curso {
             requisitos,
             objetivos,
             nivel,
-            seccion,
-            categoria,
-            subCategorias,
+            seccion,// r
+            categoria,// r
+            subCategorias,// r
             datosPrecio,
-            cantidadEstudiantes,
-            duracionCurso,
+            cantidadEstudiantes,// r
+            cantidadMeGusta,// r
+            duracionCurso,// r
             idioma,
             subTitulos,
-            certificado,
+            certificado,// r
             fechaCreacion,
             fechaActualizacion,
         } = datosCurso
@@ -48,6 +49,7 @@ class Curso {
         this.subCategorias = subCategorias ? subCategorias : []
         this.datosPrecio = datosPrecio ? datosPrecio : new DatosPrecio_Curso()
         this.cantidadEstudiantes = cantidadEstudiantes ? cantidadEstudiantes : 0
+        this.cantidadMeGusta = cantidadMeGusta ? cantidadMeGusta : 0
         this.duracionCurso = duracionCurso ? duracionCurso : 0
         this.idioma = idioma ? idioma : 'español'
         this.subTitulos = subTitulos ? subTitulos : []
@@ -90,6 +92,7 @@ class Curso {
             subCategorias,
             datosPrecio,
             cantidadEstudiantes,
+            cantidadMeGusta,
             duracionCurso,
             idioma,
             subTitulos,
@@ -112,6 +115,7 @@ class Curso {
         this.setSubCategorias( subCategorias )
         this.setDatosPrecio( datosPrecio )
         this.setCantidadEstudiante( cantidadEstudiantes )
+        this.setCantidadMeGusta ( cantidadMeGusta )
         this.setDuracionCurso( duracionCurso )
         this.setIdioma( idioma )
         this.setSubTitulos( subTitulos )
@@ -184,6 +188,10 @@ class Curso {
 
     setCantidadEstudiante ( cantidadEstudiantes = 0 ) {
         this.cantidadEstudiantes = cantidadEstudiantes
+    }
+
+    setCantidadMeGusta ( cantidadMeGusta = 0 ) {
+        this.cantidadMeGusta = cantidadMeGusta
     }
 
     setDuracionCurso ( duracionCurso = 0 ) {

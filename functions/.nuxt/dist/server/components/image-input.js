@@ -12,7 +12,7 @@ module.exports = {
 
 /***/ }),
 
-/***/ 347:
+/***/ 346:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -340,7 +340,7 @@ const baseMixins = Object(_util_mixins__WEBPACK_IMPORTED_MODULE_10__[/* default 
 
 /***/ }),
 
-/***/ 357:
+/***/ 356:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -423,10 +423,7 @@ const baseMixins = Object(_util_mixins__WEBPACK_IMPORTED_MODULE_10__[/* default 
 
         let formData = new FormData();
         let imageURL = URL.createObjectURL(imageFile);
-        formData.append('image', imageFile);
-        console.log('formData', formData);
-        console.log('imageURL', imageURL);
-        console.log('imageFile', imageFile); // Emit the FormData and image URL to the parent component
+        formData.append('image', imageFile); // Emit the FormData and image URL to the parent component
 
         this.$emit('input', {
           formData,
@@ -441,7 +438,7 @@ const baseMixins = Object(_util_mixins__WEBPACK_IMPORTED_MODULE_10__[/* default 
 
 /***/ }),
 
-/***/ 369:
+/***/ 368:
 /***/ (function(module, exports) {
 
 // Exports
@@ -452,19 +449,19 @@ module.exports = {
 
 /***/ }),
 
-/***/ 389:
+/***/ 388:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _node_modules_css_loader_dist_cjs_js_ref_3_oneOf_1_0_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_3_oneOf_1_1_node_modules_nuxt_components_dist_loader_js_ref_0_0_node_modules_vue_loader_lib_index_js_vue_loader_options_ImageInput_vue_vue_type_style_index_0_id_999850b8_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(369);
-/* harmony import */ var _node_modules_css_loader_dist_cjs_js_ref_3_oneOf_1_0_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_3_oneOf_1_1_node_modules_nuxt_components_dist_loader_js_ref_0_0_node_modules_vue_loader_lib_index_js_vue_loader_options_ImageInput_vue_vue_type_style_index_0_id_999850b8_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_css_loader_dist_cjs_js_ref_3_oneOf_1_0_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_3_oneOf_1_1_node_modules_nuxt_components_dist_loader_js_ref_0_0_node_modules_vue_loader_lib_index_js_vue_loader_options_ImageInput_vue_vue_type_style_index_0_id_999850b8_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_0__);
-/* harmony reexport (unknown) */ for(var __WEBPACK_IMPORT_KEY__ in _node_modules_css_loader_dist_cjs_js_ref_3_oneOf_1_0_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_3_oneOf_1_1_node_modules_nuxt_components_dist_loader_js_ref_0_0_node_modules_vue_loader_lib_index_js_vue_loader_options_ImageInput_vue_vue_type_style_index_0_id_999850b8_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_0__) if(["default"].indexOf(__WEBPACK_IMPORT_KEY__) < 0) (function(key) { __webpack_require__.d(__webpack_exports__, key, function() { return _node_modules_css_loader_dist_cjs_js_ref_3_oneOf_1_0_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_3_oneOf_1_1_node_modules_nuxt_components_dist_loader_js_ref_0_0_node_modules_vue_loader_lib_index_js_vue_loader_options_ImageInput_vue_vue_type_style_index_0_id_999850b8_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_0__[key]; }) }(__WEBPACK_IMPORT_KEY__));
+/* harmony import */ var _node_modules_css_loader_dist_cjs_js_ref_3_oneOf_1_0_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_3_oneOf_1_1_node_modules_nuxt_components_dist_loader_js_ref_0_0_node_modules_vue_loader_lib_index_js_vue_loader_options_ImageInput_vue_vue_type_style_index_0_id_22778aa6_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(368);
+/* harmony import */ var _node_modules_css_loader_dist_cjs_js_ref_3_oneOf_1_0_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_3_oneOf_1_1_node_modules_nuxt_components_dist_loader_js_ref_0_0_node_modules_vue_loader_lib_index_js_vue_loader_options_ImageInput_vue_vue_type_style_index_0_id_22778aa6_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_css_loader_dist_cjs_js_ref_3_oneOf_1_0_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_3_oneOf_1_1_node_modules_nuxt_components_dist_loader_js_ref_0_0_node_modules_vue_loader_lib_index_js_vue_loader_options_ImageInput_vue_vue_type_style_index_0_id_22778aa6_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_0__);
+/* harmony reexport (unknown) */ for(var __WEBPACK_IMPORT_KEY__ in _node_modules_css_loader_dist_cjs_js_ref_3_oneOf_1_0_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_3_oneOf_1_1_node_modules_nuxt_components_dist_loader_js_ref_0_0_node_modules_vue_loader_lib_index_js_vue_loader_options_ImageInput_vue_vue_type_style_index_0_id_22778aa6_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_0__) if(["default"].indexOf(__WEBPACK_IMPORT_KEY__) < 0) (function(key) { __webpack_require__.d(__webpack_exports__, key, function() { return _node_modules_css_loader_dist_cjs_js_ref_3_oneOf_1_0_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_3_oneOf_1_1_node_modules_nuxt_components_dist_loader_js_ref_0_0_node_modules_vue_loader_lib_index_js_vue_loader_options_ImageInput_vue_vue_type_style_index_0_id_22778aa6_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_0__[key]; }) }(__WEBPACK_IMPORT_KEY__));
 
 
 /***/ }),
 
-/***/ 390:
+/***/ 389:
 /***/ (function(module, exports) {
 
 // IMPORTANT: Do NOT use ES2015 features in this file (except for modules).
@@ -490,22 +487,22 @@ module.exports = function installDirectives (component, directives) {
 
 /***/ }),
 
-/***/ 400:
+/***/ 399:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 // ESM COMPAT FLAG
 __webpack_require__.r(__webpack_exports__);
 
-// CONCATENATED MODULE: ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/@nuxt/components/dist/loader.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./components/ImageInput.vue?vue&type=template&id=999850b8&scoped=true&
-var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',[_vm._ssrNode("<div data-v-999850b8>","</div>",[_vm._ssrNode("<div slot=\"activator\" data-v-999850b8>","</div>",[(!_vm.value.imageURL)?_c('v-avatar',{directives:[{name:"ripple",rawName:"v-ripple"}],staticClass:"mb-3 avatar-img",attrs:{"size":"210px"},on:{"click":function($event){return _vm.launchFilePicker()}}},[_c('span',{staticClass:"white--text"},[_vm._v("Agregue una foto de perfil")])]):_c('v-avatar',{directives:[{name:"ripple",rawName:"v-ripple"}],staticClass:"mb-3 avatar-img",attrs:{"size":"210px"},on:{"click":function($event){return _vm.launchFilePicker()}}},[_c('img',{attrs:{"src":_vm.value.imageURL,"alt":"avatar"}})])],1)]),_vm._ssrNode(" <input type=\"file\""+(_vm._ssrAttr("name",_vm.uploadFieldName))+" style=\"display:none\" data-v-999850b8> "),_c('v-dialog',{attrs:{"max-width":"300"},model:{value:(_vm.errorDialog),callback:function ($$v) {_vm.errorDialog=$$v},expression:"errorDialog"}},[_c('v-card',[_c('v-card-text',{staticClass:"subheading"},[_vm._v("\n                "+_vm._s(_vm.errorText)+"\n            ")]),_vm._v(" "),_c('v-card-actions',[_c('v-spacer'),_vm._v(" "),_c('v-btn',{attrs:{"flat":""},on:{"click":function($event){_vm.errorDialog = false}}},[_vm._v("Got it!")])],1)],1)],1)],2)}
+// CONCATENATED MODULE: ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/@nuxt/components/dist/loader.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./components/ImageInput.vue?vue&type=template&id=22778aa6&scoped=true&
+var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',[_vm._ssrNode("<div data-v-22778aa6>","</div>",[_vm._ssrNode("<div slot=\"activator\" data-v-22778aa6>","</div>",[(!_vm.value.imageURL)?_c('v-avatar',{directives:[{name:"ripple",rawName:"v-ripple"}],staticClass:"mb-3 avatar-img",attrs:{"size":"210px"},on:{"click":function($event){return _vm.launchFilePicker()}}},[_c('span',{staticClass:"white--text"},[_vm._v("Agregue una foto de perfil")])]):_c('v-avatar',{directives:[{name:"ripple",rawName:"v-ripple"}],staticClass:"mb-3 avatar-img",attrs:{"size":"210px"},on:{"click":function($event){return _vm.launchFilePicker()}}},[_c('img',{attrs:{"src":_vm.value.imageURL,"alt":""}})])],1)]),_vm._ssrNode(" <input type=\"file\""+(_vm._ssrAttr("name",_vm.uploadFieldName))+" style=\"display:none\" data-v-22778aa6> "),_c('v-dialog',{attrs:{"max-width":"300"},model:{value:(_vm.errorDialog),callback:function ($$v) {_vm.errorDialog=$$v},expression:"errorDialog"}},[_c('v-card',[_c('v-card-text',{staticClass:"subheading"},[_vm._v("\n                "+_vm._s(_vm.errorText)+"\n            ")]),_vm._v(" "),_c('v-card-actions',[_c('v-spacer'),_vm._v(" "),_c('v-btn',{attrs:{"flat":""},on:{"click":function($event){_vm.errorDialog = false}}},[_vm._v("Got it!")])],1)],1)],1)],2)}
 var staticRenderFns = []
 
 
-// CONCATENATED MODULE: ./components/ImageInput.vue?vue&type=template&id=999850b8&scoped=true&
+// CONCATENATED MODULE: ./components/ImageInput.vue?vue&type=template&id=22778aa6&scoped=true&
 
 // EXTERNAL MODULE: ./node_modules/babel-loader/lib??ref--2-0!./node_modules/@nuxt/components/dist/loader.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./components/ImageInput.vue?vue&type=script&lang=js&
-var ImageInputvue_type_script_lang_js_ = __webpack_require__(357);
+var ImageInputvue_type_script_lang_js_ = __webpack_require__(356);
 
 // CONCATENATED MODULE: ./components/ImageInput.vue?vue&type=script&lang=js&
  /* harmony default export */ var components_ImageInputvue_type_script_lang_js_ = (ImageInputvue_type_script_lang_js_["a" /* default */]); 
@@ -529,13 +526,13 @@ var VCard = __webpack_require__(78);
 var components_VCard = __webpack_require__(31);
 
 // EXTERNAL MODULE: ./node_modules/vuetify/lib/components/VDialog/VDialog.js
-var VDialog = __webpack_require__(347);
+var VDialog = __webpack_require__(346);
 
 // EXTERNAL MODULE: ./node_modules/vuetify/lib/components/VGrid/VSpacer.js
 var VSpacer = __webpack_require__(242);
 
 // EXTERNAL MODULE: ./node_modules/vuetify-loader/lib/runtime/installDirectives.js
-var installDirectives = __webpack_require__(390);
+var installDirectives = __webpack_require__(389);
 var installDirectives_default = /*#__PURE__*/__webpack_require__.n(installDirectives);
 
 // EXTERNAL MODULE: ./node_modules/vuetify/lib/directives/ripple/index.js
@@ -547,7 +544,7 @@ var ripple = __webpack_require__(25);
 
 function injectStyles (context) {
   
-  var style0 = __webpack_require__(389)
+  var style0 = __webpack_require__(388)
 if (style0.__inject__) style0.__inject__(context)
 
 }
@@ -560,7 +557,7 @@ var component = Object(componentNormalizer["a" /* default */])(
   staticRenderFns,
   false,
   injectStyles,
-  "999850b8",
+  "22778aa6",
   "7989d120"
   
 )

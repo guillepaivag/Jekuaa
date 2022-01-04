@@ -26,4 +26,3 @@ You can directly use them in pages and other components without the need to impo
 - `<BlogsListaBlogs>` | `<blogs-lista-blogs>` (components/blogs/lista-blogs.vue)
 - `<BlogsVisualizador>` | `<blogs-visualizador>` (components/blogs/Visualizador.vue)
 - `<UsuariosCartaPresentacion>` | `<usuarios-carta-presentacion>` (components/usuarios/CartaPresentacion.vue)
-- `<TiptapVuetifyImagenURL>` | `<tiptap-vuetify-imagen-u-r-l>` (components/tiptap/vuetify/ImagenURL.vue)

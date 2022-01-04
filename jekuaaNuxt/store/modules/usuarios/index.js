@@ -270,7 +270,7 @@ export const actions = {
   async firebaseRegistroUser_EmailAndPassword ({ dispatch, state }, usuario) {
     console.log('[STORE ACTIONS] - firebaseRegistroUser_EmailAndPassword')
 
-    const datosRegistroUsuario = await this.$axios.$post('/usuarios/estudiante/crearUsuario', {
+    const datosRegistroUsuario = await this.$axios.$post('/usuario/crearUsuario', {
       datosUsuario: {
         nombreUsuario: usuario.nombreUsuario,
         correo: usuario.correo,
@@ -453,7 +453,7 @@ export const mutations = {
     if (jekuaaPremium) {
       state.jekuaaPremium = jekuaaPremium
     } else {
-      state.jekuaaPremium = null
+      state.jekuaaPremium = jekuaaPremiumDefault
     }
   },
 

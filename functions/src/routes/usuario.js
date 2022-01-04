@@ -40,13 +40,13 @@ router.post('/crearUsuario',
     construirDatosUsuario, 
     crearUsuario)
 
-router.post('/obtenerDatosUsuario', 
+router.get('/datosUsuario/:tipoIdentificador/:valorIdentificador', 
     obtenerUsuario)
 
-router.post('/obtenerAuthUsuario', 
+router.get('/datosAuthentication/:tipoIdentificador/:valorIdentificador', 
     obtenerUsuarioAuth)
 
-router.post('/obtenerInformacionUsuario', 
+router.get('/informacionUsuario/:tipoIdentificador/:valorIdentificador', 
     obtenerUsuarioInfo)
 
 router.put('/actualizarUsuario', 

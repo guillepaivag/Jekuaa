@@ -100,7 +100,7 @@ export default {
   },
   async asyncData({isDev, route, $axios, store, env, params, query, req, res, redirect, error}) {
     try {
-      const response = await $axios.get('/blog/estudiante/blogConMasMeGusta', {
+      const response = await $axios.get('/blog/blogConMasMeGusta', {
         headers: {
           'Content-Type': 'application/json'
         }

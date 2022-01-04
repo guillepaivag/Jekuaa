@@ -354,7 +354,7 @@ export default {
           }
         }
 
-        const respuesta = await this.$axios.$put(`/usuarios/estudiante/actualizarInformacion`, body, config)
+        const respuesta = await this.$axios.$put(`/usuario/actualizarInformacion`, body, config)
 
       } catch (error) {
         console.log('error', error)

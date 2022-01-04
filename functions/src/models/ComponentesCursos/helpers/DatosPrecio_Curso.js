@@ -16,6 +16,14 @@ class DatosPrecio_Curso {
         this.estado = estado ? estado : 'gratis'
         this.porcetajeDescuento = porcetajeDescuento ? porcetajeDescuento : 0
     }
+
+    getDatosPrecio_Curso ( getJSON = false ) {
+        if ( getJSON ) {
+            return JSON.parse( JSON.stringify( this ) )
+        }
+
+        return this
+    }
 }
 
 module.exports = DatosPrecio_Curso

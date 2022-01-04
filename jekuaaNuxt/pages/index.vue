@@ -213,7 +213,7 @@ export default {
             listaPreguntasFrecuentes: [
                 {
                     nombre: '¿Qué es Jekuaapy?',
-                    descripcion: 'Jekuaapy es una plataforma de enseñanza de varios temas, ahora mismo la plataforma cuenta con blogs, vamos ir agregando y actualizando funcionalidades, cursos, retos y de esa forma ir formando a los futuros estudiantes de Jekuaapy y ¡divulgar información! 🌎'
+                    descripcion: 'Jekuaapy es una plataforma de enseñanza de varios temas, por el momento la plataforma solamente cuenta con blogs, se irá agregando y actualizando funcionalidades, cursos, retos y de esa forma ir formando a los futuros estudiantes de Jekuaapy y ¡divulgar información! 🌎'
                 },
             ]
         }

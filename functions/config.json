@@ -4,6 +4,6 @@
     "api_key": "c5421ff3ce360d6478059e96317448db"
   },
   "environment": {
-    "mode": "development"
+    "mode": "production"
   }
 }

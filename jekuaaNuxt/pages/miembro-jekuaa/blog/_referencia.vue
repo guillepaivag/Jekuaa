@@ -121,7 +121,7 @@ export default {
                     }
                 }
 
-                const respuesta = await this.$axios.$delete(`/blog/miembroJekuaa/eliminarBlog/${this.uidConfirmacion}`, config)
+                const respuesta = await this.$axios.$delete(`/miembroJekuaa/eliminarBlog/${this.uidConfirmacion}`, config)
 
                 this.$nuxt.$options.router.push('/miembro-jekuaa/blogs/mis-blogs')
                 

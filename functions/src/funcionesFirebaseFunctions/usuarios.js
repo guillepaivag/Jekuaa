@@ -1,34 +1,56 @@
 const functions = require('firebase-functions')
 const admin = require('../../firebase-service')
 const db = require('../../db')
+const Usuario = require('../models/ComponentesUsuario/Usuario')
+const Instructor = require('../models/ComponentesUsuario/Instructor')
 const ffUsuarios = {}
 
-ffUsuarios.eventoCreacionUsuario = functions.region('southamerica-east1').auth.user().onCreate((user) => {
-    const incrementar = admin.firestore.FieldValue.increment(1)
-    const esEstudiante = user.customClaims.jekuaaRol === 'estudiante'
+/**
+ * Incremetación de contador de cantidad de blogs
+*/
+ffUsuarios.eventoCreacionBlog = functions
+.region('southamerica-east1')
+.firestore.document('Usuarios/{uid}')
+.onCreate(async ( change, context ) => {
+    const document = change
 
-    db.collection('Contadores').doc('usuarios').update({
-        cantidad: incrementar
-    })
-
-    db.collection('InformacionUsuarios').doc(user.uid).set({
-        uid: user.uid,
-        descripcion: '',
-        especializaciones: '',
-        intereses: '',
-        rolDescriptivo: 'Estudiante de Jekuaa',
-        redesSociales: [],
-    })
+    const usuario = new Usuario(document.data())
+    
+    // Creación de instructor
+    if (usuario.instructor) {
+        // Crear instructor
+        Instructor.crearNuevoInstructor({
+            uid: usuarioAuthNuevo.uid,
+        })
+    }
 })
 
-ffUsuarios.eventoEliminacionUsuario = functions.region('southamerica-east1').auth.user().onDelete((user) => {
-    const decrementar = admin.firestore.FieldValue.increment(-1)
+ffUsuarios.eventoActualizacionBlog = functions
+.region('southamerica-east1')
+.firestore.document('Usuarios/{uid}')
+.onUpdate(async ( change, context ) => {
+    const docNuevo = change.after
+    const docViejo = change.before
+    
+    const nuevo = new Usuario(docNuevo.data())
 
-    db.collection('Contadores').doc('usuarios').update({
-        cantidad: decrementar
-    })
+    if (nuevo.instructor) {
+        // Verificar si existe documento
 
-    db.collection('InformacionUsuarios').doc(user.uid).delete()
+        // Si no existe, crear
+    }
 })
+
+ffUsuarios.eventoEliminacionBlog = functions
+.region('southamerica-east1')
+.firestore.document('Usuarios/{uid}')
+.onDelete(async ( change, context ) => {
+    const document = change
+    
+    // Verificar si existe documento
+
+    // Si no existe, crear
+})
+
 
 module.exports = ffUsuarios

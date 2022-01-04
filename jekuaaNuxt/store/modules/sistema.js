@@ -44,7 +44,7 @@ export const actions = {
           statusCode: error.response.status
         })
       } else if ( responseError.codigo.includes('usuario_no_autenticado') ) {
-        return this.app.router.push('/autenticacion/inicioSesion')
+        return this.app.router.push('/inicioSesion')
       } else if ( responseError.codigo.includes('usuario_mala_solicitud') || responseError.codigo.includes('sistema') ) {
         return 'mensaje-error'
       }

@@ -73,7 +73,7 @@ function capitalize(text) {
 
 /* harmony default export */ var utils_capitalize = (capitalize);
 // EXTERNAL MODULE: ./node_modules/instantsearch.js/es/lib/utils/defer.js
-var defer = __webpack_require__(307);
+var defer = __webpack_require__(306);
 
 // CONCATENATED MODULE: ./node_modules/instantsearch.js/es/lib/utils/isDomElement.js
 function isDomElement(object) {
@@ -364,19 +364,19 @@ function renderTemplate(_ref) {
 
 /* harmony default export */ var utils_renderTemplate = (renderTemplate);
 // EXTERNAL MODULE: ./node_modules/instantsearch.js/es/lib/utils/getRefinements.js
-var getRefinements = __webpack_require__(291);
+var getRefinements = __webpack_require__(290);
 
 // EXTERNAL MODULE: ./node_modules/instantsearch.js/es/lib/utils/clearRefinements.js
-var clearRefinements = __webpack_require__(289);
+var clearRefinements = __webpack_require__(288);
 
 // EXTERNAL MODULE: ./node_modules/instantsearch.js/es/lib/utils/escapeRefinement.js
-var escapeRefinement = __webpack_require__(301);
+var escapeRefinement = __webpack_require__(300);
 
 // EXTERNAL MODULE: ./node_modules/instantsearch.js/es/lib/utils/unescapeRefinement.js
 var unescapeRefinement = __webpack_require__(269);
 
 // EXTERNAL MODULE: ./node_modules/instantsearch.js/es/lib/utils/checkRendering.js
-var checkRendering = __webpack_require__(288);
+var checkRendering = __webpack_require__(287);
 
 // CONCATENATED MODULE: ./node_modules/instantsearch.js/es/lib/utils/typedObject.js
 /**
@@ -566,7 +566,7 @@ function checkIndexUiState(_ref) {
    false ? undefined : void 0;
 }
 // EXTERNAL MODULE: ./node_modules/instantsearch.js/es/lib/utils/getPropertyByPath.js
-var getPropertyByPath = __webpack_require__(303);
+var getPropertyByPath = __webpack_require__(302);
 
 // EXTERNAL MODULE: ./node_modules/instantsearch.js/es/lib/utils/getObjectType.js
 var getObjectType = __webpack_require__(266);
@@ -575,16 +575,16 @@ var getObjectType = __webpack_require__(266);
 var noop = __webpack_require__(265);
 
 // EXTERNAL MODULE: ./node_modules/instantsearch.js/es/lib/utils/isFiniteNumber.js
-var isFiniteNumber = __webpack_require__(298);
+var isFiniteNumber = __webpack_require__(297);
 
 // EXTERNAL MODULE: ./node_modules/instantsearch.js/es/lib/utils/isPlainObject.js
 var isPlainObject = __webpack_require__(272);
 
 // EXTERNAL MODULE: ./node_modules/instantsearch.js/es/lib/utils/range.js
-var range = __webpack_require__(299);
+var range = __webpack_require__(298);
 
 // EXTERNAL MODULE: ./node_modules/instantsearch.js/es/lib/utils/isEqual.js
-var isEqual = __webpack_require__(296);
+var isEqual = __webpack_require__(295);
 
 // EXTERNAL MODULE: ./node_modules/instantsearch.js/es/lib/utils/escape.js
 var utils_escape = __webpack_require__(271);
@@ -593,16 +593,16 @@ var utils_escape = __webpack_require__(271);
 var utils_unescape = __webpack_require__(275);
 
 // EXTERNAL MODULE: ./node_modules/instantsearch.js/es/lib/utils/concatHighlightedParts.js
-var concatHighlightedParts = __webpack_require__(308);
+var concatHighlightedParts = __webpack_require__(307);
 
 // EXTERNAL MODULE: ./node_modules/instantsearch.js/es/lib/utils/getHighlightedParts.js
-var getHighlightedParts = __webpack_require__(309);
+var getHighlightedParts = __webpack_require__(308);
 
 // EXTERNAL MODULE: ./node_modules/instantsearch.js/es/lib/utils/getHighlightFromSiblings.js
 var getHighlightFromSiblings = __webpack_require__(276);
 
 // EXTERNAL MODULE: ./node_modules/instantsearch.js/es/lib/utils/reverseHighlightedParts.js
-var reverseHighlightedParts = __webpack_require__(310);
+var reverseHighlightedParts = __webpack_require__(309);
 
 // EXTERNAL MODULE: ./node_modules/instantsearch.js/es/lib/utils/find.js
 var find = __webpack_require__(268);
@@ -611,13 +611,13 @@ var find = __webpack_require__(268);
 var findIndex = __webpack_require__(267);
 
 // EXTERNAL MODULE: ./node_modules/instantsearch.js/es/lib/utils/mergeSearchParameters.js
-var mergeSearchParameters = __webpack_require__(290);
+var mergeSearchParameters = __webpack_require__(289);
 
 // EXTERNAL MODULE: ./node_modules/instantsearch.js/es/lib/utils/resolveSearchParameters.js
-var resolveSearchParameters = __webpack_require__(311);
+var resolveSearchParameters = __webpack_require__(310);
 
 // EXTERNAL MODULE: ./node_modules/instantsearch.js/es/lib/utils/toArray.js
-var toArray = __webpack_require__(300);
+var toArray = __webpack_require__(299);
 
 // EXTERNAL MODULE: ./node_modules/instantsearch.js/es/lib/utils/logger.js
 var logger = __webpack_require__(254);
@@ -632,19 +632,19 @@ var documentation = __webpack_require__(264);
 var geo_search = __webpack_require__(274);
 
 // EXTERNAL MODULE: ./node_modules/instantsearch.js/es/lib/utils/hits-absolute-position.js
-var hits_absolute_position = __webpack_require__(294);
+var hits_absolute_position = __webpack_require__(293);
 
 // EXTERNAL MODULE: ./node_modules/instantsearch.js/es/lib/utils/hits-query-id.js
-var hits_query_id = __webpack_require__(295);
+var hits_query_id = __webpack_require__(294);
 
 // EXTERNAL MODULE: ./node_modules/instantsearch.js/es/lib/utils/isFacetRefined.js
 var isFacetRefined = __webpack_require__(270);
 
 // EXTERNAL MODULE: ./node_modules/instantsearch.js/es/lib/utils/createSendEventForFacet.js
-var createSendEventForFacet = __webpack_require__(292);
+var createSendEventForFacet = __webpack_require__(291);
 
 // EXTERNAL MODULE: ./node_modules/instantsearch.js/es/lib/utils/createSendEventForHits.js
-var createSendEventForHits = __webpack_require__(293);
+var createSendEventForHits = __webpack_require__(292);
 
 // CONCATENATED MODULE: ./node_modules/instantsearch.js/es/lib/utils/getAppIdAndApiKey.js
 // typed as any, since it accepts the _real_ js clients, not the interface we otherwise expect
@@ -665,22 +665,22 @@ function getAppIdAndApiKey(searchClient) {
   }
 }
 // EXTERNAL MODULE: ./node_modules/instantsearch.js/es/lib/utils/convertNumericRefinementsToFilters.js
-var convertNumericRefinementsToFilters = __webpack_require__(297);
+var convertNumericRefinementsToFilters = __webpack_require__(296);
 
 // EXTERNAL MODULE: ./node_modules/instantsearch.js/es/lib/utils/createConcurrentSafePromise.js
-var createConcurrentSafePromise = __webpack_require__(304);
+var createConcurrentSafePromise = __webpack_require__(303);
 
 // EXTERNAL MODULE: ./node_modules/instantsearch.js/es/lib/utils/debounce.js
-var debounce = __webpack_require__(305);
+var debounce = __webpack_require__(304);
 
 // EXTERNAL MODULE: ./node_modules/instantsearch.js/es/lib/utils/serializer.js
 var serializer = __webpack_require__(253);
 
 // EXTERNAL MODULE: ./node_modules/instantsearch.js/es/lib/utils/getWidgetAttribute.js
-var getWidgetAttribute = __webpack_require__(306);
+var getWidgetAttribute = __webpack_require__(305);
 
 // EXTERNAL MODULE: ./node_modules/instantsearch.js/es/lib/utils/safelyRunOnBrowser.js
-var safelyRunOnBrowser = __webpack_require__(302);
+var safelyRunOnBrowser = __webpack_require__(301);
 
 // CONCATENATED MODULE: ./node_modules/instantsearch.js/es/lib/utils/index.js
 
@@ -1496,13 +1496,13 @@ function isPlainObject(value) {
 
 "use strict";
 /* harmony import */ var _lib_utils__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(264);
-/* harmony import */ var _lib_utils__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(296);
+/* harmony import */ var _lib_utils__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(295);
 /* harmony import */ var _lib_utils__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(265);
-/* harmony import */ var _lib_utils__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(288);
-/* harmony import */ var _lib_utils__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(293);
+/* harmony import */ var _lib_utils__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(287);
+/* harmony import */ var _lib_utils__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(292);
 /* harmony import */ var _lib_utils__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(249);
-/* harmony import */ var _lib_utils__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(294);
-/* harmony import */ var _lib_utils__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(295);
+/* harmony import */ var _lib_utils__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(293);
+/* harmony import */ var _lib_utils__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(294);
 function ownKeys(object, enumerableOnly) {
   var keys = Object.keys(object);
 
@@ -2060,7 +2060,7 @@ function getHighlightFromSiblings(parts, i) {
 
 /***/ }),
 
-/***/ 288:
+/***/ 287:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -2077,7 +2077,7 @@ function checkRendering(rendering, usage) {
 
 /***/ }),
 
-/***/ 289:
+/***/ 288:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -2126,7 +2126,7 @@ function clearRefinements(_ref) {
 
 /***/ }),
 
-/***/ 290:
+/***/ 289:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -2340,7 +2340,7 @@ var merge = function merge() {
 
 /***/ }),
 
-/***/ 291:
+/***/ 290:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -2488,7 +2488,7 @@ function getRefinements(results, state) {
 
 /***/ }),
 
-/***/ 292:
+/***/ 291:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -2552,7 +2552,7 @@ function createSendEventForFacet(_ref) {
 
 /***/ }),
 
-/***/ 293:
+/***/ 292:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -2734,7 +2734,7 @@ function createBindEventForHits(_ref3) {
 
 /***/ }),
 
-/***/ 294:
+/***/ 293:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -2798,7 +2798,7 @@ function addAbsolutePosition(hits, page, hitsPerPage) {
 
 /***/ }),
 
-/***/ 295:
+/***/ 294:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -2866,7 +2866,7 @@ function addQueryID(hits, queryID) {
 
 /***/ }),
 
-/***/ 296:
+/***/ 295:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -2906,7 +2906,7 @@ function isEqual(first, second) {
 
 /***/ }),
 
-/***/ 297:
+/***/ 296:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -2938,7 +2938,7 @@ function convertNumericRefinementsToFilters(state, attribute) {
 
 /***/ }),
 
-/***/ 298:
+/***/ 297:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -2953,7 +2953,7 @@ function isFiniteNumber(value) {
 
 /***/ }),
 
-/***/ 299:
+/***/ 298:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -3015,7 +3015,7 @@ function range(_ref) {
 
 /***/ }),
 
-/***/ 300:
+/***/ 299:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -3027,7 +3027,7 @@ function toArray(value) {
 
 /***/ }),
 
-/***/ 301:
+/***/ 300:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -3043,7 +3043,7 @@ function escapeRefinement(value) {
 
 /***/ }),
 
-/***/ 302:
+/***/ 301:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -3074,7 +3074,7 @@ function safelyRunOnBrowser(callback) {
 
 /***/ }),
 
-/***/ 303:
+/***/ 302:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -3089,7 +3089,7 @@ function getPropertyByPath(object, path) {
 
 /***/ }),
 
-/***/ 304:
+/***/ 303:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -3136,7 +3136,7 @@ function createConcurrentSafePromise() {
 
 /***/ }),
 
-/***/ 305:
+/***/ 304:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -3165,7 +3165,7 @@ function debounce(func, wait) {
 
 /***/ }),
 
-/***/ 306:
+/***/ 305:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -3196,7 +3196,7 @@ function getWidgetAttribute(widget, initOptions) {
 
 /***/ }),
 
-/***/ 307:
+/***/ 306:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -3250,7 +3250,7 @@ var defer = function defer(callback) {
 
 /***/ }),
 
-/***/ 308:
+/***/ 307:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -3267,7 +3267,7 @@ function concatHighlightedParts(parts) {
 
 /***/ }),
 
-/***/ 309:
+/***/ 308:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -3302,7 +3302,7 @@ function getHighlightedParts(highlightedValue) {
 
 /***/ }),
 
-/***/ 310:
+/***/ 309:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -3378,7 +3378,7 @@ function reverseHighlightedParts(parts) {
 
 /***/ }),
 
-/***/ 311:
+/***/ 310:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -3398,7 +3398,7 @@ var resolveSearchParameters = function resolveSearchParameters(current) {
 
 /***/ }),
 
-/***/ 312:
+/***/ 311:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -3407,8 +3407,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var algoliasearch_helper__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(190);
 /* harmony import */ var algoliasearch_helper__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(algoliasearch_helper__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var _lib_utils__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(264);
-/* harmony import */ var _lib_utils__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(290);
-/* harmony import */ var _lib_utils__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(311);
+/* harmony import */ var _lib_utils__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(289);
+/* harmony import */ var _lib_utils__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(310);
 function ownKeys(object, enumerableOnly) {
   var keys = Object.keys(object);
 
@@ -4060,7 +4060,7 @@ function storeRenderState(_ref7) {
 
 /***/ }),
 
-/***/ 313:
+/***/ 312:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -4068,51 +4068,51 @@ function storeRenderState(_ref7) {
 
 /***/ }),
 
-/***/ 314:
+/***/ 313:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _utils__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(315);
+/* harmony import */ var _utils__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(314);
 /* harmony import */ var _utils__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_utils__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony reexport (unknown) */ for(var __WEBPACK_IMPORT_KEY__ in _utils__WEBPACK_IMPORTED_MODULE_0__) if(["default"].indexOf(__WEBPACK_IMPORT_KEY__) < 0) (function(key) { __webpack_require__.d(__webpack_exports__, key, function() { return _utils__WEBPACK_IMPORTED_MODULE_0__[key]; }) }(__WEBPACK_IMPORT_KEY__));
-/* harmony import */ var _algoliasearch__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(316);
+/* harmony import */ var _algoliasearch__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(315);
 /* harmony import */ var _algoliasearch__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_algoliasearch__WEBPACK_IMPORTED_MODULE_1__);
 /* harmony reexport (unknown) */ for(var __WEBPACK_IMPORT_KEY__ in _algoliasearch__WEBPACK_IMPORTED_MODULE_1__) if(["default"].indexOf(__WEBPACK_IMPORT_KEY__) < 0) (function(key) { __webpack_require__.d(__webpack_exports__, key, function() { return _algoliasearch__WEBPACK_IMPORTED_MODULE_1__[key]; }) }(__WEBPACK_IMPORT_KEY__));
-/* harmony import */ var _results__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(317);
+/* harmony import */ var _results__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(316);
 /* harmony import */ var _results__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_results__WEBPACK_IMPORTED_MODULE_2__);
 /* harmony reexport (unknown) */ for(var __WEBPACK_IMPORT_KEY__ in _results__WEBPACK_IMPORTED_MODULE_2__) if(["default"].indexOf(__WEBPACK_IMPORT_KEY__) < 0) (function(key) { __webpack_require__.d(__webpack_exports__, key, function() { return _results__WEBPACK_IMPORTED_MODULE_2__[key]; }) }(__WEBPACK_IMPORT_KEY__));
-/* harmony import */ var _component__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(318);
+/* harmony import */ var _component__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(317);
 /* harmony import */ var _component__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(_component__WEBPACK_IMPORTED_MODULE_3__);
 /* harmony reexport (unknown) */ for(var __WEBPACK_IMPORT_KEY__ in _component__WEBPACK_IMPORTED_MODULE_3__) if(["default"].indexOf(__WEBPACK_IMPORT_KEY__) < 0) (function(key) { __webpack_require__.d(__webpack_exports__, key, function() { return _component__WEBPACK_IMPORTED_MODULE_3__[key]; }) }(__WEBPACK_IMPORT_KEY__));
-/* harmony import */ var _instantsearch__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(319);
+/* harmony import */ var _instantsearch__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(318);
 /* harmony import */ var _instantsearch__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(_instantsearch__WEBPACK_IMPORTED_MODULE_4__);
 /* harmony reexport (unknown) */ for(var __WEBPACK_IMPORT_KEY__ in _instantsearch__WEBPACK_IMPORTED_MODULE_4__) if(["default"].indexOf(__WEBPACK_IMPORT_KEY__) < 0) (function(key) { __webpack_require__.d(__webpack_exports__, key, function() { return _instantsearch__WEBPACK_IMPORTED_MODULE_4__[key]; }) }(__WEBPACK_IMPORT_KEY__));
-/* harmony import */ var _middleware__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(320);
+/* harmony import */ var _middleware__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(319);
 /* harmony import */ var _middleware__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(_middleware__WEBPACK_IMPORTED_MODULE_5__);
 /* harmony reexport (unknown) */ for(var __WEBPACK_IMPORT_KEY__ in _middleware__WEBPACK_IMPORTED_MODULE_5__) if(["default"].indexOf(__WEBPACK_IMPORT_KEY__) < 0) (function(key) { __webpack_require__.d(__webpack_exports__, key, function() { return _middleware__WEBPACK_IMPORTED_MODULE_5__[key]; }) }(__WEBPACK_IMPORT_KEY__));
-/* harmony import */ var _router__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(321);
+/* harmony import */ var _router__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(320);
 /* harmony import */ var _router__WEBPACK_IMPORTED_MODULE_6___default = /*#__PURE__*/__webpack_require__.n(_router__WEBPACK_IMPORTED_MODULE_6__);
 /* harmony reexport (unknown) */ for(var __WEBPACK_IMPORT_KEY__ in _router__WEBPACK_IMPORTED_MODULE_6__) if(["default"].indexOf(__WEBPACK_IMPORT_KEY__) < 0) (function(key) { __webpack_require__.d(__webpack_exports__, key, function() { return _router__WEBPACK_IMPORTED_MODULE_6__[key]; }) }(__WEBPACK_IMPORT_KEY__));
-/* harmony import */ var _insights__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(322);
+/* harmony import */ var _insights__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(321);
 /* harmony import */ var _insights__WEBPACK_IMPORTED_MODULE_7___default = /*#__PURE__*/__webpack_require__.n(_insights__WEBPACK_IMPORTED_MODULE_7__);
 /* harmony reexport (unknown) */ for(var __WEBPACK_IMPORT_KEY__ in _insights__WEBPACK_IMPORTED_MODULE_7__) if(["default"].indexOf(__WEBPACK_IMPORT_KEY__) < 0) (function(key) { __webpack_require__.d(__webpack_exports__, key, function() { return _insights__WEBPACK_IMPORTED_MODULE_7__[key]; }) }(__WEBPACK_IMPORT_KEY__));
-/* harmony import */ var _connector__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(323);
+/* harmony import */ var _connector__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(322);
 /* harmony import */ var _connector__WEBPACK_IMPORTED_MODULE_8___default = /*#__PURE__*/__webpack_require__.n(_connector__WEBPACK_IMPORTED_MODULE_8__);
 /* harmony reexport (unknown) */ for(var __WEBPACK_IMPORT_KEY__ in _connector__WEBPACK_IMPORTED_MODULE_8__) if(["default"].indexOf(__WEBPACK_IMPORT_KEY__) < 0) (function(key) { __webpack_require__.d(__webpack_exports__, key, function() { return _connector__WEBPACK_IMPORTED_MODULE_8__[key]; }) }(__WEBPACK_IMPORT_KEY__));
-/* harmony import */ var _widget_factory__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(324);
+/* harmony import */ var _widget_factory__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(323);
 /* harmony import */ var _widget_factory__WEBPACK_IMPORTED_MODULE_9___default = /*#__PURE__*/__webpack_require__.n(_widget_factory__WEBPACK_IMPORTED_MODULE_9__);
 /* harmony reexport (unknown) */ for(var __WEBPACK_IMPORT_KEY__ in _widget_factory__WEBPACK_IMPORTED_MODULE_9__) if(["default"].indexOf(__WEBPACK_IMPORT_KEY__) < 0) (function(key) { __webpack_require__.d(__webpack_exports__, key, function() { return _widget_factory__WEBPACK_IMPORTED_MODULE_9__[key]; }) }(__WEBPACK_IMPORT_KEY__));
-/* harmony import */ var _widget__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(325);
+/* harmony import */ var _widget__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(324);
 /* harmony import */ var _widget__WEBPACK_IMPORTED_MODULE_10___default = /*#__PURE__*/__webpack_require__.n(_widget__WEBPACK_IMPORTED_MODULE_10__);
 /* harmony reexport (unknown) */ for(var __WEBPACK_IMPORT_KEY__ in _widget__WEBPACK_IMPORTED_MODULE_10__) if(["default"].indexOf(__WEBPACK_IMPORT_KEY__) < 0) (function(key) { __webpack_require__.d(__webpack_exports__, key, function() { return _widget__WEBPACK_IMPORTED_MODULE_10__[key]; }) }(__WEBPACK_IMPORT_KEY__));
-/* harmony import */ var _ui_state__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(326);
+/* harmony import */ var _ui_state__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(325);
 /* harmony import */ var _ui_state__WEBPACK_IMPORTED_MODULE_11___default = /*#__PURE__*/__webpack_require__.n(_ui_state__WEBPACK_IMPORTED_MODULE_11__);
 /* harmony reexport (unknown) */ for(var __WEBPACK_IMPORT_KEY__ in _ui_state__WEBPACK_IMPORTED_MODULE_11__) if(["default"].indexOf(__WEBPACK_IMPORT_KEY__) < 0) (function(key) { __webpack_require__.d(__webpack_exports__, key, function() { return _ui_state__WEBPACK_IMPORTED_MODULE_11__[key]; }) }(__WEBPACK_IMPORT_KEY__));
-/* harmony import */ var _render_state__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(327);
+/* harmony import */ var _render_state__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(326);
 /* harmony import */ var _render_state__WEBPACK_IMPORTED_MODULE_12___default = /*#__PURE__*/__webpack_require__.n(_render_state__WEBPACK_IMPORTED_MODULE_12__);
 /* harmony reexport (unknown) */ for(var __WEBPACK_IMPORT_KEY__ in _render_state__WEBPACK_IMPORTED_MODULE_12__) if(["default"].indexOf(__WEBPACK_IMPORT_KEY__) < 0) (function(key) { __webpack_require__.d(__webpack_exports__, key, function() { return _render_state__WEBPACK_IMPORTED_MODULE_12__[key]; }) }(__WEBPACK_IMPORT_KEY__));
-/* harmony import */ var _templates__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(328);
+/* harmony import */ var _templates__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(327);
 /* harmony import */ var _templates__WEBPACK_IMPORTED_MODULE_13___default = /*#__PURE__*/__webpack_require__.n(_templates__WEBPACK_IMPORTED_MODULE_13__);
 /* harmony reexport (unknown) */ for(var __WEBPACK_IMPORT_KEY__ in _templates__WEBPACK_IMPORTED_MODULE_13__) if(["default"].indexOf(__WEBPACK_IMPORT_KEY__) < 0) (function(key) { __webpack_require__.d(__webpack_exports__, key, function() { return _templates__WEBPACK_IMPORTED_MODULE_13__[key]; }) }(__WEBPACK_IMPORT_KEY__));
 // internal
@@ -4132,6 +4132,13 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
+
+
+
+/***/ }),
+
+/***/ 314:
+/***/ (function(module, exports) {
 
 
 
@@ -4231,13 +4238,6 @@ __webpack_require__.r(__webpack_exports__);
 /***/ 328:
 /***/ (function(module, exports) {
 
-
-
-/***/ }),
-
-/***/ 329:
-/***/ (function(module, exports) {
-
 // Exports
 module.exports = {
 
@@ -4246,7 +4246,7 @@ module.exports = {
 
 /***/ }),
 
-/***/ 332:
+/***/ 331:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -4292,19 +4292,19 @@ var documentation = __webpack_require__(264);
 var noop = __webpack_require__(265);
 
 // EXTERNAL MODULE: ./node_modules/instantsearch.js/es/lib/utils/checkRendering.js
-var checkRendering = __webpack_require__(288);
+var checkRendering = __webpack_require__(287);
 
 // EXTERNAL MODULE: ./node_modules/instantsearch.js/es/lib/utils/clearRefinements.js
-var clearRefinements = __webpack_require__(289);
+var clearRefinements = __webpack_require__(288);
 
 // EXTERNAL MODULE: ./node_modules/instantsearch.js/es/lib/utils/mergeSearchParameters.js
-var mergeSearchParameters = __webpack_require__(290);
+var mergeSearchParameters = __webpack_require__(289);
 
 // EXTERNAL MODULE: ./node_modules/instantsearch.js/es/lib/utils/uniq.js
 var uniq = __webpack_require__(252);
 
 // EXTERNAL MODULE: ./node_modules/instantsearch.js/es/lib/utils/getRefinements.js
-var getRefinements = __webpack_require__(291);
+var getRefinements = __webpack_require__(290);
 
 // CONCATENATED MODULE: ./node_modules/instantsearch.js/es/connectors/clear-refinements/connectClearRefinements.js
 function _toConsumableArray(arr) {
@@ -4805,7 +4805,7 @@ function normalizeRefinement(refinement) {
 
 /* harmony default export */ var current_refinements_connectCurrentRefinements = (connectCurrentRefinements_connectCurrentRefinements);
 // EXTERNAL MODULE: ./node_modules/instantsearch.js/es/lib/utils/createSendEventForFacet.js
-var createSendEventForFacet = __webpack_require__(292);
+var createSendEventForFacet = __webpack_require__(291);
 
 // CONCATENATED MODULE: ./node_modules/instantsearch.js/es/connectors/hierarchical-menu/connectHierarchicalMenu.js
 function connectHierarchicalMenu_ownKeys(object, enumerableOnly) {
@@ -5184,16 +5184,16 @@ var connectHierarchicalMenu_connectHierarchicalMenu = function connectHierarchic
 
 /* harmony default export */ var hierarchical_menu_connectHierarchicalMenu = (connectHierarchicalMenu_connectHierarchicalMenu);
 // EXTERNAL MODULE: ./node_modules/instantsearch.js/es/lib/utils/createSendEventForHits.js
-var createSendEventForHits = __webpack_require__(293);
+var createSendEventForHits = __webpack_require__(292);
 
 // EXTERNAL MODULE: ./node_modules/instantsearch.js/es/lib/utils/escape-highlight.js
 var escape_highlight = __webpack_require__(249);
 
 // EXTERNAL MODULE: ./node_modules/instantsearch.js/es/lib/utils/hits-absolute-position.js
-var hits_absolute_position = __webpack_require__(294);
+var hits_absolute_position = __webpack_require__(293);
 
 // EXTERNAL MODULE: ./node_modules/instantsearch.js/es/lib/utils/hits-query-id.js
-var hits_query_id = __webpack_require__(295);
+var hits_query_id = __webpack_require__(294);
 
 // CONCATENATED MODULE: ./node_modules/instantsearch.js/es/connectors/hits/connectHits.js
 function connectHits_ownKeys(object, enumerableOnly) {
@@ -6114,10 +6114,10 @@ var connectMenu_connectMenu = function connectMenu(renderFn) {
 
 /* harmony default export */ var menu_connectMenu = (connectMenu_connectMenu);
 // EXTERNAL MODULE: ./node_modules/instantsearch.js/es/lib/utils/convertNumericRefinementsToFilters.js
-var convertNumericRefinementsToFilters = __webpack_require__(297);
+var convertNumericRefinementsToFilters = __webpack_require__(296);
 
 // EXTERNAL MODULE: ./node_modules/instantsearch.js/es/lib/utils/isFiniteNumber.js
-var isFiniteNumber = __webpack_require__(298);
+var isFiniteNumber = __webpack_require__(297);
 
 // CONCATENATED MODULE: ./node_modules/instantsearch.js/es/connectors/numeric-menu/connectNumericMenu.js
 function connectNumericMenu_slicedToArray(arr, i) {
@@ -6524,7 +6524,7 @@ function hasNumericRefinement(currentRefinements, operator, value) {
 
 /* harmony default export */ var numeric_menu_connectNumericMenu = (connectNumericMenu_connectNumericMenu);
 // EXTERNAL MODULE: ./node_modules/instantsearch.js/es/lib/utils/range.js
-var range = __webpack_require__(299);
+var range = __webpack_require__(298);
 
 // CONCATENATED MODULE: ./node_modules/instantsearch.js/es/connectors/pagination/Paginator.js
 function _classCallCheck(instance, Constructor) {
@@ -8475,10 +8475,10 @@ var connectStats_connectStats = function connectStats(renderFn) {
 
 /* harmony default export */ var stats_connectStats = (connectStats_connectStats);
 // EXTERNAL MODULE: ./node_modules/instantsearch.js/es/lib/utils/toArray.js
-var toArray = __webpack_require__(300);
+var toArray = __webpack_require__(299);
 
 // EXTERNAL MODULE: ./node_modules/instantsearch.js/es/lib/utils/escapeRefinement.js
-var escapeRefinement = __webpack_require__(301);
+var escapeRefinement = __webpack_require__(300);
 
 // EXTERNAL MODULE: ./node_modules/instantsearch.js/es/lib/utils/unescapeRefinement.js
 var unescapeRefinement = __webpack_require__(269);
@@ -9368,7 +9368,7 @@ var connectGeoSearch_connectGeoSearch = function connectGeoSearch(renderFn) {
 
 /* harmony default export */ var geo_search_connectGeoSearch = (connectGeoSearch_connectGeoSearch);
 // EXTERNAL MODULE: ./node_modules/instantsearch.js/es/lib/utils/safelyRunOnBrowser.js
-var safelyRunOnBrowser = __webpack_require__(302);
+var safelyRunOnBrowser = __webpack_require__(301);
 
 // CONCATENATED MODULE: ./node_modules/instantsearch.js/es/connectors/powered-by/connectPoweredBy.js
 function connectPoweredBy_ownKeys(object, enumerableOnly) {
@@ -9638,7 +9638,7 @@ var connectConfigure_connectConfigure = function connectConfigure() {
 
 /* harmony default export */ var configure_connectConfigure = (connectConfigure_connectConfigure);
 // EXTERNAL MODULE: ./node_modules/instantsearch.js/es/lib/utils/getPropertyByPath.js
-var getPropertyByPath = __webpack_require__(303);
+var getPropertyByPath = __webpack_require__(302);
 
 // CONCATENATED MODULE: ./node_modules/instantsearch.js/es/connectors/configure-related-items/connectConfigureRelatedItems.js
 function connectConfigureRelatedItems_ownKeys(object, enumerableOnly) {
@@ -9972,7 +9972,7 @@ var connectAutocomplete_connectAutocomplete = function connectAutocomplete(rende
 
 /* harmony default export */ var autocomplete_connectAutocomplete = (connectAutocomplete_connectAutocomplete);
 // EXTERNAL MODULE: ./node_modules/instantsearch.js/es/lib/utils/isEqual.js
-var isEqual = __webpack_require__(296);
+var isEqual = __webpack_require__(295);
 
 // CONCATENATED MODULE: ./node_modules/instantsearch.js/es/connectors/query-rules/connectQueryRules.js
 function connectQueryRules_ownKeys(object, enumerableOnly) {
@@ -10614,10 +10614,10 @@ var connectVoiceSearch_connectVoiceSearch = function connectVoiceSearch(renderFn
 
 /* harmony default export */ var voice_search_connectVoiceSearch = (connectVoiceSearch_connectVoiceSearch);
 // EXTERNAL MODULE: ./node_modules/instantsearch.js/es/lib/utils/createConcurrentSafePromise.js
-var createConcurrentSafePromise = __webpack_require__(304);
+var createConcurrentSafePromise = __webpack_require__(303);
 
 // EXTERNAL MODULE: ./node_modules/instantsearch.js/es/lib/utils/debounce.js
-var debounce = __webpack_require__(305);
+var debounce = __webpack_require__(304);
 
 // CONCATENATED MODULE: ./node_modules/instantsearch.js/es/connectors/answers/connectAnswers.js
 function connectAnswers_ownKeys(object, enumerableOnly) {
@@ -10954,7 +10954,7 @@ var esnext_map_some_js_ = __webpack_require__(188);
 var esnext_map_update_js_ = __webpack_require__(189);
 
 // EXTERNAL MODULE: ./node_modules/instantsearch.js/es/lib/utils/getWidgetAttribute.js
-var getWidgetAttribute = __webpack_require__(306);
+var getWidgetAttribute = __webpack_require__(305);
 
 // CONCATENATED MODULE: ./node_modules/instantsearch.js/es/connectors/dynamic-widgets/connectDynamicWidgets.js
 
@@ -11209,7 +11209,7 @@ var EXPERIMENTAL_connectDynamicWidgets = Object(logger["a" /* deprecate */])(dyn
 
 /***/ }),
 
-/***/ 333:
+/***/ 332:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -11282,11 +11282,11 @@ Object.defineProperty(exports, "__esModule", {
 });
 
 var Vue = _interopDefault(__webpack_require__(1)),
-    connectors = __webpack_require__(332),
+    connectors = __webpack_require__(331),
     mitt = _interopDefault(__webpack_require__(228)),
     utils = __webpack_require__(247),
-    indexWidget = _interopDefault(__webpack_require__(312)),
-    instantsearch = _interopDefault(__webpack_require__(358)),
+    indexWidget = _interopDefault(__webpack_require__(311)),
+    instantsearch = _interopDefault(__webpack_require__(357)),
     algoliaHelper = _interopDefault(__webpack_require__(190));
 
 function suit(e, t, i) {
@@ -14767,7 +14767,7 @@ exports.AisAutocomplete = Autocomplete, exports.AisBreadcrumb = Breadcrumb, expo
 
 /***/ }),
 
-/***/ 350:
+/***/ 349:
 /***/ (function(module, exports) {
 
 // Exports
@@ -14778,22 +14778,22 @@ module.exports = {
 
 /***/ }),
 
-/***/ 358:
+/***/ 357:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _lib_InstantSearch__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(364);
-/* harmony import */ var _lib_version__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(313);
-/* harmony import */ var _helpers__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(391);
-/* harmony import */ var _helpers__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(392);
-/* harmony import */ var _helpers__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(393);
-/* harmony import */ var _helpers__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(394);
-/* harmony import */ var _helpers__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(395);
-/* harmony import */ var _helpers__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(397);
-/* harmony import */ var _lib_infiniteHitsCache__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(396);
+/* harmony import */ var _lib_InstantSearch__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(363);
+/* harmony import */ var _lib_version__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(312);
+/* harmony import */ var _helpers__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(390);
+/* harmony import */ var _helpers__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(391);
+/* harmony import */ var _helpers__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(392);
+/* harmony import */ var _helpers__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(393);
+/* harmony import */ var _helpers__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(394);
+/* harmony import */ var _helpers__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(396);
+/* harmony import */ var _lib_infiniteHitsCache__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(395);
 /* harmony import */ var _lib_utils__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(254);
-/* harmony import */ var _types__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(314);
+/* harmony import */ var _types__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(313);
 /* harmony reexport (unknown) */ for(var __WEBPACK_IMPORT_KEY__ in _types__WEBPACK_IMPORTED_MODULE_10__) if(["default"].indexOf(__WEBPACK_IMPORT_KEY__) < 0) (function(key) { __webpack_require__.d(__webpack_exports__, key, function() { return _types__WEBPACK_IMPORTED_MODULE_10__[key]; }) }(__WEBPACK_IMPORT_KEY__));
 
 
@@ -14843,19 +14843,19 @@ Object.defineProperty(instantsearch, 'connectors', {
 
 /***/ }),
 
-/***/ 359:
+/***/ 358:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _node_modules_css_loader_dist_cjs_js_ref_3_oneOf_1_0_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_3_oneOf_1_1_node_modules_nuxt_components_dist_loader_js_ref_0_0_node_modules_vue_loader_lib_index_js_vue_loader_options_InfiniteHitsBlogs_vue_vue_type_style_index_0_id_c669df34_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(329);
+/* harmony import */ var _node_modules_css_loader_dist_cjs_js_ref_3_oneOf_1_0_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_3_oneOf_1_1_node_modules_nuxt_components_dist_loader_js_ref_0_0_node_modules_vue_loader_lib_index_js_vue_loader_options_InfiniteHitsBlogs_vue_vue_type_style_index_0_id_c669df34_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(328);
 /* harmony import */ var _node_modules_css_loader_dist_cjs_js_ref_3_oneOf_1_0_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_3_oneOf_1_1_node_modules_nuxt_components_dist_loader_js_ref_0_0_node_modules_vue_loader_lib_index_js_vue_loader_options_InfiniteHitsBlogs_vue_vue_type_style_index_0_id_c669df34_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_css_loader_dist_cjs_js_ref_3_oneOf_1_0_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_3_oneOf_1_1_node_modules_nuxt_components_dist_loader_js_ref_0_0_node_modules_vue_loader_lib_index_js_vue_loader_options_InfiniteHitsBlogs_vue_vue_type_style_index_0_id_c669df34_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_0__);
 /* harmony reexport (unknown) */ for(var __WEBPACK_IMPORT_KEY__ in _node_modules_css_loader_dist_cjs_js_ref_3_oneOf_1_0_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_3_oneOf_1_1_node_modules_nuxt_components_dist_loader_js_ref_0_0_node_modules_vue_loader_lib_index_js_vue_loader_options_InfiniteHitsBlogs_vue_vue_type_style_index_0_id_c669df34_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_0__) if(["default"].indexOf(__WEBPACK_IMPORT_KEY__) < 0) (function(key) { __webpack_require__.d(__webpack_exports__, key, function() { return _node_modules_css_loader_dist_cjs_js_ref_3_oneOf_1_0_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_3_oneOf_1_1_node_modules_nuxt_components_dist_loader_js_ref_0_0_node_modules_vue_loader_lib_index_js_vue_loader_options_InfiniteHitsBlogs_vue_vue_type_style_index_0_id_c669df34_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_0__[key]; }) }(__WEBPACK_IMPORT_KEY__));
 
 
 /***/ }),
 
-/***/ 364:
+/***/ 363:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -14869,25 +14869,25 @@ var external_events_ = __webpack_require__(230);
 var external_events_default = /*#__PURE__*/__webpack_require__.n(external_events_);
 
 // EXTERNAL MODULE: ./node_modules/instantsearch.js/es/widgets/index/index.js
-var index = __webpack_require__(312);
+var index = __webpack_require__(311);
 
 // EXTERNAL MODULE: ./node_modules/instantsearch.js/es/lib/version.js
-var version = __webpack_require__(313);
+var version = __webpack_require__(312);
 
 // EXTERNAL MODULE: ./node_modules/instantsearch.js/es/helpers/highlight.js
-var helpers_highlight = __webpack_require__(391);
+var helpers_highlight = __webpack_require__(390);
 
 // EXTERNAL MODULE: ./node_modules/instantsearch.js/es/helpers/reverseHighlight.js
-var helpers_reverseHighlight = __webpack_require__(392);
+var helpers_reverseHighlight = __webpack_require__(391);
 
 // EXTERNAL MODULE: ./node_modules/instantsearch.js/es/helpers/snippet.js
-var helpers_snippet = __webpack_require__(393);
+var helpers_snippet = __webpack_require__(392);
 
 // EXTERNAL MODULE: ./node_modules/instantsearch.js/es/helpers/reverseSnippet.js
-var helpers_reverseSnippet = __webpack_require__(394);
+var helpers_reverseSnippet = __webpack_require__(393);
 
 // EXTERNAL MODULE: ./node_modules/instantsearch.js/es/helpers/insights.js
-var helpers_insights = __webpack_require__(395);
+var helpers_insights = __webpack_require__(394);
 
 // CONCATENATED MODULE: ./node_modules/instantsearch.js/es/lib/createHelpers.js
 function ownKeys(object, enumerableOnly) {
@@ -15005,7 +15005,7 @@ function hoganHelpers(_ref) {
 var documentation = __webpack_require__(264);
 
 // EXTERNAL MODULE: ./node_modules/instantsearch.js/es/lib/utils/defer.js
-var defer = __webpack_require__(307);
+var defer = __webpack_require__(306);
 
 // EXTERNAL MODULE: ./node_modules/instantsearch.js/es/lib/utils/noop.js
 var noop = __webpack_require__(265);
@@ -15126,7 +15126,7 @@ var external_qs_ = __webpack_require__(231);
 var external_qs_default = /*#__PURE__*/__webpack_require__.n(external_qs_);
 
 // EXTERNAL MODULE: ./node_modules/instantsearch.js/es/lib/utils/safelyRunOnBrowser.js
-var safelyRunOnBrowser = __webpack_require__(302);
+var safelyRunOnBrowser = __webpack_require__(301);
 
 // CONCATENATED MODULE: ./node_modules/instantsearch.js/es/lib/routers/history.js
 function _classCallCheck(instance, Constructor) {
@@ -15408,7 +15408,7 @@ function historyRouter() {
   });
 }
 // EXTERNAL MODULE: ./node_modules/instantsearch.js/es/lib/utils/isEqual.js
-var isEqual = __webpack_require__(296);
+var isEqual = __webpack_require__(295);
 
 // CONCATENATED MODULE: ./node_modules/instantsearch.js/es/middlewares/createRouterMiddleware.js
 function createRouterMiddleware_ownKeys(object, enumerableOnly) {
@@ -16293,7 +16293,7 @@ var InstantSearch_InstantSearch = /*#__PURE__*/function (_EventEmitter) {
 
 /***/ }),
 
-/***/ 366:
+/***/ 365:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -16308,7 +16308,7 @@ var staticRenderFns = []
 // CONCATENATED MODULE: ./components/blogs/InfiniteHitsBlogs.vue?vue&type=template&id=c669df34&scoped=true&
 
 // EXTERNAL MODULE: ./node_modules/vue-instantsearch/vue2/cjs/index.js
-var cjs = __webpack_require__(333);
+var cjs = __webpack_require__(332);
 
 // EXTERNAL MODULE: ./node_modules/instantsearch.js/es/connectors/infinite-hits/connectInfiniteHits.js
 var connectInfiniteHits = __webpack_require__(273);
@@ -16452,7 +16452,7 @@ var VIcon = __webpack_require__(72);
 
 function injectStyles (context) {
   
-  var style0 = __webpack_require__(359)
+  var style0 = __webpack_require__(358)
 if (style0.__inject__) style0.__inject__(context)
 
 }
@@ -16485,7 +16485,7 @@ installComponents_default()(component, {VBtn: VBtn["a" /* default */],VCard: VCa
 
 /***/ }),
 
-/***/ 371:
+/***/ 370:
 /***/ (function(module, exports) {
 
 // Exports
@@ -16496,19 +16496,19 @@ module.exports = {
 
 /***/ }),
 
-/***/ 372:
+/***/ 371:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _node_modules_css_loader_dist_cjs_js_ref_3_oneOf_1_0_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_3_oneOf_1_1_node_modules_nuxt_components_dist_loader_js_ref_0_0_node_modules_vue_loader_lib_index_js_vue_loader_options_buscador_infinito_blogs_vue_vue_type_style_index_0_id_05e6f222_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(350);
+/* harmony import */ var _node_modules_css_loader_dist_cjs_js_ref_3_oneOf_1_0_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_3_oneOf_1_1_node_modules_nuxt_components_dist_loader_js_ref_0_0_node_modules_vue_loader_lib_index_js_vue_loader_options_buscador_infinito_blogs_vue_vue_type_style_index_0_id_05e6f222_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(349);
 /* harmony import */ var _node_modules_css_loader_dist_cjs_js_ref_3_oneOf_1_0_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_3_oneOf_1_1_node_modules_nuxt_components_dist_loader_js_ref_0_0_node_modules_vue_loader_lib_index_js_vue_loader_options_buscador_infinito_blogs_vue_vue_type_style_index_0_id_05e6f222_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_css_loader_dist_cjs_js_ref_3_oneOf_1_0_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_3_oneOf_1_1_node_modules_nuxt_components_dist_loader_js_ref_0_0_node_modules_vue_loader_lib_index_js_vue_loader_options_buscador_infinito_blogs_vue_vue_type_style_index_0_id_05e6f222_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_0__);
 /* harmony reexport (unknown) */ for(var __WEBPACK_IMPORT_KEY__ in _node_modules_css_loader_dist_cjs_js_ref_3_oneOf_1_0_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_3_oneOf_1_1_node_modules_nuxt_components_dist_loader_js_ref_0_0_node_modules_vue_loader_lib_index_js_vue_loader_options_buscador_infinito_blogs_vue_vue_type_style_index_0_id_05e6f222_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_0__) if(["default"].indexOf(__WEBPACK_IMPORT_KEY__) < 0) (function(key) { __webpack_require__.d(__webpack_exports__, key, function() { return _node_modules_css_loader_dist_cjs_js_ref_3_oneOf_1_0_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_3_oneOf_1_1_node_modules_nuxt_components_dist_loader_js_ref_0_0_node_modules_vue_loader_lib_index_js_vue_loader_options_buscador_infinito_blogs_vue_vue_type_style_index_0_id_05e6f222_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_0__[key]; }) }(__WEBPACK_IMPORT_KEY__));
 
 
 /***/ }),
 
-/***/ 383:
+/***/ 382:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -16525,17 +16525,17 @@ var staticRenderFns = []
 // CONCATENATED MODULE: ./components/blogs/buscador-infinito-blogs.vue?vue&type=template&id=05e6f222&scoped=true&
 
 // EXTERNAL MODULE: ./node_modules/vue-instantsearch/vue2/cjs/index.js
-var cjs = __webpack_require__(333);
+var cjs = __webpack_require__(332);
 
 // EXTERNAL MODULE: external "algoliasearch/lite"
 var lite_ = __webpack_require__(232);
 var lite_default = /*#__PURE__*/__webpack_require__.n(lite_);
 
 // EXTERNAL MODULE: ./node_modules/instantsearch.css/themes/algolia-min.css
-var algolia_min = __webpack_require__(371);
+var algolia_min = __webpack_require__(370);
 
 // EXTERNAL MODULE: ./components/blogs/InfiniteHitsBlogs.vue + 4 modules
-var InfiniteHitsBlogs = __webpack_require__(366);
+var InfiniteHitsBlogs = __webpack_require__(365);
 
 // CONCATENATED MODULE: ./node_modules/babel-loader/lib??ref--2-0!./node_modules/@nuxt/components/dist/loader.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./components/blogs/buscador-infinito-blogs.vue?vue&type=script&lang=js&
 //
@@ -16593,7 +16593,7 @@ var componentNormalizer = __webpack_require__(6);
 
 function injectStyles (context) {
   
-  var style0 = __webpack_require__(372)
+  var style0 = __webpack_require__(371)
 if (style0.__inject__) style0.__inject__(context)
 
 }
@@ -16615,13 +16615,13 @@ var component = Object(componentNormalizer["a" /* default */])(
 
 /***/ }),
 
-/***/ 391:
+/***/ 390:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return highlight; });
 /* harmony import */ var _lib_suit__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(255);
-/* harmony import */ var _lib_utils__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(303);
+/* harmony import */ var _lib_utils__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(302);
 /* harmony import */ var _lib_utils__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(249);
 
 
@@ -16647,15 +16647,15 @@ function highlight(_ref) {
 
 /***/ }),
 
-/***/ 392:
+/***/ 391:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return reverseHighlight; });
-/* harmony import */ var _lib_utils__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(303);
-/* harmony import */ var _lib_utils__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(308);
-/* harmony import */ var _lib_utils__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(310);
-/* harmony import */ var _lib_utils__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(309);
+/* harmony import */ var _lib_utils__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(302);
+/* harmony import */ var _lib_utils__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(307);
+/* harmony import */ var _lib_utils__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(309);
+/* harmony import */ var _lib_utils__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(308);
 /* harmony import */ var _lib_utils__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(249);
 /* harmony import */ var _lib_suit__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(255);
 
@@ -16683,13 +16683,13 @@ function reverseHighlight(_ref) {
 
 /***/ }),
 
-/***/ 393:
+/***/ 392:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return snippet; });
 /* harmony import */ var _lib_suit__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(255);
-/* harmony import */ var _lib_utils__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(303);
+/* harmony import */ var _lib_utils__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(302);
 /* harmony import */ var _lib_utils__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(249);
 
 
@@ -16715,15 +16715,15 @@ function snippet(_ref) {
 
 /***/ }),
 
-/***/ 394:
+/***/ 393:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return reverseSnippet; });
-/* harmony import */ var _lib_utils__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(303);
-/* harmony import */ var _lib_utils__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(308);
-/* harmony import */ var _lib_utils__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(310);
-/* harmony import */ var _lib_utils__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(309);
+/* harmony import */ var _lib_utils__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(302);
+/* harmony import */ var _lib_utils__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(307);
+/* harmony import */ var _lib_utils__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(309);
+/* harmony import */ var _lib_utils__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(308);
 /* harmony import */ var _lib_utils__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(249);
 /* harmony import */ var _lib_suit__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(255);
 
@@ -16751,7 +16751,7 @@ function reverseSnippet(_ref) {
 
 /***/ }),
 
-/***/ 395:
+/***/ 394:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -16830,13 +16830,13 @@ function insights(method, payload) {
 
 /***/ }),
 
-/***/ 396:
+/***/ 395:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return createInfiniteHitsSessionStorageCache; });
-/* harmony import */ var _utils__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(302);
-/* harmony import */ var _utils__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(296);
+/* harmony import */ var _utils__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(301);
+/* harmony import */ var _utils__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(295);
 function _objectWithoutProperties(source, excluded) {
   if (source == null) return {};
 
@@ -16937,7 +16937,7 @@ function createInfiniteHitsSessionStorageCache() {
 
 /***/ }),
 
-/***/ 397:
+/***/ 396:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";

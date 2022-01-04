@@ -20,7 +20,7 @@ const {
 const {
   eventoCreacionUsuario,
   eventoEliminacionUsuario,
-} = require('./src/funcionesFirebaseFunctions/usuarios')
+} = require('./src/funcionesFirebaseFunctions/auth')
 
 /*
  * FUNCIONES - FIREBASE CLOUD FUNCTIONS

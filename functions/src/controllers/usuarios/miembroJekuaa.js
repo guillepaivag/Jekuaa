@@ -1,7 +1,6 @@
-const Blog = require("../../models/Blog")
 const manejadorErrores = require("../../helpers/ManejoErrores")
 const Respuesta = require("../../models/Respuesta")
-const fs = require('fs')
+const MiembroJekuaa = require("../../models/ComponentesUsuario/TiposUsuarios/MiembroJekuaa")
 
 const controller = {}
 
@@ -14,11 +13,7 @@ controller.crearBlog = async (req, res) => {
         const respuesta = new Respuesta()
         let codigo = 'jekuaa/exito'
 
-        // Agregar a Firestore
-        const blogRespuesta = await Blog.crearNuevoBlog( datosBlog )
-
-        // Agregar archivo blog (contenido)
-        await Blog.subirArchivoBlogAStorage( rutaArchivoTemp, datosBlog.uid )
+        const blogRespuesta = await MiembroJekuaa.crearBlog(datosBlog, rutaArchivoTemp)
 
         // Retornar respuesta
         respuesta.setRespuestaPorCodigo(codigo, {
@@ -52,29 +47,7 @@ controller.actualizarDatosBlog = async (req, res) => {
         const respuesta = new Respuesta()
         let codigo = 'jekuaa/exito'
 
-        // Actualizar a Firestore
-        let blogRespuesta
-        if (datosBlog && Object.keys(datosBlog).length) {
-            blogRespuesta = await Blog.actualizarBlog( uid, datosBlog )
-        }
-
-        // Actualizar archivo blog (contenido)
-        let archivoCreado
-        if (rutaArchivoTemp) {
-            archivoCreado = await Blog.subirArchivoBlogAStorage( rutaArchivoTemp, uid )
-            
-            // Borrar el archivo creado en el servidor
-            fs.unlink(rutaArchivoTemp, (err => {
-                if ( err ) {
-                    console.log('Error al eliminar el archivo temporal: ', err)
-                    return
-                }
-            }))
-        }
-
-        const data = {}
-        blogRespuesta ? data.blogRespuesta = blogRespuesta : ''
-        archivoCreado ? data.archivoCreado = archivoCreado : ''
+        const data = await MiembroJekuaa.actualizarBlog(uid, datosBlog, rutaArchivoTemp)
 
         // Retornar respuesta
         respuesta.setRespuestaPorCodigo(codigo, {
@@ -106,11 +79,7 @@ controller.eliminarBlog = async (req, res) => {
         const respuesta = new Respuesta()
         let codigo = 'jekuaa/exito'
 
-        // Eliminar los datos del blog en Firestore
-        const datosBlogEliminado = await Blog.eliminarBlog( uid )
-
-        // Eliminar el archivo del blog en Storage
-        await Blog.eliminarArchivoBlog( uid )
+        const datosBlogEliminado = await MiembroJekuaa.eliminarBlog(uid)
 
         // Retornar respuesta
         respuesta.setRespuestaPorCodigo(codigo, {
@@ -123,6 +92,102 @@ controller.eliminarBlog = async (req, res) => {
 
     } catch (error) {
         console.log('Error - eliminarBlog: ', error)
+
+        const {
+            status,
+            respuesta
+        } = manejadorErrores( error )
+
+        return res.status( status ).json( respuesta )
+    }
+}
+
+controller.crearCurso = async (req, res) => {
+    try {
+        const { jekuaaDatos, body } = req
+        const {  } = body
+
+        const respuesta = new Respuesta()
+        let codigo = 'jekuaa/exito'
+
+        // Crear documento curso
+
+        // Crear documentos de unidades por curso
+
+        // Crear documentos de clases por curso
+
+        // Crear archivos para cada clase por curso
+
+        // Retornar respuesta
+        respuesta.setRespuestaPorCodigo(codigo, {
+            mensaje: '¡Se creó un curso!',
+            resultado: blogRespuesta.getBlog()
+        })
+        const status = respuesta.getStatusCode()
+        
+        return res.status( status ).json( respuesta.getRespuesta() )
+    } catch (error) {
+        console.log('Error - crearCurso: ', error)
+
+        const {
+            status,
+            respuesta
+        } = manejadorErrores( error )
+
+        return res.status( status ).json( respuesta )
+    }
+}
+
+controller.actualizarCurso = async (req, res) => {
+    try {
+        const { jekuaaDatos, body } = req
+        const {  } = body
+
+        const respuesta = new Respuesta()
+        let codigo = 'jekuaa/exito'
+
+
+
+        // Retornar respuesta
+        respuesta.setRespuestaPorCodigo(codigo, {
+            mensaje: '¡Se actualizó un curso!',
+            resultado: blogRespuesta.getBlog()
+        })
+        const status = respuesta.getStatusCode()
+        
+        return res.status( status ).json( respuesta.getRespuesta() )
+    } catch (error) {
+        console.log('Error - actualizarCurso: ', error)
+
+        const {
+            status,
+            respuesta
+        } = manejadorErrores( error )
+
+        return res.status( status ).json( respuesta )
+    }
+}
+
+controller.eliminarCurso = async (req, res) => {
+    try {
+        const { jekuaaDatos, body } = req
+        const {  } = body
+
+        const respuesta = new Respuesta()
+        let codigo = 'jekuaa/exito'
+
+
+
+        // Retornar respuesta
+        respuesta.setRespuestaPorCodigo(codigo, {
+            mensaje: '¡Se eliminó un curso!',
+            resultado: blogRespuesta.getBlog()
+        })
+        const status = respuesta.getStatusCode()
+        
+        return res.status( status ).json( respuesta.getRespuesta() )
+    } catch (error) {
+        console.log('Error - eliminarCurso: ', error)
 
         const {
             status,

@@ -1,4 +1,4 @@
-exports.ids = [27];
+exports.ids = [26];
 exports.modules = {
 
 /***/ 248:
@@ -403,7 +403,7 @@ const cache = new Map();
 
 /***/ }),
 
-/***/ 404:
+/***/ 403:
 /***/ (function(module, exports) {
 
 // Exports
@@ -414,26 +414,26 @@ module.exports = {
 
 /***/ }),
 
-/***/ 421:
+/***/ 419:
 /***/ (function(module, exports, __webpack_require__) {
 
 module.exports = __webpack_require__.p + "img/mesa-trabajo.94df391.jpg";
 
 /***/ }),
 
-/***/ 422:
+/***/ 420:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _node_modules_css_loader_dist_cjs_js_ref_3_oneOf_1_0_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_3_oneOf_1_1_node_modules_nuxt_components_dist_loader_js_ref_0_0_node_modules_vue_loader_lib_index_js_vue_loader_options_index_vue_vue_type_style_index_0_id_c561b8ac_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(404);
+/* harmony import */ var _node_modules_css_loader_dist_cjs_js_ref_3_oneOf_1_0_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_3_oneOf_1_1_node_modules_nuxt_components_dist_loader_js_ref_0_0_node_modules_vue_loader_lib_index_js_vue_loader_options_index_vue_vue_type_style_index_0_id_c561b8ac_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(403);
 /* harmony import */ var _node_modules_css_loader_dist_cjs_js_ref_3_oneOf_1_0_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_3_oneOf_1_1_node_modules_nuxt_components_dist_loader_js_ref_0_0_node_modules_vue_loader_lib_index_js_vue_loader_options_index_vue_vue_type_style_index_0_id_c561b8ac_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_css_loader_dist_cjs_js_ref_3_oneOf_1_0_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_3_oneOf_1_1_node_modules_nuxt_components_dist_loader_js_ref_0_0_node_modules_vue_loader_lib_index_js_vue_loader_options_index_vue_vue_type_style_index_0_id_c561b8ac_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_0__);
 /* harmony reexport (unknown) */ for(var __WEBPACK_IMPORT_KEY__ in _node_modules_css_loader_dist_cjs_js_ref_3_oneOf_1_0_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_3_oneOf_1_1_node_modules_nuxt_components_dist_loader_js_ref_0_0_node_modules_vue_loader_lib_index_js_vue_loader_options_index_vue_vue_type_style_index_0_id_c561b8ac_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_0__) if(["default"].indexOf(__WEBPACK_IMPORT_KEY__) < 0) (function(key) { __webpack_require__.d(__webpack_exports__, key, function() { return _node_modules_css_loader_dist_cjs_js_ref_3_oneOf_1_0_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_3_oneOf_1_1_node_modules_nuxt_components_dist_loader_js_ref_0_0_node_modules_vue_loader_lib_index_js_vue_loader_options_index_vue_vue_type_style_index_0_id_c561b8ac_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_0__[key]; }) }(__WEBPACK_IMPORT_KEY__));
 
 
 /***/ }),
 
-/***/ 449:
+/***/ 445:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -441,7 +441,7 @@ __webpack_require__.r(__webpack_exports__);
 __webpack_require__.r(__webpack_exports__);
 
 // CONCATENATED MODULE: ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/@nuxt/components/dist/loader.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./pages/miembro-jekuaa/index.vue?vue&type=template&id=c561b8ac&scoped=true&
-var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{},[_vm._ssrNode("<div class=\"container\" data-v-c561b8ac>","</div>",[_c('v-row',{staticClass:"mt-5",attrs:{"no-gutters":""}},[_c('v-col',{attrs:{"cols":"12","md":"5"}},[_c('div',{staticClass:"contenedor-l"},[_c('v-card',{staticClass:"pt-10 pb-10",attrs:{"color":"#683bce","dark":""}},[_c('div',{staticClass:"d-flex flex-no-wrap justify-space-between"},[_c('div',{staticClass:"ml-5"},[_c('v-card-title',{staticClass:"text-h5 mb-0"},[_vm._v("\n                                Blog\n                            ")]),_vm._v(" "),_c('v-card-subtitle',{staticClass:"mt-0"},[_vm._v("\n                                ¡Crea un blog con Jekuaapy!\n                            ")]),_vm._v(" "),_c('v-card-actions',[_c('v-btn',{staticClass:"ml-2 mt-3",attrs:{"outlined":"","rounded":"","to":"/miembro-jekuaa/blogs/nuevo"}},[_vm._v("\n                                    Crear blog\n                                ")])],1)],1),_vm._v(" "),_c('v-avatar',{staticClass:"ma-3 mr-7",attrs:{"size":"155","tile":""}},[_c('v-img',{attrs:{"src":"https://firebasestorage.googleapis.com/v0/b/jekuaa-py.appspot.com/o/vecteezy_write-to-computer-on-background_.jpg?alt=media&token=1c1589f4-c48b-4e9c-839c-e7be1e7600be"}})],1)],1)])],1)]),_vm._v(" "),_c('v-col',{attrs:{"cols":"12","md":"7"}},[_c('div',{staticClass:"contenedor-r"},[_c('h3',{staticClass:"titulo-presentacion"},[_vm._v("¡Blogs con Jekuaapy!")]),_vm._v(" "),_c('p',[_vm._v("Contrary to popular belief, Lorem Ipsum is not simply random text. It has roots in a piece of classical Latin literature from 45 BC, making it over 2000 years old. Richard McClintock, a Latin professor at Hampden-Sydney College in Virginia, looked up one of the more obscure Latin words, consectetur, from a Lorem Ipsum passage, and going through the cites of the word in classical literature, discovered the undoubtable source.")]),_vm._v(" "),_c('p',[_vm._v("The standard chunk of Lorem Ipsum used since the 1500s is reproduced below for those interested. Sections 1.10.32 and 1.10.33 from \"de Finibus Bonorum et Malorum\" by Cicero are also reproduced in their exact original form, accompanied by English versions from the 1914 translation by H. Rackham.")]),_vm._v(" "),_c('v-btn',{staticClass:"ml-2 mt-5",attrs:{"outlined":"","rounded":"","color":"#683bce","to":"/miembro-jekuaa/blogs"}},[_vm._v("\n                        Comenzar jekuaapy blogs\n                    ")])],1)])],1),_vm._ssrNode(" <h3 class=\"titulo-presentacion mt-15\" data-v-c561b8ac>¡Mesas de trabajos!</h3> "),_c('v-divider'),_vm._ssrNode(" "),_c('v-row',{staticClass:"mt-5 mb-5",attrs:{"no-gutters":""}},[_c('v-col',{attrs:{"cols":"12","md":"12"}},[_c('div',{staticClass:"contenedor-r"},[_c('v-card',{staticClass:"mx-auto"},[_c('v-img',{staticClass:"white--text align-end",attrs:{"height":"250px","src":__webpack_require__(421)}},[_c('v-card-title',[_vm._v("\n                                ¡Blogs con Jekuaapy!\n                            ")])],1),_vm._v(" "),_c('div',{staticClass:"container"},[_c('v-card-subtitle',{staticClass:"pb-0"},[_vm._v("\n                                ¡Escribe lo que quieres mostrar al mundo!\n                            ")]),_vm._v(" "),_c('v-card-text',{staticClass:"text--primary"},[_c('div')]),_vm._v(" "),_c('v-card-actions',[_c('v-btn',{attrs:{"outlined":"","rounded":"","color":"#683bce","to":"/miembro-jekuaa/blogs"}},[_vm._v("\n                                    Comenzar\n                                ")])],1)],1)],1)],1)])],1)],2)])}
+var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{},[_vm._ssrNode("<div class=\"container\" data-v-c561b8ac>","</div>",[_c('v-row',{staticClass:"mt-5",attrs:{"no-gutters":""}},[_c('v-col',{attrs:{"cols":"12","md":"5"}},[_c('div',{staticClass:"contenedor-l"},[_c('v-card',{staticClass:"pt-10 pb-10",attrs:{"color":"#683bce","dark":""}},[_c('div',{staticClass:"d-flex flex-no-wrap justify-space-between"},[_c('div',{staticClass:"ml-5"},[_c('v-card-title',{staticClass:"text-h5 mb-0"},[_vm._v("\n                                Blog\n                            ")]),_vm._v(" "),_c('v-card-subtitle',{staticClass:"mt-0"},[_vm._v("\n                                ¡Crea un blog con Jekuaapy!\n                            ")]),_vm._v(" "),_c('v-card-actions',[_c('v-btn',{staticClass:"ml-2 mt-3",attrs:{"outlined":"","rounded":"","to":"/miembro-jekuaa/blogs/nuevo"}},[_vm._v("\n                                    Crear blog\n                                ")])],1)],1),_vm._v(" "),_c('v-avatar',{staticClass:"ma-3 mr-7",attrs:{"size":"155","tile":""}},[_c('v-img',{attrs:{"src":"https://firebasestorage.googleapis.com/v0/b/jekuaa-py.appspot.com/o/vecteezy_write-to-computer-on-background_.jpg?alt=media&token=1c1589f4-c48b-4e9c-839c-e7be1e7600be"}})],1)],1)])],1)]),_vm._v(" "),_c('v-col',{attrs:{"cols":"12","md":"7"}},[_c('div',{staticClass:"contenedor-r"},[_c('h3',{staticClass:"titulo-presentacion"},[_vm._v("¡Blogs con Jekuaapy!")]),_vm._v(" "),_c('p',[_vm._v("Contrary to popular belief, Lorem Ipsum is not simply random text. It has roots in a piece of classical Latin literature from 45 BC, making it over 2000 years old. Richard McClintock, a Latin professor at Hampden-Sydney College in Virginia, looked up one of the more obscure Latin words, consectetur, from a Lorem Ipsum passage, and going through the cites of the word in classical literature, discovered the undoubtable source.")]),_vm._v(" "),_c('p',[_vm._v("The standard chunk of Lorem Ipsum used since the 1500s is reproduced below for those interested. Sections 1.10.32 and 1.10.33 from \"de Finibus Bonorum et Malorum\" by Cicero are also reproduced in their exact original form, accompanied by English versions from the 1914 translation by H. Rackham.")]),_vm._v(" "),_c('v-btn',{staticClass:"ml-2 mt-5",attrs:{"outlined":"","rounded":"","color":"#683bce","to":"/miembro-jekuaa/blogs"}},[_vm._v("\n                        Comenzar jekuaapy blogs\n                    ")])],1)])],1),_vm._ssrNode(" <h3 class=\"titulo-presentacion mt-15\" data-v-c561b8ac>¡Mesas de trabajos!</h3> "),_c('v-divider'),_vm._ssrNode(" "),_c('v-row',{staticClass:"mt-5 mb-5",attrs:{"no-gutters":""}},[_c('v-col',{attrs:{"cols":"12","md":"12"}},[_c('div',{staticClass:"contenedor-r"},[_c('v-card',{staticClass:"mx-auto"},[_c('v-img',{staticClass:"white--text align-end",attrs:{"height":"250px","src":__webpack_require__(419)}},[_c('v-card-title',[_vm._v("\n                                ¡Blogs con Jekuaapy!\n                            ")])],1),_vm._v(" "),_c('div',{staticClass:"container"},[_c('v-card-subtitle',{staticClass:"pb-0"},[_vm._v("\n                                ¡Escribe lo que quieres mostrar al mundo!\n                            ")]),_vm._v(" "),_c('v-card-text',{staticClass:"text--primary"},[_c('div')]),_vm._v(" "),_c('v-card-actions',[_c('v-btn',{attrs:{"outlined":"","rounded":"","color":"#683bce","to":"/miembro-jekuaa/blogs"}},[_vm._v("\n                                    Comenzar\n                                ")])],1)],1)],1)],1)])],1)],2)])}
 var staticRenderFns = []
 
 
@@ -631,7 +631,7 @@ var VRow = __webpack_require__(257);
 
 function injectStyles (context) {
   
-  var style0 = __webpack_require__(422)
+  var style0 = __webpack_require__(420)
 if (style0.__inject__) style0.__inject__(context)
 
 }

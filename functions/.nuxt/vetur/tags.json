@@ -58,8 +58,5 @@
   },
   "UsuariosCartaPresentacion": {
     "description": "Auto imported from components/usuarios/CartaPresentacion.vue"
-  },
-  "TiptapVuetifyImagenURL": {
-    "description": "Auto imported from components/tiptap/vuetify/ImagenURL.vue"
   }
 }

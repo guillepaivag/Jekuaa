@@ -99,7 +99,7 @@ export default {
                     }
                 }
 
-                const respuesta = await this.$axios.$put(`/usuarios/estudiante/actualizarUsuario`, body, config)
+                const respuesta = await this.$axios.$put(`/usuario/actualizarUsuario`, body, config)
 
             } catch (error) {
                 const accion = await this.$store.dispatch('modules/sistema/errorHandler', error)

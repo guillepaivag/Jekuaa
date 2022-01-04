@@ -1,4 +1,4 @@
-exports.ids = [31];
+exports.ids = [30];
 exports.modules = {
 
 /***/ 248:
@@ -403,19 +403,19 @@ const cache = new Map();
 
 /***/ }),
 
-/***/ 452:
+/***/ 448:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 // ESM COMPAT FLAG
 __webpack_require__.r(__webpack_exports__);
 
-// CONCATENATED MODULE: ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/@nuxt/components/dist/loader.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./pages/perfil/seguridad.vue?vue&type=template&id=35a4372c&
+// CONCATENATED MODULE: ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/@nuxt/components/dist/loader.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./pages/perfil/seguridad.vue?vue&type=template&id=482cb8da&
 var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{},[_vm._ssrNode("<form>","</form>",[_c('v-row',{staticClass:"mb-3"},[_c('v-col',{attrs:{"cols":"12"}},[_c('h1',[_vm._v("Contraseña")])]),_vm._v(" "),_c('v-col',{attrs:{"cols":"12","lg":"6"}},[_c('v-text-field',{staticClass:"mt-5 mb-5",attrs:{"error-messages":_vm.erroresContrasenha,"counter":20,"label":"Nueva contraseña","required":""},on:{"input":function($event){return _vm.$v.contrasenha.$touch()},"blur":function($event){return _vm.$v.contrasenha.$touch()}},model:{value:(_vm.contrasenha),callback:function ($$v) {_vm.contrasenha=$$v},expression:"contrasenha"}})],1),_vm._v(" "),_c('v-col',{attrs:{"cols":"12","lg":"6"}},[_c('v-text-field',{staticClass:"mt-5 mb-5",attrs:{"error-messages":_vm.erroresConfirmacionContrasenha,"counter":20,"label":"Confirmación de contraseña","required":""},on:{"input":function($event){return _vm.$v.confirmacionContrasenha.$touch()},"blur":function($event){return _vm.$v.confirmacionContrasenha.$touch()}},model:{value:(_vm.confirmacionContrasenha),callback:function ($$v) {_vm.confirmacionContrasenha=$$v},expression:"confirmacionContrasenha"}})],1)],1),_vm._ssrNode(" "),_vm._ssrNode("<div class=\"botones\">","</div>",[_c('v-btn',{staticClass:"mr-4",attrs:{"disabled":_vm.$v.$anyError || !_vm.contrasenha || !_vm.confirmacionContrasenha,"text":"","color":"#683bce"},on:{"click":_vm.actualizar}},[_vm._v("\n                Actualizar contraseña\n            ")]),_vm._ssrNode(" "),_c('v-btn',{attrs:{"text":"","color":"#ff1d89"},on:{"click":_vm.reiniciar}},[_vm._v(" Reiniciar ")])],2)],2)])}
 var staticRenderFns = []
 
 
-// CONCATENATED MODULE: ./pages/perfil/seguridad.vue?vue&type=template&id=35a4372c&
+// CONCATENATED MODULE: ./pages/perfil/seguridad.vue?vue&type=template&id=482cb8da&
 
 // EXTERNAL MODULE: external "vuelidate"
 var external_vuelidate_ = __webpack_require__(194);
@@ -518,7 +518,7 @@ var validators_ = __webpack_require__(195);
             Authorization: `Bearer ${token}`
           }
         };
-        const respuesta = await this.$axios.$put(`/usuarios/estudiante/actualizarUsuario`, body, config);
+        const respuesta = await this.$axios.$put(`/usuario/actualizarUsuario`, body, config);
       } catch (error) {
         const accion = await this.$store.dispatch('modules/sistema/errorHandler', error);
       }

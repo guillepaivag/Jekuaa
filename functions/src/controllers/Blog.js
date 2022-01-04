@@ -200,9 +200,7 @@ controller.obtenerContenidoBlog = async ( req, res ) => {
         }
 
         // Obtener archivo
-        const contenido = await blog.obtenerContenido({
-            extensionArchivo: 'md'
-        })
+        const contenido = await Blog.obtenerContenido(uid, 'md')
 
         // Retornar respuesta
         respuesta.setRespuestaPorCodigo(codigo, {

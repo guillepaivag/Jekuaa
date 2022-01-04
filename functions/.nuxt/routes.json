@@ -4,21 +4,24 @@
     "path": "/inicio",
     "component": "C:\\\\Users\\\\i3\\\\Desktop\\\\PDGP\\\\WebDevelopment\\\\Proyectos\\\\Jekuaa\\\\jekuaa\\\\jekuaaNuxt\\\\pages\\\\inicio.vue",
     "chunkName": "pages/inicio",
-    "url": "/inicio"
+    "url": "/inicio",
+    "_name": "_55e36ebc"
   },
   {
     "name": "inicioSesion",
     "path": "/inicioSesion",
     "component": "C:\\\\Users\\\\i3\\\\Desktop\\\\PDGP\\\\WebDevelopment\\\\Proyectos\\\\Jekuaa\\\\jekuaa\\\\jekuaaNuxt\\\\pages\\\\inicioSesion.vue",
     "chunkName": "pages/inicioSesion",
-    "url": "/inicioSesion"
+    "url": "/inicioSesion",
+    "_name": "_23a3b863"
   },
   {
     "name": "miembro-jekuaa",
     "path": "/miembro-jekuaa",
     "component": "C:\\\\Users\\\\i3\\\\Desktop\\\\PDGP\\\\WebDevelopment\\\\Proyectos\\\\Jekuaa\\\\jekuaa\\\\jekuaaNuxt\\\\pages\\\\miembro-jekuaa\\\\index.vue",
     "chunkName": "pages/miembro-jekuaa/index",
-    "url": "/miembro-jekuaa"
+    "url": "/miembro-jekuaa",
+    "_name": "_ca494018"
   },
   {
     "path": "/perfil",
@@ -30,93 +33,108 @@
         "path": "",
         "component": "C:\\\\Users\\\\i3\\\\Desktop\\\\PDGP\\\\WebDevelopment\\\\Proyectos\\\\Jekuaa\\\\jekuaa\\\\jekuaaNuxt\\\\pages\\\\perfil\\\\index.vue",
         "chunkName": "pages/perfil/index",
-        "url": "/perfil"
+        "url": "/perfil",
+        "_name": "_4118ef02"
       },
       {
         "name": "perfil-informacion",
         "path": "informacion",
         "component": "C:\\\\Users\\\\i3\\\\Desktop\\\\PDGP\\\\WebDevelopment\\\\Proyectos\\\\Jekuaa\\\\jekuaa\\\\jekuaaNuxt\\\\pages\\\\perfil\\\\informacion.vue",
         "chunkName": "pages/perfil/informacion",
-        "url": "/perfil/informacion"
+        "url": "/perfil/informacion",
+        "_name": "_95710d6c"
       },
       {
         "name": "perfil-seguridad",
         "path": "seguridad",
         "component": "C:\\\\Users\\\\i3\\\\Desktop\\\\PDGP\\\\WebDevelopment\\\\Proyectos\\\\Jekuaa\\\\jekuaa\\\\jekuaaNuxt\\\\pages\\\\perfil\\\\seguridad.vue",
         "chunkName": "pages/perfil/seguridad",
-        "url": "/perfil/seguridad"
+        "url": "/perfil/seguridad",
+        "_name": "_1d940d5d"
       }
-    ]
+    ],
+    "_name": "_12f09ea3"
   },
   {
     "name": "registro",
     "path": "/registro",
     "component": "C:\\\\Users\\\\i3\\\\Desktop\\\\PDGP\\\\WebDevelopment\\\\Proyectos\\\\Jekuaa\\\\jekuaa\\\\jekuaaNuxt\\\\pages\\\\registro.vue",
     "chunkName": "pages/registro",
-    "url": "/registro"
+    "url": "/registro",
+    "_name": "_e05e746c"
   },
   {
     "name": "miembro-jekuaa-blogs",
     "path": "/miembro-jekuaa/blogs",
     "component": "C:\\\\Users\\\\i3\\\\Desktop\\\\PDGP\\\\WebDevelopment\\\\Proyectos\\\\Jekuaa\\\\jekuaa\\\\jekuaaNuxt\\\\pages\\\\miembro-jekuaa\\\\blogs\\\\index.vue",
     "chunkName": "pages/miembro-jekuaa/blogs/index",
-    "url": "/miembro-jekuaa/blogs"
+    "url": "/miembro-jekuaa/blogs",
+    "_name": "_ac831f22"
   },
   {
     "name": "miembro-jekuaa-blogs-mis-blogs",
     "path": "/miembro-jekuaa/blogs/mis-blogs",
     "component": "C:\\\\Users\\\\i3\\\\Desktop\\\\PDGP\\\\WebDevelopment\\\\Proyectos\\\\Jekuaa\\\\jekuaa\\\\jekuaaNuxt\\\\pages\\\\miembro-jekuaa\\\\blogs\\\\mis-blogs.vue",
     "chunkName": "pages/miembro-jekuaa/blogs/mis-blogs",
-    "url": "/miembro-jekuaa/blogs/mis-blogs"
+    "url": "/miembro-jekuaa/blogs/mis-blogs",
+    "_name": "_ed3fda90"
   },
   {
     "name": "miembro-jekuaa-blogs-nuevo",
     "path": "/miembro-jekuaa/blogs/nuevo",
     "component": "C:\\\\Users\\\\i3\\\\Desktop\\\\PDGP\\\\WebDevelopment\\\\Proyectos\\\\Jekuaa\\\\jekuaa\\\\jekuaaNuxt\\\\pages\\\\miembro-jekuaa\\\\blogs\\\\nuevo.vue",
     "chunkName": "pages/miembro-jekuaa/blogs/nuevo",
-    "url": "/miembro-jekuaa/blogs/nuevo"
+    "url": "/miembro-jekuaa/blogs/nuevo",
+    "_name": "_90b2c058"
   },
   {
     "name": "miembro-jekuaa-blog-actualizar-referencia",
     "path": "/miembro-jekuaa/blog/actualizar/:referencia?",
     "component": "C:\\\\Users\\\\i3\\\\Desktop\\\\PDGP\\\\WebDevelopment\\\\Proyectos\\\\Jekuaa\\\\jekuaa\\\\jekuaaNuxt\\\\pages\\\\miembro-jekuaa\\\\blog\\\\actualizar\\\\_referencia.vue",
-    "chunkName": "pages/miembro-jekuaa/blog/actualizar/_referencia"
+    "chunkName": "pages/miembro-jekuaa/blog/actualizar/_referencia",
+    "_name": "_7f06e921"
   },
   {
     "name": "miembro-jekuaa-blog-referencia",
     "path": "/miembro-jekuaa/blog/:referencia",
     "component": "C:\\\\Users\\\\i3\\\\Desktop\\\\PDGP\\\\WebDevelopment\\\\Proyectos\\\\Jekuaa\\\\jekuaa\\\\jekuaaNuxt\\\\pages\\\\miembro-jekuaa\\\\blog\\\\_referencia.vue",
-    "chunkName": "pages/miembro-jekuaa/blog/_referencia"
+    "chunkName": "pages/miembro-jekuaa/blog/_referencia",
+    "_name": "_3b178e51"
   },
   {
     "name": "bienvenido-a-jekuaapy-nombreUsuario",
     "path": "/bienvenido-a-jekuaapy/:nombreUsuario?",
     "component": "C:\\\\Users\\\\i3\\\\Desktop\\\\PDGP\\\\WebDevelopment\\\\Proyectos\\\\Jekuaa\\\\jekuaa\\\\jekuaaNuxt\\\\pages\\\\bienvenido-a-jekuaapy\\\\_nombreUsuario.vue",
-    "chunkName": "pages/bienvenido-a-jekuaapy/_nombreUsuario"
+    "chunkName": "pages/bienvenido-a-jekuaapy/_nombreUsuario",
+    "_name": "_2d566381"
   },
   {
     "name": "blog-referencia",
     "path": "/blog/:referencia?",
     "component": "C:\\\\Users\\\\i3\\\\Desktop\\\\PDGP\\\\WebDevelopment\\\\Proyectos\\\\Jekuaa\\\\jekuaa\\\\jekuaaNuxt\\\\pages\\\\blog\\\\_referencia.vue",
-    "chunkName": "pages/blog/_referencia"
+    "chunkName": "pages/blog/_referencia",
+    "_name": "_9d048bb0"
   },
   {
     "name": "estudiante-nombreUsuario",
     "path": "/estudiante/:nombreUsuario?",
     "component": "C:\\\\Users\\\\i3\\\\Desktop\\\\PDGP\\\\WebDevelopment\\\\Proyectos\\\\Jekuaa\\\\jekuaa\\\\jekuaaNuxt\\\\pages\\\\estudiante\\\\_nombreUsuario.vue",
-    "chunkName": "pages/estudiante/_nombreUsuario"
+    "chunkName": "pages/estudiante/_nombreUsuario",
+    "_name": "_048ec7cf"
   },
   {
     "name": "blogs-seccion-categoria-subCategoria",
     "path": "/blogs/:seccion?/:categoria?/:subCategoria?",
     "component": "C:\\\\Users\\\\i3\\\\Desktop\\\\PDGP\\\\WebDevelopment\\\\Proyectos\\\\Jekuaa\\\\jekuaa\\\\jekuaaNuxt\\\\pages\\\\blogs\\\\_seccion\\\\_categoria\\\\_subCategoria.vue",
-    "chunkName": "pages/blogs/_seccion/_categoria/_subCategoria"
+    "chunkName": "pages/blogs/_seccion/_categoria/_subCategoria",
+    "_name": "_31ed6c2d"
   },
   {
     "name": "index",
     "path": "/",
     "component": "C:\\\\Users\\\\i3\\\\Desktop\\\\PDGP\\\\WebDevelopment\\\\Proyectos\\\\Jekuaa\\\\jekuaa\\\\jekuaaNuxt\\\\pages\\\\index.vue",
     "chunkName": "pages/index",
-    "url": "/"
+    "url": "/",
+    "_name": "_50fb564b"
   }
 ]

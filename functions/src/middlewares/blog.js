@@ -2,11 +2,12 @@ const admin = require('../../firebase-service')
 const db = require('../../db')
 const Blog = require("../models/Blog")
 const ErrorJekuaa = require("../models/Error/ErroresJekuaa")
-const Usuario = require("../models/Usuario")
+const Usuario = require("../models/ComponentesUsuario/Usuario")
 const utils_blog = require("../utils/blog")
 const esReferenciaBlog = require("../utils/esReferenciaBlog")
 const showdown = require('showdown')
 const configJekuaa = require('../../configJekuaa')
+const Authentication = require('../models/Authentication')
 
 const middlewares = {}
 
@@ -316,10 +317,6 @@ middlewares.verificadorDeDatosBlog = async (req, res, next) => {
 
         const esOperacionAgregar = req.method === 'POST'
 
-        if (!esOperacionAgregar) {
-            var docBlog = await db.collection('Blogs').doc(params.uid).get()
-        }
-
         if ( datosBlog ) {
             const {
                 uid,                    // constante
@@ -346,7 +343,7 @@ middlewares.verificadorDeDatosBlog = async (req, res, next) => {
                     })
                 }
 
-                const valido = referencia.length >= 10 && referencia.length <= 100
+                const valido = referencia.length >= 1 && referencia.length <= 100
                 if ( !valido ) {
                     throw new ErrorJekuaa({
                         codigo: 'jekuaa/error/usuario_mala_solicitud',
@@ -354,12 +351,12 @@ middlewares.verificadorDeDatosBlog = async (req, res, next) => {
                     })
                 }
 
-                const documents = await db.collection('Blogs').where('referencia', '==', referencia).get()
+                const existe = await Blog.existeDocumentoBlog({referencia})
                 
-                if (!documents.empty) {
+                if (existe) {
                     throw new ErrorJekuaa({
                         codigo: 'jekuaa/error/usuario_mala_solicitud',
-                        mensaje: 'Ya existe esta referencia.'
+                        mensaje: 'Ya existe esta referencia url.'
                     })
                 }
             }
@@ -392,10 +389,15 @@ middlewares.verificadorDeDatosBlog = async (req, res, next) => {
                         mensaje: 'No puedes agregar un blog a nombre de otro usuario que no seas tu.'
                     })
                 }
+
+                const existe = await Authentication.existeUsuario({ uid: datosUsuario.uid })
                 
-                await Usuario.errorNoExisteUsuario({
-                    uid: datosUsuario.uid
-                })
+                if (!existe) {
+                    throw new ErrorJekuaa({
+                        codigo: 'jekuaa/error/usuario_mala_solicitud',
+                        mensaje: 'No existe este usuario.'
+                    })
+                }
             }
 
             if (esOperacionAgregar) {
@@ -404,7 +406,7 @@ middlewares.verificadorDeDatosBlog = async (req, res, next) => {
                  * Si la sección es: string vacio ('') o undefined no se verificara nada, por el hecho de que
                  * cuando la sección es string vacio ('') o undefined el blog pasa a ser un blog normal sin sección,
                  * entonces, la categoria y subcategorias se eliminan por tanto no es necesario realizar
-                 * una verificación. 
+                 * una verificación.
                 */
 
                 if (seccion) {
@@ -442,6 +444,8 @@ middlewares.verificadorDeDatosBlog = async (req, res, next) => {
                  * una verificación. 
                 */
 
+                const docBlog = await db.collection('Blogs').doc(params.uid).get()
+
                 if (seccion !== '') {
                     let seccionSeleccionada = seccion ? seccion : docBlog.data().seccion
                     let categoriaSeleccionada = categoria ? categoria : docBlog.data().categoria
@@ -478,7 +482,7 @@ middlewares.verificadorDeDatosBlog = async (req, res, next) => {
             let converter = new showdown.Converter()
             let html = converter.makeHtml(contenidoBlog)
 
-            let soloTexto = html.replace(/(<([^>]+)>)/ig,"")
+            let soloTexto = html.replace(/(<([^>]+)>)/ig, '')
             soloTexto =  soloTexto.replace(/[\n\r]+/g, '')
             soloTexto = soloTexto.replace(/\s{2,10}/g, ' ')
             soloTexto = soloTexto.trim()
@@ -509,7 +513,6 @@ middlewares.construirDatosBlog = (req, res, next) => {
         const esOperacionAgregar = req.method === 'POST'
 
         if (esOperacionAgregar) {
-            // datosBlog.uid = uuidv4()
             datosBlog.uid = admin.firestore().collection('Blogs').doc().id
             datosBlogFormateado = utils_blog.construirDatosParaNuevoBlog(datosBlog, contenidoBlog, esRutaAdmin)
         } else {
@@ -531,8 +534,15 @@ middlewares.verificacionExistenciaBlog = async (req, res, next) => {
         const { params } = req
         const { uid } = params
 
-        await Blog.errorBlogPorUID(uid, 'no-existe')
+        const existe = await Blog.existeDocumentoBlog({ uid })
         
+        if (!existe) {
+            throw new ErrorJekuaa({
+                codigo: 'jekuaa/error/usuario_mala_solicitud',
+                mensaje: `No existe el blog.`
+            })
+        }
+
         next()
     } catch (error) {
         next(error)
@@ -544,11 +554,8 @@ middlewares.verificacionExistenciaArchivoBlog = async (req, res, next) => {
         const { params } = req
         const { uid } = params
 
-        const rutaModo = configJekuaa.environment.mode === 'production' ? 'prod' : 'dev'
-        const ruta = `blogs/${rutaModo}/${uid}.md`
-
         // Verificacion de existencia de archivo
-        const existe = await Blog.existeArchivoBlog(ruta)
+        const existe = await Blog.existeArchivoBlog(uid)
         if ( !existe ) {
             throw new ErrorJekuaa({
                 codigo: 'jekuaa/error/usuario_mala_solicitud',

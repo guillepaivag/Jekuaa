@@ -1,21 +1,24 @@
+const fs = require('fs')
+const os = require('os')
+const path = require('path')
+
 const admin = require('../../firebase-service')
 const db = require('../../db')
+const utilsUsuarios = require('../utils/usuario')
 const getAuthToken = require('../helpers/getAuthToken')
+const esNombreUsuario = require('../utils/esNombreUsuario')
+const obtenerEdad = require('../utils/obtenerEdad')
+const validarEmail = require('../utils/emailValido')
 const ErrorJekuaa = require('../models/Error/ErroresJekuaa')
 const ErroresJekuaa = require('../models/Error/ErroresJekuaa')
 const JekuaaPremium = require('../models/JekuaaPremium')
 const JekuaaRoles = require('../models/JekuaaRoles')
-const Instructor = require('../models/TiposUsuarios/Instructor')
-const Usuario = require('../models/Usuario')
-const validarEmail = require('../utils/emailValido')
-const esAlfanumerico = require('../utils/esAlfanumerico')
-const obtenerEdad = require('../utils/obtenerEdad')
-const utilsUsuarios = require('../utils/usuario')
-const fs = require('fs')
-const os = require('os')
-const path = require('path')
-const middlewaresUser = {}
+const Instructor = require('../models/ComponentesUsuario/Instructor')
+const Usuario = require('../models/ComponentesUsuario/Usuario')
+const Authentication = require('../models/Authentication')
 
+
+const middlewaresUser = {}
 const COLECCION_USUARIO = 'Usuarios'
 
 // MIDDLEWARES
@@ -470,10 +473,10 @@ middlewaresUser.validarDatosExistentesClienteCrear = async (req, res, next) => {
             // Nombre de usuario
             if ( nombreUsuario ) {
                 // Verificar que sea alfanumerico
-                if (!esAlfanumerico(nombreUsuario)) {
+                if (!esNombreUsuario(nombreUsuario)) {
                     throw new ErrorJekuaa({
                         codigo: 'jekuaa/error/usuario_mala_solicitud',
-                        mensaje: 'El nombre de usuario solo puede tener (a-z) (A-Z) (0-9) (_).'
+                        mensaje: 'El nombre de usuario solo puede tener: a-z A-Z 0-9 _'
                     })
                 }
                 
@@ -487,9 +490,14 @@ middlewaresUser.validarDatosExistentesClienteCrear = async (req, res, next) => {
                     })
                 }
 
-                await Usuario.errorExisteUsuario({
-                    nombreUsuario: datosUsuario.nombreUsuario
-                })
+                const existe = await Authentication.existeUsuario({ nombreUsuario })
+
+                if (existe) {
+                    throw new ErrorJekuaa({
+                        codigo: 'jekuaa/error/usuario_mala_solicitud',
+                        mensaje: `Ya existe el nombre de usuario ${nombreUsuario}.`
+                    })
+                }
             }
     
             // Correo
@@ -570,7 +578,7 @@ middlewaresUser.validarDatosExistentesClienteCrear = async (req, res, next) => {
                 }
     
                 // Instructor
-                if ( instructor != undefined ) {
+                if ( instructor !== undefined ) {
     
                     let rol = jekuaaRol ? jekuaaRol : 'estudiante' 
                     
@@ -669,7 +677,7 @@ middlewaresUser.validarDatosExistentesClienteActualizar = async (req, res, next)
             // Nombre de usuario
             if ( nombreUsuario ) {
                 // Verificar que sea alfanumerico
-                if (!esAlfanumerico(nombreUsuario)) {
+                if (!esNombreUsuario(nombreUsuario)) {
                     throw new ErrorJekuaa({
                         codigo: 'jekuaa/error/usuario_mala_solicitud',
                         mensaje: 'El nombre de usuario solo puede tener (a-z) (A-Z) (0-9) (_).'
@@ -686,9 +694,14 @@ middlewaresUser.validarDatosExistentesClienteActualizar = async (req, res, next)
                     })
                 }
 
-                await Usuario.errorExisteUsuario({
-                    nombreUsuario: datosUsuario.nombreUsuario
-                })
+                const existe = await Authentication.existeUsuario({ nombreUsuario })
+
+                if (existe) {
+                    throw new ErrorJekuaa({
+                        codigo: 'jekuaa/error/usuario_mala_solicitud',
+                        mensaje: `Ya existe el nombre de usuario ${nombreUsuario}.`
+                    })
+                }
             }
     
             // Correo
@@ -836,33 +849,47 @@ middlewaresUser.validarDatosExistentesClienteActualizar = async (req, res, next)
     }
 }
 
-middlewaresUser.construirDatosUsuario = ( req, res, next ) => {
+middlewaresUser.construirDatosUsuario = async ( req, res, next ) => {
     
-    const { jekuaaDatos, body } = req
+    const { jekuaaDatos, body, params } = req
     const { datosUsuario, contrasenha } = body
 
     try {        
         const esRutaAdmin = req.originalUrl.includes('adminJekuaa')
         const esOperacionAgregar = req.method === 'POST'
-        let datos = null
+        let datos = {}
 
         if (esOperacionAgregar) {
             // Construir datos para produccion
-            datos = utilsUsuarios.construirDatosParaNuevoUsuario ( datosUsuario, contrasenha, esRutaAdmin )
-
-            req.body.datosUsuario = datos.datosUsuario
-            req.body.contrasenha = datos.contrasenha
+            const { datosUsuarioConstruido, contrasenhaConstruido } = utilsUsuarios.construirDatosParaCrearUsuario ( datosUsuario, contrasenha, esRutaAdmin )
+            datos.datosUsuarioConstruido = datosUsuarioConstruido
+            datos.contrasenhaConstruido = contrasenhaConstruido
         } else {
             // Construir datos para produccion
-            datos = utilsUsuarios.construirDatosParaActualizarUsuario (datosUsuario, contrasenha, esRutaAdmin)
+            const { datosUsuarioConstruido, contrasenhaConstruido } = utilsUsuarios.construirDatosParaActualizarUsuario (datosUsuario, contrasenha, esRutaAdmin)
+            datos.datosUsuarioConstruido = datosUsuarioConstruido
+            datos.contrasenhaConstruido = contrasenhaConstruido
+            datos.authConstruido = utilsUsuarios.construirDatosAutentication(datosUsuario)
 
-            req.body.datosUsuario = datos.datosUsuario && Object.keys(datos.datosUsuario).length ? 
-            datos.datosUsuario : null
-
-            req.body.contrasenha = datos.contrasenha ? datos.contrasenha : null
+            const uid = esRutaAdmin ? params.uid : jekuaaDatos.uidSolicitante
+            const auth = new Authentication(uid)
+            datos.claimsConstruido = await utilsUsuarios.construirDatosReclamosAutenticacion(datosUsuario, auth)
         }
 
-        if ( !req.body.datosUsuario && !req.body.contrasenha ) {
+        // Pasar los datos obtenidos al body
+        datos.datosUsuarioConstruido ? 
+        req.body.datosUsuario = datos.datosUsuarioConstruido : ''
+
+        datos.contrasenhaConstruido ?
+        req.body.contrasenha = datos.contrasenhaConstruido : '' 
+
+        datos.authConstruido ?
+        req.body.datosAuth = datos.authConstruido : '' 
+
+        datos.claimsConstruido ?
+        req.body.datosClaims = datos.claimsConstruido : '' 
+
+        if ( !datos.datosUsuarioConstruido && !datos.contrasenhaConstruido ) {
             throw new ErrorJekuaa({
                 codigo: 'jekuaa/error/usuario_mala_solicitud',
                 mensaje: 'No hay datos para ' + (esOperacionAgregar ? 'agregar.' : 'actualizar.')
@@ -883,13 +910,8 @@ middlewaresUser.sePuedeEliminarPropietario = async ( req, res, next ) => {
     const { uidSolicitante, datosAuthSolicitante } = jekuaaDatos
 
     try {      
-        if (!datosUsuario) {
-            return next()
-        }
-
-        if (req.method === 'PUT' && datosUsuario.jekuaaRol === undefined) {
-            return next()
-        }
+        if (!datosUsuario) return next()
+        if (req.method === 'PUT' && datosUsuario.jekuaaRol === undefined) return next()
         
         const esRutaAdmin = req.originalUrl.includes('adminJekuaa')
         const uid = esRutaAdmin ? params.uid : uidSolicitante

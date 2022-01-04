@@ -18,7 +18,6 @@ export const BlogsInfiniteHitsBlogs = () => import('../..\\..\\jekuaaNuxt\\compo
 export const BlogsListaBlogs = () => import('../..\\..\\jekuaaNuxt\\components\\blogs\\lista-blogs.vue' /* webpackChunkName: "components/blogs-lista-blogs" */).then(c => wrapFunctional(c.default || c))
 export const BlogsVisualizador = () => import('../..\\..\\jekuaaNuxt\\components\\blogs\\Visualizador.vue' /* webpackChunkName: "components/blogs-visualizador" */).then(c => wrapFunctional(c.default || c))
 export const UsuariosCartaPresentacion = () => import('../..\\..\\jekuaaNuxt\\components\\usuarios\\CartaPresentacion.vue' /* webpackChunkName: "components/usuarios-carta-presentacion" */).then(c => wrapFunctional(c.default || c))
-export const TiptapVuetifyImagenURL = () => import('../..\\..\\jekuaaNuxt\\components\\tiptap\\vuetify\\ImagenURL.vue' /* webpackChunkName: "components/tiptap-vuetify-imagen-u-r-l" */).then(c => wrapFunctional(c.default || c))
 
 // nuxt/nuxt.js#8607
 function wrapFunctional(options) {

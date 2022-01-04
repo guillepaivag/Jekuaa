@@ -87,7 +87,7 @@ export default {
                     }
                 }
 
-                const respuesta = await this.$axios.$post(`/blog/miembroJekuaa/crearBlog`, body, config)
+                const respuesta = await this.$axios.$post(`/miembroJekuaa/crearBlog`, body, config)
 
                 this.datosCreacion.visible = true
                 this.datosCreacion.creado = true

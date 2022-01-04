@@ -205,38 +205,6 @@ class Blog {
         return this
     }
 
-    async obtenerContenido ( opciones ) {
-        let rutaCloudStorage = configJekuaa.environment.mode === 'production' ? 'blogs/prod' : 'blogs/dev'
-
-        const bucket = storage.bucket('jekuaa-blogs')
-
-        const file = bucket.file(`${rutaCloudStorage}/${this.uid}.md`)
-
-        const archivo = file.createReadStream()
-        return await new Promise((resolve, reject) => {
-            let contenido = ''
-            archivo
-            .on('data', contenidoObtenido => {
-                // Obtener el contenido del archivo
-                contenido += contenidoObtenido
-            })
-            .on('end', () => {
-                // Formatear de acuerdo a lo que se pide
-                // Formato por defecto: Markdown (md)
-                if ( opciones.extensionArchivo === 'html' ) {
-                    const converter = new showdown.Converter()
-                    contenido = converter.makeHtml(contenido)
-                }
-                
-                resolve(contenido)
-            })
-            .on('error', err => {
-                reject(err)
-            })
-        })
-
-    }
-
     formatearDatos ( ) {
         this.uid = this.uid ? this.uid.trim() : ''
         this.referencia = this.referencia ? this.referencia.trim() : ''
@@ -279,21 +247,43 @@ class Blog {
         return result
     }
 
-    static async existeArchivoBlog ( rutaArchivo ) {
+    static async obtenerContenido ( uid, extensionArchivo ) {
         const bucket = storage.bucket('jekuaa-blogs')
-        const file = bucket.file(rutaArchivo)
 
-        const existe = (await file.exists())[0]
+        const rutaModo = configJekuaa.environment.mode === 'production' ? 'prod' : 'dev'
+        const file = bucket.file(`${rutaModo}/${uid}.md`)
 
-        return existe
+        const archivo = file.createReadStream()
+        return await new Promise((resolve, reject) => {
+            let contenido = ''
+            archivo
+            .on('data', contenidoObtenido => {
+                // Obtener el contenido del archivo
+                contenido += contenidoObtenido
+            })
+            .on('end', () => {
+                // Formatear de acuerdo a lo que se pide
+                // Formato por defecto: Markdown (md)
+                if ( extensionArchivo === 'html' ) {
+                    const converter = new showdown.Converter()
+                    contenido = converter.makeHtml(contenido)
+                }
+                
+                resolve(contenido)
+            })
+            .on('error', err => {
+                reject(err)
+            })
+        })
+
     }
 
-    static async subirArchivoBlogAStorage ( rutaArchivo, uid, mantenerArchivo ) {
+    static async subirArchivoBlogAStorage ( rutaArchivo, uid ) {
         const bucket = storage.bucket('jekuaa-blogs')
 
         const rutaModo = configJekuaa.environment.mode === 'production' ? 'prod' : 'dev'
         const response = await bucket.upload(rutaArchivo, {
-            destination: `blogs/${rutaModo}/${uid}.md`,
+            destination: `${rutaModo}/${uid}.md`,
             uploadType: 'media',
             metadata: {
                 metadata: {
@@ -302,23 +292,13 @@ class Blog {
             }
         })
 
-        if (!mantenerArchivo) {
-            // Borrar el archivo creado en el servidor
-            fs.unlink(rutaArchivo, (err => {
-                if ( err ) {
-                    console.log('Error al eliminar el archivo temporal: ', err)
-                    return
-                }
-            }))
-        }
-
         return response
     }
 
     static async eliminarArchivoBlog ( nombreArchivo ) {
         const bucket = storage.bucket('jekuaa-blogs')
-        const modo = configJekuaa.environment.mode === 'production' ? 'prod' : 'dev'
-        const file = bucket.file(`blogs/${modo}/${nombreArchivo}.md`)
+        const rutaModo = configJekuaa.environment.mode === 'production' ? 'prod' : 'dev'
+        const file = bucket.file(`${rutaModo}/${nombreArchivo}.md`)
 
         const existe = (await file.exists())[0]
 
@@ -327,169 +307,34 @@ class Blog {
         return resultado
     }
 
-    static async errorBlogPorUID ( uid, operacion ) {
-        const doc = await db.collection(COLECCION_BLOG).doc(uid).get()
-        const existe = doc.exists
-
-        if ( operacion === 'existe' && existe ) {
-            throw new ErrorJekuaa({
-                codigo: 'jekuaa/error/usuario_mala_solicitud',
-                mensaje: `Existe el blog.`
-            })
-
-        } else if ( operacion === 'no-existe' && !existe ) {
-            throw new ErrorJekuaa({
-                codigo: 'jekuaa/error/usuario_mala_solicitud',
-                mensaje: `No existe el blog.`
-            })
-        }
-
-        return doc
-    }
-
-    static async errorBlogPorReferencia ( referencia, operacion ) {
-        const blogsDocs = await db.collection(COLECCION_BLOG).where('referencia', '==', referencia).get()
-
-        if ( operacion === 'existe' && !blogsDocs.empty ) {
-            throw new ErrorJekuaa({
-                codigo: 'jekuaa/error/usuario_mala_solicitud',
-                mensaje: `Existe el blog.`
-            })
-
-        } else if ( operacion === 'no-existe' && blogsDocs.empty ) {
-            throw new ErrorJekuaa({
-                codigo: 'jekuaa/error/usuario_mala_solicitud',
-                mensaje: `No existe el blog.`
-            })
-        }
-
-    }
-
-    static async inicializarListaBlogs (opciones) {
-        let { maximoPorPagina, filtros, esRutaMiembroJekuaa, } = opciones
-        
-        !maximoPorPagina ? maximoPorPagina = 5 : ''
-        
-        let blogs = []
-
-        let ref = db.collection('Blogs')
-
-        if (!esRutaMiembroJekuaa) 
-            ref = ref.where('habilitado', '==', true).where('publicado', '==', true)
-        
-        ref = Blog.filtrar( ref, filtros )
-        ref = ref.orderBy('uid').limit( maximoPorPagina )
-        const documentSnapshots = await ref.get()
-        
-        if (!documentSnapshots.docs.length) {
-            throw new ErrorJekuaa({
-                codigo: 'jekuaa/error/usuario_mala_solicitud',
-                mensaje: `¡Todavía no tienes blogs publicados!`
-            })
-        }
-
-        let ultimoDocumento = documentSnapshots.docs[documentSnapshots.docs.length-1]
-        let ultimaUID = ultimoDocumento.id
-        for (let i = 0; i < documentSnapshots.docs.length; i++) {
-            const element = documentSnapshots.docs[i]
-            blogs.push( element.data() )
-        }
-        
-        const existeMasDatos = blogs.length ? await Blog.verificarSiHayMasDatos({
-            ultimaUID,
-            filtros,
-        }) : false
-        
-        return {
-            blogs,
-            ultimaUID,
-            existeMasDatos,
-        }
-    }
-
-    static async paginarListaBlogs (opciones) {
-        let { ultimaUID, maximoPorPagina, filtros, esRutaMiembroJekuaa, } = opciones
-        
-        !maximoPorPagina ? maximoPorPagina = 5 : ''
-
-        let blogs = []
-        
-        let ref = db.collection('Blogs')
-
-        if (!esRutaMiembroJekuaa) {
-            ref = ref.where('habilitado', '==', true).where('publicado', '==', true)
-        }
-
-        ref = Blog.filtrar( ref, filtros )
-        ref = ref.orderBy('uid').startAfter(ultimaUID).limit(maximoPorPagina)
-        const documentSnapshots = await ref.get()
-        
-        let ultimoDocumento = documentSnapshots.docs[documentSnapshots.docs.length-1]
-        ultimaUID = ultimoDocumento.id
-        for (let i = 0; i < documentSnapshots.docs.length; i++) {
-            const element = documentSnapshots.docs[i]
-            blogs.push( element.data() )
-        }
-        
-        const existeMasDatos = await Blog.verificarSiHayMasDatos({
-            ultimaUID,
-            filtros,
-        })
-        
-        return {
-            blogs,
-            ultimaUID,
-            existeMasDatos,
-        }
-    }
-
-    static async verificarSiHayMasDatos (opciones) {
-        let { ultimaUID, filtros, } = opciones
-
-        let ref = db.collection('Blogs')
-        ref = Blog.filtrar( ref, filtros )
-        ref = ref.orderBy('uid').startAfter(ultimaUID).limit(1)
-        const siguienteDato = await ref.get()
-        const existeMasDatos = !siguienteDato.empty
-
-        return existeMasDatos
-    }
-
-    static filtrar ( ref, filtros ) {
-        if (!filtros || !Object.keys(filtros).length) {
-            return ref
-        }
-
+    static async existeDocumentoBlog ( identificadores = {} ) {
         const {
-            seccion, categoria, subCategorias,
-            publicador, habilitado, publicado,
-            revision,
-        } = filtros
+            uid, referencia,
+        } = identificadores
 
-        if ( seccion ) {
-            ref = ref.where('seccion', '==', seccion)
+        if (uid) {
+            const doc = await db.collection(COLECCION_BLOG).doc(uid).get()
+            return doc.exists
+        } else if (referencia) {
+            const blogsDocs = await db.collection(COLECCION_BLOG).where('referencia', '==', referencia).get()
+            return !blogsDocs.empty
+        } else {
+            throw new ErrorJekuaa({
+                codigo: 'jekuaa/error/usuario_mala_solicitud',
+                mensaje: `Seleccionar un identificador para el blog.`
+            })
         }
-        if ( categoria ) {
-            ref = ref.where('categoria', '==', categoria)
-        }
-        if ( subCategorias && subCategorias.length ) {
-            ref = ref.where('subCategorias', 'array-contains-any', subCategorias)
-        }
-        if ( publicador ) {
-            ref = ref.where('publicador', '==', publicador)
-        }
+    }
 
-        if ( habilitado !== undefined ) {
-            ref = ref.where('habilitado ', '==', habilitado)
-        }
-        if ( publicado !== undefined ) {
-            ref = ref.where('publicado ', '==', publicado)
-        }
-        if ( revision !== undefined ) {
-            ref = ref.where('revision  ', '==', revision )
-        }
+    static async existeArchivoBlog ( uid ) {       
+        const bucket = storage.bucket('jekuaa-blogs')
+        
+        const rutaModo = configJekuaa.environment.mode === 'production' ? 'prod' : 'dev'
+        const file = bucket.file(`${rutaModo}/${uid}.md`)
 
-        return ref
+        const existe = (await file.exists())[0]
+
+        return existe
     }
 }
 

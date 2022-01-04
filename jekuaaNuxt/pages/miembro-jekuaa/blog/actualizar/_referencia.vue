@@ -86,7 +86,7 @@ export default {
                     }
                 }
 
-                const respuesta = await this.$axios.$put(`/blog/miembroJekuaa/actualizarBlog/${uidBlog}`, body, config)
+                const respuesta = await this.$axios.$put(`/miembroJekuaa/actualizarBlog/${uidBlog}`, body, config)
 
                 this.datosActualizacion.visible = true
                 this.datosActualizacion.actualizado = true

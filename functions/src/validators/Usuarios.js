@@ -1,10 +1,10 @@
-const Usuario = require("../models/Usuario")
+const Usuario = require("../models/ComponentesUsuario/Usuario")
 const { check, body } = require('express-validator')
 const { validateResult } = require('../helpers/validateHelper')
 const ErrorJekuaa = require('../models/Error/ErroresJekuaa')
 const JekuaaPremium = require("../models/JekuaaPremium")
 const JekuaaRoles = require("../models/JekuaaRoles")
-const Instructor = require("../models/TiposUsuarios/Instructor")
+const Instructor = require("../models/ComponentesUsuario/Instructor")
 const datosRedesSociales = require("../InformacionEstatica/datosRedesSociales")
 
 const validaciones = {}

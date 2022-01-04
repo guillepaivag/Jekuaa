@@ -262,10 +262,10 @@ export default {
 
             // Obtener datos de usuario
             let response = {}
-            response.datosUsuario = await $axios.$post(`/usuarios/estudiante/datosUsuario`, body, config)
-            response.authUsuario = await $axios.$post(`/usuarios/estudiante/authUsuario`, body, config)
-            response.informacionUsuario = await $axios.$post(`/usuarios/estudiante/informacionUsuario`, body, config)
-            response.ultimosBlogs = await $axios.$get(`/blog/estudiante/ultimosBlogsPorPublicador/${response.datosUsuario.resultado.uid}`, body, config)
+            response.datosUsuario = await $axios.$get(`/usuario/datosUsuario/nombreUsuario/${nombreUsuario}`, config)
+            response.authUsuario = await $axios.$get(`/usuario/datosAuthentication/nombreUsuario/${nombreUsuario}`, config)
+            response.informacionUsuario = await $axios.$get(`/usuario/informacionUsuario/nombreUsuario/${nombreUsuario}`, config)
+            response.ultimosBlogs = await $axios.$get(`/blog/ultimosBlogsPorPublicador/${response.datosUsuario.resultado.uid}`, body, config)
 
             datosUsuario = response.datosUsuario.resultado
             authUsuario = response.authUsuario.resultado

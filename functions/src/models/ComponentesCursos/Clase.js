@@ -10,16 +10,18 @@ const COLECCION_CLASES = 'ClasesCurso'
 class Clase {
     constructor (datos = {}) {
         const {
-            uid, titulo, descripcion, esGratis, unidad, 
-            ordenClase, datosContenidoClase, duracionClase
+            uid, referencia, ordenClase, titulo, 
+            descripcion, esGratis, unidad, 
+            datosContenidoClase, duracionClase
         } = datos
     
         this.uid = uid ? uid : db.collection().doc().id
+        this.referencia = referencia ? referencia : ''
+        this.ordenClase = ordenClase ? ordenClase : 0
         this.titulo = titulo ?  titulo : ''
         this.descripcion = descripcion ?  descripcion : ''
         this.esGratis = esGratis ? esGratis : true
         this.unidad = unidad ? unidad : 0
-        this.ordenClase = ordenClase ? ordenClase : 0
         this.datosContenidoClase = datosContenidoClase ? datosContenidoClase : new DatosContenido_Clase()
         this.duracionClase = duracionClase ? duracionClase : 0
     }
@@ -34,16 +36,18 @@ class Clase {
 
     setClase (clase = {}) {
         const {
-            uid, titulo, descripcion, esGratis, unidad, 
-            ordenClase, datosContenidoClase, duracionClase
+            uid, referencia, ordenClase, titulo, 
+            descripcion, esGratis, unidad, 
+            datosContenidoClase, duracionClase
         } = datos
 
         this.setUid(uid)
+        this.setReferencia(referencia)
+        this.setOrdenClase(ordenClase)
         this.setTitulo(titulo)
         this.setDescripcion(descripcion)
         this.setEsGratis(esGratis)
         this.setUnidad(unidad)
-        this.setOrdenClase(ordenClase)
         this.setDatosContenidoClase(datosContenidoClase)
         this.setDuracionClase(duracionClase)
 
@@ -52,6 +56,16 @@ class Clase {
 
     setUid (uid = db.collection().doc().id) {
         this.uid = uid
+        return this
+    }
+
+    setReferencia (referencia = '') {
+        this.referencia = referencia
+        return this
+    }
+
+    setOrdenClase (ordenClase = 0) {
+        this.ordenClase = ordenClase
         return this
     }
 
@@ -72,11 +86,6 @@ class Clase {
 
     setUnidad (unidad = 0) {
         this.unidad = unidad
-        return this
-    }
-
-    setOrdenClase (ordenClase = 0) {
-        this.ordenClase = ordenClase
         return this
     }
 
@@ -123,30 +132,16 @@ class Clase {
         return this
     }
 
-    async existeArchivoBlog ( uidCurso ) {
-        if (!this.datosContenidoClase) return false
-        
-        const rutaModo = configJekuaa.environment.mode === 'production' ? 'prod' : 'dev'
-        const bucket = admin.storage().bucket('jekuaa-cursos')
-        const rutaClase = `${rutaModo}/curso/${uidCurso}/clase/${this.uid}/${this.uid}.${this.datosContenidoClase.extensionArchivo}`
-        const file = bucket.file(rutaClase)
-
-        const existe = (await file.exists())[0]
-
-        return existe
-    }
-
-    static async subirArchivo ( uid, datosArchivo ) {
-        const {
-            rutaArchivoTemp,
-            extensionArchivo,
-        } = datosArchivo
-        
+    async subirArchivo ( uidCurso, rutaArchivoTemp ) {
         const bucket = admin.storage().bucket('jekuaa-cursos')
         
+        const nombreArchivo = 'archivo'
+        const extensionArchivo = this.datosContenidoClase.extensionArchivo
+
         const rutaModo = configJekuaa.environment.mode === 'production' ? 'prod' : 'dev'
+        const rutaClase = `${rutaModo}/${uidCurso}/clases/${this.uid}/${nombreArchivo}.${extensionArchivo}`
         const response = await bucket.upload(rutaArchivoTemp, {
-            destination: `${rutaModo}/${uid}/${uid}.${extensionArchivo}`,
+            destination: rutaClase,
             uploadType: 'media',
             metadata: {
                 metadata: {
@@ -158,12 +153,30 @@ class Clase {
         return response
     }
 
-    static async eliminarArchivo ( uid ) {
+    async existeArchivo ( uidCurso ) {
         const bucket = admin.storage().bucket('jekuaa-cursos')
+
+        const nombreArchivo = 'archivo'
+        const extensionArchivo = this.datosContenidoClase.extensionArchivo
+        
         const rutaModo = configJekuaa.environment.mode === 'production' ? 'prod' : 'dev'
-        const resultado = await bucket.deleteFiles({
-            prefix: `${rutaModo}/${uid}/${uid}.`
-        })
+        const rutaClase = `${rutaModo}/${uidCurso}/clases/${this.uid}/${nombreArchivo}.${extensionArchivo}`
+        const file = bucket.file(rutaClase)
+
+        const existe = (await file.exists())[0]
+
+        return existe
+    }
+
+    async eliminarArchivo ( uidCurso ) {
+        const bucket = admin.storage().bucket('jekuaa-cursos')
+        
+        const rutaModo = configJekuaa.environment.mode === 'production' ? 'prod' : 'dev'
+        const nombreArchivo = 'archivo'
+        const extensionArchivo = this.datosContenidoClase.extensionArchivo
+
+        const rutaClase = `${rutaModo}/${uidCurso}/clases/${this.uid}/${nombreArchivo}.${extensionArchivo}`
+        const resultado = await bucket.deleteFiles({ prefix: rutaClase })
 
         return resultado
     }

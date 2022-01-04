@@ -11,13 +11,21 @@ class DatosContenido_Clase {
             tipoClase,
             existeContenido,
             extensionVideo,     // .MP4, .WMV, y .MOV
-            extensionArchivos,  // .ZIP, RAR.
+            extensionArchivo,   // .ZIP, RAR.
         } = datos
 
         this.tipoClase = tipoClase ? tipoClase : ''
         this.existeContenido = existeContenido ? existeContenido : false
         this.extensionVideo = extensionVideo ? extensionVideo : ''
-        this.extensionArchivos = extensionArchivos ? extensionArchivos : ''
+        this.extensionArchivo = extensionArchivo ? extensionArchivo : ''
+    }
+
+    getDatosContenido_Clase ( getJSON = false ) {
+        if ( getJSON ) {
+            return JSON.parse( JSON.stringify( this ) )
+        }
+
+        return this
     }
 }
 
