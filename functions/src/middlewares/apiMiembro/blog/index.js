@@ -52,6 +52,7 @@ middlewares.verificadorDeDatosRequeridos  = (req, res, next) => {
                 referencia,
                 titulo,
                 descripcion,
+                ofrecidoPor,
                 publicador,
                 seccion,
                 categoria,
@@ -140,6 +141,7 @@ middlewares.verificadorDeTipoDeDatos = (req, res, next) => {
                 referencia,
                 titulo,
                 descripcion,
+                ofrecidoPor,
                 publicador,
                 seccion,
                 categoria,
@@ -151,8 +153,7 @@ middlewares.verificadorDeTipoDeDatos = (req, res, next) => {
                 fechaCreacion,
                 fechaActualizacion,
             } = datosBlog
-    
-            const esRutaAdmin = req.originalUrl.includes('admin')
+
             const esOperacionAgregar = req.method === 'POST'
         
             /**
@@ -183,6 +184,13 @@ middlewares.verificadorDeTipoDeDatos = (req, res, next) => {
             }
 
             if ( esOperacionAgregar ) {
+                if ( !!ofrecidoPor && typeof ofrecidoPor != 'string' ) {
+                    throw new Errores({
+                        codigo: 'error/usuario_mala_solicitud',
+                        mensaje: 'La ID de la institución debe ser string.'
+                    })
+                }
+                
                 if ( typeof publicador != 'string' ) {
                     throw new Errores({
                         codigo: 'error/usuario_mala_solicitud',
@@ -258,25 +266,11 @@ middlewares.verificadorDeTipoDeDatos = (req, res, next) => {
                     }
                 }
             }
-        
-            if ( esRutaAdmin && habilitado != undefined && typeof habilitado != 'boolean' ) {
-                throw new Errores({
-                    codigo: 'error/usuario_mala_solicitud',
-                    mensaje: 'El estado habilitado del blog debe ser boolean.'
-                })
-            }
             
             if ( publicado != undefined && typeof publicado != 'boolean' ) {
                 throw new Errores({
                     codigo: 'error/usuario_mala_solicitud',
                     mensaje: 'El estado publicado del blog debe ser boolean.'
-                })
-            }
-        
-            if ( esRutaAdmin && revision != undefined && typeof revision != 'boolean' ) {
-                throw new Errores({
-                    codigo: 'error/usuario_mala_solicitud',
-                    mensaje: 'El estado revision del blog debe ser boolean.'
                 })
             }
         }
@@ -314,6 +308,7 @@ middlewares.verificadorDeDatosBlog = async (req, res, next) => {
                 referencia,             // usuario
                 titulo,                 // usuario
                 descripcion,            // usuario
+                ofrecidoPor,
                 publicador,             // constante
                 seccion,                // usuario
                 categoria,              // usuario
@@ -371,27 +366,34 @@ middlewares.verificadorDeDatosBlog = async (req, res, next) => {
                     })
                 }
             }
-        
-            // La uid del solicitante debe ser igual a la uid del dueño del blog
-            if ( publicador ) {
-                if (publicador != datosUsuario.uid) {
-                    throw new Errores({
-                        codigo: 'error/usuario_no_autorizado',
-                        mensaje: 'No puedes agregar un blog a nombre de otro usuario que no seas tu.'
-                    })
-                }
-
-                const existe = await Authentication.existeUsuario({ uid: datosUsuario.uid })
-                
-                if (!existe) {
-                    throw new Errores({
-                        codigo: 'error/usuario_mala_solicitud',
-                        mensaje: 'No existe este usuario.'
-                    })
-                }
-            }
 
             if (esOperacionAgregar) {
+
+                if ( ofrecidoPor ) {
+                    // Verificar existencia de la institución
+    
+                    // Verificar que el publicador sea responsable de la institución
+                }
+            
+                // La uid del solicitante debe ser igual a la uid del dueño del blog
+                if ( publicador ) {
+                    if (publicador != datosUsuario.uid) {
+                        throw new Errores({
+                            codigo: 'error/usuario_no_autorizado',
+                            mensaje: 'No puedes agregar un blog a nombre de otro usuario que no seas tu.'
+                        })
+                    }
+    
+                    const existe = await Authentication.existeUsuario({ uid: datosUsuario.uid })
+                    
+                    if (!existe) {
+                        throw new Errores({
+                            codigo: 'error/usuario_mala_solicitud',
+                            mensaje: 'No existe este usuario.'
+                        })
+                    }
+                }
+
                 /* Descripción de la verificacion de sección, categorias y subcategorias: (creación)
                  * ---------------------------------------------------------------------------------------
                  * Si la sección es: string vacio ('') o undefined no se verificara nada, por el hecho de que
@@ -497,15 +499,11 @@ middlewares.construirDatosBlog = (req, res, next) => {
         const { datosBlog, contenidoBlog } = body
 
         let datosBlogFormateado
-        const esRutaAdmin = req.originalUrl.includes('admin')
         const esOperacionAgregar = req.method === 'POST'
 
-        if (esOperacionAgregar) {
-            datosBlogFormateado = utils_blog.construirDatosParaNuevoBlog(datosBlog, contenidoBlog, esRutaAdmin)
-        } else {
-            datosBlogFormateado = utils_blog.construirDatosParaActualizacionBlog(uid, datosBlog, contenidoBlog, esRutaAdmin)
-        }
-
+        if (esOperacionAgregar) datosBlogFormateado = utils_blog.construirDatosParaNuevoBlog(datosBlog, contenidoBlog)
+        else datosBlogFormateado = utils_blog.construirDatosParaActualizacionBlog(uid, datosBlog, contenidoBlog)
+        
         req.body.datosBlog = datosBlogFormateado.datosBlog
         req.body.nombreBlogTemp = datosBlogFormateado.nombreBlogTemp
         req.body.rutaArchivoTemp = datosBlogFormateado.rutaArchivoTemp

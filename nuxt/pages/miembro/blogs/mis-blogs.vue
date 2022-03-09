@@ -1,5 +1,22 @@
 <template>
-    <div class="container mt-5">
+    <div class="container">
+        <div class="mt-0">
+            <v-breadcrumbs>
+                <div v-for="(breadcrumb, index) in breadcrumbs" :key="index">
+                    <v-breadcrumbs-item
+                        :href="breadcrumb.href"
+                        :disabled="breadcrumb.disabled"
+                        :nuxt="true"
+                    >
+                        {{ breadcrumb.text.toUpperCase() }}
+                    </v-breadcrumbs-item>
+                    <v-breadcrumbs-divider v-if="index !== breadcrumbs.length-1">
+                        <v-icon>mdi-chevron-right</v-icon>
+                    </v-breadcrumbs-divider>
+                </div>
+            </v-breadcrumbs>
+        </div>
+
         <v-tabs
           v-model="modelTabs"
           centered
@@ -21,7 +38,7 @@
                 <v-card flat>
                     <v-card-text>
                         <ClientOnly>
-                            <BuscadorBlog :esMiembro="true" />
+                            <BuscadorBlog :modoMiembro="true" :configuration="configurations.configuration1" />
                         </ClientOnly>
                     </v-card-text>
                 </v-card>
@@ -33,9 +50,9 @@
             >
                 <v-card flat>
                     <v-card-text>
-                        <BlogsNoPublicados 
-                            :filtrosInicializados="filtrosInicializados.noPublicados"
-                        />
+                        <ClientOnly>
+                            <BuscadorBlog :modoMiembro="true" :configuration="configurations.configuration2" />
+                        </ClientOnly>
                     </v-card-text>
                 </v-card>
             </v-tab-item>
@@ -46,9 +63,9 @@
             >
                 <v-card flat>
                     <v-card-text>
-                        <BlogsNoPublicados 
-                            :filtrosInicializados="filtrosInicializados.deshabilitados" 
-                        />
+                        <ClientOnly>
+                            <BuscadorBlog :modoMiembro="true" :configuration="configurations.configuration3" />
+                        </ClientOnly>
                     </v-card-text>
                 </v-card>
             </v-tab-item>
@@ -69,16 +86,40 @@ export default {
                 'No publicados', 
                 'Deshabilitados'
             ],
-            filtrosInicializados: {
-                noPublicados: {     
-                    publicador: this.$store.state.modules.usuarios.uid,
-                    publicado: false,
+            configurations: {
+                configuration1: {
+                    soloPublicados: true,
+                    soloHabilitados: true,
                 },
-                deshabilitados: {
-                    publicador: this.$store.state.modules.usuarios.uid,
-                    habilitado: false,
-                }
-            }
+                configuration2: {
+                    soloPublicados: false,
+                },
+                configuration3: {
+                    soloHabilitados: false,
+                },
+            },
+            breadcrumbs: [
+                {
+                    text: 'Inicio',
+                    disabled: false,
+                    href: '/',
+                },
+                {
+                    text: 'Miembro',
+                    disabled: false,
+                    href: '/miembro',
+                },
+                {
+                    text: 'Blogs',
+                    disabled: false,
+                    href: '/miembro/blogs',
+                },
+                {
+                    text: 'Mis blogs',
+                    disabled: true,
+                    href: '/miembro/blogs/mis-blogs',
+                },
+            ],
         }
     },
     components: {

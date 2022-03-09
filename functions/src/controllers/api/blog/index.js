@@ -56,14 +56,12 @@ controller.obtenerDatosBlog = async (req, res) => {
         const { params } = req
         const { uid } = params
 
-        const esRutaMJ = req.originalUrl.includes('miembro')
-
         const respuesta = new Respuesta()
         let codigo = 'exito'
 
         const blog = new Blog()
         await blog.importarDatosBlogPorUID( uid )
-        if ( !esRutaMJ && (!blog.habilitado || !blog.publicado) ) {
+        if ( !blog.habilitado || !blog.publicado ) {
             throw new Errores({
                 codigo: 'error/usuario_mala_solicitud',
                 mensaje: `Se ha deshabilitado el blog, favor vuelva más tarde.`
@@ -96,14 +94,12 @@ controller.obtenerContenidoBlog = async ( req, res ) => {
         const { params } = req
         const { uid } = params
 
-        const esRutaMJ = req.originalUrl.includes('miembro')
-
         const respuesta = new Respuesta()
         let codigo = 'exito'
 
         const blog = new Blog()
         await blog.importarDatosBlogPorUID( uid )
-        if ( !esRutaMJ && (!blog.habilitado || !blog.publicado) ) {
+        if ( !blog.habilitado || !blog.publicado ) {
             throw new Errores({
                 codigo: 'error/usuario_mala_solicitud',
                 mensaje: `Se ha deshabilitado el blog, favor vuelva más tarde.`

@@ -17,12 +17,23 @@
             </div>
         </v-parallax>
         
-        <div class="container mt-10 mb-5">
+        <div class="container mb-5">
 
-            <div class="mb-10">
-                <h2 class="subtitulos"> Descripción </h2>
-                <v-divider class="mt-3 mb-3"/>
-                {{ blog.descripcion }}
+            <div class="mb-5">
+                <v-breadcrumbs>
+                    <div v-for="(breadcrumb, index) in breadcrumbs" :key="index">
+                        <v-breadcrumbs-item
+                            :href="breadcrumb.href"
+                            :disabled="breadcrumb.disabled"
+                            :nuxt="true"
+                        >
+                            {{ breadcrumb.text.toUpperCase() }}
+                        </v-breadcrumbs-item>
+                        <v-breadcrumbs-divider v-if="index !== breadcrumbs.length-1">
+                            <v-icon>mdi-chevron-right</v-icon>
+                        </v-breadcrumbs-divider>
+                    </div>
+                </v-breadcrumbs>
             </div>
 
             <v-btn
@@ -51,7 +62,13 @@
             </v-btn>
             {{ blog.cantidadMeGusta }}
 
-            <v-row no-gutters class="mt-10 mb-10">
+            <div class="mt-15">
+                <h2 class="subtitulos"> Descripción: </h2>
+                <v-divider class="mt-3 mb-3"/>
+                {{ blog.descripcion }}
+            </div>
+
+            <v-row no-gutters class="mt-7 mb-10">
                 <v-col cols="12" sm="6">
                     <div class="contenido-l">
                         <h2 class="subtitulos"> Fecha creación: </h2>
@@ -122,7 +139,7 @@ export default {
             blog: {},
             contenidoBlog: '',
             meGustaEsteBlog: false,
-            dialogRegistro: false
+            dialogRegistro: false,
         }
     },
     components: {
@@ -230,6 +247,18 @@ export default {
         let referenciaBlog = params.referencia
         let blog = {}
         let contenidoBlog = ''
+        let breadcrumbs = [
+            {
+                text: 'Inicio',
+                disabled: false,
+                href: '/',
+            },
+            {
+                text: 'Blogs',
+                disabled: false,
+                href: '/blogs',
+            },
+        ]
         
         try {
             const ref = $firebase.firestore().collection('Blogs')
@@ -255,10 +284,17 @@ export default {
             const converter = new showdown.Converter()
             contenidoBlog = converter.makeHtml(response.data.resultado)
 
+            breadcrumbs.push({
+                text: blog.titulo,
+                disabled: true,
+                href: `/blogs/${blog.referencia}`,
+            })
+
             return {
                 referenciaBlog,
                 blog,
                 contenidoBlog,
+                breadcrumbs
             }
         } catch (err) {
             console.log('err', err)
@@ -303,7 +339,7 @@ export default {
 }
 
 .subtitulos {
-    font-size: 25px;
+    font-size: 22px;
     color: #683bce;
 }
 

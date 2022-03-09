@@ -12,7 +12,7 @@ const funciones = {}
  * @param {*} confirmacionContrasenha 
  */
 
-funciones.construirDatosParaCrearUsuario = ( datosUsuario, contrasenha, esRutaAdmin ) => {
+funciones.construirDatosParaCrearUsuario = ( datosUsuario, contrasenha ) => {
     
     const {
         uid,
@@ -42,27 +42,17 @@ funciones.construirDatosParaCrearUsuario = ( datosUsuario, contrasenha, esRutaAd
     datosUsuarioProduccion.fechaNacimiento = fechaNacimiento ? 
     timestamp.milliseconds_a_timestamp(fechaNacimiento) : null
 
-    // Premium
-    const paraDatosPlanPorDefecto = !datosPlan || datosPlan.plan === 'gratis'
-    
+    // Datos rol
     datosUsuarioProduccion.datosPlan = {}
-    if ( !paraDatosPlanPorDefecto && esRutaAdmin ) {
-        datosUsuarioProduccion.datosPlan.plan = datosPlan.plan.trim()
-        datosUsuarioProduccion.datosPlan.fechaCompra = timestamp.milliseconds_a_timestamp(datosPlan.fechaCompra)
-        datosUsuarioProduccion.datosPlan.fechaHasta = timestamp.milliseconds_a_timestamp(datosPlan.fechaHasta)
-
-    } else {
-        // Datos por defectos
-        datosUsuarioProduccion.datosPlan.plan = 'gratis'
-        datosUsuarioProduccion.datosPlan.fechaCompra = null
-        datosUsuarioProduccion.datosPlan.fechaHasta = null
-    }
+    datosUsuarioProduccion.datosPlan.plan = 'gratis'
+    datosUsuarioProduccion.datosPlan.fechaCompra = null
+    datosUsuarioProduccion.datosPlan.fechaHasta = null
     
     // Rol usuario
-    datosUsuarioProduccion.rol = rol && esRutaAdmin ? rol.trim() : 'estudiante'
+    datosUsuarioProduccion.rol = 'estudiante'
 
     // Point
-    datosUsuarioProduccion.point = point && esRutaAdmin ? point : 0
+    datosUsuarioProduccion.point = 0
 
     // Contraseña
     contrasenhaProduccion = contrasenha.trim()
@@ -74,7 +64,7 @@ funciones.construirDatosParaCrearUsuario = ( datosUsuario, contrasenha, esRutaAd
     }
 }
 
-funciones.construirDatosParaActualizarUsuario = ( datosUsuario, contrasenha, esRutaAdmin ) => {
+funciones.construirDatosParaActualizarUsuario = ( datosUsuario, contrasenha ) => {
     
     // Cambiamos el formato del cliente al formato servidor
     let resultados = {}
@@ -108,32 +98,6 @@ funciones.construirDatosParaActualizarUsuario = ( datosUsuario, contrasenha, esR
         // Fecha de nacimiento
         fechaNacimiento ? 
         datosUsuarioProduccion.fechaNacimiento = timestamp.milliseconds_a_timestamp(fechaNacimiento) : null
-    
-        if (esRutaAdmin) {
-    
-            // Premium
-            if ( datosPlan ) {
-                datosUsuarioProduccion.datosPlan = {}
-                if ( datosPlan.plan === 'gratis' ) {
-                    // Datos por defectos
-                    datosUsuarioProduccion.datosPlan.plan = 'gratis'
-                    datosUsuarioProduccion.datosPlan.fechaCompra = null
-                    datosUsuarioProduccion.datosPlan.fechaHasta = null
-                } else {
-                    datosUsuarioProduccion.datosPlan.plan = datosPlan.plan.trim()
-                    datosUsuarioProduccion.datosPlan.fechaCompra = timestamp.milliseconds_a_timestamp(datosPlan.fechaCompra)
-                    datosUsuarioProduccion.datosPlan.fechaHasta = timestamp.milliseconds_a_timestamp(datosPlan.fechaHasta)
-                }  
-            } 
-            
-            // Rol usuario
-            rol ? 
-            datosUsuarioProduccion.rol = rol : ''
-    
-            // Point
-            point ? 
-            datosUsuarioProduccion.point = point : ''
-        }
     }
 
     // Contraseña

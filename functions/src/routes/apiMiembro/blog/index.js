@@ -18,12 +18,9 @@ const {
     crearBlog, 
     actualizarDatosBlog, 
     eliminarBlog, 
-} = require('../../../controllers/apiMiembro/blog')
-
-const {
     obtenerDatosBlog,
     obtenerContenidoBlog,
-} = require('../../../controllers/api/blog')
+} = require('../../../controllers/apiMiembro/blog')
 
 router.post('/crearBlog', 
     estaAutenticado, 

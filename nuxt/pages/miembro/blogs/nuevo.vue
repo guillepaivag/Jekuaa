@@ -1,5 +1,22 @@
 <template>
-    <div>
+    <div class="container">
+        <div class="mt-0">
+            <v-breadcrumbs>
+                <div v-for="(breadcrumb, index) in breadcrumbs" :key="index">
+                    <v-breadcrumbs-item
+                        :href="breadcrumb.href"
+                        :disabled="breadcrumb.disabled"
+                        :nuxt="true"
+                    >
+                        {{ breadcrumb.text.toUpperCase() }}
+                    </v-breadcrumbs-item>
+                    <v-breadcrumbs-divider v-if="index !== breadcrumbs.length-1">
+                        <v-icon>mdi-chevron-right</v-icon>
+                    </v-breadcrumbs-divider>
+                </div>
+            </v-breadcrumbs>
+        </div>
+
         <div class="mb-10">
             <formulario-blog 
                 :datosBlog="datosBlog" 
@@ -60,6 +77,28 @@ export default {
                 visible: false,
                 creado: false,
             },
+            breadcrumbs: [
+                {
+                    text: 'Inicio',
+                    disabled: false,
+                    href: '/',
+                },
+                {
+                    text: 'Miembro',
+                    disabled: false,
+                    href: '/miembro',
+                },
+                {
+                    text: 'Blogs',
+                    disabled: false,
+                    href: '/miembro/blogs',
+                },
+                {
+                    text: 'Nuevo',
+                    disabled: true,
+                    href: '/miembro/blogs/nuevo',
+                },
+            ],
         }
     },
     components: {

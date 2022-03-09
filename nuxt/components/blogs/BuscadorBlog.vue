@@ -4,8 +4,8 @@
         :search-client="searchClient" 
         :index-name="indexName"
       >
-          <ais-configure v-if="esMiembro && filtroUsuario" :filters="filtroUsuario" :hitsPerPage="5" />
-          <ais-configure v-else :hitsPerPage="5" />
+          <ais-configure v-if="modoMiembro" :filters="filtros" :hitsPerPage="5" />
+          <ais-configure v-else :filters="filtros" :hitsPerPage="5" />
 
           <v-row no-gutters>
 
@@ -173,7 +173,7 @@
                           <div v-for="item in items" :key="item.objectID" class="card-link mb-5">
                             <article class="blog-card">
                               
-                              <nuxt-link v-if="esMiembro" :to="`/miembro/blog/${item.referencia}`">
+                              <nuxt-link v-if="modoMiembro" :to="`/miembro/blog/${item.referencia}`">
                                 <img 
                                   class="post-image" 
                                   :src="require(`~/assets/img/seccion/${item.seccion ? item.seccion : 'sinSeccion'}.webp`)" 
@@ -189,7 +189,7 @@
                               
                               <div class="article-details">
                                 <h4 class="post-category">{{ item.seccion ? item.seccion : 'Blog normal' }}</h4>
-                                <nuxt-link v-if="esMiembro" :to="`/miembro/blog/${item.referencia}`">
+                                <nuxt-link v-if="modoMiembro" :to="`/miembro/blog/${item.referencia}`">
                                   <h3 class="post-title">{{ item.titulo }}</h3>
                                 </nuxt-link>
                                 <nuxt-link v-else :to="`/blog/${item.referencia}`">
@@ -452,7 +452,7 @@ export default {
                 'af4d4e9d36a7ceb75e258007c3ceccf2'
             ),
             indexName: process.env.NODE_ENV === 'production' ? 'prod_blogs' : 'dev_blogs',
-            filtroUsuario: '',
+            filtros: '',
             drawerFilter: false,
             informacionSecciones: informacionSecciones,
         };
@@ -475,7 +475,8 @@ export default {
       }
     },
     props: {
-        esMiembro: Boolean,
+        modoMiembro: Boolean,
+        configuration: Object,
     },
     components: {
         'ais-instant-search': AisInstantSearch,
@@ -487,9 +488,19 @@ export default {
         'ais-refinement-list': AisRefinementList,
     },
     created() {
-        if ( this.esMiembro ) {
+        if ( this.modoMiembro ) {
             const uid = this.$store.state.modules.usuarios.uid
-            this.filtroUsuario = `publicador: ${uid}`
+            this.filtros = `publicador: ${uid}`
+            
+            if ( this.configuration.soloPublicados !== undefined ) 
+              this.filtros = this.filtros + ` AND publicado:${this.configuration.soloPublicados}`
+            
+
+            if ( this.configuration.soloHabilitados !== undefined ) 
+              this.filtros = this.filtros + ` AND habilitado:${this.configuration.soloHabilitados}`
+            
+        } else {
+          this.filtros = `publicado:${true} AND habilitado:${true}`
         }
     },
 };

@@ -1,5 +1,22 @@
 <template>
   <div>
+    <div class="mt-0 mb-3">
+        <v-breadcrumbs>
+            <div v-for="(breadcrumb, index) in breadcrumbs" :key="index">
+                <v-breadcrumbs-item
+                    :href="breadcrumb.href"
+                    :disabled="breadcrumb.disabled"
+                    :nuxt="true"
+                >
+                    {{ breadcrumb.text.toUpperCase() }}
+                </v-breadcrumbs-item>
+                <v-breadcrumbs-divider v-if="index !== breadcrumbs.length-1">
+                    <v-icon>mdi-chevron-right</v-icon>
+                </v-breadcrumbs-divider>
+            </div>
+        </v-breadcrumbs>
+    </div>
+
     <div class="mb-15">
         <!-- <div class="tiptap-vuetify-editor__content" v-html="contentHTML"/> -->
         <h3 class="mt-4 subtitulos"> Rol descriptivo: </h3>
@@ -227,6 +244,23 @@ export default {
         },
       ],
       cargando: false,
+      breadcrumbs: [
+          {
+              text: 'Inicio',
+              disabled: false,
+              href: '/',
+          },
+          {
+              text: 'Perfil',
+              disabled: false,
+              href: '/perfil',
+          },
+          {
+              text: 'Información',
+              disabled: true,
+              href: '/perfil/informacion',
+          },
+      ],
     }
   },
 

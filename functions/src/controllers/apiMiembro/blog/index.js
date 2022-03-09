@@ -1,4 +1,5 @@
 const manejadorErrores = require("../../../helpers/ManejoErrores")
+const Blog = require("../../../models/Blogs/Blog")
 const Respuesta = require("../../../models/Respuesta")
 const Miembro = require("../../../models/Usuarios/TiposUsuarios/Miembro")
 
@@ -92,6 +93,71 @@ controller.eliminarBlog = async (req, res) => {
 
     } catch (error) {
         console.log('Error - eliminarBlog: ', error)
+
+        const {
+            status,
+            respuesta
+        } = manejadorErrores( error )
+
+        return res.status( status ).json( respuesta )
+    }
+}
+
+
+controller.obtenerDatosBlog = async (req, res) => {
+    try {
+        const { params } = req
+        const { uid } = params
+
+        const respuesta = new Respuesta()
+        let codigo = 'exito'
+
+        const blog = new Blog()
+        await blog.importarDatosBlogPorUID( uid )
+
+        // Retornar respuesta
+        respuesta.setRespuestaPorCodigo(codigo, {
+            mensaje: '¡Se obtuvo los datos del blog de forma exitosa!',
+            resultado: blog.getBlog()
+        })
+        const status = respuesta.getStatusCode()
+        
+        return res.status( status ).json( respuesta.getRespuesta() )
+
+    } catch (error) {
+        console.log('Error - obtenerDatosBlog: ', error)
+
+        const {
+            status,
+            respuesta
+        } = manejadorErrores( error )
+
+        return res.status( status ).json( respuesta )
+    }
+}
+
+controller.obtenerContenidoBlog = async ( req, res ) => {
+    try {
+        const { params } = req
+        const { uid } = params
+
+        const respuesta = new Respuesta()
+        let codigo = 'exito'
+
+        // Obtener archivo
+        const contenido = await Blog.obtenerContenido(uid, 'md')
+
+        // Retornar respuesta
+        respuesta.setRespuestaPorCodigo(codigo, {
+            mensaje: '¡El contenido del archivo se obtuvo con exito!',
+            resultado: contenido
+        })
+        const status = respuesta.getStatusCode()
+        
+        return res.status( status ).json( respuesta.getRespuesta() )
+
+    } catch (error) {
+        console.log('Error - obtenerContenidoBlog: ', error)
 
         const {
             status,

@@ -9,7 +9,7 @@ const { milliseconds_a_timestamp } = require("./timestamp")
 
 const utils_blog = {}
 
-utils_blog.construirDatosParaNuevoBlog = ( datosBlog, contenidoBlog, esRutaAdmin ) => {
+utils_blog.construirDatosParaNuevoBlog = ( datosBlog, contenidoBlog ) => {
     
     // Referencia del blog
     const blog = new Blog(datosBlog)
@@ -21,8 +21,6 @@ utils_blog.construirDatosParaNuevoBlog = ( datosBlog, contenidoBlog, esRutaAdmin
         datosBlogFormateado.subCategorias = []
     }
     datosBlogFormateado.cantidadMeGusta = 0
-    !esRutaAdmin ? datosBlogFormateado.habilitado = true : ''
-    !esRutaAdmin ? datosBlogFormateado.revision = true : ''
     datosBlogFormateado.fechaCreacion = milliseconds_a_timestamp( Date.now() )
     datosBlogFormateado.fechaActualizacion = milliseconds_a_timestamp( Date.now() )
 
@@ -50,7 +48,7 @@ utils_blog.construirDatosParaNuevoBlog = ( datosBlog, contenidoBlog, esRutaAdmin
     }
 }
 
-utils_blog.construirDatosParaActualizacionBlog = ( uidBlog, datosBlog, contenidoBlog, esRutaAdmin ) => {
+utils_blog.construirDatosParaActualizacionBlog = ( uidBlog, datosBlog, contenidoBlog ) => {
 
     const datosActualizados = {}
     const resultado = {}
@@ -61,6 +59,7 @@ utils_blog.construirDatosParaActualizacionBlog = ( uidBlog, datosBlog, contenido
             referencia,             // usuario
             titulo,                 // usuario
             descripcion,            // usuario
+            ofrecidoPor,            // constante
             publicador,             // constante
             seccion,                // usuario
             categoria,              // usuario
@@ -88,9 +87,6 @@ utils_blog.construirDatosParaActualizacionBlog = ( uidBlog, datosBlog, contenido
                 subCategorias && subCategorias.length ? datosActualizados.subCategorias = subCategorias : ''
             }
             publicado != undefined ? datosActualizados.publicado = publicado : ''
-
-            esRutaAdmin && habilitado != undefined ? datosActualizados.habilitado = habilitado : ''
-            esRutaAdmin && revision != undefined ? datosActualizados.revision = revision : ''
         }
     }
     

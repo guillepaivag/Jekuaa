@@ -11,7 +11,7 @@ class Blog {
 
     constructor ( datosBlog = {} ) {
         const {
-            uid, referencia, titulo, descripcion, publicador,
+            uid, referencia, titulo, descripcion, ofrecidoPor, publicador,
             seccion, categoria, subCategorias, cantidadMeGusta, habilitado,
             publicado, revision, fechaCreacion, fechaActualizacion
         } = datosBlog
@@ -20,6 +20,7 @@ class Blog {
         this.referencia = referencia ? referencia : ''
         this.titulo = titulo ? titulo : ''
         this.descripcion = descripcion ? descripcion : ''
+        this.ofrecidoPor = ofrecidoPor ? ofrecidoPor : ''
         this.publicador = publicador ? publicador : ''
         this.seccion = seccion ? seccion : ''
         this.categoria = categoria ? categoria : ''
@@ -45,6 +46,7 @@ class Blog {
             referencia: this.referencia,
             titulo: this.titulo,
             descripcion: this.descripcion,
+            ofrecidoPor: this.ofrecidoPor,
             publicador: this.publicador,                    // Constante
             seccion: this.seccion,
             categoria: this.categoria,
@@ -69,6 +71,7 @@ class Blog {
         this.setREFERENCIA( ( blog && blog.referencia ) ? blog.referencia : null )
         this.setTITULO( ( blog && blog.titulo ) ? blog.titulo : null )
         this.setDESCRIPCION( ( blog && blog.descripcion ) ? blog.descripcion : null )
+        this.setOFRECIDO_POR( ( blog && blog.ofrecidoPor ) ? blog.ofrecidoPor : null )
         this.setPUBLICADOR( ( blog && blog.publicador ) ? blog.publicador : null )
         this.setSECCION( ( blog && blog.seccion ) ? blog.seccion : null )
         this.setCATEGORIA( ( blog && blog.categoria ) ? blog.categoria : null )
@@ -97,6 +100,10 @@ class Blog {
         this.descripcion = descripcion
     }
 
+    setOFRECIDO_POR ( ofrecidoPor = '' ) {
+        this.ofrecidoPor = ofrecidoPor
+    }
+    
     setPUBLICADOR ( publicador = '' ) {
         this.publicador = publicador
     }

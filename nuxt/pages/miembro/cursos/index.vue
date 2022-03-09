@@ -19,7 +19,7 @@
         </div>
 
         <div class="mt-0">
-            <h3 class="title"> Administración de blogs </h3>
+            <h3 class="title"> Administración de cursos </h3>
         </div>
 
         <v-divider></v-divider>
@@ -36,12 +36,12 @@
                     src="https://cdn.vuetifyjs.com/images/cards/docks.jpg"
                     >
                     <v-card-title>
-                        Crear blog
+                        Crear curso
                     </v-card-title>
                     </v-img>
 
                     <v-card-subtitle class="pb-0">
-                        Administración de blogs
+                        Administración de cursos
                     </v-card-subtitle>
 
                     <v-card-text class="text--primary">
@@ -57,9 +57,9 @@
                         <v-btn
                             color="#683bce"
                             text
-                            to="/miembro/blogs/nuevo"
+                            to="/miembro/cursos/nuevo"
                         >
-                            Crear blog
+                            Crear curso
                         </v-btn>
                     </v-card-actions>
                 </v-card>
@@ -75,12 +75,12 @@
                     src="https://cdn.vuetifyjs.com/images/cards/docks.jpg"
                     >
                     <v-card-title>
-                        Lista de mis blogs
+                        Lista de mis cursos
                     </v-card-title>
                     </v-img>
 
                     <v-card-subtitle class="pb-0">
-                        Administración de blogs
+                        Administración de cursos
                     </v-card-subtitle>
 
                     <v-card-text class="text--primary">
@@ -96,7 +96,7 @@
                         <v-btn
                             color="#683bce"
                             text
-                            to="/miembro/blogs/mis-blogs"
+                            to="/miembro/cursos/mis-cursos"
                         >
                             Ver lista
                         </v-btn>
@@ -126,9 +126,9 @@ export default {
                     href: '/miembro',
                 },
                 {
-                    text: 'Blogs',
+                    text: 'Cursos',
                     disabled: true,
-                    href: '/miembro/blogs',
+                    href: '/miembro/cursos',
                 },
             ],
         }

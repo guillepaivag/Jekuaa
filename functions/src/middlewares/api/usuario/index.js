@@ -183,15 +183,12 @@ middlewaresUser.construirDatosInformacionUsuario = async ( req, res, next ) => {
         const { uidSolicitante, datosAuthSolicitante } = datos
         const { descripcion, especializaciones, intereses, redesSociales, rolDescriptivo } = body
 
-        const esRutaAdmin = req.originalUrl.includes('admin')
-
         req.body.datosActualizados = {}
 
         descripcion ? req.body.datosActualizados.descripcion = descripcion : ''
         especializaciones ? req.body.datosActualizados.especializaciones = especializaciones : ''
         intereses ? req.body.datosActualizados.intereses = intereses : ''
         redesSociales && redesSociales.length ? req.body.datosActualizados.redesSociales = redesSociales : ''
-        esRutaAdmin && rolDescriptivo ? req.body.datosActualizados.redesSociales = rolDescriptivo : ''
 
         return next()
 
@@ -332,8 +329,6 @@ middlewaresUser.verificarTipoDeDatosCliente = ( req, res, next ) => {
         const { datos, body } = req
         const { datosUsuario, contrasenha, confirmacionContrasenha } = body
 
-        const esRutaAdmin = req.originalUrl.includes('admin')
-
         if (datosUsuario) {
             if (typeof datosUsuario != 'object') {
                 throw new Errores({
@@ -368,24 +363,6 @@ middlewaresUser.verificarTipoDeDatosCliente = ( req, res, next ) => {
             if ( fechaNacimiento && typeof fechaNacimiento !== 'number' ) {
                 throw new TypeError('La fecha de nacimiento debe ser de tipo number en milisegundos.', 'Usuario.js')
             }
-        
-            if ( esRutaAdmin ) {
-    
-                if ( datosPlan ) {
-                    if ( typeof datosPlan !== 'object' ) 
-                        throw new TypeError('El campo datosPlan debe ser un objeto.', 'Usuario.js')
-
-                    const verificadorFormato = new DatosPlan(datosPlan)
-                    verificadorFormato.validarTodosLosTiposDeDatos('cliente')
-                }
-            
-                if ( rol && typeof rol !== 'string' ) 
-                    throw new TypeError('El rol debe de ser de tipo string.', 'Usuario.js')
-            
-                if ( point && typeof point !== 'number' ) 
-                    throw new TypeError('El point no es de tipo numerico.', 'Usuario.js')
-                
-            }
         }
 
         if ( contrasenha ) {
@@ -411,8 +388,6 @@ middlewaresUser.validarDatosExistentesClienteCrear = async (req, res, next) => {
     const { datosUsuario, contrasenha, confirmacionContrasenha } = body
     
     try {
-        const esRutaAdmin = req.originalUrl.includes('admin')
-    
         let cantidadCaracteresValido
         let correoValido
         let fechaNacimientoValido
@@ -496,59 +471,6 @@ middlewaresUser.validarDatosExistentesClienteCrear = async (req, res, next) => {
                     })
                 }
             }
-    
-            if (esRutaAdmin) {
-
-                // DatosPlan
-                if ( datosPlan ) {
-                    const objectDatosPlan = new DatosPlan({
-                        plan: datosPlan.plan,
-                        fechaCompra: datosPlan.fechaCompra,
-                        fechaHasta: datosPlan.fechaHasta,
-                    })
-    
-                    await objectDatosPlan.validarDatosCliente()
-                }
-    
-                // Roles
-                if ( rol ) {
-                    const objectRol = new Roles(rol)
-                    let documentoRol = await objectRol.obtenerDocumentoRol()
-                    
-                    // Verificar rol valido
-                    if (!documentoRol.exists) {
-                        throw new Errores({
-                            codigo: 'error/usuario_mala_solicitud',
-                            mensaje: 'No existe este rol.'
-                        })
-                    }
-
-                    // Verificar permiso para operar el rol
-                    if ( datosAuthSolicitante.customClaims.rol !== 'propietario' ) {
-                        const rol1 = new Roles(datosAuthSolicitante.customClaims.rol)
-                        const rol2 = new Roles(rol)
-                        const diferenciaNivelRol = await Roles.compararNivelRoles(rol1, rol2)
-                
-                        if ( diferenciaNivelRol <= 0 ) {
-                            // No autorizado
-                            throw new Errores({
-                                codigo: 'error/usuario_no_autorizado'
-                            })
-                        }
-                    }
-                }
-    
-                // Points
-                if (point) {
-                    valido = point >= 0
-                    if ( !valido ) {
-                        throw new Errores({
-                            codigo: 'error/usuario_mala_solicitud',
-                            mensaje: 'El Point debe ser mayor o igual a 0.'
-                        })
-                    }
-                }
-            }
         }
     
         // Contraseñas
@@ -591,15 +513,13 @@ middlewaresUser.validarDatosExistentesClienteActualizar = async (req, res, next)
         const { datos, params, body } = req
         const { datosUsuario, contrasenha, confirmacionContrasenha } = body
         const { uidSolicitante, datosAuthSolicitante } = datos
-
-        const esRutaAdmin = req.originalUrl.includes('admin')
     
         let cantidadCaracteresValido
         let correoValido
         let fechaNacimientoValido
         let valido
 
-        const uid = esRutaAdmin ? params.uid : uidSolicitante
+        const uid = uidSolicitante
 
         const datosActualesUsuario = await admin.auth().getUser(uid)
     
@@ -681,60 +601,6 @@ middlewaresUser.validarDatosExistentesClienteActualizar = async (req, res, next)
                     })
                 }
             }
-    
-            if (esRutaAdmin) {
-
-                // DatosPlan
-                if ( datosPlan ) {
-                    const objectDatosPlan = new DatosPlan({
-                        plan: datosPlan.plan,
-                        fechaCompra: datosPlan.fechaCompra,
-                        fechaHasta: datosPlan.fechaHasta,
-                    })
-    
-                    await objectDatosPlan.validarDatosCliente()
-                }
-
-
-                // Roles
-                if ( rol ) {
-                    const objectRol = new Roles(rol)
-                    let documentoRol = await objectRol.obtenerDocumentoRol()
-                    
-                    // Verificar rol valido
-                    if (!documentoRol.exists) {
-                        throw new Errores({
-                            codigo: 'error/usuario_mala_solicitud',
-                            mensaje: 'No existe este rol.'
-                        })
-                    }
-
-                    // Verificar permiso para operar el rol
-                    if ( datosAuthSolicitante.customClaims.rol !== 'propietario' ) {
-                        const rol1 = new Roles(datosAuthSolicitante.customClaims.rol)
-                        const rol2 = new Roles(rol)
-                        const diferenciaNivelRol = await Roles.compararNivelRoles(rol1, rol2)
-                
-                        if ( diferenciaNivelRol <= 0 ) {
-                            // No autorizado
-                            throw new Errores({
-                                codigo: 'error/usuario_no_autorizado'
-                            })
-                        }
-                    }
-                }
-    
-                // Points
-                if (point) {
-                    valido = point >= 0
-                    if ( !valido ) {
-                        throw new Errores({
-                            codigo: 'error/usuario_mala_solicitud',
-                            mensaje: 'El Point debe ser mayor o igual a 0.'
-                        })
-                    }
-                }
-            }
         }
     
         // Contraseñas
@@ -778,23 +644,22 @@ middlewaresUser.construirDatosUsuario = async ( req, res, next ) => {
     const { datosUsuario, contrasenha } = body
 
     try {        
-        const esRutaAdmin = req.originalUrl.includes('admin')
         const esOperacionAgregar = req.method === 'POST'
         let datos = {}
 
         if (esOperacionAgregar) {
             // Construir datos para produccion
-            const { datosUsuarioConstruido, contrasenhaConstruido } = utilsUsuarios.construirDatosParaCrearUsuario ( datosUsuario, contrasenha, esRutaAdmin )
+            const { datosUsuarioConstruido, contrasenhaConstruido } = utilsUsuarios.construirDatosParaCrearUsuario ( datosUsuario, contrasenha )
             datos.datosUsuarioConstruido = datosUsuarioConstruido
             datos.contrasenhaConstruido = contrasenhaConstruido
         } else {
             // Construir datos para produccion
-            const { datosUsuarioConstruido, contrasenhaConstruido } = utilsUsuarios.construirDatosParaActualizarUsuario (datosUsuario, contrasenha, esRutaAdmin)
+            const { datosUsuarioConstruido, contrasenhaConstruido } = utilsUsuarios.construirDatosParaActualizarUsuario (datosUsuario, contrasenha)
             datos.datosUsuarioConstruido = datosUsuarioConstruido
             datos.contrasenhaConstruido = contrasenhaConstruido
             datos.authConstruido = utilsUsuarios.construirDatosAutentication( datosUsuario )
 
-            const uid = esRutaAdmin ? params.uid : req.datos.uidSolicitante
+            const uid = req.datos.uidSolicitante
             const auth = new Authentication(uid)
             datos.claimsConstruido = await utilsUsuarios.construirDatosReclamosAutenticacion(datosUsuario, auth)
         }
@@ -836,8 +701,7 @@ middlewaresUser.sePuedeEliminarPropietarioPUT = async ( req, res, next ) => {
         if (!datosUsuario) return next()
         if (req.method === 'PUT' && datosUsuario.rol === undefined) return next()
         
-        const esRutaAdmin = req.originalUrl.includes('admin')
-        const uid = esRutaAdmin ? params.uid : uidSolicitante
+        const uid = uidSolicitante
         const datosAuth = await admin.auth().getUser(uid)
 
         let verificar = false
@@ -874,12 +738,8 @@ middlewaresUser.sePuedeEliminarPropietarioDELETE = async (req, res, next) => {
     const { uidSolicitante, datosAuthSolicitante } = datos
 
     try {
-        const esRutaAdmin = req.originalUrl.includes('admin')
-        const uid = esRutaAdmin ? params.uid : uidSolicitante
-        let datosAuth = null
-
-        if (esRutaAdmin) datosAuth = await admin.auth().getUser(uid)
-        else datosAuth = datosAuthSolicitante
+        const uid = uidSolicitante
+        let datosAuth = datosAuthSolicitante
 
         // Verificación
         if (datosAuth.customClaims.rol === 'propietario') {
