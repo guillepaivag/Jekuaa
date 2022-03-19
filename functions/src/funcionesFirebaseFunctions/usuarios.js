@@ -2,7 +2,7 @@ const functions = require('firebase-functions')
 const admin = require('../../firebase-service')
 const db = require('../../db')
 const Usuario = require('../models/Usuarios/Usuario')
-const Instructor = require('../models/Usuarios/Instructor')
+const Miembro = require('../models/Usuarios/TiposUsuarios/Miembro')
 const InformacionUsuario = require('../models/Usuarios/InformacionUsuario')
 const Roles = require('../models/Usuarios/helpers/Roles')
 const Authentication = require('../models/Usuarios/Authentication')
@@ -29,14 +29,18 @@ ffUsuarios.eventoCreacionUsuario = functions
     const informacionUsuario = new InformacionUsuario({ uid })
     InformacionUsuario.crear(informacionUsuario)
 
-    // Datos Instructor 
+    // Datos Miembro 
     const rol = new Roles(usuario.rol)
     const docRol = await rol.obtenerDocumentoRol()
 
     if ( docRol.data().esMiembro ) {
-        const instructor = new Instructor({ uid })
-        Instructor.crearInstructor( instructor )
+        const miembro = new Miembro({ uid })
+        Miembro.crearMiembro( miembro )
     }
+
+    // Contador de usuarios
+    const incrementar = admin.firestore.FieldValue.increment(1)
+    db.collection('Contadores').doc('usuarios').update({ cantidad: incrementar })
     
 })
 
@@ -54,23 +58,24 @@ ffUsuarios.eventoActualizacionUsuario = functions
 .onUpdate(async ( change, context ) => {
     const docNuevo = change.after
     const docViejo = change.before
+    const { uid } = context.params
     
     const usuarioNuevo = new Usuario(docNuevo.data())
     const usuarioViejo = new Usuario(docViejo.data())
 
-    // Datos Instructor
+    // Datos Miembro
     const rol = new Roles(usuarioNuevo.rol)
     const docRol = await rol.obtenerDocumentoRol()
 
     if ( docRol.data().esMiembro ) {
         // Verificar si existe documento
-        const instructor = new Instructor()
-        const existe = await instructor.importarDatosInstructor( usuarioNuevo.uid )
+        const miembro = new Miembro()
+        const existe = await miembro.importarDatosMiembro( uid )
 
         // Si no existe, crear
         if (!existe) {
-            instructor.setUID( usuarioNuevo.uid )
-            Instructor.crearInstructor(instructor)
+            miembro.setUID( uid )
+            Miembro.crearMiembro( miembro )
         }
     }
 })
@@ -102,66 +107,30 @@ ffUsuarios.eventoEliminacionUsuario = functions
         await doc.ref.delete()
     }
 
-    // Datos Blogs
-    const snapshotsBlogs = await db
-        .collection('Blogs').where('publicador', '==', uid).get()
-        
-    for (let i = 0; i < snapshotsBlogs.docs.length; i++) {
-        const doc = snapshotsBlogs.docs[i]
-        await doc.ref.delete()
-    }
-
-    // Datos Instructor
-    const instructor = new Instructor()
-    const existe = await instructor.importarDatosInstructor( uid )
+    // Datos Miembro
+    const miembro = new Miembro()
+    const existe = await miembro.importarDatosMiembro( uid )
 
     if ( existe ) {
-        Instructor.eliminarInstructor( uid )
+        Miembro.eliminarMiembro( uid )
+
+        // Datos Blogs
+        const snapshotsBlogs = await db
+        .collection('Blogs').where('publicador', '==', uid).get()
+            
+        for (let i = 0; i < snapshotsBlogs.docs.length; i++) {
+            const doc = snapshotsBlogs.docs[i]
+            await doc.ref.delete()
+        }
         
-        // Datos Cursos
+        // Datos Cursos Borrador/Publicado
+
     }
-})
-
-
-
-
-
-
-
-
-
-
-ffUsuarios.incrementarCantidadUsuario = functions
-.region('southamerica-east1')
-.firestore.document('Usuarios/{uid}')
-.onCreate(async ( change, context ) => {
-
-    // Contador de usuarios
-    const incrementar = admin.firestore.FieldValue.increment(1)
-    db.collection('Contadores').doc('usuarios').update({ cantidad: incrementar })
-    
-})
-
-
-
-
-
-
-
-
-ffUsuarios.decrementarCantidadUsuario = functions
-.region('southamerica-east1')
-.firestore.document('Usuarios/{uid}')
-.onDelete(async ( change, context ) => {
 
     // Contador de usuarios
     const decrementar = admin.firestore.FieldValue.increment(-1)
     db.collection('Contadores').doc('usuarios').update({ cantidad: decrementar })
-
 })
-
-
-
 
 
 

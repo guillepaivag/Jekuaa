@@ -9,6 +9,7 @@ class CursoBorrador extends Curso {
     constructor (datos = {}) {
         super( datos )
         this.mensajesError = datos.mensajesError ? datos.mensajesError : []
+        this.contieneErrores = datos.contieneErrores ? datos.contieneErrores : false
         this.estadoDocumento = datos.estadoDocumento ? datos.estadoDocumento : ''
     }
 
@@ -26,6 +27,7 @@ class CursoBorrador extends Curso {
         return {
             ...super.getCurso(),
             mensajesError: this.mensajesError,
+            contieneErrores: this.contieneErrores,
             estadoDocumento: this.estadoDocumento,
         }
     }
@@ -33,11 +35,16 @@ class CursoBorrador extends Curso {
     setCursoBorrador ( datos = {} ) {
         super.setCurso(datos)
         this.setMensajesError(datos.mensajesError)
+        this.setContieneErrores(datos.contieneErrores)
         this.setEstadoDocumento(datos.estadoDocumento)
     }
 
     setMensajesError ( mensajesError = [] ) {
         this.mensajesError = mensajesError
+    }
+
+    setContieneErrores ( contieneErrores = false ) {
+        this.contieneErrores = contieneErrores
     }
 
     setEstadoDocumento ( estadoDocumento = '' ) {
@@ -109,6 +116,20 @@ class CursoBorrador extends Curso {
         return true
     }
 
+    static async tieneErrores ( uidCurso = '' ) {
+        const docCurso = await db
+        .collection(COLECCION_CURSOS).doc(uidCurso)
+        .get()
+
+        if (!docCurso.exists) {
+            throw new Errores({
+                codigo: 'error/usuario_mala_solicitud',
+                mensaje: 'No existe este curso.'
+            })
+        }
+
+        return docCurso.data().contieneErrores
+    }
 }
 
 module.exports = CursoBorrador

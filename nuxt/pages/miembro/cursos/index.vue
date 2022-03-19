@@ -36,7 +36,7 @@
                     src="https://cdn.vuetifyjs.com/images/cards/docks.jpg"
                     >
                     <v-card-title>
-                        Crear curso
+                        Crear curso borrador
                     </v-card-title>
                     </v-img>
 

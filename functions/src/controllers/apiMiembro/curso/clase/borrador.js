@@ -32,6 +32,7 @@ controller.crearClaseBorrador = async (req = request, res = response) => {
         const contenidoClaseBorrador = new ContenidoClaseBorrador({ 
             uid: claseBorrador.uid,
             mensajesError: ['Falta agregar contenido.'],
+            contieneErrores: true,
             estadoDocumento: 'nuevo'
         })
         ContenidoClaseBorrador.agregarDocumento(params.uidCursoBorrador,

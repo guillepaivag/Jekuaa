@@ -256,6 +256,7 @@ borrador.construirDatosCursoBorradorPOST = async (req = request, res = response,
             mensajesError.push('No existe un tipo de clase para esta clase, favor agregue contenido.')
 
         req.body.datosClase.mensajesError = mensajesError
+        req.body.datosClase.contieneErrores = !!mensajesError.length
         
         next()
     } catch (error) {

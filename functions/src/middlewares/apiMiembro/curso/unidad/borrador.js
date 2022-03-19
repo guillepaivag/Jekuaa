@@ -177,6 +177,7 @@ middleware.construirDatosUnidadBorradorPOST = async (req = request, res = respon
             mensajesError.push('La duración de la unidad es 0, favor agregar contenido.')
 
         req.body.datosUnidad.mensajesError = mensajesError
+        req.body.datosUnidad.contieneErrores = !!mensajesError.length
 
         next()
     } catch (error) {

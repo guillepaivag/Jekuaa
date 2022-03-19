@@ -20,7 +20,7 @@ funciones.construirDatosParaCrearUsuario = ( datosUsuario, contrasenha ) => {
         correo,
         nombreCompleto,
         fechaNacimiento,
-        datosPlan,
+        plan,
         rol,
         point
     } = datosUsuario
@@ -42,13 +42,10 @@ funciones.construirDatosParaCrearUsuario = ( datosUsuario, contrasenha ) => {
     datosUsuarioProduccion.fechaNacimiento = fechaNacimiento ? 
     timestamp.milliseconds_a_timestamp(fechaNacimiento) : null
 
-    // Datos rol
-    datosUsuarioProduccion.datosPlan = {}
-    datosUsuarioProduccion.datosPlan.plan = 'gratis'
-    datosUsuarioProduccion.datosPlan.fechaCompra = null
-    datosUsuarioProduccion.datosPlan.fechaHasta = null
+    // Plan
+    datosUsuarioProduccion.plan = 'gratis'
     
-    // Rol usuario
+    // Rol
     datosUsuarioProduccion.rol = 'estudiante'
 
     // Point
@@ -78,7 +75,7 @@ funciones.construirDatosParaActualizarUsuario = ( datosUsuario, contrasenha ) =>
             correo,
             nombreCompleto,
             fechaNacimiento,
-            datosPlan,
+            plan,
             rol,
             point
         } = datosUsuario
@@ -129,21 +126,21 @@ funciones.construirDatosReclamosAutenticacion = async (datosNuevos, auth) => {
     const datosReclamosAutenticacion = {}
     let reclamosViejos = null
 
-    if ( datosNuevos && (datosNuevos.datosPlan || datosNuevos.rol) ) {
+    if ( datosNuevos && (datosNuevos.plan || datosNuevos.rol) ) {
         const datosAuth = await auth.obtener()
         reclamosViejos = datosAuth.customClaims
     }
 
-    if (datosNuevos && datosNuevos.datosPlan && datosNuevos.datosPlan.plan !== reclamosViejos.plan) 
-        datosReclamosAutenticacion.datosPlan = datosNuevos.datosPlan.plan
+    if (datosNuevos && datosNuevos.plan !== reclamosViejos.plan) 
+        datosReclamosAutenticacion.plan = datosNuevos.plan
 
-    if (datosNuevos && datosNuevos.rol && datosNuevos.rol !== reclamosViejos.rol) 
+    if (datosNuevos && datosNuevos.rol !== reclamosViejos.rol) 
         datosReclamosAutenticacion.rol = datosNuevos.rol
     
     if ( !Object.keys( datosReclamosAutenticacion ).length ) return null
 
-    if ( datosReclamosAutenticacion.datosPlan === undefined ) 
-        datosReclamosAutenticacion.datosPlan = reclamosViejos.datosPlan
+    if ( datosReclamosAutenticacion.plan === undefined ) 
+        datosReclamosAutenticacion.plan = reclamosViejos.plan
     
     if ( datosReclamosAutenticacion.rol === undefined ) 
         datosReclamosAutenticacion.rol = reclamosViejos.rol

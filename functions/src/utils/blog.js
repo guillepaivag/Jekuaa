@@ -15,6 +15,7 @@ utils_blog.construirDatosParaNuevoBlog = ( datosBlog, contenidoBlog ) => {
     const blog = new Blog(datosBlog)
     const datosBlogFormateado = blog.formatearDatos().getBlog()
 
+    datosBlogFormateado.equipo = ''
     if (!datosBlogFormateado.seccion) {
         datosBlogFormateado.seccion = ''
         datosBlogFormateado.categoria = ''
@@ -30,8 +31,8 @@ utils_blog.construirDatosParaNuevoBlog = ( datosBlog, contenidoBlog ) => {
     for (let i = 0; i < dirArray.length; i++) {
         const element = dirArray[i]
         dirVerificacion = path.join(dirVerificacion, element)
-        if ( !fs.existsSync(dirVerificacion) ) fs.mkdirSync(dirVerificacion)
-
+        if ( !fs.existsSync(dirVerificacion) ) 
+            fs.mkdirSync(dirVerificacion)
     }
     const nombreBlogTemp = `${Date.now()}~${datosBlog.uid}.md`
     const rutaArchivoTemp = path.join(os.tmpdir(), 'blogs', nombreBlogTemp)
@@ -59,7 +60,7 @@ utils_blog.construirDatosParaActualizacionBlog = ( uidBlog, datosBlog, contenido
             referencia,             // usuario
             titulo,                 // usuario
             descripcion,            // usuario
-            ofrecidoPor,            // constante
+            equipo,            // constante
             publicador,             // constante
             seccion,                // usuario
             categoria,              // usuario

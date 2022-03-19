@@ -49,7 +49,7 @@ ffUnidades.validacionEstadoDocumentoUnidadBorrador = functions
         datosActualizados.mensajesError = mensajesError
     }
     
-
+    datosActualizados.contieneErrores = !!mensajesError.length
 
     // Debe existir el curso para realizar la revision
     let ref = db.collection('Cursos').doc(uidCursoBorrador)

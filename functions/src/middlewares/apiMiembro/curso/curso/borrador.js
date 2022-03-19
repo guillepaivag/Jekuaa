@@ -1,7 +1,10 @@
 const { request, response } = require("express")
 const db = require('../../../../../db')
+const ClaseBorrador = require("../../../../models/Cursos/clase/ClaseBorrador")
+const ContenidoClaseBorrador = require("../../../../models/Cursos/contenidoClase/ContenidoClaseBorrador")
 const CursoBorrador = require("../../../../models/Cursos/curso/CursoBorrador")
 const CursoRevision = require("../../../../models/Cursos/curso/CursoRevision")
+const UnidadBorrador = require("../../../../models/Cursos/unidad/UnidadBorrador")
 const Errores = require("../../../../models/Error/Errores")
 const Authentication = require("../../../../models/Usuarios/Authentication")
 const Roles = require('../../../../models/Usuarios/helpers/Roles')
@@ -33,7 +36,7 @@ borrador.verificarDatosRequeridosPOST = (req = request, res = response, next) =>
         }
 
         const {
-            ofrecidoPor,
+            equipo,
             titulo,
             referenciaURL,
         } = datosCurso
@@ -101,12 +104,12 @@ borrador.verificadorDeTipoDeDatosPOST = (req = request, res = response, next) =>
         const { datosCurso } = body
 
         const {
-            ofrecidoPor,
+            equipo,
             titulo,
             referenciaURL,
         } = datosCurso
 
-        // if ( ofrecidoPor && typeof ofrecidoPor !== 'string' ) {
+        // if ( equipo && typeof equipo !== 'string' ) {
         //     throw new Errores({
         //         codigo: 'error/usuario_mala_solicitud',
         //         mensaje: 'La uid de la institución que ofrece el curso debe ser String.'
@@ -143,7 +146,7 @@ borrador.verificadorDeTipoDeDatosPUT = (req = request, res = response, next) => 
             uid,                // c
             responsable,        // c
             contribuyentes,
-            ofrecidoPor,        // c
+            equipo,        // c
             titulo,  
             referenciaURL, 
             descripcion,
@@ -312,7 +315,7 @@ borrador.verificadorDeDatosPOST = async (req = request, res = response, next) =>
         const { datosCurso } = body
 
         const {
-            ofrecidoPor,
+            equipo,
             titulo,
             referenciaURL,
         } = datosCurso
@@ -384,7 +387,7 @@ borrador.verificadorDeDatosPUT = async (req = request, res = response, next) => 
             uid,                // c
             responsable,        // c
             contribuyentes,
-            ofrecidoPor,        // c
+            equipo,        // c
             titulo,  
             referenciaURL, 
             descripcion,
@@ -564,7 +567,7 @@ borrador.construirDatosCursoBorradorPOST = (req = request, res = response, next)
         const { datosCurso } = body
 
         const {
-            ofrecidoPor,
+            equipo,
             titulo,
             referenciaURL,
         } = datosCurso
@@ -607,6 +610,7 @@ borrador.construirDatosCursoBorradorPOST = (req = request, res = response, next)
         if ( cursoBorrador.idioma === '' ) mensajesError.push('No existe idioma principal en este curso, favor actualizar.')
 
         req.body.datosCurso.mensajesError = mensajesError
+        req.body.datosCurso.contieneErrores = !!mensajesError.length
 
         next()
     } catch (error) {
@@ -624,7 +628,7 @@ borrador.construirDatosCursoBorradorPUT = (req = request, res = response, next) 
             uid,                // c
             responsable,        // no se puede actualizar el responsable, solo la administracion puede
             contribuyentes,
-            ofrecidoPor,        // c
+            equipo,        // c
             titulo,
             referenciaURL,      // c
             descripcion,
@@ -805,17 +809,31 @@ borrador.perteneceAlInstructorEsteCurso = async (req = request, res = response, 
     }
 }
 
-borrador.elCursoEstaEnRevision = async (req = request, res = response, next) => {
+borrador.esValidoElCursoBorrador = async (req = request, res = response, next) => {
     try {
         const { datos, body, params } = req
         const { uidSolicitante, datosAuthSolicitante } = datos
 
-        const existe = await CursoRevision.existeCursoRevision(params.uidCursoBorrador)
+        const uidCursoBorrador = params.uidCursoBorrador
+        
+        // Verificar curso
+        let error1 = await CursoBorrador.tieneErrores(uidCursoBorrador)
 
-        if (existe) {
+        // Verificar unidades
+        let error2 = await UnidadBorrador.tieneErrores(uidCursoBorrador)
+
+        // Verificar clases
+        let error3 = await ClaseBorrador.tieneErrores(uidCursoBorrador)
+
+        // Verificar contenido-clase
+        let error4 = await ContenidoClaseBorrador.tieneErrores(uidCursoBorrador)
+
+        let existeErrores = [error1, error2, error3, error4]
+
+        if (existeErrores.includes(true)) {
             throw new Errores({
-                codigo: 'error/usuario_no_autorizado',
-                mensaje: 'Si el curso esta en revisión. Para actualizar hay que cancelar la revisión.'
+                codigo: 'error/usuario_mala_solicitud',
+                mensaje: 'Existen errores, favor arreglar.'
             })
         }
 

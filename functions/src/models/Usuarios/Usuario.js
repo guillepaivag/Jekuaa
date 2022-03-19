@@ -1,6 +1,5 @@
 const admin = require('../../../firebase-service')
 const db = require('../../../db')
-const DatosPlan = require('./helpers/DatosPlan')
 
 const COLECCION_USUARIO = 'Usuarios'
 
@@ -10,7 +9,7 @@ class Usuario {
         const { 
             uid, nombreUsuario, correo, 
             nombreCompleto, fechaNacimiento,
-            datosPlan, rol, point
+            plan, rol, point
         } = datosUsuario
 
         this.uid = uid ? uid : ''
@@ -18,7 +17,7 @@ class Usuario {
         this.correo = correo ? correo : ''
         this.nombreCompleto = nombreCompleto ? nombreCompleto : ''
         this.fechaNacimiento = fechaNacimiento ? fechaNacimiento : null
-        this.datosPlan = datosPlan ? datosPlan : new DatosPlan()
+        this.plan = plan ? plan : 'gratis'
         this.rol = rol ? rol : 'estudiante'
         this.point = point ? point : 0
     }
@@ -37,7 +36,7 @@ class Usuario {
             correo: this.correo, 
             nombreCompleto: this.nombreCompleto,
             fechaNacimiento: this.fechaNacimiento,
-            datosPlan: this.datosPlan,
+            plan: this.plan,
             rol: this.rol,
             point: this.point,
         }
@@ -50,7 +49,7 @@ class Usuario {
             correo: this.correo, 
             nombreCompleto: this.nombreCompleto,
             fechaNacimiento: this.fechaNacimiento,
-            datosPlan: this.datosPlan.getDatosPlan(),
+            plan: this.plan,
             rol: this.rol,
             point: this.point,
         }
@@ -76,8 +75,8 @@ class Usuario {
         return this.fechaNacimiento
     }
 
-    getDatosPlan () {
-        return this.datosPlan
+    getPlan () {
+        return this.plan
     }
 
     getRol () {
@@ -99,7 +98,7 @@ class Usuario {
         const { 
             uid, nombreUsuario, correo, 
             nombreCompleto, fechaNacimiento,
-            datosPlan, rol, point
+            plan, rol, point
         } = datosUsuario
 
         this.setUID(uid)
@@ -107,7 +106,7 @@ class Usuario {
         this.setCorreo(correo)
         this.setNombreCompleto(nombreCompleto)
         this.setFechaNacimiento(fechaNacimiento)
-        this.setDatosPlan(datosPlan)
+        this.setPlan(plan)
         this.setRol(rol)
         this.setPoints(point)
 
@@ -139,17 +138,8 @@ class Usuario {
         return this
     }
 
-    setDatosPlan ( datosPlan = new DatosPlan() ) {
-        if (datosPlan) {
-            this.datosPlan = new DatosPlan({
-                plan: datosPlan.plan,
-                fechaCompra: datosPlan.fechaCompra,
-                fechaHasta: datosPlan.fechaHasta,
-            })
-        } else {
-            this.datosPlan = datosPlan
-        }
-
+    setPlan ( plan = 'gratis' ) {
+        this.plan = plan
         return this
     }
 

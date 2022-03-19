@@ -88,14 +88,16 @@ functions.region('southamerica-east1').firestore.document('CursosBorrador/{uidCu
 
         datosCursoBorrador.objectID = datosCursoBorrador.uid
         delete datosCursoBorrador.uid
-        cursoBorrador.datosPrecio.fechaFinDescuento = cursoBorrador.datosPrecio.fechaFinDescuento.seconds
+        
+        cursoBorrador.datosPrecio.fechaFinDescuento ? 
+        cursoBorrador.datosPrecio.fechaFinDescuento = cursoBorrador.datosPrecio.fechaFinDescuento.seconds : ''
         
         await index.saveObject(datosCursoBorrador)
 
         return true
     }
 
-    if (!document) return await deleteObject(blogId)
+    if (!document) return await deleteObject()
     else return await saveObject()
     
 })

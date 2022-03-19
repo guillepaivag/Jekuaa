@@ -9,6 +9,9 @@ const {
     verificacionExistenciaBlog,
     verificacionExistenciaArchivoBlog,
     esPropietarioDelBlog,
+    permisoParaCrearBlog,
+    permisoParaActualizarBlog,
+    permisoParaEliminarBlog,
 } = require('../../../middlewares/apiMiembro/blog')
 
 const { estaAutenticado } = require('../../../middlewares/api/usuario')
@@ -22,9 +25,10 @@ const {
     obtenerContenidoBlog,
 } = require('../../../controllers/apiMiembro/blog')
 
-router.post('/crearBlog', 
-    estaAutenticado, 
-    esMiembro, 
+router.post('/crearBlog',
+    estaAutenticado,
+    esMiembro,
+    permisoParaCrearBlog,
     verificadorDeDatosRequeridos,
     verificadorDeTipoDeDatos,
     verificadorDeDatosBlog,
@@ -34,6 +38,7 @@ router.post('/crearBlog',
 router.put('/actualizarBlog/:uid', 
     estaAutenticado, 
     esMiembro, 
+    permisoParaActualizarBlog,
     verificacionExistenciaBlog,
     esPropietarioDelBlog,
     verificadorDeDatosRequeridos,
@@ -45,6 +50,7 @@ router.put('/actualizarBlog/:uid',
 router.delete('/eliminarBlog/:uid', 
     estaAutenticado, 
     esMiembro, 
+    permisoParaEliminarBlog,
     verificacionExistenciaBlog, 
     esPropietarioDelBlog,
     eliminarBlog)
@@ -53,12 +59,14 @@ router.get('/obtenerDatos/:uid',
     estaAutenticado, 
     esMiembro, 
     verificacionExistenciaBlog,
+    esPropietarioDelBlog,
     obtenerDatosBlog)
 
 router.get('/obtenerContenido/:uid',
     estaAutenticado, 
     esMiembro, 
     verificacionExistenciaArchivoBlog,
+    esPropietarioDelBlog,
     obtenerContenidoBlog)
 
 

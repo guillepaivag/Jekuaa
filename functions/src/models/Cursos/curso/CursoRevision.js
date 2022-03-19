@@ -1,30 +1,45 @@
 const admin = require('../../../../firebase-service')
 const db = require('../../../../db')
 const { milliseconds_a_timestamp } = require('../../../utils/timestamp')
+const CursoBorrador = require('./CursoBorrador')
 
 const COLECCION_CURSOS = 'CursosRevision'
+
+/**
+ * ESTADOS:
+ * espera
+ * revision
+ * no-aceptado
+ * aceptado
+ * ------------
+ * datosCurso: {
+ *  uid,
+ *  responsable,
+ *  equipo
+ * }
+ */
 
 class CursoRevision {
     constructor (datos = {}) {
         const { 
             uid,
-            refCursoBorrador,
-            tipoCurso,
+            esNuevo,
+            revision,
+            datosCurso,
             revisionAdministracion, 
-            revisionInstitucion,
             fechaInicioRevision,
         } = datos
 
         this.uid = uid ? uid : ''
-        this.refCursoBorrador = refCursoBorrador ? refCursoBorrador : null
-        this.tipoCurso = tipoCurso ? tipoCurso : 'instructor'
-        this.revisionAdministracion = revisionAdministracion ? revisionAdministracion : {
-            estado: 'revision',
-            mensaje: '',
-            fechaRespuesta: null
+        this.esNuevo = esNuevo !== undefined ? esNuevo : false
+        this.revision = revision !== undefined ? revision : false
+        this.datosCurso = datosCurso ? datosCurso : {
+            uid: '',
+            responsable: '',
+            equipo: '',
         }
-        this.revisionInstitucion = revisionInstitucion ? revisionInstitucion : {
-            estado: 'revision',
+        this.revisionAdministracion = revisionAdministracion ? revisionAdministracion : {
+            estado: 'espera',
             mensaje: '',
             fechaRespuesta: null
         }
@@ -35,10 +50,10 @@ class CursoRevision {
     getRevision () {
         return {
             uid: this.uid,
-            refCursoBorrador: this.refCursoBorrador,
-            tipoCurso: this.tipoCurso,
+            esNuevo: this.esNuevo,
+            revision: this.revision,
+            datosCurso: this.datosCurso,
             revisionAdministracion: this.revisionAdministracion,
-            revisionInstitucion: this.revisionInstitucion,
             fechaInicioRevision: this.fechaInicioRevision,
         }
     }
@@ -49,21 +64,53 @@ class CursoRevision {
     static async existeCursoRevision ( uidCurso = '' ) {
         const doc = await db.collection(COLECCION_CURSOS).doc(uidCurso).get()
 
-        if ( !doc.exists ) return false
+        if (!doc.exists) return false
 
-        return doc.data().revisionAdministracion.estado === 'revision' || doc.data().revisionInstitucion.estado === 'revision'
+        const revision = new CursoRevision(doc.data())
+
+        return !!revision.revision
     }
 
-    static async crearRevisión ( uidCurso = '', revision = new CursoRevision() ) {
+    static async obtenerInformacionDeRevision ( uidCurso = '' ) {
+        const doc = await db.collection(COLECCION_CURSOS).doc(uidCurso).get()
+
+        if (!doc.exists) return null
+
+        const revision = new CursoRevision(doc.data())
+
+        return revision.revisionAdministracion
+    }
+
+    static async crearNuevaRevision ( uidCurso = '' ) {
+        const revision = new CursoRevision()
+        const docRevision = await db.collection(COLECCION_CURSOS).doc(uidCurso).get()
+        const docCursoBorrador = await db.collection('CursosBorrador').doc(uidCurso).get()
+        const cursoBorrador = new CursoBorrador(docCursoBorrador.data())
+
+        revision.uid = uidCurso
+        revision.esNuevo = !docRevision.exists
+        revision.revision = true
+        revision.datosCurso = {
+            uid: cursoBorrador.uid,
+            responsable: cursoBorrador.responsable,
+            equipo: cursoBorrador.equipo,
+        }
         revision.fechaInicioRevision = milliseconds_a_timestamp( Date.now() )
+
         await db.collection(COLECCION_CURSOS).doc(uidCurso).set(revision.getRevision())
-    
+
         return true
     }
 
-    static async cancelarRevisión ( uidCurso = '' ) {
-        await db.collection(COLECCION_CURSOS).doc(uidCurso).delete()
+    static async activarRevision ( uidCurso = '', activar = false ) {
+        await db.collection(COLECCION_CURSOS).doc(uidCurso).update({
+            revision: activar
+        })
+        return true
+    }
     
+    static async eliminarRevision ( uidCurso = '' ) {
+        await db.collection(COLECCION_CURSOS).doc(uidCurso).delete()
         return true
     }
 
@@ -75,18 +122,6 @@ class CursoRevision {
         }
         
         await db.collection(COLECCION_CURSOS).doc(uidCurso).update({ revisionAdministracion })
-    
-        return true
-    }
-
-    static async aceptarCursoPorInstitucion ( uidCurso = '', mensaje = '' ) {
-        const revisionInstitucion = {
-            estado: !mensaje.length ? 'aceptado' : 'rechazado',
-            mensaje: mensaje,
-            fechaRespuesta: milliseconds_a_timestamp( Date.now() )
-        }
-
-        await db.collection(COLECCION_CURSOS).doc(uidCurso).update({ revisionInstitucion })
     
         return true
     }

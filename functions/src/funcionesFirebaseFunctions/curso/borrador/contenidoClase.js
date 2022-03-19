@@ -21,7 +21,7 @@ let bucketNameContenidoBorradorVerificacion = rutaModo === 'prod' ? 'j-cursos-co
 ffmpeg.setFfprobePath(ffprobePath)
 // ffmpeg.setFfmpegPath(ffmpegPath)
 
-ffContenidoClase.validacionContenidoClaseVideo = functions
+ffContenidoClase.validacionContenidoClase = functions
 .region('southamerica-east1')
 .storage
 .bucket(bucketNameContenidoBorradorVerificacion)
@@ -91,6 +91,7 @@ ffContenidoClase.validacionContenidoClaseVideo = functions
                 mimeType: file.mimeType,
                 fechaActualizacion: timestamp.milliseconds_a_timestamp( Date.now() ),
                 mensajesError: mensajesError,
+                contieneErrores: !!mensajesError.length,
                 estadoDocumento: contenidoClaseBorrador.estadoDocumento === 'nuevo' ? 'nuevo' : 'actualizado',
                 estadoArchivo: '',
             }
@@ -151,6 +152,7 @@ ffContenidoClase.validacionContenidoClaseVideo = functions
                 mimeType: file.mimeType,
                 fechaActualizacion: timestamp.milliseconds_a_timestamp( Date.now() ),
                 mensajesError: mensajesError,
+                contieneErrores: !!mensajesError.length,
                 estadoDocumento: contenidoClaseBorrador.estadoDocumento === 'nuevo' ? 'nuevo' : 'actualizado',
                 estadoArchivo: '',
             }
@@ -223,6 +225,7 @@ ffContenidoClase.validacionContenidoClaseVideo = functions
                 fileExtension: '',
                 fileName: '',
                 mensajesError: ['Hubo un problema al subir este video, inténtelo de nuevo.'],
+                contieneErrores: true,
                 mimeType: '',
                 size: 0,
                 tipoContenido: '',

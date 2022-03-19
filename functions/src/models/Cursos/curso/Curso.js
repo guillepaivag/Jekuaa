@@ -33,7 +33,7 @@ class Curso {
             uid,                    // r
             responsable,            // r 
             contribuyentes,         // 
-            ofrecidoPor,            // constante para siempre
+            equipo,            // constante para siempre
             fotoPerfil,             // r
             titulo,                 // r 
             referenciaURL,          // constante para siempre (cuando se publica el curso) - r
@@ -53,7 +53,7 @@ class Curso {
         this.uid = uid ? uid : db.collection('Cursos').doc().id
         this.responsable = responsable ? responsable : ''
         this.contribuyentes = contribuyentes ? contribuyentes : []
-        this.ofrecidoPor = ofrecidoPor ? ofrecidoPor : ''
+        this.equipo = equipo ? equipo : ''
         this.fotoPerfil = fotoPerfil ? fotoPerfil : ''
         this.titulo = titulo ? titulo : ''
         this.referenciaURL = referenciaURL ? referenciaURL : ''
@@ -64,7 +64,7 @@ class Curso {
         this.seccion = seccion ? seccion : ''
         this.categoria = categoria ? categoria : ''
         this.subCategorias = subCategorias ? subCategorias : []
-        this.datosPrecio = datosPrecio ? datosPrecio : new DatosPrecio_Curso()
+        this.datosPrecio = datosPrecio ? new DatosPrecio_Curso(datosPrecio) : new DatosPrecio_Curso()
         this.duracion = duracion ? duracion : 0
         this.idioma = idioma ? idioma : 'español'
         this.subTitulos = subTitulos ? subTitulos : [] 
@@ -83,7 +83,7 @@ class Curso {
             uid: this.uid,
             responsable: this.responsable,
             contribuyentes: this.contribuyentes,
-            ofrecidoPor: this.ofrecidoPor,
+            equipo: this.equipo,
             fotoPerfil: this.fotoPerfil,
             titulo: this.titulo,
             referenciaURL: this.referenciaURL,
@@ -106,7 +106,7 @@ class Curso {
             uid,
             responsable, 
             contribuyentes,
-            ofrecidoPor, 
+            equipo, 
             fotoPerfil,
             titulo,  
             referenciaURL, 
@@ -126,7 +126,7 @@ class Curso {
         this.setUID( uid )
         this.setResponsable( responsable )
         this.setContribuyentes(contribuyentes)
-        this.setOfrecidoPor(ofrecidoPor)
+        this.setEquipo(equipo)
         this.setFotoPerfil( fotoPerfil )
         this.setTitulo( titulo )
         this.setReferenciaURL( referenciaURL )
@@ -155,8 +155,8 @@ class Curso {
         this.contribuyentes = contribuyentes
     }
 
-    setOfrecidoPor ( ofrecidoPor = '' ) {
-        this.ofrecidoPor = ofrecidoPor
+    setEquipo ( equipo = '' ) {
+        this.equipo = equipo
     }
 
     setFotoPerfil ( fotoPerfil = '' ) {

@@ -1,5 +1,6 @@
 const manejadorErrores = require("../../../helpers/ManejoErrores")
 const Blog = require("../../../models/Blogs/Blog")
+const Errores = require("../../../models/Error/Errores")
 const Respuesta = require("../../../models/Respuesta")
 const Miembro = require("../../../models/Usuarios/TiposUsuarios/Miembro")
 
@@ -79,6 +80,9 @@ controller.eliminarBlog = async (req, res) => {
 
         const respuesta = new Respuesta()
         let codigo = 'exito'
+
+        const blog = new Blog()
+        await blog.importarDatosBlogPorUID(uid)
 
         const datosBlogEliminado = await Miembro.eliminarBlog(uid)
 

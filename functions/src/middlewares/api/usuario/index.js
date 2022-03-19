@@ -1,7 +1,3 @@
-const fs = require('fs')
-const os = require('os')
-const path = require('path')
-
 const admin = require('../../../../firebase-service')
 const db = require('../../../../db')
 const utilsUsuarios = require('../../../utils/usuario')
@@ -10,9 +6,7 @@ const esNombreUsuario = require('../../../utils/esNombreUsuario')
 const obtenerEdad = require('../../../utils/obtenerEdad')
 const validarEmail = require('../../../utils/emailValido')
 const Errores = require('../../../models/Error/Errores')
-const DatosPlan = require('../../../models/Usuarios/helpers/DatosPlan')
 const Roles = require('../../../models/Usuarios/helpers/Roles')
-const Instructor = require('../../../models/Usuarios/Instructor')
 const Authentication = require('../../../models/Usuarios/Authentication')
 
 
@@ -49,43 +43,6 @@ middlewaresUser.estaAutenticado = (req, res, next) => {
 
     getAuthToken(req, res, myNext)
     
-}
-
-middlewaresUser.esAdmin = async (req, res, next) => {
-    
-    try {
-        const { uidSolicitante, datosAuthSolicitante } = req.datos
-        
-        const roles = new Roles(datosAuthSolicitante.customClaims.rol)
-        const documentoRol = await roles.obtenerDocumentoRol()
-        
-        if ( !documentoRol.data().esAdmin ) 
-            throw new Errores({ codigo: 'error/usuario_no_autorizado' })
-        
-        return next()
-
-    } catch ( error ) {
-        next(error)
-
-    }
-
-}
-
-middlewaresUser.esPropietario = async (req, res, next) => {
-    
-    try {
-        const { uidSolicitante, datosAuthSolicitante } = req.datos
-        
-        if ( datosAuthSolicitante.customClaims.rol !== 'propietario' ) 
-            throw new Errores({ codigo: 'error/usuario_no_autorizado' })
-        
-        return next()
-
-    } catch ( error ) {
-        next(error)
-
-    }
-
 }
 
 middlewaresUser.esDeMayorIgualNivel = async ( req, res, next ) => {
@@ -298,7 +255,7 @@ middlewaresUser.verificarDatosRequeridos = ( req, res, next ) => {
                 correo,
                 nombreCompleto,
                 fechaNacimiento,
-                datosPlan,
+                plan,
                 rol,
                 point
             } = datosUsuario
@@ -343,7 +300,7 @@ middlewaresUser.verificarTipoDeDatosCliente = ( req, res, next ) => {
                 correo,
                 nombreCompleto,
                 fechaNacimiento,
-                datosPlan,
+                plan,
                 rol,
                 point,
             } = datosUsuario
@@ -399,7 +356,7 @@ middlewaresUser.validarDatosExistentesClienteCrear = async (req, res, next) => {
                 correo,
                 nombreCompleto,
                 fechaNacimiento,
-                datosPlan,
+                plan,
                 rol,
                 point
             } = datosUsuario
@@ -529,7 +486,7 @@ middlewaresUser.validarDatosExistentesClienteActualizar = async (req, res, next)
                 correo,
                 nombreCompleto,
                 fechaNacimiento,
-                datosPlan,
+                plan,
                 rol,
                 point
             } = datosUsuario

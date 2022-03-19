@@ -16,7 +16,6 @@ const {
     verificadorDeTipoDeDatosPUT,
     verificadorDeDatosPUT,
     construirDatosCursoBorradorPUT,
-    elCursoEstaEnRevision,
     verificacionDeEstadoDocumentoPUT,
 } = require('../../../../middlewares/apiMiembro/curso/curso/borrador')
 
@@ -28,6 +27,8 @@ const {
 const { 
     actualizarPrecioCurso 
 } = require('../../../../controllers/apiMiembro/curso/curso')
+
+const { errorSiElCursoEstaEnRevision } = require('../../../../middlewares/apiMiembro/curso/curso/revision')
 
 
 // CREAR
@@ -48,7 +49,7 @@ router.put('/actualizarCursoBorrador/:uidCursoBorrador',
     esMiembro,
     permisoParaActualizarCursoBorrador,
     perteneceAlInstructorEsteCurso,
-    elCursoEstaEnRevision,
+    errorSiElCursoEstaEnRevision,
     verificarDatosRequeridosPUT,
     verificadorDeTipoDeDatosPUT,
     verificadorDeDatosPUT,
@@ -65,16 +66,6 @@ router.put('/actualizarCursoBorrador/precio/:uidCursoBorrador',
     permisoParaActualizarCursoBorrador,
     perteneceAlInstructorEsteCurso,
     actualizarPrecioCurso)
-
-
-
-// MANDAR A REVISIÓN
-
-
-
-
-// CANCELAR REVISIÓN
-
 
 
 

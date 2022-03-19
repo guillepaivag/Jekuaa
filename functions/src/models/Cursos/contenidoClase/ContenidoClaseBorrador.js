@@ -15,6 +15,7 @@ class ContenidoClaseBorrador extends ContenidoClase {
     constructor (datos = {}) {
         super(datos)
         this.mensajesError = datos.mensajesError ? datos.mensajesError : []
+        this.contieneErrores = datos.contieneErrores ? datos.contieneErrores : false
         this.estadoDocumento = datos.estadoDocumento ? datos.estadoDocumento : ''
         this.estadoArchivo = datos.estadoArchivo ? datos.estadoArchivo : ''
     }
@@ -23,6 +24,7 @@ class ContenidoClaseBorrador extends ContenidoClase {
         return {
             ...super.getContenidoClase(),
             mensajesError: this.mensajesError,
+            contieneErrores: this.contieneErrores,
             estadoDocumento: this.estadoDocumento,
             estadoArchivo: this.estadoArchivo,
         }
@@ -31,6 +33,7 @@ class ContenidoClaseBorrador extends ContenidoClase {
     setContenidoClaseBorrador ( datos = {} ) {
         this.setContenidoClase(datos)
         this.setMensajesError(datos.mensajesError)
+        this.setContieneErrores(datos.contieneErrores)
         this.setEstadoDocumento(datos.estadoDocumento)
         this.setEstadoArchivo(datos.estadoArchivo)
     }
@@ -41,6 +44,10 @@ class ContenidoClaseBorrador extends ContenidoClase {
 
     setMensajesError ( mensajesError = [] ) {
         this.mensajesError = mensajesError
+    }
+
+    setContieneErrores ( contieneErrores = false ) {
+        this.contieneErrores = contieneErrores
     }
 
     setEstadoDocumento ( estadoDocumento = '' ) {
@@ -157,6 +164,15 @@ class ContenidoClaseBorrador extends ContenidoClase {
         })
 
         return articulo
+    }
+
+    static async tieneErrores ( uidCurso = '' ) {
+        const snapshot = await db
+        .collection('CursosBorrador').doc(uidCurso)
+        .collection(COLECCION_CONTENIDO_CLASE).where('contieneErrores', '==', true).limit(1)
+        .get()
+
+        return !!snapshot.docs.length
     }
 }
 

@@ -196,6 +196,7 @@ controller.eliminarContenidoClaseBorrador = async (req = request, res = response
             estadoArchivo: '',
             estadoDocumento: contenidoClaseBorrador.estadoDocumento === 'nuevo' ? 'nuevo' : 'actualizado',
             mensajesError: [],
+            contieneErrores: false,
         }
         ContenidoClaseBorrador.actualizarDocumento(params.uidCursoBorrador,
             params.uidClaseBorrador,

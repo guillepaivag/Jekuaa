@@ -64,6 +64,8 @@ ffCursos.validacionEstadoDocumentoCursoBorrador = functions
         datosActualizados.mensajesError = mensajesError
     }
 
+    datosActualizados.contieneErrores = !!mensajesError.length
+
     // Actualizar
     if ( Object.keys(datosActualizados).length ) {
         db

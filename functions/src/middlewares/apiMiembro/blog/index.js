@@ -7,6 +7,7 @@ const Errores = require("../../../models/Error/Errores")
 const Usuario = require("../../../models/Usuarios/Usuario")
 const Authentication = require('../../../models/Usuarios/Authentication')
 const esReferenciaURL = require("../../../utils/esReferenciaURL")
+const Roles = require('../../../models/Usuarios/helpers/Roles')
 
 const middlewares = {}
 
@@ -52,7 +53,7 @@ middlewares.verificadorDeDatosRequeridos  = (req, res, next) => {
                 referencia,
                 titulo,
                 descripcion,
-                ofrecidoPor,
+                equipo,
                 publicador,
                 seccion,
                 categoria,
@@ -141,7 +142,7 @@ middlewares.verificadorDeTipoDeDatos = (req, res, next) => {
                 referencia,
                 titulo,
                 descripcion,
-                ofrecidoPor,
+                equipo,
                 publicador,
                 seccion,
                 categoria,
@@ -183,14 +184,7 @@ middlewares.verificadorDeTipoDeDatos = (req, res, next) => {
                 })
             }
 
-            if ( esOperacionAgregar ) {
-                if ( !!ofrecidoPor && typeof ofrecidoPor != 'string' ) {
-                    throw new Errores({
-                        codigo: 'error/usuario_mala_solicitud',
-                        mensaje: 'La ID de la institución debe ser string.'
-                    })
-                }
-                
+            if ( esOperacionAgregar ) {                
                 if ( typeof publicador != 'string' ) {
                     throw new Errores({
                         codigo: 'error/usuario_mala_solicitud',
@@ -308,7 +302,7 @@ middlewares.verificadorDeDatosBlog = async (req, res, next) => {
                 referencia,             // usuario
                 titulo,                 // usuario
                 descripcion,            // usuario
-                ofrecidoPor,
+                equipo,
                 publicador,             // constante
                 seccion,                // usuario
                 categoria,              // usuario
@@ -369,12 +363,6 @@ middlewares.verificadorDeDatosBlog = async (req, res, next) => {
 
             if (esOperacionAgregar) {
 
-                if ( ofrecidoPor ) {
-                    // Verificar existencia de la institución
-    
-                    // Verificar que el publicador sea responsable de la institución
-                }
-            
                 // La uid del solicitante debe ser igual a la uid del dueño del blog
                 if ( publicador ) {
                     if (publicador != datosUsuario.uid) {
@@ -392,6 +380,7 @@ middlewares.verificadorDeDatosBlog = async (req, res, next) => {
                             mensaje: 'No existe este usuario.'
                         })
                     }
+
                 }
 
                 /* Descripción de la verificacion de sección, categorias y subcategorias: (creación)
@@ -624,6 +613,86 @@ middlewares.velidarDatosMeGustaBlog = async (req, res, next) => {
                     mensaje: `El blog no esta en tus gustos.`
                 })
             }
+        }
+
+        next()
+    } catch (error) {
+        next(error)
+    }
+}
+
+
+
+
+
+
+
+
+
+
+middlewares.permisoParaCrearBlog = async (req = request, res = response, next) => {
+    try {
+        const { datos, body } = req
+        const { uidSolicitante, datosAuthSolicitante } = datos
+
+        const rol = datosAuthSolicitante.customClaims.rol
+        const roles = new Roles(rol)
+
+        const doc = await roles.obtenerDocumentoRol()
+        
+        if (!doc.data().permisosBlog.crear) {
+            throw new Errores({
+                codigo: 'error/usuario_no_autorizado',
+                mensaje: 'No tienes permiso para esta acción.'
+            })
+        }
+
+        next()
+    } catch (error) {
+        next(error)
+    }
+}
+
+middlewares.permisoParaActualizarBlog = async (req = request, res = response, next) => {
+    try {
+        const { datos, body } = req
+        const { uidSolicitante, datosAuthSolicitante } = datos
+
+        const rol = datosAuthSolicitante.customClaims.rol
+        const roles = new Roles(rol)
+
+        const doc = await roles.obtenerDocumentoRol()
+        
+        if (!doc.data().permisosBlog.actualizar) {
+            throw new Errores({
+                codigo: 'error/usuario_no_autorizado',
+                mensaje: 'No tienes permiso para esta acción.'
+            })
+        }
+
+        next()
+    } catch (error) {
+        next(error)
+    }
+}
+
+
+
+middlewares.permisoParaEliminarBlog = async (req = request, res = response, next) => {
+    try {
+        const { datos, body } = req
+        const { uidSolicitante, datosAuthSolicitante } = datos
+
+        const rol = datosAuthSolicitante.customClaims.rol
+        const roles = new Roles(rol)
+
+        const doc = await roles.obtenerDocumentoRol()
+        
+        if (!doc.data().permisosBlog.eliminar) {
+            throw new Errores({
+                codigo: 'error/usuario_no_autorizado',
+                mensaje: 'No tienes permiso para esta acción.'
+            })
         }
 
         next()

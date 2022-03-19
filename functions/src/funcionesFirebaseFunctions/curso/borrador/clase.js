@@ -50,7 +50,7 @@ ffClases.eventoCreacionClaseBorrador = functions
 
 
 
-ffClases.validacionEstadoDocumentoClaseBorrador = functions
+ffClases.eventoActualizacionClaseBorrador = functions
 .region('southamerica-east1')
 .firestore.document(documentPath)
 .onUpdate(async ( change, context ) => {
@@ -60,7 +60,8 @@ ffClases.validacionEstadoDocumentoClaseBorrador = functions
     const { uidCursoBorrador, uidUnidadBorrador, uidClaseBorrador } = context.params
 
     const claseBorrador = new ClaseBorrador( docNuevo.data() )
-    const claseBorradorViejo = new ClaseBorrador( docNuevo.data() )
+    const claseBorradorViejo = new ClaseBorrador( docViejo.data() )
+
     const datosActualizados = {}
     let mensajesError = []
 
@@ -89,6 +90,7 @@ ffClases.validacionEstadoDocumentoClaseBorrador = functions
         datosActualizados.mensajesError = mensajesError
     }
 
+    datosActualizados.contieneErrores = !!mensajesError.length
 
     // Debe existir el curso para realizar la revision
     let ref = db.collection('Cursos').doc(uidCursoBorrador)
@@ -150,27 +152,70 @@ ffClases.validacionEstadoDocumentoClaseBorrador = functions
         .collection('ClasesBorrador').doc(uidClaseBorrador)
         .update(datosActualizados)
     }
-
-    if ( claseBorrador.duracion !== claseBorradorViejo.duracion ) {
-        const total = claseBorrador.duracion - claseBorradorViejo.duracion
-        const incrementar = admin.firestore.FieldValue.increment( total )
-
-        db
-        .collection('CursosBorrador').doc(uidCursoBorrador)
-        .update({
-            duracion: incrementar
-        })
-
-        db
-        .collection('CursosBorrador').doc(uidCursoBorrador)
-        .collection('UnidadesBorrador').doc(uidUnidadBorrador)
-        .update({
-            duracion: incrementar
-        })
-    }
 })
 
 
+
+
+
+
+
+ffClases.actualizacionDuracionCUC = functions
+.region('southamerica-east1')
+.firestore.document(documentPath)
+.onWrite(async ( change, context ) => {    
+    const { uidCursoBorrador, uidUnidadBorrador, uidClaseBorrador } = context.params
+
+    const claseBorrador = change.after.exists ? new ClaseBorrador( change.after.data() ) : null
+    const claseBorradorViejo = change.before.exists ? new ClaseBorrador( change.before.data() ) : null
+
+    // CREACION
+    if (claseBorrador && !claseBorradorViejo) {
+        
+    }
+
+    // ACTUALIZACION
+    if (claseBorrador && claseBorradorViejo) {
+        if ( claseBorrador.duracion !== claseBorradorViejo.duracion ) {
+            const total = claseBorrador.duracion - claseBorradorViejo.duracion
+            const incrementar = admin.firestore.FieldValue.increment( total )
+    
+            db
+            .collection('CursosBorrador').doc(uidCursoBorrador)
+            .update({
+                duracion: incrementar
+            })
+    
+            db
+            .collection('CursosBorrador').doc(uidCursoBorrador)
+            .collection('UnidadesBorrador').doc(uidUnidadBorrador)
+            .update({
+                duracion: incrementar
+            })
+        }
+    }
+
+    // ELIMINACION
+    if (!claseBorrador && claseBorradorViejo) {
+        if (claseBorradorViejo.duracion) {
+            const incrementar = admin.firestore.FieldValue.increment( -claseBorradorViejo.duracion )
+        
+            db
+            .collection('CursosBorrador').doc(uidCursoBorrador)
+            .update({
+                duracion: incrementar
+            })
+
+            db
+            .collection('CursosBorrador').doc(uidCursoBorrador)
+            .collection('UnidadesBorrador').doc(uidUnidadBorrador)
+            .update({
+                duracion: incrementar
+            })
+        }
+    }
+
+})
 
 
 

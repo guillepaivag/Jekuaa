@@ -43,11 +43,13 @@ const {
 } = require('./src/funcionesFirebaseFunctions/curso/borrador/unidad')
 const { 
   eventoCreacionClaseBorrador,
-  validacionEstadoDocumentoClaseBorrador,
+  eventoActualizacionClaseBorrador,
   eventoEliminacionClaseBorrador
 } = require('./src/funcionesFirebaseFunctions/curso/borrador/clase')
+
 const apiMiembro = require('./apiMiembro')
-const { validacionContenidoClaseVideo } = require('./src/funcionesFirebaseFunctions/curso/borrador/contenidoClase')
+
+const { validacionContenidoClase } = require('./src/funcionesFirebaseFunctions/curso/borrador/contenidoClase')
 
 // SSR Para el cliente con Nuxt.js
 if (isProduction) 
@@ -87,11 +89,12 @@ exports.eventoEliminacionUnidadBorrador = eventoEliminacionUnidadBorrador
 
 // Funciones para clases borrador de Jekuaapy
 exports.eventoCreacionClaseBorrador = eventoCreacionClaseBorrador
-exports.validacionEstadoDocumentoClaseBorrador = validacionEstadoDocumentoClaseBorrador
+exports.eventoActualizacionClaseBorrador = eventoActualizacionClaseBorrador
 exports.eventoEliminacionClaseBorrador = eventoEliminacionClaseBorrador
 
-// 
-exports.validacionContenidoClaseVideo = validacionContenidoClaseVideo
+
+// Funciones para contenido clase borrador de Jekuaapy
+exports.validacionContenidoClase = validacionContenidoClase
 
 
 // Indexación para blogs

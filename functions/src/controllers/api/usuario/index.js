@@ -89,7 +89,7 @@ controllerUsuario.obtenerUsuario = async (req, res) => {
             })
         }
 
-        delete datosUsuario.datosPlan
+        delete datosUsuario.plan
         delete datosUsuario.rol
         delete datosUsuario.point
         delete datosUsuario.correo

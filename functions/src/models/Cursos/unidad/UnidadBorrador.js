@@ -7,6 +7,7 @@ class UnidadBorrador extends Unidad {
     constructor ( datos = {} ) {
         super(datos)
         this.mensajesError = datos.mensajesError ? datos.mensajesError : []
+        this.contieneErrores = datos.contieneErrores ? datos.contieneErrores : false
         this.estadoDocumento = datos.estadoDocumento ? datos.estadoDocumento : ''
     }
     
@@ -14,6 +15,7 @@ class UnidadBorrador extends Unidad {
         return {
             ...super.getUnidad(),
             mensajesError: this.mensajesError,
+            contieneErrores: this.contieneErrores,
             estadoDocumento: this.estadoDocumento,
         }
     }
@@ -21,6 +23,7 @@ class UnidadBorrador extends Unidad {
     setUnidadBorrador ( datos = {} ) {
         this.setUnidad(datos)
         this.setMensajesError(datos.mensajesError)
+        this.setContieneErrores(datos.contieneErrores)
         this.setEstadoDocumento(datos.estadoDocumento)
     }
 
@@ -32,6 +35,10 @@ class UnidadBorrador extends Unidad {
         this.mensajesError = mensajesError
     }
 
+    setContieneErrores ( contieneErrores = false ) {
+        this.contieneErrores = contieneErrores
+    }
+    
     setEstadoDocumento ( estadoDocumento = '' ) {
         this.estadoDocumento = estadoDocumento
     }
@@ -101,6 +108,15 @@ class UnidadBorrador extends Unidad {
         .get()
 
         return snapshot.docs.length ? snapshot.docs[0].data() : null
+    }
+
+    static async tieneErrores ( uidCurso = '' ) {
+        const snapshot = await db
+        .collection('CursosBorrador').doc(uidCurso)
+        .collection(COLECCION_UNIDAD_BORRADOR).where('contieneErrores', '==', true).limit(1)
+        .get()
+
+        return !!snapshot.docs.length
     }
 }
 

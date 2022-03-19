@@ -1,3 +1,4 @@
+const admin = require("../../../../firebase-service");
 const db = require("../../../../db");
 const Clase = require("./Clase");
 
@@ -7,6 +8,7 @@ class ClaseBorrador extends Clase {
     constructor ( datos = {} ) {
         super(datos)
         this.mensajesError = datos.mensajesError ? datos.mensajesError : []
+        this.contieneErrores = datos.contieneErrores ? datos.contieneErrores : false
         this.estadoDocumento = datos.estadoDocumento ? datos.estadoDocumento : ''
     }
 
@@ -14,6 +16,7 @@ class ClaseBorrador extends Clase {
         return {
             ...super.getClase(),
             mensajesError: this.mensajesError,
+            contieneErrores: this.contieneErrores,
             estadoDocumento: this.estadoDocumento,
         }
     }
@@ -21,6 +24,7 @@ class ClaseBorrador extends Clase {
     setClaseBorrador ( datos = {} ) {
         this.setClase(datos)
         this.setMensajesError(datos.mensajesError)
+        this.setContieneErrores(datos.contieneErrores)
         this.setEstadoDocumento(datos.estadoDocumento)
     }
 
@@ -30,6 +34,10 @@ class ClaseBorrador extends Clase {
     
     setMensajesError ( mensajesError = [] ) {
         this.mensajesError = mensajesError
+    }
+
+    setContieneErrores ( contieneErrores = false ) {
+        this.contieneErrores = contieneErrores
     }
 
     setEstadoDocumento ( estadoDocumento = '' ) {
@@ -127,6 +135,20 @@ class ClaseBorrador extends Clase {
         .get()
 
         return snapshot.docs.length ? new ClaseBorrador(snapshot.docs[0].data()) : null
+    }
+
+    static async tieneErrores( uidCurso = '' ) {
+
+        const refCursoBorrador = admin.firestore().doc(`CursosBorrador/${uidCurso}`)
+        
+        let ref = db.collectionGroup(COLLECTION_CLASES_BORRADOR)
+        .orderBy(admin.firestore.FieldPath.documentId())
+        .startAt(refCursoBorrador.path)
+        .endAt(refCursoBorrador.path + "\uf8ff")
+
+        const snapshot = await ref.where('contieneErrores', '==', true).limit(1).get()
+
+        return !!snapshot.docs.length
     }
 
 }
