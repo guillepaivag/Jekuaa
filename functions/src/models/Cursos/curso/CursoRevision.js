@@ -26,7 +26,7 @@ class CursoRevision {
             esNuevo,
             revision,
             datosCurso,
-            revisionAdministracion, 
+            estadoModeracion, 
             fechaInicioRevision,
         } = datos
 
@@ -38,7 +38,7 @@ class CursoRevision {
             responsable: '',
             equipo: '',
         }
-        this.revisionAdministracion = revisionAdministracion ? revisionAdministracion : {
+        this.estadoModeracion = estadoModeracion ? estadoModeracion : {
             estado: 'espera',
             mensaje: '',
             fechaRespuesta: null
@@ -53,7 +53,7 @@ class CursoRevision {
             esNuevo: this.esNuevo,
             revision: this.revision,
             datosCurso: this.datosCurso,
-            revisionAdministracion: this.revisionAdministracion,
+            estadoModeracion: this.estadoModeracion,
             fechaInicioRevision: this.fechaInicioRevision,
         }
     }
@@ -78,7 +78,7 @@ class CursoRevision {
 
         const revision = new CursoRevision(doc.data())
 
-        return revision.revisionAdministracion
+        return revision.estadoModeracion
     }
 
     static async crearNuevaRevision ( uidCurso = '' ) {
@@ -114,14 +114,14 @@ class CursoRevision {
         return true
     }
 
-    static async aceptarCursoPorAdministracion ( uidCurso = '', mensaje = '' ) {
-        const revisionAdministracion = {
+    static async aceptarCursoPorModeracion ( uidCurso = '', mensaje = '' ) {
+        const estadoModeracion = {
             estado: !mensaje.length ? 'aceptado' : 'rechazado',
-            mensaje: mensaje,
+            mensaje: !mensaje.length ? '' : mensaje,
             fechaRespuesta: milliseconds_a_timestamp( Date.now() )
         }
         
-        await db.collection(COLECCION_CURSOS).doc(uidCurso).update({ revisionAdministracion })
+        await db.collection(COLECCION_CURSOS).doc(uidCurso).update({ estadoModeracion })
     
         return true
     }

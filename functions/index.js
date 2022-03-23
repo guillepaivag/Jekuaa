@@ -11,45 +11,45 @@ const api = require('./api')
 
 // Funciones Cloud Functions
 const {
-  indexBlogAlgolia, indexCursoBorradorAlgolia
+  indexBlogAlgolia, 
+  indexCursoBorradorAlgolia,
+  indexCursoRevisionAlgolia
 } = require('./src/funcionesFirebaseFunctions/algolia')
 
-
 const {
-  incrementarCantidadBlog,
-  actualizacionCantidadBlog,
-  decrementarCantidadBlog,
+  eventoCreacionBlog,
+  eventoActualizacionBlog,
+  eventoEliminacionBlog,
   meGustaBlog,
   noMeGustaBlog,
 } = require('./src/funcionesFirebaseFunctions/blogs')
 
-
 const {
-  incrementarCantidadUsuario,
-  decrementarCantidadUsuario,
   eventoCreacionUsuario,
   eventoActualizacionUsuario,
   eventoEliminacionUsuario,
   comienzoProcesoEliminacion,
   cancelarProcesoEliminacion,
 } = require('./src/funcionesFirebaseFunctions/usuarios')
-const { 
-  validacionEstadoDocumentoCursoBorrador, 
-  eventoCreacionCurso 
-} = require('./src/funcionesFirebaseFunctions/curso/borrador/curso')
+
+const { validacionEstadoDocumentoCursoBorrador } = require('./src/funcionesFirebaseFunctions/curso/borrador/curso')
+
 const { 
   validacionEstadoDocumentoUnidadBorrador, 
   eventoEliminacionUnidadBorrador, 
 } = require('./src/funcionesFirebaseFunctions/curso/borrador/unidad')
+
 const { 
   eventoCreacionClaseBorrador,
   eventoActualizacionClaseBorrador,
-  eventoEliminacionClaseBorrador
+  eventoEliminacionClaseBorrador,
+  actualizacionDuracionCUC
 } = require('./src/funcionesFirebaseFunctions/curso/borrador/clase')
+
+const { validacionContenidoClase } = require('./src/funcionesFirebaseFunctions/curso/borrador/contenidoClase')
 
 const apiMiembro = require('./apiMiembro')
 
-const { validacionContenidoClase } = require('./src/funcionesFirebaseFunctions/curso/borrador/contenidoClase')
 
 // SSR Para el cliente con Nuxt.js
 if (isProduction) 
@@ -63,18 +63,16 @@ exports.apiMiembro = functions.region('southamerica-east1').https.onRequest(apiM
 // TRIGGERS:
 
 // Funciones para usuarios de Jekuaapy
-exports.incrementarCantidadUsuario = incrementarCantidadUsuario
-exports.decrementarCantidadUsuario = decrementarCantidadUsuario
 exports.eventoCreacionUsuario = eventoCreacionUsuario
 exports.eventoActualizacionUsuario = eventoActualizacionUsuario
-// exports.eventoEliminacionUsuario = eventoEliminacionUsuario
+exports.eventoEliminacionUsuario = eventoEliminacionUsuario
 // exports.comienzoProcesoEliminacion = comienzoProcesoEliminacion
 // exports.cancelarProcesoEliminacion = cancelarProcesoEliminacion
 
 // Funciones para blogs de Jekuaapy
-exports.incrementarCantidadBlog = incrementarCantidadBlog
-exports.actualizacionCantidadBlog = actualizacionCantidadBlog
-exports.decrementarCantidadBlog = decrementarCantidadBlog
+exports.eventoCreacionBlog = eventoCreacionBlog
+exports.eventoActualizacionBlog = eventoActualizacionBlog
+exports.eventoEliminacionBlog = eventoEliminacionBlog
 exports.meGustaBlog = meGustaBlog
 exports.noMeGustaBlog = noMeGustaBlog
 
@@ -90,6 +88,7 @@ exports.eventoEliminacionUnidadBorrador = eventoEliminacionUnidadBorrador
 // Funciones para clases borrador de Jekuaapy
 exports.eventoCreacionClaseBorrador = eventoCreacionClaseBorrador
 exports.eventoActualizacionClaseBorrador = eventoActualizacionClaseBorrador
+exports.actualizacionDuracionCUC = actualizacionDuracionCUC
 exports.eventoEliminacionClaseBorrador = eventoEliminacionClaseBorrador
 
 
@@ -97,6 +96,7 @@ exports.eventoEliminacionClaseBorrador = eventoEliminacionClaseBorrador
 exports.validacionContenidoClase = validacionContenidoClase
 
 
-// Indexación para blogs
+// Indexación ALGOLIA
 exports.indexBlogAlgolia = indexBlogAlgolia
 exports.indexCursoBorradorAlgolia = indexCursoBorradorAlgolia
+exports.indexCursoRevisionAlgolia = indexCursoRevisionAlgolia

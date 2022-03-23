@@ -2,7 +2,7 @@ const { Router } = require('express')
 const router = Router()
 
 const { estaAutenticado } = require('../../../../middlewares/api/usuario')
-const { esMiembro } = require('../../../../middlewares/apiMiembro/miembro')
+const { esMiembro, elMiembroEsInstructor } = require('../../../../middlewares/apiMiembro')
 
 const { 
     permisoParaCrearCursoBorrador,
@@ -35,7 +35,7 @@ const { errorSiElCursoEstaEnRevision } = require('../../../../middlewares/apiMie
 router.post('/crearCursoBorrador', 
     estaAutenticado,
     esMiembro,
-    permisoParaCrearCursoBorrador,
+    elMiembroEsInstructor,
     verificarDatosRequeridosPOST,
     verificadorDeTipoDeDatosPOST,
     verificadorDeDatosPOST,
@@ -47,7 +47,7 @@ router.post('/crearCursoBorrador',
 router.put('/actualizarCursoBorrador/:uidCursoBorrador', 
     estaAutenticado,
     esMiembro,
-    permisoParaActualizarCursoBorrador,
+    elMiembroEsInstructor,
     perteneceAlInstructorEsteCurso,
     errorSiElCursoEstaEnRevision,
     verificarDatosRequeridosPUT,
@@ -59,13 +59,13 @@ router.put('/actualizarCursoBorrador/:uidCursoBorrador',
 
 
 
-// ACTUALIZAR EL PRECIO DEL CURSO (Actualiza el precio del curso para el: publicado y borrador)
-router.put('/actualizarCursoBorrador/precio/:uidCursoBorrador', 
-    estaAutenticado,
-    esMiembro,
-    permisoParaActualizarCursoBorrador,
-    perteneceAlInstructorEsteCurso,
-    actualizarPrecioCurso)
+// // ACTUALIZAR EL PRECIO DEL CURSO (Actualiza el precio del curso para el: publicado y borrador)
+// router.put('/actualizarCursoBorrador/precio/:uidCursoBorrador', 
+//     estaAutenticado,
+//     esMiembro,
+//     elMiembroEsInstructor,
+//     perteneceAlInstructorEsteCurso,
+//     actualizarPrecioCurso)
 
 
 

@@ -1,17 +1,21 @@
 const functions = require('firebase-functions')
 const admin = require('../../firebase-service')
 const db = require('../../db')
+const Miembro = require('../models/Usuarios/TiposUsuarios/Miembro')
+const Blog = require('../models/Blogs/Blog')
 const ffBlogs = {}
 
 /**
  * Incremetación de contador de cantidad de blogs
 */
-ffBlogs.incrementarCantidadBlog = functions
+ffBlogs.eventoCreacionBlog = functions
 .region('southamerica-east1')
 .firestore.document('Blogs/{blogId}')
 .onCreate(async ( change, context ) => {
     const document = change
     const incrementar = admin.firestore.FieldValue.increment(1)
+
+    const blog = new Blog(document.data())
 
     const ref = db.collection('Contadores').doc('blogs')
     const doc = await ref.get()
@@ -29,6 +33,9 @@ ffBlogs.incrementarCantidadBlog = functions
         ref.update({ cantidadSinSeccion: incrementar })
     }
     
+    Miembro.actualizarMiembro(blog.publicador, {
+        cantidadBlogs: incrementar
+    })
 })
 
 
@@ -36,7 +43,7 @@ ffBlogs.incrementarCantidadBlog = functions
 
 
 
-ffBlogs.actualizacionCantidadBlog = functions
+ffBlogs.eventoActualizacionBlog = functions
 .region('southamerica-east1')
 .firestore.document('Blogs/{blogId}')
 .onUpdate(async ( change, context ) => {
@@ -51,12 +58,14 @@ ffBlogs.actualizacionCantidadBlog = functions
 
 
 
-ffBlogs.decrementarCantidadBlog = functions
+ffBlogs.eventoEliminacionBlog = functions
 .region('southamerica-east1')
 .firestore.document('Blogs/{blogId}')
 .onDelete(async ( change, context ) => {
     const document = change
     const decrementar = admin.firestore.FieldValue.increment(-1)
+
+    const blog = new Blog(document.data())
 
     const ref = db.collection('Contadores').doc('blogs')
 
@@ -73,6 +82,10 @@ ffBlogs.decrementarCantidadBlog = functions
             cantidadSinSeccion: decrementar
         })
     }
+
+    Miembro.actualizarMiembro(blog.publicador, {
+        cantidadBlogs: decrementar
+    })
 })
 
 

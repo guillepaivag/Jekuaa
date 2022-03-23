@@ -21,6 +21,9 @@ let bucketNameContenidoBorradorVerificacion = rutaModo === 'prod' ? 'j-cursos-co
 ffmpeg.setFfprobePath(ffprobePath)
 // ffmpeg.setFfmpegPath(ffmpegPath)
 
+
+
+
 ffContenidoClase.validacionContenidoClase = functions
 .region('southamerica-east1')
 .storage
@@ -244,5 +247,8 @@ ffContenidoClase.validacionContenidoClase = functions
     }
     
 })
+
+
+
 
 module.exports = ffContenidoClase

@@ -3,12 +3,10 @@ const UnidadBorrador = require("../../../../models/Cursos/unidad/UnidadBorrador"
 const Respuesta = require("../../../../models/Respuesta")
 const manejadorErrores = require('../../../../helpers/ManejoErrores')
 const db = require("../../../../../db")
-const admin = require('../../../../../firebase-service')
 const config = require("../../../../../config")
 const ContenidoClaseBorrador = require("../../../../models/Cursos/contenidoClase/ContenidoClaseBorrador")
 const ClaseBorrador = require("../../../../models/Cursos/clase/ClaseBorrador")
 const Clase = require("../../../../models/Cursos/clase/Clase")
-const Errores = require("../../../../models/Error/Errores")
 
 const controller = {}
 

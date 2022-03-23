@@ -1,4 +1,6 @@
-const Curso = require("./Curso");
+const Curso = require("./Curso")
+
+const COLECCION = 'CursosPublicado'
 
 class CursoPublicado extends Curso {
     constructor (datos = {}) {

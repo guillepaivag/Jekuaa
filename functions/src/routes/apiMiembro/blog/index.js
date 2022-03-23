@@ -15,7 +15,7 @@ const {
 } = require('../../../middlewares/apiMiembro/blog')
 
 const { estaAutenticado } = require('../../../middlewares/api/usuario')
-const { esMiembro } = require('../../../middlewares/apiMiembro/miembro')
+const { esMiembro, elMiembroEsBlogger } = require('../../../middlewares/apiMiembro')
 
 const { 
     crearBlog, 
@@ -28,7 +28,7 @@ const {
 router.post('/crearBlog',
     estaAutenticado,
     esMiembro,
-    permisoParaCrearBlog,
+    elMiembroEsBlogger,
     verificadorDeDatosRequeridos,
     verificadorDeTipoDeDatos,
     verificadorDeDatosBlog,
@@ -38,7 +38,7 @@ router.post('/crearBlog',
 router.put('/actualizarBlog/:uid', 
     estaAutenticado, 
     esMiembro, 
-    permisoParaActualizarBlog,
+    elMiembroEsBlogger,
     verificacionExistenciaBlog,
     esPropietarioDelBlog,
     verificadorDeDatosRequeridos,
@@ -50,7 +50,7 @@ router.put('/actualizarBlog/:uid',
 router.delete('/eliminarBlog/:uid', 
     estaAutenticado, 
     esMiembro, 
-    permisoParaEliminarBlog,
+    elMiembroEsBlogger,
     verificacionExistenciaBlog, 
     esPropietarioDelBlog,
     eliminarBlog)
@@ -58,6 +58,7 @@ router.delete('/eliminarBlog/:uid',
 router.get('/obtenerDatos/:uid', 
     estaAutenticado, 
     esMiembro, 
+    elMiembroEsBlogger,
     verificacionExistenciaBlog,
     esPropietarioDelBlog,
     obtenerDatosBlog)
@@ -65,7 +66,8 @@ router.get('/obtenerDatos/:uid',
 router.get('/obtenerContenido/:uid',
     estaAutenticado, 
     esMiembro, 
-    verificacionExistenciaArchivoBlog,
+    elMiembroEsBlogger,
+    verificacionExistenciaBlog,
     esPropietarioDelBlog,
     obtenerContenidoBlog)
 

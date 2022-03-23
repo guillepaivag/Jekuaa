@@ -1,4 +1,3 @@
-const admin = require('./firebase-service')
 const express = require('express')
 const cors = require('cors')({ origin: true })
 const manejadorErrores = require('./src/helpers/ManejoErrores')

@@ -6,6 +6,7 @@ const Miembro = require('../models/Usuarios/TiposUsuarios/Miembro')
 const InformacionUsuario = require('../models/Usuarios/InformacionUsuario')
 const Roles = require('../models/Usuarios/helpers/Roles')
 const Authentication = require('../models/Usuarios/Authentication')
+const Moderador = require('../models/Usuarios/TiposUsuarios/Moderador')
 const ffUsuarios = {}
 
 
@@ -36,6 +37,11 @@ ffUsuarios.eventoCreacionUsuario = functions
     if ( docRol.data().esMiembro ) {
         const miembro = new Miembro({ uid })
         Miembro.crearMiembro( miembro )
+    }
+
+    if ( docRol.data().esModerador ) {
+        const moderador = new Moderador({ uid })
+        Moderador.crearModerador( moderador )
     }
 
     // Contador de usuarios
@@ -78,6 +84,18 @@ ffUsuarios.eventoActualizacionUsuario = functions
             Miembro.crearMiembro( miembro )
         }
     }
+
+    if ( docRol.data().esModerador ) {
+        // Verificar si existe documento
+        const moderador = new Moderador()
+        const existe = await moderador.importarDatosModerador( uid )
+
+        // Si no existe, crear
+        if (!existe) {
+            moderador.setUID( uid )
+            Moderador.crearModerador( moderador )
+        }
+    }
 })
 
 
@@ -104,28 +122,30 @@ ffUsuarios.eventoEliminacionUsuario = functions
 
     for (let i = 0; i < snapshotsBlogsMG.docs.length; i++) {
         const doc = snapshotsBlogsMG.docs[i]
-        await doc.ref.delete()
+        doc.ref.delete()
     }
 
     // Datos Miembro
     const miembro = new Miembro()
-    const existe = await miembro.importarDatosMiembro( uid )
+    const existeMiembro = await miembro.importarDatosMiembro( uid )
+    if ( existeMiembro ) Miembro.eliminarMiembro( uid )
 
-    if ( existe ) {
-        Miembro.eliminarMiembro( uid )
-
-        // Datos Blogs
-        const snapshotsBlogs = await db
-        .collection('Blogs').where('publicador', '==', uid).get()
-            
-        for (let i = 0; i < snapshotsBlogs.docs.length; i++) {
-            const doc = snapshotsBlogs.docs[i]
-            await doc.ref.delete()
-        }
+    // Datos Moderador
+    const moderador = new Moderador()
+    const existeModerador = await moderador.importarDatosModerador( uid )
+    if ( existeModerador ) Moderador.eliminarModerador( uid )
+    
+    // Datos Blogs
+    const snapshotsBlogs = await db
+    .collection('Blogs').where('publicador', '==', uid).get()
         
-        // Datos Cursos Borrador/Publicado
-
+    for (let i = 0; i < snapshotsBlogs.docs.length; i++) {
+        const doc = snapshotsBlogs.docs[i]
+        doc.ref.delete()
     }
+
+    // Datos Cursos Borrador/Publicado
+
 
     // Contador de usuarios
     const decrementar = admin.firestore.FieldValue.increment(-1)
@@ -172,6 +192,10 @@ ffUsuarios.cancelarProcesoEliminacion = functions
     change.id
     
 })
+
+
+
+
 
 
 module.exports = ffUsuarios

@@ -33,7 +33,7 @@ class Curso {
             uid,                    // r
             responsable,            // r 
             contribuyentes,         // 
-            equipo,            // constante para siempre
+            equipo,                 // constante para siempre
             fotoPerfil,             // r
             titulo,                 // r 
             referenciaURL,          // constante para siempre (cuando se publica el curso) - r
@@ -50,7 +50,7 @@ class Curso {
             subTitulos,             // 
         } = datosCurso
 
-        this.uid = uid ? uid : db.collection('Cursos').doc().id
+        this.uid = uid ? uid : db.collection('CursosPublicado').doc().id
         this.responsable = responsable ? responsable : ''
         this.contribuyentes = contribuyentes ? contribuyentes : []
         this.equipo = equipo ? equipo : ''

@@ -628,7 +628,7 @@ borrador.construirDatosCursoBorradorPUT = (req = request, res = response, next) 
             uid,                // c
             responsable,        // no se puede actualizar el responsable, solo la administracion puede
             contribuyentes,
-            equipo,        // c
+            equipo,             // c
             titulo,
             referenciaURL,      // c
             descripcion,

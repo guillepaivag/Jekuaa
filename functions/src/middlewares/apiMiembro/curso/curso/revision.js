@@ -51,14 +51,14 @@ borrador.errorElCursoRevisionNoEstaEnEspera = async (req = request, res = respon
         const { datos, body, params } = req
         const { uidSolicitante, datosAuthSolicitante } = datos
 
-        const informacion = await CursoRevision.obtenerInformacionDeRevision(params.uidCursoBorrador)
+        const estadoModeracion = await CursoRevision.obtenerInformacionDeRevision(params.uidCursoBorrador)
 
-        const estadoAdmin = informacion.estado
+        const estado = estadoModeracion.estado
 
-        if (estadoAdmin !== 'espera') {
+        if (estado !== 'espera') {
             throw new Errores({
                 codigo: 'error/usuario_mala_solicitud',
-                mensaje: 'La revisión de este curso no esta en espera por parte de la administración de Jekuaapy.'
+                mensaje: 'La revisión ya no está en espera.'
             })
         }
 

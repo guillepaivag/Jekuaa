@@ -52,7 +52,7 @@ ffUnidades.validacionEstadoDocumentoUnidadBorrador = functions
     datosActualizados.contieneErrores = !!mensajesError.length
 
     // Debe existir el curso para realizar la revision
-    let ref = db.collection('Cursos').doc(uidCursoBorrador)
+    let ref = db.collection('CursosPublicado').doc(uidCursoBorrador)
     let doc = await ref.get()
     if (doc.exists) {
         // Una unidad nueva, siempre sera etiquetado como nuevo

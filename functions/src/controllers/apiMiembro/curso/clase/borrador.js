@@ -209,9 +209,9 @@ controller.actualizarUnidadClaseBorrador = async (req = request, res = response)
         if (claseBorrador.estadoDocumento === 'cambioUnidad') {
 
             let doc = await db
-            .collection('Cursos').doc(params.uidCursoBorrador)
-            .collection('Unidades').doc(uidUnidadBorradorNuevo)
-            .collection('Clases').doc(params.uidClaseBorrador)
+            .collection('CursosPublicado').doc(params.uidCursoBorrador)
+            .collection('UnidadesPublicado').doc(uidUnidadBorradorNuevo)
+            .collection('ClasesPublicado').doc(params.uidClaseBorrador)
             .get()
 
             if (!doc.exists) {

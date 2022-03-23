@@ -143,10 +143,11 @@ class ClaseBorrador extends Clase {
         
         let ref = db.collectionGroup(COLLECTION_CLASES_BORRADOR)
         .orderBy(admin.firestore.FieldPath.documentId())
+        .where('contieneErrores', '==', true)
         .startAt(refCursoBorrador.path)
         .endAt(refCursoBorrador.path + "\uf8ff")
 
-        const snapshot = await ref.where('contieneErrores', '==', true).limit(1).get()
+        const snapshot = await ref.limit(1).get()
 
         return !!snapshot.docs.length
     }

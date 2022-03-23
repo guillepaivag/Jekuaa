@@ -16,17 +16,18 @@ apiMiembro.use((req, res, next) => {
 apiMiembro.use((req, res, next) => { cors(req, res, () => { next() }) })
 apiMiembro.use(express.json())
 apiMiembro.use(express.urlencoded({ extended: true }))
-apiMiembro.use(express.raw({ limit: '4000mb' }))
 
 // BLOGS
 apiMiembro.use('/blog', require('./src/routes/apiMiembro/blog'))
 
-// CURSO
+// CURSOS BORRADOR
 apiMiembro.use('/curso/borrador/cursos', require('./src/routes/apiMiembro/curso/borrador/cursos'))
 apiMiembro.use('/curso/borrador/unidades', require('./src/routes/apiMiembro/curso/borrador/unidades'))
 apiMiembro.use('/curso/borrador/clases', require('./src/routes/apiMiembro/curso/borrador/clases'))
 apiMiembro.use('/curso/borrador/contenidoClase', require('./src/routes/apiMiembro/curso/borrador/contenidoClase'))
 
+// REVISION
+apiMiembro.use('/curso/revision', require('./src/routes/apiMiembro/curso/revision'))
 
 // MANEJO DE ERRORES
 apiMiembro.use((err, req, res, next) => { 

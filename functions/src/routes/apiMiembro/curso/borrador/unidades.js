@@ -2,7 +2,7 @@ const { Router } = require('express')
 const router = Router()
 
 const { estaAutenticado } = require('../../../../middlewares/api/usuario')
-const { esMiembro } = require('../../../../middlewares/apiMiembro/miembro')
+const { esMiembro, elMiembroEsInstructor } = require('../../../../middlewares/apiMiembro')
 
 const { permisoParaActualizarCursoBorrador, perteneceAlInstructorEsteCurso, } = require('../../../../middlewares/apiMiembro/curso/curso/borrador')
 
@@ -24,13 +24,15 @@ const {
     actualizarOrdenUnidadBorrador,
     eliminarUnidadBorrador,
 } = require('../../../../controllers/apiMiembro/curso/unidad/borrador')
+const { errorSiElCursoEstaEnRevision } = require('../../../../middlewares/apiMiembro/curso/curso/revision')
 
 // AGREGAR UNIDAD
 router.post('/crearUnidadBorrador/:uidCursoBorrador', 
     estaAutenticado,
     esMiembro,
-    permisoParaActualizarCursoBorrador,
+    elMiembroEsInstructor,
     perteneceAlInstructorEsteCurso,
+    errorSiElCursoEstaEnRevision,
     verificarDatosRequeridosPOST,
     verificadorDeTipoDeDatosPOST,
     verificadorDeDatosPOST,
@@ -41,8 +43,9 @@ router.post('/crearUnidadBorrador/:uidCursoBorrador',
 router.put('/actualizarUnidadBorrador/:uidCursoBorrador/:uidUnidadBorrador', 
     estaAutenticado,
     esMiembro,
-    permisoParaActualizarCursoBorrador,
+    elMiembroEsInstructor,
     perteneceAlInstructorEsteCurso,
+    errorSiElCursoEstaEnRevision,
     verificarDatosRequeridosPUT,
     verificadorDeTipoDeDatosPUT,
     verificadorDeDatosPUT,
@@ -53,16 +56,18 @@ router.put('/actualizarUnidadBorrador/:uidCursoBorrador/:uidUnidadBorrador',
 router.put('/actualizarOrdenUnidadBorrador/:uidCursoBorrador', 
     estaAutenticado,
     esMiembro,
-    permisoParaActualizarCursoBorrador,
+    elMiembroEsInstructor,
     perteneceAlInstructorEsteCurso,
+    errorSiElCursoEstaEnRevision,
     actualizarOrdenUnidadBorrador)
 
 // ELIMINAR UNIDAD
 router.delete('/eliminarUnidadBorrador/:uidCursoBorrador/:uidUnidadBorrador', 
     estaAutenticado,
     esMiembro,
-    permisoParaActualizarCursoBorrador,
+    elMiembroEsInstructor,
     perteneceAlInstructorEsteCurso,
+    errorSiElCursoEstaEnRevision,
     eliminarUnidadBorrador)
 
 module.exports = router
