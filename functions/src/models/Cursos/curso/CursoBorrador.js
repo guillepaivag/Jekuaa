@@ -2,6 +2,7 @@ const admin = require('../../../../firebase-service')
 const db = require('../../../../db')
 const Curso = require('./Curso')
 const Errores = require('../../Error/Errores')
+const CursoPublicado = require('./CursoPublicado')
 
 const COLECCION_CURSOS = 'CursosBorrador'
 
@@ -33,10 +34,14 @@ class CursoBorrador extends Curso {
     }
 
     setCursoBorrador ( datos = {} ) {
-        super.setCurso(datos)
+        this.setCurso(datos)
         this.setMensajesError(datos.mensajesError)
         this.setContieneErrores(datos.contieneErrores)
         this.setEstadoDocumento(datos.estadoDocumento)
+    }
+
+    setCurso( datos = {} ) {
+        super.setCurso(datos)
     }
 
     setMensajesError ( mensajesError = [] ) {
@@ -51,7 +56,7 @@ class CursoBorrador extends Curso {
         this.estadoDocumento = estadoDocumento
     }
 
-    // IMPORTAR DATOS
+
     async importarDatosDeUnCurso ( uidCurso = '' ) {       
         const docCurso = await db
         .collection(COLECCION_CURSOS).doc(uidCurso)
@@ -65,9 +70,6 @@ class CursoBorrador extends Curso {
 
         return this
     }
-
-
-
 
 
 

@@ -1,3 +1,4 @@
+const db = require("../../../../db")
 const Curso = require("./Curso")
 
 const COLECCION = 'CursosPublicado'
@@ -45,7 +46,7 @@ class CursoPublicado extends Curso {
             fechaActualizacion,
         } = datos
 
-        super.setCurso(datos)
+        this.setCurso(datos)
         this.setPublicado(publicado)
         this.setDeshabilitado(deshabilitado)
         this.setCantidadEstudiante( cantidadEstudiantes )
@@ -54,7 +55,9 @@ class CursoPublicado extends Curso {
         this.setFechaActualizacion( fechaActualizacion )
     }
 
-
+    setCurso( datos = {} ) {
+        super.setCurso(datos)
+    }
 
     setPublicado ( publicado ) {
         this.publicado = publicado === undefined ? true : publicado
@@ -78,6 +81,55 @@ class CursoPublicado extends Curso {
 
     setFechaActualizacion ( fechaActualizacion = null ) {
         this.fechaActualizacion = fechaActualizacion
+    }
+
+
+    async importarDatosDeUnCurso ( uidCurso = '' ) {       
+        const docCurso = await db
+        .collection(COLECCION).doc(uidCurso)
+        .get()
+
+        if (!docCurso.exists) return null
+
+        let datosCurso = docCurso.data()
+
+        this.setCursoBorrador( datosCurso )
+
+        return this
+    }
+
+
+
+
+
+
+
+
+    static async crearCurso ( cursoPublicado = new CursoPublicado() ) {
+        const datosCursoPublicado = cursoPublicado.getCursoPublicado()
+        
+        await db
+        .collection(COLECCION).doc(cursoPublicado.uid)
+        .set(datosCursoPublicado)
+
+        return true
+    }
+
+    static async actualizarCurso ( uidCurso = '', datosActualizados = {} ) {
+        
+        await db
+        .collection(COLECCION).doc(uidCurso)
+        .update(datosActualizados)
+
+        return true
+    }
+
+    static async eliminarCurso ( uidCurso = '' ) {
+        await db
+        .collection(COLECCION).doc(uidCurso)
+        .delete()
+        
+        return true
     }
 }
 

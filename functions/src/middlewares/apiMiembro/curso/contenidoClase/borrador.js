@@ -14,15 +14,15 @@ middleware.esValidoElContenidoClaseVideo = async (req, res, next) => {
     try {
         const { datos, body, files, params } = req
         const { uidSolicitante, datosAuthSolicitante } = datos
-        const { uidCursoBorrador, uidUnidadBorrador, uidClaseBorrador } = params
+        const { uidCurso, uidUnidad, uidClase } = params
 
         const file = files[0]
 
         // Verificación de validez de la clase
         const claseBorrador = new ClaseBorrador()
-        const existe = await claseBorrador.importarClasePorUID(uidCursoBorrador, 
-            uidUnidadBorrador, 
-            uidClaseBorrador)
+        const existe = await claseBorrador.importarClasePorUID(uidCurso, 
+            uidUnidad, 
+            uidClase)
 
         if (!existe) {
             throw new Errores({
@@ -86,7 +86,7 @@ middleware.esValidoElContenidoClaseVideo = async (req, res, next) => {
 middleware.construirElContenidoClaseVideo = async (req, res, next) => {
     try {
         const { datos, body, files, params } = req
-        const { uidCursoBorrador, uidUnidadBorrador, uidClaseBorrador } = params
+        const { uidCurso, uidUnidad, uidClase } = params
         const { uidSolicitante, datosAuthSolicitante } = datos
 
         const file = files[0]
@@ -141,13 +141,11 @@ middleware.esValidoElContenidoClaseArticulo = async (req, res, next) => {
     try {
         const { datos, body, params } = req
         const { uidSolicitante, datosAuthSolicitante } = datos
-        const { uidCursoBorrador, uidUnidadBorrador, uidClaseBorrador } = params
+        const { uidCurso, uidUnidad, uidClase } = params
 
         // Verificación de validez de la clase
-        const claseBorrador = new ClaseBorrador()
-        const existe = await claseBorrador.importarClasePorUID(uidCursoBorrador, 
-            uidUnidadBorrador, 
-            uidClaseBorrador)
+        const contenidoClaseBorrador = new ContenidoClaseBorrador()
+        const existe = await contenidoClaseBorrador.importarContenidoClasePorUID(uidCurso, uidClase)
 
         if (!existe) {
             throw new Errores({
@@ -156,6 +154,13 @@ middleware.esValidoElContenidoClaseArticulo = async (req, res, next) => {
             })
         }
         
+        if (contenidoClaseBorrador.estadoArchivo !== 'subiendo') {
+            throw new Errores({
+                codigo: 'error/usuario_mala_solicitud',
+                mensaje: 'Esta clase debe estar en estado "subiendo".'
+            })
+        }
+
         next()
     } catch (error) {
         next(error)
@@ -172,13 +177,13 @@ middleware.construirElContenidoClaseArticulo = async (req, res, next) => {
     try {
         const { datos, body, params } = req
         const { uidSolicitante, datosAuthSolicitante } = datos
-        const { uidCursoBorrador, uidUnidadBorrador, uidClaseBorrador } = params
+        const { uidCurso, uidUnidad, uidClase } = params
         const { articulo } = body
 
-        // Actualizar a estado "subiendo"
-        await ContenidoClaseBorrador.actualizarDocumento(uidCursoBorrador, uidClaseBorrador, {
-            estadoArchivo: 'subiendo',
-        })
+        // // Actualizar a estado "subiendo"
+        // await ContenidoClaseBorrador.actualizarDocumento(uidCurso, uidClase, {
+        //     estadoArchivo: 'subiendo',
+        // })
 
         // Pasar de HTML a Markdown
         const nombreBlogTemp = 'articulo.md'

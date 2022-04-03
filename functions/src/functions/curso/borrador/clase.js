@@ -100,8 +100,8 @@ ffClases.eventoActualizacionClaseBorrador = functions
         // hasta que se acepte los cambios o se eliminen
         if ( claseBorrador.estadoDocumento !== 'nuevo' && claseBorrador.estadoDocumento !== 'cambioUnidad' ) {
             doc = await ref
-            .collection('Unidades').doc(uidUnidadBorrador)
-            .collection('Clases').doc(uidClaseBorrador)
+            .collection('UnidadesPublicado').doc(uidUnidadBorrador)
+            .collection('ClasesPublicado').doc(uidClaseBorrador)
             .get()
             const clasePublicada = new Clase( doc.data() )
 

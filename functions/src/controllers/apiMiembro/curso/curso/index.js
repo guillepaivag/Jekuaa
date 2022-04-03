@@ -18,7 +18,7 @@ controller.actualizarPrecioCurso = async (req = request, res = response) => {
         const datosPrecio = new DatosPrecio_Curso(precio)
         
         // Actualizar precio del curso borrador
-        await CursoBorrador.actualizarCurso(params.uidCursoBorrador, {
+        await CursoBorrador.actualizarCurso(params.uidCurso, {
             datosPrecio: datosPrecio.getDatosPrecio_Curso()
         })
         

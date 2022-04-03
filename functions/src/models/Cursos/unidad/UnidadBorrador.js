@@ -1,7 +1,8 @@
 const db = require("../../../../db");
 const Unidad = require("./Unidad");
+const UnidadPublicado = require("./UnidadPublicado");
 
-const COLECCION_UNIDAD_BORRADOR = 'UnidadesBorrador'
+const COLECCION = 'UnidadesBorrador'
 
 class UnidadBorrador extends Unidad {
     constructor ( datos = {} ) {
@@ -46,7 +47,7 @@ class UnidadBorrador extends Unidad {
     async importarUnidadPorUID (uidCurso = '', uidUnidad = '') {
         const doc = await db
         .collection('CursosBorrador').doc( uidCurso )
-        .collection(COLECCION_UNIDAD_BORRADOR).doc( uidUnidad )
+        .collection(COLECCION).doc( uidUnidad )
         .get()
 
         if (!doc.exists) return null
@@ -56,31 +57,41 @@ class UnidadBorrador extends Unidad {
         return this
     }
 
+    async crearUnidadPublicadoDeBorrador ( uidCurso = '', uidUnidad = '' ) {
+        const unidadPublicado = new UnidadPublicado()
+        await unidadPublicado.importarDatosDeUnCurso(uidCurso)
+
+        const datos = super.getCurso()
+        cursoPublicado.setCurso(datos)
+
+        return cursoPublicado
+    }
+
 
 
 
     static async agregar ( uidCurso = '', unidadBorrador = new UnidadBorrador()  ) {        
         await db
         .collection('CursosBorrador').doc( uidCurso )
-        .collection(COLECCION_UNIDAD_BORRADOR).doc( unidadBorrador.uid )
+        .collection(COLECCION).doc( unidadBorrador.uid )
         .set( unidadBorrador.getUnidadBorrador() )
 
         return true
     }
 
-    static async actualizar ( uidCurso = '', uidUnidad = '', datosActualizados ) {
+    static async actualizar ( uidCurso = '', uidUnidad = '', datosActualizados = {} ) {
         await db
         .collection('CursosBorrador').doc( uidCurso )
-        .collection(COLECCION_UNIDAD_BORRADOR).doc( uidUnidad )
+        .collection(COLECCION).doc( uidUnidad )
         .update( datosActualizados )
 
         return this
     }
 
-    static async eliminar (uidCurso = '', uidUnidad = '' ) {
+    static async eliminar ( uidCurso = '', uidUnidad = '' ) {
         await db
         .collection('CursosBorrador').doc( uidCurso )
-        .collection(COLECCION_UNIDAD_BORRADOR).doc( uidUnidad )
+        .collection(COLECCION).doc( uidUnidad )
         .delete()
 
         return this
@@ -89,7 +100,7 @@ class UnidadBorrador extends Unidad {
     static async obtenerUnidades ( uidCurso = '' ) {
         const snapshot = await db
         .collection('CursosBorrador').doc( uidCurso )
-        .collection(COLECCION_UNIDAD_BORRADOR).get()
+        .collection(COLECCION).get()
 
         let unidades = []
         for (let i = 0; i < snapshot.docs.length; i++) {
@@ -104,7 +115,7 @@ class UnidadBorrador extends Unidad {
     static async obtenerUltimaUnidadPorCurso ( uidCurso = '' ) {
         const snapshot = await db
         .collection('CursosBorrador').doc( uidCurso )
-        .collection(COLECCION_UNIDAD_BORRADOR).orderBy('ordenUnidad', 'desc').limit(1)
+        .collection(COLECCION).orderBy('ordenUnidad', 'desc').limit(1)
         .get()
 
         return snapshot.docs.length ? snapshot.docs[0].data() : null
@@ -113,7 +124,7 @@ class UnidadBorrador extends Unidad {
     static async tieneErrores ( uidCurso = '' ) {
         const snapshot = await db
         .collection('CursosBorrador').doc(uidCurso)
-        .collection(COLECCION_UNIDAD_BORRADOR).where('contieneErrores', '==', true).limit(1)
+        .collection(COLECCION).where('contieneErrores', '==', true).limit(1)
         .get()
 
         return !!snapshot.docs.length

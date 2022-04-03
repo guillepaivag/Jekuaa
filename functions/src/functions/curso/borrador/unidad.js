@@ -58,7 +58,7 @@ ffUnidades.validacionEstadoDocumentoUnidadBorrador = functions
         // Una unidad nueva, siempre sera etiquetado como nuevo
         // hasta que se acepte los cambios o se eliminen
         if ( docNuevo.data().estadoDocumento !== 'nuevo' ) {
-            doc = await ref.collection('Unidades').doc(uidUnidadBorrador).get()
+            doc = await ref.collection('UnidadesPublicado').doc(uidUnidadBorrador).get()
             const unidadPublicado = new Unidad( doc.data() )
 
             let huboCambio = false

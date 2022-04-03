@@ -43,8 +43,7 @@ ffCursos.validacionEstadoDocumentoCursoBorrador = functions
     if ( cursoBorrador.nivel === '' ) mensajesError.push('No existe nivel en este curso, favor actualizar.')
 
     if ( cursoBorrador.seccion ) {
-        if ( cursoBorrador.categoria === '' ) mensajesError.push('No existe una categoria, favor actualizar.')
-        if ( cursoBorrador.subCategorias.length === 0 ) mensajesError.push('No existen subcategorias, favor actualizar.')
+        if ( cursoBorrador.categorias.length === 0 ) mensajesError.push('No existen categorias, favor actualizar.')
     }
     
     if ( cursoBorrador.duracion === 0 ) mensajesError.push('La duración del curso es 0, favor agregar contenido.')

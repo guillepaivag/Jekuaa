@@ -2,11 +2,11 @@ const { Router } = require('express')
 const router = Router()
 
 // HABILITAR EL CURSO
-router.put('/habilitar/:uidCursoBorrador', )
+router.put('/habilitar/:uidCurso', )
 
 
 // DESHABILITAR EL CURSO
-router.put('/deshabilitar/:uidCursoBorrador', )
+router.put('/deshabilitar/:uidCurso', )
 
 
 module.exports = router

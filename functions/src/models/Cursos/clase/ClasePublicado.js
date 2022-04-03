@@ -1,5 +1,7 @@
 const Clase = require("./Clase");
 
+const COLECCION = 'ClasesPublicado'
+
 class ClasePublicado extends Clase {
     constructor (datos = {}) {
         const {

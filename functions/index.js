@@ -8,13 +8,16 @@ const appNuxt = require('./appNuxt')
 
 // REST-API DE JEKUAAPY
 const api = require('./api')
+const apiMiembro = require('./apiMiembro')
+const apiModerador = require('./apiModerador')
 
 // Funciones Cloud Functions
 const {
   indexBlogAlgolia, 
   indexCursoBorradorAlgolia,
-  indexCursoRevisionAlgolia
-} = require('./src/funcionesFirebaseFunctions/algolia')
+  indexCursoRevisionAlgolia,
+  indexCursoPublicadoAlgolia
+} = require('./src/functions/algolia')
 
 const {
   eventoCreacionBlog,
@@ -22,7 +25,7 @@ const {
   eventoEliminacionBlog,
   meGustaBlog,
   noMeGustaBlog,
-} = require('./src/funcionesFirebaseFunctions/blogs')
+} = require('./src/functions/blogs')
 
 const {
   eventoCreacionUsuario,
@@ -30,25 +33,24 @@ const {
   eventoEliminacionUsuario,
   comienzoProcesoEliminacion,
   cancelarProcesoEliminacion,
-} = require('./src/funcionesFirebaseFunctions/usuarios')
+} = require('./src/functions/usuarios')
 
-const { validacionEstadoDocumentoCursoBorrador } = require('./src/funcionesFirebaseFunctions/curso/borrador/curso')
+const { validacionEstadoDocumentoCursoBorrador } = require('./src/functions/curso/borrador/curso')
 
 const { 
   validacionEstadoDocumentoUnidadBorrador, 
   eventoEliminacionUnidadBorrador, 
-} = require('./src/funcionesFirebaseFunctions/curso/borrador/unidad')
+} = require('./src/functions/curso/borrador/unidad')
 
 const { 
   eventoCreacionClaseBorrador,
   eventoActualizacionClaseBorrador,
   eventoEliminacionClaseBorrador,
   actualizacionDuracionCUC
-} = require('./src/funcionesFirebaseFunctions/curso/borrador/clase')
+} = require('./src/functions/curso/borrador/clase')
 
-const { validacionContenidoClase } = require('./src/funcionesFirebaseFunctions/curso/borrador/contenidoClase')
-
-const apiMiembro = require('./apiMiembro')
+const { validacionContenidoClase } = require('./src/functions/curso/borrador/contenidoClase')
+const { eventoActualizacionCursoRevision } = require('./src/functions/curso/revision')
 
 
 // SSR Para el cliente con Nuxt.js
@@ -58,6 +60,7 @@ if (isProduction)
 // REST-API de Jekuaapy
 exports.api = functions.region('southamerica-east1').https.onRequest(api)
 exports.apiMiembro = functions.region('southamerica-east1').https.onRequest(apiMiembro)
+exports.apiModerador = functions.region('southamerica-east1').https.onRequest(apiModerador)
 
 
 // TRIGGERS:
@@ -96,7 +99,12 @@ exports.eventoEliminacionClaseBorrador = eventoEliminacionClaseBorrador
 exports.validacionContenidoClase = validacionContenidoClase
 
 
+// Funciones para cursos revision de Jekuaapy
+exports.eventoActualizacionCursoRevision = eventoActualizacionCursoRevision
+
+
 // Indexación ALGOLIA
 exports.indexBlogAlgolia = indexBlogAlgolia
 exports.indexCursoBorradorAlgolia = indexCursoBorradorAlgolia
 exports.indexCursoRevisionAlgolia = indexCursoRevisionAlgolia
+exports.indexCursoPublicadoAlgolia = indexCursoPublicadoAlgolia

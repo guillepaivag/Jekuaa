@@ -18,8 +18,7 @@ utils_blog.construirDatosParaNuevoBlog = ( datosBlog, contenidoBlog ) => {
     datosBlogFormateado.equipo = ''
     if (!datosBlogFormateado.seccion) {
         datosBlogFormateado.seccion = ''
-        datosBlogFormateado.categoria = ''
-        datosBlogFormateado.subCategorias = []
+        datosBlogFormateado.categorias = []
     }
     datosBlogFormateado.cantidadMeGusta = 0
     datosBlogFormateado.fechaCreacion = milliseconds_a_timestamp( Date.now() )
@@ -63,8 +62,7 @@ utils_blog.construirDatosParaActualizacionBlog = ( uidBlog, datosBlog, contenido
             equipo,            // constante
             publicador,             // constante
             seccion,                // usuario
-            categoria,              // usuario
-            subCategorias,          // usuario
+            categorias,              // usuario
             cantidadMeGusta,        // automatico
             habilitado,             // adminJk
             publicado,              // usuario
@@ -80,12 +78,10 @@ utils_blog.construirDatosParaActualizacionBlog = ( uidBlog, datosBlog, contenido
             descripcion ? datosActualizados.descripcion = descripcion : ''
             if (seccion === '') {
                 datosActualizados.seccion = ''
-                datosActualizados.categoria = ''
-                datosActualizados.subCategorias = []
+                datosActualizados.categorias = []
             } else {
                 seccion ? datosActualizados.seccion = seccion : ''
-                categoria ? datosActualizados.categoria = categoria : ''
-                subCategorias && subCategorias.length ? datosActualizados.subCategorias = subCategorias : ''
+                categorias && categorias.length ? datosActualizados.categorias = categorias : ''
             }
             publicado != undefined ? datosActualizados.publicado = publicado : ''
         }

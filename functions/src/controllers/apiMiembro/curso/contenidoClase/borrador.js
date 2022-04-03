@@ -41,8 +41,8 @@ controller.agregarContenidoClaseVideoBorrador = async (req = request, res = resp
         // Agregar el archivo contenido clase
         ContenidoClaseBorrador.subirContenido({
             esVideo: true,
-            uidCurso: params.uidCursoBorrador,
-            uidClase: params.uidClaseBorrador,
+            uidCurso: params.uidCurso,
+            uidClase: params.uidClase,
             fileData: {
                 rutaArchivoTemp: file.filePath, 
                 extensionArchivo: file.fileExtension
@@ -62,15 +62,15 @@ controller.agregarContenidoClaseVideoBorrador = async (req = request, res = resp
         
         // Actualizar el documento contenido clase
         ContenidoClaseBorrador.actualizarDocumento(uidSolicitante,
-            params.uidCursoBorrador,
-            params.uidClaseBorrador,
+            params.uidCurso,
+            params.uidClase,
             documentoContenidoClase)
         
         // Actualizar el documento clase
         ClaseBorrador.actualizar(uidSolicitante, 
-            params.uidCursoBorrador,
-            params.uidUnidadBorrador,
-            params.uidClaseBorrador, 
+            params.uidCurso,
+            params.uidUnidad,
+            params.uidClase, 
             documentoClase)
 
         // Retornar respuesta
@@ -99,7 +99,7 @@ controller.agregarContenidoClaseArticuloBorrador = async (req = request, res = r
     try {
         const { datos, body, params } = req
         const { uidSolicitante, datosAuthSolicitante } = datos
-        const { uidCursoBorrador, uidUnidadBorrador, uidClaseBorrador } = params
+        const { uidCurso, uidUnidad, uidClase } = params
         const { rutaArchivoTemp } = body
 
         const respuesta = new Respuesta()
@@ -108,8 +108,8 @@ controller.agregarContenidoClaseArticuloBorrador = async (req = request, res = r
         // Agregar el archivo contenido clase
         ContenidoClaseBorrador.subirContenido({
             verificacion: true,
-            uidCurso: uidCursoBorrador,
-            uidClase: uidClaseBorrador,
+            uidCurso: uidCurso,
+            uidClase: uidClase,
             fileData: {
                 nombreArchivo: 'articulo.md',
                 rutaArchivoTemp: rutaArchivoTemp,
@@ -159,8 +159,8 @@ controller.eliminarContenidoClaseBorrador = async (req = request, res = response
         let codigo = 'exito'
 
         const contenidoClaseBorrador = new ContenidoClaseBorrador()
-        const existe = await contenidoClaseBorrador.importarContenidoClasePorUID(params.uidCursoBorrador,
-            params.uidClaseBorrador)
+        const existe = await contenidoClaseBorrador.importarContenidoClasePorUID(params.uidCurso,
+            params.uidClase)
 
         if (!existe) {
             throw new Errores({
@@ -179,8 +179,8 @@ controller.eliminarContenidoClaseBorrador = async (req = request, res = response
         // Eliminar el archivo en cloud storage
         ContenidoClaseBorrador.eliminarContenido({
             verificacion: false,
-            uidCurso: params.uidCursoBorrador,
-            uidClase: params.uidClaseBorrador
+            uidCurso: params.uidCurso,
+            uidClase: params.uidClase
         })
 
         // Actualizar por defecto el documento contenido clase
@@ -198,8 +198,8 @@ controller.eliminarContenidoClaseBorrador = async (req = request, res = response
             mensajesError: [],
             contieneErrores: false,
         }
-        ContenidoClaseBorrador.actualizarDocumento(params.uidCursoBorrador,
-            params.uidClaseBorrador,
+        ContenidoClaseBorrador.actualizarDocumento(params.uidCurso,
+            params.uidClase,
             documentoContenidoClase)
 
 
@@ -208,9 +208,9 @@ controller.eliminarContenidoClaseBorrador = async (req = request, res = response
             duracion: 0,
             tipoClase: ''
         }
-        ClaseBorrador.actualizar(params.uidCursoBorrador,
-            params.uidUnidadBorrador,
-            params.uidClaseBorrador, 
+        ClaseBorrador.actualizar(params.uidCurso,
+            params.uidUnidad,
+            params.uidClase, 
             documentoClase)
 
 
@@ -241,15 +241,15 @@ controller.obtenerUrlVideoClaseBorrador = async (req = request, res = response) 
     try {
         const { datos, body, params } = req
         const { uidSolicitante, datosAuthSolicitante } = datos
-        const { uidCursoBorrador, uidClaseBorrador } = params
+        const { uidCurso, uidClase } = params
 
         const respuesta = new Respuesta()
         let codigo = 'exito'
         
         const url = await ContenidoClaseBorrador.generarUrlVideoClase({
             verificacion: false,
-            uidCurso: uidCursoBorrador,
-            uidClase: uidClaseBorrador
+            uidCurso: uidCurso,
+            uidClase: uidClase
         })
 
         // Retornar respuesta
@@ -281,15 +281,15 @@ controller.obtenerArticuloClaseBorrador = async (req = request, res = response) 
     try {
         const { datos, body, params } = req
         const { uidSolicitante, datosAuthSolicitante } = datos
-        const { uidCursoBorrador, uidClaseBorrador } = params
+        const { uidCurso, uidClase } = params
 
         const respuesta = new Respuesta()
         let codigo = 'exito'
         
         const articulo = await ContenidoClaseBorrador.obtenerArticuloClase({
             verificacion: false,
-            uidCurso: uidCursoBorrador,
-            uidClase: uidClaseBorrador,
+            uidCurso: uidCurso,
+            uidClase: uidClase,
             getMarkdown: false
         })
 

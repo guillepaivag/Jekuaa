@@ -154,8 +154,7 @@ borrador.verificadorDeTipoDeDatosPUT = (req = request, res = response, next) => 
             objetivos,
             nivel,
             seccion,
-            categoria,
-            subCategorias,
+            categorias,
             datosPrecio,        // b - p (especial) 
             duracionCurso,      // a
             idioma,
@@ -247,27 +246,20 @@ borrador.verificadorDeTipoDeDatosPUT = (req = request, res = response, next) => 
                     mensaje: 'La sección del curso debe ser string.'
                 })
             } 
-
-            if ( typeof categoria != 'string' ) {
-                throw new Errores({
-                    codigo: 'error/usuario_mala_solicitud',
-                    mensaje: 'La categoría del curso debe ser string.'
-                })
-            }
         
-            if (!(subCategorias instanceof Array)) {
+            if (!(categorias instanceof Array)) {
                 throw new Errores({
                     codigo: 'error/usuario_mala_solicitud',
-                    mensaje: 'Las subCategorias del curso debe ser un arreglo de string.'
+                    mensaje: 'Las categorias del curso debe ser un arreglo de string.'
                 })
             }
             
-            for (let i = 0; i < subCategorias.length; i++) {
-                const subCategoria = subCategorias[i]
-                if (typeof subCategoria != 'string') {
+            for (let i = 0; i < categorias.length; i++) {
+                const categoria = categorias[i]
+                if (typeof categoria != 'string') {
                     throw new Errores({
                         codigo: 'error/usuario_mala_solicitud',
-                        mensaje: 'Las subCategorias del curso debe ser un arreglo de string.'
+                        mensaje: 'Las categorias del curso debe ser un arreglo de string.'
                     })
                 }
             }
@@ -395,8 +387,7 @@ borrador.verificadorDeDatosPUT = async (req = request, res = response, next) => 
             objetivos,
             nivel,
             seccion,
-            categoria,
-            subCategorias,
+            categorias,
             datosPrecio,        // b - p (especial) 
             duracionCurso,      // a
             idioma,
@@ -508,37 +499,35 @@ borrador.verificadorDeDatosPUT = async (req = request, res = response, next) => 
             }
         }
 
-        if ( seccion !== '' && ( seccion || categoria || (subCategorias && subCategorias.length) ) ) {
+        if ( seccion !== '' && ( seccion || (categorias && categorias.length) ) ) {
             const docCurso = await db
-            .collection('CursosBorrador').doc(params.uidCursoBorrador)
+            .collection('CursosBorrador').doc(params.uidCurso)
             .get()
 
             // Se realiza el merge de sección, categoría y subCategoría
             let seccionSeleccionada = seccion ? seccion : docCurso.data().seccion
-            let categoriaSeleccionada = categoria ? categoria : docCurso.data().categoria
-            if (subCategorias) {
-                let valido = subCategorias.length >= 1 && subCategorias.length <= 3
+            if (categorias) {
+                let valido = categorias.length >= 1 && categorias.length <= 3
                 if ( !valido ) {
                     throw new Errores({
                         codigo: 'error/usuario_mala_solicitud',
-                        mensaje: 'Por blog puede haber de 1 a 3 sub-categorias.'
+                        mensaje: 'Por blog puede haber de 1 a 3 categorias.'
                     })
                 }
             }
-            let subCategoriasSeleccionadas = subCategorias ? subCategorias : docCurso.data().subCategorias
+            let categoriasSeleccionadas = categorias ? categorias : docCurso.data().categorias
 
             // Verificación de existencia de la sección, categoría y subCategoría
             let ref = db.collection('Secciones').doc(seccionSeleccionada)
-            ref = ref.collection('Categorias').doc(categoriaSeleccionada)
 
-            for (let i = 0; i < subCategoriasSeleccionadas.length; i++) {
-                const subCategoria = subCategoriasSeleccionadas[i]
-                const doc = await ref.collection('SubCategorias').doc(subCategoria).get()
+            for (let i = 0; i < categoriasSeleccionadas.length; i++) {
+                const categoria = categoriasSeleccionadas[i]
+                const doc = await ref.collection('Categorias').doc(categoria).get()
 
                 if (!doc.exists) {
                     throw new Errores({
                         codigo: 'error/usuario_mala_solicitud',
-                        mensaje: `Hubo un problema al encontrar los datos de sección: ${seccionSeleccionada}/${categoriaSeleccionada}/${subCategoria}.`
+                        mensaje: `Hubo un problema al encontrar los datos de sección: ${seccionSeleccionada}/${categoria}.`
                     })
                 }
             }
@@ -601,8 +590,7 @@ borrador.construirDatosCursoBorradorPOST = (req = request, res = response, next)
         if ( cursoBorrador.nivel === '' ) mensajesError.push('No existe nivel en este curso, favor actualizar.')
 
         if ( cursoBorrador.seccion ) {
-            if ( cursoBorrador.categoria === '' ) mensajesError.push('No existe una categoria, favor actualizar.')
-            if ( cursoBorrador.subCategorias.length === 0 ) mensajesError.push('No existen subcategorias, favor actualizar.')
+            if ( cursoBorrador.categorias.length === 0 ) mensajesError.push('No existen categorias, favor actualizar.')
         }
         
         if ( cursoBorrador.duracion === 0 ) mensajesError.push('La duración del curso es 0, favor agregar contenido.')
@@ -636,8 +624,7 @@ borrador.construirDatosCursoBorradorPUT = (req = request, res = response, next) 
             objetivos,
             nivel,
             seccion,
-            categoria,
-            subCategorias,
+            categorias,
             datosPrecio,        // b - p (especial) 
             duracionCurso,      // a
             idioma,
@@ -680,16 +667,14 @@ borrador.construirDatosCursoBorradorPUT = (req = request, res = response, next) 
 
         if ( seccion === '' ) {
             req.body.datosCurso.seccion = ''
-            req.body.datosCurso.categoria = ''
-            req.body.datosCurso.subCategorias = []
-        } else if ( seccion || categoria || (subCategorias && subCategorias.length) ) {
+            req.body.datosCurso.categorias = []
+        } else if ( seccion || (categorias && categorias.length) ) {
             seccion ? req.body.datosCurso.seccion = seccion.trim() : ''
-            categoria ? req.body.datosCurso.categoria = categoria.trim() : ''
-            if ( subCategorias ) {
-                req.body.datosCurso.subCategorias = []
-                for (let i = 0; i < subCategorias.length; i++) {
-                    const subCategoria = subCategorias[i]
-                    req.body.datosCurso.subCategorias.push( subCategoria.trim() )
+            if ( categorias ) {
+                req.body.datosCurso.categorias = []
+                for (let i = 0; i < categorias.length; i++) {
+                    const subCategoria = categorias[i]
+                    req.body.datosCurso.categorias.push( subCategoria.trim() )
                 }
             }
         }
@@ -717,7 +702,7 @@ borrador.verificacionDeEstadoDocumentoPUT = async (req = request, res = response
         const { datosCurso } = body
 
         const cursoBarrador = new CursoBorrador()
-        await cursoBarrador.importarDatosDeUnCurso( params.uidCursoBorrador )
+        await cursoBarrador.importarDatosDeUnCurso( params.uidCurso )
 
         if ( cursoBarrador.estadoDocumento === '' ) 
             req.body.datosCurso.estadoDocumento = 'actualizado'
@@ -787,7 +772,7 @@ borrador.perteneceAlInstructorEsteCurso = async (req = request, res = response, 
         const { uidSolicitante, datosAuthSolicitante } = datos
 
         const cursoBorrador = new CursoBorrador()
-        const existe = await cursoBorrador.importarDatosDeUnCurso(params.uidCursoBorrador)
+        const existe = await cursoBorrador.importarDatosDeUnCurso(params.uidCurso)
 
         if (!existe) {
             throw new Errores({
@@ -814,19 +799,19 @@ borrador.esValidoElCursoBorrador = async (req = request, res = response, next) =
         const { datos, body, params } = req
         const { uidSolicitante, datosAuthSolicitante } = datos
 
-        const uidCursoBorrador = params.uidCursoBorrador
+        const uidCurso = params.uidCurso
         
         // Verificar curso
-        let error1 = await CursoBorrador.tieneErrores(uidCursoBorrador)
+        let error1 = await CursoBorrador.tieneErrores(uidCurso)
 
         // Verificar unidades
-        let error2 = await UnidadBorrador.tieneErrores(uidCursoBorrador)
+        let error2 = await UnidadBorrador.tieneErrores(uidCurso)
 
         // Verificar clases
-        let error3 = await ClaseBorrador.tieneErrores(uidCursoBorrador)
+        let error3 = await ClaseBorrador.tieneErrores(uidCurso)
 
         // Verificar contenido-clase
-        let error4 = await ContenidoClaseBorrador.tieneErrores(uidCursoBorrador)
+        let error4 = await ContenidoClaseBorrador.tieneErrores(uidCurso)
 
         let existeErrores = [error1, error2, error3, error4]
 

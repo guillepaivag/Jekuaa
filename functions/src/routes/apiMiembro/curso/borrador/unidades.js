@@ -27,7 +27,7 @@ const {
 const { errorSiElCursoEstaEnRevision } = require('../../../../middlewares/apiMiembro/curso/curso/revision')
 
 // AGREGAR UNIDAD
-router.post('/crearUnidadBorrador/:uidCursoBorrador', 
+router.post('/crearUnidad/:uidCurso', 
     estaAutenticado,
     esMiembro,
     elMiembroEsInstructor,
@@ -40,7 +40,7 @@ router.post('/crearUnidadBorrador/:uidCursoBorrador',
     crearUnidadBorrador)
 
 // ACTUALIZAR NOMBRE UNIDAD
-router.put('/actualizarUnidadBorrador/:uidCursoBorrador/:uidUnidadBorrador', 
+router.put('/actualizarUnidad/:uidCurso/:uidUnidad', 
     estaAutenticado,
     esMiembro,
     elMiembroEsInstructor,
@@ -53,7 +53,7 @@ router.put('/actualizarUnidadBorrador/:uidCursoBorrador/:uidUnidadBorrador',
     actualizarUnidadBorrador)
 
 // ACTUALIZAR ORDEN DE UNIDADES
-router.put('/actualizarOrdenUnidadBorrador/:uidCursoBorrador', 
+router.put('/actualizarOrdenUnidad/:uidCurso', 
     estaAutenticado,
     esMiembro,
     elMiembroEsInstructor,
@@ -62,7 +62,7 @@ router.put('/actualizarOrdenUnidadBorrador/:uidCursoBorrador',
     actualizarOrdenUnidadBorrador)
 
 // ELIMINAR UNIDAD
-router.delete('/eliminarUnidadBorrador/:uidCursoBorrador/:uidUnidadBorrador', 
+router.delete('/eliminarUnidad/:uidCurso/:uidUnidad', 
     estaAutenticado,
     esMiembro,
     elMiembroEsInstructor,

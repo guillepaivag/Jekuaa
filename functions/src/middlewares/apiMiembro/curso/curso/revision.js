@@ -9,12 +9,47 @@ borrador.errorSiElCursoEstaEnRevision = async (req = request, res = response, ne
         const { datos, body, params } = req
         const { uidSolicitante, datosAuthSolicitante } = datos
 
-        const existe = await CursoRevision.existeCursoRevision(params.uidCursoBorrador)
+        const existe = await CursoRevision.esRevisionActivada(params.uidCurso)
 
         if (existe) {
             throw new Errores({
-                codigo: 'error/usuario_no_autorizado',
-                mensaje: 'El curso está en revisión.'
+                codigo: 'error/usuario_mala_solicitud',
+                mensaje: 'La revisión esta activada, favor desactivar.'
+            })
+        }
+
+        next()
+    } catch (error) {
+        next(error)
+    }
+}
+
+borrador.validacionCreacionCursoRevision = async (req = request, res = response, next) => {
+    try {
+        const { datos, body, params } = req
+        const { uidSolicitante, datosAuthSolicitante } = datos
+
+        const revision = new CursoRevision()
+        const existe = await revision.importarDatosDeUnCursoRevision(params.uidCurso)
+
+        if (revision.activado) {
+            throw new Errores({
+                codigo: 'error/usuario_mala_solicitud',
+                mensaje: 'Hay una revisión activada, favor desactivar la revisión.'
+            })
+        }
+
+        if (revision.estadoModeracion.estado === 'revision') {
+            throw new Errores({
+                codigo: 'error/usuario_mala_solicitud',
+                mensaje: 'Se está revisando las actualizaciones de este curso.'
+            })
+        }
+
+        if ( revision.estadoPublicacion === 'proceso' || revision.estadoPublicacion === 'publicando' ) {
+            throw new Errores({
+                codigo: 'error/usuario_mala_solicitud',
+                mensaje: 'Se esta publicando las actualizaciones del curso.'
             })
         }
 
@@ -25,40 +60,39 @@ borrador.errorSiElCursoEstaEnRevision = async (req = request, res = response, ne
 }
 
 
-borrador.errorSiElCursoNoEstaEnRevision = async (req = request, res = response, next) => {
+borrador.validacionCancelacionCursoRevision = async (req = request, res = response, next) => {
     try {
         const { datos, body, params } = req
         const { uidSolicitante, datosAuthSolicitante } = datos
 
-        const existe = await CursoRevision.existeCursoRevision(params.uidCursoBorrador)
+        const revision = new CursoRevision()
+        const existe = await revision.importarDatosDeUnCursoRevision(params.uidCurso)
 
         if (!existe) {
             throw new Errores({
                 codigo: 'error/usuario_mala_solicitud',
-                mensaje: 'El curso no está en revisión.'
+                mensaje: 'No existe esta revisión.'
             })
         }
 
-        next()
-    } catch (error) {
-        next(error)
-    }
-}
-
-
-borrador.errorElCursoRevisionNoEstaEnEspera = async (req = request, res = response, next) => {
-    try {
-        const { datos, body, params } = req
-        const { uidSolicitante, datosAuthSolicitante } = datos
-
-        const estadoModeracion = await CursoRevision.obtenerInformacionDeRevision(params.uidCursoBorrador)
-
-        const estado = estadoModeracion.estado
-
-        if (estado !== 'espera') {
+        if (!revision.activado) {
             throw new Errores({
                 codigo: 'error/usuario_mala_solicitud',
-                mensaje: 'La revisión ya no está en espera.'
+                mensaje: 'La revisión ya esta desactivada.'
+            })
+        }
+
+        if (revision.estadoModeracion.estado === 'revision') {
+            throw new Errores({
+                codigo: 'error/usuario_mala_solicitud',
+                mensaje: 'Se está revisando las actualizaciones de este curso.'
+            })
+        }
+
+        if ( revision.estadoPublicacion === 'proceso' || revision.estadoPublicacion === 'publicando' ) {
+            throw new Errores({
+                codigo: 'error/usuario_mala_solicitud',
+                mensaje: 'Se esta publicando las actualizaciones del curso.'
             })
         }
 

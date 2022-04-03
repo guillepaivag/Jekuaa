@@ -5,8 +5,7 @@ const config = require("../../../../config")
 const db = require("../../../../db")
 
 /**
- *  estadoArchivo: 
- *      '', 'subiendo', 'procesando'
+ *  estadoArchivo: '', 'subiendo', 'procesando'
  */
 
 const COLECCION_CONTENIDO_CLASE = 'ContenidoClasesBorrador'

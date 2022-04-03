@@ -156,7 +156,7 @@ middleware.construirDatosUnidadBorradorPOST = async (req = request, res = respon
         const { uidSolicitante, datosAuthSolicitante } = datos
         const { datosUnidad } = body
         
-        const ultimaUnidad = await UnidadBorrador.obtenerUltimaUnidadPorCurso(params.uidCursoBorrador)
+        const ultimaUnidad = await UnidadBorrador.obtenerUltimaUnidadPorCurso(params.uidCurso)
         
         const siguienteNumeroUnidad = ultimaUnidad ? ultimaUnidad.ordenUnidad + 1 : 1
 
@@ -207,8 +207,8 @@ middleware.verificacionDeEstadoDocumentoPUT = async (req = request, res = respon
 
         if ( req.originalUrl.includes('actualizarUnidadBorrador') ) {
             const unidadBorrador = new UnidadBorrador()
-            await unidadBorrador.importarUnidadPorUID(params.uidCursoBorrador, 
-                params.uidUnidadBorrador)
+            await unidadBorrador.importarUnidadPorUID(params.uidCurso, 
+                params.uidUnidad)
 
             if ( unidadBorrador.estadoDocumento === '' ) 
                 req.body.datosUnidad.estadoDocumento = 'actualizado'
@@ -223,7 +223,7 @@ middleware.verificacionDeEstadoDocumentoPUT = async (req = request, res = respon
                 const uidUnidad = uidUnidades[i]
                 
                 const unidadBorrador = new UnidadBorrador()
-                await unidadBorrador.importarUnidadPorUID(params.uidCursoBorrador, 
+                await unidadBorrador.importarUnidadPorUID(params.uidCurso, 
                     uidUnidad)
                 
                 if ( unidadBorrador.estadoDocumento === '' ) 

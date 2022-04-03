@@ -51,7 +51,7 @@ controller.actualizarCursoBorrador = async (req = request, res = response) => {
         let codigo = 'exito'
 
         // Actualizar curso borrador
-        await CursoBorrador.actualizarCurso(params.uidCursoBorrador, datosCurso)
+        await CursoBorrador.actualizarCurso(params.uidCurso, datosCurso)
 
         // Retornar respuesta
         respuesta.setRespuestaPorCodigo(codigo, {

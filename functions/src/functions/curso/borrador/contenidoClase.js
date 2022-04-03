@@ -18,11 +18,6 @@ const rutaModo = config.environment.mode === 'production' ? 'prod' : 'dev'
 let bucketNameContenidoBorrador = rutaModo === 'prod' ? 'j-cursos-contenido-b' : 'j-cursos-contenido-b-dev'
 let bucketNameContenidoBorradorVerificacion = rutaModo === 'prod' ? 'j-cursos-contenido-bv' : 'j-cursos-contenido-bv-dev'
 
-ffmpeg.setFfprobePath(ffprobePath)
-// ffmpeg.setFfmpegPath(ffmpegPath)
-
-
-
 
 ffContenidoClase.validacionContenidoClase = functions
 .region('southamerica-east1')
@@ -50,6 +45,9 @@ ffContenidoClase.validacionContenidoClase = functions
         // Si el documento contenidoClase no esta como "subiendo"
         const contenidoClaseBorrador = new ContenidoClaseBorrador()
         const existe = !!(await contenidoClaseBorrador.importarContenidoClasePorUID(uidCurso, uidClase))
+
+        console.log('existe', existe)
+        console.log('contenidoClaseBorrador', JSON.stringify( contenidoClaseBorrador.getContenidoClaseBorrador() ))
         
         if (!existe || contenidoClaseBorrador.estadoArchivo !== 'subiendo') {
             // TODO: Eiminar el archivo subido en "validacion"
@@ -76,6 +74,21 @@ ffContenidoClase.validacionContenidoClase = functions
                 size: Number(object.size),
             }
 
+            const articuloHTML = await ContenidoClaseBorrador.obtenerArticuloClase({
+                verificacion: true,
+                uidCurso: uidCurso,
+                uidClase: uidClase,
+                getMarkdown: false
+            })
+
+            let soloTexto = articuloHTML.replace(/(<([^>]+)>)/ig, '')
+            soloTexto =  soloTexto.replace(/[\n\r]+/g, '')
+            soloTexto = soloTexto.replace(/\s{2,10}/g, ' ')
+            soloTexto = soloTexto.trim()
+
+            const duracionMinutos = soloTexto.split(' ').length / 200
+            const duracionSegundos = duracionMinutos * 60
+
             // TODO: Verificacion de datos del archivo
             const mensajesError = esValidoElContenidoClaseArticulo({
                 file,
@@ -92,7 +105,6 @@ ffContenidoClase.validacionContenidoClase = functions
                 fileName: file.fileName,
                 fileExtension: file.fileExtension,
                 mimeType: file.mimeType,
-                fechaActualizacion: timestamp.milliseconds_a_timestamp( Date.now() ),
                 mensajesError: mensajesError,
                 contieneErrores: !!mensajesError.length,
                 estadoDocumento: contenidoClaseBorrador.estadoDocumento === 'nuevo' ? 'nuevo' : 'actualizado',
@@ -101,7 +113,7 @@ ffContenidoClase.validacionContenidoClase = functions
 
             // TODO: Construcción del documento clase
             documentoClase = {
-                duracion: 0,
+                duracion: duracionSegundos,
                 tipoClase: 'articulo',
             }
 
@@ -117,6 +129,9 @@ ffContenidoClase.validacionContenidoClase = functions
                 mimeType: object.contentType,
                 size: Number(object.size),
             }
+
+            ffmpeg.setFfprobePath(ffprobePath)
+            // ffmpeg.setFfmpegPath(ffmpegPath)
             
             const promiseAll = []
             promiseAll.push(new Promise((resolve, reject) => {
@@ -153,7 +168,6 @@ ffContenidoClase.validacionContenidoClase = functions
                 fileName: file.fileName,
                 fileExtension: file.fileExtension,
                 mimeType: file.mimeType,
-                fechaActualizacion: timestamp.milliseconds_a_timestamp( Date.now() ),
                 mensajesError: mensajesError,
                 contieneErrores: !!mensajesError.length,
                 estadoDocumento: contenidoClaseBorrador.estadoDocumento === 'nuevo' ? 'nuevo' : 'actualizado',
@@ -205,14 +219,21 @@ ffContenidoClase.validacionContenidoClase = functions
     } catch (error) {
         console.log('Error al actualizar un contenido a la clase: ', error)
 
+        const uidCurso = object.name.split('/')[0]
+        const uidClase = object.name.split('/')[1]
+
         // TODO: Eliminar video de "j-cursos-contenido-bv"
         const bucketPrueba = admin.storage().bucket(bucketNameContenidoBorradorVerificacion)
         bucketPrueba.file(object.name).delete()
 
-        if (estadoDelProceso === 'actualizacion') {
-            const uidCurso = object.name.split('/')[0]
-            const uidClase = object.name.split('/')[1]
+        if (estadoDelProceso === 'iniciando' || estadoDelProceso === 'verificando') {
+            // TODO: Actualizar el documento contenidoClase como ""
+            await ContenidoClaseBorrador.actualizarDocumento(uidCurso, uidClase, {
+                estadoArchivo: ''
+            })
+        }
 
+        if (estadoDelProceso === 'actualizacion') {
             // TODO: Eliminar video de "j-cursos-contenido-b"
             const bucket = admin.storage().bucket(bucketNameContenidoBorrador)
             const rutaDestino = `${uidCurso}/${uidClase}`
@@ -224,7 +245,6 @@ ffContenidoClase.validacionContenidoClase = functions
             // con un mensaje de error: "Hubo un problema al subir este video, inténtelo de nuevo."
             ContenidoClaseBorrador.actualizarDocumento(uidCurso, uidClase, {
                 estadoArchivo: '',
-                fechaActualizacion: null,
                 fileExtension: '',
                 fileName: '',
                 mensajesError: ['Hubo un problema al subir este video, inténtelo de nuevo.'],

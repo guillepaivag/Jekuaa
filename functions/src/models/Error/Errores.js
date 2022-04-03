@@ -2,29 +2,20 @@ const informacionCodigo = require('../../InformacionEstatica/InformacionCodigo')
 
 class Errores {
     
-    constructor ( informacionError ) {
-        
-        if ( !informacionError || ( informacionError && !informacionError.codigo ) ) {
-            
-            this.codigo = 'error/sistema'
-            this.mensaje = mensaje ? mensaje : getInformacionPorCodigo( this.codigo ).mensaje
-            this.resultado = null
-            this.status = getInformacionPorCodigo( this.codigo ).status
-
-            return
-        }
-
+    constructor ( datos = {} ) {
         const {
-            codigo, mensaje, resultado, status
-        } = informacionError
+            codigo, 
+            mensaje, 
+            resultado, 
+            status
+        } = datos
 
-        let mensajePorDefecto = getInformacionPorCodigo( codigo ).mensaje
-        let statusPorDefecto = getInformacionPorCodigo( codigo ).status
-        
+        const informacionPorCodigo = getInformacionPorCodigo( codigo )
+
         this.codigo = codigo
-        this.mensaje = mensaje ? mensaje : mensajePorDefecto
+        this.mensaje = mensaje ? mensaje : informacionPorCodigo.mensaje
         this.resultado = resultado ? resultado : null
-        this.status = status ? status : statusPorDefecto
+        this.status = status ? status : informacionPorCodigo.status
         
     }
 

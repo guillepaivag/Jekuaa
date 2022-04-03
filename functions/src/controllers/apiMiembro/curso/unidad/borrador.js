@@ -22,7 +22,7 @@ controller.crearUnidadBorrador = async (req = request, res = response) => {
 
         // Crear una unidadBorrador para un cursoBorrador
         const unidadBorrador = new UnidadBorrador(datosUnidad)
-        await UnidadBorrador.agregar(params.uidCursoBorrador, unidadBorrador)
+        await UnidadBorrador.agregar(params.uidCurso, unidadBorrador)
 
         // Retornar respuesta
         respuesta.setRespuestaPorCodigo(codigo, {
@@ -55,8 +55,8 @@ controller.actualizarUnidadBorrador = async (req = request, res = response) => {
         let codigo = 'exito'
 
         // Actualizar nombre de una unidadBorrador para un cursoBorrador
-        await UnidadBorrador.actualizar(params.uidCursoBorrador, 
-            params.uidUnidadBorrador, 
+        await UnidadBorrador.actualizar(params.uidCurso, 
+            params.uidUnidad, 
             datosUnidad)
 
         // Retornar respuesta
@@ -94,12 +94,12 @@ controller.actualizarOrdenUnidadBorrador = async (req = request, res = response)
         // Actualizar orden de las unidades
         for (let i = 0; i < arrayUidUnidades.length; i++) {
             const uidUnidad = arrayUidUnidades[i]
-            UnidadBorrador.actualizar(params.uidCursoBorrador, 
+            UnidadBorrador.actualizar(params.uidCurso, 
                 uidUnidad, 
                 datosUnidad[uidUnidad])
 
             const snapshot = await db
-            .collection('CursosBorrador').doc(params.uidCursoBorrador)
+            .collection('CursosBorrador').doc(params.uidCurso)
             .collection('UnidadesBorrador').doc(uidUnidad)
             .collection('ClasesBorrador').get()
 
@@ -142,8 +142,8 @@ controller.eliminarUnidadBorrador = async (req = request, res = response) => {
 
         // Eliminar los documentos clases, contenido, complementos, subtitulos y archivos (en cloud storage)
         const snapshot = await db
-        .collection('CursosBorrador').doc(params.uidCursoBorrador)
-        .collection('UnidadesBorrador').doc(params.uidUnidadBorrador)
+        .collection('CursosBorrador').doc(params.uidCurso)
+        .collection('UnidadesBorrador').doc(params.uidUnidad)
         .collection('ClasesBorrador').get()
 
         for (let i = 0; i < snapshot.docs.length; i++) {
@@ -153,12 +153,12 @@ controller.eliminarUnidadBorrador = async (req = request, res = response) => {
             const claseBorrador = new ClaseBorrador(doc.data())
 
             // Eliminar documento clase
-            ClaseBorrador.eliminar(params.uidCursoBorrador,
-                params.uidUnidadBorrador,
+            ClaseBorrador.eliminar(params.uidCurso,
+                params.uidUnidad,
                 claseBorrador.uid)
 
             // Eliminar documento contenido
-            ContenidoClaseBorrador.eliminarDocumento(params.uidCursoBorrador,
+            ContenidoClaseBorrador.eliminarDocumento(params.uidCurso,
                 claseBorrador.uid)
 
             // Eliminar documentos complementos
@@ -168,12 +168,12 @@ controller.eliminarUnidadBorrador = async (req = request, res = response) => {
             // Eliminar archivos (en cloud storage) de una clase
             const rutaModo = config.environment.mode === 'production' ? 'prod' : 'dev'
             let bucketNameContenidoBorrador = rutaModo === 'prod' ? 'j-cursos-contenido-b' : 'j-cursos-contenido-b-dev'
-            Clase.eliminarArchivo(bucketNameContenidoBorrador, `${params.uidCursoBorrador}/${claseBorrador.uid}`)
+            Clase.eliminarArchivo(bucketNameContenidoBorrador, `${params.uidCurso}/${claseBorrador.uid}`)
         }
 
         // Eliminar el documento unidad
-        UnidadBorrador.eliminar(params.uidCursoBorrador, 
-            params.uidUnidadBorrador)
+        UnidadBorrador.eliminar(params.uidCurso, 
+            params.uidUnidad)
         
 
         // Retornar respuesta

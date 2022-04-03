@@ -26,7 +26,7 @@ const { errorSiElCursoEstaEnRevision } = require('../../../../middlewares/apiMie
 
 
 // AGREGAR CLASE
-router.post('/crearClaseBorrador/:uidCursoBorrador/:uidUnidadBorrador', 
+router.post('/crearClase/:uidCurso/:uidUnidad', 
     estaAutenticado,
     esMiembro,
     elMiembroEsInstructor,
@@ -39,7 +39,7 @@ router.post('/crearClaseBorrador/:uidCursoBorrador/:uidUnidadBorrador',
     crearClaseBorrador)
 
 // ACTUALIZAR CLASE: nombre, descripcion
-router.put('/actualizarClaseBorrador/:uidCursoBorrador/:uidUnidadBorrador/:uidClaseBorrador', 
+router.put('/actualizarClase/:uidCurso/:uidUnidad/:uidClase', 
     estaAutenticado,
     esMiembro,
     elMiembroEsInstructor,
@@ -52,7 +52,7 @@ router.put('/actualizarClaseBorrador/:uidCursoBorrador/:uidUnidadBorrador/:uidCl
     actualizarClaseBorrador)
 
 // ACTUALIZAR ORDEN DE CLASES: ordenClase
-router.put('/actualizarOrdenClaseBorrador/:uidCursoBorrador/:uidUnidadBorrador', 
+router.put('/actualizarOrdenClase/:uidCurso/:uidUnidad', 
     estaAutenticado,
     esMiembro,
     elMiembroEsInstructor,
@@ -61,7 +61,7 @@ router.put('/actualizarOrdenClaseBorrador/:uidCursoBorrador/:uidUnidadBorrador',
     actualizarOrdenClaseBorrador)
 
 // CAMBIAR UNIDAD DE UNA CLASE
-router.put('/actualizarUnidadClaseBorrador/:uidCursoBorrador/:uidClaseBorrador', 
+router.put('/actualizarUnidadClase/:uidCurso/:uidClase', 
     estaAutenticado,
     esMiembro,
     elMiembroEsInstructor,
@@ -71,7 +71,7 @@ router.put('/actualizarUnidadClaseBorrador/:uidCursoBorrador/:uidClaseBorrador',
 
 // ELIMINAR CLASE: AGREGAR UNA ETIQUETA AL DOCUMENTO QUE DIGA QUE SE ELIMINARA
 // CON CLOUD FUNCTIONS ELIMINAR TODA LA CLASE
-router.delete('/eliminarClaseBorrador/:uidCursoBorrador/:uidUnidadBorrador/:uidClaseBorrador', 
+router.delete('/eliminarClase/:uidCurso/:uidUnidad/:uidClase', 
     estaAutenticado,
     esMiembro,
     elMiembroEsInstructor,

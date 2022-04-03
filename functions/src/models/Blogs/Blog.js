@@ -12,7 +12,7 @@ class Blog {
     constructor ( datosBlog = {} ) {
         const {
             uid, referencia, titulo, descripcion, equipo, publicador,
-            seccion, categoria, subCategorias, cantidadMeGusta, habilitado,
+            seccion, categorias, cantidadMeGusta, habilitado,
             publicado, revision, fechaCreacion, fechaActualizacion
         } = datosBlog
 
@@ -23,8 +23,7 @@ class Blog {
         this.equipo = equipo ? equipo : ''
         this.publicador = publicador ? publicador : ''
         this.seccion = seccion ? seccion : ''
-        this.categoria = categoria ? categoria : ''
-        this.subCategorias = subCategorias ? subCategorias : []
+        this.categorias = categorias ? categorias : []
         this.cantidadMeGusta = cantidadMeGusta ? cantidadMeGusta : 0
         this.habilitado = habilitado !== undefined ? habilitado : true
         this.publicado = publicado !== undefined ? publicado : true
@@ -49,8 +48,7 @@ class Blog {
             equipo: this.equipo,
             publicador: this.publicador,                    // Constante
             seccion: this.seccion,
-            categoria: this.categoria,
-            subCategorias: this.subCategorias,
+            categorias: this.categorias,
             cantidadMeGusta: this.cantidadMeGusta,
             habilitado: this.habilitado,
             publicado: this.publicado,
@@ -74,8 +72,7 @@ class Blog {
         this.setEQUIPO( ( blog && blog.equipo ) ? blog.equipo : null )
         this.setPUBLICADOR( ( blog && blog.publicador ) ? blog.publicador : null )
         this.setSECCION( ( blog && blog.seccion ) ? blog.seccion : null )
-        this.setCATEGORIA( ( blog && blog.categoria ) ? blog.categoria : null )
-        this.setSUB_CATEGORIAS( ( blog && blog.subCategorias ) ? blog.subCategorias : null )
+        this.setCATEGORIAS( ( blog && blog.categorias ) ? blog.categorias : null )
         this.setCANTIDAD_ME_GUSTA( ( blog && blog.cantidadMeGusta ) ? blog.cantidadMeGusta : null )
         this.setHABILITADO( ( blog && blog.habilitado ) ? blog.habilitado : null )
         this.setPUBLICADO( ( blog && blog.publicado ) ? blog.publicado : null )
@@ -112,12 +109,8 @@ class Blog {
         this.seccion = seccion
     }
 
-    setCATEGORIA ( categoria = '' ) {
-        this.categoria = categoria
-    }
-
-    setSUB_CATEGORIAS ( subCategorias = [] ) {
-        this.subCategorias = subCategorias
+    setCATEGORIAS ( categorias = [] ) {
+        this.categorias = categorias
     }
 
     setCANTIDAD_ME_GUSTA ( cantidadMeGusta = 0 ) {
@@ -186,9 +179,8 @@ class Blog {
         this.descripcion = this.descripcion ? this.descripcion.trim() : ''
         this.publicador = this.publicador ? this.publicador.trim() : ''
         this.seccion = this.seccion ? this.seccion.trim() : ''
-        this.categoria = this.categoria ? this.categoria.trim() : ''
-        for (let i = 0; i < this.subCategorias.length; i++) {
-            this.subCategorias[i] = this.subCategorias[i].trim()
+        for (let i = 0; i < this.categorias.length; i++) {
+            this.categorias[i] = this.categorias[i].trim()
         }
 
         return this

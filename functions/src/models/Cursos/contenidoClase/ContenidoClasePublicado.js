@@ -7,6 +7,13 @@ class ContenidoClasePublicado extends ContenidoClase {
         this.fechaActualizacion = datos.fechaActualizacion ? datos.fechaActualizacion : null
     }
 
+
+
+
+    setFechaActualizacion ( fechaActualizacion = null ) {
+        this.fechaActualizacion = fechaActualizacion
+    } 
+
     // CREAR - ACTUALIZAR
     static async subirContenido () {
         // Crear/Actualizar el archivo contenido en Cloud Storage

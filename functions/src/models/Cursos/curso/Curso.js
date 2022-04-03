@@ -42,8 +42,7 @@ class Curso {
             objetivos,              // r 
             nivel,                  // r 
             seccion,                // r 
-            categoria,              // r 
-            subCategorias,          // r 
+            categorias,              // r 
             datosPrecio,            // r 
             duracion,               // automatico
             idioma,                 // r 
@@ -62,8 +61,7 @@ class Curso {
         this.objetivos = objetivos ? objetivos : []
         this.nivel = nivel ? nivel : 'basico'
         this.seccion = seccion ? seccion : ''
-        this.categoria = categoria ? categoria : ''
-        this.subCategorias = subCategorias ? subCategorias : []
+        this.categorias = categorias ? categorias : []
         this.datosPrecio = datosPrecio ? new DatosPrecio_Curso(datosPrecio) : new DatosPrecio_Curso()
         this.duracion = duracion ? duracion : 0
         this.idioma = idioma ? idioma : 'español'
@@ -92,8 +90,7 @@ class Curso {
             objetivos: this.objetivos,
             nivel: this.nivel,
             seccion: this.seccion,
-            categoria: this.categoria,
-            subCategorias: this.subCategorias,
+            categorias: this.categorias,
             datosPrecio: this.datosPrecio.getDatosPrecio_Curso(),
             duracion: this.duracion,
             idioma: this.idioma,
@@ -115,8 +112,7 @@ class Curso {
             objetivos,
             nivel,
             seccion,
-            categoria,
-            subCategorias,
+            categorias,
             datosPrecio,
             duracion,
             idioma,
@@ -135,8 +131,7 @@ class Curso {
         this.setObjetivos( objetivos )
         this.setNivel( nivel )
         this.setSeccion( seccion )
-        this.setCategoria( categoria )
-        this.setSubCategorias( subCategorias )
+        this.setCategorias( categorias )
         this.setDatosPrecio( datosPrecio )
         this.setDuracion( duracion )
         this.setIdioma( idioma )
@@ -191,12 +186,8 @@ class Curso {
         this.seccion = seccion
     }
 
-    setCategoria ( categoria = '' ) {
-        this.categoria = categoria
-    }
-
-    setSubCategorias ( subCategorias = [] ) {
-        this.subCategorias = subCategorias
+    setCategorias ( categorias = [] ) {
+        this.categorias = categorias
     }
 
     setDatosPrecio ( datosPrecio = new DatosPrecio_Curso() ) {

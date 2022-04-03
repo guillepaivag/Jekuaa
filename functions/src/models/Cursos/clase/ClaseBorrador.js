@@ -2,7 +2,7 @@ const admin = require("../../../../firebase-service");
 const db = require("../../../../db");
 const Clase = require("./Clase");
 
-const COLLECTION_CLASES_BORRADOR = 'ClasesBorrador'
+const COLECCION = 'ClasesBorrador'
 
 class ClaseBorrador extends Clase {
     constructor ( datos = {} ) {
@@ -50,7 +50,7 @@ class ClaseBorrador extends Clase {
         const doc = await db
         .collection('CursosBorrador').doc( uidCurso )
         .collection('UnidadesBorrador').doc( uidUnidad )
-        .collection(COLLECTION_CLASES_BORRADOR).doc( uidClase )
+        .collection(COLECCION).doc( uidClase )
         .get()
 
         if (!doc.exists) return null
@@ -81,7 +81,7 @@ class ClaseBorrador extends Clase {
         await db
         .collection('CursosBorrador').doc(uidCurso)
         .collection('UnidadesBorrador').doc(uidUnidad)
-        .collection(COLLECTION_CLASES_BORRADOR).doc(claseBorrador.uid)
+        .collection(COLECCION).doc(claseBorrador.uid)
         .set( claseBorrador.getClaseBorrador() )
 
         return true
@@ -91,7 +91,7 @@ class ClaseBorrador extends Clase {
         await db
         .collection('CursosBorrador').doc(uidCurso)
         .collection('UnidadesBorrador').doc(uidUnidad)
-        .collection(COLLECTION_CLASES_BORRADOR).doc(uidClase)
+        .collection(COLECCION).doc(uidClase)
         .update( datosActualizados )
 
         return true
@@ -101,7 +101,7 @@ class ClaseBorrador extends Clase {
         await db
         .collection('CursosBorrador').doc(uidCurso)
         .collection('UnidadesBorrador').doc(uidUnidad)
-        .collection(COLLECTION_CLASES_BORRADOR).doc(uidClase)
+        .collection(COLECCION).doc(uidClase)
         .delete()
 
         return true
@@ -111,7 +111,7 @@ class ClaseBorrador extends Clase {
         const snapshot = await db
         .collection('CursosBorrador').doc(uidCurso)
         .collection('UnidadesBorrador').doc(uidUnidad)
-        .collection(COLLECTION_CLASES_BORRADOR)
+        .collection(COLECCION)
         .get()
 
         if (snapshot.empty) return []
@@ -131,7 +131,7 @@ class ClaseBorrador extends Clase {
         const snapshot = await db
         .collection('CursosBorrador').doc( uidCurso )
         .collection('UnidadesBorrador').doc( uidUnidad )
-        .collection(COLLECTION_CLASES_BORRADOR).orderBy('ordenClase', 'desc').limit(1)
+        .collection(COLECCION).orderBy('ordenClase', 'desc').limit(1)
         .get()
 
         return snapshot.docs.length ? new ClaseBorrador(snapshot.docs[0].data()) : null
@@ -141,7 +141,7 @@ class ClaseBorrador extends Clase {
 
         const refCursoBorrador = admin.firestore().doc(`CursosBorrador/${uidCurso}`)
         
-        let ref = db.collectionGroup(COLLECTION_CLASES_BORRADOR)
+        let ref = db.collectionGroup(COLECCION)
         .orderBy(admin.firestore.FieldPath.documentId())
         .where('contieneErrores', '==', true)
         .startAt(refCursoBorrador.path)

@@ -233,8 +233,8 @@ borrador.construirDatosCursoBorradorPOST = async (req = request, res = response,
             titulo,
         } = datosClase
 
-        const claseBorradorUltimaClase = await ClaseBorrador.obtenerUltimaClasePorCursoUnidad(params.uidCursoBorrador, 
-        params.uidUnidadBorrador)
+        const claseBorradorUltimaClase = await ClaseBorrador.obtenerUltimaClasePorCursoUnidad(params.uidCurso, 
+        params.uidUnidad)
 
         req.body.datosClase.titulo = titulo.trim()
         req.body.datosClase.ordenClase = claseBorradorUltimaClase ? claseBorradorUltimaClase.ordenClase + 1 : 1
@@ -292,9 +292,9 @@ borrador.verificacionDeEstadoDocumentoPUT = async (req = request, res = response
 
         if ( req.originalUrl.includes('actualizarClaseBorrador') ) {
             const claseBorrador = new ClaseBorrador()
-            await claseBorrador.importarClasePorUID(params.uidCursoBorrador, 
-                params.uidUnidadBorrador,
-                params.uidClaseBorrador)
+            await claseBorrador.importarClasePorUID(params.uidCurso, 
+                params.uidUnidad,
+                params.uidClase)
 
             if ( claseBorrador.estadoDocumento === '' ) 
                 req.body.datosClase.estadoDocumento = 'actualizado'
@@ -309,8 +309,8 @@ borrador.verificacionDeEstadoDocumentoPUT = async (req = request, res = response
                 const uidClase = uidClases[i]
                 
                 const claseBorrador = new ClaseBorrador()
-                await claseBorrador.importarClasePorUID(params.uidCursoBorrador, 
-                    params.uidUnidadBorrador,
+                await claseBorrador.importarClasePorUID(params.uidCurso, 
+                    params.uidUnidad,
                     uidClase)
                 
                 if ( claseBorrador.estadoDocumento === '' ) 

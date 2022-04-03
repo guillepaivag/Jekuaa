@@ -29,7 +29,6 @@ class ContenidoClase {
             fileName, 
             fileExtension, 
             mimeType,
-            fechaActualizacion,
         } = datos
 
         this.uid = uid ? uid : ''
@@ -39,7 +38,6 @@ class ContenidoClase {
         this.fileName = fileName ? fileName : ''
         this.fileExtension = fileExtension ? fileExtension : ''
         this.mimeType = mimeType ? mimeType : ''
-        this.fechaActualizacion = fechaActualizacion ? fechaActualizacion : null
     }
 
     getContenidoClase () {
@@ -51,7 +49,6 @@ class ContenidoClase {
             fileName: this.fileName,
             fileExtension: this.fileExtension,
             mimeType: this.mimeType,
-            fechaActualizacion: this.fechaActualizacion,
         }
     }
 
@@ -63,7 +60,6 @@ class ContenidoClase {
         this.setFileName( datos.fileName )
         this.setFileExtension( datos.fileExtension )
         this.setMimeType( datos.mimeType )
-        this.setFechaActualizacion( datos.fechaActualizacion )
     }
 
     setUid ( uid = '' ) {
@@ -93,10 +89,7 @@ class ContenidoClase {
     setMimeType ( mimeType = '' ) {
         this.mimeType = mimeType
     } 
-
-    setFechaActualizacion ( fechaActualizacion = null ) {
-        this.fechaActualizacion = fechaActualizacion
-    } 
+    
 
     /**
      * CONTENIDO DE LAS CLASES

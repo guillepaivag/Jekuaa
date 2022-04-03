@@ -56,8 +56,7 @@ middlewares.verificadorDeDatosRequeridos  = (req, res, next) => {
                 equipo,
                 publicador,
                 seccion,
-                categoria,
-                subCategorias,
+                categorias,
                 cantidadMeGusta,
                 habilitado,
                 publicado,
@@ -95,17 +94,10 @@ middlewares.verificadorDeDatosRequeridos  = (req, res, next) => {
             }
         
             if ( seccion ) {
-                if ( !categoria ) {
+                if ( !categorias || !categorias.length ) {
                     throw new Errores({
                         codigo: 'error/usuario_mala_solicitud',
                         mensaje: 'La categoría debe existir.'
-                    })
-                }
-            
-                if ( !subCategorias || !subCategorias.length ) {
-                    throw new Errores({
-                        codigo: 'error/usuario_mala_solicitud',
-                        mensaje: 'Debe haber al menos una sub-categoria.'
                     })
                 }
             }
@@ -145,8 +137,7 @@ middlewares.verificadorDeTipoDeDatos = (req, res, next) => {
                 equipo,
                 publicador,
                 seccion,
-                categoria,
-                subCategorias,
+                categorias,
                 cantidadMeGusta,
                 habilitado,
                 publicado,
@@ -199,27 +190,20 @@ middlewares.verificadorDeTipoDeDatos = (req, res, next) => {
                             mensaje: 'La sección del blog debe ser string.'
                         })
                     } 
-
-                    if ( typeof categoria != 'string' ) {
-                        throw new Errores({
-                            codigo: 'error/usuario_mala_solicitud',
-                            mensaje: 'La categoría del blog debe ser string.'
-                        })
-                    }
                 
-                    if (!(subCategorias instanceof Array)) {
+                    if (!(categorias instanceof Array)) {
                         throw new Errores({
                             codigo: 'error/usuario_mala_solicitud',
-                            mensaje: 'Las subCategorias del blog debe ser un arreglo de string.'
+                            mensaje: 'Las categorias del blog debe ser un arreglo de string.'
                         })
                     }
                     
-                    for (let i = 0; i < subCategorias.length; i++) {
-                        const subCategoria = subCategorias[i]
-                        if (typeof subCategoria != 'string') {
+                    for (let i = 0; i < categorias.length; i++) {
+                        const categoria = categorias[i]
+                        if (typeof categoria != 'string') {
                             throw new Errores({
                                 codigo: 'error/usuario_mala_solicitud',
-                                mensaje: 'Las subCategorias del blog debe ser un arreglo de string.'
+                                mensaje: 'Las categorias del blog debe ser un arreglo de string.'
                             })
                         }
                     }
@@ -232,28 +216,21 @@ middlewares.verificadorDeTipoDeDatos = (req, res, next) => {
                             mensaje: 'La sección del blog debe ser string.'
                         })
                     }
-    
-                    if ( !!categoria && typeof categoria !== 'string' ) {
-                        throw new Errores({
-                            codigo: 'error/usuario_mala_solicitud',
-                            mensaje: 'La categoría del blog debe ser string.'
-                        })
-                    }
                 
-                    if ( !!subCategorias ) {
-                        if (!(subCategorias instanceof Array)) {
+                    if ( !!categorias ) {
+                        if (!(categorias instanceof Array)) {
                             throw new Errores({
                                 codigo: 'error/usuario_mala_solicitud',
-                                mensaje: 'Las subCategorias del blog debe ser un arreglo de string.'
+                                mensaje: 'Las categorias del blog debe ser un arreglo de string.'
                             })
                         }
                         
-                        for (let i = 0; i < subCategorias.length; i++) {
-                            const subCategoria = subCategorias[i]
-                            if (typeof subCategoria != 'string') {
+                        for (let i = 0; i < categorias.length; i++) {
+                            const categoria = categorias[i]
+                            if (typeof categoria != 'string') {
                                 throw new Errores({
                                     codigo: 'error/usuario_mala_solicitud',
-                                    mensaje: 'Las subCategorias del blog debe ser un arreglo de string.'
+                                    mensaje: 'Las categorias del blog debe ser un arreglo de string.'
                                 })
                             }
                         }
@@ -305,8 +282,7 @@ middlewares.verificadorDeDatosBlog = async (req, res, next) => {
                 equipo,
                 publicador,             // constante
                 seccion,                // usuario
-                categoria,              // usuario
-                subCategorias,          // usuario
+                categorias,              // usuario
                 cantidadMeGusta,        // automatico
                 habilitado,             // mj
                 publicado,              // usuario
@@ -383,76 +359,71 @@ middlewares.verificadorDeDatosBlog = async (req, res, next) => {
 
                 }
 
-                /* Descripción de la verificacion de sección, categorias y subcategorias: (creación)
+                /* Descripción de la verificacion de sección y categorias: (creación)
                  * ---------------------------------------------------------------------------------------
                  * Si la sección es: string vacio ('') o undefined no se verificara nada, por el hecho de que
                  * cuando la sección es string vacio ('') o undefined el blog pasa a ser un blog normal sin sección,
-                 * entonces, la categoria y subcategorias se eliminan por tanto no es necesario realizar
-                 * una verificación.
+                 * entonces, las categorias se eliminan por tanto no es necesario realizar una verificación.
                 */
 
                 if (seccion) {
-                    let valido = subCategorias.length >= 1 && subCategorias.length <= 3
+                    let valido = categorias.length >= 1 && categorias.length <= 3
                     if ( !valido ) {
                         throw new Errores({
                             codigo: 'error/usuario_mala_solicitud',
-                            mensaje: 'Por blog puede haber de 1 a 3 sub-categorias.'
+                            mensaje: 'Por blog puede haber de 1 a 3 categorias.'
                         })
                     }
                     
                     let ref = db.collection('Secciones').doc(seccion)
-                    ref = ref.collection('Categorias').doc(categoria)
 
-                    for (let i = 0; i < subCategorias.length; i++) {
-                        const subCategoria = subCategorias[i]
+                    for (let i = 0; i < categorias.length; i++) {
+                        const categoria = categorias[i]
                         
-                        doc = await ref.collection('SubCategorias').doc(subCategoria).get()
+                        doc = await ref.collection('Categorias').doc(categoria).get()
                         if (!doc.exists) {
                             throw new Errores({
                                 codigo: 'error/usuario_mala_solicitud',
-                                mensaje: `Hubo un problema al encontrar los datos de sección: ${seccion}/${categoria}/${subCategoria}.`
+                                mensaje: `Hubo un problema al encontrar los datos de sección: ${seccion}/${categoria}.`
                             })
                         }
                     }
                 }
 
                 
-            } else if (seccion !== undefined || categoria || (subCategorias && subCategorias.length)) {
-                /* Descripción de la verificacion de sección, categorias y subcategorias: (actualización)
+            } else if (seccion !== undefined || (categorias && categorias.length)) {
+                /* Descripción de la verificacion de sección y categorias: (creación)
                  * ---------------------------------------------------------------------------------------
-                 * Si la sección es: string vacio ('') no se verificara nada, por el hecho de que
-                 * cuando la sección es string vacio ('') el blog pasa a ser un blog normal sin sección,
-                 * entonces, la categoria y subcategorias se eliminan por tanto no es necesario realizar
-                 * una verificación. 
+                 * Si la sección es: string vacio ('') o undefined no se verificara nada, por el hecho de que
+                 * cuando la sección es string vacio ('') o undefined el blog pasa a ser un blog normal sin sección,
+                 * entonces, las categorias se eliminan por tanto no es necesario realizar una verificación.
                 */
 
                 const docBlog = await db.collection('Blogs').doc(params.uid).get()
 
                 if (seccion !== '') {
                     let seccionSeleccionada = seccion ? seccion : docBlog.data().seccion
-                    let categoriaSeleccionada = categoria ? categoria : docBlog.data().categoria
-                    if (subCategorias) {
-                        let valido = subCategorias.length >= 1 && subCategorias.length <= 3
+                    if (categorias) {
+                        let valido = categorias.length >= 1 && categorias.length <= 3
                         if ( !valido ) {
                             throw new Errores({
                                 codigo: 'error/usuario_mala_solicitud',
-                                mensaje: 'Por blog puede haber de 1 a 3 sub-categorias.'
+                                mensaje: 'Por blog puede haber de 1 a 3 categorias.'
                             })
                         }
                     }
-                    let subCategoriasSeleccionadas = subCategorias ? subCategorias : docBlog.data().subCategorias
+                    let categoriasSeleccionadas = categorias ? categorias : docBlog.data().categorias
 
                     let ref = db.collection('Secciones').doc(seccionSeleccionada)
-                    ref = ref.collection('Categorias').doc(categoriaSeleccionada)
 
-                    for (let i = 0; i < subCategoriasSeleccionadas.length; i++) {
-                        const subCategoria = subCategoriasSeleccionadas[i]
-                        const doc = await ref.collection('SubCategorias').doc(subCategoria).get()
+                    for (let i = 0; i < categoriasSeleccionadas.length; i++) {
+                        const categoria = categoriasSeleccionadas[i]
+                        const doc = await ref.collection('Categorias').doc(categoria).get()
 
                         if (!doc.exists) {
                             throw new Errores({
                                 codigo: 'error/usuario_mala_solicitud',
-                                mensaje: `Hubo un problema al encontrar los datos de sección: ${seccionSeleccionada}/${categoriaSeleccionada}/${subCategoria}.`
+                                mensaje: `Hubo un problema al encontrar los datos de sección: ${seccionSeleccionada}/${categoria}.`
                             })
                         }
                     }

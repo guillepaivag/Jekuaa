@@ -1,34 +1,39 @@
+const fs = require('fs')
 const { request, response } = require("express")
-const CursoBorrador = require("../../../../models/Cursos/curso/CursoBorrador")
-const CursoRevision = require("../../../../models/Cursos/curso/CursoRevision")
 
 const Respuesta = require("../../../../models/Respuesta")
+const manejadorErrores = require('../../../../helpers/ManejoErrores')
+const Errores = require('../../../../models/Error/Errores')
+const ContenidoClaseBorrador = require('../../../../models/Cursos/contenidoClase/ContenidoClaseBorrador')
 
 const controller = {}
 
-
-controller.crearCursoRevision = async (req = request, res = response) => {
+controller.obtenerUrlVideoClaseBorrador = async (req = request, res = response) => {
+    
     try {
         const { datos, body, params } = req
         const { uidSolicitante, datosAuthSolicitante } = datos
+        const { uidCurso, uidClase } = params
 
         const respuesta = new Respuesta()
         let codigo = 'exito'
-
-        // CREAR CURSO REVISION
-        await CursoRevision.crearNuevaRevision(params.uidCurso)
+        
+        const url = await ContenidoClaseBorrador.generarUrlVideoClase({
+            verificacion: false,
+            uidCurso: uidCurso,
+            uidClase: uidClase
+        })
 
         // Retornar respuesta
         respuesta.setRespuestaPorCodigo(codigo, {
-            mensaje: '¡Se creo una revisión para este curso!',
-            resultado: null
+            mensaje: '¡Se generó la url del video!',
+            resultado: url
         })
         const status = respuesta.getStatusCode()
         
         return res.status( status ).json( respuesta.getRespuesta() )
-        
     } catch (error) {
-        console.log('Error - crearCursoRevision: ', error)
+        console.log('Error - obtenerUrlVideoClaseBorrador: ', error)
 
         const {
             status,
@@ -37,31 +42,39 @@ controller.crearCursoRevision = async (req = request, res = response) => {
 
         return res.status( status ).json( respuesta )
     }
+
 }
 
 
-controller.desactivarCursoRevision = async (req = request, res = response) => {
+
+
+controller.obtenerArticuloClaseBorrador = async (req = request, res = response) => {
+
     try {
         const { datos, body, params } = req
         const { uidSolicitante, datosAuthSolicitante } = datos
+        const { uidCurso, uidClase } = params
 
         const respuesta = new Respuesta()
         let codigo = 'exito'
-
-        // DESACTIVAR CURSO REVISION
-        await CursoRevision.activarRevision(params.uidCurso, false)
+        
+        const articulo = await ContenidoClaseBorrador.obtenerArticuloClase({
+            verificacion: false,
+            uidCurso: uidCurso,
+            uidClase: uidClase,
+            getMarkdown: false
+        })
 
         // Retornar respuesta
         respuesta.setRespuestaPorCodigo(codigo, {
-            mensaje: '¡Se desactivo la revisión para este curso!',
-            resultado: null
+            mensaje: '¡Se generó el articulo de la clase!',
+            resultado: articulo
         })
         const status = respuesta.getStatusCode()
         
         return res.status( status ).json( respuesta.getRespuesta() )
-        
     } catch (error) {
-        console.log('Error - desactivarCursoRevision: ', error)
+        console.log('Error - obtenerUrlVideoClaseBorrador: ', error)
 
         const {
             status,
@@ -70,9 +83,7 @@ controller.desactivarCursoRevision = async (req = request, res = response) => {
 
         return res.status( status ).json( respuesta )
     }
+
 }
-
-
-
 
 module.exports = controller

@@ -6,6 +6,7 @@ const config = require('../../config')
 const Blog = require('../models/Blogs/Blog')
 const CursoBorrador = require('../models/Cursos/curso/CursoBorrador')
 const CursoRevision = require('../models/Cursos/curso/CursoRevision')
+const CursoPublicado = require('../models/Cursos/curso/CursoPublicado')
 
 const algoliaControllers = {}
 
@@ -183,21 +184,22 @@ functions.region('southamerica-east1').firestore.document('CursosPublicado/{uidC
     }
 
     async function saveObject() {
-        const cursoRevision = new CursoRevision(document)
-        const datosCursoRevision = cursoRevision.getRevision()
+        const cursoPublicado = new CursoPublicado(document)
+        const datosCursoPublicado = cursoPublicado.getCursoPublicado()
 
-        const cursoBorrador = new CursoBorrador()
-        await cursoBorrador.importarDatosDeUnCurso(uidCursoRevision)
+        datosCursoPublicado.objectID = datosCursoPublicado.uid
+        delete datosCursoPublicado.uid
 
-        datosCursoRevision.objectID = datosCursoRevision.uid
-        delete datosCursoRevision.uid
+        datosCursoPublicado.datosPrecio.fechaFinDescuento ? 
+        datosCursoPublicado.datosPrecio.fechaFinDescuento = datosCursoPublicado.datosPrecio.fechaFinDescuento.seconds : ''
 
-        datosCursoRevision.datosCurso = cursoBorrador.getCurso()
+        datosCursoPublicado.fechaCreacion ? 
+        datosCursoPublicado.fechaCreacion = datosCursoPublicado.fechaCreacion.seconds : ''
+
+        datosCursoPublicado.fechaActualizacion ? 
+        datosCursoPublicado.fechaActualizacion = datosCursoPublicado.fechaActualizacion.seconds : ''
         
-        datosCursoRevision.fechaInicioRevision ? 
-        datosCursoRevision.fechaInicioRevision = datosCursoRevision.fechaInicioRevision.seconds : ''
-        
-        await index.saveObject(datosCursoRevision)
+        await index.saveObject(datosCursoPublicado)
 
         return true
     }

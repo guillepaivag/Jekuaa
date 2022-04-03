@@ -32,7 +32,7 @@ const { errorSiElCursoEstaEnRevision } = require('../../../../middlewares/apiMie
 
 
 // CREAR
-router.post('/crearCursoBorrador', 
+router.post('/crearCurso', 
     estaAutenticado,
     esMiembro,
     elMiembroEsInstructor,
@@ -44,7 +44,7 @@ router.post('/crearCursoBorrador',
 
 
 // ACTUALIZAR CONTENIDO DE BORRADOR
-router.put('/actualizarCursoBorrador/:uidCursoBorrador', 
+router.put('/actualizarCurso/:uidCurso', 
     estaAutenticado,
     esMiembro,
     elMiembroEsInstructor,
@@ -60,7 +60,7 @@ router.put('/actualizarCursoBorrador/:uidCursoBorrador',
 
 
 // // ACTUALIZAR EL PRECIO DEL CURSO (Actualiza el precio del curso para el: publicado y borrador)
-// router.put('/actualizarCursoBorrador/precio/:uidCursoBorrador', 
+// router.put('/actualizarCurso/precio/:uidCurso', 
 //     estaAutenticado,
 //     esMiembro,
 //     elMiembroEsInstructor,

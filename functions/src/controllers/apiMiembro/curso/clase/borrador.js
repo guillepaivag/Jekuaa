@@ -24,8 +24,8 @@ controller.crearClaseBorrador = async (req = request, res = response) => {
 
         // Crear documento clase
         const claseBorrador = new ClaseBorrador(datosClase)
-        await ClaseBorrador.agregar(params.uidCursoBorrador, 
-            params.uidUnidadBorrador, 
+        await ClaseBorrador.agregar(params.uidCurso, 
+            params.uidUnidad, 
             claseBorrador)
 
         // Crear documento contenido
@@ -35,7 +35,7 @@ controller.crearClaseBorrador = async (req = request, res = response) => {
             contieneErrores: true,
             estadoDocumento: 'nuevo'
         })
-        ContenidoClaseBorrador.agregarDocumento(params.uidCursoBorrador,
+        ContenidoClaseBorrador.agregarDocumento(params.uidCurso,
             contenidoClaseBorrador)
 
         // Retornar respuesta
@@ -74,9 +74,9 @@ controller.actualizarClaseBorrador = async (req = request, res = response) => {
         let codigo = 'exito'
 
         // Crear una unidadBorrador para un cursoBorrador
-        await ClaseBorrador.actualizar(params.uidCursoBorrador, 
-            params.uidUnidadBorrador, 
-            params.uidClaseBorrador, 
+        await ClaseBorrador.actualizar(params.uidCurso, 
+            params.uidUnidad, 
+            params.uidClase, 
             datosClase)
 
         // Retornar respuesta
@@ -122,8 +122,8 @@ controller.actualizarOrdenClaseBorrador = async (req = request, res = response) 
             const ordenClaseActualizada = datosClase[uidClase]
 
             // Crear una unidadBorrador para un cursoBorrador
-            await ClaseBorrador.actualizar(params.uidCursoBorrador, 
-            params.uidUnidadBorrador, 
+            await ClaseBorrador.actualizar(params.uidCurso, 
+            params.uidUnidad, 
             uidClase, 
             ordenClaseActualizada)
         }
@@ -162,12 +162,12 @@ controller.actualizarUnidadClaseBorrador = async (req = request, res = response)
     try {
         const { datos, body, params } = req
         const { uidSolicitante, datosAuthSolicitante } = datos
-        const { uidUnidadBorrador, uidUnidadBorradorNuevo } = body
+        const { uidUnidad, uidUnidadBorradorNuevo } = body
 
         const respuesta = new Respuesta()
         let codigo = 'exito'
 
-        if ( uidUnidadBorrador === uidUnidadBorradorNuevo ) {
+        if ( uidUnidad === uidUnidadBorradorNuevo ) {
             throw new Errores({
                 codigo: 'error/usuario_mala_solicitud',
                 mensaje: 'La unidad actual debe ser diferente a la nueva.'
@@ -176,9 +176,9 @@ controller.actualizarUnidadClaseBorrador = async (req = request, res = response)
 
         // Obtener datos
         const claseBorrador = new ClaseBorrador()
-        const existeClaseBorrador = await claseBorrador.importarClasePorUID(params.uidCursoBorrador,
-        uidUnidadBorrador,
-        params.uidClaseBorrador)
+        const existeClaseBorrador = await claseBorrador.importarClasePorUID(params.uidCurso,
+        uidUnidad,
+        params.uidClase)
         if (!existeClaseBorrador) {
             throw new Errores({
                 codigo: 'error/usuario_mala_solicitud',
@@ -187,8 +187,8 @@ controller.actualizarUnidadClaseBorrador = async (req = request, res = response)
         }
 
         const unidadBorrador = new UnidadBorrador()
-        const existeUnidadBorrador = await unidadBorrador.importarUnidadPorUID(params.uidCursoBorrador,
-            uidUnidadBorrador)
+        const existeUnidadBorrador = await unidadBorrador.importarUnidadPorUID(params.uidCurso,
+            uidUnidad)
         if (!existeUnidadBorrador) {
             throw new Errores({
                 codigo: 'error/usuario_mala_solicitud',
@@ -209,9 +209,9 @@ controller.actualizarUnidadClaseBorrador = async (req = request, res = response)
         if (claseBorrador.estadoDocumento === 'cambioUnidad') {
 
             let doc = await db
-            .collection('CursosPublicado').doc(params.uidCursoBorrador)
+            .collection('CursosPublicado').doc(params.uidCurso)
             .collection('UnidadesPublicado').doc(uidUnidadBorradorNuevo)
-            .collection('ClasesPublicado').doc(params.uidClaseBorrador)
+            .collection('ClasesPublicado').doc(params.uidClase)
             .get()
 
             if (!doc.exists) {
@@ -262,19 +262,19 @@ controller.actualizarUnidadClaseBorrador = async (req = request, res = response)
         }
 
         // Ultima clase de la unidad nueva
-        const ultimaClase = await ClaseBorrador.obtenerUltimaClasePorCursoUnidad(params.uidCursoBorrador, 
+        const ultimaClase = await ClaseBorrador.obtenerUltimaClasePorCursoUnidad(params.uidCurso, 
             uidUnidadBorradorNuevo)
 
         claseBorrador.ordenClase = ultimaClase ? ultimaClase.ordenClase + 1 : 1
 
-        await ClaseBorrador.agregar(params.uidCursoBorrador, 
+        await ClaseBorrador.agregar(params.uidCurso, 
         uidUnidadBorradorNuevo, 
         claseBorrador)
 
         // Eliminar datos
-        await ClaseBorrador.eliminar(params.uidCursoBorrador,
-        uidUnidadBorrador,
-        params.uidClaseBorrador)
+        await ClaseBorrador.eliminar(params.uidCurso,
+        uidUnidad,
+        params.uidClase)
 
         // Retornar respuesta
         respuesta.setRespuestaPorCodigo(codigo, {
@@ -313,13 +313,13 @@ controller.eliminarClaseBorrador = async (req = request, res = response) => {
         let codigo = 'exito'
 
         // Eliminar documento clase
-        ClaseBorrador.eliminar(params.uidCursoBorrador,
-            params.uidUnidadBorrador,
-            params.uidClaseBorrador)
+        ClaseBorrador.eliminar(params.uidCurso,
+            params.uidUnidad,
+            params.uidClase)
 
         // Eliminar documento contenido
-        ContenidoClaseBorrador.eliminarDocumento(params.uidCursoBorrador,
-            params.uidClaseBorrador)
+        ContenidoClaseBorrador.eliminarDocumento(params.uidCurso,
+            params.uidClase)
 
         // Eliminar documentos complementos
 
@@ -328,7 +328,7 @@ controller.eliminarClaseBorrador = async (req = request, res = response) => {
         // Eliminar archivos (en cloud storage) de una clase
         const rutaModo = config.environment.mode === 'production' ? 'prod' : 'dev'
         let bucketNameContenidoBorrador = rutaModo === 'prod' ? 'j-cursos-contenido-b' : 'j-cursos-contenido-b-dev'
-        Clase.eliminarArchivo(bucketNameContenidoBorrador, `${params.uidCursoBorrador}/${params.uidClaseBorrador}`)
+        Clase.eliminarArchivo(bucketNameContenidoBorrador, `${params.uidCurso}/${params.uidClase}`)
 
         // Retornar respuesta
         respuesta.setRespuestaPorCodigo(codigo, {

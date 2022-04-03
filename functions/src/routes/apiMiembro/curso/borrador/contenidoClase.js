@@ -24,7 +24,7 @@ const { errorSiElCursoEstaEnRevision } = require('../../../../middlewares/apiMie
 
 // Funciona bien pero no con Cloud Functions: Ya que no permite 
 // un archivo de tamaño mayor a 10MB.
-router.put('/actualizarContenidoClaseBorrador/video/:uidCursoBorrador/:uidUnidadBorrador/:uidClaseBorrador', 
+router.put('/actualizarContenidoClase/video/:uidCurso/:uidUnidad/:uidClase', 
     estaAutenticado,
     esMiembro,
     elMiembroEsInstructor,
@@ -40,7 +40,7 @@ router.put('/actualizarContenidoClaseBorrador/video/:uidCursoBorrador/:uidUnidad
 
 
 
-router.put('/actualizarContenidoClaseBorrador/articulo/:uidCursoBorrador/:uidUnidadBorrador/:uidClaseBorrador', 
+router.put('/actualizarContenidoClase/articulo/:uidCurso/:uidUnidad/:uidClase', 
     estaAutenticado,
     esMiembro,
     elMiembroEsInstructor,
@@ -54,7 +54,7 @@ router.put('/actualizarContenidoClaseBorrador/articulo/:uidCursoBorrador/:uidUni
 
 
 
-router.delete('/eliminarContenidoClaseBorrador/:uidCursoBorrador/:uidUnidadBorrador/:uidClaseBorrador', 
+router.delete('/eliminarContenidoClase/:uidCurso/:uidUnidad/:uidClase', 
     estaAutenticado,
     esMiembro,
     elMiembroEsInstructor,
@@ -65,7 +65,7 @@ router.delete('/eliminarContenidoClaseBorrador/:uidCursoBorrador/:uidUnidadBorra
 
 
 
-router.get('/obtenerContenidoClaseBorrador/video/:uidCursoBorrador/:uidClaseBorrador', 
+router.get('/obtenerContenidoClase/video/:uidCurso/:uidClase', 
     estaAutenticado,
     esMiembro,
     elMiembroEsInstructor,
@@ -75,7 +75,7 @@ router.get('/obtenerContenidoClaseBorrador/video/:uidCursoBorrador/:uidClaseBorr
 
 
 
-router.get('/obtenerContenidoClaseBorrador/articulo/:uidCursoBorrador/:uidClaseBorrador', 
+router.get('/obtenerContenidoClase/articulo/:uidCurso/:uidClase', 
     estaAutenticado,
     esMiembro,
     elMiembroEsInstructor,

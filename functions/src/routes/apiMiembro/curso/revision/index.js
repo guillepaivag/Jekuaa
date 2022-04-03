@@ -2,7 +2,6 @@ const { Router } = require('express')
 
 const { 
     crearCursoRevision, 
-    activarCursoRevision, 
     desactivarCursoRevision 
 } = require('../../../../controllers/apiMiembro/curso/curso/revision')
 const { estaAutenticado } = require('../../../../middlewares/api/usuario')
@@ -11,9 +10,8 @@ const {
     esValidoElCursoBorrador
 } = require('../../../../middlewares/apiMiembro/curso/curso/borrador')
 const { 
-    errorSiElCursoNoEstaEnRevision, 
-    errorSiElCursoEstaEnRevision, 
-    errorElCursoRevisionNoEstaEnEspera
+    validacionCreacionCursoRevision, 
+    validacionCancelacionCursoRevision,
 } = require('../../../../middlewares/apiMiembro/curso/curso/revision')
 const { 
     esMiembro, 
@@ -24,37 +22,24 @@ const router = Router()
 
 
 // MANDAR A REVISIÓN
-router.post('/crearRevision/:uidCursoBorrador', 
+router.post('/crearRevision/:uidCurso', 
     estaAutenticado,
     esMiembro,
     elMiembroEsInstructor,
     perteneceAlInstructorEsteCurso,
-    errorSiElCursoEstaEnRevision,
+    validacionCreacionCursoRevision,
     esValidoElCursoBorrador,
     crearCursoRevision)
 
+
     
-    
-// ACTIVAR REVISIÓN
-router.put('/activarRevision/:uidCursoBorrador',
-    estaAutenticado,
-    esMiembro,
-    elMiembroEsInstructor,
-    perteneceAlInstructorEsteCurso,
-    errorSiElCursoEstaEnRevision, 
-    errorElCursoRevisionNoEstaEnEspera,
-    activarCursoRevision)
-
-
-
 // CANCELAR REVISIÓN
-router.put('/desactivarRevision/:uidCursoBorrador', 
+router.put('/desactivarRevision/:uidCurso', 
     estaAutenticado,
     esMiembro,
     elMiembroEsInstructor,
     perteneceAlInstructorEsteCurso,
-    errorSiElCursoNoEstaEnRevision,
-    errorElCursoRevisionNoEstaEnEspera,
+    validacionCancelacionCursoRevision,
     desactivarCursoRevision)
 
 
