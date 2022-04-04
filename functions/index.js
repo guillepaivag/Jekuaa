@@ -4,12 +4,12 @@ const config = require('./config')
 const isProduction = config.environment.mode === 'production'
 
 // NUXT SSR
-const appNuxt = require('./appNuxt')
+const appNuxt = require('./src/apps/nuxt')
 
 // REST-API DE JEKUAAPY
-const api = require('./api')
-const apiMiembro = require('./apiMiembro')
-const apiModerador = require('./apiModerador')
+const api = require('./src/apps/estudiante')
+const apiMiembro = require('./src/apps/miembro')
+const apiModerador = require('./src/apps/moderador')
 
 // Funciones Cloud Functions
 const {

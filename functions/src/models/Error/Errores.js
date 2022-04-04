@@ -1,4 +1,4 @@
-const informacionCodigo = require('../../InformacionEstatica/InformacionCodigo')
+const informacionCodigo = require('../../utils/InformacionCodigo')
 
 class Errores {
     

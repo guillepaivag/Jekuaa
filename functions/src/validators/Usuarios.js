@@ -1,7 +1,7 @@
 const { check, body } = require('express-validator')
 const { validateResult } = require('../helpers/validateHelper')
 const Errores = require('../models/Error/Errores')
-const datosRedesSociales = require("../InformacionEstatica/datosRedesSociales")
+const datosRedesSociales = require("../utils/datosRedesSociales")
 
 const validaciones = {}
 

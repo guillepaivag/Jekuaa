@@ -3,13 +3,18 @@ const functions = require('firebase-functions')
 const admin = require('../../../../firebase-service')
 const db = require('../../../../db')
 
-const CursoRevision = require('../../../models/Cursos/curso/CursoRevision')
 const CursoBorrador = require('../../../models/Cursos/curso/CursoBorrador')
+const CursoRevision = require('../../../models/Cursos/curso/CursoRevision')
 const CursoPublicado = require('../../../models/Cursos/curso/CursoPublicado')
 
+const UnidadBorrador = require('../../../models/Cursos/unidad/UnidadBorrador')
 const UnidadPublicado = require('../../../models/Cursos/unidad/UnidadPublicado')
 
+const ClaseBorrador = require('../../../models/Cursos/clase/ClaseBorrador')
 const ClasePublicado = require('../../../models/Cursos/clase/ClasePublicado')
+
+const ContenidoClaseBorrador = require('../../../models/Cursos/contenidoClase/ContenidoClaseBorrador')
+const ContenidoClasePublicado = require('../../../models/Cursos/contenidoClase/ContenidoClasePublicado')
 
 
 const ff = {}
@@ -43,6 +48,9 @@ ff.eventoActualizacionCursoRevision = functions
         cursoPublicado.setCurso( datosCursoBorrador )
 
         await CursoPublicado.crearCurso(cursoPublicado)
+        // CursoBorrador.actualizarCurso(uidCursoRevision, {
+        //     estadoDocumento: ''
+        // })
 
         // UNIDADES
         const snapshotUnidad = await db
@@ -59,24 +67,51 @@ ff.eventoActualizacionCursoRevision = functions
             unidadPublicado.setUnidad( dataUnidad )
 
             await UnidadPublicado.agregar(uidCursoRevision, unidadPublicado)
+            // UnidadBorrador.actualizar(uidCursoRevision, unidadPublicado.uid, {
+            //     estadoDocumento: ''
+            // })
 
             // CLASES
             const snapshotClase = await docUnidad.ref.collection('ClasesBorrador').get()
             const docsClases = snapshotClase.docs
 
-            for (let i = 0; i < docsClases.length; i++) {
-                const docClase = docsClases[i]
+            for (let j = 0; j < docsClases.length; j++) {
+                const docClase = docsClases[j]
                 const dataClase = docClase.data()
 
                 const clasePublicado = new ClasePublicado()
                 clasePublicado.setClase( dataClase )
 
-                
+                await ClasePublicado.agregar(uidCursoRevision, unidadPublicado.uid, clasePublicado)
+                // ClaseBorrador.actualizar(uidCursoRevision, unidadPublicado.uid, clasePublicado.uid, {
+                //     estadoDocumento: ''
+                // })
             }
         }
 
         // CONTENIDOS
-        
+        const snapshotContenidoClase = await db
+        .collection('CursosBorrador').doc(uidCursoRevision)
+        .collection('ContenidoClasesBorrador').get()
+
+        const docsContenidoClases = snapshotContenidoClase.docs
+
+        for (let i = 0; i < docsContenidoClases.length; i++) {
+            const docContenidoClase = docsContenidoClases[i]
+            const dataContenidoClase = docContenidoClase.data()
+
+            const contenidoClasePublicado = new ContenidoClasePublicado()
+            contenidoClasePublicado.setContenidoClase(dataContenidoClase)
+
+            // Contenido
+            
+
+            // Documento
+            await ContenidoClasePublicado.agregarDocumento(uidCursoRevision, contenidoClasePublicado)
+            // ContenidoClaseBorrador.actualizarDocumento(uidCursoRevision, contenidoClasePublicado.uid, {
+            //     estadoDocumento: ''
+            // })
+        }
 
     } else {
         // TODO: Filtrar las unidades, clases y contenidos que su estadoDocumento sea diferente de '' (vacio)

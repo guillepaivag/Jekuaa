@@ -24,9 +24,13 @@ class ClasePublicado extends Clase {
     }
 
     setClasePublicado (datos = {}) {
-        super(datos)
+        this.setClase(datos)
         this.setFechaCreacion( datos.fechaCreacion )
         this.setFechaActualizacion( datos.fechaActualizacion )
+    }
+
+    setClase ( clase = new Clase() ) {
+        super.setClase( clase )
     }
 
     setFechaCreacion ( fechaCreacion = null ) {
@@ -35,6 +39,54 @@ class ClasePublicado extends Clase {
 
     setFechaActualizacion ( fechaActualizacion = null ) {
         this.fechaActualizacion = fechaActualizacion
+    }
+
+    async importarClasePorUID ( uidCurso = '', uidUnidad = '', uidClase = '' ) {
+        const doc = await db
+        .collection('CursosPublicado').doc( uidCurso )
+        .collection('UnidadesPublicado').doc( uidUnidad )
+        .collection(COLECCION).doc( uidClase )
+        .get()
+
+        if (!doc.exists) return null
+
+        this.setClasePublicado(doc.data())
+
+        return this
+    }
+
+
+
+
+
+    static async agregar (uidCurso = '', uidUnidad = '', clasePublicado = new ClasePublicado()) {
+        await db
+        .collection('CursosPublicado').doc(uidCurso)
+        .collection('UnidadesPublicado').doc(uidUnidad)
+        .collection(COLECCION).doc(clasePublicado.uid)
+        .set( clasePublicado.getClasePublicado() )
+
+        return true
+    }
+    
+    static async actualizar (uidCurso = '', uidUnidad = '', uidClase = '', datosActualizados) {
+        await db
+        .collection('CursosPublicado').doc(uidCurso)
+        .collection('UnidadesPublicado').doc(uidUnidad)
+        .collection(COLECCION).doc(uidClase)
+        .update( datosActualizados )
+
+        return true
+    }
+
+    static async eliminar ( uidCurso = '', uidUnidad = '', uidClase = '' ) {
+        await db
+        .collection('CursosPublicado').doc(uidCurso)
+        .collection('UnidadesPublicado').doc(uidUnidad)
+        .collection(COLECCION).doc(uidClase)
+        .delete()
+
+        return true
     }
 }
 
