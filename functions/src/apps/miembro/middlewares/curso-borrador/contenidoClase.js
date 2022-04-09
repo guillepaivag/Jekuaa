@@ -7,6 +7,7 @@ const ClaseBorrador = require("../../../../models/Cursos/clase/ClaseBorrador")
 const Errores = require("../../../../models/Error/Errores")
 const timestamp = require("../../../../utils/timestamp")
 const ContenidoClaseBorrador = require('../../../../models/Cursos/contenidoClase/ContenidoClaseBorrador')
+const { request, response } = require('express')
 
 const middleware = {}
 
@@ -204,6 +205,57 @@ middleware.construirElContenidoClaseArticulo = async (req, res, next) => {
 }
 
 
+
+middleware.validarDatosParaCambiarEstadoArchivo = async (req=request, res=response, next) => {
+    try {
+        const { datos, body, params } = req
+        const { uidSolicitante, datosAuthSolicitante } = datos
+        const { uidCurso, uidClase } = params
+        const { estadoArchivo } = body
+
+        const contenidoClaseBorrador = new ContenidoClaseBorrador()
+        await contenidoClaseBorrador.importarContenidoClasePorUID(uidCurso, uidClase)
+
+        if (contenidoClaseBorrador.estadoArchivo === 'procesando') {
+            throw new Errores({
+                codigo: 'error/usuario_mala_solicitud',
+                mensaje: 'El contenido para esta clase ya se esta procesando.'
+            })
+        }
+
+        if (estadoArchivo === undefined) {
+            throw new Errores({
+                codigo: 'error/usuario_mala_solicitud',
+                mensaje: 'Datos invalidos.'
+            })
+        }
+
+        if (typeof estadoArchivo !== 'string') {
+            throw new Errores({
+                codigo: 'error/usuario_mala_solicitud',
+                mensaje: 'Datos invalidos.'
+            })
+        }
+
+        if (estadoArchivo !== 'subiendo' || estadoArchivo !== '') {
+            throw new Errores({
+                codigo: 'error/usuario_mala_solicitud',
+                mensaje: 'Datos invalidos.'
+            })
+        }
+
+        if (estadoArchivo === contenidoClaseBorrador.estadoArchivo) {
+            throw new Errores({
+                codigo: 'error/usuario_mala_solicitud',
+                mensaje: 'Este estado ya esta en proceso.'
+            })
+        }
+
+        next()
+    } catch (error) {
+        next(error)
+    }
+}
 
 
 

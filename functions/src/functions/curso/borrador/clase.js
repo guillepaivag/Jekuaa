@@ -92,7 +92,7 @@ ffClases.eventoActualizacionClaseBorrador = functions
 
     datosActualizados.contieneErrores = !!mensajesError.length
 
-    // Debe existir el curso para realizar la revision
+    // Debe existir el curso
     let ref = db.collection('CursosPublicado').doc(uidCursoBorrador)
     let doc = await ref.get()
     if (doc.exists) {
@@ -116,16 +116,30 @@ ffClases.eventoActualizacionClaseBorrador = functions
                 huboCambio = clasePublicada.descripcion !== claseBorrador.descripcion
 
             if ( !huboCambio ) 
-                huboCambio = clasePublicada.duracionClase !== claseBorrador.duracionClase
+                huboCambio = clasePublicada.duracion !== claseBorrador.duracion
             
             if ( !huboCambio ) 
                 huboCambio = clasePublicada.tipoClase !== claseBorrador.tipoClase
 
             if ( !huboCambio ) {
-                if ( clasePublicada.uidArchivos.length === claseBorrador.uidArchivos.length ) {
-                    for (let i = 0; i < clasePublicada.uidArchivos.length; i++) {
-                        const element = clasePublicada.uidArchivos[i]
-                        if ( !claseBorrador.uidArchivos.includes(element) ) {
+                if ( clasePublicada.complementos.length === claseBorrador.complementos.length ) {
+                    for (let i = 0; i < clasePublicada.complementos.length; i++) {
+                        const element = clasePublicada.complementos[i]
+                        if ( !claseBorrador.complementos.includes(element) ) {
+                            huboCambio = true
+                            break
+                        }
+                    }
+                } else {
+                    huboCambio = true
+                }
+            }
+
+            if ( !huboCambio ) {
+                if ( clasePublicada.subtitulos.length === claseBorrador.subtitulos.length ) {
+                    for (let i = 0; i < clasePublicada.subtitulos.length; i++) {
+                        const element = clasePublicada.subtitulos[i]
+                        if ( !claseBorrador.subtitulos.includes(element) ) {
                             huboCambio = true
                             break
                         }

@@ -26,9 +26,6 @@ apiMiembro.use('/curso-borrador/unidad', require('./routes/curso-borrador/unidad
 apiMiembro.use('/curso-borrador/clase', require('./routes/curso-borrador/clase'))
 apiMiembro.use('/curso-borrador/contenidoClase', require('./routes/curso-borrador/contenidoClase'))
 
-// REVISION
-apiMiembro.use('/curso-revision', require('./routes/curso-revision'))
-
 // MANEJO DE ERRORES
 apiMiembro.use((err, req, res, next) => { 
   console.log('Error en middleware: ', err)

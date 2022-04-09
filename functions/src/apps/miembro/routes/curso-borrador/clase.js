@@ -3,7 +3,7 @@ const router = Router()
 
 const { estaAutenticado } = require('../../../estudiante/middlewares/usuario')
 const { esMiembro, elMiembroEsInstructor } = require('../../middlewares')
-const { errorSiElCursoEstaEnRevision } = require('../../middlewares/curso-revision')
+
 const { 
     verificarDatosRequeridosPOST, 
     verificadorDeTipoDeDatosPOST, 
@@ -14,10 +14,13 @@ const {
     verificadorDeDatosPUT, 
     construirDatosCursoBorradorPUT,
 } = require('../../middlewares/curso-borrador/clase')
+
 const { 
     permisoParaActualizarCursoBorrador, 
-    perteneceAlInstructorEsteCurso 
+    perteneceAlInstructorEsteCurso, 
+    errorSiElCursoSeEstaPublicando
 } = require('../../middlewares/curso-borrador')
+
 const { 
     crearClaseBorrador, 
     actualizarClaseBorrador, 
@@ -34,7 +37,7 @@ router.post('/crear/:uidCurso/:uidUnidad',
     esMiembro,
     elMiembroEsInstructor,
     perteneceAlInstructorEsteCurso,
-    errorSiElCursoEstaEnRevision,
+    errorSiElCursoSeEstaPublicando,
     verificarDatosRequeridosPOST,
     verificadorDeTipoDeDatosPOST,
     verificadorDeDatosPOST,
@@ -47,7 +50,7 @@ router.put('/actualizar/:uidCurso/:uidUnidad/:uidClase',
     esMiembro,
     elMiembroEsInstructor,
     perteneceAlInstructorEsteCurso,
-    errorSiElCursoEstaEnRevision,
+    errorSiElCursoSeEstaPublicando,
     verificarDatosRequeridosPUT,
     verificadorDeTipoDeDatosPUT,
     verificadorDeDatosPUT,
@@ -60,7 +63,7 @@ router.put('/actualizarOrden/:uidCurso/:uidUnidad',
     esMiembro,
     elMiembroEsInstructor,
     perteneceAlInstructorEsteCurso,
-    errorSiElCursoEstaEnRevision,
+    errorSiElCursoSeEstaPublicando,
     actualizarOrdenClaseBorrador)
 
 // CAMBIAR UNIDAD DE UNA CLASE
@@ -69,7 +72,7 @@ router.put('/actualizarUnidad/:uidCurso/:uidClase',
     esMiembro,
     elMiembroEsInstructor,
     perteneceAlInstructorEsteCurso,
-    errorSiElCursoEstaEnRevision,
+    errorSiElCursoSeEstaPublicando,
     actualizarUnidadClaseBorrador)
 
 // ELIMINAR CLASE: AGREGAR UNA ETIQUETA AL DOCUMENTO QUE DIGA QUE SE ELIMINARA
@@ -79,7 +82,7 @@ router.delete('/eliminar/:uidCurso/:uidUnidad/:uidClase',
     esMiembro,
     elMiembroEsInstructor,
     perteneceAlInstructorEsteCurso,
-    errorSiElCursoEstaEnRevision,
+    errorSiElCursoSeEstaPublicando,
     eliminarClaseBorrador)
 
 

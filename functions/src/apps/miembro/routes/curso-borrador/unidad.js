@@ -6,12 +6,9 @@ const { esMiembro, elMiembroEsInstructor } = require('../../middlewares')
 
 const { 
     permisoParaActualizarCursoBorrador, 
-    perteneceAlInstructorEsteCurso, 
+    perteneceAlInstructorEsteCurso,
+    errorSiElCursoSeEstaPublicando, 
 } = require('../../middlewares/curso-borrador')
-
-const {
-    errorSiElCursoEstaEnRevision
-} = require('../../middlewares/curso-revision')
 
 const { 
     verificarDatosRequeridosPOST, 
@@ -39,7 +36,7 @@ router.post('/crear/:uidCurso',
     esMiembro,
     elMiembroEsInstructor,
     perteneceAlInstructorEsteCurso,
-    errorSiElCursoEstaEnRevision,
+    errorSiElCursoSeEstaPublicando,
     verificarDatosRequeridosPOST,
     verificadorDeTipoDeDatosPOST,
     verificadorDeDatosPOST,
@@ -52,7 +49,7 @@ router.put('/actualizar/:uidCurso/:uidUnidad',
     esMiembro,
     elMiembroEsInstructor,
     perteneceAlInstructorEsteCurso,
-    errorSiElCursoEstaEnRevision,
+    errorSiElCursoSeEstaPublicando,
     verificarDatosRequeridosPUT,
     verificadorDeTipoDeDatosPUT,
     verificadorDeDatosPUT,
@@ -65,7 +62,7 @@ router.put('/actualizarOrden/:uidCurso',
     esMiembro,
     elMiembroEsInstructor,
     perteneceAlInstructorEsteCurso,
-    errorSiElCursoEstaEnRevision,
+    errorSiElCursoSeEstaPublicando,
     actualizarOrdenUnidadBorrador)
 
 // ELIMINAR UNIDAD
@@ -74,7 +71,7 @@ router.delete('/eliminar/:uidCurso/:uidUnidad',
     esMiembro,
     elMiembroEsInstructor,
     perteneceAlInstructorEsteCurso,
-    errorSiElCursoEstaEnRevision,
+    errorSiElCursoSeEstaPublicando,
     eliminarUnidadBorrador)
 
 module.exports = router

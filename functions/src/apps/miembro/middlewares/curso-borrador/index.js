@@ -3,7 +3,7 @@ const db = require('../../../../../db')
 const ClaseBorrador = require("../../../../models/Cursos/clase/ClaseBorrador")
 const ContenidoClaseBorrador = require("../../../../models/Cursos/contenidoClase/ContenidoClaseBorrador")
 const CursoBorrador = require("../../../../models/Cursos/curso/CursoBorrador")
-const CursoRevision = require("../../../../models/Cursos/curso/CursoRevision")
+const CursoEstadoPublicacion = require("../../../../models/Cursos/curso/CursoEstadoPublicacion")
 const UnidadBorrador = require("../../../../models/Cursos/unidad/UnidadBorrador")
 const Errores = require("../../../../models/Error/Errores")
 const Authentication = require("../../../../models/Usuarios/Authentication")
@@ -718,54 +718,6 @@ borrador.verificacionDeEstadoDocumentoPUT = async (req = request, res = response
 }
 
 
-
-// PERMISO PARA CURSO BORRADOR
-borrador.permisoParaCrearCursoBorrador = async (req = request, res = response, next) => {
-    try {
-        const { datos, body } = req
-        const { uidSolicitante, datosAuthSolicitante } = datos
-
-        const rol = datosAuthSolicitante.customClaims.rol
-        const roles = new Roles(rol)
-
-        const doc = await roles.obtenerDocumentoRol()
-        
-        if (!doc.data().permisosCursoBorrador.crear) {
-            throw new Errores({
-                codigo: 'error/usuario_no_autorizado',
-                mensaje: 'No tienes permiso para esta acción.'
-            })
-        }
-
-        next()
-    } catch (error) {
-        next(error)
-    }
-}
-
-borrador.permisoParaActualizarCursoBorrador = async (req = request, res = response, next) => {
-    try {
-        const { datos, body } = req
-        const { uidSolicitante, datosAuthSolicitante } = datos
-
-        const rol = datosAuthSolicitante.customClaims.rol
-        const roles = new Roles(rol)
-
-        const doc = await roles.obtenerDocumentoRol()
-        
-        if (!doc.data().permisosCursoBorrador.actualizar) {
-            throw new Errores({
-                codigo: 'error/usuario_no_autorizado',
-                mensaje: 'No tienes permiso para esta acción.'
-            })
-        }
-
-        next()
-    } catch (error) {
-        next(error)
-    }
-}
-
 borrador.perteneceAlInstructorEsteCurso = async (req = request, res = response, next) => {
     try {
         const { datos, body, params } = req
@@ -827,5 +779,66 @@ borrador.esValidoElCursoBorrador = async (req = request, res = response, next) =
         next(error)
     }
 }
+
+
+borrador.verificarCursoEstadoPublicacion = async (req = request, res = response, next) => {
+    try {
+        const { datos, body, params } = req
+        const { uidSolicitante, datosAuthSolicitante } = datos
+
+        const uidCurso = params.uidCurso
+        
+        const cursoEstadoPublicacion = new CursoEstadoPublicacion()
+        const existe = await cursoEstadoPublicacion.importarDatosDocumento(uidCurso)
+
+        if (!existe) {
+            req.datos.esNuevo = true
+            return next()
+        }
+
+        if (cursoEstadoPublicacion.estado) {
+            throw new Errores({
+                codigo: 'error/usuario_mala_solicitud',
+                mensaje: 'Ya se esta publicando el curso.'
+            })
+        }
+
+        next()
+        
+    } catch (error) {
+        next(error)
+    }
+}
+
+
+borrador.errorSiElCursoSeEstaPublicando = async (req = request, res = response, next) => {
+    try {
+        const { datos, body, params } = req
+        const { uidSolicitante, datosAuthSolicitante } = datos
+
+        const uidCurso = params.uidCurso
+        
+        const cursoEstadoPublicacion = new CursoEstadoPublicacion()
+        const existe = await cursoEstadoPublicacion.importarDatosDocumento(uidCurso)
+
+        if (!existe) return next()
+
+        if (cursoEstadoPublicacion.estado) {
+            throw new Errores({
+                codigo: 'error/usuario_mala_solicitud',
+                mensaje: 'Ya se esta publicando el curso.'
+            })
+        }
+
+        req.datos.cursoEstadoPublicacion = cursoEstadoPublicacion
+
+        next()
+        
+    } catch (error) {
+        next(error)
+    }
+}
+
+
 
 module.exports = borrador

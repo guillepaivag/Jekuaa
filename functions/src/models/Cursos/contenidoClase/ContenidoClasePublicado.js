@@ -1,4 +1,7 @@
-const ContenidoClase = require("./ContenidoClase");
+const admin = require('../../../../firebase-service')
+const config = require("../../../../config")
+const ContenidoClase = require("./ContenidoClase")
+const ContenidoClaseBorrador = require('./ContenidoClaseBorrador')
 
 const COLECCION = 'ContenidoClasesPublicado'
 
@@ -82,6 +85,31 @@ class ContenidoClasePublicado extends ContenidoClase {
         // Crear/Actualizar el archivo contenido en Cloud Storage
 
         // Actualizar el documento contenido en Cloud Firestore
+    }
+
+    static async actualizarContenidoDesdeBorrador (uidCurso = '', uidClase = '') {
+        const rutaModo = config.environment.mode === 'production' ? 'prod' : 'dev'
+        let bucketNameContenidoPublicado = rutaModo === 'prod' ? 'j-cursos-contenido' : 'j-cursos-contenido-dev'
+        let bucketNameContenidoBorrador = rutaModo === 'prod' ? 'j-cursos-contenido-b' : 'j-cursos-contenido-b-dev'
+        
+        // Eliminación del contenido de una "carpeta"
+        await super.eliminarContenido({
+            bucketName: bucketNameContenidoPublicado,
+            uidCurso: uidCurso,
+            uidClase: uidClase
+        })
+
+        // Agregar el contenido borrador
+        const contenidoClaseBorrador = new ContenidoClaseBorrador()
+        await contenidoClaseBorrador.importarContenidoClasePorUID(uidCurso, uidClase)
+        const rutaContenido = `${uidCurso}/${uidClase}/${contenidoClaseBorrador.fileName}`
+        super.copiarContenido({
+            bucket1: bucketNameContenidoBorrador,
+            bucket2: bucketNameContenidoPublicado,
+            rutaContenido1: rutaContenido,
+            rutaContenido2: rutaContenido
+        })
+
     }
 
     // ELIMINAR

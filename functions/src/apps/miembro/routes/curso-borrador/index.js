@@ -17,15 +17,15 @@ const {
     verificadorDeDatosPUT,
     construirDatosCursoBorradorPUT,
     verificacionDeEstadoDocumentoPUT,
+    verificarCursoEstadoPublicacion,
+    esValidoElCursoBorrador,
+    errorSiElCursoSeEstaPublicando,
 } = require('../../middlewares/curso-borrador')
-
-const {
-    errorSiElCursoEstaEnRevision
-} = require('../../middlewares/curso-revision')
 
 const { 
     crearCursoBorrador, 
-    actualizarCursoBorrador 
+    actualizarCursoBorrador, 
+    publicarCursoBorrador
 } = require('../../controllers/curso-borrador')
 
 const { 
@@ -51,13 +51,24 @@ router.put('/actualizar/:uidCurso',
     esMiembro,
     elMiembroEsInstructor,
     perteneceAlInstructorEsteCurso,
-    errorSiElCursoEstaEnRevision,
+    errorSiElCursoSeEstaPublicando,
     verificarDatosRequeridosPUT,
     verificadorDeTipoDeDatosPUT,
     verificadorDeDatosPUT,
     construirDatosCursoBorradorPUT,
     verificacionDeEstadoDocumentoPUT,
     actualizarCursoBorrador)
+
+
+// ACTUALIZAR CONTENIDO DE BORRADOR
+router.put('/publicar/:uidCurso',
+    estaAutenticado,
+    esMiembro,
+    elMiembroEsInstructor,
+    perteneceAlInstructorEsteCurso,
+    verificarCursoEstadoPublicacion,
+    esValidoElCursoBorrador,
+    publicarCursoBorrador)
 
 
 

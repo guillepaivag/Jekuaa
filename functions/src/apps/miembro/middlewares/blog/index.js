@@ -341,7 +341,7 @@ middlewares.verificadorDeDatosBlog = async (req, res, next) => {
 
                 // La uid del solicitante debe ser igual a la uid del dueño del blog
                 if ( publicador ) {
-                    if (publicador != datosUsuario.uid) {
+                    if (publicador !== datosUsuario.uid) {
                         throw new Errores({
                             codigo: 'error/usuario_no_autorizado',
                             mensaje: 'No puedes agregar un blog a nombre de otro usuario que no seas tu.'
@@ -592,84 +592,5 @@ middlewares.velidarDatosMeGustaBlog = async (req, res, next) => {
     }
 }
 
-
-
-
-
-
-
-
-
-
-middlewares.permisoParaCrearBlog = async (req = request, res = response, next) => {
-    try {
-        const { datos, body } = req
-        const { uidSolicitante, datosAuthSolicitante } = datos
-
-        const rol = datosAuthSolicitante.customClaims.rol
-        const roles = new Roles(rol)
-
-        const doc = await roles.obtenerDocumentoRol()
-        
-        if (!doc.data().permisosBlog.crear) {
-            throw new Errores({
-                codigo: 'error/usuario_no_autorizado',
-                mensaje: 'No tienes permiso para esta acción.'
-            })
-        }
-
-        next()
-    } catch (error) {
-        next(error)
-    }
-}
-
-middlewares.permisoParaActualizarBlog = async (req = request, res = response, next) => {
-    try {
-        const { datos, body } = req
-        const { uidSolicitante, datosAuthSolicitante } = datos
-
-        const rol = datosAuthSolicitante.customClaims.rol
-        const roles = new Roles(rol)
-
-        const doc = await roles.obtenerDocumentoRol()
-        
-        if (!doc.data().permisosBlog.actualizar) {
-            throw new Errores({
-                codigo: 'error/usuario_no_autorizado',
-                mensaje: 'No tienes permiso para esta acción.'
-            })
-        }
-
-        next()
-    } catch (error) {
-        next(error)
-    }
-}
-
-
-
-middlewares.permisoParaEliminarBlog = async (req = request, res = response, next) => {
-    try {
-        const { datos, body } = req
-        const { uidSolicitante, datosAuthSolicitante } = datos
-
-        const rol = datosAuthSolicitante.customClaims.rol
-        const roles = new Roles(rol)
-
-        const doc = await roles.obtenerDocumentoRol()
-        
-        if (!doc.data().permisosBlog.eliminar) {
-            throw new Errores({
-                codigo: 'error/usuario_no_autorizado',
-                mensaje: 'No tienes permiso para esta acción.'
-            })
-        }
-
-        next()
-    } catch (error) {
-        next(error)
-    }
-}
 
 module.exports = middlewares

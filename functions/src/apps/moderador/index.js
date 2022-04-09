@@ -24,8 +24,6 @@ apiModerador.use('/usuario', require('./routes/usuario'))
 apiModerador.use('/blog', require('./routes/blog'))
 
 // CURSOS
-apiModerador.use('/curso-borrador/contenidoClase', require('./routes/curso-borrador/contenidoClase'))
-apiModerador.use('/curso-revision', require('./routes/curso-revision'))
 apiModerador.use('/curso-publicado', require('./routes/curso-publicado'))
 
 // MANEJO DE ERRORES

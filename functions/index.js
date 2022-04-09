@@ -15,7 +15,6 @@ const apiModerador = require('./src/apps/moderador')
 const {
   indexBlogAlgolia, 
   indexCursoBorradorAlgolia,
-  indexCursoRevisionAlgolia,
   indexCursoPublicadoAlgolia
 } = require('./src/functions/algolia')
 
@@ -50,7 +49,7 @@ const {
 } = require('./src/functions/curso/borrador/clase')
 
 const { validacionContenidoClase } = require('./src/functions/curso/borrador/contenidoClase')
-const { eventoActualizacionCursoRevision } = require('./src/functions/curso/revision')
+const { eventoPublicacionCurso } = require('./src/functions/curso/publicacion')
 
 
 // SSR Para el cliente con Nuxt.js
@@ -99,12 +98,11 @@ exports.eventoEliminacionClaseBorrador = eventoEliminacionClaseBorrador
 exports.validacionContenidoClase = validacionContenidoClase
 
 
-// Funciones para cursos revision de Jekuaapy
-exports.eventoActualizacionCursoRevision = eventoActualizacionCursoRevision
+// Publicación de curso
+exports.eventoPublicacionCurso = eventoPublicacionCurso
 
 
 // Indexación ALGOLIA
 exports.indexBlogAlgolia = indexBlogAlgolia
 exports.indexCursoBorradorAlgolia = indexCursoBorradorAlgolia
-exports.indexCursoRevisionAlgolia = indexCursoRevisionAlgolia
 exports.indexCursoPublicadoAlgolia = indexCursoPublicadoAlgolia

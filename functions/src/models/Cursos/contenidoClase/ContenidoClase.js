@@ -93,14 +93,20 @@ class ContenidoClase {
 
     /**
      * CONTENIDO DE LAS CLASES
-    */
-
+     */
+    
     static async subirContenido (datos = { bucketName, uidCurso, uidClase, fileData }) {       
         const { bucketName, uidCurso, uidClase, fileData } = datos
         
         const rutaDestino = `${uidCurso}/${uidClase}/${fileData.nombreArchivo}`
-
+ 
         return await Clase.subirArchivo(bucketName, rutaDestino, fileData)
+    }
+
+    static async copiarContenido (datos = {bucket1, bucket2, rutaContenido1, rutaContenido2}) {
+        const { bucket1, bucket2, rutaContenido1, rutaContenido2 } = datos
+
+        await Clase.copiarContenido(bucket1, bucket2, rutaContenido1, rutaContenido2)
     }
 
     static async existeContenido ( datos = { bucketName, uidCurso, uidClase, fileData } ) {

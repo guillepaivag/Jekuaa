@@ -51,7 +51,7 @@ ffUnidades.validacionEstadoDocumentoUnidadBorrador = functions
     
     datosActualizados.contieneErrores = !!mensajesError.length
 
-    // Debe existir el curso para realizar la revision
+    // Debe existir el curso
     let ref = db.collection('CursosPublicado').doc(uidCursoBorrador)
     let doc = await ref.get()
     if (doc.exists) {
@@ -70,6 +70,9 @@ ffUnidades.validacionEstadoDocumentoUnidadBorrador = functions
 
             if ( !huboCambio ) 
                 huboCambio = unidadPublicado.cantidadClases !== unidadBorrador.cantidadClases
+
+            if ( !huboCambio ) 
+                huboCambio = unidadPublicado.duracion !== unidadBorrador.duracion
 
             // Si es un documento sin cambios y hubo un cambio, actualizar a "actualizado"
             if ( huboCambio && unidadBorrador.estadoDocumento === '' ) 

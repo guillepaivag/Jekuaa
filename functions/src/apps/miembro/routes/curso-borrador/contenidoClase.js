@@ -5,7 +5,8 @@ const { estaAutenticado } = require('../../../estudiante/middlewares/usuario')
 const { esMiembro, elMiembroEsInstructor } = require('../../middlewares')
 const { 
     permisoParaActualizarCursoBorrador, 
-    perteneceAlInstructorEsteCurso 
+    perteneceAlInstructorEsteCurso, 
+    errorSiElCursoSeEstaPublicando
 } = require('../../middlewares/curso-borrador')
 const busboyMiddleware = require('../../../../helpers/busboy-middleware')
 const obtenerMetadataArchivo = require('../../../../helpers/obtener-metadata-archivo')
@@ -13,34 +14,45 @@ const {
     esValidoElContenidoClaseVideo, 
     construirElContenidoClaseVideo, 
     esValidoElContenidoClaseArticulo, 
-    construirElContenidoClaseArticulo 
+    construirElContenidoClaseArticulo, 
+    validarDatosParaCambiarEstadoArchivo
 } = require('../../../../apps/miembro/middlewares/curso-borrador/contenidoClase')
-const {
-    errorSiElCursoEstaEnRevision
-} = require('../../../../apps/miembro/middlewares/curso-revision')
+
 const { 
     agregarContenidoClaseVideoBorrador, 
     agregarContenidoClaseArticuloBorrador, 
     eliminarContenidoClaseBorrador,
     obtenerUrlVideoClaseBorrador,
-    obtenerArticuloClaseBorrador
+    obtenerArticuloClaseBorrador,
+    cambiarEstadoArchivo
 } = require('../../../../apps/miembro/controllers/curso-borrador/contenidoClase')
 
 
 
-// Funciona bien pero no con Cloud Functions: Ya que no permite 
-// un archivo de tamaño mayor a 10MB.
-router.put('/actualizarVideo/:uidCurso/:uidUnidad/:uidClase', 
+router.put('/cambiarEstadoArchivo/:uidCurso/:uidClase', 
     estaAutenticado,
     esMiembro,
     elMiembroEsInstructor,
     perteneceAlInstructorEsteCurso, 
-    errorSiElCursoEstaEnRevision,
-    busboyMiddleware,
-    obtenerMetadataArchivo,
-    esValidoElContenidoClaseVideo,
-    construirElContenidoClaseVideo,
-    agregarContenidoClaseVideoBorrador)
+    validarDatosParaCambiarEstadoArchivo,
+    cambiarEstadoArchivo)
+
+
+
+
+
+// // Funciona bien pero no con Cloud Functions: Ya que no permite 
+// // un archivo de tamaño mayor a 10MB.
+// router.put('/actualizarVideo/:uidCurso/:uidUnidad/:uidClase', 
+//     estaAutenticado,
+//     esMiembro,
+//     elMiembroEsInstructor,
+//     perteneceAlInstructorEsteCurso, 
+//     busboyMiddleware,
+//     obtenerMetadataArchivo,
+//     esValidoElContenidoClaseVideo,
+//     construirElContenidoClaseVideo,
+//     agregarContenidoClaseVideoBorrador)
 
 
 
@@ -51,7 +63,7 @@ router.put('/actualizarArticulo/:uidCurso/:uidUnidad/:uidClase',
     esMiembro,
     elMiembroEsInstructor,
     perteneceAlInstructorEsteCurso, 
-    errorSiElCursoEstaEnRevision,
+    errorSiElCursoSeEstaPublicando,
     esValidoElContenidoClaseArticulo,
     construirElContenidoClaseArticulo,
     agregarContenidoClaseArticuloBorrador)
@@ -65,7 +77,7 @@ router.delete('/eliminar/:uidCurso/:uidUnidad/:uidClase',
     esMiembro,
     elMiembroEsInstructor,
     perteneceAlInstructorEsteCurso, 
-    errorSiElCursoEstaEnRevision,
+    errorSiElCursoSeEstaPublicando,
     eliminarContenidoClaseBorrador)
 
 
@@ -76,6 +88,7 @@ router.get('/obtenerVideo/:uidCurso/:uidClase',
     esMiembro,
     elMiembroEsInstructor,
     perteneceAlInstructorEsteCurso, 
+    errorSiElCursoSeEstaPublicando,
     obtenerUrlVideoClaseBorrador)
 
 
@@ -86,6 +99,7 @@ router.get('/obtenerArticulo/:uidCurso/:uidClase',
     esMiembro,
     elMiembroEsInstructor,
     perteneceAlInstructorEsteCurso, 
+    errorSiElCursoSeEstaPublicando,
     obtenerArticuloClaseBorrador)
 
 
