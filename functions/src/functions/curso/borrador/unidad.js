@@ -3,6 +3,7 @@ const admin = require('../../../../firebase-service')
 const db = require('../../../../db')
 const UnidadBorrador = require('../../../models/Cursos/unidad/UnidadBorrador')
 const Unidad = require('../../../models/Cursos/unidad/Unidad')
+const ElementoCursoEliminado = require('../../../models/Cursos/curso/ElementoCursoEliminado')
 const ffUnidades = {}
 
 
@@ -106,6 +107,7 @@ ffUnidades.eventoEliminacionUnidadBorrador = functions
 .firestore.document(documentPath)
 .onDelete(async (document, context) => {
     const doc = document
+    const unidadBorrador = new UnidadBorrador(doc.data())
 
     const { uidCursoBorrador, uidUnidadBorrador } = context.params
 
@@ -121,6 +123,19 @@ ffUnidades.eventoEliminacionUnidadBorrador = functions
         if (!doc.exists) continue
         const decrementar = admin.firestore.FieldValue.increment(-1)
         doc.ref.update({ ordenUnidad: decrementar })
+    }
+
+    if (unidadBorrador.estadoDocumento !== 'nuevo') {
+        const elementoCursoEliminado = new ElementoCursoEliminado()
+        elementoCursoEliminado.setUid(uidCursoBorrador)
+        elementoCursoEliminado.setTipo('unidad')
+        elementoCursoEliminado.setDatos({
+            uidCurso: uidCursoBorrador,
+            uidUnidad: uidUnidadBorrador,
+            uidClase: '',
+        })
+
+        ElementoCursoEliminado.agregar(uidCursoBorrador, elementoCursoEliminado)
     }
 
 })
