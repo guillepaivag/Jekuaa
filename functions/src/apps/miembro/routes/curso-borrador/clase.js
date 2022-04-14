@@ -67,7 +67,7 @@ router.put('/actualizarOrden/:uidCurso/:uidUnidad',
     actualizarOrdenClaseBorrador)
 
 // CAMBIAR UNIDAD DE UNA CLASE
-router.put('/actualizarUnidad/:uidCurso/:uidClase', 
+router.put('/cambiarUnidad/:uidCurso/:uidUnidad/:uidClase', 
     estaAutenticado,
     esMiembro,
     elMiembroEsInstructor,

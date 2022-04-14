@@ -155,10 +155,10 @@ middleware.esValidoElContenidoClaseArticulo = async (req, res, next) => {
             })
         }
         
-        if (contenidoClaseBorrador.estadoArchivo !== 'subiendo') {
+        if (contenidoClaseBorrador.estadoArchivo === 'procesando') {
             throw new Errores({
                 codigo: 'error/usuario_mala_solicitud',
-                mensaje: 'Esta clase debe estar en estado "subiendo".'
+                mensaje: 'Hay un contenido para esta clase que ya se está procesando.'
             })
         }
 
@@ -181,11 +181,6 @@ middleware.construirElContenidoClaseArticulo = async (req, res, next) => {
         const { uidCurso, uidUnidad, uidClase } = params
         const { articulo } = body
 
-        // // Actualizar a estado "subiendo"
-        // await ContenidoClaseBorrador.actualizarDocumento(uidCurso, uidClase, {
-        //     estadoArchivo: 'subiendo',
-        // })
-
         // Pasar de HTML a Markdown
         const nombreBlogTemp = 'articulo.md'
         const rutaArchivoTemp = path.join(os.tmpdir(), nombreBlogTemp)
@@ -203,61 +198,6 @@ middleware.construirElContenidoClaseArticulo = async (req, res, next) => {
         next(error)
     }
 }
-
-
-
-middleware.validarDatosParaCambiarEstadoArchivo = async (req=request, res=response, next) => {
-    try {
-        const { datos, body, params } = req
-        const { uidSolicitante, datosAuthSolicitante } = datos
-        const { uidCurso, uidClase } = params
-        const { estadoArchivo } = body
-
-        const contenidoClaseBorrador = new ContenidoClaseBorrador()
-        await contenidoClaseBorrador.importarContenidoClasePorUID(uidCurso, uidClase)
-
-        if (contenidoClaseBorrador.estadoArchivo === 'procesando') {
-            throw new Errores({
-                codigo: 'error/usuario_mala_solicitud',
-                mensaje: 'El contenido para esta clase ya se esta procesando.'
-            })
-        }
-
-        if (estadoArchivo === undefined) {
-            throw new Errores({
-                codigo: 'error/usuario_mala_solicitud',
-                mensaje: 'Datos invalidos.'
-            })
-        }
-
-        if (typeof estadoArchivo !== 'string') {
-            throw new Errores({
-                codigo: 'error/usuario_mala_solicitud',
-                mensaje: 'Datos invalidos.'
-            })
-        }
-
-        if (estadoArchivo !== 'subiendo' || estadoArchivo !== '') {
-            throw new Errores({
-                codigo: 'error/usuario_mala_solicitud',
-                mensaje: 'Datos invalidos.'
-            })
-        }
-
-        if (estadoArchivo === contenidoClaseBorrador.estadoArchivo) {
-            throw new Errores({
-                codigo: 'error/usuario_mala_solicitud',
-                mensaje: 'Este estado ya esta en proceso.'
-            })
-        }
-
-        next()
-    } catch (error) {
-        next(error)
-    }
-}
-
-
 
 
 

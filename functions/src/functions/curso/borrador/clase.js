@@ -99,7 +99,7 @@ ffClases.eventoActualizacionClaseBorrador = functions
     if (doc.exists) {
         // Una unidad nueva, siempre sera etiquetado como nuevo
         // hasta que se acepte los cambios o se eliminen
-        if ( claseBorrador.estadoDocumento !== 'nuevo' && claseBorrador.estadoDocumento !== 'cambioUnidad' ) {
+        if ( claseBorrador.estadoDocumento !== 'nuevo' && !claseBorrador.estadoDocumento.includes('cambioUnidad') ) {
             doc = await ref
             .collection('UnidadesPublicado').doc(uidUnidadBorrador)
             .collection('ClasesPublicado').doc(uidClaseBorrador)
@@ -273,7 +273,6 @@ ffClases.eventoEliminacionClaseBorrador = functions
 
     if (claseBorrador.estadoDocumento !== 'nuevo') {
         const elementoCursoEliminado = new ElementoCursoEliminado()
-        elementoCursoEliminado.setUid(uidCursoBorrador)
         elementoCursoEliminado.setTipo('clase')
         elementoCursoEliminado.setDatos({
             uidCurso: uidCursoBorrador,

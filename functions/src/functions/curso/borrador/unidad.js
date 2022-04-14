@@ -127,7 +127,6 @@ ffUnidades.eventoEliminacionUnidadBorrador = functions
 
     if (unidadBorrador.estadoDocumento !== 'nuevo') {
         const elementoCursoEliminado = new ElementoCursoEliminado()
-        elementoCursoEliminado.setUid(uidCursoBorrador)
         elementoCursoEliminado.setTipo('unidad')
         elementoCursoEliminado.setDatos({
             uidCurso: uidCursoBorrador,

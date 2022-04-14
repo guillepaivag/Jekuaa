@@ -29,18 +29,6 @@ const {
 
 
 
-router.put('/cambiarEstadoArchivo/:uidCurso/:uidClase', 
-    estaAutenticado,
-    esMiembro,
-    elMiembroEsInstructor,
-    perteneceAlInstructorEsteCurso, 
-    validarDatosParaCambiarEstadoArchivo,
-    cambiarEstadoArchivo)
-
-
-
-
-
 // // Funciona bien pero no con Cloud Functions: Ya que no permite 
 // // un archivo de tamaño mayor a 10MB.
 // router.put('/actualizarVideo/:uidCurso/:uidUnidad/:uidClase', 
@@ -88,7 +76,6 @@ router.get('/obtenerVideo/:uidCurso/:uidClase',
     esMiembro,
     elMiembroEsInstructor,
     perteneceAlInstructorEsteCurso, 
-    errorSiElCursoSeEstaPublicando,
     obtenerUrlVideoClaseBorrador)
 
 
@@ -99,7 +86,6 @@ router.get('/obtenerArticulo/:uidCurso/:uidClase',
     esMiembro,
     elMiembroEsInstructor,
     perteneceAlInstructorEsteCurso, 
-    errorSiElCursoSeEstaPublicando,
     obtenerArticuloClaseBorrador)
 
 

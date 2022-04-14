@@ -162,12 +162,12 @@ controller.actualizarUnidadClaseBorrador = async (req = request, res = response)
     try {
         const { datos, body, params } = req
         const { uidSolicitante, datosAuthSolicitante } = datos
-        const { uidUnidad, uidUnidadBorradorNuevo } = body
+        const { uidUnidadNueva } = body
 
         const respuesta = new Respuesta()
         let codigo = 'exito'
 
-        if ( uidUnidad === uidUnidadBorradorNuevo ) {
+        if ( params.uidUnidad === uidUnidadNueva ) {
             throw new Errores({
                 codigo: 'error/usuario_mala_solicitud',
                 mensaje: 'La unidad actual debe ser diferente a la nueva.'
@@ -176,9 +176,7 @@ controller.actualizarUnidadClaseBorrador = async (req = request, res = response)
 
         // Obtener datos
         const claseBorrador = new ClaseBorrador()
-        const existeClaseBorrador = await claseBorrador.importarClasePorUID(params.uidCurso,
-        uidUnidad,
-        params.uidClase)
+        const existeClaseBorrador = await claseBorrador.importarClasePorUID(params.uidCurso, params.uidUnidad, params.uidClase)
         if (!existeClaseBorrador) {
             throw new Errores({
                 codigo: 'error/usuario_mala_solicitud',
@@ -187,8 +185,7 @@ controller.actualizarUnidadClaseBorrador = async (req = request, res = response)
         }
 
         const unidadBorrador = new UnidadBorrador()
-        const existeUnidadBorrador = await unidadBorrador.importarUnidadPorUID(params.uidCurso,
-            uidUnidad)
+        const existeUnidadBorrador = await unidadBorrador.importarUnidadPorUID(params.uidCurso, params.uidUnidad)
         if (!existeUnidadBorrador) {
             throw new Errores({
                 codigo: 'error/usuario_mala_solicitud',
@@ -198,25 +195,25 @@ controller.actualizarUnidadClaseBorrador = async (req = request, res = response)
 
         // Agregar la clase a la nueva unidad
         if (claseBorrador.estadoDocumento === '') 
-            claseBorrador.estadoDocumento = 'cambioUnidad'
+            claseBorrador.estadoDocumento = `cambioUnidad/${params.uidUnidad}/${uidUnidadNueva}`
         
         if (claseBorrador.estadoDocumento === 'nuevo') 
             claseBorrador.estadoDocumento = 'nuevo'
         
         if (claseBorrador.estadoDocumento === 'actualizado') 
-            claseBorrador.estadoDocumento = 'cambioUnidad'
+            claseBorrador.estadoDocumento = `cambioUnidad/${params.uidUnidad}/${uidUnidadNueva}`
         
-        if (claseBorrador.estadoDocumento === 'cambioUnidad') {
+        if ( claseBorrador.estadoDocumento.includes('cambioUnidad') ) {
 
             let doc = await db
             .collection('CursosPublicado').doc(params.uidCurso)
-            .collection('UnidadesPublicado').doc(uidUnidadBorradorNuevo)
+            .collection('UnidadesPublicado').doc(uidUnidadNueva)
             .collection('ClasesPublicado').doc(params.uidClase)
             .get()
 
             if (!doc.exists) {
                 // 'cambioUnidad'
-                claseBorrador.estadoDocumento = 'cambioUnidad'
+                claseBorrador.estadoDocumento = `cambioUnidad/${params.uidUnidad}/${uidUnidadNueva}`
             } else {
                 // '', 'actualizado'
                 const clasePublicada = new Clase( doc.data() )
@@ -263,17 +260,17 @@ controller.actualizarUnidadClaseBorrador = async (req = request, res = response)
 
         // Ultima clase de la unidad nueva
         const ultimaClase = await ClaseBorrador.obtenerUltimaClasePorCursoUnidad(params.uidCurso, 
-            uidUnidadBorradorNuevo)
+            uidUnidadNueva)
 
         claseBorrador.ordenClase = ultimaClase ? ultimaClase.ordenClase + 1 : 1
 
-        await ClaseBorrador.agregar(params.uidCurso, 
-        uidUnidadBorradorNuevo, 
+        ClaseBorrador.agregar(params.uidCurso, 
+        uidUnidadNueva, 
         claseBorrador)
 
         // Eliminar datos
-        await ClaseBorrador.eliminar(params.uidCurso,
-        uidUnidad,
+        ClaseBorrador.eliminar(params.uidCurso,
+        params.uidUnidad,
         params.uidClase)
 
         // Retornar respuesta

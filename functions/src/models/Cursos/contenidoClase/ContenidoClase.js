@@ -97,34 +97,59 @@ class ContenidoClase {
     
     static async subirContenido (datos = { bucketName, uidCurso, uidClase, fileData }) {       
         const { bucketName, uidCurso, uidClase, fileData } = datos
+        const { nombreArchivo, extensionArchivo, rutaArchivoTemp } = fileData
         
-        const rutaDestino = `${uidCurso}/${uidClase}/${fileData.nombreArchivo}`
+        const rutaDestino = `${uidCurso}/${uidClase}/${nombreArchivo}`
+
+        const bucket = admin.storage().bucket(bucketName)
+
+        const response = await bucket.upload(rutaArchivoTemp, {
+            destination: rutaDestino,
+            uploadType: 'media',
+            metadata: {
+                metadata: {
+                    contentType: `.${extensionArchivo}`
+                }
+            }
+        })
  
-        return await Clase.subirArchivo(bucketName, rutaDestino, fileData)
+        return response
     }
 
-    static async copiarContenido (datos = {bucket1, bucket2, rutaContenido1, rutaContenido2}) {
-        const { bucket1, bucket2, rutaContenido1, rutaContenido2 } = datos
+    static async copiarContenido (datos = {bucketOrigin, bucketDestination, rutaContenidoOrigin, rutaContenidoDestination}) {
+        const { bucketOrigin, bucketDestination, rutaContenidoOrigin, rutaContenidoDestination } = datos
 
-        await Clase.copiarContenido(bucket1, bucket2, rutaContenido1, rutaContenido2)
+        const storage = admin.storage()
+
+        const bucket1 = storage.bucket(bucketOrigin)
+        const file1 = bucket1.file(rutaContenidoOrigin)
+
+        const bucket2 = storage.bucket(bucketDestination)
+        const file2 = bucket2.file(rutaContenidoDestination)
+
+        await file1.copy(file2)
     }
 
     static async existeContenido ( datos = { bucketName, uidCurso, uidClase, fileData } ) {
         const { bucketName, uidCurso, uidClase, fileData } = datos
+        const { nombreArchivo } = fileData
         
-        const rutaDestino = `${uidCurso}/${uidClase}/${fileData.nombreArchivo}`
+        const rutaDestino = `${uidCurso}/${uidClase}/${nombreArchivo}`
 
-        return Clase.existeArchivo(bucketName, rutaDestino)
+        const bucket = admin.storage().bucket(bucketName)
+
+        const file = bucket.file(rutaDestino)
+
+        const existe = (await file.exists())[0]
+
+        return existe
     }
 
-    static async eliminarContenido ( datos = { bucketName, uidCurso, uidClase } ) {
-        const { bucketName, uidCurso, uidClase } = datos
-        
-        const rutaDestino = `${uidCurso}/${uidClase}/`
-
-        await Clase.eliminarArchivo(bucketName, rutaDestino)
-
-        return true
+    static async eliminarContenidoPrefix ( datos = { bucketName, rutaContenidoPrefix } ) {
+        const { bucketName, rutaContenidoPrefix } = datos
+    
+        const bucket = admin.storage().bucket(bucketName)
+        await bucket.deleteFiles({ prefix: rutaContenidoPrefix })
     }
 
     static async generarUrlVideoClase ( datos = { bucketName, uidCurso, uidClase } ) {

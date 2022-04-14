@@ -169,18 +169,17 @@ controller.eliminarContenidoClaseBorrador = async (req = request, res = response
             })
         }
 
-        if (contenidoClaseBorrador.estadoArchivo !== '') {
+        if (contenidoClaseBorrador.estadoArchivo === 'procesando') {
             throw new Errores({
                 codigo: 'error/usuario_mala_solicitud',
-                mensaje: 'Se esta subiendo o procesando un contenido para esta clase, intentelo más tarde.',
+                mensaje: 'Se está procesando un contenido para esta clase.',
             })
         }
         
         // Eliminar el archivo en cloud storage
-        ContenidoClaseBorrador.eliminarContenido({
+        ContenidoClaseBorrador.eliminarContenidoPrefix({
             verificacion: false,
-            uidCurso: params.uidCurso,
-            uidClase: params.uidClase
+            rutaContenidoPrefix: `${params.uidCurso}/${params.uidClase}/${contenidoClaseBorrador.fileName}`
         })
 
         // Actualizar por defecto el documento contenido clase
@@ -313,42 +312,5 @@ controller.obtenerArticuloClaseBorrador = async (req = request, res = response) 
 
 }
 
-
-controller.cambiarEstadoArchivo = async (req = request, res = response) => {
-
-    try {
-        const { datos, body, params } = req
-        const { uidSolicitante, datosAuthSolicitante } = datos
-        const { uidCurso, uidClase } = params
-        const { estadoArchivo } = body
-
-        const respuesta = new Respuesta()
-        let codigo = 'exito'
-        
-        await ContenidoClaseBorrador.actualizarDocumento(uidCurso, uidClase, {
-            estadoArchivo: estadoArchivo
-        })
-        
-        // Retornar respuesta
-        const mensaje = estadoArchivo ? 'El contenido de la clase esta en modo de subida.' : 'Se bloqueó la subida para esta clase.'
-        respuesta.setRespuestaPorCodigo(codigo, {
-            mensaje: mensaje,
-            resultado: estadoArchivo
-        })
-        const status = respuesta.getStatusCode()
-        
-        return res.status( status ).json( respuesta.getRespuesta() )
-    } catch (error) {
-        console.log('Error - cambiarEstadoArchivo: ', error)
-
-        const {
-            status,
-            respuesta
-        } = manejadorErrores( error )
-
-        return res.status( status ).json( respuesta )
-    }
-
-}
 
 module.exports = controller

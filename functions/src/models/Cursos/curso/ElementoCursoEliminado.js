@@ -7,7 +7,7 @@ class ElementoCursoEliminado {
     constructor (data = {}) {
         const { uid, tipo, datos } = data
 
-        this.uid = uid ? uid : ''
+        this.uid = uid ? uid : db.collection('Coleccion').doc().id
         this.tipo = tipo ? tipo : ''
         this.datos = datos ? datos : {
             uidCurso: '',
@@ -30,7 +30,7 @@ class ElementoCursoEliminado {
         this.setDatos(data.datos)
     }
 
-    setUid (uid = '') {
+    setUid (uid = db.collection('Coleccion').doc().id) {
         this.uid = uid
     }
 

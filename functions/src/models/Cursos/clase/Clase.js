@@ -118,51 +118,6 @@ class Clase {
         return this
     }
 
-
-
-    /**
-     * CONTENIDO DE LAS CLASES
-    */
-
-    static async subirArchivo ( bucketName = '', rutaDestino = '', fileData = {} ) {
-        const bucket = admin.storage().bucket(bucketName)
-
-        const response = await bucket.upload(fileData.rutaArchivoTemp, {
-            destination: rutaDestino,
-            uploadType: 'media',
-            metadata: {
-                metadata: {
-                    contentType: `.${fileData.extensionArchivo}`
-                }
-            }
-        })
-
-        return response
-    }
-
-    static async copiarContenido ( bucket1 = '', bucket2 = '', rutaContenido1 = '', rutaContenido2 = '' ) {
-        const storage = admin.storage()
-        const bucket = storage.bucket(bucket1)
-        const file = bucket.file(rutaContenido1)
-
-        await file.copy(storage.bucket(bucket2).file(rutaContenido2))
-    }
-
-    static async existeArchivo ( bucketName = '', rutaDestino = '' ) {
-        const bucket = admin.storage().bucket(bucketName)
-
-        const file = bucket.file(rutaDestino)
-
-        const existe = (await file.exists())[0]
-
-        return existe
-    }
-
-    static async eliminarArchivo ( bucketName = '', rutaDestino = '' ) {
-        const bucket = admin.storage().bucket(bucketName)
-        await bucket.deleteFiles({ prefix: rutaDestino })
-        return true
-    }
 }
 
 module.exports = Clase

@@ -5,7 +5,7 @@ const config = require("../../../../config")
 const db = require("../../../../db")
 
 /**
- *  estadoArchivo: '', 'subiendo', 'procesando'
+ *  estadoArchivo: '', 'procesando'
  */
 
 const COLECCION_CONTENIDO_CLASE = 'ContenidoClasesBorrador'
@@ -113,27 +113,24 @@ class ContenidoClaseBorrador extends ContenidoClase {
             uidClase: uidClase,
             fileData: fileData
         })
-
-        return true
     }
 
     // ELIMINAR
-    static async eliminarContenido (datos = {verificacion, uidCurso, uidClase}) {
-        const { verificacion, uidCurso, uidClase } = datos
+    static async eliminarContenidoPrefix (datos = {verificacion, rutaContenidoPrefix}) {
+        const { verificacion, rutaContenidoPrefix } = datos
         const rutaModo = config.environment.mode === 'production' ? 'prod' : 'dev'
         
         // Eliminar el archivo contenido de Cloud Storage
         let bucketNameContenidoBorrador = rutaModo === 'prod' ? 'j-cursos-contenido-b' : 'j-cursos-contenido-b-dev'
         let bucketNameContenidoBorradorVerificacion = rutaModo === 'prod' ? 'j-cursos-contenido-bv' : 'j-cursos-contenido-bv-dev'
-        await super.eliminarContenido({
-            bucketName: !verificacion ? bucketNameContenidoBorrador : bucketNameContenidoBorradorVerificacion,
-            uidCurso: uidCurso,
-            uidClase: uidClase,
-        })
 
-        return true
+        await super.eliminarContenidoPrefix({
+            bucketName: !verificacion ? bucketNameContenidoBorrador : bucketNameContenidoBorradorVerificacion,
+            rutaContenidoPrefix: rutaContenidoPrefix
+        })
     }
 
+    // GENERAR URL VIDEO
     static async generarUrlVideoClase (datos = {verificacion, uidCurso, uidClase}) {
         const { verificacion, uidCurso, uidClase } = datos
         const rutaModo = config.environment.mode === 'production' ? 'prod' : 'dev'
@@ -149,6 +146,7 @@ class ContenidoClaseBorrador extends ContenidoClase {
         return url
     }
 
+    // OBTENER ARTICULO
     static async obtenerArticuloClase (datos = {verificacion, uidCurso, uidClase, getMarkdown}) {
         const { verificacion, uidCurso, uidClase, getMarkdown } = datos
         const rutaModo = config.environment.mode === 'production' ? 'prod' : 'dev'
@@ -165,6 +163,7 @@ class ContenidoClaseBorrador extends ContenidoClase {
         return articulo
     }
 
+    // VERFICADOR DE EXISTENCIA DE ERRORES
     static async tieneErrores ( uidCurso = '' ) {
         const snapshot = await db
         .collection('CursosBorrador').doc(uidCurso)

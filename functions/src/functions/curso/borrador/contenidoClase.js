@@ -12,6 +12,8 @@ const {
 } = require('./helpers/contenidoClase')
 const config = require("../../../../config")
 const db = require('../../../../db')
+const CursoEstadoPublicacion = require('../../../models/Cursos/curso/CursoEstadoPublicacion')
+const ElementoCursoEliminado = require('../../../models/Cursos/curso/ElementoCursoEliminado')
 
 const ffContenidoClase = {}
 const rutaModo = config.environment.mode === 'production' ? 'prod' : 'dev'
@@ -42,18 +44,23 @@ ffContenidoClase.validacionContenidoClase = functions
         let documentoClase = {}
         estadoDelProceso = 'verificando'
 
-        // Si el documento contenidoClase no esta como "subiendo"
         const contenidoClaseBorrador = new ContenidoClaseBorrador()
         const existe = !!(await contenidoClaseBorrador.importarContenidoClasePorUID(uidCurso, uidClase))
 
         console.log('existe', existe)
         console.log('contenidoClaseBorrador', JSON.stringify( contenidoClaseBorrador.getContenidoClaseBorrador() ))
         
-        if (!existe || contenidoClaseBorrador.estadoArchivo !== 'subiendo') {
-            // TODO: Eiminar el archivo subido en "validacion"
-            console.log('No existe este curso o no hay un curso subiendose.')
-            throw new Error('No existe este curso o no hay un curso subiendose.')
-        }
+        if ( !existe ) 
+            throw new Error('No existe la clase.')
+        
+        if ( contenidoClaseBorrador.estadoArchivo === 'procesando' ) 
+            throw new Error('Ya se esta procesando un archivo.')
+
+        const cursoEstadoPublicacion = new CursoEstadoPublicacion()
+        await cursoEstadoPublicacion.importarDatosDocumento(uidCurso)
+
+        if (cursoEstadoPublicacion.estado) 
+            throw new Error('Se esta publicando el curso.')
 
         // TODO: Actualizar el documento contenidoClase como "procesando"
         await ContenidoClaseBorrador.actualizarDocumento(uidCurso, uidClase, {
@@ -219,12 +226,12 @@ ffContenidoClase.validacionContenidoClase = functions
     } catch (error) {
         console.log('Error al actualizar un contenido a la clase: ', error)
 
-        const uidCurso = object.name.split('/')[0]
-        const uidClase = object.name.split('/')[1]
-
         // TODO: Eliminar video de "j-cursos-contenido-bv"
         const bucketPrueba = admin.storage().bucket(bucketNameContenidoBorradorVerificacion)
         bucketPrueba.file(object.name).delete()
+
+        const uidCurso = object.name.split('/')[0]
+        const uidClase = object.name.split('/')[1]
 
         if (estadoDelProceso === 'iniciando' || estadoDelProceso === 'verificando') {
             // TODO: Actualizar el documento contenidoClase como ""
@@ -268,6 +275,30 @@ ffContenidoClase.validacionContenidoClase = functions
     
 })
 
+
+
+ffContenidoClase.eventoEliminacionDocumentoCCB = functions
+.region('southamerica-east1')
+.firestore.document('CursosBorrador/{uidCursoBorrador}/ContenidoClasesBorrador/{uidContenidoClaseBorrador}')
+.onDelete(async (document, context) => {
+    const doc = document
+    const contenidoClaseBorrador = new ContenidoClaseBorrador(doc.data())
+
+    const { uidCursoBorrador, uidContenidoClaseBorrador } = context.params
+
+    if (contenidoClaseBorrador.estadoDocumento !== 'nuevo') {
+        const elementoCursoEliminado = new ElementoCursoEliminado()
+        elementoCursoEliminado.setTipo('contenidoClase')
+        elementoCursoEliminado.setDatos({
+            uidCurso: uidCursoBorrador,
+            uidUnidad: '',
+            uidClase: uidContenidoClaseBorrador,
+        })
+
+        ElementoCursoEliminado.agregar(uidCursoBorrador, elementoCursoEliminado)
+    }
+
+})
 
 
 

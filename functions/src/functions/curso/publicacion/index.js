@@ -17,6 +17,7 @@ const ContenidoClaseBorrador = require('../../../models/Cursos/contenidoClase/Co
 const ContenidoClasePublicado = require('../../../models/Cursos/contenidoClase/ContenidoClasePublicado')
 
 const CursoEstadoPublicacion = require('../../../models/Cursos/curso/CursoEstadoPublicacion')
+const ElementoCursoEliminado = require('../../../models/Cursos/curso/ElementoCursoEliminado')
 
 const ff = {}
 
@@ -43,8 +44,6 @@ ff.eventoPublicacionCurso = functions
     await cursoBorrador.importarDatosDeUnCurso(uidCursoEstadoPublicacion)
 
     if (cursoBorrador.estadoDocumento === 'nuevo') {
-        // "Si el curso borrador es nuevo, las unidades y clases tambien lo seran"
-        // TODO: Agregar el curso, las unidades, las clases y sus contenidos.
 
         // CURSO
         const cursoPublicado = new CursoPublicado()
@@ -54,6 +53,9 @@ ff.eventoPublicacionCurso = functions
         // CursoBorrador.actualizarCurso(uidCursoEstadoPublicacion, {
         //     estadoDocumento: ''
         // })
+
+
+
 
         // UNIDADES
         const snapshotUnidad = await db
@@ -73,6 +75,9 @@ ff.eventoPublicacionCurso = functions
             // UnidadBorrador.actualizar(uidCursoEstadoPublicacion, unidadPublicado.uid, {
             //     estadoDocumento: ''
             // })
+
+
+            
 
             // CLASES
             const snapshotClase = await docUnidad.ref.collection('ClasesBorrador').get()
@@ -107,7 +112,7 @@ ff.eventoPublicacionCurso = functions
             contenidoClasePublicado.setContenidoClase(dataContenidoClase)
 
             // Contenido
-            ContenidoClasePublicado.actualizarContenidoDesdeBorrador(uidCursoEstadoPublicacion, contenidoClasePublicado.uid)
+            await ContenidoClasePublicado.copiarContenidoDeBorrador(uidCursoEstadoPublicacion, contenidoClasePublicado.uid)
 
             // Documento
             await ContenidoClasePublicado.agregarDocumento(uidCursoEstadoPublicacion, contenidoClasePublicado)
@@ -119,9 +124,14 @@ ff.eventoPublicacionCurso = functions
     } else {
         // TODO: Filtrar las unidades, clases y contenidos que su estadoDocumento sea diferente de '' (vacio)
         if (cursoBorrador.estadoDocumento === 'actualizado') {
-            
+            CursoPublicado.actualizarCurso(uidCursoEstadoPublicacion, cursoBorrador.getCurso())
+            // CursoBorrador.actualizarCurso(uidCursoEstadoPublicacion, {
+            //     estadoDocumento: ''
+            // })
         }
 
+
+        
         let ref = db.collection('CursosBorrador').doc(uidCursoEstadoPublicacion)
         const snapshotUnidades = await ref.collection('UnidadesBorrador').get()
         const docsUnidades = snapshotUnidades.docs
@@ -131,12 +141,24 @@ ff.eventoPublicacionCurso = functions
             const unidadBorrador = new UnidadBorrador(docUnidad.data())
 
             if (unidadBorrador.estadoDocumento === 'nuevo') {
-                
+                const unidadPublicado = new UnidadPublicado()
+                unidadPublicado.setUnidad( unidadBorrador.getUnidad() )
+
+                await UnidadPublicado.agregar(uidCursoEstadoPublicacion, unidadPublicado)
+                // UnidadBorrador.actualizar(uidCursoEstadoPublicacion, unidadBorrador.uid, {
+                //     estadoDocumento: ''
+                // })
             }
 
             if (unidadBorrador.estadoDocumento === 'actualizado') {
-                
+                UnidadPublicado.actualizar(uidCursoEstadoPublicacion, unidadBorrador.uid, unidadBorrador.getUnidad())
+                // UnidadBorrador.actualizar(uidCursoEstadoPublicacion, unidadBorrador.uid, {
+                //     estadoDocumento: ''
+                // })
             }
+
+
+
 
             const snapshotClase = await docUnidad.ref.collection('ClasesBorrador').get()
             const docsClases = snapshotClase.docs
@@ -146,18 +168,43 @@ ff.eventoPublicacionCurso = functions
                 const claseBorrador = new ClaseBorrador(docClase.data())
 
                 if (claseBorrador.estadoDocumento === 'nuevo') {
-                
+                    const clasePublicado = new ClasePublicado()
+                    clasePublicado.setClase( claseBorrador.getClase() )
+    
+                    await ClasePublicado.agregar(uidCursoEstadoPublicacion, unidadBorrador.uid, clasePublicado)
+                    // ClaseBorrador.actualizar(uidCursoEstadoPublicacion, unidadBorrador.uid, claseBorrador.uid, {
+                    //     estadoDocumento: ''
+                    // })
                 }
     
                 if (claseBorrador.estadoDocumento === 'actualizado') {
-                    
+                    ClasePublicado.actualizar(uidCursoEstadoPublicacion, unidadBorrador.uid, claseBorrador.uid, claseBorrador.getClase())
+                    // ClaseBorrador.actualizar(uidCursoEstadoPublicacion, unidadBorrador.uid, claseBorrador.uid, {
+                    //     estadoDocumento: ''
+                    // })
                 }
 
-                if (claseBorrador.estadoDocumento === 'cambioUnidad') {
+                if ( claseBorrador.estadoDocumento.includes('cambioUnidad') ) {
+                    const array = claseBorrador.estadoDocumento.split('/')
+                    const uidUnidadVieja = array[1]
+                    const uidUnidadNueva = array[2]
+
+                    // Agregar clase a la nueva unidad
+                    const clasePublicado = new ClasePublicado( claseBorrador.getClase() )
+                    ClasePublicado.agregar(uidCursoEstadoPublicacion, uidUnidadNueva, clasePublicado)
+
+                    // Eliminar clase de la vieja unidad
+                    ClasePublicado.eliminar(uidCursoEstadoPublicacion, uidUnidadVieja, claseBorrador.uid)
                     
+                    // ClaseBorrador.actualizar(uidCursoEstadoPublicacion, unidadBorrador.uid, claseBorrador.uid, {
+                    //     estadoDocumento: ''
+                    // })
                 }
             }
         }
+
+
+
 
         const snapshotContenidoClase = await db
         .collection('CursosBorrador').doc(uidCursoEstadoPublicacion)
@@ -170,13 +217,69 @@ ff.eventoPublicacionCurso = functions
             const contenidoClaseBorrador = new ContenidoClaseBorrador(docContenidoClase.data())
             
             if (contenidoClaseBorrador.estadoDocumento === 'actualizado') {
+                // Contenido
+                const contenidoClasePublicado = new ContenidoClasePublicado()
+                await contenidoClasePublicado.importarContenidoClasePorUID(uidCursoEstadoPublicacion, contenidoClaseBorrador.uid)
+
+                await ContenidoClasePublicado.eliminarContenidoPrefix(`${uidCursoEstadoPublicacion}/${contenidoClaseBorrador.uid}/${contenidoClasePublicado.fileName}`)
+                await ContenidoClasePublicado.copiarContenidoDeBorrador(uidCursoEstadoPublicacion, contenidoClaseBorrador.uid)
                 
+                // Documento
+                ContenidoClasePublicado.actualizarDocumento(uidCursoEstadoPublicacion, contenidoClaseBorrador.uid, contenidoClaseBorrador.getContenidoClase())
+                // ContenidoClaseBorrador.actualizarDocumento(uidCursoEstadoPublicacion, contenidoClaseBorrador.uid, {
+                //     estadoDocumento: ''
+                // })
             }
         }
 
+
+
+
         
         // Documentos eliminados en referencia de los documentos de CursoPublicado
-        
+        const snapshotElementoCursoEliminado = await db
+        .collection('CursosBorrador').doc(uidCursoEstadoPublicacion)
+        .collection('ElementosCursoEliminado').get()
+
+        const docsElementoCursoEliminado = snapshotElementoCursoEliminado.docs
+
+        for (let i = 0; i < docsElementoCursoEliminado.length; i++) {
+            const docElementoCursoEliminado = docsElementoCursoEliminado[i]
+            const elementoCursoEliminado = new ElementoCursoEliminado(docElementoCursoEliminado.data())
+
+            // Eliminar el elemento del curso publicado por uid
+            if (elementoCursoEliminado.tipo === 'unidad') {
+                const uidCurso = elementoCursoEliminado.datos.uidCurso
+                const uidUnidad = elementoCursoEliminado.datos.uidUnidad
+
+                // Documento
+                UnidadPublicado.eliminar(uidCurso, uidUnidad)
+                
+            } else if (elementoCursoEliminado.tipo === 'clase') {
+                const uidCurso = elementoCursoEliminado.datos.uidCurso
+                const uidUnidad = elementoCursoEliminado.datos.uidUnidad
+                const uidClase = elementoCursoEliminado.datos.uidClase
+
+                // Documento
+                ClasePublicado.eliminar(uidCurso, uidUnidad, uidClase)
+
+            } else if (elementoCursoEliminado.tipo === 'contenidoClase') {
+                const uidCurso = elementoCursoEliminado.datos.uidCurso
+                const uidClase = elementoCursoEliminado.datos.uidClase
+
+                const contenidoClasePublicado = new ContenidoClasePublicado()
+                await contenidoClasePublicado.importarContenidoClasePorUID(uidCurso, uidClase)
+
+                // Contenido
+                ContenidoClasePublicado.eliminarContenidoPrefix(`${uidCurso}/${uidClase}/${contenidoClasePublicado.fileName}`)
+                
+                // Documento
+                ContenidoClasePublicado.eliminarDocumento(uidCurso, uidClase)
+            }
+
+            // Eliminar de ElementosCursoEliminado
+            ElementoCursoEliminado.eliminar(uidCursoEstadoPublicacion, elementoCursoEliminado.uid)
+        }
     }
 
     // CursoEstadoPublicacion.actualizarDocumento(uidCursoEstadoPublicacion, {

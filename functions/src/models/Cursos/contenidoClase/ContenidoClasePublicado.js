@@ -81,42 +81,32 @@ class ContenidoClasePublicado extends ContenidoClase {
     }
 
     // CREAR - ACTUALIZAR
-    static async subirContenido () {
-        // Crear/Actualizar el archivo contenido en Cloud Storage
-
-        // Actualizar el documento contenido en Cloud Firestore
-    }
-
-    static async actualizarContenidoDesdeBorrador (uidCurso = '', uidClase = '') {
+    static async copiarContenidoDeBorrador (uidCurso = '', uidClase = '') {
         const rutaModo = config.environment.mode === 'production' ? 'prod' : 'dev'
-        let bucketNameContenidoPublicado = rutaModo === 'prod' ? 'j-cursos-contenido' : 'j-cursos-contenido-dev'
-        let bucketNameContenidoBorrador = rutaModo === 'prod' ? 'j-cursos-contenido-b' : 'j-cursos-contenido-b-dev'
-        
-        // Eliminación del contenido de una "carpeta"
-        await super.eliminarContenido({
-            bucketName: bucketNameContenidoPublicado,
-            uidCurso: uidCurso,
-            uidClase: uidClase
-        })
+        const bucketNameContenidoPublicado = rutaModo === 'prod' ? 'j-cursos-contenido' : 'j-cursos-contenido-dev'
+        const bucketNameContenidoBorrador = rutaModo === 'prod' ? 'j-cursos-contenido-b' : 'j-cursos-contenido-b-dev'
 
-        // Agregar el contenido borrador
         const contenidoClaseBorrador = new ContenidoClaseBorrador()
         await contenidoClaseBorrador.importarContenidoClasePorUID(uidCurso, uidClase)
-        const rutaContenido = `${uidCurso}/${uidClase}/${contenidoClaseBorrador.fileName}`
-        super.copiarContenido({
-            bucket1: bucketNameContenidoBorrador,
-            bucket2: bucketNameContenidoPublicado,
-            rutaContenido1: rutaContenido,
-            rutaContenido2: rutaContenido
-        })
 
+        const rutaContenido = `${uidCurso}/${uidClase}/${contenidoClaseBorrador.fileName}`
+        await super.copiarContenido({
+            bucketOrigin: bucketNameContenidoBorrador,
+            bucketDestination: bucketNameContenidoPublicado,
+            rutaContenidoOrigin: rutaContenido,
+            rutaContenidoDestination: rutaContenido
+        })
     }
 
     // ELIMINAR
-    static async eliminarContenido () {
-        // Eliminar el archivo contenido de Cloud Storage
+    static async eliminarContenidoPrefix (rutaContenidoPrefix = '') {
+        const rutaModo = config.environment.mode === 'production' ? 'prod' : 'dev'
+        const bucketNameContenidoPublicado = rutaModo === 'prod' ? 'j-cursos-contenido' : 'j-cursos-contenido-dev'
 
-        // Poner como documento contenido por defecto el documento contenido
+        await super.eliminarContenidoPrefix({
+            bucketName: bucketNameContenidoPublicado, 
+            rutaContenidoPrefix: rutaContenidoPrefix
+        })
     }
 
     static async generarUrlFirmadaVideoClase () {
