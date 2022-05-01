@@ -85,7 +85,6 @@ ffUnidades.validacionEstadoDocumentoUnidadBorrador = functions
         }
     }
 
-
     if ( Object.keys(datosActualizados).length ) {
         await db
         .collection('CursosBorrador').doc(uidCursoBorrador)
@@ -123,18 +122,6 @@ ffUnidades.eventoEliminacionUnidadBorrador = functions
         if (!doc.exists) continue
         const decrementar = admin.firestore.FieldValue.increment(-1)
         doc.ref.update({ ordenUnidad: decrementar })
-    }
-
-    if (unidadBorrador.estadoDocumento !== 'nuevo') {
-        const elementoCursoEliminado = new ElementoCursoEliminado()
-        elementoCursoEliminado.setTipo('unidad')
-        elementoCursoEliminado.setDatos({
-            uidCurso: uidCursoBorrador,
-            uidUnidad: uidUnidadBorrador,
-            uidClase: '',
-        })
-
-        ElementoCursoEliminado.agregar(uidCursoBorrador, elementoCursoEliminado)
     }
 
 })

@@ -3,10 +3,10 @@ const UnidadBorrador = require("../../../../models/Cursos/unidad/UnidadBorrador"
 const Respuesta = require("../../../../models/Respuesta")
 const manejadorErrores = require('../../../../helpers/ManejoErrores')
 const db = require("../../../../../db")
-const config = require("../../../../../config")
 const ContenidoClaseBorrador = require("../../../../models/Cursos/contenidoClase/ContenidoClaseBorrador")
 const ClaseBorrador = require("../../../../models/Cursos/clase/ClaseBorrador")
-const Clase = require("../../../../models/Cursos/clase/Clase")
+const UnidadPublicado = require("../../../../models/Cursos/unidad/UnidadPublicado")
+const ElementoCursoEliminado = require("../../../../models/Cursos/curso/ElementoCursoEliminado")
 
 const controller = {}
 
@@ -166,15 +166,53 @@ controller.eliminarUnidadBorrador = async (req = request, res = response) => {
             // Eliminar documentos subtitulos
 
             // Eliminar archivos (en cloud storage) de una clase
-            const rutaModo = config.environment.mode === 'production' ? 'prod' : 'dev'
-            let bucketNameContenidoBorrador = rutaModo === 'prod' ? 'j-cursos-contenido-b' : 'j-cursos-contenido-b-dev'
-            Clase.eliminarArchivo(bucketNameContenidoBorrador, `${params.uidCurso}/${claseBorrador.uid}`)
+            ContenidoClaseBorrador.eliminarContenidoPrefix({
+                verificacion: false,
+                rutaContenidoPrefix: `${params.uidCurso}/${claseBorrador.uid}`
+            })
+
+            if (claseBorrador.estadoDocumento !== 'nuevo') {
+                // CLASE
+                const elementoCursoEliminado1 = new ElementoCursoEliminado()
+                elementoCursoEliminado1.setTipo('clase')
+                elementoCursoEliminado1.setDatos({
+                    uidCurso: params.uidCurso,
+                    uidUnidad: params.uidUnidad,
+                    uidClase: claseBorrador.uid,
+                })
+
+                ElementoCursoEliminado.agregar(params.uidCurso, elementoCursoEliminado1)
+
+                // CONTENIDO CLASE
+                const elementoCursoEliminado2 = new ElementoCursoEliminado()
+                elementoCursoEliminado2.setTipo('contenidoClase')
+                elementoCursoEliminado2.setDatos({
+                    uidCurso: params.uidCurso,
+                    uidUnidad: '',
+                    uidClase: claseBorrador.uid,
+                })
+
+                ElementoCursoEliminado.agregar(params.uidCurso, elementoCursoEliminado2)
+            }
         }
 
         // Eliminar el documento unidad
-        UnidadBorrador.eliminar(params.uidCurso, 
-            params.uidUnidad)
-        
+        UnidadBorrador.eliminar(params.uidCurso, params.uidUnidad)
+
+        const unidadBorrador = new UnidadBorrador()
+        await unidadBorrador.importarUnidadPorUID(params.uidCurso, params.uidUnidad)
+
+        if (unidadBorrador.estadoDocumento !== 'nuevo') {
+            const elementoCursoEliminado = new ElementoCursoEliminado()
+            elementoCursoEliminado.setTipo('unidad')
+            elementoCursoEliminado.setDatos({
+                uidCurso: params.uidCurso,
+                uidUnidad: params.uidUnidad,
+                uidClase: '',
+            })
+
+            ElementoCursoEliminado.agregar(params.uidCurso, elementoCursoEliminado)
+        }
 
         // Retornar respuesta
         respuesta.setRespuestaPorCodigo(codigo, {

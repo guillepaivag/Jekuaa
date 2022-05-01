@@ -111,7 +111,7 @@
 export default {
     name: '',
     layout: 'miembro',
-    middleware: 'esMiembro',
+    middleware: 'esInstructor',
     data() {
         return {
             breadcrumbs: [

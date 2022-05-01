@@ -34,13 +34,21 @@ class Authentication {
 
         return usuarioAuthNuevo.uid
     }
+
+    async existeUsuario () {
+        try {
+            return await this.obtener()
+        } catch (error) {
+            return null
+        }
+    }
     
     async obtener () {
         // Recolectamos los datos de firebase authentication
         return await admin.auth().getUser(this.uid)
     }
 
-    async actualizar (datosActualizados = {}) {
+    async actualizar (datosActualizados = { auth, claims }) {
         const { auth, claims } = datosActualizados
         
         if (auth) await admin.auth().updateUser(this.uid, auth)
@@ -57,43 +65,57 @@ class Authentication {
         return await admin.auth().updateUser(this.uid, { disabled: !habilitar })
     }
 
-    async actualizarFotoPerfil ( rutaArchivo, extensionArchivo ) {
-        const rutaModo = config.environment.mode === 'production' ? 'prod' : 'dev'
+    async aceptarFotoEnVerificacion ( datos = { bucketOrigin, bucketDestination, rutaOrigin, rutaDestination } ) {
+        const { bucketOrigin, bucketDestination, rutaOrigin, rutaDestination } = datos
 
-        let bucketNameFotoPerfil = rutaModo === 'prod' ? 'j-fotos-perfiles' : 'j-fotos-perfiles-dev'
-        
-        const bucket = admin.storage().bucket(bucketNameFotoPerfil)
+        const storage = admin.storage()
 
-        await bucket.deleteFiles({ prefix: `${this.uid}.` })
+        // Mover al storage aceptado
+        const bucketO = storage.bucket(bucketOrigin)
+        const fileO = bucketO.file(rutaOrigin)
 
-        let rutaStorage = `${this.uid}.${extensionArchivo}`
-        await bucket.upload(rutaArchivo, {
-            destination: rutaStorage,
-            uploadType: 'media',
-            metadata: {
-                metadata: {
-                    contentType: `.${extensionArchivo}`
-                }
-            }
-        })
+        const bucketD = storage.bucket(bucketDestination)
+        const fileD = bucketD.file(rutaDestination)
 
-        const link = bucket.file(rutaStorage).publicUrl()
+        await fileO.copy(fileD)
+        console.log('fileD.publicUrl()', fileD.publicUrl())
 
-        await admin.auth().updateUser(this.uid, { 
-            photoURL: link
-        })
+        // Actualizar con la nueva URL
+        this.actualizarFotoPerfil( fileD.publicUrl() )
 
-        return link
+        // Eliminar la foto en verificación
+        this.eliminarFotoPerfilVerificacion()
     }
 
-    async eliminarFotoPerfil (  ) {
+    async actualizarFotoPerfil ( urlFoto = '' ) {
+        await admin.auth().updateUser(this.uid, { 
+            photoURL: urlFoto
+        })
+
+        return urlFoto
+    }
+
+    async eliminarFotoPerfil () {
         const rutaModo = config.environment.mode === 'production' ? 'prod' : 'dev'
 
-        let bucketNameFotoPerfil = rutaModo === 'prod' ? 'j-fotos-perfiles' : 'j-fotos-perfiles-dev'
+        let bucketNameFotoPerfil = rutaModo === 'prod' ? 'prod-j-fotos-perfiles' : 'dev-j-fotos-perfiles'
 
         const bucket = admin.storage().bucket(bucketNameFotoPerfil)
-        await bucket.deleteFiles({ prefix: `${this.uid}.` })
+        await bucket.deleteFiles({ prefix: `${this.uid}` })
+        
         await admin.auth().updateUser( this.uid, { photoURL: null })
+
+        return this
+    }
+
+    async eliminarFotoPerfilVerificacion ( fileNamePrefix = '' ) {
+        const rutaModo = config.environment.mode === 'production' ? 'prod' : 'dev'
+
+        let bucketNameFotoPerfil = rutaModo === 'prod' ? 'prod-j-fotos-perfiles-v' : 'dev-j-fotos-perfiles-v'
+
+        const bucket = admin.storage().bucket(bucketNameFotoPerfil)
+        if (fileNamePrefix) await bucket.deleteFiles({ prefix: `${this.uid}/${fileNamePrefix}` }) 
+        else await bucket.deleteFiles({ prefix: `${this.uid}/` })
 
         return this
     }

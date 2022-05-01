@@ -152,33 +152,34 @@ class ContenidoClase {
         await bucket.deleteFiles({ prefix: rutaContenidoPrefix })
     }
 
-    static async generarUrlVideoClase ( datos = { bucketName, uidCurso, uidClase } ) {
-        const { bucketName, uidCurso, uidClase } = datos
-
-        const rutaDestino = `${uidCurso}/${uidClase}/`
+    static async generarUrlVideoClasePrefix ( datos = { bucketName, rutaContenidoPrefix } ) {
+        const { bucketName, rutaContenidoPrefix } = datos
 
         const bucket = admin.storage().bucket(bucketName)
-        const response = await bucket.getFiles({
-            prefix: rutaDestino
-        })
+        const response = await bucket.getFiles({ prefix: rutaContenidoPrefix })
         const files = response[0]
         const file = files[0]
 
+        // file.publicUrl()
         const links = await file.getSignedUrl({
             action: 'read',
             expires: Date.now() + 10 * 1000
         })
 
-        return links[0]
+        const link = links[0]
+
+        return link
     }
 
-    static async obtenerArticuloClase ( datos = { bucketName, uidCurso, uidClase, getMarkdown } ) {
-        const { bucketName, uidCurso, uidClase, getMarkdown } = datos
-        
-        const rutaDestino = `${uidCurso}/${uidClase}/articulo.md`
+    static async obtenerArticuloClasePrefix ( datos = { bucketName, rutaContenidoPrefix, getMarkdown } ) {
+        const { bucketName, rutaContenidoPrefix, getMarkdown } = datos
 
         const bucket = admin.storage().bucket(bucketName)
-        const file = bucket.file(rutaDestino)
+        const response = await bucket.getFiles({
+            prefix: rutaContenidoPrefix
+        })
+        const files = response[0]
+        const file = files[0]
 
         const archivo = file.createReadStream()
         return new Promise((resolve, reject) => {

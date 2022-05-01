@@ -166,15 +166,15 @@ controllerUsuario.obtenerUsuarioAuth = async (req, res) => {
         
         datosAuth = JSON.parse( JSON.stringify( responseDatosAuth ) )
 
-        delete datosAuth.email
-        delete datosAuth.emailVerified
-        delete datosAuth.disabled
-        delete datosAuth.passwordHash
-        delete datosAuth.passwordSalt
-        delete datosAuth.customClaims.plan
-        delete datosAuth.customClaims.rol
-        delete datosAuth.tokensValidAfterTime
-        delete datosAuth.providerData
+        // delete datosAuth.email
+        // delete datosAuth.emailVerified
+        // delete datosAuth.disabled
+        // delete datosAuth.passwordHash
+        // delete datosAuth.passwordSalt
+        // delete datosAuth.customClaims.plan
+        // delete datosAuth.customClaims.rol
+        // delete datosAuth.tokensValidAfterTime
+        // delete datosAuth.providerData
         
         let codigo = 'exito'
         const respuesta = new Respuesta().setRespuestaPorCodigo(codigo, {
@@ -339,46 +339,6 @@ controllerUsuario.actualizarMiInformacion = async (req, res) => {
         
     } catch ( error ) {
         console.log('Error - actualizarMiInformacion: ', error)
-
-        const {
-            status,
-            respuesta
-        } = manejadorErrores( error )
-
-        return res.status( status ).json( respuesta )
-    }
-}
-
-controllerUsuario.actualizarFotoPerfil = async (req, res) => {
-    try {
-        const { datos, body, files } = req
-        const { uidSolicitante, datosAuthSolicitante } = datos
-        
-        const respuesta = new Respuesta()
-        let codigo = 'exito'
-        
-        const file = files[0]
-        const auth = new Authentication(uidSolicitante)
-        const url = await auth.actualizarFotoPerfil(file.filePath, file.fileExtension)
-
-        // Borrar el archivo creado en el servidor
-        fs.unlink(file.filePath, (err => {
-            if ( err ) {
-                console.log('Error al eliminar el archivo temporal: ', err)
-                return
-            }
-        }))
-        
-        respuesta.setRespuestaPorCodigo(codigo, {
-            mensaje: '¡Se actualizó la foto de perfil!',
-            resultado: url
-        })
-        const status = respuesta.getStatusCode()
-        
-        return res.status( status ).json( respuesta.getRespuesta() )
-        
-    } catch ( error ) {
-        console.log('Error - actualizarFotoPerfil: ', error)
 
         const {
             status,

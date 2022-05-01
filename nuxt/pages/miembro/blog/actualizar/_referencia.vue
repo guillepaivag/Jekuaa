@@ -1,10 +1,27 @@
 <template>
     <div class="container">
+
+        <div class="mt-0">
+            <v-breadcrumbs>
+                <div v-for="(breadcrumb, index) in breadcrumbs" :key="index">
+                    <v-breadcrumbs-item
+                        :href="breadcrumb.href"
+                        :disabled="breadcrumb.disabled"
+                        :nuxt="true"
+                    >
+                        {{ breadcrumb.text.toUpperCase() }}
+                    </v-breadcrumbs-item>
+                    <v-breadcrumbs-divider v-if="index !== breadcrumbs.length-1">
+                        <v-icon>mdi-chevron-right</v-icon>
+                    </v-breadcrumbs-divider>
+                </div>
+            </v-breadcrumbs>
+        </div>
+
         <div v-if="datosBlog">
-            <formulario-blog 
-                :datosBlog="datosBlog" 
-                :contenidoBlog="contenidoBlog" 
-                :accion="'actualizar'" 
+            <FormularioBlogActualizar 
+                :datosBlogProps="datosBlog" 
+                :contenidoBlogProps="contenidoBlog" 
                 @actualizarBlog="actualizarBlog($event)"
             />
 
@@ -40,12 +57,12 @@
 <script>
 import Spinner from '@/components/Spinner'
 import showdown from 'showdown'
-import FormularioBlog from '@/components/blogs/formulario-blog'
+import FormularioBlogActualizar from '@/components/blogs/miembro/formulario-blog-actualizar'
 
 export default {
     name: '',
     layout: 'miembro',
-    middleware: 'esMiembro',
+    middleware: 'esBlogger',
     data() {
         return {
             datosBlog: null,
@@ -55,10 +72,32 @@ export default {
                 visible: false,
                 actualizado: false,
             },
+            breadcrumbs: [
+                {
+                    text: 'Inicio',
+                    disabled: false,
+                    href: '/',
+                },
+                {
+                    text: 'Miembro',
+                    disabled: false,
+                    href: '/miembro',
+                },
+                {
+                    text: 'Blogs',
+                    disabled: false,
+                    href: '/miembro/blogs',
+                },
+                {
+                    text: 'Mis cursos',
+                    disabled: false,
+                    href: '/miembro/cursos/mis-cursos',
+                },
+            ],
         }
     },
     components: {
-        'formulario-blog': FormularioBlog,
+        FormularioBlogActualizar,
         'spinner': Spinner,
     },
     methods: {
@@ -86,7 +125,7 @@ export default {
                     }
                 }
 
-                const respuesta = await this.$axios.$put(`/apiMiembro/blog/actualizarBlog/${uidBlog}`, body, config)
+                const respuesta = await this.$axios.$put(`/apiMiembro/blog/actualizar/${uidBlog}`, body, config)
 
                 this.datosActualizacion.visible = true
                 this.datosActualizacion.actualizado = true
@@ -122,11 +161,24 @@ export default {
                     Authorization: `Bearer ${token}`
                 }
             })
+            const contenido = response.data.resultado ? response.data.resultado : ''
 
             let converter = new showdown.Converter()
 
             this.datosBlog = doc.data()
-            this.contenidoBlog = converter.makeHtml(response.data.resultado)
+            this.contenidoBlog = converter.makeHtml(contenido)
+
+            this.breadcrumbs.push({
+                text: this.datosBlog.titulo,
+                disabled: false,
+                href: `/miembro/blog/${this.$route.params.referencia}`,
+            })
+
+            this.breadcrumbs.push({
+                text: 'Actualizar',
+                disabled: true,
+                href: `/miembro/blog/actualizar/${this.$route.params.referencia}`,
+            })
         } catch (error) {
             console.log('error', error)
             const accion = await this.$store.dispatch('modules/sistema/errorHandler', error)

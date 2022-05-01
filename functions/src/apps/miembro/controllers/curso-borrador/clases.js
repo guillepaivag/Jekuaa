@@ -1,14 +1,13 @@
 const { request, response } = require("express")
-const admin = require("../../../../../firebase-service")
 const ClaseBorrador = require("../../../../models/Cursos/clase/ClaseBorrador")
 const manejadorErrores = require('../../../../helpers/ManejoErrores')
 const Respuesta = require("../../../../models/Respuesta")
 const Errores = require("../../../../models/Error/Errores")
-const config = require("../../../../../config")
 const ContenidoClaseBorrador = require("../../../../models/Cursos/contenidoClase/ContenidoClaseBorrador")
 const Clase = require("../../../../models/Cursos/clase/Clase")
 const db = require("../../../../../db")
 const UnidadBorrador = require("../../../../models/Cursos/unidad/UnidadBorrador")
+const ElementoCursoEliminado = require("../../../../models/Cursos/curso/ElementoCursoEliminado")
 
 const controller = {}
 
@@ -229,16 +228,30 @@ controller.actualizarUnidadClaseBorrador = async (req = request, res = response)
                     huboCambio = clasePublicada.descripcion !== claseBorrador.descripcion
 
                 if ( !huboCambio ) 
-                    huboCambio = clasePublicada.duracionClase !== claseBorrador.duracionClase
+                    huboCambio = clasePublicada.duracion !== claseBorrador.duracion
                 
                 if ( !huboCambio ) 
                     huboCambio = clasePublicada.tipoClase !== claseBorrador.tipoClase
 
                 if ( !huboCambio ) {
-                    if ( clasePublicada.uidArchivos.length === claseBorrador.uidArchivos.length ) {
-                        for (let i = 0; i < clasePublicada.uidArchivos.length; i++) {
-                            const element = clasePublicada.uidArchivos[i]
-                            if ( !claseBorrador.uidArchivos.includes(element) ) {
+                    if ( clasePublicada.complementos.length === claseBorrador.complementos.length ) {
+                        for (let i = 0; i < clasePublicada.complementos.length; i++) {
+                            const element = clasePublicada.complementos[i]
+                            if ( !claseBorrador.complementos.includes(element) ) {
+                                huboCambio = true
+                                break
+                            }
+                        }
+                    } else {
+                        huboCambio = true
+                    }
+                }
+
+                if ( !huboCambio ) {
+                    if ( clasePublicada.subtitulos.length === claseBorrador.subtitulos.length ) {
+                        for (let i = 0; i < clasePublicada.subtitulos.length; i++) {
+                            const element = clasePublicada.subtitulos[i]
+                            if ( !claseBorrador.subtitulos.includes(element) ) {
                                 huboCambio = true
                                 break
                             }
@@ -264,7 +277,7 @@ controller.actualizarUnidadClaseBorrador = async (req = request, res = response)
 
         claseBorrador.ordenClase = ultimaClase ? ultimaClase.ordenClase + 1 : 1
 
-        ClaseBorrador.agregar(params.uidCurso, 
+        await ClaseBorrador.agregar(params.uidCurso, 
         uidUnidadNueva, 
         claseBorrador)
 
@@ -323,9 +336,37 @@ controller.eliminarClaseBorrador = async (req = request, res = response) => {
         // Eliminar documentos subtitulos
 
         // Eliminar archivos (en cloud storage) de una clase
-        const rutaModo = config.environment.mode === 'production' ? 'prod' : 'dev'
-        let bucketNameContenidoBorrador = rutaModo === 'prod' ? 'j-cursos-contenido-b' : 'j-cursos-contenido-b-dev'
-        Clase.eliminarArchivo(bucketNameContenidoBorrador, `${params.uidCurso}/${params.uidClase}`)
+        ContenidoClaseBorrador.eliminarContenidoPrefix({
+            verificacion: false,
+            rutaContenidoPrefix: `${params.uidCurso}/${params.uidClase}`
+        })
+
+        const claseBorrador = new ClaseBorrador()
+        await claseBorrador.importarClasePorUID(params.uidCurso, params.uidUnidad, params.uidClase)
+
+        if (claseBorrador.estadoDocumento !== 'nuevo') {
+            // CLASE
+            const elementoCursoEliminado1 = new ElementoCursoEliminado()
+            elementoCursoEliminado1.setTipo('clase')
+            elementoCursoEliminado1.setDatos({
+                uidCurso: params.uidCurso,
+                uidUnidad: params.uidUnidad,
+                uidClase: params.uidClase,
+            })
+
+            ElementoCursoEliminado.agregar(params.uidCurso, elementoCursoEliminado1)
+
+            // CONTENIDO CLASE
+            const elementoCursoEliminado2 = new ElementoCursoEliminado()
+            elementoCursoEliminado2.setTipo('contenidoClase')
+            elementoCursoEliminado2.setDatos({
+                uidCurso: params.uidCurso,
+                uidUnidad: '',
+                uidClase: params.uidClase,
+            })
+
+            ElementoCursoEliminado.agregar(params.uidCurso, elementoCursoEliminado2)
+        }
 
         // Retornar respuesta
         respuesta.setRespuestaPorCodigo(codigo, {

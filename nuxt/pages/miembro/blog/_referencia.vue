@@ -1,5 +1,22 @@
 <template>
     <div class="container">
+
+        <div class="mt-0">
+            <v-breadcrumbs>
+                <div v-for="(breadcrumb, index) in breadcrumbs" :key="index">
+                    <v-breadcrumbs-item
+                        :href="breadcrumb.href"
+                        :disabled="breadcrumb.disabled"
+                        :nuxt="true"
+                    >
+                        {{ breadcrumb.text.toUpperCase() }}
+                    </v-breadcrumbs-item>
+                    <v-breadcrumbs-divider v-if="index !== breadcrumbs.length-1">
+                        <v-icon>mdi-chevron-right</v-icon>
+                    </v-breadcrumbs-divider>
+                </div>
+            </v-breadcrumbs>
+        </div>
         
         <div class="mt-5">
             <v-btn
@@ -18,15 +35,24 @@
             >
                 Eliminar
             </v-btn>
+            <v-btn
+                v-if="datosBlog"
+                :disabled="!datosBlog.contieneErrores"
+                depressed
+                color="blue"
+                class="white--text"
+                v-on:click="mostrarErrores"
+            >
+                Errores
+            </v-btn>
         </div>
 
         <v-divider class="mt-5 mb-0"></v-divider>
 
         <div v-if="datosBlog">
-            <formulario-blog 
-                :datosBlog="datosBlog" 
-                :contenidoBlog="contenidoBlog" 
-                :accion="'leer'" 
+            <FormularioBlogLeer 
+                :datosBlogProps="datosBlog" 
+                :contenidoBlogProps="contenidoBlog" 
             />
         </div>
         <div class="loadingMovie" v-else>
@@ -79,18 +105,45 @@
                 </v-card-actions>
             </v-card>
         </v-dialog>
+
+        <v-dialog
+            v-if="datosBlog"
+            v-model="verErroresBlog"
+            max-width="400px"
+        >
+            <v-card>
+                <v-card-title class="backgroundErrores textoErrores">
+                    Errores en este blog
+                </v-card-title>
+
+                <v-card-text class="mt-5">
+                    <ErroresBlog :contieneErroresProps="datosBlog.contieneErrores" :mensajesErrorProps="datosBlog.mensajesError" />
+                </v-card-text>
+
+                <v-card-actions class="d-flex flex-row-reverse pb-5 pt-2">
+                    <v-btn
+                        class="white--text"
+                        color="blue"
+                        @click="verErroresBlog = false"
+                    >
+                        Cerrar
+                    </v-btn>
+                </v-card-actions>
+            </v-card>
+        </v-dialog>
     </div>
 </template>
 
 <script>
 import Spinner from '@/components/Spinner'
 import showdown from 'showdown'
-import FormularioBlog from '@/components/blogs/formulario-blog'
+import FormularioBlogLeer from '@/components/blogs/miembro/formulario-blog-leer'
+import ErroresBlog from '@/components/blogs/miembro/ErroresBlog'
 
 export default {
     name: '',
     layout: 'miembro',
-    middleware: 'esMiembro',
+    middleware: 'esBlogger',
     data() {
         return {
             datosBlog: null,
@@ -98,13 +151,40 @@ export default {
             estadoDialogEliminacion: false,
             uidConfirmacion: '',
             eliminando: false,
+            verErroresBlog: false,
+            breadcrumbs: [
+                {
+                    text: 'Inicio',
+                    disabled: false,
+                    href: '/',
+                },
+                {
+                    text: 'Miembro',
+                    disabled: false,
+                    href: '/miembro',
+                },
+                {
+                    text: 'Blogs',
+                    disabled: false,
+                    href: '/miembro/blogs',
+                },
+                {
+                    text: 'Mis cursos',
+                    disabled: false,
+                    href: '/miembro/cursos/mis-cursos',
+                },
+            ],
         }
     },
     components: {
-        'formulario-blog': FormularioBlog,
+        FormularioBlogLeer,
+        ErroresBlog,
         'spinner': Spinner,
     },
     methods: {
+        mostrarErrores () {
+            this.verErroresBlog = !this.verErroresBlog
+        },
         async eliminarBlog () {
             try {
                 this.eliminando = true
@@ -121,7 +201,7 @@ export default {
                     }
                 }
 
-                const respuesta = await this.$axios.$delete(`/apiMiembro/blog/eliminarBlog/${this.uidConfirmacion}`, config)
+                const respuesta = await this.$axios.$delete(`/apiMiembro/blog/eliminar/${this.uidConfirmacion}`, config)
 
                 this.$nuxt.$options.router.push('/miembro/blogs/mis-blogs')
                 
@@ -162,8 +242,15 @@ export default {
 
             let converter = new showdown.Converter()
 
+            // Asignar valores
             this.datosBlog = doc.data()
             this.contenidoBlog = converter.makeHtml(response.data.resultado)
+
+            this.breadcrumbs.push({
+                text: this.datosBlog.titulo,
+                disabled: true,
+                href: `/miembro/blog/${this.$route.params.referencia}`,
+            })
         } catch (error) {
             console.log('error', error)
             const accion = await this.$store.dispatch('modules/sistema/errorHandler', error)
@@ -188,6 +275,14 @@ export default {
 
 .textoInformacionAccion {
     color: rgb(197, 52, 52);
+}
+
+.backgroundErrores {
+    background-color: rgb(52, 100, 197);
+}
+
+.textoErrores {
+    color: rgb(255, 255, 255)
 }
 
 .inputConfirmacionAccion {

@@ -12,8 +12,8 @@ class Blog {
     constructor ( datosBlog = {} ) {
         const {
             uid, referencia, titulo, descripcion, equipo, publicador,
-            seccion, categorias, cantidadMeGusta, habilitado,
-            publicado, revision, fechaCreacion, fechaActualizacion
+            seccion, categorias, mensajesError, contieneErrores, 
+            cantidadMeGusta, habilitado, publicado, revision, fechaCreacion, fechaActualizacion
         } = datosBlog
 
         this.uid = uid ? uid : db.collection(COLECCION_BLOG).doc().id
@@ -24,6 +24,8 @@ class Blog {
         this.publicador = publicador ? publicador : ''
         this.seccion = seccion ? seccion : ''
         this.categorias = categorias ? categorias : []
+        this.mensajesError = mensajesError ? mensajesError : []
+        this.contieneErrores = contieneErrores !== contieneErrores ? contieneErrores : false
         this.cantidadMeGusta = cantidadMeGusta ? cantidadMeGusta : 0
         this.habilitado = habilitado !== undefined ? habilitado : true
         this.publicado = publicado !== undefined ? publicado : true
@@ -49,6 +51,8 @@ class Blog {
             publicador: this.publicador,                    // Constante
             seccion: this.seccion,
             categorias: this.categorias,
+            mensajesError: this.mensajesError,
+            contieneErrores: this.contieneErrores,
             cantidadMeGusta: this.cantidadMeGusta,
             habilitado: this.habilitado,
             publicado: this.publicado,
@@ -64,7 +68,7 @@ class Blog {
 
     // Metodo
 
-    setBLOG ( blog ) {
+    setBLOG ( blog = new Blog() ) {
         this.setUID( ( blog && blog.uid ) ? blog.uid : null )
         this.setREFERENCIA( ( blog && blog.referencia ) ? blog.referencia : null )
         this.setTITULO( ( blog && blog.titulo ) ? blog.titulo : null )
@@ -73,6 +77,8 @@ class Blog {
         this.setPUBLICADOR( ( blog && blog.publicador ) ? blog.publicador : null )
         this.setSECCION( ( blog && blog.seccion ) ? blog.seccion : null )
         this.setCATEGORIAS( ( blog && blog.categorias ) ? blog.categorias : null )
+        this.setMENSAJES_ERROR( ( blog && blog.mensajesError ) ? blog.mensajesError : null )
+        this.setCONTIENE_ERRORES( ( blog && blog.contieneErrores ) ? blog.contieneErrores : null )
         this.setCANTIDAD_ME_GUSTA( ( blog && blog.cantidadMeGusta ) ? blog.cantidadMeGusta : null )
         this.setHABILITADO( ( blog && blog.habilitado ) ? blog.habilitado : null )
         this.setPUBLICADO( ( blog && blog.publicado ) ? blog.publicado : null )
@@ -111,6 +117,14 @@ class Blog {
 
     setCATEGORIAS ( categorias = [] ) {
         this.categorias = categorias
+    }
+
+    setMENSAJES_ERROR ( mensajesError = [] ) {
+        this.mensajesError = mensajesError
+    }
+    
+    setCONTIENE_ERRORES ( contieneErrores = false ) {
+        this.contieneErrores = contieneErrores
     }
 
     setCANTIDAD_ME_GUSTA ( cantidadMeGusta = 0 ) {
@@ -217,7 +231,7 @@ class Blog {
     static async obtenerContenido ( uid, extensionArchivo ) {
         const rutaModo = config.environment.mode === 'production' ? 'prod' : 'dev'
 
-        const bucketName = rutaModo === 'prod' ? 'j-blogs' : 'j-blogs-dev'
+        const bucketName = rutaModo === 'prod' ? 'prod-j-blogs' : 'dev-j-blogs'
         const bucket = storage.bucket(bucketName)
         const file = bucket.file(`${uid}.md`)
 
@@ -249,7 +263,7 @@ class Blog {
     static async subirArchivoBlogAStorage ( rutaArchivo, uid ) {
         const rutaModo = config.environment.mode === 'production' ? 'prod' : 'dev'
         
-        const bucketName = rutaModo === 'prod' ? 'j-blogs' : 'j-blogs-dev'
+        const bucketName = rutaModo === 'prod' ? 'prod-j-blogs' : 'dev-j-blogs'
         const bucket = storage.bucket(bucketName)
 
         const response = await bucket.upload(rutaArchivo, {
@@ -268,7 +282,7 @@ class Blog {
     static async eliminarArchivoBlog ( nombreArchivo ) {
         const rutaModo = config.environment.mode === 'production' ? 'prod' : 'dev'
         
-        const bucketName = rutaModo === 'prod' ? 'j-blogs' : 'j-blogs-dev'
+        const bucketName = rutaModo === 'prod' ? 'prod-j-blogs' : 'dev-j-blogs'
         const bucket = storage.bucket(bucketName)
 
         const file = bucket.file(`${nombreArchivo}.md`)
@@ -304,7 +318,7 @@ class Blog {
     static async existeArchivoBlog ( uid ) {       
         const rutaModo = config.environment.mode === 'production' ? 'prod' : 'dev'
         
-        const bucketName = rutaModo === 'prod' ? 'j-blogs' : 'j-blogs-dev'
+        const bucketName = rutaModo === 'prod' ? 'prod-j-blogs' : 'dev-j-blogs'
         const bucket = storage.bucket(bucketName)
         
         const file = bucket.file(`${uid}.md`)

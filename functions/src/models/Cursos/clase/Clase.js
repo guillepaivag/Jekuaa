@@ -33,6 +33,7 @@ class Clase {
             tipoClase,          // r - a
             complementos,       // 
             subtitulos,         // 
+            vistaPrevia,        // 
         } = datos
     
         this.uid = uid ? uid : db.collection(COLECCION_CLASES).doc().id
@@ -43,6 +44,7 @@ class Clase {
         this.tipoClase = tipoClase ? tipoClase : ''
         this.complementos = complementos ? complementos : []
         this.subtitulos = subtitulos ? subtitulos : []
+        this.vistaPrevia = vistaPrevia !== undefined ?  vistaPrevia : false
     }
 
     getClase () {
@@ -55,6 +57,7 @@ class Clase {
             tipoClase: this.tipoClase,
             complementos: this.complementos,
             subtitulos: this.subtitulos,
+            vistaPrevia: this.vistaPrevia,
         }
     }
 
@@ -63,7 +66,7 @@ class Clase {
             uid, ordenClase, titulo, 
             descripcion, duracion, 
             tipoClase, complementos,
-            subtitulos
+            subtitulos, vistaPrevia
         } = datos
 
         this.setUid(uid)
@@ -74,6 +77,7 @@ class Clase {
         this.setTipoClase(tipoClase)
         this.setComplementos(complementos)
         this.setSubTitulos(subtitulos)
+        this.setVistaPrevia(vistaPrevia)
 
         return this
     }
@@ -115,6 +119,11 @@ class Clase {
 
     setSubTitulos ( subtitulos = [] ) {
         this.subtitulos = subtitulos
+        return this
+    }
+
+    setVistaPrevia ( vistaPrevia = false ) {
+        this.vistaPrevia = vistaPrevia
         return this
     }
 

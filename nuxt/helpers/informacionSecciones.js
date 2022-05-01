@@ -41,49 +41,6 @@ agregarCategorias([
 
 
 
-
-
-// Subcategorias
-agregarSubCategorias([
-    {
-        uid: 'busqueda',
-        nombre: 'Busqueda',
-    },
-    {
-        uid: 'eficiencia',
-        nombre: 'Eficiencia',
-    },
-    {
-        uid: 'ordenacion',
-        nombre: 'Ordenación',
-    },
-], 'informatica', 'algoritmos')
-
-agregarSubCategorias([
-    {
-        uid: 'disenho-web',
-        nombre: 'Diseño web',
-    },
-    {
-        uid: 'vuejs',
-        nombre: 'Vue.js',
-    },
-], 'informatica', 'desarrollo-web')
-
-agregarSubCategorias([
-    {
-        uid: 'tcp',
-        nombre: 'TCP',
-    },
-], 'informatica', 'redes')
-
-agregarSubCategorias([
-    {
-        uid: 'derivada',
-        nombre: 'Derivada',
-    },
-], 'matematica', 'calculo')
-
 export default secciones
 
 
@@ -105,12 +62,6 @@ function agregarCategorias (categorias, idSeccion) {
     }
 }
 
-function agregarSubCategorias (subCategorias, idSeccion, idCategoria) {
-    for (let i = 0; i < subCategorias.length; i++) {
-        const subCategoria = subCategorias[i]
-        agregarSubCategoria(subCategoria, idSeccion, idCategoria)
-    }
-}
 
 
 // Funciones para agregar un elemento
@@ -122,16 +73,8 @@ function agregarSeccion (seccion) {
 }
 
 function agregarCategoria (categoria, idSeccion) {
-    secciones[idSeccion].categorias[categoria.uid] = {
-        ...categoria,
-        subCategorias: {}
-    }
+    secciones[idSeccion].categorias[categoria.uid] = categoria
 }
-
-function agregarSubCategoria (subCategoria, idSeccion, idCategoria) {
-    secciones[idSeccion].categorias[idCategoria].subCategorias[subCategoria.uid] = subCategoria
-}
-
 
 
 
@@ -156,12 +99,6 @@ function agregarSubCategoria (subCategoria, idSeccion, idCategoria) {
 //             algoritmos: {
 //                 uid: 'algoritmos',
 //                 nombre: 'Algoritmos',
-//                 subCategorias: {
-//                     busqueda: {
-//                         uid: 'busqueda',
-//                         nombre: 'Busqueda',
-//                     },
-//                 }
 //             },
 //         }
 //     },

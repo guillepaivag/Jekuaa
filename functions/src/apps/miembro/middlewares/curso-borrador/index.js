@@ -695,29 +695,6 @@ borrador.construirDatosCursoBorradorPUT = (req = request, res = response, next) 
 }
 
 
-borrador.verificacionDeEstadoDocumentoPUT = async (req = request, res = response, next) => {
-    try {
-        const { datos, body, params } = req
-        const { uidSolicitante, datosAuthSolicitante } = datos
-        const { datosCurso } = body
-
-        const cursoBarrador = new CursoBorrador()
-        await cursoBarrador.importarDatosDeUnCurso( params.uidCurso )
-
-        if ( cursoBarrador.estadoDocumento === '' ) 
-            req.body.datosCurso.estadoDocumento = 'actualizado'
-        else if ( cursoBarrador.estadoDocumento === 'nuevo' ) 
-            return next()
-        else if ( cursoBarrador.estadoDocumento === 'actualizado' ) 
-            return next()
-
-        next()
-    } catch (error) {
-        next(error)
-    }
-}
-
-
 borrador.perteneceAlInstructorEsteCurso = async (req = request, res = response, next) => {
     try {
         const { datos, body, params } = req

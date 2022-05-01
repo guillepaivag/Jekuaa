@@ -8,11 +8,11 @@ const {
     verificarDatosRequeridosPOST, 
     verificadorDeTipoDeDatosPOST, 
     verificadorDeDatosPOST, 
-    construirDatosCursoBorradorPOST, 
     verificarDatosRequeridosPUT, 
     verificadorDeTipoDeDatosPUT, 
     verificadorDeDatosPUT, 
-    construirDatosCursoBorradorPUT,
+    construirDatosClaseBorradorPOST,
+    construirDatosClaseBorradorPUT,
 } = require('../../middlewares/curso-borrador/clase')
 
 const { 
@@ -41,7 +41,7 @@ router.post('/crear/:uidCurso/:uidUnidad',
     verificarDatosRequeridosPOST,
     verificadorDeTipoDeDatosPOST,
     verificadorDeDatosPOST,
-    construirDatosCursoBorradorPOST,
+    construirDatosClaseBorradorPOST,
     crearClaseBorrador)
 
 // ACTUALIZAR CLASE: nombre, descripcion
@@ -54,7 +54,7 @@ router.put('/actualizar/:uidCurso/:uidUnidad/:uidClase',
     verificarDatosRequeridosPUT,
     verificadorDeTipoDeDatosPUT,
     verificadorDeDatosPUT,
-    construirDatosCursoBorradorPUT,
+    construirDatosClaseBorradorPUT,
     actualizarClaseBorrador)
 
 // ACTUALIZAR ORDEN DE CLASES: ordenClase

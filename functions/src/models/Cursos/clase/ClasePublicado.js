@@ -1,3 +1,5 @@
+const db = require("../../../../db");
+
 const Clase = require("./Clase");
 
 const COLECCION = 'ClasesPublicado'

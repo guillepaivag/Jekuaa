@@ -18,18 +18,53 @@
         </div>
 
         <div class="mb-10">
-            <formulario-blog 
-                :datosBlog="datosBlog" 
-                :contenidoBlog="contenidoBlog" 
-                :accion="'crear'" 
-                @crearBlog="crearBlog($event)"
-            />
+            <v-text-field
+                v-model="titulo"
+                :error-messages="tituloErr"
+                :counter="100"
+                label="Titulo"
+                required
+                @input="$v.titulo.$touch()"
+                @blur="$v.titulo.$touch()"
+                class="mt-7"
+            ></v-text-field>
+
+            <v-text-field
+                v-model="referencia"
+                :error-messages="referenciaErr"
+                :counter="100"
+                label="Referencia URL"
+                required
+                @input="$v.referencia.$touch()"
+                @blur="$v.referencia.$touch()"
+                class="mt-7"
+            ></v-text-field>
+        </div>
+
+        <div class="mt-7">
+            <v-btn 
+                outlined
+                color="#683bce"
+                v-on:click="crearBlog"
+                :disabled="$v.$anyError"
+            >
+              Crear blog
+            </v-btn>
+
+            <v-btn 
+                v-if="datosCreacion.creado"
+                outlined
+                color="#683bce"
+                :to="`/miembro/blog/${referencia}`"
+                :disabled="$v.$anyError"
+            >
+              Ver blog
+            </v-btn>
         </div>
 
         <div v-if="datosCreacion.visible && datosCreacion.creado">
             <v-snackbar
                 v-model="datosCreacion.visible"
-                :multi-line="multiLine"
                 :timeout="-1"
                 :value="true"
                 color="#683BCE"
@@ -52,31 +87,30 @@
 </template>
 
 <script>
+import { validationMixin } from 'vuelidate'
+import { required, minLength, maxLength } from 'vuelidate/lib/validators'
+
 import showdown from 'showdown'
 import TurndownService from 'turndown'
-import FormularioBlog from '@/components/blogs/formulario-blog'
 
 export default {
     name: '',
     layout: 'miembro',
-    middleware: 'esMiembro',
+    middleware: 'esBlogger',
+    mixins: [validationMixin],
+    validations: {
+        referencia: { required, maxLength: maxLength(100) },
+        titulo: { required, maxLength: maxLength(100) },
+    },
     data() {
         return {
-            datosBlog: {
-                referencia: '',                                     // requerido
-                titulo: '',                                         // requerido
-                descripcion: '',                                    // requerido
-                publicador: this.$store.state.modules.usuarios.uid, // requerido
-                seccion: '',                                        // requerido
-                categoria: '',                                      // requerido
-                subCategorias: [],                                  // requerido
-                publicado: true,                                    // opcional
-            },
-            contenidoBlog: ``,
+            referencia: '',
+            titulo: '',
             datosCreacion: {
                 visible: false,
                 creado: false,
             },
+            blogCreado: null,
             breadcrumbs: [
                 {
                     text: 'Inicio',
@@ -102,22 +136,22 @@ export default {
         }
     },
     components: {
-        'formulario-blog': FormularioBlog
+        
     },
     methods: {
         
-        async crearBlog (datos) {
+        async crearBlog () {
             try {
-                const { datosBlog, contenidoBlog } = datos
+                const datosBlog = {
+                    referencia: this.referencia,
+                    titulo: this.titulo
+                }
 
                 let token = this.$firebase.auth().currentUser
                 token = token ? await token.getIdToken() : ''
                 await this.$store.dispatch('modules/usuarios/setTOKEN', token)
 
-                let body = {
-                    datosBlog,
-                    contenidoBlog: contenidoBlog,
-                }
+                let body = { datosBlog }
 
                 let config = {
                     headers: {
@@ -126,7 +160,9 @@ export default {
                     }
                 }
 
-                const respuesta = await this.$axios.$post(`/apiMiembro/blog/crearBlog`, body, config)
+                const respuesta = await this.$axios.$post(`/apiMiembro/blog/crear`, body, config)
+
+                this.blogCreado = respuesta.data.resultado
 
                 this.datosCreacion.visible = true
                 this.datosCreacion.creado = true
@@ -137,6 +173,22 @@ export default {
                 const accion = await this.$store.dispatch('modules/sistema/errorHandler', error)
             }
         }
+    },
+    computed: {
+        referenciaErr () {
+            const errors = []
+            if (!this.$v.referencia.$dirty) return errors
+            !this.$v.referencia.maxLength && errors.push('La referencia URL es muy larga.')
+            !this.$v.referencia.required && errors.push('La referencia URL es requerida.')
+            return errors
+        },
+        tituloErr () {
+            const errors = []
+            if (!this.$v.titulo.$dirty) return errors
+            !this.$v.titulo.maxLength && errors.push('El titulo es muy largo.')
+            !this.$v.titulo.required && errors.push('El titulo es requerido.')
+            return errors
+        },
     },
     watch: {
         

@@ -80,7 +80,7 @@
                       <div class="mt-5">
                           <h2> Categoría </h2>
                           <div class="mt-3">
-                            <ais-refinement-list attribute="categoria" :limit="2" show-more>
+                            <ais-refinement-list attribute="categorias" :limit="2" show-more>
                               <template
                                 v-slot="{
                                   items,
@@ -109,7 +109,7 @@
                                     v-model="item.isRefined"
                                     :label="`${item.value}`"
                                     color="#683bce"
-                                    @click.prevent="refineCategoria(refine, item.value)"
+                                    @click.prevent="refineCategorias(refine, item.value)"
                                   >
                                     <template v-slot:label>
                                       {{item.label}}
@@ -365,7 +365,7 @@
                   <div class="mt-5">
                       <h2> Categoría </h2>
                       <div class="mt-3">
-                        <ais-refinement-list attribute="categoria" :limit="2" show-more>
+                        <ais-refinement-list attribute="categorias" :limit="2" show-more>
                           <template
                             v-slot="{
                               items,
@@ -395,7 +395,7 @@
                                 v-model="item.isRefined"
                                 :label="`${item.value}`"
                                 color="#683bce"
-                                @click.prevent="refineCategoria(refine, item.value)"
+                                @click.prevent="refineCategorias(refine, item.value)"
                               >
                                 <template v-slot:label>
                                   {{item.label}}
@@ -467,7 +467,7 @@ export default {
       refineSeccion(refine, value) {
         refine(value)
       },
-      refineCategoria(refine, value) {
+      refineCategorias(refine, value) {
         refine(value)
       },
       fechaActual (segundos) {

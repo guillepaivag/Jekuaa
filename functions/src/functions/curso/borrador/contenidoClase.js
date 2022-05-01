@@ -13,12 +13,11 @@ const {
 const config = require("../../../../config")
 const db = require('../../../../db')
 const CursoEstadoPublicacion = require('../../../models/Cursos/curso/CursoEstadoPublicacion')
-const ElementoCursoEliminado = require('../../../models/Cursos/curso/ElementoCursoEliminado')
 
 const ffContenidoClase = {}
 const rutaModo = config.environment.mode === 'production' ? 'prod' : 'dev'
-let bucketNameContenidoBorrador = rutaModo === 'prod' ? 'j-cursos-contenido-b' : 'j-cursos-contenido-b-dev'
-let bucketNameContenidoBorradorVerificacion = rutaModo === 'prod' ? 'j-cursos-contenido-bv' : 'j-cursos-contenido-bv-dev'
+let bucketNameContenidoBorrador = rutaModo === 'prod' ? 'prod-j-cursos-contenido-b' : 'dev-j-cursos-contenido-b'
+let bucketNameContenidoBorradorVerificacion = rutaModo === 'prod' ? 'prod-j-cursos-contenido-bv' : 'dev-j-cursos-contenido-bv'
 
 
 ffContenidoClase.validacionContenidoClase = functions
@@ -37,6 +36,12 @@ ffContenidoClase.validacionContenidoClase = functions
         const uidClase = object.name.split('/')[1]
         const fileName = object.name.split('/')[2]
         const esArticulo = fileExtension.includes('md')
+
+        const CEP = new CursoEstadoPublicacion()
+        await CEP.importarDatosDocumento(uidCurso)
+
+        if (CEP.estado) 
+            throw new Error('El curso se esta publicando.')
         
         let file = null
         let videoData = null
@@ -189,6 +194,7 @@ ffContenidoClase.validacionContenidoClase = functions
         }
 
         estadoDelProceso = 'actualizacion'
+        
         // TODO: Si existe contenido, eliminar el "actual" (asincrono)
         if (contenidoClaseBorrador.tipoContenido) {
             const bucket = admin.storage().bucket(bucketNameContenidoBorrador)
@@ -273,31 +279,6 @@ ffContenidoClase.validacionContenidoClase = functions
 
     }
     
-})
-
-
-
-ffContenidoClase.eventoEliminacionDocumentoCCB = functions
-.region('southamerica-east1')
-.firestore.document('CursosBorrador/{uidCursoBorrador}/ContenidoClasesBorrador/{uidContenidoClaseBorrador}')
-.onDelete(async (document, context) => {
-    const doc = document
-    const contenidoClaseBorrador = new ContenidoClaseBorrador(doc.data())
-
-    const { uidCursoBorrador, uidContenidoClaseBorrador } = context.params
-
-    if (contenidoClaseBorrador.estadoDocumento !== 'nuevo') {
-        const elementoCursoEliminado = new ElementoCursoEliminado()
-        elementoCursoEliminado.setTipo('contenidoClase')
-        elementoCursoEliminado.setDatos({
-            uidCurso: uidCursoBorrador,
-            uidUnidad: '',
-            uidClase: uidContenidoClaseBorrador,
-        })
-
-        ElementoCursoEliminado.agregar(uidCursoBorrador, elementoCursoEliminado)
-    }
-
 })
 
 

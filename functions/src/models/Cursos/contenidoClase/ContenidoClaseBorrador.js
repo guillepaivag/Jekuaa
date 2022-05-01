@@ -105,8 +105,8 @@ class ContenidoClaseBorrador extends ContenidoClase {
         const rutaModo = config.environment.mode === 'production' ? 'prod' : 'dev'
 
         // Crear/Actualizar el archivo contenido en Cloud Storage
-        let bucketNameContenidoBorrador = rutaModo === 'prod' ? 'j-cursos-contenido-b' : 'j-cursos-contenido-b-dev'
-        let bucketNameContenidoBorradorVerificacion = rutaModo === 'prod' ? 'j-cursos-contenido-bv' : 'j-cursos-contenido-bv-dev'
+        let bucketNameContenidoBorrador = rutaModo === 'prod' ? 'prod-j-cursos-contenido-b' : 'dev-j-cursos-contenido-b'
+        let bucketNameContenidoBorradorVerificacion = rutaModo === 'prod' ? 'prod-j-cursos-contenido-bv' : 'dev-j-cursos-contenido-bv'
         await super.subirContenido({
             bucketName: !verificacion ? bucketNameContenidoBorrador : bucketNameContenidoBorradorVerificacion,
             uidCurso: uidCurso,
@@ -121,8 +121,8 @@ class ContenidoClaseBorrador extends ContenidoClase {
         const rutaModo = config.environment.mode === 'production' ? 'prod' : 'dev'
         
         // Eliminar el archivo contenido de Cloud Storage
-        let bucketNameContenidoBorrador = rutaModo === 'prod' ? 'j-cursos-contenido-b' : 'j-cursos-contenido-b-dev'
-        let bucketNameContenidoBorradorVerificacion = rutaModo === 'prod' ? 'j-cursos-contenido-bv' : 'j-cursos-contenido-bv-dev'
+        let bucketNameContenidoBorrador = rutaModo === 'prod' ? 'prod-j-cursos-contenido-b' : 'dev-j-cursos-contenido-b'
+        let bucketNameContenidoBorradorVerificacion = rutaModo === 'prod' ? 'prod-j-cursos-contenido-bv' : 'dev-j-cursos-contenido-bv'
 
         await super.eliminarContenidoPrefix({
             bucketName: !verificacion ? bucketNameContenidoBorrador : bucketNameContenidoBorradorVerificacion,
@@ -133,14 +133,18 @@ class ContenidoClaseBorrador extends ContenidoClase {
     // GENERAR URL VIDEO
     static async generarUrlVideoClase (datos = {verificacion, uidCurso, uidClase}) {
         const { verificacion, uidCurso, uidClase } = datos
+        
         const rutaModo = config.environment.mode === 'production' ? 'prod' : 'dev'
+        let bucketNameContenidoBorrador = rutaModo === 'prod' ? 'prod-j-cursos-contenido-b' : 'dev-j-cursos-contenido-b'
+        let bucketNameContenidoBorradorVerificacion = rutaModo === 'prod' ? 'prod-j-cursos-contenido-bv' : 'dev-j-cursos-contenido-bv'
 
-        let bucketNameContenidoBorrador = rutaModo === 'prod' ? 'j-cursos-contenido-b' : 'j-cursos-contenido-b-dev'
-        let bucketNameContenidoBorradorVerificacion = rutaModo === 'prod' ? 'j-cursos-contenido-bv' : 'j-cursos-contenido-bv-dev'
-        const url = await super.generarUrlVideoClase({
+        const contenidoClaseBorrador = new ContenidoClaseBorrador()
+        await contenidoClaseBorrador.importarContenidoClasePorUID(uidCurso, uidClase)
+        const rutaStorage = `${uidCurso}/${uidClase}/${contenidoClaseBorrador.fileName}`
+
+        const url = await super.generarUrlVideoClasePrefix({
             bucketName: !verificacion ? bucketNameContenidoBorrador : bucketNameContenidoBorradorVerificacion,
-            uidCurso: uidCurso,
-            uidClase: uidClase,
+            rutaContenidoPrefix: rutaStorage
         })
         
         return url
@@ -150,13 +154,13 @@ class ContenidoClaseBorrador extends ContenidoClase {
     static async obtenerArticuloClase (datos = {verificacion, uidCurso, uidClase, getMarkdown}) {
         const { verificacion, uidCurso, uidClase, getMarkdown } = datos
         const rutaModo = config.environment.mode === 'production' ? 'prod' : 'dev'
-        let bucketNameContenidoBorrador = rutaModo === 'prod' ? 'j-cursos-contenido-b' : 'j-cursos-contenido-b-dev'
-        let bucketNameContenidoBorradorVerificacion = rutaModo === 'prod' ? 'j-cursos-contenido-bv' : 'j-cursos-contenido-bv-dev'
+        let bucketNameContenidoBorrador = rutaModo === 'prod' ? 'prod-j-cursos-contenido-b' : 'dev-j-cursos-contenido-b'
+        let bucketNameContenidoBorradorVerificacion = rutaModo === 'prod' ? 'prod-j-cursos-contenido-bv' : 'dev-j-cursos-contenido-bv'
 
-        const articulo = await super.obtenerArticuloClase({
+        const rutaStorage = `${uidCurso}/${uidClase}/articulo.md`
+        const articulo = await super.obtenerArticuloClasePrefix({
             bucketName: !verificacion ? bucketNameContenidoBorrador : bucketNameContenidoBorradorVerificacion,
-            uidCurso: uidCurso,
-            uidClase: uidClase,
+            rutaContenidoPrefix: rutaStorage,
             getMarkdown: getMarkdown
         })
 

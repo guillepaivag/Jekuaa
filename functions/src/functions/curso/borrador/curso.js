@@ -184,6 +184,7 @@ ffCursos.validacionEstadoDocumentoCursoBorrador = functions
         .collection('CursosBorrador').doc(uidCursoBorrador)
         .update(datosActualizados)
     }
+
 })
 
 

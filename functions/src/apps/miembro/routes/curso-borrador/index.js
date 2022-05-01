@@ -16,7 +16,6 @@ const {
     verificadorDeTipoDeDatosPUT,
     verificadorDeDatosPUT,
     construirDatosCursoBorradorPUT,
-    verificacionDeEstadoDocumentoPUT,
     verificarCursoEstadoPublicacion,
     esValidoElCursoBorrador,
     errorSiElCursoSeEstaPublicando,
@@ -56,7 +55,6 @@ router.put('/actualizar/:uidCurso',
     verificadorDeTipoDeDatosPUT,
     verificadorDeDatosPUT,
     construirDatosCursoBorradorPUT,
-    verificacionDeEstadoDocumentoPUT,
     actualizarCursoBorrador)
 
 

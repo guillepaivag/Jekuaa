@@ -1,6 +1,6 @@
 <template>
     <div class="container">
-
+        
         <div class="mt-0">
             <v-breadcrumbs>
                 <div v-for="(breadcrumb, index) in breadcrumbs" :key="index">
@@ -27,6 +27,7 @@
         <v-row class="mt-5">
             <v-col cols="12" sm="6">
                 <v-card
+                    v-if="funcionesMiembro.blogger"
                     class="mx-auto"
                     max-width="500"
                 >
@@ -65,6 +66,7 @@
             </v-col>
             <v-col cols="12" sm="6">
                 <v-card
+                    v-if="funcionesMiembro.instructor"
                     class="mx-auto"
                     max-width="500"
                 >
@@ -106,6 +108,8 @@
 </template>
 
 <script>
+import { fb } from '@/plugins/firebase'
+
 export default {
     name: '',
     layout: 'miembro',
@@ -124,7 +128,18 @@ export default {
                     href: '/miembro',
                 },
             ],
+            funcionesMiembro: {
+                instructor: false,
+                blogger: false
+            }
         }
+    },
+    async created () {
+        const doc = await fb.firestore().collection('Miembros').doc(this.$store.state.modules.usuarios.uid).get()
+
+        this.funcionesMiembro.instructor = doc.data().funciones.includes('instructor')
+        this.funcionesMiembro.blogger = doc.data().funciones.includes('blogger')
+
     },
 }
 </script>

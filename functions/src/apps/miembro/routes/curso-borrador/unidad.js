@@ -19,7 +19,6 @@ const {
     verificadorDeTipoDeDatosPUT,
     verificadorDeDatosPUT,
     construirDatosUnidadBorradorPUT,
-    verificacionDeEstadoDocumentoPUT,
 } = require('../../middlewares/curso-borrador/unidad')
 
 const { 

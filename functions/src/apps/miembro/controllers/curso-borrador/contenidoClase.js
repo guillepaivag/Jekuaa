@@ -6,93 +6,9 @@ const manejadorErrores = require('../../../../helpers/ManejoErrores')
 const Errores = require('../../../../models/Error/Errores')
 const ClaseBorrador = require('../../../../models/Cursos/clase/ClaseBorrador')
 const ContenidoClaseBorrador = require('../../../../models/Cursos/contenidoClase/ContenidoClaseBorrador')
+const ContenidoClasePublicado = require('../../../../models/Cursos/contenidoClase/ContenidoClasePublicado')
 
 const controller = {}
-
-controller.agregarContenidoClaseVideoBorrador = async (req = request, res = response) => {
-    try {
-        const { datos, body, params, files } = req
-        const { uidSolicitante, datosAuthSolicitante } = datos
-        const { datosActualizados } = body
-        const { documentoContenidoClase, documentoClase } = datosActualizados
-
-        const respuesta = new Respuesta()
-        let codigo = 'exito'
-        
-        const file = files[0]
-
-        // duration
-        // resolution
-        // width
-        // height
-        // sample_aspect_ratio
-        // display_aspect_ratio
-
-        // uid,
-        // tipoContenido,
-        // videoData,
-        // size,               // mb
-        // fileName, 
-        // fileExtension, 
-        // mimeType,
-        // encoding,
-        // fechaActualizacion,
-
-        // Agregar el archivo contenido clase
-        ContenidoClaseBorrador.subirContenido({
-            esVideo: true,
-            uidCurso: params.uidCurso,
-            uidClase: params.uidClase,
-            fileData: {
-                rutaArchivoTemp: file.filePath, 
-                extensionArchivo: file.fileExtension
-            }
-        }).then(response => {
-            // Eliminar archivo temp
-            fs.unlink(file.filePath, (err => {
-                if ( err ) {
-                    throw new Errores({
-                        codigo: 'error/usuario_mala_solicitud',
-                        mensaje: 'Error al eliminar el archivo temporal.',
-                        resultado: err
-                    })
-                }
-            }))
-        })
-        
-        // Actualizar el documento contenido clase
-        ContenidoClaseBorrador.actualizarDocumento(uidSolicitante,
-            params.uidCurso,
-            params.uidClase,
-            documentoContenidoClase)
-        
-        // Actualizar el documento clase
-        ClaseBorrador.actualizar(uidSolicitante, 
-            params.uidCurso,
-            params.uidUnidad,
-            params.uidClase, 
-            documentoClase)
-
-        // Retornar respuesta
-        respuesta.setRespuestaPorCodigo(codigo, {
-            mensaje: '¡Se agrego un contenido a una clase!',
-            resultado: null
-        })
-        const status = respuesta.getStatusCode()
-        
-        return res.status( status ).json( respuesta.getRespuesta() )
-    } catch (error) {
-        console.log('Error - agregarContenidoClaseVideo: ', error)
-
-        const {
-            status,
-            respuesta
-        } = manejadorErrores( error )
-
-        return res.status( status ).json( respuesta )
-    }
-}
-
 
 
 controller.agregarContenidoClaseArticuloBorrador = async (req = request, res = response) => {
@@ -194,8 +110,8 @@ controller.eliminarContenidoClaseBorrador = async (req = request, res = response
             fechaActualizacion: null,
             estadoArchivo: '',
             estadoDocumento: contenidoClaseBorrador.estadoDocumento === 'nuevo' ? 'nuevo' : 'actualizado',
-            mensajesError: [],
-            contieneErrores: false,
+            mensajesError: ['Falta agregar contenido.'],
+            contieneErrores: true,
         }
         ContenidoClaseBorrador.actualizarDocumento(params.uidCurso,
             params.uidClase,
@@ -211,7 +127,6 @@ controller.eliminarContenidoClaseBorrador = async (req = request, res = response
             params.uidUnidad,
             params.uidClase, 
             documentoClase)
-
 
         // Retornar respuesta
         respuesta.setRespuestaPorCodigo(codigo, {
@@ -244,13 +159,24 @@ controller.obtenerUrlVideoClaseBorrador = async (req = request, res = response) 
 
         const respuesta = new Respuesta()
         let codigo = 'exito'
-        
-        const url = await ContenidoClaseBorrador.generarUrlVideoClase({
-            verificacion: false,
-            uidCurso: uidCurso,
-            uidClase: uidClase
-        })
 
+        const contenidoClaseBorrador = new ContenidoClaseBorrador()
+        await contenidoClaseBorrador.importarContenidoClasePorUID(uidCurso, uidClase)
+
+        let url = ''
+        if (contenidoClaseBorrador.estadoDocumento) {
+            url = await ContenidoClaseBorrador.generarUrlVideoClase({
+                verificacion: false,
+                uidCurso: uidCurso,
+                uidClase: uidClase
+            })
+        } else {
+            url = await ContenidoClasePublicado.generarUrlVideoClase({
+                uidCurso: uidCurso,
+                uidClase: uidClase
+            })
+        }
+        
         // Retornar respuesta
         respuesta.setRespuestaPorCodigo(codigo, {
             mensaje: '¡Se generó la url del video!',
@@ -283,13 +209,25 @@ controller.obtenerArticuloClaseBorrador = async (req = request, res = response) 
 
         const respuesta = new Respuesta()
         let codigo = 'exito'
-        
-        const articulo = await ContenidoClaseBorrador.obtenerArticuloClase({
-            verificacion: false,
-            uidCurso: uidCurso,
-            uidClase: uidClase,
-            getMarkdown: false
-        })
+
+        const contenidoClaseBorrador = new ContenidoClaseBorrador()
+        await contenidoClaseBorrador.importarContenidoClasePorUID(uidCurso, uidClase)
+
+        let articulo = ''
+        if (contenidoClaseBorrador.estadoDocumento) {
+            articulo = await ContenidoClaseBorrador.obtenerArticuloClase({
+                verificacion: false,
+                uidCurso: uidCurso,
+                uidClase: uidClase,
+                getMarkdown: false
+            })
+        } else {
+            articulo = await ContenidoClasePublicado.obtenerArticuloClase({
+                uidCurso: uidCurso,
+                uidClase: uidClase,
+                getMarkdown: false
+            })
+        }
 
         // Retornar respuesta
         respuesta.setRespuestaPorCodigo(codigo, {

@@ -36,40 +36,7 @@
           lg="4"
         >
           <div class="container imagenAvatar mt-5">
-            <image-input v-model="avatar" />
-
-            <div class="mt-5">
-              <v-btn 
-                v-if="avatar.formData"
-                block
-                text
-                class="mt-1 mb-1"
-                color="#683bce"
-                @click="actualizarFotoPerfil" 
-                :loading="saving"
-                :disabled="!avatar.formData"
-              >Actualizar foto de perfil</v-btn>
-
-              <v-btn 
-                v-if="avatar.formData"
-                block
-                :disabled="saving"
-                class="mt-1 mb-1"
-                text
-                color="#ff1d89"
-                @click="reiniciarImagen" 
-              >Reiniciar</v-btn>
-
-              <v-btn 
-                v-if="!avatar.formData && avatar.imageURL"
-                block
-                :disabled="saving"
-                class="mt-1 mb-1"
-                text
-                color="red"
-                @click="eliminarFotoPerfil" 
-              >Borrar foto de perfil</v-btn>
-            </div>
+            <foto-perfil />
           </div>
         </v-col>
 
@@ -159,7 +126,7 @@
 </template>
 
 <script>
-import ImageInput from '@/components/ImageInput'
+import FotoPerfil from '@/components/FotoPerfil'
 import { validationMixin } from 'vuelidate'
 import { required, minLength, maxLength, email } from 'vuelidate/lib/validators'
 
@@ -176,14 +143,11 @@ export default {
   data() {
     return {
       menuFechaNacimiento: false,
-      saving: false,
-      saved: false,
       nombreUsuario: '',
       nombreCompleto: '',
       correo: '',
       fechaNacimiento: null,
       fechaNacimientoString: '',
-      avatar: null,
       breadcrumbs: [
           {
               text: 'Inicio',
@@ -200,19 +164,12 @@ export default {
   },
 
   components: {
-    'image-input': ImageInput
+    'foto-perfil': FotoPerfil
   },
 
   watch:{
-    avatar: {
-      handler: function() {
-        this.saved = false
-      },
-      deep: true
-    },
     fechaNacimientoString: function (n, v) {
       if (!n) return
-
       this.fechaNacimiento = new Date(`${n}T05:00:00.000Z`).getTime()
     }
   },
@@ -282,7 +239,6 @@ export default {
         const accion = await this.$store.dispatch('modules/sistema/errorHandler', error)
       }
     },
-
     reiniciar () {
       const usuario = this.$store.state.modules.usuarios
 
@@ -293,78 +249,6 @@ export default {
       this.fechaNacimientoString = usuario.fechaNacimiento ? 
       (new Date(this.fechaNacimiento - (new Date()).getTimezoneOffset() * 60000)).toISOString().substr(0, 10) : ''
     },
-    reiniciarImagen() {
-      if (this.saving) return
-
-      const usuario = this.$store.state.modules.usuarios
-
-      this.avatar = {
-        formData: null,
-        imageURL: usuario.fotoPerfil ? usuario.fotoPerfil : ''
-      }
-    },
-    async actualizarFotoPerfil() {
-      if (!this.avatar.formData) return
-
-      this.saving = true
-
-      try {
-        let token = this.$firebase.auth().currentUser
-        token = token ? await token.getIdToken() : ''
-        await this.$store.dispatch('modules/usuarios/setTOKEN', token)
-
-        let body = this.avatar.formData
-
-        let config = {
-          headers: {
-            'Content-Type': 'multipart/form-data',
-            Authorization: `Bearer ${token}`
-          }
-        }
-
-        const respuesta = await this.$axios.$put(`/api/usuario/actualizarFotoPerfil`, body, config)
-
-        this.$store.commit('modules/usuarios/setFotoPerfil', respuesta.resultado)
-        this.saved = true
-      } catch (error) {
-        console.log('error', error)
-
-        const accion = await this.$store.dispatch('modules/sistema/errorHandler', error)
-      } finally {
-        this.saving = false
-        this.reiniciarImagen()
-      }
-    },
-    async eliminarFotoPerfil () {
-      const condicion = !this.avatar.formData && this.avatar.imageURL
-      if (!condicion) return
-
-      this.saving = true
-
-      try {
-        let token = this.$firebase.auth().currentUser
-        token = token ? await token.getIdToken() : ''
-        await this.$store.dispatch('modules/usuarios/setTOKEN', token)
-
-        let config = {
-          headers: {
-            'Content-Type': 'application/json',
-            Authorization: `Bearer ${token}`
-          }
-        }
-
-        await this.$axios.$delete(`/api/usuario/eliminarFotoPerfil`, config)
-
-        this.$store.commit('modules/usuarios/setFotoPerfil', null)
-        this.saved = true
-      } catch (error) {
-        console.log('error', error)
-        const accion = await this.$store.dispatch('modules/sistema/errorHandler', error)
-      } finally {
-        this.saving = false
-        this.reiniciarImagen()
-      }
-    }
   },
 
   computed: {
@@ -401,7 +285,6 @@ export default {
 
   created() {
     this.reiniciar()
-    this.reiniciarImagen()
   },
 }
 </script>

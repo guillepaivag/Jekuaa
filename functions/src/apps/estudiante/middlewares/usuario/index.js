@@ -68,48 +68,6 @@ middlewaresUser.construirDatosInformacionUsuario = async ( req, res, next ) => {
     
 }
 
-middlewaresUser.validarFotoPerfil = async ( req, res, next ) => {
-    
-    try {
-        const { datos, body, files } = req
-        const { uidSolicitante, datosAuthSolicitante } = datos
-        const {  } = body
-
-        if (files.length <= 0) {
-            throw new Errores({
-                codigo: 'error/usuario_mala_solicitud',
-                mensaje: 'No hay foto de perfil para actualizar.',
-            })
-        }
-        const file = files[0]
-        const fileMB = file.size * 0.000001
-
-        const condicionTipo = file.mimeType.includes('image') && 
-        (file.fileExtension === 'png' || file.fileExtension === 'jpg' || file.fileExtension === 'jpeg')
-        
-        if (!condicionTipo) {
-            throw new Errores({
-                codigo: 'error/usuario_mala_solicitud',
-                mensaje: 'La foto de perfil tiene que ser imagen del tipo: png, jpg o jpeg.',
-            })
-        }
-
-        if (fileMB > 1) {
-            throw new Errores({
-                codigo: 'error/usuario_mala_solicitud',
-                mensaje: 'La foto de perfil no puede ser mayor a 1MB.',
-            })
-        }
-
-        return next()
-
-    } catch (error) {
-        console.log('ERROR MIDDLEWARE: validarFotoPerfil ', error)
-        next(error)
-    }
-    
-}
-
 middlewaresUser.verificarDatosRequeridos = ( req, res, next ) => {
     try {
         const { datos, body } = req

@@ -10,12 +10,14 @@ const appNuxt = require('./src/apps/nuxt')
 const api = require('./src/apps/estudiante')
 const apiMiembro = require('./src/apps/miembro')
 const apiModerador = require('./src/apps/moderador')
+const apiPropietario = require('./src/apps/propietario')
 
 // Funciones Cloud Functions
 const {
   indexBlogAlgolia, 
   indexCursoBorradorAlgolia,
-  indexCursoPublicadoAlgolia
+  indexCursoPublicadoAlgolia,
+  indexUsuarioAlgolia
 } = require('./src/functions/algolia')
 
 const {
@@ -32,6 +34,7 @@ const {
   eventoEliminacionUsuario,
   comienzoProcesoEliminacion,
   cancelarProcesoEliminacion,
+  actualizacionFotoPerfilDeUsuario,
 } = require('./src/functions/usuarios')
 
 const { validacionEstadoDocumentoCursoBorrador } = require('./src/functions/curso/borrador/curso')
@@ -50,6 +53,7 @@ const {
 
 const { validacionContenidoClase } = require('./src/functions/curso/borrador/contenidoClase')
 const { eventoPublicacionCurso } = require('./src/functions/curso/publicacion')
+const { creacionCursoPublicado, actualizacionCursoPublicado, eliminacionCursoPublicado } = require('./src/functions/curso/publicado')
 
 
 // SSR Para el cliente con Nuxt.js
@@ -60,6 +64,7 @@ if (isProduction)
 exports.api = functions.region('southamerica-east1').https.onRequest(api)
 exports.apiMiembro = functions.region('southamerica-east1').https.onRequest(apiMiembro)
 exports.apiModerador = functions.region('southamerica-east1').https.onRequest(apiModerador)
+exports.apiPropietario = functions.region('southamerica-east1').https.onRequest(apiPropietario)
 
 
 // TRIGGERS:
@@ -68,6 +73,7 @@ exports.apiModerador = functions.region('southamerica-east1').https.onRequest(ap
 exports.eventoCreacionUsuario = eventoCreacionUsuario
 exports.eventoActualizacionUsuario = eventoActualizacionUsuario
 exports.eventoEliminacionUsuario = eventoEliminacionUsuario
+exports.actualizacionFotoPerfilDeUsuario = actualizacionFotoPerfilDeUsuario
 // exports.comienzoProcesoEliminacion = comienzoProcesoEliminacion
 // exports.cancelarProcesoEliminacion = cancelarProcesoEliminacion
 
@@ -98,11 +104,17 @@ exports.eventoEliminacionClaseBorrador = eventoEliminacionClaseBorrador
 exports.validacionContenidoClase = validacionContenidoClase
 
 
+// Funciones para cursos publicado de Jekuaapy
+exports.creacionCursoPublicado = creacionCursoPublicado
+exports.actualizacionCursoPublicado = actualizacionCursoPublicado
+exports.eliminacionCursoPublicado = eliminacionCursoPublicado
+
 // Publicación de curso
 exports.eventoPublicacionCurso = eventoPublicacionCurso
 
 
 // Indexación ALGOLIA
+exports.indexUsuarioAlgolia = indexUsuarioAlgolia
 exports.indexBlogAlgolia = indexBlogAlgolia
 exports.indexCursoBorradorAlgolia = indexCursoBorradorAlgolia
 exports.indexCursoPublicadoAlgolia = indexCursoPublicadoAlgolia

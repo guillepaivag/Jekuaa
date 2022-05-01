@@ -6,8 +6,8 @@
     "start": "npm run shell",
     "logs": "firebase functions:log",
     "serve": "npm run environmentDev && firebase emulators:start --only functions,ui",
-    "deployDev": "npm run environmentDev && npm run deployDevGo",
-    "deployDevGo": "firebase deploy --only functions:incrementarCantidadUsuario,functions:decrementarCantidadUsuario,functions:eventoCreacionUsuario,functions:eventoActualizacionUsuario,functions:incrementarCantidadBlog,functions:actualizacionCantidadBlog,functions:decrementarCantidadBlog,functions:meGustaBlog,functions:noMeGustaBlog,functions:validacionEstadoDocumentoCursoBorrador,functions:validacionEstadoDocumentoUnidadBorrador,functions:eventoEliminacionUnidadBorrador,functions:eventoCreacionClaseBorrador,functions:validacionEstadoDocumentoClaseBorrador,functions:eventoEliminacionClaseBorrador,functions:validacionContenidoClaseVideo,functions:indexBlogAlgolia",
+    "deployProd": "npm run environmentProd && firebase deploy --only functions",
+    "deployDev": "npm run environmentDev && firebase deploy --only functions",
     "environmentProd": "cd .. && firebase use prod && cd \"functions\" && firebase functions:config:set environment.mode=production && firebase functions:config:get > config.json && firebase functions:config:get",
     "environmentDev": "cd .. && firebase use dev && cd \"functions\" && firebase functions:config:set environment.mode=development && firebase functions:config:get > config.json && firebase functions:config:get"
   },

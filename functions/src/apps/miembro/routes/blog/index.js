@@ -5,13 +5,10 @@ const {
     verificadorDeDatosRequeridos,
     verificadorDeTipoDeDatos,
     verificadorDeDatosBlog,
-    construirDatosBlog,
     verificacionExistenciaBlog,
-    verificacionExistenciaArchivoBlog,
     esPropietarioDelBlog,
-    permisoParaCrearBlog,
-    permisoParaActualizarBlog,
-    permisoParaEliminarBlog,
+    construirDatosBlogPOST,
+    construirDatosBlogPUT,
 } = require('../../middlewares/blog')
 
 const { estaAutenticado } = require('../../../estudiante/middlewares/usuario')
@@ -32,7 +29,7 @@ router.post('/crear',
     verificadorDeDatosRequeridos,
     verificadorDeTipoDeDatos,
     verificadorDeDatosBlog,
-    construirDatosBlog,
+    construirDatosBlogPOST,
     crearBlog)
 
 router.put('/actualizar/:uid', 
@@ -44,7 +41,7 @@ router.put('/actualizar/:uid',
     verificadorDeDatosRequeridos,
     verificadorDeTipoDeDatos,
     verificadorDeDatosBlog,
-    construirDatosBlog,
+    construirDatosBlogPUT,
     actualizarDatosBlog)
 
 router.delete('/eliminar/:uid', 

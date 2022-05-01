@@ -3,7 +3,6 @@ const admin = require('../../../../firebase-service')
 const db = require('../../../../db')
 const ClaseBorrador = require('../../../models/Cursos/clase/ClaseBorrador')
 const Clase = require('../../../models/Cursos/clase/Clase')
-const ElementoCursoEliminado = require('../../../models/Cursos/curso/ElementoCursoEliminado')
 const ffClases = {}
 
 
@@ -150,6 +149,9 @@ ffClases.eventoActualizacionClaseBorrador = functions
                 }
             }
 
+            if ( !huboCambio ) 
+                huboCambio = clasePublicada.vistaPrevia !== claseBorrador.vistaPrevia
+
             // Si es un documento sin cambios y hubo un cambio, actualizar a "actualizado"
             if ( huboCambio && claseBorrador.estadoDocumento === '' ) 
                 datosActualizados.estadoDocumento = 'actualizado'
@@ -186,7 +188,22 @@ ffClases.actualizacionDuracionCUC = functions
 
     // CREACION
     if (claseBorrador && !claseBorradorViejo) {
+        if (claseBorrador.duracion) {
+            const incrementar = admin.firestore.FieldValue.increment( claseBorrador.duracion )
         
+            db
+            .collection('CursosBorrador').doc(uidCursoBorrador)
+            .update({
+                duracion: incrementar
+            })
+
+            db
+            .collection('CursosBorrador').doc(uidCursoBorrador)
+            .collection('UnidadesBorrador').doc(uidUnidadBorrador)
+            .update({
+                duracion: incrementar
+            })
+        }
     }
 
     // ACTUALIZACION
@@ -256,8 +273,7 @@ ffClases.eventoEliminacionClaseBorrador = functions
 
     // Decrementar cantidad de clases
     const doc2 = await ref.get()
-    if (doc2.exists) 
-        ref.update({ cantidadClases: decrementar })
+    if (doc2.exists) ref.update({ cantidadClases: decrementar })
 
     // Reordenar clases
     const snapshot = await ref.collection('ClasesBorrador')
@@ -266,22 +282,9 @@ ffClases.eventoEliminacionClaseBorrador = functions
 
     for (let i = 0; i < snapshot.docs.length; i++) {
         const doc = snapshot.docs[i]
-
-        if (doc.exists) 
-            doc.ref.update({ ordenClase: decrementar })
+        if (doc.exists) doc.ref.update({ ordenClase: decrementar })
     }
 
-    if (claseBorrador.estadoDocumento !== 'nuevo') {
-        const elementoCursoEliminado = new ElementoCursoEliminado()
-        elementoCursoEliminado.setTipo('clase')
-        elementoCursoEliminado.setDatos({
-            uidCurso: uidCursoBorrador,
-            uidUnidad: uidUnidadBorrador,
-            uidClase: uidClaseBorrador,
-        })
-
-        ElementoCursoEliminado.agregar(uidCursoBorrador, elementoCursoEliminado)
-    }
 })
 
 

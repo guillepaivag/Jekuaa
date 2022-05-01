@@ -1,13 +1,21 @@
+const TurndownService = require('turndown')
+const path = require('path')
+const fs = require('fs')
+const os = require('os')
+
 const admin = require('../../../../../firebase-service')
 const db = require('../../../../../db')
-const utils_blog = require("../../../../utils/blog")
+const { milliseconds_a_timestamp } = require("../../../../utils/timestamp")
+const esReferenciaURL = require("../../../../utils/esReferenciaURL")
 
 const Blog = require("../../../../models/Blogs/Blog")
 const Errores = require("../../../../models/Error/Errores")
 const Usuario = require("../../../../models/Usuarios/Usuario")
 const Authentication = require('../../../../models/Usuarios/Authentication')
-const esReferenciaURL = require("../../../../utils/esReferenciaURL")
 const Roles = require('../../../../models/Usuarios/helpers/Roles')
+
+
+
 
 const middlewares = {}
 
@@ -25,21 +33,7 @@ middlewares.verificadorDeDatosRequeridos  = (req, res, next) => {
             })
         }
 
-        if ( (!datosBlog || !Object.keys(datosBlog).length) && !contenidoBlog ) {
-            throw new Errores({
-                codigo: 'error/usuario_mala_solicitud',
-                mensaje: 'No existen los datos necesarios.'
-            })
-        }
-
         if (esOperacionAgregar) {
-            
-            if (Object.keys(body).length !== 2) {
-                throw new Errores({
-                    codigo: 'error/usuario_mala_solicitud',
-                    mensaje: 'No existen los datos necesarios.'
-                })
-            }
 
             if ( !datosBlog ) {
                 throw new Errores({
@@ -79,33 +73,11 @@ middlewares.verificadorDeDatosRequeridos  = (req, res, next) => {
                 })
             }
         
-            if ( !descripcion ) {
+        } else {
+            if ( (!datosBlog || !Object.keys(datosBlog).length) && !contenidoBlog ) {
                 throw new Errores({
                     codigo: 'error/usuario_mala_solicitud',
-                    mensaje: 'La descripción debe existir.'
-                })
-            }
-        
-            if ( !publicador ) {
-                throw new Errores({
-                    codigo: 'error/usuario_mala_solicitud',
-                    mensaje: 'El publicador debe existir.'
-                })
-            }
-        
-            if ( seccion ) {
-                if ( !categorias || !categorias.length ) {
-                    throw new Errores({
-                        codigo: 'error/usuario_mala_solicitud',
-                        mensaje: 'La categoría debe existir.'
-                    })
-                }
-            }
-        
-            if ( !contenidoBlog ) {
-                throw new Errores({
-                    codigo: 'error/usuario_mala_solicitud',
-                    mensaje: 'El contenido del blog debe existir.'
+                    mensaje: 'No existen los datos necesarios.'
                 })
             }
         }
@@ -121,14 +93,16 @@ middlewares.verificadorDeTipoDeDatos = (req, res, next) => {
         const { datos, body } = req
         const { datosBlog, contenidoBlog } = body
 
-        if (datosBlog) {
+        const esOperacionAgregar = req.method === 'POST'
+
+        if (esOperacionAgregar) {
             if (typeof datosBlog != 'object') {
                 throw new Errores({
                     codigo: 'error/usuario_mala_solicitud',
                     mensaje: 'Los datosBlog debe ser un objecto.'
                 })
             }
-            
+
             const {
                 uid,
                 referencia,
@@ -146,69 +120,81 @@ middlewares.verificadorDeTipoDeDatos = (req, res, next) => {
                 fechaActualizacion,
             } = datosBlog
 
-            const esOperacionAgregar = req.method === 'POST'
-        
             /**
              * Tipos de datos: Formato y tipo de datos 
              * correctos para un blog
              * 
             */
     
-            if ( !!referencia && typeof referencia != 'string' ) {
+            if ( typeof referencia != 'string' ) {
                 throw new Errores({
                     codigo: 'error/usuario_mala_solicitud',
                     mensaje: 'La referencia del blog debe ser string.'
                 })
             }
         
-            if ( !!titulo && typeof titulo != 'string' ) {
+            if ( typeof titulo != 'string' ) {
                 throw new Errores({
                     codigo: 'error/usuario_mala_solicitud',
                     mensaje: 'El titulo del blog debe ser string.'
                 })
             }
-        
-            if ( !!descripcion && typeof descripcion != 'string' ) {
-                throw new Errores({
-                    codigo: 'error/usuario_mala_solicitud',
-                    mensaje: 'La descripción del blog debe ser string.'
-                })
-            }
 
-            if ( esOperacionAgregar ) {                
-                if ( typeof publicador != 'string' ) {
+        } else {
+            if (datosBlog) {
+                if (typeof datosBlog != 'object') {
                     throw new Errores({
                         codigo: 'error/usuario_mala_solicitud',
-                        mensaje: 'El publicador del blog debe ser string.'
+                        mensaje: 'Los datosBlog debe ser un objecto.'
+                    })
+                }
+                
+                const {
+                    uid,
+                    referencia,
+                    titulo,
+                    descripcion,
+                    equipo,
+                    publicador,
+                    seccion,
+                    categorias,
+                    cantidadMeGusta,
+                    habilitado,
+                    publicado,
+                    revision,
+                    fechaCreacion,
+                    fechaActualizacion,
+                } = datosBlog
+    
+                
+            
+                /**
+                 * Tipos de datos: Formato y tipo de datos 
+                 * correctos para un blog
+                 * 
+                */
+        
+                if ( !!referencia && typeof referencia != 'string' ) {
+                    throw new Errores({
+                        codigo: 'error/usuario_mala_solicitud',
+                        mensaje: 'La referencia del blog debe ser string.'
+                    })
+                }
+            
+                if ( !!titulo && typeof titulo != 'string' ) {
+                    throw new Errores({
+                        codigo: 'error/usuario_mala_solicitud',
+                        mensaje: 'El titulo del blog debe ser string.'
+                    })
+                }
+            
+                if ( !!descripcion && typeof descripcion != 'string' ) {
+                    throw new Errores({
+                        codigo: 'error/usuario_mala_solicitud',
+                        mensaje: 'La descripción del blog debe ser string.'
                     })
                 }
 
-                if (seccion) {
-                    if (typeof seccion != 'string' ) {
-                        throw new Errores({
-                            codigo: 'error/usuario_mala_solicitud',
-                            mensaje: 'La sección del blog debe ser string.'
-                        })
-                    } 
-                
-                    if (!(categorias instanceof Array)) {
-                        throw new Errores({
-                            codigo: 'error/usuario_mala_solicitud',
-                            mensaje: 'Las categorias del blog debe ser un arreglo de string.'
-                        })
-                    }
-                    
-                    for (let i = 0; i < categorias.length; i++) {
-                        const categoria = categorias[i]
-                        if (typeof categoria != 'string') {
-                            throw new Errores({
-                                codigo: 'error/usuario_mala_solicitud',
-                                mensaje: 'Las categorias del blog debe ser un arreglo de string.'
-                            })
-                        }
-                    }
-                }
-            } else {
                 if (seccion !== undefined && seccion !== '') {
                     if ( !!seccion && typeof seccion !== 'string' ) {
                         throw new Errores({
@@ -236,17 +222,18 @@ middlewares.verificadorDeTipoDeDatos = (req, res, next) => {
                         }
                     }
                 }
-            }
-            
-            if ( publicado != undefined && typeof publicado != 'boolean' ) {
-                throw new Errores({
-                    codigo: 'error/usuario_mala_solicitud',
-                    mensaje: 'El estado publicado del blog debe ser boolean.'
-                })
+
+                if ( publicado !== undefined && typeof publicado !== 'boolean' ) {
+                    throw new Errores({
+                        codigo: 'error/usuario_mala_solicitud',
+                        mensaje: 'El estado publicado del blog debe ser boolean.'
+                    })
+                }
+
             }
         }
     
-        if ( !!contenidoBlog && typeof contenidoBlog != 'string' ) {
+        if ( !!contenidoBlog && typeof contenidoBlog !== 'string' ) {
             throw new Errores({
                 codigo: 'error/usuario_mala_solicitud',
                 mensaje: 'El contenido del blog debe ser string.'
@@ -273,7 +260,7 @@ middlewares.verificadorDeDatosBlog = async (req, res, next) => {
 
         const esOperacionAgregar = req.method === 'POST'
 
-        if ( datosBlog ) {
+        if (esOperacionAgregar) {
             const {
                 uid,                    // constante
                 referencia,             // usuario
@@ -327,76 +314,77 @@ middlewares.verificadorDeDatosBlog = async (req, res, next) => {
                 }
             }
 
-            if ( descripcion ) {
-                const valido = descripcion.length >= 10 && descripcion.length <= 500
-                if ( !valido ) {
-                    throw new Errores({
-                        codigo: 'error/usuario_mala_solicitud',
-                        mensaje: 'La descripción debe ser mayor/igual a 10 y menor/igual a 100.'
-                    })
-                }
-            }
+        } else {
+            if (datosBlog) {
+                
+                const {
+                    uid,                    // constante
+                    referencia,             // usuario
+                    titulo,                 // usuario
+                    descripcion,            // usuario
+                    equipo,
+                    publicador,             // constante
+                    seccion,                // usuario
+                    categorias,              // usuario
+                    cantidadMeGusta,        // automatico
+                    habilitado,             // mj
+                    publicado,              // usuario
+                    revision,               // mj
+                    fechaCreacion,          // constante
+                    fechaActualizacion,     // automatico
+                } = datosBlog
 
-            if (esOperacionAgregar) {
-
-                // La uid del solicitante debe ser igual a la uid del dueño del blog
-                if ( publicador ) {
-                    if (publicador !== datosUsuario.uid) {
-                        throw new Errores({
-                            codigo: 'error/usuario_no_autorizado',
-                            mensaje: 'No puedes agregar un blog a nombre de otro usuario que no seas tu.'
-                        })
-                    }
-    
-                    const existe = await Authentication.existeUsuario({ uid: datosUsuario.uid })
-                    
-                    if (!existe) {
+                if ( referencia ) {
+                    if ( !esReferenciaURL(referencia) ) {
                         throw new Errores({
                             codigo: 'error/usuario_mala_solicitud',
-                            mensaje: 'No existe este usuario.'
+                            mensaje: 'Debe ser una referencia de blog válida.'
                         })
                     }
 
-                }
-
-                /* Descripción de la verificacion de sección y categorias: (creación)
-                 * ---------------------------------------------------------------------------------------
-                 * Si la sección es: string vacio ('') o undefined no se verificara nada, por el hecho de que
-                 * cuando la sección es string vacio ('') o undefined el blog pasa a ser un blog normal sin sección,
-                 * entonces, las categorias se eliminan por tanto no es necesario realizar una verificación.
-                */
-
-                if (seccion) {
-                    let valido = categorias.length >= 1 && categorias.length <= 3
+                    const valido = referencia.length >= 1 && referencia.length <= 100
                     if ( !valido ) {
                         throw new Errores({
                             codigo: 'error/usuario_mala_solicitud',
-                            mensaje: 'Por blog puede haber de 1 a 3 categorias.'
+                            mensaje: 'La referencia debe ser mayor/igual a 10 y menor/igual a 100.'
                         })
                     }
-                    
-                    let ref = db.collection('Secciones').doc(seccion)
 
-                    for (let i = 0; i < categorias.length; i++) {
-                        const categoria = categorias[i]
-                        
-                        doc = await ref.collection('Categorias').doc(categoria).get()
-                        if (!doc.exists) {
-                            throw new Errores({
-                                codigo: 'error/usuario_mala_solicitud',
-                                mensaje: `Hubo un problema al encontrar los datos de sección: ${seccion}/${categoria}.`
-                            })
-                        }
+                    const existe = await Blog.existeDocumentoBlog({referencia})
+                    
+                    if (existe) {
+                        throw new Errores({
+                            codigo: 'error/usuario_mala_solicitud',
+                            mensaje: 'Ya existe esta referencia url.'
+                        })
                     }
                 }
 
-                
-            } else if (seccion !== undefined || (categorias && categorias.length)) {
+                if ( titulo ) {
+                    const valido = titulo.length >= 10 && titulo.length <= 100
+                    if ( !valido ) {
+                        throw new Errores({
+                            codigo: 'error/usuario_mala_solicitud',
+                            mensaje: 'El titulo debe ser mayor/igual a 10 y menor/igual a 100.'
+                        })
+                    }
+                }
+
+                if ( descripcion ) {
+                    const valido = descripcion.length >= 10 && descripcion.length <= 500
+                    if ( !valido ) {
+                        throw new Errores({
+                            codigo: 'error/usuario_mala_solicitud',
+                            mensaje: 'La descripción debe ser mayor/igual a 10 y menor/igual a 100.'
+                        })
+                    }
+                }
+
                 /* Descripción de la verificacion de sección y categorias: (creación)
-                 * ---------------------------------------------------------------------------------------
-                 * Si la sección es: string vacio ('') o undefined no se verificara nada, por el hecho de que
-                 * cuando la sección es string vacio ('') o undefined el blog pasa a ser un blog normal sin sección,
-                 * entonces, las categorias se eliminan por tanto no es necesario realizar una verificación.
+                * ---------------------------------------------------------------------------------------
+                * Si la sección es: string vacio ('') o undefined no se verificara nada, por el hecho de que
+                * cuando la sección es string vacio ('') o undefined el blog pasa a ser un blog normal sin sección,
+                * entonces, las categorias se eliminan por tanto no es necesario realizar una verificación.
                 */
 
                 const docBlog = await db.collection('Blogs').doc(params.uid).get()
@@ -429,20 +417,20 @@ middlewares.verificadorDeDatosBlog = async (req, res, next) => {
                     }
                 }
             }
-        }
 
-        if (contenidoBlog) {
-            let soloTexto = contenidoBlog.replace(/(<([^>]+)>)/ig, '')
-            soloTexto =  soloTexto.replace(/[\n\r]+/g, '')
-            soloTexto = soloTexto.replace(/\s{2,10}/g, ' ')
-            soloTexto = soloTexto.trim()
-            
-            const valido = soloTexto.length >= 50
-            if ( !valido ) {
-                throw new Errores({
-                    codigo: 'error/usuario_mala_solicitud',
-                    mensaje: 'El tamaño del blog debe ser mayor a 50 carácteres.'
-                })
+            if (contenidoBlog) {
+                let soloTexto = contenidoBlog.replace(/(<([^>]+)>)/ig, '')
+                soloTexto =  soloTexto.replace(/[\n\r]+/g, '')
+                soloTexto = soloTexto.replace(/\s{2,10}/g, ' ')
+                soloTexto = soloTexto.trim()
+                
+                const valido = soloTexto.length >= 50
+                if ( !valido ) {
+                    throw new Errores({
+                        codigo: 'error/usuario_mala_solicitud',
+                        mensaje: 'El tamaño del blog debe ser mayor a 50 carácteres.'
+                    })
+                }
             }
         }
 
@@ -452,21 +440,129 @@ middlewares.verificadorDeDatosBlog = async (req, res, next) => {
     }
 }
 
-middlewares.construirDatosBlog = (req, res, next) => {
+middlewares.construirDatosBlogPOST = (req, res, next) => {
     try {
         const { datos, body, params } = req
+        const { uidSolicitante, datosAuthSolicitante } = datos
         const { uid } = params
         const { datosBlog, contenidoBlog } = body
 
-        let datosBlogFormateado
-        const esOperacionAgregar = req.method === 'POST'
+        // Referencia del blog
+        const blog = new Blog()
+        const datosBlogFormateado = blog.formatearDatos().getBlog()
 
-        if (esOperacionAgregar) datosBlogFormateado = utils_blog.construirDatosParaNuevoBlog(datosBlog, contenidoBlog)
-        else datosBlogFormateado = utils_blog.construirDatosParaActualizacionBlog(uid, datosBlog, contenidoBlog)
+        datosBlogFormateado.publicador = uidSolicitante
+        datosBlogFormateado.referencia = datosBlog.referencia
+        datosBlogFormateado.titulo = datosBlog.titulo
+
+        datosBlogFormateado.publicado = true
+        datosBlogFormateado.habilitado = false
+        datosBlogFormateado.contieneErrores = true
+        datosBlogFormateado.mensajesError = [
+            'Falta una descripción para el blog.',
+            'Falta contenido para el blog.'
+        ]
+        datosBlogFormateado.fechaCreacion = milliseconds_a_timestamp( Date.now() )
+        datosBlogFormateado.fechaActualizacion = milliseconds_a_timestamp( Date.now() )
+
+        // Archivo del blog
+        let dirArray = ['blogs']
+        let dirVerificacion = path.join(os.tmpdir())
+        for (let i = 0; i < dirArray.length; i++) {
+            const element = dirArray[i]
+            dirVerificacion = path.join(dirVerificacion, element)
+            if ( !fs.existsSync(dirVerificacion) ) fs.mkdirSync(dirVerificacion)
+
+        }
+        const nombreBlogTemp = `${Date.now()}~${blog.uid}.md`
+        const rutaArchivoTemp = path.join(os.tmpdir(), 'blogs', nombreBlogTemp)
+
+        fs.writeFileSync(rutaArchivoTemp, '')
         
-        req.body.datosBlog = datosBlogFormateado.datosBlog
-        req.body.nombreBlogTemp = datosBlogFormateado.nombreBlogTemp
-        req.body.rutaArchivoTemp = datosBlogFormateado.rutaArchivoTemp
+        req.body.datosBlog = datosBlogFormateado
+        req.body.rutaArchivoTemp = rutaArchivoTemp
+
+        next()
+    } catch (error) {
+        next(error)
+    }
+}
+
+middlewares.construirDatosBlogPUT = (req, res, next) => {
+    try {
+        const { datos, body, params } = req
+        const { uidSolicitante, datosAuthSolicitante } = datos
+        const { uid } = params
+        const { datosBlog, contenidoBlog } = body
+
+        const datosActualizados = {}
+        let rutaArchivoTemp = ''
+
+        if (datosBlog) {
+            const {
+                uid,                    // constante
+                referencia,             // usuario
+                titulo,                 // usuario
+                descripcion,            // usuario
+                equipo,                 // constante
+                publicador,             // constante
+                seccion,                // usuario
+                categorias,             // usuario
+                mensajesError,
+                contieneErrores,
+                cantidadMeGusta,        // automatico
+                habilitado,             // adminJk
+                publicado,              // usuario
+                revision,               // adminJk
+                fechaCreacion,          // constante
+                fechaActualizacion,     // automatico
+            } = datosBlog
+            
+            // Referencia del blog
+            if (Object.keys(datosBlog).length) {
+                referencia ? datosActualizados.referencia = referencia : ''
+                titulo ? datosActualizados.titulo = titulo : ''
+                descripcion ? datosActualizados.descripcion = descripcion : ''
+                if (seccion === '') {
+                    datosActualizados.seccion = ''
+                    datosActualizados.categorias = []
+                } else {
+                    seccion ? datosActualizados.seccion = seccion : ''
+                    categorias && categorias.length ? datosActualizados.categorias = categorias : ''
+                }
+                publicado !== undefined ? datosActualizados.publicado = publicado : ''
+            }
+        }
+        
+        // Archivo del blog
+        if (contenidoBlog) {
+            let dirArray = ['blogs']
+            let dirVerificacion = path.join(os.tmpdir())
+            for (let i = 0; i < dirArray.length; i++) {
+                const element = dirArray[i]
+                dirVerificacion = path.join(dirVerificacion, element)
+                if ( !fs.existsSync(dirVerificacion) ) fs.mkdirSync(dirVerificacion)
+            }
+            const nombreBlogTemp = `${Date.now()}~${uid}.md`
+            rutaArchivoTemp = path.join(os.tmpdir(), 'blogs', nombreBlogTemp)
+    
+            let turndownService = new TurndownService()
+            let markdown = turndownService.turndown(contenidoBlog)
+    
+            fs.writeFileSync(rutaArchivoTemp, markdown)
+        }
+    
+        if ((datosActualizados && Object.keys(datosActualizados).length) || rutaArchivoTemp) {
+            datosActualizados.fechaActualizacion = milliseconds_a_timestamp( Date.now() )
+        } else {
+            throw new Errores({
+                codigo: 'error/usuario_mala_solicitud',
+                mensaje: 'No hay datos para actualizar.'
+            })
+        }
+        
+        req.body.datosBlog = datosActualizados
+        req.body.rutaArchivoTemp = rutaArchivoTemp
 
         next()
     } catch (error) {

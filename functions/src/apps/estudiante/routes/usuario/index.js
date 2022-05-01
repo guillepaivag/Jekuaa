@@ -16,7 +16,6 @@ const {
     construirDatosUsuario,
     construirDatosInformacionUsuario,
     validarFotoPerfil,
-    construirFotoPerfil,
     sePuedeEliminarPropietarioDELETE,
 } = require('../../../estudiante/middlewares/usuario')
 
@@ -27,7 +26,6 @@ const {
     obtenerUsuarioInfo,
     actualizarMiUsuario,
     actualizarMiInformacion,
-    actualizarFotoPerfil,
     eliminarFotoPerfil,
     procesoEliminacion,
 } = require('../../../estudiante/controllers/usuario')
@@ -63,12 +61,6 @@ router.put('/actualizarInformacion',
     validarDatosActualizacionInformacionUsuario,
     construirDatosInformacionUsuario,
     actualizarMiInformacion)
-
-router.put('/actualizarFotoPerfil', 
-    estaAutenticado, 
-    busboyMiddleware,
-    validarFotoPerfil,
-    actualizarFotoPerfil)
 
 router.delete('/eliminarFotoPerfil', 
     estaAutenticado, 

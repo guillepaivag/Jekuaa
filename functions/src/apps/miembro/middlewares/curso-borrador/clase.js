@@ -115,6 +115,7 @@ borrador.verificadorDeTipoDeDatosPUT = (req = request, res = response, next) => 
         const {
             titulo,
             descripcion,
+            vistaPrevia
         } = datosClase
 
         
@@ -132,7 +133,15 @@ borrador.verificadorDeTipoDeDatosPUT = (req = request, res = response, next) => 
             })
         }
 
+        if ( vistaPrevia && typeof vistaPrevia !== 'boolean' ) {
+            throw new Errores({
+                codigo: 'error/usuario_mala_solicitud',
+                mensaje: 'La descripción de la clase debe ser String.'
+            })
+        }
+
         next()
+
     } catch (error) {
         next(error)
     }
@@ -181,6 +190,7 @@ borrador.verificadorDeDatosPUT = async (req = request, res = response, next) => 
         const {
             titulo,
             descripcion,
+            vistaPrevia
         } = datosClase
 
         // Titulo
@@ -215,7 +225,9 @@ borrador.verificadorDeDatosPUT = async (req = request, res = response, next) => 
                 })
             }
         }
+        
         next()
+
     } catch (error) {
         next(error)
     }
@@ -223,7 +235,7 @@ borrador.verificadorDeDatosPUT = async (req = request, res = response, next) => 
 
 
 // CONSTRUCCIÓN DE DATOS
-borrador.construirDatosCursoBorradorPOST = async (req = request, res = response, next) => {
+borrador.construirDatosClaseBorradorPOST = async (req = request, res = response, next) => {
     try {
         const { datos, body, params } = req
         const { uidSolicitante, datosAuthSolicitante } = datos
@@ -264,7 +276,7 @@ borrador.construirDatosCursoBorradorPOST = async (req = request, res = response,
     }
 }
 
-borrador.construirDatosCursoBorradorPUT = (req = request, res = response, next) => {
+borrador.construirDatosClaseBorradorPUT = (req = request, res = response, next) => {
     try {
         const { datos, body } = req
         const { uidSolicitante, datosAuthSolicitante } = datos
@@ -273,10 +285,12 @@ borrador.construirDatosCursoBorradorPUT = (req = request, res = response, next) 
         const {
             titulo,
             descripcion,
+            vistaPrevia
         } = datosClase
         
         titulo ? req.body.datosClase.titulo = titulo.trim() : ''
         descripcion ? req.body.datosClase.descripcion = descripcion.trim() : ''
+        vistaPrevia !== undefined ? req.body.datosClase.vistaPrevia = vistaPrevia : ''
 
         next()
     } catch (error) {

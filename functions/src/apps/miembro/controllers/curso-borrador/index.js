@@ -81,7 +81,6 @@ controller.publicarCursoBorrador = async (req = request, res = response) => {
         const { datos, body, params } = req
         const { uidSolicitante, datosAuthSolicitante } = datos
         const { esNuevo } = datos
-        const { datosCurso } = body
 
         const respuesta = new Respuesta()
         let codigo = 'exito'
@@ -105,7 +104,7 @@ controller.publicarCursoBorrador = async (req = request, res = response) => {
         // Retornar respuesta
         respuesta.setRespuestaPorCodigo(codigo, {
             mensaje: '¡El curso está en proceso de publicación!',
-            resultado: datosCurso
+            resultado: null
         })
         const status = respuesta.getStatusCode()
         

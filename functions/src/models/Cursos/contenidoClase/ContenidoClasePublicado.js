@@ -1,4 +1,5 @@
 const admin = require('../../../../firebase-service')
+const db = require("../../../../db");
 const config = require("../../../../config")
 const ContenidoClase = require("./ContenidoClase")
 const ContenidoClaseBorrador = require('./ContenidoClaseBorrador')
@@ -80,11 +81,16 @@ class ContenidoClasePublicado extends ContenidoClase {
         return true
     }
 
+
+
+
     // CREAR - ACTUALIZAR
-    static async copiarContenidoDeBorrador (uidCurso = '', uidClase = '') {
+    static async copiarContenidoDeBorrador (datos = {uidCurso, uidClase}) {
+        const { uidCurso, uidClase } = datos
+
         const rutaModo = config.environment.mode === 'production' ? 'prod' : 'dev'
-        const bucketNameContenidoPublicado = rutaModo === 'prod' ? 'j-cursos-contenido' : 'j-cursos-contenido-dev'
-        const bucketNameContenidoBorrador = rutaModo === 'prod' ? 'j-cursos-contenido-b' : 'j-cursos-contenido-b-dev'
+        const bucketNameContenidoPublicado = rutaModo === 'prod' ? 'prod-j-cursos-contenido' : 'dev-j-cursos-contenido'
+        const bucketNameContenidoBorrador = rutaModo === 'prod' ? 'prod-j-cursos-contenido-b' : 'dev-j-cursos-contenido-b'
 
         const contenidoClaseBorrador = new ContenidoClaseBorrador()
         await contenidoClaseBorrador.importarContenidoClasePorUID(uidCurso, uidClase)
@@ -99,9 +105,11 @@ class ContenidoClasePublicado extends ContenidoClase {
     }
 
     // ELIMINAR
-    static async eliminarContenidoPrefix (rutaContenidoPrefix = '') {
+    static async eliminarContenidoPrefix ( datos = { rutaContenidoPrefix } ) {
+        const { rutaContenidoPrefix } = datos
+
         const rutaModo = config.environment.mode === 'production' ? 'prod' : 'dev'
-        const bucketNameContenidoPublicado = rutaModo === 'prod' ? 'j-cursos-contenido' : 'j-cursos-contenido-dev'
+        const bucketNameContenidoPublicado = rutaModo === 'prod' ? 'prod-j-cursos-contenido' : 'dev-j-cursos-contenido'
 
         await super.eliminarContenidoPrefix({
             bucketName: bucketNameContenidoPublicado, 
@@ -109,12 +117,39 @@ class ContenidoClasePublicado extends ContenidoClase {
         })
     }
 
-    static async generarUrlFirmadaVideoClase () {
+    static async generarUrlVideoClase (datos = {uidCurso, uidClase}) {
+        const { uidCurso, uidClase } = datos
+
+        const rutaModo = config.environment.mode === 'production' ? 'prod' : 'dev'
+        const bucketNameContenido = rutaModo === 'prod' ? 'prod-j-cursos-contenido' : 'dev-j-cursos-contenido'
+
+        const contenidoClasePublicado = new ContenidoClasePublicado()
+        await contenidoClasePublicado.importarContenidoClasePorUID(uidCurso, uidClase)
+
+        const rutaStorage = `${uidCurso}/${uidClase}/${contenidoClasePublicado.fileName}`
+
+        const url = await super.generarUrlVideoClasePrefix({
+            bucketName: bucketNameContenido,
+            rutaContenidoPrefix: rutaStorage
+        })
         
+        return url
     }
 
-    static async obtenerArticuloClase () {
-        
+    static async obtenerArticuloClase (datos = {uidCurso, uidClase, getMarkdown}) {
+        const { uidCurso, uidClase, getMarkdown } = datos
+
+        const rutaModo = config.environment.mode === 'production' ? 'prod' : 'dev'
+        const bucketNameContenido = rutaModo === 'prod' ? 'prod-j-cursos-contenido' : 'dev-j-cursos-contenido'
+
+        const rutaStorage = `${uidCurso}/${uidClase}/articulo.md`
+        const articulo = await super.obtenerArticuloClasePrefix({
+            bucketName: bucketNameContenido,
+            rutaContenidoPrefix: rutaStorage,
+            getMarkdown: getMarkdown
+        })
+
+        return articulo
     }
 }
 

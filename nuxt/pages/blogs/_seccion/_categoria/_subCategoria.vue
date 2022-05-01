@@ -18,7 +18,7 @@
         </div>
 
         <ClientOnly>
-            <BuscadorBlog :modoMiembro="false" />
+            <BuscadorBlog />
         </ClientOnly>
     </div>
 </template>

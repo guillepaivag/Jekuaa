@@ -2,7 +2,7 @@ const informacionCodigo = require('../../utils/InformacionCodigo')
 
 class Errores {
     
-    constructor ( datos = {} ) {
+    constructor ( datos = {codigo, mensaje, resultado, status} ) {
         const {
             codigo, 
             mensaje, 

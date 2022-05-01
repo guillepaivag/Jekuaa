@@ -1,13 +1,19 @@
 const functions = require('firebase-functions')
 const admin = require('../../firebase-service')
 const db = require('../../db')
+const config = require('../../config')
 const Usuario = require('../models/Usuarios/Usuario')
 const Miembro = require('../models/Usuarios/TiposUsuarios/Miembro')
 const InformacionUsuario = require('../models/Usuarios/InformacionUsuario')
 const Roles = require('../models/Usuarios/helpers/Roles')
 const Authentication = require('../models/Usuarios/Authentication')
 const Moderador = require('../models/Usuarios/TiposUsuarios/Moderador')
+
+
 const ffUsuarios = {}
+const rutaModo = config.environment.mode === 'production' ? 'prod' : 'dev'
+const bucketNameFotoPerfilVerificacion = rutaModo === 'prod' ? 'prod-j-fotos-perfiles-v' : 'dev-j-fotos-perfiles-v'
+const bucketNameFotoPerfil = rutaModo === 'prod' ? 'prod-j-fotos-perfiles' : 'dev-j-fotos-perfiles'
 
 
 
@@ -152,6 +158,78 @@ ffUsuarios.eventoEliminacionUsuario = functions
     db.collection('Contadores').doc('usuarios').update({ cantidad: decrementar })
 })
 
+
+
+
+
+
+
+
+
+// uidUsuario/nombreArchivo.extension
+ffUsuarios.actualizacionFotoPerfilDeUsuario = functions
+.region('southamerica-east1')
+.storage
+.bucket(bucketNameFotoPerfilVerificacion)
+.object().onFinalize(async (object, context) => {
+    console.log('object', JSON.stringify(object))
+    console.log('context', JSON.stringify(context))
+
+    try {
+        console.log('object.name', object.name)
+
+        const array2 = object.name.split('/')
+        const uidUsuario = array2[0]
+        console.log('array2', array2)
+        console.log('uidUsuario', uidUsuario)
+
+        const array1 = object.name.split('.')
+        const fileExtension = array1[array1.length-1]
+        console.log('array1', array1)
+        console.log('fileExtension', fileExtension)
+
+        const auth = new Authentication(uidUsuario)
+
+        
+        // png | jpg | jpeg
+        if (fileExtension !== 'png' && fileExtension !== 'jpg' && fileExtension !== 'jpeg') {
+            throw new Error('Extensión incorrecta.')
+        }
+        
+
+        // // 5mb
+        // const size = Number(object.size)
+
+
+        // if (size > 5) 
+        //     throw new Error('La foto de perfil solo puede pesar hasta 5MB.')
+
+        
+        // Eliminar la foto publicada
+        const userRecord = await auth.existeUsuario()
+        if (!userRecord) throw new Error('No existe este usuario.')
+        if (userRecord.photoURL) await auth.eliminarFotoPerfil()
+
+        // Publicar la foto verificada
+        await auth.aceptarFotoEnVerificacion({
+            bucketOrigin: rutaModo === 'prod' ? 'prod-j-fotos-perfiles-v' : 'dev-j-fotos-perfiles-v',
+            bucketDestination: rutaModo === 'prod' ? 'prod-j-fotos-perfiles' : 'dev-j-fotos-perfiles',
+            rutaOrigin: object.name,
+            rutaDestination: `${uidUsuario}.${fileExtension}`
+        })
+
+    } catch (error) {
+        console.log('Error al actualizar una foto de perfil: ', error)
+
+        // Eliminar foto de perfil en verificacion
+        const fileV = admin.storage().bucket(bucketNameFotoPerfilVerificacion).file( object.name )
+        fileV.delete()
+
+        const file = admin.storage().bucket(bucketNameFotoPerfil).file( object.name )
+        file.delete()
+    }
+    
+})
 
 
 

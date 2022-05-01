@@ -10,7 +10,7 @@ controller.crearBlog = async (req, res) => {
     
     try {
         const { datos, body } = req
-        const { datosBlog, nombreBlogTemp, rutaArchivoTemp } = body
+        const { datosBlog, rutaArchivoTemp } = body
 
         const respuesta = new Respuesta()
         let codigo = 'exito'
@@ -43,7 +43,7 @@ controller.actualizarDatosBlog = async (req, res) => {
     try {
         const { datos, body, params } = req
         const { uidSolicitante, datosAuthSolicitante } = datos
-        const { datosBlog, nombreBlogTemp, rutaArchivoTemp } = body
+        const { datosBlog, rutaArchivoTemp } = body
         const { uid } = params
 
         const respuesta = new Respuesta()

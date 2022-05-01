@@ -38,7 +38,7 @@
                 <v-card flat>
                     <v-card-text>
                         <ClientOnly>
-                            <BuscadorBlog :modoMiembro="true" :configuration="configurations.configuration1" />
+                            <BuscadorBlogMiembro :configuration="configurations.configuration1" />
                         </ClientOnly>
                     </v-card-text>
                 </v-card>
@@ -51,7 +51,7 @@
                 <v-card flat>
                     <v-card-text>
                         <ClientOnly>
-                            <BuscadorBlog :modoMiembro="true" :configuration="configurations.configuration2" />
+                            <BuscadorBlogMiembro :configuration="configurations.configuration2" />
                         </ClientOnly>
                     </v-card-text>
                 </v-card>
@@ -64,7 +64,7 @@
                 <v-card flat>
                     <v-card-text>
                         <ClientOnly>
-                            <BuscadorBlog :modoMiembro="true" :configuration="configurations.configuration3" />
+                            <BuscadorBlogMiembro :configuration="configurations.configuration3" />
                         </ClientOnly>
                     </v-card-text>
                 </v-card>
@@ -74,10 +74,12 @@
 </template>
 
 <script>
-import BuscadorBlog from '@/components/blogs/BuscadorBlog'
-import BlogsNoPublicados from '@/components/blogs/miembro/BlogsNoPublicados'
+import BuscadorBlogMiembro from '@/components/blogs/miembro/BuscadorBlog'
 
 export default {
+    name: '',
+    layout: 'miembro',
+    middleware: 'esBlogger',
     data() {
         return {
             modelTabs: 'tab-0',
@@ -123,8 +125,7 @@ export default {
         }
     },
     components: {
-        BuscadorBlog,
-        BlogsNoPublicados
+        BuscadorBlogMiembro,
     }
 }
 </script>

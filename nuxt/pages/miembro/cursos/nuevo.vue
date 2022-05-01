@@ -100,7 +100,6 @@
         <div>
             <v-snackbar
                 v-model="informacionMensaje.visible"
-                :multi-line="multiLine"
                 :timeout="-1"
                 :value="true"
                 :color="informacionMensaje.color"
@@ -130,6 +129,8 @@ import { required, minLength, maxLength } from 'vuelidate/lib/validators'
 
 export default {
     name: '',
+    layout: 'miembro',
+    middleware: 'esInstructor',
     mixins: [validationMixin],
     validations: {
       titulo: { required, minLength: minLength(10), maxLength: maxLength(60) },

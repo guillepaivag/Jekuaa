@@ -16,15 +16,22 @@
                 </div>
             </v-breadcrumbs>
         </div>
-    
 
-
+        <div>
+            <ClientOnly>
+                <BuscadorCursosBorradorMiembro />
+            </ClientOnly>
+        </div>
     </div>
 </template>
 
 <script>
+import BuscadorCursosBorradorMiembro from '@/components/cursos-borrador/miembro/BuscadorCursosBorrador'
+
 export default {
     name: '',
+    layout: 'miembro',
+    middleware: 'esBlogger',
     data() {
         return {
             breadcrumbs: [
@@ -45,12 +52,20 @@ export default {
                 },
                 {
                     text: 'Mis cursos',
-                    disabled: true,
+                    disabled: false,
                     href: '/miembro/cursos/mis-cursos',
+                },
+                {
+                    text: 'Borrador',
+                    disabled: true,
+                    href: '/miembro/cursos/mis-cursos/borrador',
                 },
             ],
         }
     },
+    components: {
+        BuscadorCursosBorradorMiembro,
+    }
 }
 </script>
 
