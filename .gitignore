@@ -68,3 +68,5 @@ node_modules/
 # Functions
 functions/config.json
 functions/.nuxt/
+functions/jekuaapyServiceAccountKey.json
+functions/jekuaapyServiceAccountKeyDev.json
