@@ -1,5 +1,6 @@
 <template>
     <div class="pl-3 pr-3">
+
         <form>
             <div class="pl-1 pr-1">
                 <v-text-field
@@ -314,10 +315,106 @@ export default {
             }
         },
         filtroDeDatosActualizados () {
+            let datosActualizados = {}
 
+            if (this.datosCurso.titulo !== this.datosCursoProp.titulo) {
+                datosActualizados.titulo = this.datosCurso.titulo
+            }
+
+            if (this.datosCurso.descripcion !== this.datosCursoProp.descripcion) {
+                datosActualizados.descripcion = this.datosCurso.descripcion
+            }
+
+            if (this.datosCurso.requisitos.length !== this.datosCursoProp.requisitos.length) {
+                datosActualizados.requisitos = this.datosCurso.requisitos
+            } else {
+                let cambio = false
+                for (let i = 0; i < this.datosCurso.requisitos.length; i++) {
+                    const requisito = this.datosCurso.requisitos[i]
+                    cambio = !this.datosCursoProp.requisitos.includes(requisito)
+                    if (cambio) {
+                        datosActualizados.requisitos = this.datosCurso.requisitos
+                        break
+                    }
+                }
+            }
+
+            if (this.datosCurso.objetivos.length !== this.datosCursoProp.objetivos.length) {
+                datosActualizados.objetivos = this.datosCurso.objetivos
+            } else {
+                let cambio = false
+                for (let i = 0; i < this.datosCurso.objetivos.length; i++) {
+                    const objetivo = this.datosCurso.objetivos[i]
+                    cambio = !this.datosCursoProp.objetivos.includes(objetivo)
+                    if (cambio) {
+                        datosActualizados.objetivos = this.datosCurso.objetivos
+                        break
+                    }
+                }
+            }
+
+            if (this.datosCurso.nivel !== this.datosCursoProp.nivel) {
+                datosActualizados.nivel = this.datosCurso.nivel
+            }
+
+            if (this.datosCurso.seccion !== this.datosCursoProp.seccion) {
+                datosActualizados.seccion = this.datosCurso.seccion
+            }
+
+            if (this.datosCurso.categorias.length !== this.datosCursoProp.categorias.length) {
+                datosActualizados.categorias = this.datosCurso.categorias
+            } else {
+                let cambio = false
+                for (let i = 0; i < this.datosCurso.categorias.length; i++) {
+                    const categoria = this.datosCurso.categorias[i]
+                    cambio = !this.datosCursoProp.categorias.includes(categoria)
+                    if (cambio) {
+                        datosActualizados.categorias = this.datosCurso.categorias
+                        break
+                    }
+                }
+            }
+
+            if (this.datosCurso.idioma !== this.datosCursoProp.idioma) {
+                datosActualizados.idioma = this.datosCurso.idioma
+            }
+
+            return datosActualizados
         },
         async actualizarDatosCurso () {
-            console.log('Actualizando datos del curso', this.datosCurso)
+
+            const hayActualizacion = !!Object.keys( this.filtroDeDatosActualizados() ).length
+
+            if (hayActualizacion) {
+                try {
+                    const datosActualizados = this.filtroDeDatosActualizados()
+
+                    let token = this.$firebase.auth().currentUser
+                    token = token ? await token.getIdToken() : ''
+                    await this.$store.dispatch('modules/usuarios/setTOKEN', token)
+
+                    let body = { datosCurso: datosActualizados }
+
+                    let config = {
+                        headers: {
+                            'Content-Type': 'application/json',
+                            Authorization: `Bearer ${token}`
+                        }
+                    }
+
+                    const uidCurso = this.datosCursoProp.uid
+                    const respuesta = await this.$axios.$put(`/apiMiembro/curso-borrador/actualizar/${uidCurso}`, body, config)
+
+                    this.$emit('actualizacionCurso', { datosCurso: datosActualizados })
+                    
+                } catch (error) {
+                    console.log('error', error)
+                    const accion = await this.$store.dispatch('modules/sistema/errorHandler', error)
+                }
+            } else {
+                console.log('No hay actualizaciones..')
+            }
+
         },
     },
     watch: {
@@ -400,11 +497,11 @@ export default {
         this.datosCurso = {
             titulo: this.datosCursoProp.titulo,
             descripcion: this.datosCursoProp.descripcion,
-            requisitos: this.datosCursoProp.requisitos,
-            objetivos: this.datosCursoProp.objetivos,
+            requisitos: JSON.parse( JSON.stringify( this.datosCursoProp.requisitos ) ),
+            objetivos: JSON.parse( JSON.stringify( this.datosCursoProp.objetivos ) ),
             nivel: this.datosCursoProp.nivel,
             seccion: this.datosCursoProp.seccion,
-            categorias: this.datosCursoProp.categorias,
+            categorias: JSON.parse( JSON.stringify( this.datosCursoProp.categorias ) ),
             idioma: this.datosCursoProp.idioma,
         }
 
@@ -459,6 +556,6 @@ export default {
 }
 
 .enIdioma {
-    margin-bottom: 100px;
+    margin-bottom: 0;
 }
 </style>

@@ -20,39 +20,23 @@
         <div class="container">
             <v-row no-gutters>
                 <v-col cols="12" lg="2">
-                    <v-btn
-                        class="mb-2"
-                        outlined
-                        color="#683bce"
-                        to="/miembro/curso-borrador/introduccion-1-2022"
-                        exact
-                    >
-                        Datos del curso
-                    </v-btn>
-
-                    <v-btn
-                        class="mb-2"
-                        outlined
-                        color="#683bce"
-                        to="/miembro/curso-borrador/introduccion-1-2022/programa-estudio"
-                        exact
-                    >
-                        Contenido
-                    </v-btn>
-
-                    <v-btn
-                        class="mb-2"
-                        outlined
-                        color="#683bce"
-                        to="/miembro/curso-borrador/introduccion-1-2022/precios"
-                        exact
-                    >
-                        Precios
-                    </v-btn>
-
+                    <!-- displayNonePequenha -->
+                    <div class="conjuntoBotones">
+                        <v-btn
+                            v-for="(item, index) in informacionBotones" :key="index"
+                            class="mb-2"
+                            text
+                            color="#683bce"
+                            :disabled="!uidCurso"
+                            :to="item.to"
+                            exact
+                        >
+                            {{ item.title }}
+                        </v-btn>
+                    </div>
                 </v-col>
 
-                <v-divider vertical></v-divider>
+                <v-divider class="displayNonePequenha" vertical></v-divider>
                 
                 <v-col cols="12" lg="10">
                     <nuxt-child />
@@ -97,29 +81,43 @@ export default {
                     href: '/miembro/cursos/mis-cursos/borrador',
                 },
             ],
+            uidCurso: '',
+            informacionBotones: [
+                { to: `/miembro/curso-borrador/${this.$route.params.uidCurso}`, title: 'Información' },
+                { to: `/miembro/curso-borrador/${this.$route.params.uidCurso}/programa-estudio`, title: 'Contenido' },
+                { to: `/miembro/curso-borrador/${this.$route.params.uidCurso}/precios`, title: 'Precios' },
+                { to: `/miembro/curso-borrador/${this.$route.params.uidCurso}/publicacion`, title: 'Publicación' },
+            ]
         }
     },
     methods: {
         
     },
     async created() {
-        const snapshotCurso = await fb.firestore()
-        .collection('CursosBorrador').where('referenciaURL', '==', this.$route.params.referenciaURL).limit(1)
+        const doc = await fb.firestore()
+        .collection('CursosBorrador').doc(this.$route.params.uidCurso)
         .get()
+        this.uidCurso = doc.id
 
-        if (snapshotCurso.empty) this.$router.push('/miembro/cursos/mis-cursos/borrador')
-
-        const doc = snapshotCurso.docs[0]
+        if (!doc.exists) this.$router.push('/miembro/cursos/mis-cursos/borrador')
 
         this.breadcrumbs.push({
             text: doc.data().titulo,
             disabled: true,
-            href: `/miembro/curso-borrador/${this.$route.params.referenciaURL}`,
+            href: `/miembro/curso-borrador/${this.$route.params.uidCurso}`,
         })
     },
 }
 </script>
 
-<style>
+<style scoped>
+@media (max-width: 1263px) {
+  .displayNonePequenha {
+    display: none;
+  }
 
+  .conjuntoBotones {
+    margin-bottom: 30px;
+  }
+}
 </style>

@@ -50,6 +50,8 @@ ff.eventoPublicacionCurso = functions
             // CURSO
             const cursoPublicado = new CursoPublicado()
             cursoPublicado.setCurso( cursoBorrador.getCurso() )
+            cursoPublicado.setFechaCreacion( timestamp.milliseconds_a_timestamp(Date.now()) )
+            cursoPublicado.setFechaActualizacion( timestamp.milliseconds_a_timestamp(Date.now()) )
 
             await CursoPublicado.crearCurso(cursoPublicado)
             CursoBorrador.actualizarCurso(uidCursoEstadoPublicacion, {
@@ -72,6 +74,8 @@ ff.eventoPublicacionCurso = functions
 
                 const unidadPublicado = new UnidadPublicado()
                 unidadPublicado.setUnidad( dataUnidad )
+                unidadPublicado.setFechaCreacion( timestamp.milliseconds_a_timestamp(Date.now()) )
+                unidadPublicado.setFechaActualizacion( timestamp.milliseconds_a_timestamp(Date.now()) )
 
                 await UnidadPublicado.agregar(uidCursoEstadoPublicacion, unidadPublicado)
                 UnidadBorrador.actualizar(uidCursoEstadoPublicacion, unidadPublicado.uid, {
@@ -91,6 +95,8 @@ ff.eventoPublicacionCurso = functions
 
                     const clasePublicado = new ClasePublicado()
                     clasePublicado.setClase( dataClase )
+                    clasePublicado.setFechaCreacion( timestamp.milliseconds_a_timestamp(Date.now()) )
+                    clasePublicado.setFechaActualizacion( timestamp.milliseconds_a_timestamp(Date.now()) )
 
                     await ClasePublicado.agregar(uidCursoEstadoPublicacion, unidadPublicado.uid, clasePublicado)
                     ClaseBorrador.actualizar(uidCursoEstadoPublicacion, unidadPublicado.uid, clasePublicado.uid, {
@@ -112,6 +118,8 @@ ff.eventoPublicacionCurso = functions
 
                 const contenidoClasePublicado = new ContenidoClasePublicado()
                 contenidoClasePublicado.setContenidoClase(dataContenidoClase)
+                contenidoClasePublicado.fechaCreacion( timestamp.milliseconds_a_timestamp(Date.now()) )
+                contenidoClasePublicado.fechaActualizacion( timestamp.milliseconds_a_timestamp(Date.now()) )
 
                 // Contenido
                 await ContenidoClasePublicado.copiarContenidoDeBorrador({
@@ -129,7 +137,10 @@ ff.eventoPublicacionCurso = functions
         } else {
             // TODO: Filtrar las unidades, clases y contenidos que su estadoDocumento sea diferente de '' (vacio)
             if (cursoBorrador.estadoDocumento === 'actualizado') {
-                CursoPublicado.actualizarCurso(uidCursoEstadoPublicacion, cursoBorrador.getCurso())
+                CursoPublicado.actualizarCurso(uidCursoEstadoPublicacion, {
+                    ...cursoBorrador.getCurso(),
+                    fechaActualizacion: timestamp.milliseconds_a_timestamp(Date.now())
+                })
                 CursoBorrador.actualizarCurso(uidCursoEstadoPublicacion, {
                     estadoDocumento: ''
                 })
@@ -148,6 +159,8 @@ ff.eventoPublicacionCurso = functions
                 if (unidadBorrador.estadoDocumento === 'nuevo') {
                     const unidadPublicado = new UnidadPublicado()
                     unidadPublicado.setUnidad( unidadBorrador.getUnidad() )
+                    unidadPublicado.setFechaCreacion( timestamp.milliseconds_a_timestamp(Date.now()) )
+                    unidadPublicado.setFechaActualizacion( timestamp.milliseconds_a_timestamp(Date.now()) )
 
                     await UnidadPublicado.agregar(uidCursoEstadoPublicacion, unidadPublicado)
                     UnidadBorrador.actualizar(uidCursoEstadoPublicacion, unidadBorrador.uid, {
@@ -156,7 +169,10 @@ ff.eventoPublicacionCurso = functions
                 }
 
                 if (unidadBorrador.estadoDocumento === 'actualizado') {
-                    UnidadPublicado.actualizar(uidCursoEstadoPublicacion, unidadBorrador.uid, unidadBorrador.getUnidad())
+                    UnidadPublicado.actualizar(uidCursoEstadoPublicacion, unidadBorrador.uid, {
+                        ...unidadBorrador.getUnidad(),
+                        fechaActualizacion: timestamp.milliseconds_a_timestamp(Date.now())
+                    })
                     UnidadBorrador.actualizar(uidCursoEstadoPublicacion, unidadBorrador.uid, {
                         estadoDocumento: ''
                     })
@@ -175,6 +191,8 @@ ff.eventoPublicacionCurso = functions
                     if (claseBorrador.estadoDocumento === 'nuevo') {
                         const clasePublicado = new ClasePublicado()
                         clasePublicado.setClase( claseBorrador.getClase() )
+                        clasePublicado.setFechaCreacion( timestamp.milliseconds_a_timestamp(Date.now()) )
+                        clasePublicado.setFechaActualizacion( timestamp.milliseconds_a_timestamp(Date.now()) )
         
                         await ClasePublicado.agregar(uidCursoEstadoPublicacion, unidadBorrador.uid, clasePublicado)
                         ClaseBorrador.actualizar(uidCursoEstadoPublicacion, unidadBorrador.uid, claseBorrador.uid, {
@@ -183,7 +201,10 @@ ff.eventoPublicacionCurso = functions
                     }
         
                     if (claseBorrador.estadoDocumento === 'actualizado') {
-                        ClasePublicado.actualizar(uidCursoEstadoPublicacion, unidadBorrador.uid, claseBorrador.uid, claseBorrador.getClase())
+                        ClasePublicado.actualizar(uidCursoEstadoPublicacion, unidadBorrador.uid, claseBorrador.uid, {
+                            ...claseBorrador.getClase(),
+                            fechaActualizacion: timestamp.milliseconds_a_timestamp(Date.now())
+                        })
                         ClaseBorrador.actualizar(uidCursoEstadoPublicacion, unidadBorrador.uid, claseBorrador.uid, {
                             estadoDocumento: ''
                         })
@@ -195,8 +216,14 @@ ff.eventoPublicacionCurso = functions
                         const uidUnidadNueva = array[2]
 
                         // Agregar clase a la nueva unidad
-                        const clasePublicado = new ClasePublicado( claseBorrador.getClase() )
-                        ClasePublicado.agregar(uidCursoEstadoPublicacion, uidUnidadNueva, clasePublicado)
+                        const clasePublicadoViejo = new ClasePublicado()
+                        await clasePublicadoViejo.importarClasePorUID(uidCursoEstadoPublicacion, uidUnidadVieja, claseBorrador.uid)
+
+                        const clasePublicadoNuevo = new ClasePublicado( claseBorrador.getClase() )
+                        clasePublicadoNuevo.setFechaCreacion( clasePublicadoViejo.fechaCreacion )
+                        clasePublicadoNuevo.setFechaActualizacion( timestamp.milliseconds_a_timestamp(Date.now()) )
+                        
+                        ClasePublicado.agregar(uidCursoEstadoPublicacion, uidUnidadNueva, clasePublicadoNuevo)
 
                         // Eliminar clase de la vieja unidad
                         ClasePublicado.eliminar(uidCursoEstadoPublicacion, uidUnidadVieja, claseBorrador.uid)
@@ -223,6 +250,8 @@ ff.eventoPublicacionCurso = functions
 
                 if (contenidoClaseBorrador.estadoDocumento === 'nuevo') {
                     const contenidoClasePublicado = new ContenidoClasePublicado(docContenidoClase.data())
+                    contenidoClasePublicado.fechaCreacion( timestamp.milliseconds_a_timestamp(Date.now()) )
+                    contenidoClasePublicado.fechaActualizacion( timestamp.milliseconds_a_timestamp(Date.now()) )
 
                     // Contenido
                     await ContenidoClasePublicado.copiarContenidoDeBorrador({
@@ -251,7 +280,10 @@ ff.eventoPublicacionCurso = functions
                     })
 
                     // Documento
-                    ContenidoClasePublicado.actualizarDocumento(uidCursoEstadoPublicacion, contenidoClaseBorrador.uid, contenidoClaseBorrador.getContenidoClase())
+                    ContenidoClasePublicado.actualizarDocumento(uidCursoEstadoPublicacion, contenidoClaseBorrador.uid, {
+                        ...contenidoClaseBorrador.getContenidoClase(),
+                        fechaActualizacion: timestamp.milliseconds_a_timestamp(Date.now())
+                    })
                     ContenidoClaseBorrador.actualizarDocumento(uidCursoEstadoPublicacion, contenidoClaseBorrador.uid, {
                         estadoDocumento: ''
                     })

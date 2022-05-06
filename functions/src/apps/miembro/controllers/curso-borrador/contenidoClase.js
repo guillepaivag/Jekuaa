@@ -106,6 +106,7 @@ controller.eliminarContenidoClaseBorrador = async (req = request, res = response
             fileName: '', 
             fileExtension: '', 
             mimeType: '',
+            fechaSubida: null,
             encoding: '',
             fechaActualizacion: null,
             estadoArchivo: '',

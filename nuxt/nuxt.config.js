@@ -29,9 +29,7 @@ module.exports = {
       { rel: 'stylesheet', href: 'https://fonts.googleapis.com/icon?family=Material+Icons' },
       { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' },
     ],
-    script: [
-      { src: '' },
-    ]
+    script: []
   },
 
   // Global CSS: https://go.nuxtjs.dev/config-css
@@ -40,7 +38,7 @@ module.exports = {
   // Plugins to run before rendering page: https://go.nuxtjs.dev/config-plugins
   plugins: [
     { src: './plugins/firebase.js' },
-    { src: './plugins/vue-observe-visibility.js', ssr: false },
+    { src: './plugins/vue-observe-visibility.js', mode: 'client' },
   ],
 
   // Auto import components: https://go.nuxtjs.dev/config-components

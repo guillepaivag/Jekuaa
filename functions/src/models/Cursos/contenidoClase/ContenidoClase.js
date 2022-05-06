@@ -29,6 +29,7 @@ class ContenidoClase {
             fileName, 
             fileExtension, 
             mimeType,
+            fechaSubida,
         } = datos
 
         this.uid = uid ? uid : ''
@@ -38,6 +39,7 @@ class ContenidoClase {
         this.fileName = fileName ? fileName : ''
         this.fileExtension = fileExtension ? fileExtension : ''
         this.mimeType = mimeType ? mimeType : ''
+        this.fechaSubida = fechaSubida ? fechaSubida : null
     }
 
     getContenidoClase () {
@@ -49,6 +51,7 @@ class ContenidoClase {
             fileName: this.fileName,
             fileExtension: this.fileExtension,
             mimeType: this.mimeType,
+            fechaSubida: this.fechaSubida,
         }
     }
 
@@ -60,6 +63,7 @@ class ContenidoClase {
         this.setFileName( datos.fileName )
         this.setFileExtension( datos.fileExtension )
         this.setMimeType( datos.mimeType )
+        this.setFechaSubida( datos.fechaSubida )
     }
 
     setUid ( uid = '' ) {
@@ -88,6 +92,10 @@ class ContenidoClase {
 
     setMimeType ( mimeType = '' ) {
         this.mimeType = mimeType
+    } 
+
+    setFechaSubida ( fechaSubida = null ) {
+        this.fechaSubida = fechaSubida
     } 
     
 

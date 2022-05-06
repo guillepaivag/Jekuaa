@@ -1,6 +1,6 @@
 <template>
     <div>
-        PROGRAMA DE ESTUDIO
+        Publicación
     </div>
 </template>
 

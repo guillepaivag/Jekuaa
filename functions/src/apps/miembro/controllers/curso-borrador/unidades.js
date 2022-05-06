@@ -27,7 +27,7 @@ controller.crearUnidadBorrador = async (req = request, res = response) => {
         // Retornar respuesta
         respuesta.setRespuestaPorCodigo(codigo, {
             mensaje: '¡Se creó una unidad para este curso!',
-            resultado: null
+            resultado: unidadBorrador
         })
         const status = respuesta.getStatusCode()
         

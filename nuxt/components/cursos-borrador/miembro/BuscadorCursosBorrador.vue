@@ -172,7 +172,7 @@
                           <div v-for="item in items" :key="item.objectID" class="card-link mb-5">
                             <article class="blog-card">
                               
-                              <nuxt-link :to="`/miembro/curso-borrador/${item.referenciaURL}`">
+                              <nuxt-link :to="`/miembro/curso-borrador/${item.objectID}`">
                                 <img 
                                   v-if="item.fotoPerfil"
                                   class="post-image" 
@@ -187,7 +187,7 @@
 
                               <div class="article-details">
                                 <h4 class="post-category">{{ item.seccion ? item.seccion : 'Curso normal' }}</h4>
-                                <nuxt-link :to="`/miembro/curso-borrador/${item.referenciaURL}`">
+                                <nuxt-link :to="`/miembro/curso-borrador/${item.objectID}`">
                                   <h3 class="post-title">{{ item.titulo }}</h3>
                                 </nuxt-link>
                                 <p class="post-description">{{ item.descripcion }}</p>
