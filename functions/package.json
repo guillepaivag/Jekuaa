@@ -1,0 +1,63 @@
+{
+  "name": "functions",
+  "description": "Cloud Functions for Firebase",
+  "scripts": {
+    "shell": "firebase functions:shell",
+    "start": "npm run shell",
+    "logs": "firebase functions:log",
+    "serve": "npm run environmentDev && firebase emulators:start --only functions",
+    "deployProd": "npm run environmentProd && firebase deploy --only functions",
+    "deployDev": "npm run environmentDev && firebase deploy --only functions",
+    "environmentProd": "cd .. && firebase use prod && cd \"functions\" && firebase functions:config:set environment.mode=production && firebase functions:config:get > config.json && firebase functions:config:get",
+    "environmentDev": "cd .. && firebase use dev && cd \"functions\" && firebase functions:config:set environment.mode=development && firebase functions:config:get > config.json && firebase functions:config:get"
+  },
+  "engines": {
+    "node": "16"
+  },
+  "main": "index.js",
+  "dependencies": {
+    "@ffmpeg-installer/ffmpeg": "^1.1.0",
+    "@ffprobe-installer/ffprobe": "^1.4.1",
+    "@nuxtjs/axios": "^5.13.6",
+    "@nuxtjs/pwa": "^3.3.5",
+    "@nuxtjs/sitemap": "^2.4.0",
+    "@tiptap/extension-image": "^2.0.0-beta.24",
+    "@tiptap/starter-kit": "^2.0.0-beta.163",
+    "@tiptap/vue-2": "^2.0.0-beta.72",
+    "algoliasearch": "^4.11.0",
+    "axios": "^0.21.1",
+    "busboy": "^1.4.0",
+    "codemirror": "^5.63.3",
+    "cookieparser": "^0.1.0",
+    "core-js": "^3.9.1",
+    "cors": "^2.8.5",
+    "cross-env": "^7.0.3",
+    "express": "^4.17.1",
+    "express-multipart-file-parser": "^0.1.2",
+    "express-validator": "^6.12.2",
+    "firebase": "^8.4.1",
+    "firebase-admin": "^9.2.0",
+    "firebase-functions": "^3.22.0",
+    "fluent-ffmpeg": "^2.1.2",
+    "instantsearch.css": "^7.4.5",
+    "instantsearch.js": "^4.33.1",
+    "javascript-time-ago": "^2.3.10",
+    "js-cookie": "^3.0.0",
+    "jwt-decode": "^3.1.2",
+    "nodemailer": "^6.7.5",
+    "nuxt": "^2.15.3",
+    "showdown": "^1.9.1",
+    "turndown": "^7.1.1",
+    "vue-instantsearch": "^4.1.1",
+    "vue-observe-visibility": "^1.0.0",
+    "vuelidate": "^0.7.6"
+  },
+  "devDependencies": {
+    "@babel/cli": "^7.16.0",
+    "@babel/core": "^7.16.5",
+    "@babel/preset-env": "^7.16.5",
+    "@nuxtjs/vuetify": "^1.12.1",
+    "firebase-functions-test": "^0.2.0"
+  },
+  "private": true
+}
