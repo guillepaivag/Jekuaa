@@ -66,10 +66,12 @@ node_modules/
 .env
 
 # Nuxt
+nuxt/package-lock.json
 nuxt/helpers/config_firebase_dev.js
 nuxt/helpers/config_firebase_prod.js
 
 # Functions
+functions/package-lock.json
 functions/.nuxt/
 functions/config.json
 functions/serviceAccountKey.json
