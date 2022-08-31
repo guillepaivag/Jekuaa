@@ -10,68 +10,72 @@
         <v-row class="contenedor_informacion">
             <v-col cols="12" md="7">
                 <h2>¡Aprende con un equipo especializado!</h2>
-                <v-divider class=""></v-divider>
+                <v-divider class="mb-2"></v-divider>
                 <p>
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. 
-                    Sed et lacus a ipsum viverra ullamcorper. Interdum et 
-                    malesuada fames ac ante ipsum primis in faucibus. Maecenas 
-                    orci diam, pellentesque imperdiet sapien sed, viverra placerat 
-                    nisi. Proin commodo semper pellentesque. Sed vulputate 
-                    convallis sem, a lobortis tortor imperdiet ac.
+                    En el equipo de classfii buscamos que tengas un sitio donde 
+                    ir aprendiendo de forma eficaz, que nunca te desmotives y 
+                    puedas aprender de la manera más divertida!
                 </p>
 
             </v-col>
             <v-col class="" cols="12" md="5">
                 <!-- class="stylie" -->
                 <!-- max-height="250" max-width="450" -->
-                <v-img
-                    lazy-src="https://picsum.photos/id/11/10/6"
-                    src="https://picsum.photos/id/11/500/300"
-                ></v-img>
+                <v-img :src="require('~/assets/img/team.jpg')"></v-img>
             </v-col>
         </v-row>
 
         <v-row class="contenedor_informacion">
             <v-col class="" cols="12" md="5">
-                <v-img
-                    lazy-src="https://picsum.photos/id/11/10/6"
-                    src="https://picsum.photos/id/11/500/300"
-                ></v-img>
+                <v-img :src="require('~/assets/img/profesional.jpg')"></v-img>
             </v-col>
             <v-col cols="12" md="7">
-                <h2>¡Transformate en un profesional!</h2>
-                <v-divider class=""></v-divider>
+                <h2>¡Transformate en un profesional! 🚀</h2>
+                <v-divider class="mb-2"></v-divider>
                 <p>
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. 
-                    Sed et lacus a ipsum viverra ullamcorper. Interdum et 
-                    malesuada fames ac ante ipsum primis in faucibus. Maecenas 
-                    orci diam, pellentesque imperdiet sapien sed, viverra placerat 
-                    nisi. Proin commodo semper pellentesque. Sed vulputate 
-                    convallis sem, a lobortis tortor imperdiet ac.
+                    Tenemos la misión de que aprendas de forma eficiente, divertida
+                    y te transformes en el profesional que tu quieres ser, estaras con 
+                    profesionales guiandote paso a paso con nuestros cursos especializados 
+                    y gamificados.
+                </p>
+                <p>
+                    ¡Conoceras tu "yo" del futuro! 
                 </p>
             </v-col>
         </v-row>
 
-        <v-row class="contenedor_informacion">
+        <v-row class="contenedor_informacion mb-15">
             <v-col cols="12" md="7">
-                <h2>¡Busca también en blogs!</h2>
-                <v-divider class=""></v-divider>
+                <h2>¡Busca a otras personas para aprender!</h2>
+                <v-divider class="mb-2"></v-divider>
                 <p>
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. 
-                    Sed et lacus a ipsum viverra ullamcorper. Interdum et 
-                    malesuada fames ac ante ipsum primis in faucibus. Maecenas 
-                    orci diam, pellentesque imperdiet sapien sed, viverra placerat 
-                    nisi. Proin commodo semper pellentesque. Sed vulputate 
-                    convallis sem, a lobortis tortor imperdiet ac.
+                    Una de las cosas mas importantes cuando quieres 
+                    conseguir un trabajo y experiencia es formar una 
+                    red de contacto, aquí en Classfii priorizamos que 
+                    además de aprender, puedas conocer a nuestros 
+                    miembros y la comunidad.
+                </p>
+                <p>
+                    ¿y quién sabe si te encuentras 
+                    un nuevo socio? 😉
                 </p>
             </v-col>
             <v-col class="" cols="12" md="5">
-                <v-img
-                    lazy-src="https://picsum.photos/id/11/10/6"
-                    src="https://picsum.photos/id/11/500/300"
-                ></v-img>
+                <v-img :src="require('~/assets/img/conociendo_gente.jpg')"></v-img>
             </v-col>
         </v-row>
+
+        <div class="text-center mb-15">
+            <v-btn
+                class=""
+                outlined
+                x-large
+                color="indigo"
+                to="/centro"
+            >
+                🚀 Comenzar
+            </v-btn>
+        </div>
         
     </div>
 </template>
@@ -95,7 +99,7 @@ export default {
 
 <style scoped>
 .contenedor_informacion {
-    margin-bottom: 70px;
+    margin-bottom: 150px;
 }
 
 /* .stylie {

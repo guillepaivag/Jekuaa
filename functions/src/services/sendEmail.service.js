@@ -16,6 +16,8 @@ const sendEmail = async (data = { from, to, subject, html }) => {
     try {
         const { from, to, subject, html } = data
 
+        console.log('Enviando correo (sendEmail)')
+
         const sended = await transporter.sendMail({
             from: from,
             to: to,
@@ -25,6 +27,8 @@ const sendEmail = async (data = { from, to, subject, html }) => {
 
         return await sended
     } catch (error) {
+        console.log('Error al enviar el correo (sendEmail)', error)
+
         return await error
     }
 }

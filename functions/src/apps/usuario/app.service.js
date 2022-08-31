@@ -4,14 +4,27 @@ const manejadorErrores = require('../../helpers/manejoErrores')
 
 const api = express()
 
-api.use((req, res, next) => {
-  res.set('Access-Control-Allow-Origin', 'https://jekuaapy.com')
-  res.set('Access-Control-Allow-Headers', 'Authorization, X-API-KEY, Origin, X-Requested-With, Content-Type, Accept, Access-Control-Allow-Request-Method, token')
-  res.set('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, DELETE')
-  next()
-})
+// api.use((req, res, next) => {
+//   res.setHeader('Access-Control-Allow-Origin', 'https://jekuaapy.com')
+//   res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, DELETE')
+//   res.setHeader('Access-Control-Allow-Headers', 'Authorization, X-API-KEY, Origin, X-Requested-With, Content-Type, Accept, Access-Control-Allow-Request-Method, token')
+//   res.setHeader('Access-Control-Allow-Credentials', true)
+//   next()
+// })
 
-api.use((req, res, next) => { cors(req, res, () => { next() }) })
+var allowlist = ['https://jekuaapy.com', 'http://localhost:3000']
+var corsOptionsDelegate = function (req, callback) {
+  var corsOptions;
+  if (allowlist.indexOf(req.header('Origin')) !== -1) {
+    corsOptions = { origin: true } // reflect (enable) the requested origin in the CORS response
+  } else {
+    corsOptions = { origin: false } // disable CORS for this request
+  }
+  callback(null, corsOptions) // callback expects two parameters: error and options
+}
+cors(corsOptionsDelegate)
+
+// api.use((req, res, next) => { cors(req, res, () => { next() }) })
 api.use(express.json())
 api.use(express.urlencoded({ extended: true }))
 

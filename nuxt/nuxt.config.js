@@ -1,6 +1,12 @@
-const baseURL = process.env.NODE_ENV === 'production' ? 
-'https://southamerica-east1-jekuaa-py.cloudfunctions.net' : 
-'http://localhost:5001/jekuaa-py-dev/southamerica-east1'
+const isProduction = true
+const localeProduction = true
+
+const baseURL = isProduction ? 
+  'https://southamerica-east1-jekuaa-py.cloudfunctions.net' : 
+
+  localeProduction ? 
+  'http://localhost:5001/jekuaa-py/southamerica-east1' : 
+  'http://localhost:5001/jekuaa-py-dev/southamerica-east1'
 
 module.exports = {
   // Global page headers: https://go.nuxtjs.dev/config-head
@@ -28,13 +34,10 @@ module.exports = {
       
       { rel: 'stylesheet', href: 'https://unpkg.com/video.js@7/dist/video-js.min.css' },
       // { rel: 'stylesheet', href: 'https://unpkg.com/@videojs/themes@1/dist/forest/index.css' },
-
-      { rel: 'stylesheet', href: 'https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.6.0/styles/base16/atelier-forest.min.css' },
     ],
     script: [
       { src: 'https://vjs.zencdn.net/7.19.2/video.min.js' },
-      { src: 'http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js' },
-      { src: 'https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.6.0/highlight.min.js' },
+      // { src: 'http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js' },
     ]
   },
 
@@ -45,7 +48,6 @@ module.exports = {
     '~/assets/style/visualizador_prose_mirror.scss',
     '~/assets/style/videojs_custom_theme.scss',
     '~/assets/style/fonts.scss',
-    // '~/assets/style/styles_codeblock/base16/atelier-forest.min.css'
   ],
   
   // Plugins to run before rendering page: https://go.nuxtjs.dev/config-plugins
@@ -69,7 +71,7 @@ module.exports = {
   ],
 
   env: {
-    NODE_ENV: false ? 'production' : 'development'
+    NODE_ENV: (isProduction || localeProduction) ? 'production' : 'development'
   },
 
   // Modules: https://go.nuxtjs.dev/config-modules
@@ -85,7 +87,6 @@ module.exports = {
       ['~/assets/style/visualizador_prose_mirror.scss'],
       ['~/assets/style/videojs_custom_theme.scss'],
       ['~/assets/style/fonts.scss'],
-      // ['~/assets/style/styles_codeblock/base16/atelier-forest.min.css'],
     ]
   ],
 
@@ -123,5 +124,12 @@ module.exports = {
   build: {
     transpile: ['vuetify/lib', 'vue-instantsearch', 'instantsearch.js/es'],
     extractCSS: true,
+    babel:{
+      plugins: [
+        ['@babel/plugin-proposal-class-properties', { loose: true }],
+        ['@babel/plugin-proposal-private-methods', { loose: true }],
+        ['@babel/plugin-proposal-private-property-in-object', { loose: true }]
+      ]
+    }
   }
 }

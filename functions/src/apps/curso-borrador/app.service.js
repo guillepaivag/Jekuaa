@@ -4,12 +4,13 @@ const manejadorErrores = require('../../helpers/manejoErrores')
 
 const api = express()
 
-api.use((req, res, next) => {
-  res.set('Access-Control-Allow-Origin', 'https://jekuaapy.com')
-  res.set('Access-Control-Allow-Headers', 'Authorization, X-API-KEY, Origin, X-Requested-With, Content-Type, Accept, Access-Control-Allow-Request-Method, token')
-  res.set('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, DELETE')
-  next()
-})
+// api.use((req, res, next) => {
+//   res.setHeader('Access-Control-Allow-Origin', 'https://jekuaapy.com')
+//   res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, DELETE')
+//   res.setHeader('Access-Control-Allow-Headers', 'Authorization, X-API-KEY, Origin, X-Requested-With, Content-Type, Accept, Access-Control-Allow-Request-Method, token')
+//   res.setHeader('Access-Control-Allow-Credentials', true)
+//   next()
+// })
 
 api.use((req, res, next) => { cors(req, res, () => { next() }) })
 api.use(express.json())

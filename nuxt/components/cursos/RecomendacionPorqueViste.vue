@@ -16,8 +16,6 @@
 </template>
 
 <script>
-// import { h } from 'preact'
-// import { relatedProducts } from '@algolia/recommend-js'
 import { fb } from '~/plugins/firebase'
 import recommend from '@algolia/recommend'
 

@@ -60,7 +60,13 @@ export default {
       } catch (error) {
         console.log('Error - inicioSesionEmail', error)
         const accion = await this.$store.dispatch('modules/sistema/errorHandler', error)
-        
+
+        this.$store.commit('modules/sistema/setLoading', false)
+
+        if (error.code === 'auth/wrong-password') {
+          
+        }
+
       }
     }
   }

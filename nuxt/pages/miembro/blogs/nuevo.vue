@@ -111,7 +111,6 @@ import { validationMixin } from 'vuelidate'
 import { required, minLength, maxLength } from 'vuelidate/lib/validators'
 
 import showdown from 'showdown'
-import TurndownService from 'turndown'
 
 export default {
     name: '',

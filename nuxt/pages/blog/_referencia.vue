@@ -278,6 +278,7 @@ export default {
             const docBlog = docsBlogs.docs[0]
             
             blog = docBlog.data()
+            console.log('blog', blog)
 
             let config = {
                 headers: {

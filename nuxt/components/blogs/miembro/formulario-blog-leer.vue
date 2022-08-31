@@ -222,7 +222,6 @@
 import VisualizadorBlog from '@/components/blogs/Visualizador'
 import informacionSecciones from '@/helpers/informacionSecciones'
 import showdown from 'showdown'
-import TurndownService from 'turndown'
 
 export default {
   components: {

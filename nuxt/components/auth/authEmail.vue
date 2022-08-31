@@ -222,7 +222,10 @@ export default {
 
         if (error.code === 'auth/popup-closed-by-user') {
           this.$store.commit('modules/sistema/setLoading', false)
+        } else {
+          this.$store.commit('modules/sistema/setLoading', false)
         }
+        
       }
 
     },
@@ -267,7 +270,10 @@ export default {
 
         if (error.code === 'auth/popup-closed-by-user') {
           this.$store.commit('modules/sistema/setLoading', false)
+        } else {
+          this.$store.commit('modules/sistema/setLoading', false)
         }
+
       }
 
     }
