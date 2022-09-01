@@ -1,1 +1,0 @@
-(window.webpackJsonp=window.webpackJsonp||[]).push([[46],{589:function(n,o,r){"use strict";r.r(o);var t={name:"visualizador-articulo",props:{contenido:String}},e=r(32),component=Object(e.a)(t,(function(){var n=this;return(0,n._self._c)("div",{staticClass:"ProseMirror",domProps:{innerHTML:n._s(n.contenido)}})}),[],!1,null,"7ac8fab8",null);o.default=component.exports}}]);

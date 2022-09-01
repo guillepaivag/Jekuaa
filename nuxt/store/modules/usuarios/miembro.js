@@ -1,11 +1,21 @@
-export const state = {
+// export const state = {
+//     uid: '',
+//     funciones: [],
+//     fechaComienzo: null,
+//     cantidadEstudiantes: 0,
+//     cantidadCursos: 0,
+//     cantidadBlogs: 0,
+// }
+
+export const state = () => ({
     uid: '',
     funciones: [],
     fechaComienzo: null,
     cantidadEstudiantes: 0,
     cantidadCursos: 0,
     cantidadBlogs: 0,
-}
+})
+
 
 export const getters = {
     uid (state) {

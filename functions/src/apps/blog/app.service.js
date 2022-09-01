@@ -1,5 +1,5 @@
 const express = require('express')
-const cors = require('cors')({ origin: true })
+const cors = require('cors')
 const manejadorErrores = require('../../helpers/manejoErrores')
 
 const api = express()
@@ -12,9 +12,21 @@ const api = express()
 //   next()
 // })
 
-api.use((req, res, next) => { cors(req, res, () => { next() }) })
+// api.use(cors({
+//   credentials: true,
+//   origin: 'https://jekuaapy.com',
+//   methods: ['GET','POST','DELETE','PUT','UPDATE','PATCH'],
+//   allowedHeaders: ['Authorization', 'Content-Type']
+// }))
+
+api.use(cors({
+  credentials: true,
+  origin: ['https://jekuaapy.com', 'https://jekuaa-py.web.app', 'http://localhost:3000'],
+  methods: ['GET','POST','DELETE','PUT','UPDATE','PATCH'],
+  allowedHeaders: ['Authorization', 'Content-Type']
+}))
 api.use(express.json())
-api.use(express.urlencoded({ extended: true }))
+api.use(express.urlencoded({ extended: false }))
 
 // GENERAL
 api.use('/', require('./routes'))

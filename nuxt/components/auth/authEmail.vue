@@ -109,10 +109,10 @@
             </v-btn>
 
             <v-btn
+              disabled
               class=""
               outlined
               color="blue"
-              v-on:click="loginWithFacebook"
             >
               <v-icon left>
                 mdi-facebook

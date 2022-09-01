@@ -640,7 +640,7 @@ var helpers = __webpack_require__(0);
 var VList = __webpack_require__(76);
 
 // EXTERNAL MODULE: ./node_modules/vuetify/src/components/VList/VListGroup.sass
-var VListGroup = __webpack_require__(168);
+var VListGroup = __webpack_require__(166);
 
 // EXTERNAL MODULE: ./node_modules/vuetify/lib/components/VIcon/index.js
 var VIcon = __webpack_require__(9);
@@ -1641,7 +1641,7 @@ module.exports = require("ufo");
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var _src_components_VToolbar_VToolbar_sass__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(172);
+/* harmony import */ var _src_components_VToolbar_VToolbar_sass__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(170);
 /* harmony import */ var _src_components_VToolbar_VToolbar_sass__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_src_components_VToolbar_VToolbar_sass__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var _VSheet_VSheet__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(11);
 /* harmony import */ var _VImg_VImg__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(65);
@@ -1801,7 +1801,7 @@ module.exports = require("ufo");
 
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return BaseItemGroup; });
-/* harmony import */ var _src_components_VItemGroup_VItemGroup_sass__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(170);
+/* harmony import */ var _src_components_VItemGroup_VItemGroup_sass__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(168);
 /* harmony import */ var _src_components_VItemGroup_VItemGroup_sass__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_src_components_VItemGroup_VItemGroup_sass__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var _mixins_comparable__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(89);
 /* harmony import */ var _mixins_proxyable__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(43);
@@ -3121,7 +3121,7 @@ __webpack_require__.r(__webpack_exports__);
 var VBtn = __webpack_require__(51);
 
 // EXTERNAL MODULE: ./node_modules/vuetify/lib/components/VSnackbar/VSnackbar.js
-var VSnackbar = __webpack_require__(266);
+var VSnackbar = __webpack_require__(264);
 
 // CONCATENATED MODULE: ./node_modules/vuetify-loader/lib/loader.js??ref--4!./node_modules/babel-loader/lib??ref--2-0!./node_modules/vue-loader/lib/loaders/templateLoader.js??ref--7!./node_modules/@nuxt/components/dist/loader.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./components/SnackbarError.vue?vue&type=template&id=1066e29e&scoped=true&
 
@@ -3215,7 +3215,7 @@ var componentNormalizer = __webpack_require__(7);
 
 function injectStyles (context) {
   
-  var style0 = __webpack_require__(183)
+  var style0 = __webpack_require__(181)
 if (style0.__inject__) style0.__inject__(context)
 
 }
@@ -4104,16 +4104,16 @@ const fb = external_firebase_default.a;
 __webpack_require__.r(__webpack_exports__);
 
 // EXTERNAL MODULE: ./node_modules/vuetify/lib/components/VAppBar/VAppBar.js
-var VAppBar = __webpack_require__(260);
+var VAppBar = __webpack_require__(258);
 
 // EXTERNAL MODULE: ./node_modules/vuetify/lib/components/VAppBar/VAppBarNavIcon.js
-var VAppBarNavIcon = __webpack_require__(263);
+var VAppBarNavIcon = __webpack_require__(261);
 
 // EXTERNAL MODULE: ./node_modules/vuetify/lib/components/VBtn/VBtn.js
 var VBtn = __webpack_require__(51);
 
 // EXTERNAL MODULE: ./node_modules/vuetify/lib/components/VDivider/VDivider.js
-var VDivider = __webpack_require__(214);
+var VDivider = __webpack_require__(212);
 
 // EXTERNAL MODULE: ./node_modules/vuetify/lib/components/VIcon/VIcon.js
 var VIcon = __webpack_require__(72);
@@ -4134,16 +4134,16 @@ var components_VList = __webpack_require__(2);
 var VListItemIcon = __webpack_require__(47);
 
 // EXTERNAL MODULE: ./node_modules/vuetify/lib/components/VNavigationDrawer/VNavigationDrawer.js
-var VNavigationDrawer = __webpack_require__(259);
+var VNavigationDrawer = __webpack_require__(257);
 
 // EXTERNAL MODULE: ./node_modules/vuetify/lib/components/VGrid/VSpacer.js
-var VSpacer = __webpack_require__(262);
+var VSpacer = __webpack_require__(260);
 
 // EXTERNAL MODULE: ./node_modules/vuetify/lib/components/VTabs/VTab.js
-var VTab = __webpack_require__(261);
+var VTab = __webpack_require__(259);
 
 // EXTERNAL MODULE: ./node_modules/vuetify/lib/components/VTabs/VTabs.js + 2 modules
-var VTabs = __webpack_require__(267);
+var VTabs = __webpack_require__(265);
 
 // EXTERNAL MODULE: ./node_modules/vuetify/lib/components/VToolbar/index.js
 var VToolbar = __webpack_require__(96);
@@ -4341,7 +4341,7 @@ var componentNormalizer = __webpack_require__(7);
 
 function injectStyles (context) {
   
-  var style0 = __webpack_require__(176)
+  var style0 = __webpack_require__(174)
 if (style0.__inject__) style0.__inject__(context)
 
 }
@@ -4370,10 +4370,10 @@ var component = Object(componentNormalizer["a" /* default */])(
 __webpack_require__.r(__webpack_exports__);
 
 // EXTERNAL MODULE: ./node_modules/vuetify/lib/components/VAppBar/VAppBar.js
-var VAppBar = __webpack_require__(260);
+var VAppBar = __webpack_require__(258);
 
 // EXTERNAL MODULE: ./node_modules/vuetify/lib/components/VAppBar/VAppBarNavIcon.js
-var VAppBarNavIcon = __webpack_require__(263);
+var VAppBarNavIcon = __webpack_require__(261);
 
 // EXTERNAL MODULE: ./node_modules/vuetify/lib/components/VAvatar/VAvatar.js
 var VAvatar = __webpack_require__(73);
@@ -4385,10 +4385,10 @@ var VBtn = __webpack_require__(51);
 var VCard = __webpack_require__(81);
 
 // EXTERNAL MODULE: ./node_modules/vuetify/lib/components/VChip/VChip.js
-var VChip = __webpack_require__(215);
+var VChip = __webpack_require__(213);
 
 // EXTERNAL MODULE: ./node_modules/vuetify/lib/components/VDivider/VDivider.js
-var VDivider = __webpack_require__(214);
+var VDivider = __webpack_require__(212);
 
 // EXTERNAL MODULE: ./node_modules/vuetify/lib/components/VIcon/VIcon.js
 var VIcon = __webpack_require__(72);
@@ -4412,19 +4412,19 @@ var components_VList = __webpack_require__(2);
 var VListItemIcon = __webpack_require__(47);
 
 // EXTERNAL MODULE: ./node_modules/vuetify/lib/components/VMenu/VMenu.js + 1 modules
-var VMenu = __webpack_require__(240);
+var VMenu = __webpack_require__(238);
 
 // EXTERNAL MODULE: ./node_modules/vuetify/lib/components/VNavigationDrawer/VNavigationDrawer.js
-var VNavigationDrawer = __webpack_require__(259);
+var VNavigationDrawer = __webpack_require__(257);
 
 // EXTERNAL MODULE: ./node_modules/vuetify/lib/components/VGrid/VSpacer.js
-var VSpacer = __webpack_require__(262);
+var VSpacer = __webpack_require__(260);
 
 // EXTERNAL MODULE: ./node_modules/vuetify/lib/components/VTabs/VTab.js
-var VTab = __webpack_require__(261);
+var VTab = __webpack_require__(259);
 
 // EXTERNAL MODULE: ./node_modules/vuetify/lib/components/VTabs/VTabs.js + 2 modules
-var VTabs = __webpack_require__(267);
+var VTabs = __webpack_require__(265);
 
 // CONCATENATED MODULE: ./node_modules/vuetify-loader/lib/loader.js??ref--4!./node_modules/babel-loader/lib??ref--2-0!./node_modules/vue-loader/lib/loaders/templateLoader.js??ref--7!./node_modules/@nuxt/components/dist/loader.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./components/NavigationUser.vue?vue&type=template&id=ca40da8e&scoped=true&
 
@@ -4783,7 +4783,7 @@ var componentNormalizer = __webpack_require__(7);
 
 function injectStyles (context) {
   
-  var style0 = __webpack_require__(179)
+  var style0 = __webpack_require__(177)
 if (style0.__inject__) style0.__inject__(context)
 
 }
@@ -5026,7 +5026,7 @@ var componentNormalizer = __webpack_require__(7);
 
 function injectStyles (context) {
   
-  var style0 = __webpack_require__(162)
+  var style0 = __webpack_require__(160)
 if (style0.__inject__) style0.__inject__(context)
 
 }
@@ -5811,7 +5811,7 @@ const baseMixins = Object(_util_mixins__WEBPACK_IMPORTED_MODULE_9__[/* default *
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var _src_components_VList_VListItem_sass__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(166);
+/* harmony import */ var _src_components_VList_VListItem_sass__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(164);
 /* harmony import */ var _src_components_VList_VListItem_sass__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_src_components_VList_VListItem_sass__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var _mixins_colorable__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(6);
 /* harmony import */ var _mixins_routable__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(10);
@@ -9093,7 +9093,7 @@ const baseMixins = Object(_util_mixins__WEBPACK_IMPORTED_MODULE_8__[/* default *
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var _src_components_VList_VList_sass__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(167);
+/* harmony import */ var _src_components_VList_VList_sass__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(165);
 /* harmony import */ var _src_components_VList_VList_sass__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_src_components_VList_VList_sass__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var _VSheet_VSheet__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(11);
 // Styles
@@ -9257,7 +9257,7 @@ const baseMixins = Object(_util_mixins__WEBPACK_IMPORTED_MODULE_8__[/* default *
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var _src_components_VList_VListItemGroup_sass__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(169);
+/* harmony import */ var _src_components_VList_VListItemGroup_sass__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(167);
 /* harmony import */ var _src_components_VList_VListItemGroup_sass__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_src_components_VList_VListItemGroup_sass__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var _VItemGroup_VItemGroup__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(17);
 /* harmony import */ var _mixins_colorable__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(6);
@@ -9512,13 +9512,13 @@ var VCard = __webpack_require__(81);
 var components_VCard = __webpack_require__(18);
 
 // EXTERNAL MODULE: ./node_modules/vuetify/lib/components/VFooter/VFooter.js
-var VFooter = __webpack_require__(265);
+var VFooter = __webpack_require__(263);
 
 // EXTERNAL MODULE: ./node_modules/vuetify/lib/components/VIcon/VIcon.js
 var VIcon = __webpack_require__(72);
 
 // EXTERNAL MODULE: ./node_modules/vuetify/lib/components/VGrid/VSpacer.js
-var VSpacer = __webpack_require__(262);
+var VSpacer = __webpack_require__(260);
 
 // CONCATENATED MODULE: ./node_modules/vuetify-loader/lib/loader.js??ref--4!./node_modules/babel-loader/lib??ref--2-0!./node_modules/vue-loader/lib/loaders/templateLoader.js??ref--7!./node_modules/@nuxt/components/dist/loader.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./components/FooterDefault.vue?vue&type=template&id=9f1fad4e&scoped=true&
 
@@ -9611,7 +9611,7 @@ var componentNormalizer = __webpack_require__(7);
 
 function injectStyles (context) {
   
-  var style0 = __webpack_require__(181)
+  var style0 = __webpack_require__(179)
 if (style0.__inject__) style0.__inject__(context)
 
 }
@@ -9646,13 +9646,13 @@ var VCard = __webpack_require__(81);
 var components_VCard = __webpack_require__(18);
 
 // EXTERNAL MODULE: ./node_modules/vuetify/lib/components/VFooter/VFooter.js
-var VFooter = __webpack_require__(265);
+var VFooter = __webpack_require__(263);
 
 // EXTERNAL MODULE: ./node_modules/vuetify/lib/components/VIcon/VIcon.js
 var VIcon = __webpack_require__(72);
 
 // EXTERNAL MODULE: ./node_modules/vuetify/lib/components/VGrid/VSpacer.js
-var VSpacer = __webpack_require__(262);
+var VSpacer = __webpack_require__(260);
 
 // CONCATENATED MODULE: ./node_modules/vuetify-loader/lib/loader.js??ref--4!./node_modules/babel-loader/lib??ref--2-0!./node_modules/vue-loader/lib/loaders/templateLoader.js??ref--7!./node_modules/@nuxt/components/dist/loader.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./components/FooterMiembro.vue?vue&type=template&id=477d9c73&scoped=true&
 
@@ -9745,7 +9745,7 @@ var componentNormalizer = __webpack_require__(7);
 
 function injectStyles (context) {
   
-  var style0 = __webpack_require__(185)
+  var style0 = __webpack_require__(183)
 if (style0.__inject__) style0.__inject__(context)
 
 }
@@ -10302,7 +10302,7 @@ function removeActivator(activator) {
 "use strict";
 
 // EXTERNAL MODULE: ./node_modules/vuetify/src/components/VOverlay/VOverlay.sass
-var VOverlay = __webpack_require__(165);
+var VOverlay = __webpack_require__(163);
 
 // EXTERNAL MODULE: ./node_modules/vuetify/lib/mixins/colorable/index.js
 var colorable = __webpack_require__(6);
@@ -10871,7 +10871,7 @@ var VAvatar = __webpack_require__(73);
 var VBtn = __webpack_require__(51);
 
 // EXTERNAL MODULE: ./node_modules/vuetify/lib/components/VDivider/VDivider.js
-var VDivider = __webpack_require__(214);
+var VDivider = __webpack_require__(212);
 
 // EXTERNAL MODULE: ./node_modules/vuetify/lib/components/VIcon/VIcon.js
 var VIcon = __webpack_require__(72);
@@ -10880,7 +10880,7 @@ var VIcon = __webpack_require__(72);
 var VImg = __webpack_require__(65);
 
 // EXTERNAL MODULE: ./node_modules/vuetify/lib/components/VTextField/VTextField.js + 3 modules
-var VTextField = __webpack_require__(212);
+var VTextField = __webpack_require__(210);
 
 // CONCATENATED MODULE: ./node_modules/vuetify-loader/lib/loader.js??ref--4!./node_modules/babel-loader/lib??ref--2-0!./node_modules/vue-loader/lib/loaders/templateLoader.js??ref--7!./node_modules/@nuxt/components/dist/loader.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./components/notFound.vue?vue&type=template&id=372dc122&scoped=true&
 
@@ -10992,7 +10992,7 @@ var component = Object(componentNormalizer["a" /* default */])(
 "use strict";
 
 // EXTERNAL MODULE: ./node_modules/vuetify/src/components/VWindow/VWindow.sass
-var VWindow = __webpack_require__(175);
+var VWindow = __webpack_require__(173);
 
 // EXTERNAL MODULE: ./node_modules/vuetify/lib/directives/touch/index.js
 var touch = __webpack_require__(37);
@@ -11648,7 +11648,7 @@ var componentNormalizer = __webpack_require__(7);
 
 function injectStyles (context) {
   
-  var style0 = __webpack_require__(163)
+  var style0 = __webpack_require__(161)
 if (style0.__inject__) style0.__inject__(context)
 
 }
@@ -11674,7 +11674,7 @@ var component = Object(componentNormalizer["a" /* default */])(
 /***/ (function(module, exports, __webpack_require__) {
 
 __webpack_require__(128);
-module.exports = __webpack_require__(195);
+module.exports = __webpack_require__(193);
 
 
 /***/ }),
@@ -15237,35 +15237,13 @@ __webpack_require__.r(__webpack_exports__);
 
 // Exports
 module.exports = {
-	"ProseMirror": "R9R+iHbLIfUjelFPOexjGg==",
-	"ProseMirror-selectednode": "Oih3cHrQ74UGMvhNp38kEg=="
-};
-
-
-/***/ }),
-/* 156 */
-/***/ (function(module, exports) {
-
-// Exports
-module.exports = {
-	"visualizadorArticulo": "DtsYDFnfujgJeDZ7lS51hw==",
-	"visualizadorArticulo-selectednode": "_5GSA2Dy+zhcTbOLeK0HrAw=="
-};
-
-
-/***/ }),
-/* 157 */
-/***/ (function(module, exports) {
-
-// Exports
-module.exports = {
 	"ProseMirror": "RqAy6ec3F0Xvw0FJptVibA==",
 	"ProseMirror-selectednode": "_7+VluaFhu2Hn9EaXQkLD3A=="
 };
 
 
 /***/ }),
-/* 158 */
+/* 156 */
 /***/ (function(module, exports) {
 
 // Exports
@@ -15296,7 +15274,7 @@ module.exports = {
 
 
 /***/ }),
-/* 159 */
+/* 157 */
 /***/ (function(module, exports) {
 
 // Exports
@@ -15306,7 +15284,7 @@ module.exports = {
 
 
 /***/ }),
-/* 160 */
+/* 158 */
 /***/ (function(module, exports) {
 
 // Exports
@@ -15323,7 +15301,7 @@ module.exports = {
 
 
 /***/ }),
-/* 161 */
+/* 159 */
 /***/ (function(module, exports) {
 
 // Exports
@@ -15334,7 +15312,7 @@ module.exports = {
 
 
 /***/ }),
-/* 162 */
+/* 160 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -15345,7 +15323,7 @@ __webpack_require__.r(__webpack_exports__);
 
 
 /***/ }),
-/* 163 */
+/* 161 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -15356,7 +15334,7 @@ __webpack_require__.r(__webpack_exports__);
 
 
 /***/ }),
-/* 164 */
+/* 162 */
 /***/ (function(module, exports) {
 
 // Exports
@@ -15391,7 +15369,7 @@ module.exports = {
 
 
 /***/ }),
-/* 165 */
+/* 163 */
 /***/ (function(module, exports) {
 
 // Exports
@@ -15407,7 +15385,7 @@ module.exports = {
 
 
 /***/ }),
-/* 166 */
+/* 164 */
 /***/ (function(module, exports) {
 
 // Exports
@@ -15450,7 +15428,7 @@ module.exports = {
 
 
 /***/ }),
-/* 167 */
+/* 165 */
 /***/ (function(module, exports) {
 
 // Exports
@@ -15487,7 +15465,7 @@ module.exports = {
 
 
 /***/ }),
-/* 168 */
+/* 166 */
 /***/ (function(module, exports) {
 
 // Exports
@@ -15516,7 +15494,7 @@ module.exports = {
 
 
 /***/ }),
-/* 169 */
+/* 167 */
 /***/ (function(module, exports) {
 
 // Exports
@@ -15527,7 +15505,7 @@ module.exports = {
 
 
 /***/ }),
-/* 170 */
+/* 168 */
 /***/ (function(module, exports) {
 
 // Exports
@@ -15537,7 +15515,7 @@ module.exports = {
 
 
 /***/ }),
-/* 171 */
+/* 169 */
 /***/ (function(module, exports) {
 
 // Exports
@@ -15567,7 +15545,7 @@ module.exports = {
 
 
 /***/ }),
-/* 172 */
+/* 170 */
 /***/ (function(module, exports) {
 
 // Exports
@@ -15605,7 +15583,7 @@ module.exports = {
 
 
 /***/ }),
-/* 173 */
+/* 171 */
 /***/ (function(module, exports) {
 
 // Exports
@@ -15657,7 +15635,7 @@ module.exports = {
 
 
 /***/ }),
-/* 174 */
+/* 172 */
 /***/ (function(module, exports) {
 
 // Exports
@@ -15676,7 +15654,7 @@ module.exports = {
 
 
 /***/ }),
-/* 175 */
+/* 173 */
 /***/ (function(module, exports) {
 
 // Exports
@@ -15714,7 +15692,7 @@ module.exports = {
 
 
 /***/ }),
-/* 176 */
+/* 174 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -15725,7 +15703,7 @@ __webpack_require__.r(__webpack_exports__);
 
 
 /***/ }),
-/* 177 */
+/* 175 */
 /***/ (function(module, exports) {
 
 // Exports
@@ -15771,7 +15749,7 @@ module.exports = {
 
 
 /***/ }),
-/* 178 */
+/* 176 */
 /***/ (function(module, exports) {
 
 // Exports
@@ -15794,7 +15772,7 @@ module.exports = {
 
 
 /***/ }),
-/* 179 */
+/* 177 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -15805,7 +15783,7 @@ __webpack_require__.r(__webpack_exports__);
 
 
 /***/ }),
-/* 180 */
+/* 178 */
 /***/ (function(module, exports) {
 
 // Exports
@@ -15824,7 +15802,7 @@ module.exports = {
 
 
 /***/ }),
-/* 181 */
+/* 179 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -15835,7 +15813,7 @@ __webpack_require__.r(__webpack_exports__);
 
 
 /***/ }),
-/* 182 */
+/* 180 */
 /***/ (function(module, exports) {
 
 // Exports
@@ -15870,7 +15848,7 @@ module.exports = {
 
 
 /***/ }),
-/* 183 */
+/* 181 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -15881,7 +15859,7 @@ __webpack_require__.r(__webpack_exports__);
 
 
 /***/ }),
-/* 184 */
+/* 182 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -15892,7 +15870,7 @@ __webpack_require__.r(__webpack_exports__);
 
 
 /***/ }),
-/* 185 */
+/* 183 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -15903,7 +15881,7 @@ __webpack_require__.r(__webpack_exports__);
 
 
 /***/ }),
-/* 186 */
+/* 184 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -15914,7 +15892,7 @@ __webpack_require__.r(__webpack_exports__);
 
 
 /***/ }),
-/* 187 */
+/* 185 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -15925,13 +15903,13 @@ __webpack_require__.r(__webpack_exports__);
 
 
 /***/ }),
-/* 188 */
+/* 186 */
 /***/ (function(module, exports) {
 
 module.exports = require("cookieparser");
 
 /***/ }),
-/* 189 */
+/* 187 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -15940,10 +15918,14 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "getters", function() { return getters; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "actions", function() { return actions; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "mutations", function() { return mutations; });
-const state = {
+// export const state = {
+//   loading: false,
+//   error: null
+// }
+const state = () => ({
   loading: false,
   error: null
-};
+});
 const getters = {
   getLoading(state) {
     return state.loading;
@@ -16021,7 +16003,7 @@ const mutations = {
 };
 
 /***/ }),
-/* 190 */
+/* 188 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -16034,8 +16016,21 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var js_cookie__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(js_cookie__WEBPACK_IMPORTED_MODULE_0__);
 
 const COOKIE_NAME = '__session';
-const collectionName = 'Usuarios';
-const state = {
+const collectionName = 'Usuarios'; // export const state = {
+//   token: '',
+//   emailVerificado: false,
+//   fotoPerfil: '',
+//   nombreCompleto: '',
+//   uid: '',
+//   nombreUsuario: '',
+//   correo: '',
+//   fechaNacimiento: null,
+//   plan: 'gratis',
+//   rol: 'estudiante',
+//   point: 0,
+// }
+
+const state = () => ({
   token: '',
   emailVerificado: false,
   fotoPerfil: '',
@@ -16047,7 +16042,7 @@ const state = {
   plan: 'gratis',
   rol: 'estudiante',
   point: 0
-};
+});
 const getters = {
   token(state) {
     return state.token;
@@ -16450,7 +16445,7 @@ const mutations = {
 };
 
 /***/ }),
-/* 191 */
+/* 189 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -16459,14 +16454,15 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "getters", function() { return getters; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "actions", function() { return actions; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "mutations", function() { return mutations; });
-const collectionName = 'Blogs';
-const state = {};
+const collectionName = 'Blogs'; // export const state = {}
+
+const state = () => ({});
 const getters = {};
 const actions = {};
 const mutations = {};
 
 /***/ }),
-/* 192 */
+/* 190 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -16475,14 +16471,22 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "getters", function() { return getters; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "mutations", function() { return mutations; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "actions", function() { return actions; });
-const state = {
+// export const state = {
+//     uid: '',
+//     funciones: [],
+//     fechaComienzo: null,
+//     cantidadEstudiantes: 0,
+//     cantidadCursos: 0,
+//     cantidadBlogs: 0,
+// }
+const state = () => ({
   uid: '',
   funciones: [],
   fechaComienzo: null,
   cantidadEstudiantes: 0,
   cantidadCursos: 0,
   cantidadBlogs: 0
-};
+});
 const getters = {
   uid(state) {
     return state.uid;
@@ -16627,7 +16631,7 @@ const actions = {
 };
 
 /***/ }),
-/* 193 */
+/* 191 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -16636,11 +16640,16 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "getters", function() { return getters; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "mutations", function() { return mutations; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "actions", function() { return actions; });
-const state = {
+// export const state = {
+//     uid: '',
+//     funciones: [],
+//     fechaComienzo: null,
+// }
+const state = () => ({
   uid: '',
   funciones: [],
   fechaComienzo: null
-};
+});
 const getters = {
   uid(state) {
     return state.uid;
@@ -16722,13 +16731,13 @@ const actions = {
 };
 
 /***/ }),
-/* 194 */
+/* 192 */
 /***/ (function(module, exports) {
 
 // This file is intentionally left empty for noop aliases
 
 /***/ }),
-/* 195 */
+/* 193 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -17570,137 +17579,137 @@ function shouldScrollToTop(route) {
 
 
 
-const _43b025f8 = () => interopDefault(__webpack_require__.e(/* import() | pages/centro */ 39).then(__webpack_require__.bind(null, 559)));
+const _43b025f8 = () => interopDefault(__webpack_require__.e(/* import() | pages/centro */ 39).then(__webpack_require__.bind(null, 557)));
 
-const _275f200c = () => interopDefault(__webpack_require__.e(/* import() | pages/cuentas-classfii-sin-verificar */ 40).then(__webpack_require__.bind(null, 549)));
+const _275f200c = () => interopDefault(__webpack_require__.e(/* import() | pages/cuentas-classfii-sin-verificar */ 40).then(__webpack_require__.bind(null, 547)));
 
-const _9f109dc8 = () => interopDefault(__webpack_require__.e(/* import() | pages/fiipoints/index */ 48).then(__webpack_require__.bind(null, 560)));
+const _9f109dc8 = () => interopDefault(__webpack_require__.e(/* import() | pages/fiipoints/index */ 48).then(__webpack_require__.bind(null, 558)));
 
-const _3f56d42f = () => interopDefault(__webpack_require__.e(/* import() | pages/historial-compra */ 49).then(__webpack_require__.bind(null, 561)));
+const _3f56d42f = () => interopDefault(__webpack_require__.e(/* import() | pages/historial-compra */ 49).then(__webpack_require__.bind(null, 559)));
 
-const _0d33bab4 = () => interopDefault(__webpack_require__.e(/* import() | pages/historial-compra/productos */ 50).then(__webpack_require__.bind(null, 552)));
+const _0d33bab4 = () => interopDefault(__webpack_require__.e(/* import() | pages/historial-compra/productos */ 50).then(__webpack_require__.bind(null, 550)));
 
-const _6f9bd31f = () => interopDefault(__webpack_require__.e(/* import() | pages/inicioSesion */ 52).then(__webpack_require__.bind(null, 562)));
+const _6f9bd31f = () => interopDefault(__webpack_require__.e(/* import() | pages/inicioSesion */ 52).then(__webpack_require__.bind(null, 560)));
 
-const _c1223eac = () => interopDefault(__webpack_require__.e(/* import() | pages/miembro/index */ 75).then(__webpack_require__.bind(null, 563)));
+const _c1223eac = () => interopDefault(__webpack_require__.e(/* import() | pages/miembro/index */ 75).then(__webpack_require__.bind(null, 561)));
 
-const _f8f3b3c0 = () => interopDefault(__webpack_require__.e(/* import() | pages/mis-cursos */ 76).then(__webpack_require__.bind(null, 564)));
+const _f8f3b3c0 = () => interopDefault(__webpack_require__.e(/* import() | pages/mis-cursos */ 76).then(__webpack_require__.bind(null, 562)));
 
-const _46a6f5e0 = () => interopDefault(__webpack_require__.e(/* import() | pages/moderador/index */ 89).then(__webpack_require__.bind(null, 565)));
+const _46a6f5e0 = () => interopDefault(__webpack_require__.e(/* import() | pages/moderador/index */ 89).then(__webpack_require__.bind(null, 563)));
 
-const _78769d57 = () => interopDefault(__webpack_require__.e(/* import() | pages/pedidos/index */ 91).then(__webpack_require__.bind(null, 550)));
+const _78769d57 = () => interopDefault(__webpack_require__.e(/* import() | pages/pedidos/index */ 91).then(__webpack_require__.bind(null, 548)));
 
-const _56d2765f = () => interopDefault(__webpack_require__.e(/* import() | pages/perfil */ 95).then(__webpack_require__.bind(null, 553)));
+const _56d2765f = () => interopDefault(__webpack_require__.e(/* import() | pages/perfil */ 95).then(__webpack_require__.bind(null, 551)));
 
-const _127ec543 = () => interopDefault(__webpack_require__.e(/* import() | pages/perfil/index */ 96).then(__webpack_require__.bind(null, 566)));
+const _127ec543 = () => interopDefault(__webpack_require__.e(/* import() | pages/perfil/index */ 96).then(__webpack_require__.bind(null, 564)));
 
-const _ab89d9e4 = () => interopDefault(__webpack_require__.e(/* import() | pages/perfil/informacion */ 97).then(__webpack_require__.bind(null, 567)));
+const _ab89d9e4 = () => interopDefault(__webpack_require__.e(/* import() | pages/perfil/informacion */ 97).then(__webpack_require__.bind(null, 565)));
 
-const _2b6b4821 = () => interopDefault(__webpack_require__.e(/* import() | pages/perfil/seguridad */ 98).then(__webpack_require__.bind(null, 568)));
+const _2b6b4821 = () => interopDefault(__webpack_require__.e(/* import() | pages/perfil/seguridad */ 98).then(__webpack_require__.bind(null, 566)));
 
-const _34e4156a = () => interopDefault(__webpack_require__.e(/* import() | pages/precios */ 99).then(__webpack_require__.bind(null, 569)));
+const _34e4156a = () => interopDefault(__webpack_require__.e(/* import() | pages/precios */ 99).then(__webpack_require__.bind(null, 567)));
 
-const _629b9e86 = () => interopDefault(__webpack_require__.e(/* import() | pages/registro */ 100).then(__webpack_require__.bind(null, 570)));
+const _629b9e86 = () => interopDefault(__webpack_require__.e(/* import() | pages/registro */ 100).then(__webpack_require__.bind(null, 568)));
 
-const _a2c94504 = () => interopDefault(__webpack_require__.e(/* import() | pages/fiipoints/comprar */ 47).then(__webpack_require__.bind(null, 571)));
+const _a2c94504 = () => interopDefault(__webpack_require__.e(/* import() | pages/fiipoints/comprar */ 47).then(__webpack_require__.bind(null, 569)));
 
-const _5a50d6f9 = () => interopDefault(__webpack_require__.e(/* import() | pages/miembro/blogs/index */ 55).then(__webpack_require__.bind(null, 572)));
+const _5a50d6f9 = () => interopDefault(__webpack_require__.e(/* import() | pages/miembro/blogs/index */ 55).then(__webpack_require__.bind(null, 570)));
 
-const _39d0c573 = () => interopDefault(__webpack_require__.e(/* import() | pages/miembro/cursos/index */ 72).then(__webpack_require__.bind(null, 573)));
+const _39d0c573 = () => interopDefault(__webpack_require__.e(/* import() | pages/miembro/cursos/index */ 72).then(__webpack_require__.bind(null, 571)));
 
-const _4812e9cf = () => interopDefault(__webpack_require__.e(/* import() | pages/moderador/blogs */ 77).then(__webpack_require__.bind(null, 574)));
+const _4812e9cf = () => interopDefault(__webpack_require__.e(/* import() | pages/moderador/blogs */ 77).then(__webpack_require__.bind(null, 572)));
 
-const _5722b84e = () => interopDefault(__webpack_require__.e(/* import() | pages/moderador/cursos/index */ 87).then(__webpack_require__.bind(null, 575)));
+const _5722b84e = () => interopDefault(__webpack_require__.e(/* import() | pages/moderador/cursos/index */ 87).then(__webpack_require__.bind(null, 573)));
 
-const _1ae42292 = () => interopDefault(__webpack_require__.e(/* import() | pages/moderador/usuarios */ 90).then(__webpack_require__.bind(null, 576)));
+const _1ae42292 = () => interopDefault(__webpack_require__.e(/* import() | pages/moderador/usuarios */ 90).then(__webpack_require__.bind(null, 574)));
 
-const _215a0774 = () => interopDefault(__webpack_require__.e(/* import() | pages/pedidos/nuevo/index */ 93).then(__webpack_require__.bind(null, 551)));
+const _215a0774 = () => interopDefault(__webpack_require__.e(/* import() | pages/pedidos/nuevo/index */ 93).then(__webpack_require__.bind(null, 549)));
 
-const _45e82442 = () => interopDefault(__webpack_require__.e(/* import() | pages/miembro/blogs/mis-blogs */ 56).then(__webpack_require__.bind(null, 577)));
+const _45e82442 = () => interopDefault(__webpack_require__.e(/* import() | pages/miembro/blogs/mis-blogs */ 56).then(__webpack_require__.bind(null, 575)));
 
-const _6839065e = () => interopDefault(__webpack_require__.e(/* import() | pages/miembro/blogs/nuevo */ 57).then(__webpack_require__.bind(null, 578)));
+const _6839065e = () => interopDefault(__webpack_require__.e(/* import() | pages/miembro/blogs/nuevo */ 57).then(__webpack_require__.bind(null, 576)));
 
-const _0f663aa0 = () => interopDefault(__webpack_require__.e(/* import() | pages/miembro/cursos/borradores */ 71).then(__webpack_require__.bind(null, 579)));
+const _0f663aa0 = () => interopDefault(__webpack_require__.e(/* import() | pages/miembro/cursos/borradores */ 71).then(__webpack_require__.bind(null, 577)));
 
-const _47b8f4d8 = () => interopDefault(__webpack_require__.e(/* import() | pages/miembro/cursos/nuevo */ 73).then(__webpack_require__.bind(null, 580)));
+const _47b8f4d8 = () => interopDefault(__webpack_require__.e(/* import() | pages/miembro/cursos/nuevo */ 73).then(__webpack_require__.bind(null, 578)));
 
-const _7d39685f = () => interopDefault(__webpack_require__.e(/* import() | pages/miembro/cursos/publicados */ 74).then(__webpack_require__.bind(null, 581)));
+const _7d39685f = () => interopDefault(__webpack_require__.e(/* import() | pages/miembro/cursos/publicados */ 74).then(__webpack_require__.bind(null, 579)));
 
-const _0c8fd7ec = () => interopDefault(__webpack_require__.e(/* import() | pages/moderador/cursos/borradores */ 86).then(__webpack_require__.bind(null, 556)));
+const _0c8fd7ec = () => interopDefault(__webpack_require__.e(/* import() | pages/moderador/cursos/borradores */ 86).then(__webpack_require__.bind(null, 554)));
 
-const _7ea499b9 = () => interopDefault(__webpack_require__.e(/* import() | pages/moderador/cursos/publicados */ 88).then(__webpack_require__.bind(null, 582)));
+const _7ea499b9 = () => interopDefault(__webpack_require__.e(/* import() | pages/moderador/cursos/publicados */ 88).then(__webpack_require__.bind(null, 580)));
 
-const _4653e7fa = () => interopDefault(__webpack_require__.e(/* import() | pages/pedidos/nuevo/points/index */ 94).then(__webpack_require__.bind(null, 583)));
+const _4653e7fa = () => interopDefault(__webpack_require__.e(/* import() | pages/pedidos/nuevo/points/index */ 94).then(__webpack_require__.bind(null, 581)));
 
-const _491db052 = () => interopDefault(__webpack_require__.e(/* import() | pages/miembro/blog/actualizar/_referencia */ 54).then(__webpack_require__.bind(null, 584)));
+const _491db052 = () => interopDefault(__webpack_require__.e(/* import() | pages/miembro/blog/actualizar/_referencia */ 54).then(__webpack_require__.bind(null, 582)));
 
-const _553b5986 = () => interopDefault(__webpack_require__.e(/* import() | pages/miembro/curso-borrador/vista-previa/_uidCurso/clase */ 65).then(__webpack_require__.bind(null, 585)));
+const _553b5986 = () => interopDefault(__webpack_require__.e(/* import() | pages/miembro/curso-borrador/vista-previa/_uidCurso/clase */ 65).then(__webpack_require__.bind(null, 583)));
 
-const _d2b9997a = () => interopDefault(__webpack_require__.e(/* import() | pages/miembro/curso-borrador/vista-previa/_uidCurso/clase/_uidClase */ 66).then(__webpack_require__.bind(null, 586)));
+const _d2b9997a = () => interopDefault(__webpack_require__.e(/* import() | pages/miembro/curso-borrador/vista-previa/_uidCurso/clase/_uidClase */ 66).then(__webpack_require__.bind(null, 584)));
 
-const _0f91ae07 = () => interopDefault(__webpack_require__.e(/* import() | pages/miembro/blog/_referencia */ 53).then(__webpack_require__.bind(null, 587)));
+const _0f91ae07 = () => interopDefault(__webpack_require__.e(/* import() | pages/miembro/blog/_referencia */ 53).then(__webpack_require__.bind(null, 585)));
 
-const _c0318282 = () => interopDefault(__webpack_require__.e(/* import() | pages/miembro/curso-borrador/_uidCurso */ 58).then(__webpack_require__.bind(null, 557)));
+const _c0318282 = () => interopDefault(__webpack_require__.e(/* import() | pages/miembro/curso-borrador/_uidCurso */ 58).then(__webpack_require__.bind(null, 555)));
 
-const _0a69d0e3 = () => interopDefault(__webpack_require__.e(/* import() | pages/miembro/curso-borrador/_uidCurso/index */ 61).then(__webpack_require__.bind(null, 588)));
+const _0a69d0e3 = () => interopDefault(__webpack_require__.e(/* import() | pages/miembro/curso-borrador/_uidCurso/index */ 61).then(__webpack_require__.bind(null, 586)));
 
-const _fd79f580 = () => interopDefault(__webpack_require__.e(/* import() | pages/miembro/curso-borrador/_uidCurso/auxiliares */ 59).then(__webpack_require__.bind(null, 589)));
+const _fd79f580 = () => interopDefault(__webpack_require__.e(/* import() | pages/miembro/curso-borrador/_uidCurso/auxiliares */ 59).then(__webpack_require__.bind(null, 587)));
 
-const _4fb0f4d2 = () => interopDefault(__webpack_require__.e(/* import() | pages/miembro/curso-borrador/_uidCurso/foto-curso */ 60).then(__webpack_require__.bind(null, 617)));
+const _4fb0f4d2 = () => interopDefault(__webpack_require__.e(/* import() | pages/miembro/curso-borrador/_uidCurso/foto-curso */ 60).then(__webpack_require__.bind(null, 615)));
 
-const _14452a3e = () => interopDefault(__webpack_require__.e(/* import() | pages/miembro/curso-borrador/_uidCurso/precios */ 62).then(__webpack_require__.bind(null, 558)));
+const _14452a3e = () => interopDefault(__webpack_require__.e(/* import() | pages/miembro/curso-borrador/_uidCurso/precios */ 62).then(__webpack_require__.bind(null, 556)));
 
-const _3561e40a = () => interopDefault(__webpack_require__.e(/* import() | pages/miembro/curso-borrador/_uidCurso/programa-estudio */ 63).then(__webpack_require__.bind(null, 590)));
+const _3561e40a = () => interopDefault(__webpack_require__.e(/* import() | pages/miembro/curso-borrador/_uidCurso/programa-estudio */ 63).then(__webpack_require__.bind(null, 588)));
 
-const _7744d8a4 = () => interopDefault(__webpack_require__.e(/* import() | pages/miembro/curso-borrador/_uidCurso/publicacion */ 64).then(__webpack_require__.bind(null, 591)));
+const _7744d8a4 = () => interopDefault(__webpack_require__.e(/* import() | pages/miembro/curso-borrador/_uidCurso/publicacion */ 64).then(__webpack_require__.bind(null, 589)));
 
-const _262bcc71 = () => interopDefault(__webpack_require__.e(/* import() | pages/miembro/curso-publicado/_uidCurso/index */ 70).then(__webpack_require__.bind(null, 592)));
+const _262bcc71 = () => interopDefault(__webpack_require__.e(/* import() | pages/miembro/curso-publicado/_uidCurso/index */ 70).then(__webpack_require__.bind(null, 590)));
 
-const _4b0e9cbd = () => interopDefault(__webpack_require__.e(/* import() | pages/moderador/curso-borrador/_uidCurso/index */ 81).then(__webpack_require__.bind(null, 593)));
+const _4b0e9cbd = () => interopDefault(__webpack_require__.e(/* import() | pages/moderador/curso-borrador/_uidCurso/index */ 81).then(__webpack_require__.bind(null, 591)));
 
-const _0bbf0852 = () => interopDefault(__webpack_require__.e(/* import() | pages/moderador/curso-publicado/_uidCurso/index */ 85).then(__webpack_require__.bind(null, 594)));
+const _0bbf0852 = () => interopDefault(__webpack_require__.e(/* import() | pages/moderador/curso-publicado/_uidCurso/index */ 85).then(__webpack_require__.bind(null, 592)));
 
-const _3a1b68cc = () => interopDefault(__webpack_require__.e(/* import() | pages/miembro/curso-publicado/_uidCurso/ajustes */ 67).then(__webpack_require__.bind(null, 595)));
+const _3a1b68cc = () => interopDefault(__webpack_require__.e(/* import() | pages/miembro/curso-publicado/_uidCurso/ajustes */ 67).then(__webpack_require__.bind(null, 593)));
 
-const _54f44109 = () => interopDefault(__webpack_require__.e(/* import() | pages/miembro/curso-publicado/_uidCurso/clase */ 68).then(__webpack_require__.bind(null, 596)));
+const _54f44109 = () => interopDefault(__webpack_require__.e(/* import() | pages/miembro/curso-publicado/_uidCurso/clase */ 68).then(__webpack_require__.bind(null, 594)));
 
-const _500b8be0 = () => interopDefault(__webpack_require__.e(/* import() | pages/miembro/curso-publicado/_uidCurso/clase/_uidClase */ 69).then(__webpack_require__.bind(null, 597)));
+const _500b8be0 = () => interopDefault(__webpack_require__.e(/* import() | pages/miembro/curso-publicado/_uidCurso/clase/_uidClase */ 69).then(__webpack_require__.bind(null, 595)));
 
-const _3a34dcb4 = () => interopDefault(__webpack_require__.e(/* import() | pages/moderador/curso-borrador/_uidCurso/auxiliares */ 78).then(__webpack_require__.bind(null, 598)));
+const _3a34dcb4 = () => interopDefault(__webpack_require__.e(/* import() | pages/moderador/curso-borrador/_uidCurso/auxiliares */ 78).then(__webpack_require__.bind(null, 596)));
 
-const _79d71155 = () => interopDefault(__webpack_require__.e(/* import() | pages/moderador/curso-borrador/_uidCurso/clase */ 79).then(__webpack_require__.bind(null, 599)));
+const _79d71155 = () => interopDefault(__webpack_require__.e(/* import() | pages/moderador/curso-borrador/_uidCurso/clase */ 79).then(__webpack_require__.bind(null, 597)));
 
-const _4903d414 = () => interopDefault(__webpack_require__.e(/* import() | pages/moderador/curso-borrador/_uidCurso/clase/_uidClase */ 80).then(__webpack_require__.bind(null, 600)));
+const _4903d414 = () => interopDefault(__webpack_require__.e(/* import() | pages/moderador/curso-borrador/_uidCurso/clase/_uidClase */ 80).then(__webpack_require__.bind(null, 598)));
 
-const _28e8f06f = () => interopDefault(__webpack_require__.e(/* import() | pages/moderador/curso-publicado/_uidCurso/clase */ 82).then(__webpack_require__.bind(null, 601)));
+const _28e8f06f = () => interopDefault(__webpack_require__.e(/* import() | pages/moderador/curso-publicado/_uidCurso/clase */ 82).then(__webpack_require__.bind(null, 599)));
 
-const _87293e8c = () => interopDefault(__webpack_require__.e(/* import() | pages/moderador/curso-publicado/_uidCurso/clase/_uidClase */ 83).then(__webpack_require__.bind(null, 602)));
+const _87293e8c = () => interopDefault(__webpack_require__.e(/* import() | pages/moderador/curso-publicado/_uidCurso/clase/_uidClase */ 83).then(__webpack_require__.bind(null, 600)));
 
-const _6c9c0ab4 = () => interopDefault(__webpack_require__.e(/* import() | pages/moderador/curso-publicado/_uidCurso/estudiantes */ 84).then(__webpack_require__.bind(null, 603)));
+const _6c9c0ab4 = () => interopDefault(__webpack_require__.e(/* import() | pages/moderador/curso-publicado/_uidCurso/estudiantes */ 84).then(__webpack_require__.bind(null, 601)));
 
-const _2f4d4258 = () => interopDefault(__webpack_require__.e(/* import() | pages/pedidos/nuevo/_tipoProducto/_uidProducto */ 92).then(__webpack_require__.bind(null, 604)));
+const _2f4d4258 = () => interopDefault(__webpack_require__.e(/* import() | pages/pedidos/nuevo/_tipoProducto/_uidProducto */ 92).then(__webpack_require__.bind(null, 602)));
 
-const _6a30d776 = () => interopDefault(__webpack_require__.e(/* import() | pages/bienvenido-a-classfii/_nombreUsuario */ 36).then(__webpack_require__.bind(null, 605)));
+const _6a30d776 = () => interopDefault(__webpack_require__.e(/* import() | pages/bienvenido-a-classfii/_nombreUsuario */ 36).then(__webpack_require__.bind(null, 603)));
 
-const _81561628 = () => interopDefault(__webpack_require__.e(/* import() | pages/blog/_referencia */ 37).then(__webpack_require__.bind(null, 606)));
+const _81561628 = () => interopDefault(__webpack_require__.e(/* import() | pages/blog/_referencia */ 37).then(__webpack_require__.bind(null, 604)));
 
-const _224cd4f3 = () => interopDefault(__webpack_require__.e(/* import() | pages/curso/_codigo/index */ 44).then(__webpack_require__.bind(null, 607)));
+const _224cd4f3 = () => interopDefault(__webpack_require__.e(/* import() | pages/curso/_codigo/index */ 44).then(__webpack_require__.bind(null, 605)));
 
-const _4473698b = () => interopDefault(__webpack_require__.e(/* import() | pages/estudiante/_nombreUsuario */ 46).then(__webpack_require__.bind(null, 554)));
+const _4473698b = () => interopDefault(__webpack_require__.e(/* import() | pages/estudiante/_nombreUsuario */ 46).then(__webpack_require__.bind(null, 552)));
 
-const _2d26d25f = () => interopDefault(__webpack_require__.e(/* import() | pages/verificacion-email/_uidUsuario */ 101).then(__webpack_require__.bind(null, 608)));
+const _2d26d25f = () => interopDefault(__webpack_require__.e(/* import() | pages/verificacion-email/_uidUsuario */ 101).then(__webpack_require__.bind(null, 606)));
 
-const _5115498b = () => interopDefault(__webpack_require__.e(/* import() | pages/curso/_codigo/clase */ 41).then(__webpack_require__.bind(null, 609)));
+const _5115498b = () => interopDefault(__webpack_require__.e(/* import() | pages/curso/_codigo/clase */ 41).then(__webpack_require__.bind(null, 607)));
 
-const _caa903c4 = () => interopDefault(__webpack_require__.e(/* import() | pages/curso/_codigo/clase/_uidClase */ 42).then(__webpack_require__.bind(null, 610)));
+const _caa903c4 = () => interopDefault(__webpack_require__.e(/* import() | pages/curso/_codigo/clase/_uidClase */ 42).then(__webpack_require__.bind(null, 608)));
 
-const _590eb150 = () => interopDefault(__webpack_require__.e(/* import() | pages/curso/_codigo/continuar */ 43).then(__webpack_require__.bind(null, 611)));
+const _590eb150 = () => interopDefault(__webpack_require__.e(/* import() | pages/curso/_codigo/continuar */ 43).then(__webpack_require__.bind(null, 609)));
 
-const _37fc754e = () => interopDefault(__webpack_require__.e(/* import() | pages/blogs/_seccion/_categoria */ 38).then(__webpack_require__.bind(null, 612)));
+const _37fc754e = () => interopDefault(__webpack_require__.e(/* import() | pages/blogs/_seccion/_categoria */ 38).then(__webpack_require__.bind(null, 610)));
 
-const _431be216 = () => interopDefault(__webpack_require__.e(/* import() | pages/cursos/_seccion/_categoria */ 45).then(__webpack_require__.bind(null, 613)));
+const _431be216 = () => interopDefault(__webpack_require__.e(/* import() | pages/cursos/_seccion/_categoria */ 45).then(__webpack_require__.bind(null, 611)));
 
-const _29e1970f = () => interopDefault(__webpack_require__.e(/* import() | pages/index */ 51).then(__webpack_require__.bind(null, 614)));
+const _29e1970f = () => interopDefault(__webpack_require__.e(/* import() | pages/index */ 51).then(__webpack_require__.bind(null, 612)));
 
 const emptyFn = () => {};
 
@@ -18488,23 +18497,17 @@ var nuxt_loading_component = Object(componentNormalizer["a" /* default */])(
 )
 
 /* harmony default export */ var nuxt_loading = (nuxt_loading_component.exports);
-// EXTERNAL MODULE: ./assets/style/visualizador_blog.scss
-var visualizador_blog = __webpack_require__(155);
-
-// EXTERNAL MODULE: ./assets/style/visualizador_articulo.scss
-var visualizador_articulo = __webpack_require__(156);
-
 // EXTERNAL MODULE: ./assets/style/visualizador_prose_mirror.scss
-var visualizador_prose_mirror = __webpack_require__(157);
+var visualizador_prose_mirror = __webpack_require__(155);
 
 // EXTERNAL MODULE: ./assets/style/videojs_custom_theme.scss
-var videojs_custom_theme = __webpack_require__(158);
+var videojs_custom_theme = __webpack_require__(156);
 
 // EXTERNAL MODULE: ./assets/style/fonts.scss
-var fonts = __webpack_require__(159);
+var fonts = __webpack_require__(157);
 
 // EXTERNAL MODULE: ./node_modules/vuetify/src/components/VApp/VApp.sass
-var VApp = __webpack_require__(160);
+var VApp = __webpack_require__(158);
 
 // EXTERNAL MODULE: ./node_modules/vuetify/lib/mixins/themeable/index.js
 var themeable = __webpack_require__(5);
@@ -18572,7 +18575,7 @@ var mixins = __webpack_require__(3);
 
 }));
 // EXTERNAL MODULE: ./node_modules/vuetify/src/components/VMain/VMain.sass
-var VMain = __webpack_require__(161);
+var VMain = __webpack_require__(159);
 
 // EXTERNAL MODULE: ./node_modules/vuetify/lib/mixins/ssr-bootable/index.js
 var ssr_bootable = __webpack_require__(22);
@@ -18699,7 +18702,7 @@ var SnackbarError = __webpack_require__(25);
 
 function default_injectStyles (context) {
   
-  var style0 = __webpack_require__(184)
+  var style0 = __webpack_require__(182)
 if (style0.__inject__) style0.__inject__(context)
 
 }
@@ -18723,13 +18726,13 @@ var default_component = Object(componentNormalizer["a" /* default */])(
 installComponents(default_component, {Loading: __webpack_require__(41).default,NavigationUser: __webpack_require__(35).default,NavigationDefault: __webpack_require__(34).default,FooterDefault: __webpack_require__(82).default,SnackbarError: __webpack_require__(25).default})
 
 // EXTERNAL MODULE: ./node_modules/vuetify/lib/components/VAppBar/VAppBar.js
-var VAppBar = __webpack_require__(260);
+var VAppBar = __webpack_require__(258);
 
 // EXTERNAL MODULE: ./node_modules/vuetify/lib/components/VAppBar/VAppBarNavIcon.js
-var VAppBarNavIcon = __webpack_require__(263);
+var VAppBarNavIcon = __webpack_require__(261);
 
 // EXTERNAL MODULE: ./node_modules/vuetify/lib/components/VDivider/VDivider.js
-var VDivider = __webpack_require__(214);
+var VDivider = __webpack_require__(212);
 
 // EXTERNAL MODULE: ./node_modules/vuetify/lib/components/VIcon/VIcon.js
 var VIcon = __webpack_require__(72);
@@ -18753,10 +18756,10 @@ var components_VList = __webpack_require__(2);
 var VListItemIcon = __webpack_require__(47);
 
 // EXTERNAL MODULE: ./node_modules/vuetify/lib/components/VNavigationDrawer/VNavigationDrawer.js
-var VNavigationDrawer = __webpack_require__(259);
+var VNavigationDrawer = __webpack_require__(257);
 
 // EXTERNAL MODULE: ./node_modules/vuetify/lib/components/VGrid/VSpacer.js
-var VSpacer = __webpack_require__(262);
+var VSpacer = __webpack_require__(260);
 
 // CONCATENATED MODULE: ./node_modules/vuetify-loader/lib/loader.js??ref--4!./node_modules/babel-loader/lib??ref--2-0!./node_modules/vue-loader/lib/loaders/templateLoader.js??ref--7!./node_modules/@nuxt/components/dist/loader.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./layouts/miembro.vue?vue&type=template&id=756718f4&scoped=true&
 
@@ -19007,7 +19010,7 @@ var FooterMiembro = __webpack_require__(83);
 
 function miembro_injectStyles (context) {
   
-  var style0 = __webpack_require__(186)
+  var style0 = __webpack_require__(184)
 if (style0.__inject__) style0.__inject__(context)
 
 }
@@ -19262,7 +19265,7 @@ var moderadorvue_type_template_id_b026659a_scoped_true_staticRenderFns = [];
 
 function moderador_injectStyles (context) {
   
-  var style0 = __webpack_require__(187)
+  var style0 = __webpack_require__(185)
 if (style0.__inject__) style0.__inject__(context)
 
 }
@@ -19286,8 +19289,6 @@ var moderador_component = Object(componentNormalizer["a" /* default */])(
 installComponents(moderador_component, {Loading: __webpack_require__(41).default,SnackbarError: __webpack_require__(25).default})
 
 // CONCATENATED MODULE: ../functions/.nuxt/App.js
-
-
 
 
 
@@ -19482,15 +19483,15 @@ const VUEX_PROPERTIES = ['state', 'getters', 'actions', 'mutations'];
 let store_store = {};
 
 (function updateModules() {
-  store_store = normalizeRoot(__webpack_require__(196), 'store/index.js'); // If store is an exported method = classic mode (deprecated)
+  store_store = normalizeRoot(__webpack_require__(194), 'store/index.js'); // If store is an exported method = classic mode (deprecated)
   // Enforce store modules
 
   store_store.modules = store_store.modules || {};
-  resolveStoreModules(__webpack_require__(189), 'modules/sistema.js');
-  resolveStoreModules(__webpack_require__(190), 'modules/usuarios/index.js');
-  resolveStoreModules(__webpack_require__(191), 'modules/blogs/index.js');
-  resolveStoreModules(__webpack_require__(192), 'modules/usuarios/miembro.js');
-  resolveStoreModules(__webpack_require__(193), 'modules/usuarios/moderador.js'); // If the environment supports hot reloading...
+  resolveStoreModules(__webpack_require__(187), 'modules/sistema.js');
+  resolveStoreModules(__webpack_require__(188), 'modules/usuarios/index.js');
+  resolveStoreModules(__webpack_require__(189), 'modules/blogs/index.js');
+  resolveStoreModules(__webpack_require__(190), 'modules/usuarios/miembro.js');
+  resolveStoreModules(__webpack_require__(191), 'modules/usuarios/moderador.js'); // If the environment supports hot reloading...
 })(); // createStore
 
 
@@ -19607,47 +19608,47 @@ function mergeProperty(storeModule, moduleData, property) {
 // CONCATENATED MODULE: ../functions/.nuxt/components/index.js
 const components_FooterDefault = () => Promise.resolve(/* import() */).then(__webpack_require__.bind(null, 82)).then(c => wrapFunctional(c.default || c));
 const components_FooterMiembro = () => Promise.resolve(/* import() */).then(__webpack_require__.bind(null, 83)).then(c => wrapFunctional(c.default || c));
-const FotoPerfil = () => __webpack_require__.e(/* import() | components/foto-perfil */ 30).then(__webpack_require__.bind(null, 402)).then(c => wrapFunctional(c.default || c));
+const FotoPerfil = () => __webpack_require__.e(/* import() | components/foto-perfil */ 30).then(__webpack_require__.bind(null, 400)).then(c => wrapFunctional(c.default || c));
 const components_Loading = () => Promise.resolve(/* import() */).then(__webpack_require__.bind(null, 41)).then(c => wrapFunctional(c.default || c));
 const components_NavigationDefault = () => Promise.resolve(/* import() */).then(__webpack_require__.bind(null, 34)).then(c => wrapFunctional(c.default || c));
 const components_NavigationUser = () => Promise.resolve(/* import() */).then(__webpack_require__.bind(null, 35)).then(c => wrapFunctional(c.default || c));
 const NotFound = () => Promise.resolve(/* import() */).then(__webpack_require__.bind(null, 119)).then(c => wrapFunctional(c.default || c));
 const components_SnackbarError = () => Promise.resolve(/* import() */).then(__webpack_require__.bind(null, 25)).then(c => wrapFunctional(c.default || c));
 const Spinner = () => Promise.resolve(/* import() */).then(__webpack_require__.bind(null, 125)).then(c => wrapFunctional(c.default || c));
-const Tiptap = () => __webpack_require__.e(/* import() | components/tiptap */ 32).then(__webpack_require__.bind(null, 303)).then(c => wrapFunctional(c.default || c));
-const AuthEmail = () => __webpack_require__.e(/* import() | components/auth-email */ 1).then(__webpack_require__.bind(null, 363)).then(c => wrapFunctional(c.default || c));
-const BlogsBuscadorBlog = () => __webpack_require__.e(/* import() | components/blogs-buscador-blog */ 2).then(__webpack_require__.bind(null, 468)).then(c => wrapFunctional(c.default || c));
-const BlogsRecomendacionPorDarMG = () => __webpack_require__.e(/* import() | components/blogs-recomendacion-por-dar-m-g */ 7).then(__webpack_require__.bind(null, 453)).then(c => wrapFunctional(c.default || c));
-const BlogsRecomendacionPorSeccion = () => __webpack_require__.e(/* import() | components/blogs-recomendacion-por-seccion */ 8).then(__webpack_require__.bind(null, 452)).then(c => wrapFunctional(c.default || c));
-const BlogsRecomendacionPorSimilitud = () => __webpack_require__.e(/* import() | components/blogs-recomendacion-por-similitud */ 9).then(__webpack_require__.bind(null, 463)).then(c => wrapFunctional(c.default || c));
-const BlogsVisualizador = () => __webpack_require__.e(/* import() | components/blogs-visualizador */ 10).then(__webpack_require__.bind(null, 307)).then(c => wrapFunctional(c.default || c));
-const CursosIniciarSesion = () => __webpack_require__.e(/* import() | components/cursos-iniciar-sesion */ 19).then(__webpack_require__.bind(null, 466)).then(c => wrapFunctional(c.default || c));
-const CursosRecomendacionPorqueViste = () => __webpack_require__.e(/* import() | components/cursos-recomendacion-porque-viste */ 26).then(__webpack_require__.bind(null, 615)).then(c => wrapFunctional(c.default || c));
-const CursosSinAccesoCurso = () => __webpack_require__.e(/* import() | components/cursos-sin-acceso-curso */ 27).then(__webpack_require__.bind(null, 467)).then(c => wrapFunctional(c.default || c));
-const CursosVisualizadorArticulo = () => __webpack_require__.e(/* import() | components/cursos-visualizador-articulo */ 28).then(__webpack_require__.bind(null, 304)).then(c => wrapFunctional(c.default || c));
-const CursosVisualizadorVideo = () => __webpack_require__.e(/* import() | components/cursos-visualizador-video */ 29).then(__webpack_require__.bind(null, 305)).then(c => wrapFunctional(c.default || c));
-const InformacionUsuarioFormularioInformacionUsuario = () => __webpack_require__.e(/* import() | components/informacion-usuario-formulario-informacion-usuario */ 31).then(__webpack_require__.bind(null, 616)).then(c => wrapFunctional(c.default || c));
-const UsuariosCartaPresentacion = () => __webpack_require__.e(/* import() | components/usuarios-carta-presentacion */ 33).then(__webpack_require__.bind(null, 464)).then(c => wrapFunctional(c.default || c));
-const UsuariosCartaPresentacionInstructor = () => __webpack_require__.e(/* import() | components/usuarios-carta-presentacion-instructor */ 34).then(__webpack_require__.bind(null, 465)).then(c => wrapFunctional(c.default || c));
-const BlogsMiembroBuscadorBlog = () => __webpack_require__.e(/* import() | components/blogs-miembro-buscador-blog */ 3).then(__webpack_require__.bind(null, 454)).then(c => wrapFunctional(c.default || c));
-const BlogsMiembroErroresBlog = () => __webpack_require__.e(/* import() | components/blogs-miembro-errores-blog */ 4).then(__webpack_require__.bind(null, 461)).then(c => wrapFunctional(c.default || c));
-const BlogsMiembroFormularioBlogActualizar = () => __webpack_require__.e(/* import() | components/blogs-miembro-formulario-blog-actualizar */ 5).then(__webpack_require__.bind(null, 459)).then(c => wrapFunctional(c.default || c));
-const BlogsMiembroFormularioBlogLeer = () => __webpack_require__.e(/* import() | components/blogs-miembro-formulario-blog-leer */ 6).then(__webpack_require__.bind(null, 460)).then(c => wrapFunctional(c.default || c));
-const CursosBorradorMiembroBuscadorCursosBorrador = () => __webpack_require__.e(/* import() | components/cursos-borrador-miembro-buscador-cursos-borrador */ 11).then(__webpack_require__.bind(null, 455)).then(c => wrapFunctional(c.default || c));
-const CursosBorradorMiembroFormularioCurso = () => __webpack_require__.e(/* import() | components/cursos-borrador-miembro-formulario-curso */ 12).then(__webpack_require__.bind(null, 462)).then(c => wrapFunctional(c.default || c));
-const CursosBorradorMiembroGeneradorArticulo = () => __webpack_require__.e(/* import() | components/cursos-borrador-miembro-generador-articulo */ 13).then(__webpack_require__.bind(null, 470)).then(c => wrapFunctional(c.default || c));
-const CursosBorradorMiembroGeneradorVideoClase = () => __webpack_require__.e(/* import() | components/cursos-borrador-miembro-generador-video-clase */ 14).then(__webpack_require__.bind(null, 471)).then(c => wrapFunctional(c.default || c));
-const CursosBorradorMiembroListaUnidadesClases = () => __webpack_require__.e(/* import() | components/cursos-borrador-miembro-lista-unidades-clases */ 15).then(__webpack_require__.bind(null, 365)).then(c => wrapFunctional(c.default || c));
-const CursosBorradorMiembroProgramaEstudio = () => __webpack_require__.e(/* import() | components/cursos-borrador-miembro-programa-estudio */ 16).then(__webpack_require__.bind(null, 555)).then(c => wrapFunctional(c.default || c));
-const CursosBorradorModeradorBuscadorCursosBorrador = () => __webpack_require__.e(/* import() | components/cursos-borrador-moderador-buscador-cursos-borrador */ 17).then(__webpack_require__.bind(null, 457)).then(c => wrapFunctional(c.default || c));
-const CursosBorradorModeradorListaUnidadesClases = () => __webpack_require__.e(/* import() | components/cursos-borrador-moderador-lista-unidades-clases */ 18).then(__webpack_require__.bind(null, 367)).then(c => wrapFunctional(c.default || c));
-const CursosPublicadoEstudianteBuscadorCursosPublicado = () => __webpack_require__.e(/* import() | components/cursos-publicado-estudiante-buscador-cursos-publicado */ 20).then(__webpack_require__.bind(null, 469)).then(c => wrapFunctional(c.default || c));
-const CursosPublicadoEstudianteListaUnidadesClases = () => __webpack_require__.e(/* import() | components/cursos-publicado-estudiante-lista-unidades-clases */ 21).then(__webpack_require__.bind(null, 369)).then(c => wrapFunctional(c.default || c));
-const CursosPublicadoMiembroBuscadorCursosPublicado = () => __webpack_require__.e(/* import() | components/cursos-publicado-miembro-buscador-cursos-publicado */ 22).then(__webpack_require__.bind(null, 456)).then(c => wrapFunctional(c.default || c));
-const CursosPublicadoMiembroListaUnidadesClases = () => __webpack_require__.e(/* import() | components/cursos-publicado-miembro-lista-unidades-clases */ 23).then(__webpack_require__.bind(null, 366)).then(c => wrapFunctional(c.default || c));
-const CursosPublicadoModeradorBuscadorCursosPublicado = () => __webpack_require__.e(/* import() | components/cursos-publicado-moderador-buscador-cursos-publicado */ 24).then(__webpack_require__.bind(null, 458)).then(c => wrapFunctional(c.default || c));
-const CursosPublicadoModeradorListaUnidadesClases = () => __webpack_require__.e(/* import() | components/cursos-publicado-moderador-lista-unidades-clases */ 25).then(__webpack_require__.bind(null, 368)).then(c => wrapFunctional(c.default || c));
-const UsuariosModeradorVisualizadorDatosUsuario = () => __webpack_require__.e(/* import() | components/usuarios-moderador-visualizador-datos-usuario */ 35).then(__webpack_require__.bind(null, 364)).then(c => wrapFunctional(c.default || c)); // nuxt/nuxt.js#8607
+const Tiptap = () => __webpack_require__.e(/* import() | components/tiptap */ 32).then(__webpack_require__.bind(null, 301)).then(c => wrapFunctional(c.default || c));
+const AuthEmail = () => __webpack_require__.e(/* import() | components/auth-email */ 1).then(__webpack_require__.bind(null, 361)).then(c => wrapFunctional(c.default || c));
+const BlogsBuscadorBlog = () => __webpack_require__.e(/* import() | components/blogs-buscador-blog */ 2).then(__webpack_require__.bind(null, 466)).then(c => wrapFunctional(c.default || c));
+const BlogsRecomendacionPorDarMG = () => __webpack_require__.e(/* import() | components/blogs-recomendacion-por-dar-m-g */ 7).then(__webpack_require__.bind(null, 451)).then(c => wrapFunctional(c.default || c));
+const BlogsRecomendacionPorSeccion = () => __webpack_require__.e(/* import() | components/blogs-recomendacion-por-seccion */ 8).then(__webpack_require__.bind(null, 450)).then(c => wrapFunctional(c.default || c));
+const BlogsRecomendacionPorSimilitud = () => __webpack_require__.e(/* import() | components/blogs-recomendacion-por-similitud */ 9).then(__webpack_require__.bind(null, 461)).then(c => wrapFunctional(c.default || c));
+const BlogsVisualizador = () => __webpack_require__.e(/* import() | components/blogs-visualizador */ 10).then(__webpack_require__.bind(null, 305)).then(c => wrapFunctional(c.default || c));
+const CursosIniciarSesion = () => __webpack_require__.e(/* import() | components/cursos-iniciar-sesion */ 19).then(__webpack_require__.bind(null, 464)).then(c => wrapFunctional(c.default || c));
+const CursosRecomendacionPorqueViste = () => __webpack_require__.e(/* import() | components/cursos-recomendacion-porque-viste */ 26).then(__webpack_require__.bind(null, 613)).then(c => wrapFunctional(c.default || c));
+const CursosSinAccesoCurso = () => __webpack_require__.e(/* import() | components/cursos-sin-acceso-curso */ 27).then(__webpack_require__.bind(null, 465)).then(c => wrapFunctional(c.default || c));
+const CursosVisualizadorArticulo = () => __webpack_require__.e(/* import() | components/cursos-visualizador-articulo */ 28).then(__webpack_require__.bind(null, 302)).then(c => wrapFunctional(c.default || c));
+const CursosVisualizadorVideo = () => __webpack_require__.e(/* import() | components/cursos-visualizador-video */ 29).then(__webpack_require__.bind(null, 303)).then(c => wrapFunctional(c.default || c));
+const InformacionUsuarioFormularioInformacionUsuario = () => __webpack_require__.e(/* import() | components/informacion-usuario-formulario-informacion-usuario */ 31).then(__webpack_require__.bind(null, 614)).then(c => wrapFunctional(c.default || c));
+const UsuariosCartaPresentacion = () => __webpack_require__.e(/* import() | components/usuarios-carta-presentacion */ 33).then(__webpack_require__.bind(null, 462)).then(c => wrapFunctional(c.default || c));
+const UsuariosCartaPresentacionInstructor = () => __webpack_require__.e(/* import() | components/usuarios-carta-presentacion-instructor */ 34).then(__webpack_require__.bind(null, 463)).then(c => wrapFunctional(c.default || c));
+const BlogsMiembroBuscadorBlog = () => __webpack_require__.e(/* import() | components/blogs-miembro-buscador-blog */ 3).then(__webpack_require__.bind(null, 452)).then(c => wrapFunctional(c.default || c));
+const BlogsMiembroErroresBlog = () => __webpack_require__.e(/* import() | components/blogs-miembro-errores-blog */ 4).then(__webpack_require__.bind(null, 459)).then(c => wrapFunctional(c.default || c));
+const BlogsMiembroFormularioBlogActualizar = () => __webpack_require__.e(/* import() | components/blogs-miembro-formulario-blog-actualizar */ 5).then(__webpack_require__.bind(null, 457)).then(c => wrapFunctional(c.default || c));
+const BlogsMiembroFormularioBlogLeer = () => __webpack_require__.e(/* import() | components/blogs-miembro-formulario-blog-leer */ 6).then(__webpack_require__.bind(null, 458)).then(c => wrapFunctional(c.default || c));
+const CursosBorradorMiembroBuscadorCursosBorrador = () => __webpack_require__.e(/* import() | components/cursos-borrador-miembro-buscador-cursos-borrador */ 11).then(__webpack_require__.bind(null, 453)).then(c => wrapFunctional(c.default || c));
+const CursosBorradorMiembroFormularioCurso = () => __webpack_require__.e(/* import() | components/cursos-borrador-miembro-formulario-curso */ 12).then(__webpack_require__.bind(null, 460)).then(c => wrapFunctional(c.default || c));
+const CursosBorradorMiembroGeneradorArticulo = () => __webpack_require__.e(/* import() | components/cursos-borrador-miembro-generador-articulo */ 13).then(__webpack_require__.bind(null, 468)).then(c => wrapFunctional(c.default || c));
+const CursosBorradorMiembroGeneradorVideoClase = () => __webpack_require__.e(/* import() | components/cursos-borrador-miembro-generador-video-clase */ 14).then(__webpack_require__.bind(null, 469)).then(c => wrapFunctional(c.default || c));
+const CursosBorradorMiembroListaUnidadesClases = () => __webpack_require__.e(/* import() | components/cursos-borrador-miembro-lista-unidades-clases */ 15).then(__webpack_require__.bind(null, 363)).then(c => wrapFunctional(c.default || c));
+const CursosBorradorMiembroProgramaEstudio = () => __webpack_require__.e(/* import() | components/cursos-borrador-miembro-programa-estudio */ 16).then(__webpack_require__.bind(null, 553)).then(c => wrapFunctional(c.default || c));
+const CursosBorradorModeradorBuscadorCursosBorrador = () => __webpack_require__.e(/* import() | components/cursos-borrador-moderador-buscador-cursos-borrador */ 17).then(__webpack_require__.bind(null, 455)).then(c => wrapFunctional(c.default || c));
+const CursosBorradorModeradorListaUnidadesClases = () => __webpack_require__.e(/* import() | components/cursos-borrador-moderador-lista-unidades-clases */ 18).then(__webpack_require__.bind(null, 365)).then(c => wrapFunctional(c.default || c));
+const CursosPublicadoEstudianteBuscadorCursosPublicado = () => __webpack_require__.e(/* import() | components/cursos-publicado-estudiante-buscador-cursos-publicado */ 20).then(__webpack_require__.bind(null, 467)).then(c => wrapFunctional(c.default || c));
+const CursosPublicadoEstudianteListaUnidadesClases = () => __webpack_require__.e(/* import() | components/cursos-publicado-estudiante-lista-unidades-clases */ 21).then(__webpack_require__.bind(null, 367)).then(c => wrapFunctional(c.default || c));
+const CursosPublicadoMiembroBuscadorCursosPublicado = () => __webpack_require__.e(/* import() | components/cursos-publicado-miembro-buscador-cursos-publicado */ 22).then(__webpack_require__.bind(null, 454)).then(c => wrapFunctional(c.default || c));
+const CursosPublicadoMiembroListaUnidadesClases = () => __webpack_require__.e(/* import() | components/cursos-publicado-miembro-lista-unidades-clases */ 23).then(__webpack_require__.bind(null, 364)).then(c => wrapFunctional(c.default || c));
+const CursosPublicadoModeradorBuscadorCursosPublicado = () => __webpack_require__.e(/* import() | components/cursos-publicado-moderador-buscador-cursos-publicado */ 24).then(__webpack_require__.bind(null, 456)).then(c => wrapFunctional(c.default || c));
+const CursosPublicadoModeradorListaUnidadesClases = () => __webpack_require__.e(/* import() | components/cursos-publicado-moderador-lista-unidades-clases */ 25).then(__webpack_require__.bind(null, 366)).then(c => wrapFunctional(c.default || c));
+const UsuariosModeradorVisualizadorDatosUsuario = () => __webpack_require__.e(/* import() | components/usuarios-moderador-visualizador-datos-usuario */ 35).then(__webpack_require__.bind(null, 362)).then(c => wrapFunctional(c.default || c)); // nuxt/nuxt.js#8607
 
 function wrapFunctional(options) {
   if (!options || !options.functional) {
@@ -19705,7 +19706,7 @@ external_vue_default.a.use(framework["a" /* default */], {});
   ctx.$vuetify = vuetify.framework;
 });
 // EXTERNAL MODULE: ../functions/.nuxt/empty.js
-var _nuxt_empty = __webpack_require__(194);
+var _nuxt_empty = __webpack_require__(192);
 
 // CONCATENATED MODULE: ../functions/.nuxt/pwa/meta.utils.js
 function mergeMeta(to, from) {
@@ -19868,8 +19869,20 @@ const createAxiosInstance = axiosOptions => {
     };
   }); // Setup interceptors
 
+  setupCredentialsInterceptor(axios);
   setupProgress(axios);
   return axios;
+};
+
+const setupCredentialsInterceptor = axios => {
+  // Send credentials only to relative and API Backend requests
+  axios.onRequest(config => {
+    if (config.withCredentials === undefined) {
+      if (!/^https?:\/\//i.test(config.url) || config.url.indexOf(config.baseURL) === 0) {
+        config.withCredentials = true;
+      }
+    }
+  });
 };
 
 const setupProgress = axios => {
@@ -20697,7 +20710,7 @@ const createNext = ssrContext => opts => {
 });
 
 /***/ }),
-/* 196 */
+/* 194 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -20714,7 +20727,7 @@ var external_jwt_decode_default = /*#__PURE__*/__webpack_require__.n(external_jw
 // CONCATENATED MODULE: ./helpers/index.js
 
 
-const cookieparser = __webpack_require__(188);
+const cookieparser = __webpack_require__(186);
 
 function getUserFromCookie(req) {
   if (!req.headers.cookie) return null;
@@ -20794,87 +20807,87 @@ const actions = {
 };
 
 /***/ }),
-/* 197 */
+/* 195 */
 /***/ (function(module, exports) {
 
 module.exports = require("core-js/modules/esnext.map.delete-all.js");
 
 /***/ }),
-/* 198 */
+/* 196 */
 /***/ (function(module, exports) {
 
 module.exports = require("core-js/modules/esnext.map.every.js");
 
 /***/ }),
-/* 199 */
+/* 197 */
 /***/ (function(module, exports) {
 
 module.exports = require("core-js/modules/esnext.map.filter.js");
 
 /***/ }),
-/* 200 */
+/* 198 */
 /***/ (function(module, exports) {
 
 module.exports = require("core-js/modules/esnext.map.find.js");
 
 /***/ }),
-/* 201 */
+/* 199 */
 /***/ (function(module, exports) {
 
 module.exports = require("core-js/modules/esnext.map.find-key.js");
 
 /***/ }),
-/* 202 */
+/* 200 */
 /***/ (function(module, exports) {
 
 module.exports = require("core-js/modules/esnext.map.includes.js");
 
 /***/ }),
-/* 203 */
+/* 201 */
 /***/ (function(module, exports) {
 
 module.exports = require("core-js/modules/esnext.map.key-of.js");
 
 /***/ }),
-/* 204 */
+/* 202 */
 /***/ (function(module, exports) {
 
 module.exports = require("core-js/modules/esnext.map.map-keys.js");
 
 /***/ }),
-/* 205 */
+/* 203 */
 /***/ (function(module, exports) {
 
 module.exports = require("core-js/modules/esnext.map.map-values.js");
 
 /***/ }),
-/* 206 */
+/* 204 */
 /***/ (function(module, exports) {
 
 module.exports = require("core-js/modules/esnext.map.merge.js");
 
 /***/ }),
-/* 207 */
+/* 205 */
 /***/ (function(module, exports) {
 
 module.exports = require("core-js/modules/esnext.map.reduce.js");
 
 /***/ }),
-/* 208 */
+/* 206 */
 /***/ (function(module, exports) {
 
 module.exports = require("core-js/modules/esnext.map.some.js");
 
 /***/ }),
-/* 209 */
+/* 207 */
 /***/ (function(module, exports) {
 
 module.exports = require("core-js/modules/esnext.map.update.js");
 
 /***/ }),
-/* 210 */,
-/* 211 */,
-/* 212 */
+/* 208 */,
+/* 209 */,
+/* 210 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -21547,8 +21560,8 @@ const dirtyTypes = ['color', 'file', 'time', 'date', 'datetime-local', 'week', '
 }));
 
 /***/ }),
-/* 213 */,
-/* 214 */
+/* 211 */,
+/* 212 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -21593,11 +21606,11 @@ const dirtyTypes = ['color', 'file', 'time', 'date', 'datetime-local', 'week', '
 }));
 
 /***/ }),
-/* 215 */
+/* 213 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var _src_components_VChip_VChip_sass__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(177);
+/* harmony import */ var _src_components_VChip_VChip_sass__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(175);
 /* harmony import */ var _src_components_VChip_VChip_sass__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_src_components_VChip_VChip_sass__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var _util_mixins__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(3);
 /* harmony import */ var _transitions__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(24);
@@ -21783,160 +21796,160 @@ const dirtyTypes = ['color', 'file', 'time', 'date', 'datetime-local', 'week', '
 }));
 
 /***/ }),
-/* 216 */
+/* 214 */
 /***/ (function(module, exports) {
 
 module.exports = require("vuelidate");
 
 /***/ }),
-/* 217 */
+/* 215 */
 /***/ (function(module, exports) {
 
 module.exports = require("vuelidate/lib/validators");
 
 /***/ }),
-/* 218 */
+/* 216 */
 /***/ (function(module, exports) {
 
 module.exports = require("core-js/modules/esnext.set.add-all.js");
 
 /***/ }),
-/* 219 */
+/* 217 */
 /***/ (function(module, exports) {
 
 module.exports = require("core-js/modules/esnext.set.delete-all.js");
 
 /***/ }),
-/* 220 */
+/* 218 */
 /***/ (function(module, exports) {
 
 module.exports = require("core-js/modules/esnext.set.difference.js");
 
 /***/ }),
-/* 221 */
+/* 219 */
 /***/ (function(module, exports) {
 
 module.exports = require("core-js/modules/esnext.set.every.js");
 
 /***/ }),
-/* 222 */
+/* 220 */
 /***/ (function(module, exports) {
 
 module.exports = require("core-js/modules/esnext.set.filter.js");
 
 /***/ }),
-/* 223 */
+/* 221 */
 /***/ (function(module, exports) {
 
 module.exports = require("core-js/modules/esnext.set.find.js");
 
 /***/ }),
-/* 224 */
+/* 222 */
 /***/ (function(module, exports) {
 
 module.exports = require("core-js/modules/esnext.set.intersection.js");
 
 /***/ }),
-/* 225 */
+/* 223 */
 /***/ (function(module, exports) {
 
 module.exports = require("core-js/modules/esnext.set.is-disjoint-from.js");
 
 /***/ }),
-/* 226 */
+/* 224 */
 /***/ (function(module, exports) {
 
 module.exports = require("core-js/modules/esnext.set.is-subset-of.js");
 
 /***/ }),
-/* 227 */
+/* 225 */
 /***/ (function(module, exports) {
 
 module.exports = require("core-js/modules/esnext.set.is-superset-of.js");
 
 /***/ }),
-/* 228 */
+/* 226 */
 /***/ (function(module, exports) {
 
 module.exports = require("core-js/modules/esnext.set.join.js");
 
 /***/ }),
-/* 229 */
+/* 227 */
 /***/ (function(module, exports) {
 
 module.exports = require("core-js/modules/esnext.set.map.js");
 
 /***/ }),
-/* 230 */
+/* 228 */
 /***/ (function(module, exports) {
 
 module.exports = require("core-js/modules/esnext.set.reduce.js");
 
 /***/ }),
-/* 231 */
+/* 229 */
 /***/ (function(module, exports) {
 
 module.exports = require("core-js/modules/esnext.set.some.js");
 
 /***/ }),
-/* 232 */
+/* 230 */
 /***/ (function(module, exports) {
 
 module.exports = require("core-js/modules/esnext.set.symmetric-difference.js");
 
 /***/ }),
-/* 233 */
+/* 231 */
 /***/ (function(module, exports) {
 
 module.exports = require("core-js/modules/esnext.set.union.js");
 
 /***/ }),
-/* 234 */
+/* 232 */
 /***/ (function(module, exports) {
 
 module.exports = require("instantsearch.js/cjs/connectors");
 
 /***/ }),
-/* 235 */
+/* 233 */
 /***/ (function(module, exports) {
 
 module.exports = require("mitt");
 
 /***/ }),
-/* 236 */
+/* 234 */
 /***/ (function(module, exports) {
 
 module.exports = require("instantsearch.js/cjs/lib/utils");
 
 /***/ }),
-/* 237 */
+/* 235 */
 /***/ (function(module, exports) {
 
 module.exports = require("instantsearch.js/cjs/widgets/index/index");
 
 /***/ }),
-/* 238 */
+/* 236 */
 /***/ (function(module, exports) {
 
 module.exports = require("instantsearch.js/cjs");
 
 /***/ }),
-/* 239 */
+/* 237 */
 /***/ (function(module, exports) {
 
 module.exports = require("algoliasearch/lite");
 
 /***/ }),
-/* 240 */
+/* 238 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 
 // EXTERNAL MODULE: ./node_modules/vuetify/src/components/VMenu/VMenu.sass
-var VMenu = __webpack_require__(178);
+var VMenu = __webpack_require__(176);
 
 // EXTERNAL MODULE: ./node_modules/vuetify/lib/components/VThemeProvider/VThemeProvider.js
-var VThemeProvider = __webpack_require__(264);
+var VThemeProvider = __webpack_require__(262);
 
 // EXTERNAL MODULE: ./node_modules/vuetify/lib/mixins/activatable/index.js
 var activatable = __webpack_require__(50);
@@ -22849,94 +22862,94 @@ const VMenu_baseMixins = Object(mixins["a" /* default */])(dependent["a" /* defa
 }));
 
 /***/ }),
-/* 241 */,
-/* 242 */
+/* 239 */,
+/* 240 */
 /***/ (function(module, exports) {
 
 module.exports = require("showdown");
 
 /***/ }),
-/* 243 */
+/* 241 */
 /***/ (function(module, exports) {
 
 module.exports = require("@algolia/recommend");
 
 /***/ }),
-/* 244 */
+/* 242 */
 /***/ (function(module, exports) {
 
 module.exports = require("core-js/modules/esnext.array.last-item.js");
 
 /***/ }),
-/* 245 */
+/* 243 */
 /***/ (function(module, exports) {
 
 module.exports = require("video.js");
 
 /***/ }),
-/* 246 */
+/* 244 */
 /***/ (function(module, exports) {
 
 module.exports = require("url");
 
 /***/ }),
-/* 247 */
+/* 245 */
 /***/ (function(module, exports) {
 
 module.exports = require("@tiptap/vue-2");
 
 /***/ }),
-/* 248 */
+/* 246 */
 /***/ (function(module, exports) {
 
 module.exports = require("@tiptap/starter-kit");
 
 /***/ }),
-/* 249 */
+/* 247 */
 /***/ (function(module, exports) {
 
 module.exports = require("@tiptap/extension-document");
 
 /***/ }),
-/* 250 */
+/* 248 */
 /***/ (function(module, exports) {
 
 module.exports = require("@tiptap/extension-paragraph");
 
 /***/ }),
-/* 251 */
+/* 249 */
 /***/ (function(module, exports) {
 
 module.exports = require("@tiptap/extension-text");
 
 /***/ }),
-/* 252 */
+/* 250 */
 /***/ (function(module, exports) {
 
 module.exports = require("@tiptap/extension-image");
 
 /***/ }),
-/* 253 */
+/* 251 */
 /***/ (function(module, exports) {
 
 module.exports = require("@tiptap/extension-dropcursor");
 
 /***/ }),
-/* 254 */,
-/* 255 */
+/* 252 */,
+/* 253 */
 /***/ (function(module, exports) {
 
 module.exports = require("vuedraggable");
 
 /***/ }),
+/* 254 */,
+/* 255 */,
 /* 256 */,
-/* 257 */,
-/* 258 */,
-/* 259 */
+/* 257 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var _src_components_VNavigationDrawer_VNavigationDrawer_sass__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(164);
+/* harmony import */ var _src_components_VNavigationDrawer_VNavigationDrawer_sass__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(162);
 /* harmony import */ var _src_components_VNavigationDrawer_VNavigationDrawer_sass__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_src_components_VNavigationDrawer_VNavigationDrawer_sass__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var _VImg_VImg__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(65);
 /* harmony import */ var _mixins_applicationable__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(44);
@@ -23352,11 +23365,11 @@ const baseMixins = Object(_util_mixins__WEBPACK_IMPORTED_MODULE_13__[/* default 
 }));
 
 /***/ }),
-/* 260 */
+/* 258 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var _src_components_VAppBar_VAppBar_sass__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(171);
+/* harmony import */ var _src_components_VAppBar_VAppBar_sass__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(169);
 /* harmony import */ var _src_components_VAppBar_VAppBar_sass__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_src_components_VAppBar_VAppBar_sass__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var _VToolbar_VToolbar__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(16);
 /* harmony import */ var _directives_scroll__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(86);
@@ -23613,7 +23626,7 @@ const baseMixins = Object(_util_mixins__WEBPACK_IMPORTED_MODULE_8__[/* default *
 }));
 
 /***/ }),
-/* 261 */
+/* 259 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -23716,7 +23729,7 @@ Object(_mixins_groupable__WEBPACK_IMPORTED_MODULE_0__[/* factory */ "a"])('tabsB
 }));
 
 /***/ }),
-/* 262 */
+/* 260 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -23728,7 +23741,7 @@ Object(_mixins_groupable__WEBPACK_IMPORTED_MODULE_0__[/* factory */ "a"])('tabsB
 /* harmony default export */ __webpack_exports__["a"] = (Object(_util_helpers__WEBPACK_IMPORTED_MODULE_1__[/* createSimpleFunctional */ "i"])('spacer', 'div', 'v-spacer'));
 
 /***/ }),
-/* 263 */
+/* 261 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -23767,7 +23780,7 @@ Object(_mixins_groupable__WEBPACK_IMPORTED_MODULE_0__[/* factory */ "a"])('tabsB
 }));
 
 /***/ }),
-/* 264 */
+/* 262 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -23796,11 +23809,11 @@ Object(_mixins_groupable__WEBPACK_IMPORTED_MODULE_0__[/* factory */ "a"])('tabsB
 }));
 
 /***/ }),
-/* 265 */
+/* 263 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var _src_components_VFooter_VFooter_sass__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(180);
+/* harmony import */ var _src_components_VFooter_VFooter_sass__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(178);
 /* harmony import */ var _src_components_VFooter_VFooter_sass__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_src_components_VFooter_VFooter_sass__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var _VSheet_VSheet__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(11);
 /* harmony import */ var _mixins_applicationable__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(44);
@@ -23897,11 +23910,11 @@ Object(_mixins_groupable__WEBPACK_IMPORTED_MODULE_0__[/* factory */ "a"])('tabsB
 }));
 
 /***/ }),
-/* 266 */
+/* 264 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var _src_components_VSnackbar_VSnackbar_sass__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(182);
+/* harmony import */ var _src_components_VSnackbar_VSnackbar_sass__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(180);
 /* harmony import */ var _src_components_VSnackbar_VSnackbar_sass__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_src_components_VSnackbar_VSnackbar_sass__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var _VSheet_VSheet__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(11);
 /* harmony import */ var _mixins_colorable__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(6);
@@ -24100,16 +24113,16 @@ Object(_mixins_groupable__WEBPACK_IMPORTED_MODULE_0__[/* factory */ "a"])('tabsB
 }));
 
 /***/ }),
-/* 267 */
+/* 265 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 
 // EXTERNAL MODULE: ./node_modules/vuetify/src/components/VTabs/VTabs.sass
-var VTabs = __webpack_require__(173);
+var VTabs = __webpack_require__(171);
 
 // EXTERNAL MODULE: ./node_modules/vuetify/src/components/VSlideGroup/VSlideGroup.sass
-var VSlideGroup = __webpack_require__(174);
+var VSlideGroup = __webpack_require__(172);
 
 // EXTERNAL MODULE: ./node_modules/vuetify/lib/components/VIcon/index.js
 var VIcon = __webpack_require__(9);

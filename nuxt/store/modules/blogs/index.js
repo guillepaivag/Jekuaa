@@ -1,18 +1,14 @@
 const collectionName = 'Blogs'
 
-export const state = {
+// export const state = {}
 
-}
-
-
-export const getters = {
-
-}
+export const state = () => ({})
 
 
-export const actions = {
-    
-}
+export const getters = {}
+
+
+export const actions = {}
 
 
 export const mutations = {}

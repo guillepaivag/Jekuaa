@@ -1,8 +1,14 @@
-export const state = {
+// export const state = {
+//     uid: '',
+//     funciones: [],
+//     fechaComienzo: null,
+// }
+
+export const state = () => ({
     uid: '',
     funciones: [],
     fechaComienzo: null,
-}
+})
 
 export const getters = {
     uid (state) {

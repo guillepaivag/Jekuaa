@@ -3,7 +3,21 @@ const COOKIE_NAME = '__session'
 const collectionName = 'Usuarios'
 
 
-export const state = {
+// export const state = {
+//   token: '',
+//   emailVerificado: false,
+//   fotoPerfil: '',
+//   nombreCompleto: '',
+//   uid: '',
+//   nombreUsuario: '',
+//   correo: '',
+//   fechaNacimiento: null,
+//   plan: 'gratis',
+//   rol: 'estudiante',
+//   point: 0,
+// }
+
+export const state = () => ({
   token: '',
   emailVerificado: false,
   fotoPerfil: '',
@@ -15,8 +29,7 @@ export const state = {
   plan: 'gratis',
   rol: 'estudiante',
   point: 0,
-}
-
+})
 
 
 

@@ -1,7 +1,12 @@
-export const state = {
+// export const state = {
+//   loading: false,
+//   error: null
+// }
+
+export const state = () => ({
   loading: false,
   error: null
-}
+})
 
 export const getters = {
 

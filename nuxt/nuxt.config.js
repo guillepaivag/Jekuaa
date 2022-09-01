@@ -43,8 +43,6 @@ module.exports = {
 
   // Global CSS: https://go.nuxtjs.dev/config-css
   css: [
-    '~/assets/style/visualizador_blog.scss', 
-    '~/assets/style/visualizador_articulo.scss', 
     '~/assets/style/visualizador_prose_mirror.scss',
     '~/assets/style/videojs_custom_theme.scss',
     '~/assets/style/fonts.scss',
@@ -82,8 +80,6 @@ module.exports = {
     '@nuxtjs/pwa',
     [
       'nuxt-sass-resources-loader',
-      ['~/assets/style/visualizador_blog.scss'],
-      ['~/assets/style/visualizador_articulo.scss'],
       ['~/assets/style/visualizador_prose_mirror.scss'],
       ['~/assets/style/videojs_custom_theme.scss'],
       ['~/assets/style/fonts.scss'],
@@ -96,7 +92,8 @@ module.exports = {
 
   // Axios module configuration: https://go.nuxtjs.dev/config-axios
   axios: {
-    baseURL: baseURL
+    baseURL: baseURL,
+    credentials: true,
   },
   
   publicRuntimeConfig: {

@@ -1,22 +1,17 @@
 const express = require('express')
-const cors = require('cors')({
-  origin: true
-})
+const cors = require('cors')
 const manejadorErrores = require('../../helpers/manejoErrores')
 
 const api = express()
 
-// api.use((req, res, next) => {
-//   res.setHeader('Access-Control-Allow-Origin', 'https://jekuaapy.com')
-//   res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, DELETE')
-//   res.setHeader('Access-Control-Allow-Headers', 'Authorization, X-API-KEY, Origin, X-Requested-With, Content-Type, Accept, Access-Control-Allow-Request-Method, token')
-//   res.setHeader('Access-Control-Allow-Credentials', true)
-//   next()
-// })
-
-api.use((req, res, next) => { cors(req, res, () => { next() }) })
+api.use(cors({
+  credentials: true,
+  origin: ['https://jekuaapy.com', 'https://jekuaa-py.web.app', 'http://localhost:3000'],
+  methods: ['GET','POST','DELETE','PUT','UPDATE','PATCH'],
+  allowedHeaders: ['Authorization', 'Content-Type']
+}))
 api.use(express.json())
-api.use(express.urlencoded({ extended: true }))
+api.use(express.urlencoded({ extended: false }))
 
 // CURSOS
 api.use('/', require('./routes'))

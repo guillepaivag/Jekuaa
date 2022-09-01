@@ -1,14 +1,14 @@
 exports.ids = [59];
 exports.modules = {
 
-/***/ 361:
+/***/ 359:
 /***/ (function(module, exports, __webpack_require__) {
 
 module.exports = __webpack_require__.p + "img/loading1.87c5a9d.jpg";
 
 /***/ }),
 
-/***/ 423:
+/***/ 421:
 /***/ (function(module, exports) {
 
 // Exports
@@ -21,19 +21,19 @@ module.exports = {
 
 /***/ }),
 
-/***/ 499:
+/***/ 497:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _node_modules_css_loader_dist_cjs_js_ref_3_oneOf_1_0_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_3_oneOf_1_1_node_modules_nuxt_components_dist_loader_js_ref_0_0_node_modules_vue_loader_lib_index_js_vue_loader_options_auxiliares_vue_vue_type_style_index_0_id_1ffcb334_prod_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(423);
+/* harmony import */ var _node_modules_css_loader_dist_cjs_js_ref_3_oneOf_1_0_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_3_oneOf_1_1_node_modules_nuxt_components_dist_loader_js_ref_0_0_node_modules_vue_loader_lib_index_js_vue_loader_options_auxiliares_vue_vue_type_style_index_0_id_1ffcb334_prod_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(421);
 /* harmony import */ var _node_modules_css_loader_dist_cjs_js_ref_3_oneOf_1_0_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_3_oneOf_1_1_node_modules_nuxt_components_dist_loader_js_ref_0_0_node_modules_vue_loader_lib_index_js_vue_loader_options_auxiliares_vue_vue_type_style_index_0_id_1ffcb334_prod_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_css_loader_dist_cjs_js_ref_3_oneOf_1_0_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_3_oneOf_1_1_node_modules_nuxt_components_dist_loader_js_ref_0_0_node_modules_vue_loader_lib_index_js_vue_loader_options_auxiliares_vue_vue_type_style_index_0_id_1ffcb334_prod_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_0__);
 /* harmony reexport (unknown) */ for(var __WEBPACK_IMPORT_KEY__ in _node_modules_css_loader_dist_cjs_js_ref_3_oneOf_1_0_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_3_oneOf_1_1_node_modules_nuxt_components_dist_loader_js_ref_0_0_node_modules_vue_loader_lib_index_js_vue_loader_options_auxiliares_vue_vue_type_style_index_0_id_1ffcb334_prod_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_0__) if(["default"].indexOf(__WEBPACK_IMPORT_KEY__) < 0) (function(key) { __webpack_require__.d(__webpack_exports__, key, function() { return _node_modules_css_loader_dist_cjs_js_ref_3_oneOf_1_0_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_3_oneOf_1_1_node_modules_nuxt_components_dist_loader_js_ref_0_0_node_modules_vue_loader_lib_index_js_vue_loader_options_auxiliares_vue_vue_type_style_index_0_id_1ffcb334_prod_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_0__[key]; }) }(__WEBPACK_IMPORT_KEY__));
 
 
 /***/ }),
 
-/***/ 589:
+/***/ 587:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -59,7 +59,7 @@ var VImg = __webpack_require__(65);
 var VProgressLinear = __webpack_require__(75);
 
 // EXTERNAL MODULE: ./node_modules/vuetify/lib/components/VGrid/VSpacer.js
-var VSpacer = __webpack_require__(262);
+var VSpacer = __webpack_require__(260);
 
 // CONCATENATED MODULE: ./node_modules/vuetify-loader/lib/loader.js??ref--4!./node_modules/babel-loader/lib??ref--2-0!./node_modules/vue-loader/lib/loaders/templateLoader.js??ref--7!./node_modules/@nuxt/components/dist/loader.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./pages/miembro/curso-borrador/_uidCurso/auxiliares.vue?vue&type=template&id=1ffcb334&scoped=true&
 
@@ -102,7 +102,7 @@ var auxiliaresvue_type_template_id_1ffcb334_scoped_true_render = function render
     }) : _c(VImg["a" /* default */], {
       attrs: {
         "height": "200",
-        "src": __webpack_require__(361)
+        "src": __webpack_require__(359)
       }
     }), _vm._v(" "), _c(components_VCard["d" /* VCardTitle */], [_vm._v("\n                " + _vm._s(auxiliar.displayName ? auxiliar.displayName : 'Cargando...') + "\n            ")]), _vm._v(" "), _c(components_VCard["c" /* VCardText */], {
       staticStyle: {
@@ -237,7 +237,7 @@ var componentNormalizer = __webpack_require__(7);
 
 function injectStyles (context) {
   
-  var style0 = __webpack_require__(499)
+  var style0 = __webpack_require__(497)
 if (style0.__inject__) style0.__inject__(context)
 
 }
