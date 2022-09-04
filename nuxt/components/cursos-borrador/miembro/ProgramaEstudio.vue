@@ -62,9 +62,6 @@
                                     <v-icon dark>
                                         mdi-chevron-down
                                     </v-icon>
-                                    <!-- <span class="material-icons my-icon">
-                                        dehaze
-                                    </span> -->
                                 </v-btn>
 
                                 <v-btn
@@ -107,60 +104,8 @@
                                 </v-btn>
                             </v-card-actions>
 
-                            <!-- <div class="informacionUnidadTexto" style="color: #683bce;">
-                                <ul>
-                                    <li class="mb-1">
-                                        <b class="" v-if="datoUnidad.estadoDocumento === ''"> 
-                                            Sin cambios 
-                                        </b>
-
-                                        <b v-else-if="datoUnidad.estadoDocumento === 'nuevo'">
-                                            Nueva unidad
-                                        </b> 
-
-                                        <b v-else-if="datoUnidad.estadoDocumento === 'actualizado'">
-                                            Actualizado
-                                        </b> 
-                                    </li>
-
-                                    <li class="mb-1">
-                                        <b class="">Clases:</b> 
-                                        <p style="display: inline;" :style="datoUnidad.cantidadClases ? '' : 'color: red;'">
-                                            {{ datoUnidad.cantidadClases }} {{ datoUnidad.cantidadClases !== 1 ? 'clases. ' : 'clase. ' }}
-                                        </p>
-                                    </li>
-
-                                    <li class="mb-1">
-                                        <b class="">Duración:</b>
-                                        <p style="display: inline;" :style="datoUnidad.duracion ? '' : 'color: red;'">
-                                            {{ secondsToString(datoUnidad.duracion) }}
-                                        </p>
-                                    </li>
-
-                                    <li class="mb-1">
-                                        <u 
-                                            v-if="datoUnidad.mensajesError.length"
-                                            class="cantidadErroresUnidad informacionUnidadTexto"
-                                            style="color: red;"
-                                            v-on:click="mostrarErroresUnidad(datoUnidad.uid)"
-                                        > 
-                                            {{ datoUnidad.mensajesError.length }} {{ datoUnidad.mensajesError.length !== 1 ? 'errores.' : 'error.' }}
-                                        </u>
-                                        <p 
-                                            v-else
-                                            class="informacionUnidadTexto"
-                                            style="color: green;"
-                                        > 
-                                            0 errores. 
-                                        </p>
-                                    </li>
-                                </ul>
-                            </div> -->
-
                         </v-list-item-content> 
                         
-                        <!-- @mousedown="dragging = true" @mouseup="dragging = false" -->
-                        <!-- btn-action -->
                         <v-card-actions class="botones_accion_1">
                             <v-row align="center">
                                 <v-col
@@ -269,6 +214,9 @@
                                                 <v-icon class="mr-1" color="#ff1d89" v-if="datoClase.tipoClase === 'video'">
                                                     mdi-play-circle
                                                 </v-icon>
+                                                <v-icon class="mr-1" color="#ff1d89" v-else-if="datoClase.tipoClase === 'video-youtube'">
+                                                    mdi-youtube
+                                                </v-icon>
                                                 <v-icon class="mr-1" color="#ff1d89" v-else-if="datoClase.tipoClase === 'articulo'">
                                                     mdi-file-multiple
                                                 </v-icon>
@@ -314,6 +262,9 @@
                                                     <b>Tipo de clase:</b>
                                                     <v-icon color="#ff1d89" v-if="datoClase.tipoClase === 'video'">
                                                         mdi-play-circle
+                                                    </v-icon>
+                                                    <v-icon color="#ff1d89" v-if="datoClase.tipoClase === 'video-youtube'">
+                                                        mdi-youtube
                                                     </v-icon>
                                                     <v-icon color="#ff1d89" v-if="datoClase.tipoClase === 'articulo'">
                                                         mdi-file-multiple
@@ -448,6 +399,7 @@
                                                             
                                                             <div class="text-center">
                                                                 <v-btn
+                                                                    disabled
                                                                     circle
                                                                     color="success"
                                                                     class="mb-1"
@@ -483,6 +435,25 @@
                                                                     </v-icon>
                                                                     Articulo
                                                                 </v-btn>
+
+                                                                <v-btn
+                                                                    circle
+                                                                    color="success"
+                                                                    class="mb-1"
+                                                                    v-on:click="
+                                                                        dialogSubirContenido.value = true; 
+                                                                        dialogSubirContenido.tipo = 'video-youtube';
+                                                                        dialogSubirContenido.uidCurso = uidCursoProp;
+                                                                        dialogSubirContenido.uidUnidad = datoUnidad.uid;
+                                                                        dialogSubirContenido.uidClase = datoClase.uid;
+                                                                        dialogSubirContenido.contenidoViejo = datoClase.valorContenido;
+                                                                    "
+                                                                >
+                                                                    <v-icon left>
+                                                                        mdi-youtube
+                                                                    </v-icon>
+                                                                    Youtube
+                                                                </v-btn>
                                                             </div>
 
                                                             <v-divider class="mt-3 mb-6"></v-divider>
@@ -504,6 +475,55 @@
                                                                             
                                                                             <p style="font-size: 20px;">
                                                                                 {{ datoClase.datosContenido.fileName }}
+                                                                            </p>
+
+                                                                            <p style="font-size: 15px; margin-top: -7px;">
+                                                                                <b>Duración:</b> {{ secondsToString(datoClase.duracion) }}
+                                                                            </p>
+
+                                                                            <p style="font-size: 15px; margin-top: -7px;">
+                                                                                <b>Fecha subida:</b> {{ secondsToDateString( datoClase.datosContenido.fechaSubida.seconds ) }}
+                                                                            </p>
+
+                                                                            <u 
+                                                                                v-if="datoClase.datosContenido.mensajesError.length"
+                                                                                class="cantidadErroresUnidad informacionUnidadTexto"
+                                                                                style="color: red; margin-top: -7px;"
+                                                                                v-on:click="mostrarErroresClase(datoClase.datosContenido.mensajesError)"
+                                                                            > 
+                                                                                {{ datoClase.datosContenido.mensajesError.length }} {{ datoClase.datosContenido.mensajesError.length !== 1 ? 'errores.' : 'error.' }}
+                                                                            </u>
+                                                                            <p 
+                                                                                v-else
+                                                                                class="informacionUnidadTexto"
+                                                                                style="color: green; display: inline; margin-top: -7px;"
+                                                                            > 
+                                                                                0 errores. 
+                                                                            </p>
+                                                                            
+                                                                        </div>
+                                                                    </v-col>
+                                                                </v-row>
+                                                            </div>
+                                                            <div v-else-if="datoClase.datosContenido.tipoContenido === 'video-youtube'">
+                                                                <v-row no-gutters>
+                                                                    <v-col class="" cols="12" lg="7">
+                                                                        <div class="">
+                                                                            <div class="container" v-if="datoClase.valorContenido">
+                                                                                <VisualizadorYoutube :codigoVideoYoutube="datoClase.valorContenido.codigoVideoYoutube" />
+                                                                                <!-- {{datoClase.valorContenido}} -->
+                                                                            </div>
+                                                                            <div class="text-center" v-else>
+                                                                                Cargando..
+                                                                            </div>
+                                                                        </div>
+                                                                    </v-col>
+                                                                    <v-col cols="12" lg="5">
+                                                                        <div class="">
+                                                                            
+                                                                            <p style="font-size: 20px;">
+                                                                                <!-- {{ datoClase.datosContenido.fileName }} -->
+                                                                                Video de Youtube
                                                                             </p>
 
                                                                             <p style="font-size: 15px; margin-top: -7px;">
@@ -637,6 +657,23 @@
                 </v-btn>
             </div>
         </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
         <!-- Actividad de proceso -->
         <v-dialog
@@ -866,8 +903,6 @@
         >
 
             <v-card>
-                <!-- {{dialogSubirContenido}} -->
-
                 <v-card-title class="text-h5 primary white--text lighten-2">
                     {{
                         dialogSubirContenido.tipo === 'video' ? 
@@ -884,14 +919,26 @@
                         :uidClase="dialogSubirContenido.uidClase"
                         @sendVideo="subirVideoClase($event)"
                     />
+                    <GeneradorVideoYoutubeClase 
+                        v-else-if="dialogSubirContenido.tipo === 'video-youtube'"
+                        :uidCurso="uidCursoProp"
+                        :uidUnidad="dialogSubirContenido.uidUnidad"
+                        :uidClase="dialogSubirContenido.uidClase"
+                        :contenidoInicial="dialogSubirContenido.contenidoViejo"
+                        @sendYoutube="subirVideoYoutubeClase($event)"
+                    />
                     <GeneradorArticulo 
-                        v-else
+                        v-else-if="dialogSubirContenido.tipo === 'articulo'"
                         :uidCurso="uidCursoProp"
                         :uidUnidad="dialogSubirContenido.uidUnidad"
                         :uidClase="dialogSubirContenido.uidClase"
                         :contenidoInicial="dialogSubirContenido.contenidoViejo"
                         @sendArticulo="subirArticuloClase($event)"
                     />
+                    
+                    <div v-else-if="dialogSubirContenido.tipo === 'video-youtube'">
+                        {{dialogSubirContenido.contenidoViejo}}
+                    </div>
                 </div>
 
                 <v-divider></v-divider>
@@ -915,8 +962,10 @@
 <script>
 import VisualizadorArticulo from '@/components/cursos/VisualizadorArticulo'
 import VisualizadorVideo from '@/components/cursos/VisualizadorVideo'
+import VisualizadorYoutube from '@/components/cursos/VisualizadorYoutube'
 import GeneradorArticulo from '@/components/cursos-borrador/miembro/GeneradorArticulo'
 import GeneradorVideoClase from '@/components/cursos-borrador/miembro/GeneradorVideoClase'
+import GeneradorVideoYoutubeClase from '@/components/cursos-borrador/miembro/GeneradorVideoYoutubeClase'
 import draggable from 'vuedraggable'
 import { fb } from '@/plugins/firebase'
 
@@ -982,6 +1031,8 @@ export default {
         GeneradorVideoClase,
         VisualizadorArticulo,
         VisualizadorVideo,
+        VisualizadorYoutube,
+        GeneradorVideoYoutubeClase,
     },
     methods: {
         // General
@@ -1197,7 +1248,9 @@ export default {
                 const snapshotClases = await fb.firestore()
                 .collection('CursosBorrador').doc(this.uidCursoProp)
                 .collection('UnidadesBorrador').doc(uidUnidad)
-                .collection('ClasesBorrador').orderBy('ordenClase').get()
+                .collection('ClasesBorrador')
+                .orderBy('ordenClase')
+                .get()
 
                 for (let i = 0; i < snapshotClases.docs.length; i++) {
                     const doc = snapshotClases.docs[i]
@@ -1310,8 +1363,8 @@ export default {
                     // Primera vez que se ve el contenido o si hay un cambio de contenido
                     const noSeEstaProcesando = snapshot.data().estadoContenido === ''
 
-                    const contenidoArchivo = ['video', 'articulo']
-                    if ( noSeEstaProcesando && contenidoArchivo.includes(snapshot.data().tipoContenido) ) {
+                    // Si no se esta procesando un contenido y la clase tiene contenido en cloud storage
+                    if ( noSeEstaProcesando && snapshot.data().tipoContenido ) {
                         if ( !datosContenidoAnterior || !datosContenidoAnterior.tipoContenido || datosContenidoAnterior.fechaSubida.seconds !== snapshot.data().fechaSubida.seconds ) {
                             datosClase.valorContenido = ''
 
@@ -1344,7 +1397,7 @@ export default {
                                     console.log('error video', error)
                                 })
 
-                            } else {
+                            } else if (snapshot.data().tipoContenido === 'articulo') {
                                 this.$axios.$get(`/serviceCursoBorrador/miembro/contenidoClase/obtenerArticulo/${uidCurso}/${snapshot.id}`, config)
                                 .then(respuesta => {
                                     datosClase.valorContenido = respuesta.resultado
@@ -1353,6 +1406,11 @@ export default {
                                     console.log('error articulo', error)
                                 })
 
+                            } else if (snapshot.data().tipoContenido === 'video-youtube') {
+                                datosClase.valorContenido = {
+                                    duracion: snapshot.data().duracion,
+                                    codigoVideoYoutube: snapshot.data().codigoVideoYoutube,
+                                }
                             }
                         }
 
@@ -1746,6 +1804,50 @@ export default {
                 }
 
                 const respuesta = await this.$axios.$put(`/serviceCursoBorrador/miembro/contenidoClase/actualizarArticulo/${uidCurso}/${uidUnidad}/${uidClase}`, body, config)
+                
+            } catch (error) {
+                console.log('error', error)
+                const accion = await this.$store.dispatch('modules/sistema/errorHandler', error)
+
+                this.datosUnidades[index].datosClases[index2].auxiliares.estadoContenido = ''
+                this.datosUnidades[index].datosClases[index2].auxiliares.porcentajeSubida = 0
+                const indexClase = this.datosUnidades[index].auxiliares.procesosContenidoPorClase.findIndex(element => element === uidClase)
+                if (indexClase !== -1) this.datosUnidades[index].auxiliares.procesosContenidoPorClase.splice(indexClase, 1)
+
+            } finally {
+
+            }
+        },
+        async subirVideoYoutubeClase (data) {
+            console.log('data', data)
+            const { uidCurso, uidUnidad, uidClase, duracion, codigoVideoYoutube } = data
+
+            // Quitar dialog de subida archivo
+            this.dialogSubirContenido.value = false
+
+            // Cambiar estado de archivo a 'subiendo'
+            const index = this.datosUnidades.findIndex(unidad => unidad.uid === data.uidUnidad)
+            const index2 = this.datosUnidades[index].datosClases.findIndex(datoClase => datoClase.uid === data.uidClase)
+            
+            this.datosUnidades[index].datosClases[index2].auxiliares.estadoContenido = 'subiendo'
+            this.datosUnidades[index].datosClases[index2].auxiliares.porcentajeSubida = 0
+            this.datosUnidades[index].auxiliares.procesosContenidoPorClase.push(uidClase)
+
+            try {
+                let token = this.$firebase.auth().currentUser
+                token = token ? await token.getIdToken() : ''
+                await this.$store.dispatch('modules/usuarios/setTOKEN', token)
+
+                let body = { duracion, codigoVideoYoutube }
+
+                let config = {
+                    headers: {
+                        'Content-Type': 'application/json',
+                        Authorization: `Bearer ${token}`
+                    }
+                }
+
+                const respuesta = await this.$axios.$put(`/serviceCursoBorrador/miembro/contenidoClase/actualizarVideoYoutube/${uidCurso}/${uidUnidad}/${uidClase}`, body, config)
                 
             } catch (error) {
                 console.log('error', error)

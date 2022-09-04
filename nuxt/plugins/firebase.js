@@ -30,6 +30,7 @@ export default async ({ env, store, redirect }, inject) => {
   if (process.client) {
 
     firebase.auth().onAuthStateChanged(async (user) => {
+      console.log('user', user)
 
       if (user) {
         store.commit('modules/sistema/setLoading', true)

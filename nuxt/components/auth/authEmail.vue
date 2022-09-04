@@ -208,7 +208,7 @@ export default {
             point: 0,
           })
 
-          this.$router.push(`/bienvenido-a-classfii/${nombreUsuario}`)
+          this.$router.push(`/bienvenido-a-jekuaapy/${nombreUsuario}`)
         } else {
 
           await this.$store.dispatch('modules/usuarios/setDatosUsuarioPorUID', result.user.uid)
@@ -256,7 +256,7 @@ export default {
             point: 0,
           })
 
-          this.$router.push(`/bienvenido-a-classfii/${nombreUsuario}`)
+          this.$router.push(`/bienvenido-a-jekuaapy/${nombreUsuario}`)
         } else {
 
           await this.$store.dispatch('modules/usuarios/setDatosUsuarioPorUID', result.user.uid)

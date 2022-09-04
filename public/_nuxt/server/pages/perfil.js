@@ -1075,7 +1075,7 @@ var VProgressCircular = __webpack_require__(71);
 // EXTERNAL MODULE: ./node_modules/vuetify/lib/components/VGrid/VRow.js
 var VRow = __webpack_require__(268);
 
-// CONCATENATED MODULE: ./node_modules/vuetify-loader/lib/loader.js??ref--4!./node_modules/babel-loader/lib??ref--2-0!./node_modules/vue-loader/lib/loaders/templateLoader.js??ref--7!./node_modules/@nuxt/components/dist/loader.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./pages/perfil.vue?vue&type=template&id=2307f777&scoped=true&
+// CONCATENATED MODULE: ./node_modules/vuetify-loader/lib/loader.js??ref--4!./node_modules/babel-loader/lib??ref--2-0!./node_modules/vue-loader/lib/loaders/templateLoader.js??ref--7!./node_modules/@nuxt/components/dist/loader.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./pages/perfil.vue?vue&type=template&id=7ab01112&scoped=true&
 
 
 
@@ -1084,7 +1084,7 @@ var VRow = __webpack_require__(268);
 
 
 
-var perfilvue_type_template_id_2307f777_scoped_true_render = function render() {
+var perfilvue_type_template_id_7ab01112_scoped_true_render = function render() {
   var _vm = this,
       _c = _vm._self._c;
 
@@ -1108,7 +1108,7 @@ var perfilvue_type_template_id_2307f777_scoped_true_render = function render() {
       "to": "/perfil/seguridad",
       "exact": ""
     }
-  }, [_c('span', [_vm._v("Seguridad")]), _vm._v(" "), _c(VIcon["a" /* default */], [_vm._v("mdi-key")])], 1)], 1), _vm._ssrNode(" "), _vm._ssrNode("<div style=\"margin-bottom: -15px;\" data-v-2307f777>", "</div>", [_vm.$store.state.modules.usuarios.emailVerificado ? _c(VAlert["a" /* default */], {
+  }, [_c('span', [_vm._v("Seguridad")]), _vm._v(" "), _c(VIcon["a" /* default */], [_vm._v("mdi-key")])], 1)], 1), _vm._ssrNode(" "), _vm._ssrNode("<div style=\"margin-bottom: -15px;\" data-v-7ab01112>", "</div>", [_vm.$store.state.modules.usuarios.emailVerificado ? _c(VAlert["a" /* default */], {
     attrs: {
       "dense": "",
       "text": "",
@@ -1136,9 +1136,9 @@ var perfilvue_type_template_id_2307f777_scoped_true_render = function render() {
     }
   }, [_c('a', {
     attrs: {
-      "href": "/cuentas-classfii-sin-verificar"
+      "href": "/cuentas-jekuaapy-sin-verificar"
     }
-  }, [_vm._v("Más información")]), _vm._v(" sobre cuentas de Classfii sin verificar.\n                    ")])]), _vm._v(" "), _c(VCol["a" /* default */], {
+  }, [_vm._v("Más información")]), _vm._v(" sobre cuentas de Jekuaapy sin verificar.\n                    ")])]), _vm._v(" "), _c(VCol["a" /* default */], {
     staticClass: "shrink"
   }, [_vm.estadoCorreoVerificacion !== 'reenviando' ? _c(VBtn["a" /* default */], {
     attrs: {
@@ -1160,12 +1160,12 @@ var perfilvue_type_template_id_2307f777_scoped_true_render = function render() {
       "indeterminate": "",
       "size": 20
     }
-  })], 1)], 1)], 1)], 1)], 1), _vm._ssrNode(" "), _vm._ssrNode("<div class=\"container\" data-v-2307f777>", "</div>", [_c('nuxt-child')], 1)], 2);
+  })], 1)], 1)], 1)], 1)], 1), _vm._ssrNode(" "), _vm._ssrNode("<div class=\"container\" data-v-7ab01112>", "</div>", [_c('nuxt-child')], 1)], 2);
 };
 
 var staticRenderFns = [];
 
-// CONCATENATED MODULE: ./pages/perfil.vue?vue&type=template&id=2307f777&scoped=true&
+// CONCATENATED MODULE: ./pages/perfil.vue?vue&type=template&id=7ab01112&scoped=true&
 
 // CONCATENATED MODULE: ./node_modules/babel-loader/lib??ref--2-0!./node_modules/@nuxt/components/dist/loader.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./pages/perfil.vue?vue&type=script&lang=js&
 /* harmony default export */ var perfilvue_type_script_lang_js_ = ({
@@ -1227,11 +1227,11 @@ function injectStyles (context) {
 
 var component = Object(componentNormalizer["a" /* default */])(
   pages_perfilvue_type_script_lang_js_,
-  perfilvue_type_template_id_2307f777_scoped_true_render,
+  perfilvue_type_template_id_7ab01112_scoped_true_render,
   staticRenderFns,
   false,
   injectStyles,
-  "2307f777",
+  "7ab01112",
   "144eadfd"
   
 )

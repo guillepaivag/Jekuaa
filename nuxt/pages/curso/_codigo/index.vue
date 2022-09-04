@@ -38,7 +38,7 @@
                                         style="font-size: 17px;"
                                         small
                                     >
-                                        {{ curso.datosPrecio.precio }} FP
+                                        {{ curso.datosPrecio.precio }} JP
                                     </v-chip>
                                 </div>
 
@@ -52,13 +52,13 @@
                                         style="font-size: 17px;"
                                         small
                                     >
-                                        {{ curso.datosPrecio.descuento.precio }} FP
+                                        {{ curso.datosPrecio.descuento.precio }} JP
                                     </v-chip>
                                     <b 
                                         class="ml-1 text-decoration-line-through"
                                         style="color: #ffffff; font-size: 15px;"
                                     >
-                                        {{ curso.datosPrecio.precio }} FP
+                                        {{ curso.datosPrecio.precio }} JP
                                     </b>
                                 </div>
                             </div>
@@ -254,7 +254,7 @@
                             outlined
                             style="font-size: 20px;"
                         >
-                            {{ curso.datosPrecio.precio }} FP
+                            {{ curso.datosPrecio.precio }} JP
                         </v-chip>
 
                         <!-- Pago comun -->
@@ -265,7 +265,7 @@
                             outlined
                             style="font-size: 20px;"
                         >
-                            {{ curso.datosPrecio.precio }} FP
+                            {{ curso.datosPrecio.precio }} JP
                         </v-chip>
 
                         <!-- Pago con descuento -->
@@ -276,7 +276,7 @@
                             outlined
                             style="font-size: 20px;"
                         >
-                            {{ curso.datosPrecio.descuento.precio }} FP
+                            {{ curso.datosPrecio.descuento.precio }} JP
                         </v-chip>
 
                         <!-- Pago con descuento -->
@@ -285,7 +285,7 @@
                             class="ml-1 text-decoration-line-through"
                             style="color: #8E8E8E; font-size: 15px;"
                         >
-                            {{ curso.datosPrecio.precio }} FP
+                            {{ curso.datosPrecio.precio }} JP
                         </b>
 
                     </div>
@@ -387,10 +387,10 @@
                 </v-card-title>
 
                 <v-card-text>
-                    <p>Para dar <b>me gusta</b> a este blog de Classfii debes registrarte o iniciar sesión.</p>
+                    <p>Para dar <b>me gusta</b> a este blog de Jekuaapy debes registrarte o iniciar sesión.</p>
                     <v-divider class="mb-6"></v-divider>
-                    <p>Si tienes una cuenta en Classfii puedes iniciar sesión <nuxt-link to="/autenticacion/inicioSesion">aquí</nuxt-link>.</p>
-                    <p>En caso que no tengas una cuenta en Classfii puedes registrarte <nuxt-link to="/autenticacion/registro">aquí</nuxt-link></p>
+                    <p>Si tienes una cuenta en Jekuaapy puedes iniciar sesión <nuxt-link to="/autenticacion/inicioSesion">aquí</nuxt-link>.</p>
+                    <p>En caso que no tengas una cuenta en Jekuaapy puedes registrarte <nuxt-link to="/autenticacion/registro">aquí</nuxt-link></p>
                 </v-card-text>
 
                 <v-divider></v-divider>

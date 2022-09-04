@@ -22,6 +22,8 @@ const {
     agregarContenidoClaseArticuloBorrador, 
     obtenerUrlVideoClaseBorrador,
     obtenerArticuloClaseBorrador,
+    agregarContenidoClaseVideoYoutubeBorrador,
+    obtenerVideoYoutubeClaseBorrador,
 } = require('../../controllers/miembro/contenidoClase')
 
 
@@ -34,6 +36,17 @@ router.put('/actualizarArticulo/:uidCurso/:uidUnidad/:uidClase',
     errorSiElCursoSeEstaPublicando,
     construirElContenidoClaseArticulo,
     agregarContenidoClaseArticuloBorrador)
+
+
+
+
+router.put('/actualizarVideoYoutube/:uidCurso/:uidUnidad/:uidClase', 
+    estaAutenticado,
+    esMiembro,
+    esMiembroInstructor_InstructorAuxiliar,
+    esAdministradorDelCursoBorrador, 
+    errorSiElCursoSeEstaPublicando,
+    agregarContenidoClaseVideoYoutubeBorrador)
 
 
 
@@ -55,5 +68,14 @@ router.get('/obtenerArticulo/:uidCurso/:uidClase',
     esAdministradorDelCursoBorrador, 
     obtenerArticuloClaseBorrador)
 
+
+
+
+router.get('/obtenerVideoYoutube/:uidCurso/:uidClase', 
+    estaAutenticado,
+    esMiembro,
+    esMiembroInstructor_InstructorAuxiliar,
+    esAdministradorDelCursoBorrador, 
+    obtenerVideoYoutubeClaseBorrador)
 
 module.exports = router

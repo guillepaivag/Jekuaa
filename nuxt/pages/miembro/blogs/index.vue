@@ -32,7 +32,7 @@
             >
                 <v-row align="center">
                     <v-col class="grow">
-                        Crear un blog en Classfii
+                        Crear un blog en Jekuaapy
                     </v-col>
                     <v-col class="shrink">
                         <v-btn

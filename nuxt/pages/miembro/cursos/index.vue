@@ -33,7 +33,7 @@
             >
                 <v-row align="center">
                     <v-col class="grow">
-                        Crear un curso en Classfii
+                        Crear un curso en Jekuaapy
                     </v-col>
                     <v-col class="shrink">
                         <v-btn

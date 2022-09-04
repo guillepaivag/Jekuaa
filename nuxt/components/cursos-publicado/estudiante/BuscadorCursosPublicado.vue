@@ -227,7 +227,7 @@
                                     style="font-size: 17px;"
                                     small
                                   >
-                                    {{ item.datosPrecio.precio }} FP
+                                    {{ item.datosPrecio.precio }} JP
                                   </v-chip>
 
                                   <!-- Pago con descuento -->
@@ -239,7 +239,7 @@
                                     style="font-size: 17px;"
                                     small
                                   >
-                                    {{ item.datosPrecio.descuento.precio }} FP
+                                    {{ item.datosPrecio.descuento.precio }} JP
                                   </v-chip>
 
                                   <!-- Pago con descuento -->
@@ -248,7 +248,7 @@
                                     class="ml-1 text-decoration-line-through"
                                     style="color: #8E8E8E; font-size: 15px;"
                                   >
-                                    {{ item.datosPrecio.precio }} FP
+                                    {{ item.datosPrecio.precio }} JP
                                   </b>
                                 </div>
 

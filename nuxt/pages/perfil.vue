@@ -42,7 +42,7 @@
                     <v-col class="grow">
                         <p style="margin-bottom: 5px;">Falta verificar el correo: <b>{{ $store.state.modules.usuarios.correo }}</b></p>
                         <p style="margin-bottom: 0;">
-                            <a href="/cuentas-classfii-sin-verificar">Más información</a> sobre cuentas de Classfii sin verificar.
+                            <a href="/cuentas-jekuaapy-sin-verificar">Más información</a> sobre cuentas de Jekuaapy sin verificar.
                         </p>
                     </v-col>
                     <v-col class="shrink">

@@ -10,6 +10,9 @@ const ContenidoArticuloBorrador = require('../../../../models/Cursos/contenidoCl
 const ContenidoArticuloPublicado = require('../../../../models/Cursos/contenidoClase/ContenidoArticuloPublicado')
 const manejadorErrores = require('../../../../helpers/manejoErrores')
 const config = require("../../../../../config")
+const ContenidoYoutubeBorrador = require('../../../../models/Cursos/contenidoClase/contenidoYoutube/ContenidoYoutubeBorrador')
+const { milliseconds_a_timestamp } = require('../../../../utils/timestamp')
+const db = require('../../../../../db')
 
 const controller = {}
 
@@ -65,6 +68,90 @@ controller.agregarContenidoClaseArticuloBorrador = async (req = request, res = r
         return res.status( respuesta.estado ).json( respuesta.getRespuesta() )
     }
 }
+
+
+
+controller.agregarContenidoClaseVideoYoutubeBorrador = async (req = request, res = response) => {
+    try {
+        const { datos, body, params } = req
+        const { uidSolicitante, datosAuthSolicitante } = datos
+        const { uidCurso, uidUnidad, uidClase } = params
+        const { duracion, codigoVideoYoutube } = body
+
+        const respuesta = new Respuesta()
+        let estado = 'exito'
+
+        // Obtener documento de contenido de clase borrador
+        const result = await ContenidoClase.obtenerDocumentoBorrador(uidCurso, uidClase)
+
+        if ( result.contenidoClase.estadoContenido === 'procesando' ) 
+            throw new Error('Ya se esta procesando un archivo.')
+
+        // Actualizar como procesando el estadoContenido
+        await ContenidoClase.actualizarDocumentoBorrador(uidCurso, uidClase, {
+            estadoContenido: 'procesando'
+        })
+
+        if (result.tipoContenido === 'video' || result.tipoContenido === 'articulo') {
+            // Eliminar el archivo video||articulo de borrador
+            const fileNameAux = result.contenidoClase.tipoContenido === 'video' ?
+            `video.${result.contenidoClase.fileExtension}` : 'articulo.md'
+
+            const rutaModo = config.environment.mode === 'production' ? 'prod' : 'dev'
+            const bucketNameContenidoBorrador = rutaModo === 'prod' ? 'prod-j-cursos-contenido-b' : 'dev-j-cursos-contenido-b'
+
+            await ContenidoClase.eliminarContenidoArchivo({
+                bucketName: bucketNameContenidoBorrador,
+                rutaPrefix: `${uidCurso}/${uidClase}/${fileNameAux}`
+            })
+            
+        }
+
+        // Actualizar documento contenido clase
+        const documentoContenidoClase = new ContenidoYoutubeBorrador({
+            uid: uidClase,
+            tipoContenido: 'video-youtube',
+
+            duracion: duracion,
+            codigoVideoYoutube: codigoVideoYoutube,
+            fechaSubida: milliseconds_a_timestamp( Date.now() ),
+
+            mensajesError: [],
+            contieneErrores: false,
+            estadoDocumento: result.contenidoClase.estadoDocumento === 'nuevo' ? 'nuevo' : 'actualizado',
+            estadoContenido: '',
+        }).getContenidoYoutubeBorrador()
+        await ContenidoClase.agregarDocumentoBorrador(uidCurso, documentoContenidoClase)
+        
+        // Actualizar documento clase
+        const documentoClase = {
+            duracion: duracion,
+            tipoClase: 'video-youtube',
+        }
+        const snapshot = await db.collectionGroup('ClasesBorrador').where('uid', '==', uidClase).get()
+        const docs = snapshot.docs
+        for (let i = 0; i < docs.length; i++) {
+            const doc = docs[i]
+            await doc.ref.update(documentoClase)
+        }
+        
+        // Retornar respuesta
+        respuesta.setRespuesta({
+            estado: 200,
+            mensaje: 'exito',
+            resultado: null
+        })
+        
+        return res.status( respuesta.estado ).json( respuesta.getRespuesta() )
+
+    } catch (error) {
+        console.log('Error - agregarContenidoClaseVideoYoutubeBorrador: ', error)
+
+        const respuesta = manejadorErrores( error )
+        return res.status( respuesta.estado ).json( respuesta.getRespuesta() )
+    }
+}
+
 
 
 controller.obtenerUrlVideoClaseBorrador = async (req = request, res = response) => {
@@ -152,6 +239,42 @@ controller.obtenerArticuloClaseBorrador = async (req = request, res = response) 
     }
 
 }
+
+
+
+controller.obtenerVideoYoutubeClaseBorrador = async (req = request, res = response) => {
+    
+    try {
+        const { datos, body, params } = req
+        const { uidSolicitante, datosAuthSolicitante } = datos
+        const { uidCurso, uidClase } = params
+
+        const respuesta = new Respuesta()
+
+        const result = await ContenidoClase.obtenerDocumentoBorrador(uidCurso, uidClase)
+        const contenidoYoutubeBorrador = new ContenidoYoutubeBorrador(result.contenidoClase)
+
+        // Retornar respuesta
+        respuesta.setRespuesta({
+            estado: 200,
+            mensaje: 'exito',
+            resultado: {
+                codigoVideoYoutube: contenidoYoutubeBorrador.codigoVideoYoutube,
+                duracion: contenidoYoutubeBorrador.duracion
+            }
+        })
+        
+        return res.status( respuesta.estado ).json( respuesta.getRespuesta() )
+
+    } catch (error) {
+        console.log('Error - obtenerVideoYoutubeClaseBorrador: ', error)
+
+        const respuesta = manejadorErrores( error )
+        return res.status( respuesta.estado ).json( respuesta.getRespuesta() )
+    }
+
+}
+
 
 
 module.exports = controller

@@ -67,7 +67,7 @@
                                     :height="100"
                                 >
                                     <v-card-title>
-                                        ¡Conoce el mundo de Classfii!
+                                        ¡Conoce el mundo de Jekuaapy!
                                     </v-card-title>
                                 </v-img>
 

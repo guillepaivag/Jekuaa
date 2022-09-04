@@ -144,7 +144,7 @@
           <v-img
             contain
             max-width="125"
-            :src="require(`~/assets/img/logo_classfii.png`)"
+            :src="require(`~/assets/img/logo1.png`)"
           />
         </nuxt-link>
       </div>
@@ -193,7 +193,7 @@
         small
       >
         <span class="">
-          {{ $store.state.modules.usuarios.point }} FP
+          {{ $store.state.modules.usuarios.point }} JP
         </span>
       </v-chip>
 

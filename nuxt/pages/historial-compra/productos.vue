@@ -171,7 +171,7 @@
                                 <h2>Costo total</h2>
                                 <v-divider></v-divider>
                                 <p v-if="dataDialog.tipoPedido === 'productos'" style="display: inline;">
-                                    {{ dataDialog.costoTotal }} FP
+                                    {{ dataDialog.costoTotal }} JP
                                 </p>
                                 <p v-else style="display: inline;">
                                     ${{ dataDialog.costoTotal }}
@@ -210,10 +210,10 @@
                                 
                                 <div v-if="dataDialog.tipoPedido === 'productos'">
                                     <p v-if="detallesItem.detalles.porcentajeDescuento" class="text--primary" style="display: inline;">
-                                        {{ detallesItem.precioTotal }} FP || {{ detallesItem.detalles.precioReal }} FP
+                                        {{ detallesItem.precioTotal }} JP || {{ detallesItem.detalles.precioReal }} JP
                                     </p>
                                     <p v-else class="text--primary" style="display: inline;">
-                                        Costo: {{ detallesItem.precioTotal }} FP
+                                        Costo: {{ detallesItem.precioTotal }} JP
                                     </p>
                                 </div>
 
@@ -260,7 +260,7 @@
                                     style="height: 100%;"
                                 >
                                     <v-card-text class="pb-0">
-                                        <!-- Solo tendras acceso al contenido gratis, tu progreso se mantiene y te devolvemos tus FP. -->
+                                        <!-- Solo tendras acceso al contenido gratis, tu progreso se mantiene y te devolvemos tus JP. -->
                                         <nuxt-link to="">
                                             <p class="text-h6 text--primary">
                                                 ¿Qué ocurre si reembolso este producto?
@@ -334,7 +334,7 @@ export default {
             return d.toLocaleString()
         },
         getFormaDePago(formaDePago) {
-            if (formaDePago === 'points') return 'FP'
+            if (formaDePago === 'points') return 'JP'
             else return ''
         },
         generateLinkProducto (tipoPedido, tipoItem, detallesItem) {

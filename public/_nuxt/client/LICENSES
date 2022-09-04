@@ -37,9 +37,6 @@
  */
 
 
-/*! js-cookie v3.0.1 | MIT */
-
-
 /*! showdown v 1.9.1 - 02-11-2019 */
 
 
@@ -179,10 +176,10 @@ and limitations under the License.
  */
 
 
+/*! js-cookie v3.0.1 | MIT */
+
+
 /*! algoliasearch-lite.umd.js | 4.14.2 | © Algolia, inc. | https://github.com/algolia/algoliasearch-client-javascript */
-
-
-/*! recommend.umd.js | 4.14.2 | © Algolia, inc. | https://github.com/algolia/algoliasearch-client-javascript */
 
 
 /*! recommend.umd.js | 4.14.2 | © Algolia, inc. | https://github.com/algolia/algoliasearch-client-javascript */

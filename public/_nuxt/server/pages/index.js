@@ -1,4 +1,4 @@
-exports.ids = [51];
+exports.ids = [49];
 exports.modules = {
 
 /***/ 266:
@@ -970,9 +970,9 @@ module.exports = __webpack_require__.p + "img/presentacion3.705d370.jpg";
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _node_modules_css_loader_dist_cjs_js_ref_3_oneOf_1_0_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_3_oneOf_1_1_node_modules_nuxt_components_dist_loader_js_ref_0_0_node_modules_vue_loader_lib_index_js_vue_loader_options_index_vue_vue_type_style_index_0_id_36eecd4a_prod_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(447);
-/* harmony import */ var _node_modules_css_loader_dist_cjs_js_ref_3_oneOf_1_0_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_3_oneOf_1_1_node_modules_nuxt_components_dist_loader_js_ref_0_0_node_modules_vue_loader_lib_index_js_vue_loader_options_index_vue_vue_type_style_index_0_id_36eecd4a_prod_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_css_loader_dist_cjs_js_ref_3_oneOf_1_0_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_3_oneOf_1_1_node_modules_nuxt_components_dist_loader_js_ref_0_0_node_modules_vue_loader_lib_index_js_vue_loader_options_index_vue_vue_type_style_index_0_id_36eecd4a_prod_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_0__);
-/* harmony reexport (unknown) */ for(var __WEBPACK_IMPORT_KEY__ in _node_modules_css_loader_dist_cjs_js_ref_3_oneOf_1_0_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_3_oneOf_1_1_node_modules_nuxt_components_dist_loader_js_ref_0_0_node_modules_vue_loader_lib_index_js_vue_loader_options_index_vue_vue_type_style_index_0_id_36eecd4a_prod_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_0__) if(["default"].indexOf(__WEBPACK_IMPORT_KEY__) < 0) (function(key) { __webpack_require__.d(__webpack_exports__, key, function() { return _node_modules_css_loader_dist_cjs_js_ref_3_oneOf_1_0_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_3_oneOf_1_1_node_modules_nuxt_components_dist_loader_js_ref_0_0_node_modules_vue_loader_lib_index_js_vue_loader_options_index_vue_vue_type_style_index_0_id_36eecd4a_prod_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_0__[key]; }) }(__WEBPACK_IMPORT_KEY__));
+/* harmony import */ var _node_modules_css_loader_dist_cjs_js_ref_3_oneOf_1_0_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_3_oneOf_1_1_node_modules_nuxt_components_dist_loader_js_ref_0_0_node_modules_vue_loader_lib_index_js_vue_loader_options_index_vue_vue_type_style_index_0_id_4410a68b_prod_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(447);
+/* harmony import */ var _node_modules_css_loader_dist_cjs_js_ref_3_oneOf_1_0_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_3_oneOf_1_1_node_modules_nuxt_components_dist_loader_js_ref_0_0_node_modules_vue_loader_lib_index_js_vue_loader_options_index_vue_vue_type_style_index_0_id_4410a68b_prod_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_css_loader_dist_cjs_js_ref_3_oneOf_1_0_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_3_oneOf_1_1_node_modules_nuxt_components_dist_loader_js_ref_0_0_node_modules_vue_loader_lib_index_js_vue_loader_options_index_vue_vue_type_style_index_0_id_4410a68b_prod_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_0__);
+/* harmony reexport (unknown) */ for(var __WEBPACK_IMPORT_KEY__ in _node_modules_css_loader_dist_cjs_js_ref_3_oneOf_1_0_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_3_oneOf_1_1_node_modules_nuxt_components_dist_loader_js_ref_0_0_node_modules_vue_loader_lib_index_js_vue_loader_options_index_vue_vue_type_style_index_0_id_4410a68b_prod_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_0__) if(["default"].indexOf(__WEBPACK_IMPORT_KEY__) < 0) (function(key) { __webpack_require__.d(__webpack_exports__, key, function() { return _node_modules_css_loader_dist_cjs_js_ref_3_oneOf_1_0_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_3_oneOf_1_1_node_modules_nuxt_components_dist_loader_js_ref_0_0_node_modules_vue_loader_lib_index_js_vue_loader_options_index_vue_vue_type_style_index_0_id_4410a68b_prod_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_0__[key]; }) }(__WEBPACK_IMPORT_KEY__));
 
 
 /***/ }),
@@ -1014,7 +1014,7 @@ var VImg = __webpack_require__(65);
 // EXTERNAL MODULE: ./node_modules/vuetify/lib/components/VGrid/VRow.js
 var VRow = __webpack_require__(268);
 
-// CONCATENATED MODULE: ./node_modules/vuetify-loader/lib/loader.js??ref--4!./node_modules/babel-loader/lib??ref--2-0!./node_modules/vue-loader/lib/loaders/templateLoader.js??ref--7!./node_modules/@nuxt/components/dist/loader.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./pages/index.vue?vue&type=template&id=36eecd4a&scoped=true&
+// CONCATENATED MODULE: ./node_modules/vuetify-loader/lib/loader.js??ref--4!./node_modules/babel-loader/lib??ref--2-0!./node_modules/vue-loader/lib/loaders/templateLoader.js??ref--7!./node_modules/@nuxt/components/dist/loader.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./pages/index.vue?vue&type=template&id=4410a68b&scoped=true&
 
 
 
@@ -1026,11 +1026,11 @@ var VRow = __webpack_require__(268);
 
 
 
-var lib_vue_loader_options_pagesvue_type_template_id_36eecd4a_scoped_true_render = function render() {
+var lib_vue_loader_options_pagesvue_type_template_id_4410a68b_scoped_true_render = function render() {
   var _vm = this,
       _c = _vm._self._c;
 
-  return _c('div', {}, [_vm._ssrNode("<section class=\"container presentacion\" data-v-36eecd4a>", "</section>", [_vm._ssrNode("<div data-v-36eecd4a>", "</div>", [_vm._ssrNode("<div class=\"mt-5\" data-v-36eecd4a>", "</div>", [_vm._ssrNode("<h1 class=\"titulo\" data-v-36eecd4a>¡Bienvenido a <span style=\"color: #683bce;\" data-v-36eecd4a>Class</span><span style=\"color: #ff1d89;\" data-v-36eecd4a>fii</span>!</h1> "), _c(VDivider["a" /* default */]), _vm._ssrNode(" <p class=\"mt-5 descripcion\" data-v-36eecd4a>\n                    Classfii, una plataforma educativa para que \n                    aprendas sobre los temas y contenidos que te gusten, \n                    de manera rápida y divertida!\n                </p> "), _vm._ssrNode("<div class=\"mt-5\" data-v-36eecd4a>", "</div>", [_c(VBtn["a" /* default */], {
+  return _c('div', {}, [_vm._ssrNode("<section class=\"container presentacion\" data-v-4410a68b>", "</section>", [_vm._ssrNode("<div data-v-4410a68b>", "</div>", [_vm._ssrNode("<div class=\"mt-5\" data-v-4410a68b>", "</div>", [_vm._ssrNode("<h1 class=\"titulo\" data-v-4410a68b>¡Bienvenido a <span style=\"color: #683bce;\" data-v-4410a68b>Jekuaa</span><span style=\"color: #ff1d89;\" data-v-4410a68b>py</span>!</h1> "), _c(VDivider["a" /* default */]), _vm._ssrNode(" <p class=\"mt-5 descripcion\" data-v-4410a68b>\n                    Jekuaapy, una plataforma educativa para que \n                    aprendas sobre los temas y contenidos que te gusten, \n                    de manera rápida y divertida!\n                </p> "), _vm._ssrNode("<div class=\"mt-5\" data-v-4410a68b>", "</div>", [_c(VBtn["a" /* default */], {
     attrs: {
       "color": "#ff1d89",
       "outlined": "",
@@ -1041,7 +1041,7 @@ var lib_vue_loader_options_pagesvue_type_template_id_36eecd4a_scoped_true_render
       "left": "",
       "dark": ""
     }
-  }, [_vm._v("\n                            mdi-alpha-j-box\n                        ")]), _vm._v("\n                        ¡Descubre más contenido!\n                    ")], 1)], 1)], 2)])]), _vm._ssrNode(" "), _vm._ssrNode("<div class=\"container contenedor-descripciones\" data-v-36eecd4a>", "</div>", [_c(VRow["a" /* default */], [_c(VCol["a" /* default */], {
+  }, [_vm._v("\n                            mdi-alpha-j-box\n                        ")]), _vm._v("\n                        ¡Descubre más contenido!\n                    ")], 1)], 1)], 2)])]), _vm._ssrNode(" "), _vm._ssrNode("<div class=\"container contenedor-descripciones\" data-v-4410a68b>", "</div>", [_c(VRow["a" /* default */], [_c(VCol["a" /* default */], {
     attrs: {
       "cols": "12",
       "md": "7"
@@ -1059,9 +1059,9 @@ var lib_vue_loader_options_pagesvue_type_template_id_36eecd4a_scoped_true_render
     }
   }, [_c('h3', {
     staticClass: "font-weight-bold contenedor-descripcion-titulo"
-  }, [_vm._v("\n                    ¡Classfii cursos!\n                ")]), _vm._v(" "), _c('p', {
+  }, [_vm._v("\n                    ¡Jekuaapy cursos!\n                ")]), _vm._v(" "), _c('p', {
     staticClass: "font-weight contenedor-descripcion-mensaje"
-  }, [_vm._v("\n                    ¡Puedes aprender sobre varios temas como programación, matemática, marketing y más en Classfii cursos!\n                ")])])], 1)], 1), _vm._ssrNode(" "), _c(VDivider["a" /* default */]), _vm._ssrNode(" "), _vm._ssrNode("<div class=\"container contenedor-descripciones\" style=\"padding-bottom: 50px;\" data-v-36eecd4a>", "</div>", [_c(VRow["a" /* default */], [_c(VCol["a" /* default */], {
+  }, [_vm._v("\n                    ¡Puedes aprender sobre varios temas como programación, matemática, marketing y más en Jekuaapy cursos!\n                ")])])], 1)], 1), _vm._ssrNode(" "), _c(VDivider["a" /* default */]), _vm._ssrNode(" "), _vm._ssrNode("<div class=\"container contenedor-descripciones\" style=\"padding-bottom: 50px;\" data-v-4410a68b>", "</div>", [_c(VRow["a" /* default */], [_c(VCol["a" /* default */], {
     staticClass: "contenedor-descripcion",
     attrs: {
       "cols": "12",
@@ -1071,7 +1071,7 @@ var lib_vue_loader_options_pagesvue_type_template_id_36eecd4a_scoped_true_render
     staticClass: "font-weight-bold contenedor-descripcion-titulo"
   }, [_vm._v("\n                    ¡Diversos temas!\n                ")]), _vm._v(" "), _c('p', {
     staticClass: "font-weight contenedor-descripcion-mensaje"
-  }, [_vm._v("\n                    En Classfii existen secciones, que se dividen en:\n                ")])]), _vm._v(" "), _c(VCol["a" /* default */], {
+  }, [_vm._v("\n                    En Jekuaapy existen secciones, que se dividen en:\n                ")])]), _vm._v(" "), _c(VCol["a" /* default */], {
     attrs: {
       "cols": "12",
       "md": "7"
@@ -1093,7 +1093,7 @@ var lib_vue_loader_options_pagesvue_type_template_id_36eecd4a_scoped_true_render
         "font-size": "18px"
       }
     }, [_vm._v("\n                            " + _vm._s(seccion.descripcion) + "\n                        ")])])], 1);
-  }), 1)], 1)], 1)], 1), _vm._ssrNode(" "), _c(VDivider["a" /* default */]), _vm._ssrNode(" "), _vm._ssrNode("<div class=\"container contenedor-descripciones\" data-v-36eecd4a>", "</div>", [_c(VRow["a" /* default */], [_c(VCol["a" /* default */], {
+  }), 1)], 1)], 1)], 1), _vm._ssrNode(" "), _c(VDivider["a" /* default */]), _vm._ssrNode(" "), _vm._ssrNode("<div class=\"container contenedor-descripciones\" data-v-4410a68b>", "</div>", [_c(VRow["a" /* default */], [_c(VCol["a" /* default */], {
     attrs: {
       "cols": "12",
       "md": "7"
@@ -1111,9 +1111,9 @@ var lib_vue_loader_options_pagesvue_type_template_id_36eecd4a_scoped_true_render
     }
   }, [_c('h3', {
     staticClass: "font-weight-bold contenedor-descripcion-titulo"
-  }, [_vm._v("\n                    ¡Forma parte de la comunidad Classfii!\n                ")]), _vm._v(" "), _c('p', {
+  }, [_vm._v("\n                    ¡Forma parte de la comunidad Jekuaapy!\n                ")]), _vm._v(" "), _c('p', {
     staticClass: "font-weight contenedor-descripcion-mensaje"
-  }, [_vm._v("\n                    Puedes create una cuenta gratis en Classfii y comenzar con esta ¡aventura de conocimiento!\n                ")])])], 1)], 1), _vm._ssrNode(" "), _c(VDivider["a" /* default */]), _vm._ssrNode(" "), _vm._ssrNode("<div class=\"container mt-10 mb-10\" data-v-36eecd4a>", "</div>", [_vm._ssrNode("<div style=\"text-align: center;\" data-v-36eecd4a>", "</div>", [_vm._ssrNode("<h1 class=\"titulo\" data-v-36eecd4a>Preguntas frecuentes</h1> "), _c(VDivider["a" /* default */], {
+  }, [_vm._v("\n                    Puedes create una cuenta gratis en Jekuaapy y comenzar con esta ¡aventura de conocimiento!\n                ")])])], 1)], 1), _vm._ssrNode(" "), _c(VDivider["a" /* default */]), _vm._ssrNode(" "), _vm._ssrNode("<div class=\"container mt-10 mb-10\" data-v-4410a68b>", "</div>", [_vm._ssrNode("<div style=\"text-align: center;\" data-v-4410a68b>", "</div>", [_vm._ssrNode("<h1 class=\"titulo\" data-v-4410a68b>Preguntas frecuentes</h1> "), _c(VDivider["a" /* default */], {
     staticClass: "mb-7"
   })], 2), _vm._ssrNode(" "), _c(VExpansionPanels["a" /* default */], {
     attrs: {
@@ -1124,31 +1124,31 @@ var lib_vue_loader_options_pagesvue_type_template_id_36eecd4a_scoped_true_render
       "font-size": "22px",
       "display": "inline"
     }
-  }, [_vm._v("\n                        ¿Qué es Classfii?\n                    ")])]), _vm._v(" "), _c(VExpansionPanelContent["a" /* default */], [_c('p', {
+  }, [_vm._v("\n                        ¿Qué es Jekuaapy?\n                    ")])]), _vm._v(" "), _c(VExpansionPanelContent["a" /* default */], [_c('p', {
     staticClass: "mt-3",
     staticStyle: {
       "font-size": "18px"
     }
-  }, [_vm._v("\n                        Classfii es una plataforma de enseñanza de varios temas, por el momento la plataforma solamente cuenta con blogs, se irá agregando y actualizando funcionalidades, cursos, retos y de esa forma ir formando a los futuros estudiantes de Classfii y ¡divulgar información! 🌎\n                    ")])])], 1), _vm._v(" "), _c(VExpansionPanel["a" /* default */], [_c(VExpansionPanelHeader["a" /* default */], [_c('h4', {
+  }, [_vm._v("\n                        Jekuaapy es una plataforma de enseñanza de varios temas, por el momento la plataforma solamente cuenta con blogs, se irá agregando y actualizando funcionalidades, cursos, retos y de esa forma ir formando a los futuros estudiantes de Jekuaapy y ¡divulgar información! 🌎\n                    ")])])], 1), _vm._v(" "), _c(VExpansionPanel["a" /* default */], [_c(VExpansionPanelHeader["a" /* default */], [_c('h4', {
     staticStyle: {
       "font-size": "22px",
       "display": "inline"
     }
-  }, [_vm._v("\n                        ¿Qué es un Fiipoint?\n                    ")])]), _vm._v(" "), _c(VExpansionPanelContent["a" /* default */], [_c('p', {
+  }, [_vm._v("\n                        ¿Qué es un Jekuaapoint?\n                    ")])]), _vm._v(" "), _c(VExpansionPanelContent["a" /* default */], [_c('p', {
     staticClass: "mt-3",
     staticStyle: {
       "font-size": "18px"
     }
   }, [_vm._v("\n                        Los "), _c('nuxt-link', {
     attrs: {
-      "to": "/fiipoints"
+      "to": "/jekuaapoints"
     }
-  }, [_vm._v("Fiipoints")]), _vm._v(" son creditos dentro de la plataforma para comprar tus cursos!\n                    ")], 1)])], 1)], 1)], 2)], 2);
+  }, [_vm._v("Jekuaapoints")]), _vm._v(" son creditos dentro de la plataforma para comprar tus cursos!\n                    ")], 1)])], 1)], 1)], 2)], 2);
 };
 
 var staticRenderFns = [];
 
-// CONCATENATED MODULE: ./pages/index.vue?vue&type=template&id=36eecd4a&scoped=true&
+// CONCATENATED MODULE: ./pages/index.vue?vue&type=template&id=4410a68b&scoped=true&
 
 // CONCATENATED MODULE: ./node_modules/babel-loader/lib??ref--2-0!./node_modules/@nuxt/components/dist/loader.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./pages/index.vue?vue&type=script&lang=js&
 /* harmony default export */ var lib_vue_loader_options_pagesvue_type_script_lang_js_ = ({
@@ -1158,10 +1158,10 @@ var staticRenderFns = [];
     return {
       listaSecciones: [{
         nombre: 'Informática',
-        descripcion: 'Tienes alguna duda sobre un lenguaje de programación, comando, operadores, modelos de programación o aprender sobre algún algoritmo? En Classfii lo tienes y ¡con códigos de ejemplo! 👩🏻‍💻'
+        descripcion: 'Tienes alguna duda sobre un lenguaje de programación, comando, operadores, modelos de programación o aprender sobre algún algoritmo? En Jekuaapy lo tienes y ¡con códigos de ejemplo! 👩🏻‍💻'
       }, {
         nombre: 'Matemática',
-        descripcion: '¿Deseas aprender cálculo, física, geometría, analítica y comprender todo lo relacionado a la matemática? Con Classfii blogs puedes aprender! 🚀'
+        descripcion: '¿Deseas aprender cálculo, física, geometría, analítica y comprender todo lo relacionado a la matemática? Con Jekuaapy blogs puedes aprender! 🚀'
       }]
     };
   },
@@ -1195,11 +1195,11 @@ if (style0.__inject__) style0.__inject__(context)
 
 var component = Object(componentNormalizer["a" /* default */])(
   pagesvue_type_script_lang_js_,
-  lib_vue_loader_options_pagesvue_type_template_id_36eecd4a_scoped_true_render,
+  lib_vue_loader_options_pagesvue_type_template_id_4410a68b_scoped_true_render,
   staticRenderFns,
   false,
   injectStyles,
-  "36eecd4a",
+  "4410a68b",
   "7a50f3b1"
   
 )

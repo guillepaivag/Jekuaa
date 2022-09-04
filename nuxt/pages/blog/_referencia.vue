@@ -108,10 +108,10 @@
                 </v-card-title>
 
                 <v-card-text>
-                    <p>Para dar <b>me gusta</b> a este blog de Classfii debes registrarte o iniciar sesión.</p>
+                    <p>Para dar <b>me gusta</b> a este blog de Jekuaapy debes registrarte o iniciar sesión.</p>
                     <v-divider class="mb-6"></v-divider>
-                    <p>Si tienes una cuenta en Classfii puedes iniciar sesión <nuxt-link to="/autenticacion/inicioSesion">aquí</nuxt-link>.</p>
-                    <p>En caso que no tengas una cuenta en Classfii puedes registrarte <nuxt-link to="/autenticacion/registro">aquí</nuxt-link></p>
+                    <p>Si tienes una cuenta en Jekuaapy puedes iniciar sesión <nuxt-link to="/autenticacion/inicioSesion">aquí</nuxt-link>.</p>
+                    <p>En caso que no tengas una cuenta en Jekuaapy puedes registrarte <nuxt-link to="/autenticacion/registro">aquí</nuxt-link></p>
                 </v-card-text>
 
                 <v-divider></v-divider>

@@ -22,6 +22,8 @@ const ContenidoArticuloPublicado = require('../../models/Cursos/contenidoClase/C
 const ContenidoClase = require('../../models/Cursos/contenidoClase/ContenidoClase')
 const ContenidoVideoBorrador = require('../../models/Cursos/contenidoClase/ContenidoVideoBorrador')
 const ContenidoArticuloBorrador = require('../../models/Cursos/contenidoClase/ContenidoArticuloBorrador')
+const ContenidoYoutubePublicado = require('../../models/Cursos/contenidoClase/contenidoYoutube/ContenidoYoutubePublicado')
+const ContenidoYoutubeBorrador = require('../../models/Cursos/contenidoClase/contenidoYoutube/ContenidoYoutubeBorrador')
 
 const ff = {}
 
@@ -109,6 +111,9 @@ ff.eventoPublicacionCurso = functions
                 }
             }
 
+
+
+            
             // CONTENIDOS
             const snapshotContenidoClase = await db
             .collection('CursosBorrador').doc(uidCursoEstadoPublicacion)
@@ -123,26 +128,36 @@ ff.eventoPublicacionCurso = functions
                 let contenidoClasePublicado = null
                 if (dataContenidoClase.tipoContenido === 'video') 
                     contenidoClasePublicado = new ContenidoVideoPublicado(dataContenidoClase)
+                else if (dataContenidoClase.tipoContenido === 'video-youtube') 
+                    contenidoClasePublicado = new ContenidoYoutubePublicado(dataContenidoClase)
                 else if (dataContenidoClase.tipoContenido === 'articulo') 
                     contenidoClasePublicado = new ContenidoArticuloPublicado(dataContenidoClase)
                 
                 contenidoClasePublicado.setFechaCreacion( timestamp.milliseconds_a_timestamp(Date.now()) )
                 contenidoClasePublicado.setFechaActualizacion( timestamp.milliseconds_a_timestamp(Date.now()) )
 
-                // Contenido
-                let bucketOrigin = rutaModo === 'prod' ? 'prod-j-cursos-contenido-b' : 'dev-j-cursos-contenido-b'
-                let bucketDestination = rutaModo === 'prod' ? 'prod-j-cursos-contenido' : 'dev-j-cursos-contenido'
-                const ruta = `${uidCursoEstadoPublicacion}/${contenidoClasePublicado.uid}/${dataContenidoClase.tipoContenido}.${dataContenidoClase.fileExtension}`
-                await ContenidoClase.moverContenidoArchivo({
-                    bucketOrigin: bucketOrigin,
-                    bucketDestination: bucketDestination,
-                    rutaOrigin: ruta,
-                    rutaDestination : ruta,
-                })
-
+                if (dataContenidoClase.tipoContenido === 'video' || dataContenidoClase.tipoContenido === 'articulo') {
+                    // Contenido
+                    let bucketOrigin = rutaModo === 'prod' ? 'prod-j-cursos-contenido-b' : 'dev-j-cursos-contenido-b'
+                    let bucketDestination = rutaModo === 'prod' ? 'prod-j-cursos-contenido' : 'dev-j-cursos-contenido'
+                    const ruta = `${uidCursoEstadoPublicacion}/${contenidoClasePublicado.uid}/${dataContenidoClase.tipoContenido}.${dataContenidoClase.fileExtension}`
+                    await ContenidoClase.moverContenidoArchivo({
+                        bucketOrigin: bucketOrigin,
+                        bucketDestination: bucketDestination,
+                        rutaOrigin: ruta,
+                        rutaDestination : ruta,
+                    })
+                }
+                
                 // Documento
-                const datosContenidoClase = contenidoClasePublicado.tipoContenido === 'video' ?
-                contenidoClasePublicado.getContenidoVideoPublicado() : contenidoClasePublicado.getContenidoArticuloPublicado()
+                let datosContenidoClase = null
+                if (contenidoClasePublicado.tipoContenido === 'video') {
+                    datosContenidoClase = contenidoClasePublicado.getContenidoVideoPublicado()
+                } else if (contenidoClasePublicado.tipoContenido === 'video-youtube') {
+                    datosContenidoClase = contenidoClasePublicado.getContenidoYoutubePublicado()
+                } else if (contenidoClasePublicado.tipoContenido === 'articulo') {
+                    datosContenidoClase = contenidoClasePublicado.getContenidoArticuloPublicado()
+                }
 
                 await ContenidoClase.agregarDocumentoPublicado(uidCursoEstadoPublicacion, datosContenidoClase)
                 await ContenidoClase.actualizarDocumentoBorrador(uidCursoEstadoPublicacion, contenidoClasePublicado.uid, {
@@ -164,6 +179,7 @@ ff.eventoPublicacionCurso = functions
 
 
             
+
             let ref = db.collection('CursosBorrador').doc(uidCursoEstadoPublicacion)
             const snapshotUnidades = await ref.collection('UnidadesBorrador').get()
             const docsUnidades = snapshotUnidades.docs
@@ -256,7 +272,8 @@ ff.eventoPublicacionCurso = functions
 
             const snapshotContenidoClase = await db
             .collection('CursosBorrador').doc(uidCursoEstadoPublicacion)
-            .collection('ContenidoClasesBorrador').where('estadoDocumento', '!=', '').get()
+            .collection('ContenidoClasesBorrador').where('estadoDocumento', '!=', '')
+            .get()
 
             const docsContenidoClases = snapshotContenidoClase.docs
 
@@ -267,33 +284,46 @@ ff.eventoPublicacionCurso = functions
                 let contenidoClaseBorrador = null
                 if (dataContenidoClase.tipoContenido === 'video') 
                     contenidoClaseBorrador = new ContenidoVideoBorrador(dataContenidoClase)
+                else if (dataContenidoClase.tipoContenido === 'video-youtube') 
+                    contenidoClaseBorrador = new ContenidoYoutubeBorrador(dataContenidoClase)
                 else if (dataContenidoClase.tipoContenido === 'articulo') 
                     contenidoClaseBorrador = new ContenidoArticuloBorrador(dataContenidoClase)
 
+                
                 if (contenidoClaseBorrador.estadoDocumento === 'nuevo') {
                     let contenidoClasePublicado = null
                     if (dataContenidoClase.tipoContenido === 'video') 
                         contenidoClasePublicado = new ContenidoVideoPublicado(dataContenidoClase)
+                    else if (dataContenidoClase.tipoContenido === 'video-youtube') 
+                        contenidoClasePublicado = new ContenidoYoutubePublicado(dataContenidoClase)
                     else if (dataContenidoClase.tipoContenido === 'articulo') 
                         contenidoClasePublicado = new ContenidoArticuloPublicado(dataContenidoClase)
                     
                     contenidoClasePublicado.setFechaCreacion( timestamp.milliseconds_a_timestamp(Date.now()) )
                     contenidoClasePublicado.setFechaActualizacion( timestamp.milliseconds_a_timestamp(Date.now()) )
 
-                    // Contenido
-                    let bucketOrigin = rutaModo === 'prod' ? 'prod-j-cursos-contenido-b' : 'dev-j-cursos-contenido-b'
-                    let bucketDestination = rutaModo === 'prod' ? 'prod-j-cursos-contenido' : 'dev-j-cursos-contenido'
-                    const ruta = `${uidCursoEstadoPublicacion}/${contenidoClasePublicado.uid}/${dataContenidoClase.tipoContenido}.${dataContenidoClase.fileExtension}`
-                    await ContenidoClase.moverContenidoArchivo({
-                        bucketOrigin: bucketOrigin,
-                        bucketDestination: bucketDestination,
-                        rutaOrigin: ruta,
-                        rutaDestination : ruta,
-                    })
+                    if (dataContenidoClase.tipoContenido === 'video' || dataContenidoClase.tipoContenido === 'articulo') {
+                        // Contenido
+                        let bucketOrigin = rutaModo === 'prod' ? 'prod-j-cursos-contenido-b' : 'dev-j-cursos-contenido-b'
+                        let bucketDestination = rutaModo === 'prod' ? 'prod-j-cursos-contenido' : 'dev-j-cursos-contenido'
+                        const ruta = `${uidCursoEstadoPublicacion}/${contenidoClasePublicado.uid}/${dataContenidoClase.tipoContenido}.${dataContenidoClase.fileExtension}`
+                        await ContenidoClase.moverContenidoArchivo({
+                            bucketOrigin: bucketOrigin,
+                            bucketDestination: bucketDestination,
+                            rutaOrigin: ruta,
+                            rutaDestination : ruta,
+                        })
+                    }
 
                     // Documento
-                    const datosContenidoClase = contenidoClasePublicado.tipoContenido === 'video' ?
-                    contenidoClasePublicado.getContenidoVideoPublicado() : contenidoClasePublicado.getContenidoArticuloPublicado()
+                    let datosContenidoClase = null
+                    if (contenidoClasePublicado.tipoContenido === 'video') {
+                        datosContenidoClase = contenidoClasePublicado.getContenidoVideoPublicado()
+                    } else if (contenidoClasePublicado.tipoContenido === 'video-youtube') {
+                        datosContenidoClase = contenidoClasePublicado.getContenidoYoutubePublicado()
+                    } else if (contenidoClasePublicado.tipoContenido === 'articulo') {
+                        datosContenidoClase = contenidoClasePublicado.getContenidoArticuloPublicado()
+                    }
 
                     await ContenidoClase.agregarDocumentoPublicado(uidCursoEstadoPublicacion, datosContenidoClase)
                     await ContenidoClase.actualizarDocumentoBorrador(uidCursoEstadoPublicacion, contenidoClasePublicado.uid, {
@@ -301,40 +331,86 @@ ff.eventoPublicacionCurso = functions
                     })
                 }
                 
-                if (contenidoClaseBorrador.estadoDocumento === 'actualizado') {
+                else if (contenidoClaseBorrador.estadoDocumento === 'actualizado') {
                     // Contenido
                     const resultContenidoPublicado = await ContenidoClase.obtenerDocumentoPublicado(uidCursoEstadoPublicacion, contenidoClaseBorrador.uid)
                     const contenidoClasePublicado = resultContenidoPublicado.contenidoClase
                     
                     let bucketNameContenidoBorrador = rutaModo === 'prod' ? 'prod-j-cursos-contenido-b' : 'dev-j-cursos-contenido-b'
                     let bucketNameContenidoPublicado = rutaModo === 'prod' ? 'prod-j-cursos-contenido' : 'dev-j-cursos-contenido'
+
+                    if (contenidoClasePublicado.tipoContenido === 'video' || contenidoClasePublicado.tipoContenido === 'articulo') {
+                        const rutaPrefixEliminacion = contenidoClasePublicado.tipoContenido === 'video' ? 
+                        `${uidCursoEstadoPublicacion}/${contenidoClasePublicado.uid}/video.${contenidoClasePublicado.fileExtension}` :
+                        `${uidCursoEstadoPublicacion}/${contenidoClasePublicado.uid}/articulo.md`
+                        await ContenidoClase.eliminarContenidoArchivo({
+                            bucketName: bucketNameContenidoPublicado,
+                            rutaPrefix: rutaPrefixEliminacion,
+                        })
+                    }
                     
-                    const rutaPrefixEliminacion = contenidoClasePublicado.tipoContenido === 'video' ? 
-                    `${uidCursoEstadoPublicacion}/${contenidoClasePublicado.uid}/video.${contenidoClasePublicado.fileExtension}` :
-                    `${uidCursoEstadoPublicacion}/${contenidoClasePublicado.uid}/articulo.md`
-                    await ContenidoClase.eliminarContenidoArchivo({
-                        bucketName: bucketNameContenidoPublicado,
-                        rutaPrefix: rutaPrefixEliminacion,
-                    })
-
-                    const rutaContenidoClase = contenidoClaseBorrador.tipoContenido === 'video' ? 
-                    `${uidCursoEstadoPublicacion}/${contenidoClaseBorrador.uid}/video.${contenidoClaseBorrador.fileExtension}` :
-                    `${uidCursoEstadoPublicacion}/${contenidoClaseBorrador.uid}/articulo.md`
-                    await ContenidoClase.moverContenidoArchivo({
-                        bucketOrigin: bucketNameContenidoBorrador,
-                        bucketDestination: bucketNameContenidoPublicado,
-                        rutaOrigin: rutaContenidoClase,
-                        rutaDestination: rutaContenidoClase,
-                    })
-
+                    if (contenidoClaseBorrador.tipoContenido === 'video' || contenidoClaseBorrador.tipoContenido === 'articulo') {
+                        const rutaContenidoClase = contenidoClaseBorrador.tipoContenido === 'video' ? 
+                        `${uidCursoEstadoPublicacion}/${contenidoClaseBorrador.uid}/video.${contenidoClaseBorrador.fileExtension}` :
+                        `${uidCursoEstadoPublicacion}/${contenidoClaseBorrador.uid}/articulo.md`
+                        await ContenidoClase.moverContenidoArchivo({
+                            bucketOrigin: bucketNameContenidoBorrador,
+                            bucketDestination: bucketNameContenidoPublicado,
+                            rutaOrigin: rutaContenidoClase,
+                            rutaDestination: rutaContenidoClase,
+                        })
+                    }
+                    
                     // Documento
-                    const datosContenidoClase = contenidoClaseBorrador.tipoContenido === 'video' ?
-                    contenidoClaseBorrador.getContenidoVideo() : contenidoClaseBorrador.getContenidoArticulo()
+                    let datosNuevoContenidoClase = {}
+                    if (contenidoClaseBorrador.tipoContenido === 'video') {
+                        datosNuevoContenidoClase = new ContenidoVideoPublicado({
+                            uid: contenidoClaseBorrador.uid,
+                            tipoContenido: 'video',
 
-                    await ContenidoClase.actualizarDocumentoPublicado(uidCursoEstadoPublicacion, contenidoClaseBorrador.uid, {
-                        ...datosContenidoClase,
-                        fechaActualizacion: timestamp.milliseconds_a_timestamp(Date.now()),
-                    })
+                            videoData: contenidoClaseBorrador.videoData,
+                            size: contenidoClaseBorrador.size,
+                            fileName: contenidoClaseBorrador.fileName,
+                            fileExtension: contenidoClaseBorrador.fileExtension,
+                            mimeType: contenidoClaseBorrador.mimeType,
+                            fechaSubida: contenidoClaseBorrador.fechaSubida,
+                            
+                            fechaCreacion: contenidoClasePublicado.fechaCreacion,
+                            fechaActualizacion: timestamp.milliseconds_a_timestamp(Date.now()),
+                        }).getContenidoVideoPublicado()
+
+                    } else if (contenidoClaseBorrador.tipoContenido === 'video-youtube') {
+                        datosNuevoContenidoClase = new ContenidoYoutubePublicado({
+                            uid: contenidoClaseBorrador.uid,
+                            tipoContenido: 'video-youtube',
+
+                            duracion: contenidoClaseBorrador.duracion,
+                            codigoVideoYoutube: contenidoClaseBorrador.codigoVideoYoutube,
+                            fechaSubida: contenidoClaseBorrador.fechaSubida,
+                            
+                            fechaCreacion: contenidoClasePublicado.fechaCreacion,
+                            fechaActualizacion: timestamp.milliseconds_a_timestamp(Date.now()),
+                        }).getContenidoYoutubePublicado()
+                        
+                    } else if (contenidoClaseBorrador.tipoContenido === 'articulo') {
+                              
+                        datosNuevoContenidoClase = new ContenidoArticuloPublicado({
+                            uid: contenidoClaseBorrador.uid,
+                            tipoContenido: 'articulo',
+                            
+                            size: contenidoClaseBorrador.size,
+                            fileName: contenidoClaseBorrador.fileName,
+                            fileExtension: contenidoClaseBorrador.fileExtension,
+                            mimeType: contenidoClaseBorrador.mimeType,
+                            fechaSubida: contenidoClaseBorrador.fechaSubida,
+
+                            fechaCreacion: contenidoClasePublicado.fechaCreacion,
+                            fechaActualizacion: timestamp.milliseconds_a_timestamp(Date.now()),
+                        }).getContenidoArticuloPublicado()
+                        
+                    } 
+
+                    await ContenidoClase.agregarDocumentoPublicado(uidCursoEstadoPublicacion, datosNuevoContenidoClase)
                     await ContenidoClase.actualizarDocumentoBorrador(uidCursoEstadoPublicacion, contenidoClaseBorrador.uid, {
                         estadoDocumento: ''
                     })
@@ -376,13 +452,18 @@ ff.eventoPublicacionCurso = functions
                     const uidCurso = elementoCursoEliminado.datos.uidCurso
                     const uidClase = elementoCursoEliminado.datos.uidClase
 
-                    // Contenido
-                    let bucketNameContenidoPublicado = rutaModo === 'prod' ? 'prod-j-cursos-contenido' : 'dev-j-cursos-contenido'
-                    const rutaPrefix = `${uidCurso}/${uidClase}/`
-                    ContenidoClase.eliminarContenidoArchivo({
-                        bucketName: bucketNameContenidoPublicado,
-                        rutaPrefix: rutaPrefix,
-                    })
+                    const resultContenidoPublicado = await ContenidoClase.obtenerDocumentoPublicado(uidCurso, uidClase)
+                    const contenidoClasePublicado = resultContenidoPublicado.contenidoClase
+
+                    if (contenidoClasePublicado.tipoContenido === 'video' || contenidoClasePublicado.tipoContenido === 'articulo') {
+                        // Contenido
+                        let bucketNameContenidoPublicado = rutaModo === 'prod' ? 'prod-j-cursos-contenido' : 'dev-j-cursos-contenido'
+                        const rutaPrefix = `${uidCurso}/${uidClase}/`
+                        ContenidoClase.eliminarContenidoArchivo({
+                            bucketName: bucketNameContenidoPublicado,
+                            rutaPrefix: rutaPrefix,
+                        })
+                    }
                     
                     // Documento
                     ContenidoClase.eliminarDocumentoPublicado(uidCurso, uidClase)

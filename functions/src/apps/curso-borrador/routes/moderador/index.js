@@ -14,7 +14,8 @@ const {
     crearCursoBorrador, 
     actualizarAuxiliares, 
     obtenerUrlVideoClase, 
-    obtenerArticuloClase 
+    obtenerArticuloClase, 
+    obtenerVideoYoutubeClase
 } = require('../../controllers/moderador')
 
 // CREAR
@@ -51,5 +52,13 @@ router.get('/obtenerArticulo/:uidCurso/:uidClase',
     esModerador,
     esModeradorDeCursos,
     obtenerArticuloClase)
+
+
+// OBTENER VIDEO YOUTUBE
+router.get('/obtenerVideoYoutube/:uidCurso/:uidClase', 
+    estaAutenticado,
+    esModerador,
+    esModeradorDeCursos,
+    obtenerVideoYoutubeClase)
 
 module.exports = router

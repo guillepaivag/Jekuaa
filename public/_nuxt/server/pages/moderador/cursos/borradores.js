@@ -930,7 +930,7 @@ module.exports = __webpack_require__.p + "img/matematica.761aff7.webp";
 /***/ 283:
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__.p + "img/sin-seccion.b6dd829.webp";
+module.exports = __webpack_require__.p + "img/sin-seccion.0b23ce7.webp";
 
 /***/ }),
 
@@ -6017,7 +6017,7 @@ var VSheet = __webpack_require__(11);
 // EXTERNAL MODULE: ./node_modules/vuetify/lib/components/VTextField/VTextField.js + 3 modules
 var VTextField = __webpack_require__(210);
 
-// CONCATENATED MODULE: ./node_modules/vuetify-loader/lib/loader.js??ref--4!./node_modules/babel-loader/lib??ref--2-0!./node_modules/vue-loader/lib/loaders/templateLoader.js??ref--7!./node_modules/@nuxt/components/dist/loader.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./pages/moderador/cursos/borradores.vue?vue&type=template&id=df8dd546&
+// CONCATENATED MODULE: ./node_modules/vuetify-loader/lib/loader.js??ref--4!./node_modules/babel-loader/lib??ref--2-0!./node_modules/vue-loader/lib/loaders/templateLoader.js??ref--7!./node_modules/@nuxt/components/dist/loader.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./pages/moderador/cursos/borradores.vue?vue&type=template&id=5fba155d&
 
 
 
@@ -6025,7 +6025,7 @@ var VTextField = __webpack_require__(210);
 
 
 
-var borradoresvue_type_template_id_df8dd546_render = function render() {
+var borradoresvue_type_template_id_5fba155d_render = function render() {
   var _vm = this,
       _c = _vm._self._c;
 
@@ -6053,7 +6053,7 @@ var borradoresvue_type_template_id_df8dd546_render = function render() {
           attrs: {
             "left": ""
           }
-        }, [_vm._v("\n                    mdi-plus\n                ")]), _vm._v("\n                Crear curso para Classfii\n            ")], 1)];
+        }, [_vm._v("\n                    mdi-plus\n                ")]), _vm._v("\n                Crear curso para Jekuaapy\n            ")], 1)];
       }
     }]),
     model: {
@@ -6197,7 +6197,7 @@ var borradoresvue_type_template_id_df8dd546_render = function render() {
 
 var staticRenderFns = [];
 
-// CONCATENATED MODULE: ./pages/moderador/cursos/borradores.vue?vue&type=template&id=df8dd546&
+// CONCATENATED MODULE: ./pages/moderador/cursos/borradores.vue?vue&type=template&id=5fba155d&
 
 // EXTERNAL MODULE: external "vuelidate"
 var external_vuelidate_ = __webpack_require__(214);
@@ -6362,7 +6362,7 @@ function injectStyles (context) {
 
 var component = Object(componentNormalizer["a" /* default */])(
   cursos_borradoresvue_type_script_lang_js_,
-  borradoresvue_type_template_id_df8dd546_render,
+  borradoresvue_type_template_id_5fba155d_render,
   staticRenderFns,
   false,
   injectStyles,

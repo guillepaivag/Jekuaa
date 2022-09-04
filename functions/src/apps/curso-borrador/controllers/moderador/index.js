@@ -8,6 +8,7 @@ const ContenidoVideoBorrador = require("../../../../models/Cursos/contenidoClase
 const ContenidoVideoPublicado = require("../../../../models/Cursos/contenidoClase/ContenidoVideoPublicado")
 const ContenidoArticuloBorrador = require("../../../../models/Cursos/contenidoClase/ContenidoArticuloBorrador")
 const ContenidoArticuloPublicado = require("../../../../models/Cursos/contenidoClase/ContenidoArticuloPublicado")
+const ContenidoYoutubeBorrador = require("../../../../models/Cursos/contenidoClase/contenidoYoutube/ContenidoYoutubeBorrador")
 
 const controller = {}
 
@@ -154,5 +155,39 @@ controller.obtenerArticuloClase = async (req = request, res = response) => {
         return res.status( respuesta.estado ).json( respuesta.getRespuesta() )
     }
 }
+
+controller.obtenerVideoYoutubeClase = async (req = request, res = response) => {
+    
+    try {
+        const { datos, body, params } = req
+        const { uidSolicitante, datosAuthSolicitante } = datos
+        const { uidCurso, uidClase } = params
+
+        const respuesta = new Respuesta()
+
+        const result = await ContenidoClase.obtenerDocumentoBorrador(uidCurso, uidClase)
+        const contenidoYoutubeBorrador = new ContenidoYoutubeBorrador(result.contenidoClase)
+
+        // Retornar respuesta
+        respuesta.setRespuesta({
+            estado: 200,
+            mensaje: 'exito',
+            resultado: {
+                codigoVideoYoutube: contenidoYoutubeBorrador.codigoVideoYoutube,
+                duracion: contenidoYoutubeBorrador.duracion
+            }
+        })
+        
+        return res.status( respuesta.estado ).json( respuesta.getRespuesta() )
+
+    } catch (error) {
+        console.log('Error - obtenerVideoYoutubeClase: ', error)
+
+        const respuesta = manejadorErrores( error )
+        return res.status( respuesta.estado ).json( respuesta.getRespuesta() )
+    }
+
+}
+
 
 module.exports = controller

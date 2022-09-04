@@ -122,21 +122,33 @@ functions.region('southamerica-east1').firestore.document('Blogs/{blogId}').onWr
         return true
     }
 
+    const publicadoViejo = blogViejo.publicado && blogViejo.habilitado
+    const publicadoNuevo = blogNuevo.publicado && blogNuevo.habilitado
+
     if ( !blogViejo && blogNuevo ) {
+        // Creacion de un objeto
         return await saveObjectFromDisabledIndex()
 
     } else if ( blogViejo && !blogNuevo ) {
+        // Eliminacion de un objeto
         await deleteObjectFromDisabledIndex()
         return await deleteObjectFromPublishedIndex()
     
-    } else if ( (blogViejo && blogNuevo) && (!blogViejo.publicado || !blogViejo.habilitado) && (blogNuevo.publicado && blogNuevo.habilitado)) {
-        await deleteObjectFromDisabledIndex()
-        return await saveObjectFromPublishedIndex()
-
-    } else if ( (blogViejo && blogNuevo) && (blogViejo.publicado && blogViejo.habilitado) && (!blogNuevo.publicado || !blogNuevo.habilitado)) {
-        await deleteObjectFromPublishedIndex()
-        return await saveObjectFromDisabledIndex()
-
+    } else if ( blogViejo && blogNuevo ) {
+        if ( !publicadoViejo && publicadoNuevo ) {
+            // Publicacion de algo despublicado
+            await deleteObjectFromDisabledIndex()
+            return await saveObjectFromPublishedIndex()
+        
+        } else if ( publicadoViejo && !publicadoNuevo ) {
+            // Despublicacion de algo publicado
+            await deleteObjectFromPublishedIndex()
+            return await saveObjectFromDisabledIndex()
+    
+        } else {
+            if ( publicadoNuevo ) return await saveObjectFromPublishedIndex() 
+            else return await saveObjectFromDisabledIndex()
+        }
     }
     
 })
@@ -273,6 +285,9 @@ functions.region('southamerica-east1').firestore.document('CursosPublicado/{uidC
             return true
         }
 
+        const publicadoViejo = cursoPublicadoViejo.publicado && cursoPublicadoViejo.habilitado
+        const publicadoNuevo = cursoPublicadoNuevo.publicado && cursoPublicadoNuevo.habilitado
+
         if ( !cursoPublicadoViejo && cursoPublicadoNuevo ) {
             return await saveObjectFromDisabledIndex()
     
@@ -280,15 +295,23 @@ functions.region('southamerica-east1').firestore.document('CursosPublicado/{uidC
             await deleteObjectFromDisabledIndex()
             return await deleteObjectFromPublishedIndex()
         
-        } else if ( (cursoPublicadoViejo && cursoPublicadoNuevo) && (!cursoPublicadoViejo.publicado || !cursoPublicadoViejo.habilitado) && (cursoPublicadoNuevo.publicado && cursoPublicadoNuevo.habilitado)) {
-            await deleteObjectFromDisabledIndex()
-            return await saveObjectFromPublishedIndex()
-    
-        } else if ( (cursoPublicadoViejo && cursoPublicadoNuevo) && (cursoPublicadoViejo.publicado && cursoPublicadoViejo.habilitado) && (!cursoPublicadoNuevo.publicado || !cursoPublicadoNuevo.habilitado)) {
-            await deleteObjectFromPublishedIndex()
-            return await saveObjectFromDisabledIndex()
-    
+        } else if ( cursoPublicadoViejo && cursoPublicadoNuevo ) {
+            if ( !publicadoViejo && publicadoNuevo ) {
+                // Publicacion de algo despublicado
+                await deleteObjectFromDisabledIndex()
+                return await saveObjectFromPublishedIndex()
+            
+            } else if ( publicadoViejo && !publicadoNuevo ) {
+                // Despublicacion de algo publicado
+                await deleteObjectFromPublishedIndex()
+                return await saveObjectFromDisabledIndex()
+        
+            } else {
+                if ( publicadoNuevo ) return await saveObjectFromPublishedIndex() 
+                else return await saveObjectFromDisabledIndex()
+            }
         }
+        
     } catch (error) {
         console.log(error)
         console.log(JSON.stringify(error))

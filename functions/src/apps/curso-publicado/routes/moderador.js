@@ -2,7 +2,7 @@ const { Router } = require('express')
 
 const estaAutenticado = require('../../../helpers/estaAutenticado')
 const { esModerador, esModeradorDeCursos } = require('../../../helpers/moderador')
-const { obtenerUrlVideoClase, obtenerArticuloClase } = require('../controllers/moderador')
+const { obtenerUrlVideoClase, obtenerArticuloClase, obtenerVideoYoutubeClase } = require('../controllers/moderador')
 
 const router = Router()
 
@@ -20,6 +20,14 @@ router.get('/obtenerArticulo/:uidCurso/:uidClase',
     esModerador,
     esModeradorDeCursos,
     obtenerArticuloClase)
+
+
+// OBTENER VIDEO YOUTUBE
+router.get('/obtenerVideoYoutube/:uidCurso/:uidClase', 
+    estaAutenticado,
+    esModerador,
+    esModeradorDeCursos,
+    obtenerVideoYoutubeClase)
 
 
 // HABILITAR EL CURSO

@@ -13,7 +13,7 @@
 
         <v-list-item-content>
           <v-list-item-title class="estiloTexto">
-            Classfii
+            Jekuaapy
           </v-list-item-title>
         </v-list-item-content>
       </v-list-item>
@@ -83,7 +83,7 @@
           <v-img
             contain
             max-width="125"
-            :src="require(`~/assets/img/logo_classfii.png`)"
+            :src="require(`~/assets/img/logo1.png`)"
           />
         </nuxt-link>
       </div>

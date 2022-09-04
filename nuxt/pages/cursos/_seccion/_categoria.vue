@@ -17,41 +17,47 @@
             </v-breadcrumbs>
         </div>
 
-        <div v-if="existenCursos">
-            <ClientOnly>
-                <BuscadorCursosPublicado />
-            </ClientOnly>
+        <div v-if="cargando">
+            Cargando
         </div>
 
-        <v-row v-else class="" style="margin-top: 15px; margin-bottom: 50px;">
-            <v-col cols="12" md="4">
-                <div class="">
-                    <v-img 
-                        class="contenido_image mb-5" 
-                        max-width="400"
-                        :src="require('~/assets/img/proximamente_cursos.png')"
-                    ></v-img>
-                </div>
-            </v-col>
-            <v-col class="contenido_texto" cols="12" md="8">
-                <h2>¡Cursos en Classfii proximamente!</h2>
-                <v-divider class="mb-2"></v-divider>
-                <p>
-                    ¡Estamos trabajando para impulsar tu crecimiento profesional!
-                </p>
+        <div v-else>
+            <div v-if="existenCursos">
+                <ClientOnly>
+                    <BuscadorCursosPublicado />
+                </ClientOnly>
+            </div>
 
-                <v-btn
-                    class=""
-                    outlined
-                    text
-                    x-large
-                    color="#683bce"
-                    to="/centro"
-                >
-                    Volver 🚀
-                </v-btn>
-            </v-col>
-        </v-row>
+            <v-row v-else class="" style="margin-top: 15px; margin-bottom: 50px;">
+                <v-col cols="12" md="4">
+                    <div class="">
+                        <v-img 
+                            class="contenido_image mb-5" 
+                            max-width="400"
+                            :src="require('~/assets/img/proximamente_cursos.png')"
+                        ></v-img>
+                    </div>
+                </v-col>
+                <v-col class="contenido_texto" cols="12" md="8">
+                    <h2>¡Cursos en Jekuaapy proximamente!</h2>
+                    <v-divider class="mb-2"></v-divider>
+                    <p>
+                        ¡Estamos trabajando para impulsar tu crecimiento profesional!
+                    </p>
+
+                    <v-btn
+                        class=""
+                        outlined
+                        text
+                        x-large
+                        color="#683bce"
+                        to="/centro"
+                    >
+                        Volver 🚀
+                    </v-btn>
+                </v-col>
+            </v-row>
+        </div>
 
     </div>
 </template>
@@ -78,6 +84,7 @@ export default {
                     href: '/cursos',
                 },
             ],
+            cargando: true,
         }
     },
     components: {
@@ -91,6 +98,8 @@ export default {
         .get()
 
         this.existenCursos = !snapshot.empty
+
+        this.cargando = false
     }
 }
 </script>

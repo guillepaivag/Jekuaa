@@ -3,7 +3,7 @@ const router = Router()
 
 const estaAutenticado = require('../../../helpers/estaAutenticado')
 const { esMiembro, esMiembroInstructor, esMiembroInstructor_InstructorAuxiliar } = require('../../../helpers/miembro')
-const { publicarCurso, obtenerUrlVideoClase, obtenerArticuloClase } = require('../controllers/miembro')
+const { publicarCurso, obtenerUrlVideoClase, obtenerArticuloClase, obtenerVideoYoutubeClase } = require('../controllers/miembro')
 const { esResponsableDelCursoPublicado, esAdministradorDelCursoPublicado, } = require('../middlewares/miembro')
 
 router.get('/obtenerVideo/:uidCurso/:uidClase', 
@@ -22,6 +22,16 @@ router.get('/obtenerArticulo/:uidCurso/:uidClase',
     esMiembroInstructor_InstructorAuxiliar,
     esAdministradorDelCursoPublicado, 
     obtenerArticuloClase)
+
+
+
+
+router.get('/obtenerVideoYoutube/:uidCurso/:uidClase', 
+    estaAutenticado,
+    esMiembro,
+    esMiembroInstructor_InstructorAuxiliar,
+    esAdministradorDelCursoPublicado, 
+    obtenerVideoYoutubeClase)
 
 
 

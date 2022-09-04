@@ -25,7 +25,7 @@
 
         <v-card-text class="py-1 white--text text-center backgroundFooterRojo">
           <samp class="footerTextTamanho">
-            {{ new Date().getFullYear() }} — <strong>Classfii</strong>
+            {{ new Date().getFullYear() }} — <strong>Jekuaapy</strong>
           </samp>
         </v-card-text>
       </v-card>
@@ -42,15 +42,15 @@ export default {
       socials: [
         {
           icon: 'mdi-instagram',
-          to: 'https://instagram.com/classfii',
+          to: 'https://instagram.com/jekuaapy',
         },
         {
           icon: 'mdi-facebook',
-          to: 'https://facebook.com/classfii',
+          to: 'https://facebook.com/jekuaapy',
         },
         {
           icon: 'mdi-twitter',
-          to: 'https://twitter.com/classfii',
+          to: 'https://twitter.com/jekuaapy',
         },
         // {
         //   icon: 'mdi-linkedin',

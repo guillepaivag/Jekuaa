@@ -14,8 +14,8 @@
 
                 <div class="letra mt-5">¡Tu cuenta ha sido creada! Pero aún tu correo no a sido verificado.</div>
                 <div class="text--primary mt-3">
-                    <p class="letra">Muchas gracias por formar parte de Classfii. Esperamos que tengas una buena experiencia.</p>
-                    <p class="letra">Solo falta verificar tu correo para acceder a Classfii y poder utilizar los servicios.</p>
+                    <p class="letra">Muchas gracias por formar parte de Jekuaapy. Esperamos que tengas una buena experiencia.</p>
+                    <p class="letra">Solo falta verificar tu correo para acceder a Jekuaapy y poder utilizar los servicios.</p>
                     <p style="font-size: 17px;">¡Te esperamos {{email}}!</p>
                 </div>
             </v-card-text>

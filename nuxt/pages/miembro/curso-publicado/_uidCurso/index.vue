@@ -75,7 +75,7 @@
                         <v-icon color="error" class="mr-2">
                             mdi-alert-circle
                         </v-icon>
-                        Tu curso fue deshabilitado por la moderación de Classfii. <u class="verDeshabilitado"> ¿Por qué? </u>
+                        Tu curso fue deshabilitado por la moderación de Jekuaapy. <u class="verDeshabilitado"> ¿Por qué? </u>
                     </v-col>
                     <v-col class="shrink">
                         <v-btn
@@ -179,7 +179,7 @@
                         <v-row class="text-center">
                             <v-col class="" cols="12" md="6">
                                 <v-text-field
-                                    :value="datosCurso.equipo ? 'Classfii' : 'Sin equipo'"
+                                    :value="datosCurso.equipo ? 'Jekuaapy' : 'Sin equipo'"
                                     readonly
                                     label="Equipo"
                                 ></v-text-field>
@@ -302,7 +302,7 @@
                         <v-row class="text-center mt-3">
                             <v-col class="" cols="12" md="6">
                                 <v-text-field
-                                    :value="`${datosCurso.datosPrecio.precio} FP`"
+                                    :value="`${datosCurso.datosPrecio.precio} JP`"
                                     readonly
                                     label="Precio"
                                 ></v-text-field>

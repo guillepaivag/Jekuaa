@@ -1,7 +1,9 @@
 const { request, response } = require("express")
 const manejadorErrores = require("../../../helpers/manejoErrores")
 const ContenidoArticuloPublicado = require("../../../models/Cursos/contenidoClase/ContenidoArticuloPublicado")
+const ContenidoClase = require("../../../models/Cursos/contenidoClase/ContenidoClase")
 const ContenidoVideoPublicado = require("../../../models/Cursos/contenidoClase/ContenidoVideoPublicado")
+const ContenidoYoutubeBorrador = require("../../../models/Cursos/contenidoClase/contenidoYoutube/ContenidoYoutubeBorrador")
 const CursoPublicado = require("../../../models/Cursos/curso/CursoPublicado")
 const Respuesta = require("../../../models/Respuesta")
 
@@ -100,6 +102,40 @@ controller.obtenerArticuloClase = async (req = request, res = response) => {
         return res.status( respuesta.estado ).json( respuesta.getRespuesta() )
     } catch (error) {
         console.log('Error - obtenerArticuloClase: ', error)
+
+        const respuesta = manejadorErrores( error )
+        return res.status( respuesta.estado ).json( respuesta.getRespuesta() )
+    }
+
+}
+
+
+
+controller.obtenerVideoYoutubeClase = async (req = request, res = response) => {
+
+    try {
+        const { datos, body, params } = req
+        const { uidSolicitante, datosAuthSolicitante } = datos
+        const { uidCurso, uidClase } = params
+
+        const respuesta = new Respuesta()
+
+        const result = await ContenidoClase.obtenerDocumentoBorrador(uidCurso, uidClase)
+        const contenidoYoutubeBorrador = new ContenidoYoutubeBorrador(result.contenidoClase)
+
+        // Retornar respuesta
+        respuesta.setRespuesta({
+            estado: 200,
+            mensaje: 'exito',
+            resultado: {
+                codigoVideoYoutube: contenidoYoutubeBorrador.codigoVideoYoutube,
+                duracion: contenidoYoutubeBorrador.duracion
+            }
+        })
+        
+        return res.status( respuesta.estado ).json( respuesta.getRespuesta() )
+    } catch (error) {
+        console.log('Error - obtenerVideoYoutubeClase: ', error)
 
         const respuesta = manejadorErrores( error )
         return res.status( respuesta.estado ).json( respuesta.getRespuesta() )

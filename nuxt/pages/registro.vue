@@ -77,7 +77,7 @@ export default {
           point: 0,
         })
 
-        this.$router.push(`/bienvenido-a-classfii/${usuario.nombreUsuario}`)
+        this.$router.push(`/bienvenido-a-jekuaapy/${usuario.nombreUsuario}`)
 
       } catch (error) {
         console.log('error', error)

@@ -91,7 +91,7 @@
 
 
         <div class="mt-12">
-            <h3 class="title"> Reglas de un miembro de Classfii </h3>
+            <h3 class="title"> Reglas de un miembro de Jekuaapy </h3>
         </div>
         <v-divider></v-divider>
 

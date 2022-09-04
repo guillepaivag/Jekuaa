@@ -157,10 +157,12 @@ controller.eliminarUnidadBorrador = async (req = request, res = response) => {
             // Eliminar documentos subtitulos
 
             // Eliminar archivos (en cloud storage) de una clase
-            await ContenidoClase.eliminarContenidoArchivo({
-                bucketName: bucketNameContenidoBorrador,
-                rutaPrefix: `${params.uidCurso}/${claseBorrador.uid}/`
-            })
+            if (claseBorrador.tipoClase === 'video' || claseBorrador.tipoClase === 'articulo') {
+                await ContenidoClase.eliminarContenidoArchivo({
+                    bucketName: bucketNameContenidoBorrador,
+                    rutaPrefix: `${params.uidCurso}/${claseBorrador.uid}/`
+                })
+            }
 
             if (claseBorrador.estadoDocumento !== 'nuevo') {
                 // CLASE

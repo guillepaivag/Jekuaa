@@ -18,8 +18,8 @@
                                     v-model="computedPrecio"
                                     class="mt-0 pt-0"
                                     type="number"
-                                    label="FiiPoints:"
-                                    placeholder="FiiPoints"
+                                    label="Jekuaapoints:"
+                                    placeholder="Jekuaapoints"
                                     @input="$v.precio.$touch()"
                                     @blur="$v.precio.$touch()"
                                     :error-messages="errorsPrecio"
@@ -115,7 +115,7 @@
                         <div class="mb-3">
                             <p>
                                 <b>Precio con descuento:</b> 
-                                {{ getDescuento(precio, descuento) }} FP
+                                {{ getDescuento(precio, descuento) }} JP
                             </p>
                             <p>
                                 <b>Precio con descuento:</b> 
@@ -190,7 +190,7 @@ export default {
             conDescuento: false,
             reglas: [
                 '1JP = $0.0798',
-                'El precio se maneja en FiiPoints (FP).',
+                'El precio se maneja en Jekuaapoints (JP).',
                 'El precio de un curso debe estar en un rango de 0JP a 2700JP.',
                 'Para aplicar descuentos al curso, el curso debe costar mínimo 250JP.',
                 'El % de descuento un curso debe estar en un rango de 3% a 100%.',
@@ -205,12 +205,12 @@ export default {
             let precioDescuento = precio - ( precio * (descuento.porcentaje / 100) )
             return Number(precioDescuento.toFixed())
         },
-        JP_to_dolar (FP) {
-            let dolar = 0.0798 * FP
+        JP_to_dolar (JP) {
+            let dolar = 0.0798 * JP
             return dolar.toFixed(2)
         },
-        JP_to_dolar_descuento (FP, descuento) {
-            let dolar = 0.0798 * FP
+        JP_to_dolar_descuento (JP, descuento) {
+            let dolar = 0.0798 * JP
             let result = dolar - ( dolar *  (descuento.porcentaje / 100) )
             return result.toFixed(2)
         },

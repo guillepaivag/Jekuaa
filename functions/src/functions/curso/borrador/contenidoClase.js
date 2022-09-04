@@ -220,7 +220,7 @@ ffContenidoClase.validacionContenidoClase = functions
         estadoDelProceso = 'actualizacion'
         
         // TODO: Si existe contenido, eliminar el "actual" (asincrono)
-        if (result.contenidoClase.tipoContenido) {
+        if (result.contenidoClase.tipoContenido === 'video' || result.contenidoClase.tipoContenido === 'articulo') {
             
             const fileNameAux = result.contenidoClase.tipoContenido === 'video' ?
             `video.${result.contenidoClase.fileExtension}` : 'articulo.md'

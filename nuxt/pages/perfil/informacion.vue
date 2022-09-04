@@ -285,7 +285,7 @@ export default {
   methods: {
     getRolDescriptivo (rolDescriptivo) {
       if (rolDescriptivo === 'estudiante') {
-        return 'Estudiante de Classfii'
+        return 'Estudiante de Jekuaapy'
       }
 
       return rolDescriptivo

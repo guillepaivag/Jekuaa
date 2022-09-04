@@ -9,7 +9,7 @@
                     Iniciar sesión
                 </p>
                 <p>
-                    Classfii
+                    Jekuaapy
                 </p>
                 <div class="text--primary">
                     Para ver este contenido por favor inicia sesión. <br>

@@ -3,11 +3,11 @@
         <section class="container presentacion">
             <div>
                 <div class="mt-5">
-                    <h1 class="titulo">¡Bienvenido a <span style="color: #683bce;">Class</span><span style="color: #ff1d89;">fii</span>!</h1>
+                    <h1 class="titulo">¡Bienvenido a <span style="color: #683bce;">Jekuaa</span><span style="color: #ff1d89;">py</span>!</h1>
                     <v-divider></v-divider>
 
                     <p class="mt-5 descripcion">
-                        Classfii, una plataforma educativa para que 
+                        Jekuaapy, una plataforma educativa para que 
                         aprendas sobre los temas y contenidos que te gusten, 
                         de manera rápida y divertida!
                     </p>
@@ -52,11 +52,11 @@
                     class="contenedor-descripcion"
                 >
                     <h3 class="font-weight-bold contenedor-descripcion-titulo">
-                        ¡Classfii cursos!
+                        ¡Jekuaapy cursos!
                     </h3>
 
                     <p class="font-weight contenedor-descripcion-mensaje">
-                        ¡Puedes aprender sobre varios temas como programación, matemática, marketing y más en Classfii cursos!
+                        ¡Puedes aprender sobre varios temas como programación, matemática, marketing y más en Jekuaapy cursos!
                     </p>
                 </v-col>
             </v-row>
@@ -75,7 +75,7 @@
                     </h3>
 
                     <p class="font-weight contenedor-descripcion-mensaje">
-                        En Classfii existen secciones, que se dividen en:
+                        En Jekuaapy existen secciones, que se dividen en:
                     </p>
                 </v-col>
 
@@ -128,11 +128,11 @@
                     class="contenedor-descripcion"
                 >
                     <h3 class="font-weight-bold contenedor-descripcion-titulo">
-                        ¡Forma parte de la comunidad Classfii!
+                        ¡Forma parte de la comunidad Jekuaapy!
                     </h3>
 
                     <p class="font-weight contenedor-descripcion-mensaje">
-                        Puedes create una cuenta gratis en Classfii y comenzar con esta ¡aventura de conocimiento!
+                        Puedes create una cuenta gratis en Jekuaapy y comenzar con esta ¡aventura de conocimiento!
                     </p>
                 </v-col>
                 
@@ -150,12 +150,12 @@
                 <v-expansion-panel>
                     <v-expansion-panel-header>
                         <h4 style="font-size: 22px; display: inline;">
-                            ¿Qué es Classfii?
+                            ¿Qué es Jekuaapy?
                         </h4>
                     </v-expansion-panel-header>
                     <v-expansion-panel-content>
                         <p class="mt-3" style="font-size: 18px;">
-                            Classfii es una plataforma de enseñanza de varios temas, por el momento la plataforma solamente cuenta con blogs, se irá agregando y actualizando funcionalidades, cursos, retos y de esa forma ir formando a los futuros estudiantes de Classfii y ¡divulgar información! 🌎
+                            Jekuaapy es una plataforma de enseñanza de varios temas, por el momento la plataforma solamente cuenta con blogs, se irá agregando y actualizando funcionalidades, cursos, retos y de esa forma ir formando a los futuros estudiantes de Jekuaapy y ¡divulgar información! 🌎
                         </p>
                     </v-expansion-panel-content>
                 </v-expansion-panel>
@@ -163,19 +163,17 @@
                 <v-expansion-panel>
                     <v-expansion-panel-header>
                         <h4 style="font-size: 22px; display: inline;">
-                            ¿Qué es un Fiipoint?
+                            ¿Qué es un Jekuaapoint?
                         </h4>
                     </v-expansion-panel-header>
                     <v-expansion-panel-content>
                         <p class="mt-3" style="font-size: 18px;">
-                            Los <nuxt-link to="/fiipoints">Fiipoints</nuxt-link> son creditos dentro de la plataforma para comprar tus cursos!
+                            Los <nuxt-link to="/jekuaapoints">Jekuaapoints</nuxt-link> son creditos dentro de la plataforma para comprar tus cursos!
                         </p>
                     </v-expansion-panel-content>
                 </v-expansion-panel>
             </v-expansion-panels>
         </div>
-
-
     </div>
 </template>
 
@@ -192,11 +190,11 @@ export default {
             listaSecciones: [
                 {
                     nombre: 'Informática',
-                    descripcion: 'Tienes alguna duda sobre un lenguaje de programación, comando, operadores, modelos de programación o aprender sobre algún algoritmo? En Classfii lo tienes y ¡con códigos de ejemplo! 👩🏻‍💻'
+                    descripcion: 'Tienes alguna duda sobre un lenguaje de programación, comando, operadores, modelos de programación o aprender sobre algún algoritmo? En Jekuaapy lo tienes y ¡con códigos de ejemplo! 👩🏻‍💻'
                 },
                 {
                     nombre: 'Matemática',
-                    descripcion: '¿Deseas aprender cálculo, física, geometría, analítica y comprender todo lo relacionado a la matemática? Con Classfii blogs puedes aprender! 🚀'
+                    descripcion: '¿Deseas aprender cálculo, física, geometría, analítica y comprender todo lo relacionado a la matemática? Con Jekuaapy blogs puedes aprender! 🚀'
                 },
             ],
         }
@@ -272,5 +270,4 @@ export default {
         padding: 50px 20px 50px 20px !important;
     }
 }
-
 </style>

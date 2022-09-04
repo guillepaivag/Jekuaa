@@ -1008,7 +1008,7 @@ module.exports = __webpack_require__.p + "img/matematica.761aff7.webp";
 /***/ 283:
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__.p + "img/sin-seccion.b6dd829.webp";
+module.exports = __webpack_require__.p + "img/sin-seccion.0b23ce7.webp";
 
 /***/ }),
 

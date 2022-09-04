@@ -917,13 +917,13 @@ var VCard = __webpack_require__(81);
 // EXTERNAL MODULE: ./node_modules/vuetify/lib/components/VCard/index.js
 var components_VCard = __webpack_require__(18);
 
-// CONCATENATED MODULE: ./node_modules/vuetify-loader/lib/loader.js??ref--4!./node_modules/babel-loader/lib??ref--2-0!./node_modules/vue-loader/lib/loaders/templateLoader.js??ref--7!./node_modules/@nuxt/components/dist/loader.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./components/cursos/IniciarSesion.vue?vue&type=template&id=a5eeec58&
+// CONCATENATED MODULE: ./node_modules/vuetify-loader/lib/loader.js??ref--4!./node_modules/babel-loader/lib??ref--2-0!./node_modules/vue-loader/lib/loaders/templateLoader.js??ref--7!./node_modules/@nuxt/components/dist/loader.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./components/cursos/IniciarSesion.vue?vue&type=template&id=776789d4&
 
 
 
 
 
-var IniciarSesionvue_type_template_id_a5eeec58_render = function render() {
+var IniciarSesionvue_type_template_id_776789d4_render = function render() {
   var _vm = this,
       _c = _vm._self._c;
 
@@ -934,7 +934,7 @@ var IniciarSesionvue_type_template_id_a5eeec58_render = function render() {
     }
   }, [_c(components_VCard["c" /* VCardText */], [_c('p', {
     staticClass: "text-h4 text--primary"
-  }, [_vm._v("\n                Iniciar sesión\n            ")]), _vm._v(" "), _c('p', [_vm._v("\n                Classfii\n            ")]), _vm._v(" "), _c('div', {
+  }, [_vm._v("\n                Iniciar sesión\n            ")]), _vm._v(" "), _c('p', [_vm._v("\n                Jekuaapy\n            ")]), _vm._v(" "), _c('div', {
     staticClass: "text--primary"
   }, [_vm._v("\n                Para ver este contenido por favor inicia sesión. "), _c('br'), _vm._v("\n                Y comienza con un mundo de aprendizaje 🚀\n            ")])]), _vm._v(" "), _c(components_VCard["a" /* VCardActions */], [_c(VBtn["a" /* default */], {
     attrs: {
@@ -947,7 +947,7 @@ var IniciarSesionvue_type_template_id_a5eeec58_render = function render() {
 
 var staticRenderFns = [];
 
-// CONCATENATED MODULE: ./components/cursos/IniciarSesion.vue?vue&type=template&id=a5eeec58&
+// CONCATENATED MODULE: ./components/cursos/IniciarSesion.vue?vue&type=template&id=776789d4&
 
 // CONCATENATED MODULE: ./node_modules/babel-loader/lib??ref--2-0!./node_modules/@nuxt/components/dist/loader.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./components/cursos/IniciarSesion.vue?vue&type=script&lang=js&
 /* harmony default export */ var IniciarSesionvue_type_script_lang_js_ = ({});
@@ -969,7 +969,7 @@ function injectStyles (context) {
 
 var component = Object(componentNormalizer["a" /* default */])(
   cursos_IniciarSesionvue_type_script_lang_js_,
-  IniciarSesionvue_type_template_id_a5eeec58_render,
+  IniciarSesionvue_type_template_id_776789d4_render,
   staticRenderFns,
   false,
   injectStyles,
@@ -998,13 +998,13 @@ var VCard = __webpack_require__(81);
 // EXTERNAL MODULE: ./node_modules/vuetify/lib/components/VCard/index.js
 var components_VCard = __webpack_require__(18);
 
-// CONCATENATED MODULE: ./node_modules/vuetify-loader/lib/loader.js??ref--4!./node_modules/babel-loader/lib??ref--2-0!./node_modules/vue-loader/lib/loaders/templateLoader.js??ref--7!./node_modules/@nuxt/components/dist/loader.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./components/cursos/SinAccesoCurso.vue?vue&type=template&id=f7305920&
+// CONCATENATED MODULE: ./node_modules/vuetify-loader/lib/loader.js??ref--4!./node_modules/babel-loader/lib??ref--2-0!./node_modules/vue-loader/lib/loaders/templateLoader.js??ref--7!./node_modules/@nuxt/components/dist/loader.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./components/cursos/SinAccesoCurso.vue?vue&type=template&id=77a8d370&
 
 
 
 
 
-var SinAccesoCursovue_type_template_id_f7305920_render = function render() {
+var SinAccesoCursovue_type_template_id_77a8d370_render = function render() {
   var _vm = this,
       _c = _vm._self._c;
 
@@ -1015,7 +1015,7 @@ var SinAccesoCursovue_type_template_id_f7305920_render = function render() {
     }
   }, [_c(components_VCard["c" /* VCardText */], [_c('p', {
     staticClass: "text-h4 text--primary"
-  }, [_vm._v("\n                Sin acceso\n            ")]), _vm._v(" "), _c('p', [_vm._v("\n                Classfii\n            ")]), _vm._v(" "), _c('div', {
+  }, [_vm._v("\n                Sin acceso\n            ")]), _vm._v(" "), _c('p', [_vm._v("\n                Jekuaapy\n            ")]), _vm._v(" "), _c('div', {
     staticClass: "text--primary"
   }, [_vm._v("\n                Para ver este contenido por favor compra el curso. "), _c('br'), _vm._v("\n                Y comienza con un mundo de aprendizaje 🚀\n            ")])]), _vm._v(" "), _c(components_VCard["a" /* VCardActions */], [_vm.curso.datosPrecio.precio === 0 ? _c(VBtn["a" /* default */], {
     attrs: {
@@ -1043,7 +1043,7 @@ var SinAccesoCursovue_type_template_id_f7305920_render = function render() {
 
 var staticRenderFns = [];
 
-// CONCATENATED MODULE: ./components/cursos/SinAccesoCurso.vue?vue&type=template&id=f7305920&
+// CONCATENATED MODULE: ./components/cursos/SinAccesoCurso.vue?vue&type=template&id=77a8d370&
 
 // CONCATENATED MODULE: ./node_modules/babel-loader/lib??ref--2-0!./node_modules/@nuxt/components/dist/loader.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./components/cursos/SinAccesoCurso.vue?vue&type=script&lang=js&
 /* harmony default export */ var SinAccesoCursovue_type_script_lang_js_ = ({
@@ -1077,7 +1077,7 @@ function injectStyles (context) {
 
 var component = Object(componentNormalizer["a" /* default */])(
   cursos_SinAccesoCursovue_type_script_lang_js_,
-  SinAccesoCursovue_type_template_id_f7305920_render,
+  SinAccesoCursovue_type_template_id_77a8d370_render,
   staticRenderFns,
   false,
   injectStyles,

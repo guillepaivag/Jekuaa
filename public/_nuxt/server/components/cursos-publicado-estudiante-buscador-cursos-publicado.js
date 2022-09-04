@@ -930,7 +930,7 @@ module.exports = __webpack_require__.p + "img/matematica.761aff7.webp";
 /***/ 283:
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__.p + "img/sin-seccion.b6dd829.webp";
+module.exports = __webpack_require__.p + "img/sin-seccion.0b23ce7.webp";
 
 /***/ }),
 
@@ -4719,9 +4719,9 @@ module.exports = {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _node_modules_css_loader_dist_cjs_js_ref_7_oneOf_1_0_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_7_oneOf_1_1_node_modules_sass_loader_dist_cjs_js_ref_7_oneOf_1_2_node_modules_nuxt_components_dist_loader_js_ref_0_0_node_modules_vue_loader_lib_index_js_vue_loader_options_BuscadorCursosPublicado_vue_vue_type_style_index_0_id_5e6d829a_prod_scoped_true_lang_scss___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(352);
-/* harmony import */ var _node_modules_css_loader_dist_cjs_js_ref_7_oneOf_1_0_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_7_oneOf_1_1_node_modules_sass_loader_dist_cjs_js_ref_7_oneOf_1_2_node_modules_nuxt_components_dist_loader_js_ref_0_0_node_modules_vue_loader_lib_index_js_vue_loader_options_BuscadorCursosPublicado_vue_vue_type_style_index_0_id_5e6d829a_prod_scoped_true_lang_scss___WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_css_loader_dist_cjs_js_ref_7_oneOf_1_0_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_7_oneOf_1_1_node_modules_sass_loader_dist_cjs_js_ref_7_oneOf_1_2_node_modules_nuxt_components_dist_loader_js_ref_0_0_node_modules_vue_loader_lib_index_js_vue_loader_options_BuscadorCursosPublicado_vue_vue_type_style_index_0_id_5e6d829a_prod_scoped_true_lang_scss___WEBPACK_IMPORTED_MODULE_0__);
-/* harmony reexport (unknown) */ for(var __WEBPACK_IMPORT_KEY__ in _node_modules_css_loader_dist_cjs_js_ref_7_oneOf_1_0_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_7_oneOf_1_1_node_modules_sass_loader_dist_cjs_js_ref_7_oneOf_1_2_node_modules_nuxt_components_dist_loader_js_ref_0_0_node_modules_vue_loader_lib_index_js_vue_loader_options_BuscadorCursosPublicado_vue_vue_type_style_index_0_id_5e6d829a_prod_scoped_true_lang_scss___WEBPACK_IMPORTED_MODULE_0__) if(["default"].indexOf(__WEBPACK_IMPORT_KEY__) < 0) (function(key) { __webpack_require__.d(__webpack_exports__, key, function() { return _node_modules_css_loader_dist_cjs_js_ref_7_oneOf_1_0_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_7_oneOf_1_1_node_modules_sass_loader_dist_cjs_js_ref_7_oneOf_1_2_node_modules_nuxt_components_dist_loader_js_ref_0_0_node_modules_vue_loader_lib_index_js_vue_loader_options_BuscadorCursosPublicado_vue_vue_type_style_index_0_id_5e6d829a_prod_scoped_true_lang_scss___WEBPACK_IMPORTED_MODULE_0__[key]; }) }(__WEBPACK_IMPORT_KEY__));
+/* harmony import */ var _node_modules_css_loader_dist_cjs_js_ref_7_oneOf_1_0_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_7_oneOf_1_1_node_modules_sass_loader_dist_cjs_js_ref_7_oneOf_1_2_node_modules_nuxt_components_dist_loader_js_ref_0_0_node_modules_vue_loader_lib_index_js_vue_loader_options_BuscadorCursosPublicado_vue_vue_type_style_index_0_id_429b4ebf_prod_scoped_true_lang_scss___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(352);
+/* harmony import */ var _node_modules_css_loader_dist_cjs_js_ref_7_oneOf_1_0_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_7_oneOf_1_1_node_modules_sass_loader_dist_cjs_js_ref_7_oneOf_1_2_node_modules_nuxt_components_dist_loader_js_ref_0_0_node_modules_vue_loader_lib_index_js_vue_loader_options_BuscadorCursosPublicado_vue_vue_type_style_index_0_id_429b4ebf_prod_scoped_true_lang_scss___WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_css_loader_dist_cjs_js_ref_7_oneOf_1_0_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_7_oneOf_1_1_node_modules_sass_loader_dist_cjs_js_ref_7_oneOf_1_2_node_modules_nuxt_components_dist_loader_js_ref_0_0_node_modules_vue_loader_lib_index_js_vue_loader_options_BuscadorCursosPublicado_vue_vue_type_style_index_0_id_429b4ebf_prod_scoped_true_lang_scss___WEBPACK_IMPORTED_MODULE_0__);
+/* harmony reexport (unknown) */ for(var __WEBPACK_IMPORT_KEY__ in _node_modules_css_loader_dist_cjs_js_ref_7_oneOf_1_0_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_7_oneOf_1_1_node_modules_sass_loader_dist_cjs_js_ref_7_oneOf_1_2_node_modules_nuxt_components_dist_loader_js_ref_0_0_node_modules_vue_loader_lib_index_js_vue_loader_options_BuscadorCursosPublicado_vue_vue_type_style_index_0_id_429b4ebf_prod_scoped_true_lang_scss___WEBPACK_IMPORTED_MODULE_0__) if(["default"].indexOf(__WEBPACK_IMPORT_KEY__) < 0) (function(key) { __webpack_require__.d(__webpack_exports__, key, function() { return _node_modules_css_loader_dist_cjs_js_ref_7_oneOf_1_0_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_7_oneOf_1_1_node_modules_sass_loader_dist_cjs_js_ref_7_oneOf_1_2_node_modules_nuxt_components_dist_loader_js_ref_0_0_node_modules_vue_loader_lib_index_js_vue_loader_options_BuscadorCursosPublicado_vue_vue_type_style_index_0_id_429b4ebf_prod_scoped_true_lang_scss___WEBPACK_IMPORTED_MODULE_0__[key]; }) }(__WEBPACK_IMPORT_KEY__));
 
 
 /***/ }),
@@ -4731,9 +4731,9 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _node_modules_css_loader_dist_cjs_js_ref_3_oneOf_1_0_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_3_oneOf_1_1_node_modules_nuxt_components_dist_loader_js_ref_0_0_node_modules_vue_loader_lib_index_js_vue_loader_options_BuscadorCursosPublicado_vue_vue_type_style_index_1_id_5e6d829a_prod_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(353);
-/* harmony import */ var _node_modules_css_loader_dist_cjs_js_ref_3_oneOf_1_0_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_3_oneOf_1_1_node_modules_nuxt_components_dist_loader_js_ref_0_0_node_modules_vue_loader_lib_index_js_vue_loader_options_BuscadorCursosPublicado_vue_vue_type_style_index_1_id_5e6d829a_prod_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_css_loader_dist_cjs_js_ref_3_oneOf_1_0_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_3_oneOf_1_1_node_modules_nuxt_components_dist_loader_js_ref_0_0_node_modules_vue_loader_lib_index_js_vue_loader_options_BuscadorCursosPublicado_vue_vue_type_style_index_1_id_5e6d829a_prod_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_0__);
-/* harmony reexport (unknown) */ for(var __WEBPACK_IMPORT_KEY__ in _node_modules_css_loader_dist_cjs_js_ref_3_oneOf_1_0_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_3_oneOf_1_1_node_modules_nuxt_components_dist_loader_js_ref_0_0_node_modules_vue_loader_lib_index_js_vue_loader_options_BuscadorCursosPublicado_vue_vue_type_style_index_1_id_5e6d829a_prod_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_0__) if(["default"].indexOf(__WEBPACK_IMPORT_KEY__) < 0) (function(key) { __webpack_require__.d(__webpack_exports__, key, function() { return _node_modules_css_loader_dist_cjs_js_ref_3_oneOf_1_0_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_3_oneOf_1_1_node_modules_nuxt_components_dist_loader_js_ref_0_0_node_modules_vue_loader_lib_index_js_vue_loader_options_BuscadorCursosPublicado_vue_vue_type_style_index_1_id_5e6d829a_prod_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_0__[key]; }) }(__WEBPACK_IMPORT_KEY__));
+/* harmony import */ var _node_modules_css_loader_dist_cjs_js_ref_3_oneOf_1_0_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_3_oneOf_1_1_node_modules_nuxt_components_dist_loader_js_ref_0_0_node_modules_vue_loader_lib_index_js_vue_loader_options_BuscadorCursosPublicado_vue_vue_type_style_index_1_id_429b4ebf_prod_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(353);
+/* harmony import */ var _node_modules_css_loader_dist_cjs_js_ref_3_oneOf_1_0_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_3_oneOf_1_1_node_modules_nuxt_components_dist_loader_js_ref_0_0_node_modules_vue_loader_lib_index_js_vue_loader_options_BuscadorCursosPublicado_vue_vue_type_style_index_1_id_429b4ebf_prod_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_css_loader_dist_cjs_js_ref_3_oneOf_1_0_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_3_oneOf_1_1_node_modules_nuxt_components_dist_loader_js_ref_0_0_node_modules_vue_loader_lib_index_js_vue_loader_options_BuscadorCursosPublicado_vue_vue_type_style_index_1_id_429b4ebf_prod_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_0__);
+/* harmony reexport (unknown) */ for(var __WEBPACK_IMPORT_KEY__ in _node_modules_css_loader_dist_cjs_js_ref_3_oneOf_1_0_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_3_oneOf_1_1_node_modules_nuxt_components_dist_loader_js_ref_0_0_node_modules_vue_loader_lib_index_js_vue_loader_options_BuscadorCursosPublicado_vue_vue_type_style_index_1_id_429b4ebf_prod_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_0__) if(["default"].indexOf(__WEBPACK_IMPORT_KEY__) < 0) (function(key) { __webpack_require__.d(__webpack_exports__, key, function() { return _node_modules_css_loader_dist_cjs_js_ref_3_oneOf_1_0_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_3_oneOf_1_1_node_modules_nuxt_components_dist_loader_js_ref_0_0_node_modules_vue_loader_lib_index_js_vue_loader_options_BuscadorCursosPublicado_vue_vue_type_style_index_1_id_429b4ebf_prod_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_0__[key]; }) }(__WEBPACK_IMPORT_KEY__));
 
 
 /***/ }),
@@ -4778,7 +4778,7 @@ var VRow = __webpack_require__(268);
 // EXTERNAL MODULE: ./node_modules/vuetify/lib/components/VTextField/VTextField.js + 3 modules
 var VTextField = __webpack_require__(210);
 
-// CONCATENATED MODULE: ./node_modules/vuetify-loader/lib/loader.js??ref--4!./node_modules/babel-loader/lib??ref--2-0!./node_modules/vue-loader/lib/loaders/templateLoader.js??ref--7!./node_modules/@nuxt/components/dist/loader.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./components/cursos-publicado/estudiante/BuscadorCursosPublicado.vue?vue&type=template&id=5e6d829a&scoped=true&
+// CONCATENATED MODULE: ./node_modules/vuetify-loader/lib/loader.js??ref--4!./node_modules/babel-loader/lib??ref--2-0!./node_modules/vue-loader/lib/loaders/templateLoader.js??ref--7!./node_modules/@nuxt/components/dist/loader.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./components/cursos-publicado/estudiante/BuscadorCursosPublicado.vue?vue&type=template&id=429b4ebf&scoped=true&
 
 
 
@@ -4791,7 +4791,7 @@ var VTextField = __webpack_require__(210);
 
 
 
-var BuscadorCursosPublicadovue_type_template_id_5e6d829a_scoped_true_render = function render() {
+var BuscadorCursosPublicadovue_type_template_id_429b4ebf_scoped_true_render = function render() {
   var _vm = this,
       _c = _vm._self._c;
 
@@ -5089,7 +5089,7 @@ var BuscadorCursosPublicadovue_type_template_id_5e6d829a_scoped_true_render = fu
               "outlined": "",
               "small": ""
             }
-          }, [_vm._v("\n                                " + _vm._s(item.datosPrecio.precio) + " FP\n                              ")]) : _vm._e(), _vm._v(" "), _vm.estaEnDescuento(item.datosPrecio.descuento) ? _c(VChip["a" /* default */], {
+          }, [_vm._v("\n                                " + _vm._s(item.datosPrecio.precio) + " JP\n                              ")]) : _vm._e(), _vm._v(" "), _vm.estaEnDescuento(item.datosPrecio.descuento) ? _c(VChip["a" /* default */], {
             staticStyle: {
               "font-size": "17px"
             },
@@ -5098,13 +5098,13 @@ var BuscadorCursosPublicadovue_type_template_id_5e6d829a_scoped_true_render = fu
               "outlined": "",
               "small": ""
             }
-          }, [_vm._v("\n                                " + _vm._s(item.datosPrecio.descuento.precio) + " FP\n                              ")]) : _vm._e(), _vm._v(" "), _vm.estaEnDescuento(item.datosPrecio.descuento) ? _c('b', {
+          }, [_vm._v("\n                                " + _vm._s(item.datosPrecio.descuento.precio) + " JP\n                              ")]) : _vm._e(), _vm._v(" "), _vm.estaEnDescuento(item.datosPrecio.descuento) ? _c('b', {
             staticClass: "ml-1 text-decoration-line-through",
             staticStyle: {
               "color": "#8E8E8E",
               "font-size": "15px"
             }
-          }, [_vm._v("\n                                " + _vm._s(item.datosPrecio.precio) + " FP\n                              ")]) : _vm._e()], 1), _vm._v(" "), _c('div', {
+          }, [_vm._v("\n                                " + _vm._s(item.datosPrecio.precio) + " JP\n                              ")]) : _vm._e()], 1), _vm._v(" "), _c('div', {
             staticClass: "mb-4"
           }, _vm._l(item.categorias, function (categoria, index) {
             return _c(VChip["a" /* default */], {
@@ -5422,7 +5422,7 @@ var BuscadorCursosPublicadovue_type_template_id_5e6d829a_scoped_true_render = fu
 
 var staticRenderFns = [];
 
-// CONCATENATED MODULE: ./components/cursos-publicado/estudiante/BuscadorCursosPublicado.vue?vue&type=template&id=5e6d829a&scoped=true&
+// CONCATENATED MODULE: ./components/cursos-publicado/estudiante/BuscadorCursosPublicado.vue?vue&type=template&id=429b4ebf&scoped=true&
 
 // EXTERNAL MODULE: ./node_modules/vue-instantsearch/vue2/cjs/index.js
 var cjs = __webpack_require__(284);
@@ -5570,11 +5570,11 @@ if (style1.__inject__) style1.__inject__(context)
 
 var component = Object(componentNormalizer["a" /* default */])(
   estudiante_BuscadorCursosPublicadovue_type_script_lang_js_,
-  BuscadorCursosPublicadovue_type_template_id_5e6d829a_scoped_true_render,
+  BuscadorCursosPublicadovue_type_template_id_429b4ebf_scoped_true_render,
   staticRenderFns,
   false,
   injectStyles,
-  "5e6d829a",
+  "429b4ebf",
   "314dc89b"
   
 )

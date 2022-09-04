@@ -56,13 +56,13 @@
                     <p><strong>Nombre usuario:</strong> {{datosUsuario.nombreUsuario}}</p>
                     <p v-if="authUsuario.displayName"><strong>Nombre completo:</strong> {{authUsuario.displayName}}</p>
                     <p v-if="datosUsuario.fechaNacimiento"><strong>Fecha de nacimiento:</strong> {{fechaNacimientoString}}</p>
-                    <p><strong>Comenzó en Classfii:</strong> {{authUsuario.metadata.creationTime}}</p>
+                    <p><strong>Comenzó en Jekuaapy:</strong> {{authUsuario.metadata.creationTime}}</p>
                     <p><strong>Ultima vez:</strong> {{authUsuario.metadata.lastSignInTime}}</p>
                     <p v-if="datosUsuario.instructor">
                         <v-icon class="align--center mr-1 mb-3" size="35px" color="#683bce">
                             mdi-theater
                         </v-icon>
-                        Soy instructor de Classfii
+                        Soy instructor de Jekuaapy
                     </p>
                 </div>
             </div>
@@ -192,7 +192,7 @@ export default {
     methods: {
         getRolDescriptivo (rolDescriptivo) {
             if (rolDescriptivo === 'estudiante') {
-                return 'Estudiante de Classfii'
+                return 'Estudiante de Jekuaapy'
             }
 
             return rolDescriptivo

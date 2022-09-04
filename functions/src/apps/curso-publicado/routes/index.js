@@ -9,7 +9,7 @@ const {
     estaAutenticadoParaVerContenidoClase, 
     marcarComoClaseVisualizada 
 } = require('../middlewares')
-const { darMeGusta, obtenerUrlVideoClase, obtenerArticuloClase } = require('../controllers')
+const { darMeGusta, obtenerUrlVideoClase, obtenerArticuloClase, obtenerVideoYoutubeClase } = require('../controllers')
 
 router.post('/meGusta/:uidCurso', 
     estaAutenticado,
@@ -34,6 +34,15 @@ router.get('/obtenerArticulo/:uidCurso/:uidClase',
     validacionObtencionContenido,
     marcarComoClaseVisualizada,
     obtenerArticuloClase)
+
+
+
+
+router.get('/obtenerVideoYoutube/:uidCurso/:uidClase', 
+    estaAutenticadoParaVerContenidoClase,
+    validacionObtencionContenido,
+    marcarComoClaseVisualizada,
+    obtenerVideoYoutubeClase)
 
 
 module.exports = router

@@ -17,7 +17,7 @@
                     <v-icon left>
                         mdi-plus
                     </v-icon>
-                    Crear curso para Classfii
+                    Crear curso para Jekuaapy
                 </v-btn>
             </template>
             <v-sheet

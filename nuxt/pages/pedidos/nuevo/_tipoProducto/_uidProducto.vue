@@ -46,7 +46,7 @@
                                     style="font-size: 17px;"
                                     small
                                 >
-                                    {{ data.datosPrecio.precio }} FP
+                                    {{ data.datosPrecio.precio }} JP
                                 </v-chip>
                                 <div v-else>
                                     <v-chip
@@ -56,14 +56,14 @@
                                         style="font-size: 17px;"
                                         small
                                     >
-                                        {{ data.datosPrecio.descuento.precio }} FP
+                                        {{ data.datosPrecio.descuento.precio }} JP
                                     </v-chip>
 
                                     <b 
                                         class="ml-1 text-decoration-line-through"
                                         style="color: #aaaaaa; font-size: 16px;"    
                                     >
-                                        {{ data.datosPrecio.precio }} FP
+                                        {{ data.datosPrecio.precio }} JP
                                     </b>
                                 </div>
                             </v-col>
@@ -78,7 +78,7 @@
 
                     <div class="mt-7" v-if="data">
                         <p style="margin-bottom: 0; font-size: 18px;">
-                            <b>Precio original:</b> {{ data.datosPrecio.precio }} FP
+                            <b>Precio original:</b> {{ data.datosPrecio.precio }} JP
                         </p>
 
                         <p style="margin-bottom: 0; font-size: 18px;" v-if="hayDescuento">
@@ -86,7 +86,7 @@
                         </p>
 
                         <p style="margin-bottom: 0; font-size: 18px;" v-if="hayDescuento">
-                            <b>Precio con descuento:</b> {{ data.datosPrecio.descuento.precio }} FP
+                            <b>Precio con descuento:</b> {{ data.datosPrecio.descuento.precio }} JP
                         </p>
 
                         <p style="margin-bottom: 0; font-size: 18px;" v-if="hayDescuento">
@@ -98,21 +98,21 @@
                         <div class="mb-10">
                             <b style="font-size: 24px;">
                                 Precio total: 
-                                {{ !hayDescuento ? data.datosPrecio.precio : data.datosPrecio.descuento.precio }} FP
+                                {{ !hayDescuento ? data.datosPrecio.precio : data.datosPrecio.descuento.precio }} JP
                             </b>
                         </div>
 
                         <p style="margin-bottom: 0;" class="text-center" v-if="!tieneParaComprar">
-                            ¡Ohh no! No tienes suficiente FiiPoints
+                            ¡Ohh no! No tienes suficiente Jekuaapoints
                         </p>
                         <v-btn
                             v-if="!tieneParaComprar"
                             class="white--text mb-5"
                             block
                             color="#683bce"
-                            :to="linkComprarFiiPoints"
+                            :to="linkComprarPoints"
                         >
-                            ¡Comprar FiiPoints!
+                            ¡Comprar Jekuaapoints!
                         </v-btn>
 
                         <v-btn
@@ -142,7 +142,7 @@
                         </p>
 
                         <nuxt-link style="color: #ffffff;" to="/" target="_blank">
-                            ¿Qué son los FiiPoints (FP)?
+                            ¿Qué son los Jekuaapoints (JP)?
                         </nuxt-link>
                     </div>
                 </div>
@@ -169,7 +169,7 @@ export default {
             loading: false,
             pagado: false,
             linkVerProducto: '/',
-            linkComprarFiiPoints: '/',
+            linkComprarPoints: '/',
             tieneParaComprar: false,
         }
     },
