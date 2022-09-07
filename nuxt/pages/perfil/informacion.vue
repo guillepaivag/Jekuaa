@@ -348,30 +348,7 @@ export default {
       this.intereses !== actual.intereses ? 
       datos.intereses = this.intereses : ''
 
-      let diferentes = this.redesSociales.length !== actual.redesSociales.length
-      let existe
-      if (!diferentes) {
-        for (let i = 0; i < this.redesSociales.length; i++) {
-          const element = this.redesSociales[i]
-          existe = false
-          for (let j = 0; j < actual.redesSociales.length; j++) {
-            const element2 = actual.redesSociales[j]
-            if (element.redSocial === element2.redSocial) {
-              existe = true
-              break
-            }
-          }
-
-          if (!existe) break
-        }
-
-        
-      }
-
-      if (!existe || diferentes) {
-        this.redesSociales !== actual.redesSociales ? 
-        datos.redesSociales = this.redesSociales : ''
-      }
+      datos.redesSociales = this.redesSociales
       
       return datos
     },

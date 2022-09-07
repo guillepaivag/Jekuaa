@@ -43,7 +43,7 @@ module.exports =
 /******/
 /******/ 		// "0" is the signal for "already loaded"
 /******/ 		if(installedChunks[chunkId] !== 0) {
-/******/ 			var chunk = require("./" + ({"1":"components/auth-email","2":"components/blogs-buscador-blog","3":"components/blogs-miembro-buscador-blog","4":"components/blogs-miembro-errores-blog","5":"components/blogs-miembro-formulario-blog-actualizar","6":"components/blogs-miembro-formulario-blog-leer","7":"components/blogs-recomendacion-por-dar-m-g","8":"components/blogs-recomendacion-por-seccion","9":"components/blogs-recomendacion-por-similitud","10":"components/blogs-visualizador","11":"components/cursos-borrador-miembro-buscador-cursos-borrador","12":"components/cursos-borrador-miembro-formulario-curso","13":"components/cursos-borrador-miembro-generador-articulo","14":"components/cursos-borrador-miembro-generador-video-clase","15":"components/cursos-borrador-miembro-lista-unidades-clases","16":"components/cursos-borrador-miembro-programa-estudio","17":"components/cursos-borrador-moderador-buscador-cursos-borrador","18":"components/cursos-borrador-moderador-lista-unidades-clases","19":"components/cursos-iniciar-sesion","20":"components/cursos-publicado-estudiante-buscador-cursos-publicado","21":"components/cursos-publicado-estudiante-lista-unidades-clases","22":"components/cursos-publicado-miembro-buscador-cursos-publicado","23":"components/cursos-publicado-miembro-lista-unidades-clases","24":"components/cursos-publicado-moderador-buscador-cursos-publicado","25":"components/cursos-publicado-moderador-lista-unidades-clases","26":"components/cursos-recomendacion-porque-viste","27":"components/cursos-sin-acceso-curso","28":"components/cursos-visualizador-articulo","29":"components/cursos-visualizador-video","30":"components/foto-perfil","31":"components/informacion-usuario-formulario-informacion-usuario","32":"components/tiptap","33":"components/usuarios-carta-presentacion","34":"components/usuarios-carta-presentacion-instructor","35":"components/usuarios-moderador-visualizador-datos-usuario","36":"pages/bienvenido-a-jekuaapy/_nombreUsuario","37":"pages/blog/_referencia","38":"pages/blogs/_seccion/_categoria","39":"pages/centro","40":"pages/cuentas-jekuaapy-sin-verificar","41":"pages/curso/_codigo/clase","42":"pages/curso/_codigo/clase/_uidClase","43":"pages/curso/_codigo/continuar","44":"pages/curso/_codigo/index","45":"pages/cursos/_seccion/_categoria","46":"pages/estudiante/_nombreUsuario","47":"pages/historial-compra","48":"pages/historial-compra/productos","49":"pages/index","50":"pages/inicioSesion","51":"pages/jekuaapoints/comprar","52":"pages/jekuaapoints/index","53":"pages/miembro/blog/_referencia","54":"pages/miembro/blog/actualizar/_referencia","55":"pages/miembro/blogs/index","56":"pages/miembro/blogs/mis-blogs","57":"pages/miembro/blogs/nuevo","58":"pages/miembro/curso-borrador/_uidCurso","59":"pages/miembro/curso-borrador/_uidCurso/auxiliares","60":"pages/miembro/curso-borrador/_uidCurso/foto-curso","61":"pages/miembro/curso-borrador/_uidCurso/index","62":"pages/miembro/curso-borrador/_uidCurso/precios","63":"pages/miembro/curso-borrador/_uidCurso/programa-estudio","64":"pages/miembro/curso-borrador/_uidCurso/publicacion","65":"pages/miembro/curso-borrador/vista-previa/_uidCurso/clase","66":"pages/miembro/curso-borrador/vista-previa/_uidCurso/clase/_uidClase","67":"pages/miembro/curso-publicado/_uidCurso/ajustes","68":"pages/miembro/curso-publicado/_uidCurso/clase","69":"pages/miembro/curso-publicado/_uidCurso/clase/_uidClase","70":"pages/miembro/curso-publicado/_uidCurso/index","71":"pages/miembro/cursos/borradores","72":"pages/miembro/cursos/index","73":"pages/miembro/cursos/nuevo","74":"pages/miembro/cursos/publicados","75":"pages/miembro/index","76":"pages/mis-cursos","77":"pages/moderador/blogs","78":"pages/moderador/curso-borrador/_uidCurso/auxiliares","79":"pages/moderador/curso-borrador/_uidCurso/clase","80":"pages/moderador/curso-borrador/_uidCurso/clase/_uidClase","81":"pages/moderador/curso-borrador/_uidCurso/index","82":"pages/moderador/curso-publicado/_uidCurso/clase","83":"pages/moderador/curso-publicado/_uidCurso/clase/_uidClase","84":"pages/moderador/curso-publicado/_uidCurso/estudiantes","85":"pages/moderador/curso-publicado/_uidCurso/index","86":"pages/moderador/cursos/borradores","87":"pages/moderador/cursos/index","88":"pages/moderador/cursos/publicados","89":"pages/moderador/index","90":"pages/moderador/usuarios","91":"pages/pedidos/index","92":"pages/pedidos/nuevo/_tipoProducto/_uidProducto","93":"pages/pedidos/nuevo/index","94":"pages/pedidos/nuevo/points/index","95":"pages/perfil","96":"pages/perfil/index","97":"pages/perfil/informacion","98":"pages/perfil/seguridad","99":"pages/precios","100":"pages/registro","101":"pages/verificacion-email/_uidUsuario"}[chunkId]||chunkId) + ".js");
+/******/ 			var chunk = require("./" + ({"1":"components/auth-email","2":"components/blogs-buscador-blog","3":"components/blogs-miembro-buscador-blog","4":"components/blogs-miembro-errores-blog","5":"components/blogs-miembro-formulario-blog-actualizar","6":"components/blogs-miembro-formulario-blog-leer","7":"components/blogs-recomendacion-por-dar-m-g","8":"components/blogs-recomendacion-por-seccion","9":"components/blogs-recomendacion-por-similitud","10":"components/blogs-visualizador","11":"components/cursos-borrador-miembro-buscador-cursos-borrador","12":"components/cursos-borrador-miembro-formulario-curso","13":"components/cursos-borrador-miembro-generador-articulo","14":"components/cursos-borrador-miembro-generador-video-clase","15":"components/cursos-borrador-miembro-generador-video-youtube-clase","16":"components/cursos-borrador-miembro-lista-unidades-clases","17":"components/cursos-borrador-miembro-programa-estudio","18":"components/cursos-borrador-moderador-buscador-cursos-borrador","19":"components/cursos-borrador-moderador-lista-unidades-clases","20":"components/cursos-iniciar-sesion","21":"components/cursos-publicado-estudiante-buscador-cursos-publicado","22":"components/cursos-publicado-estudiante-lista-unidades-clases","23":"components/cursos-publicado-miembro-buscador-cursos-publicado","24":"components/cursos-publicado-miembro-lista-unidades-clases","25":"components/cursos-publicado-moderador-buscador-cursos-publicado","26":"components/cursos-publicado-moderador-lista-unidades-clases","27":"components/cursos-recomendacion-porque-viste","28":"components/cursos-sin-acceso-curso","29":"components/cursos-visualizador-articulo","30":"components/cursos-visualizador-video","31":"components/cursos-visualizador-youtube","32":"components/foto-perfil","33":"components/informacion-usuario-formulario-informacion-usuario","34":"components/tiptap","35":"components/usuarios-carta-presentacion","36":"components/usuarios-carta-presentacion-instructor","37":"components/usuarios-moderador-visualizador-datos-usuario","38":"pages/bienvenido-a-jekuaapy/_nombreUsuario","39":"pages/blog/_referencia","40":"pages/blogs/_seccion/_categoria","41":"pages/centro","42":"pages/cuentas-jekuaapy-sin-verificar","43":"pages/curso/_codigo/clase","44":"pages/curso/_codigo/clase/_uidClase","45":"pages/curso/_codigo/continuar","46":"pages/curso/_codigo/index","47":"pages/cursos/_seccion/_categoria","48":"pages/estudiante/_nombreUsuario","49":"pages/historial-compra","50":"pages/historial-compra/productos","51":"pages/index","52":"pages/inicioSesion","53":"pages/jekuaapoints/comprar","54":"pages/jekuaapoints/index","55":"pages/miembro/blog/_referencia","56":"pages/miembro/blog/actualizar/_referencia","57":"pages/miembro/blogs/index","58":"pages/miembro/blogs/mis-blogs","59":"pages/miembro/blogs/nuevo","60":"pages/miembro/curso-borrador/_uidCurso","61":"pages/miembro/curso-borrador/_uidCurso/auxiliares","62":"pages/miembro/curso-borrador/_uidCurso/foto-curso","63":"pages/miembro/curso-borrador/_uidCurso/index","64":"pages/miembro/curso-borrador/_uidCurso/precios","65":"pages/miembro/curso-borrador/_uidCurso/programa-estudio","66":"pages/miembro/curso-borrador/_uidCurso/publicacion","67":"pages/miembro/curso-borrador/vista-previa/_uidCurso/clase","68":"pages/miembro/curso-borrador/vista-previa/_uidCurso/clase/_uidClase","69":"pages/miembro/curso-publicado/_uidCurso/ajustes","70":"pages/miembro/curso-publicado/_uidCurso/clase","71":"pages/miembro/curso-publicado/_uidCurso/clase/_uidClase","72":"pages/miembro/curso-publicado/_uidCurso/index","73":"pages/miembro/cursos/borradores","74":"pages/miembro/cursos/index","75":"pages/miembro/cursos/nuevo","76":"pages/miembro/cursos/publicados","77":"pages/miembro/index","78":"pages/mis-cursos","79":"pages/moderador/blogs","80":"pages/moderador/curso-borrador/_uidCurso/auxiliares","81":"pages/moderador/curso-borrador/_uidCurso/clase","82":"pages/moderador/curso-borrador/_uidCurso/clase/_uidClase","83":"pages/moderador/curso-borrador/_uidCurso/index","84":"pages/moderador/curso-publicado/_uidCurso/clase","85":"pages/moderador/curso-publicado/_uidCurso/clase/_uidClase","86":"pages/moderador/curso-publicado/_uidCurso/estudiantes","87":"pages/moderador/curso-publicado/_uidCurso/index","88":"pages/moderador/cursos/borradores","89":"pages/moderador/cursos/index","90":"pages/moderador/cursos/publicados","91":"pages/moderador/index","92":"pages/moderador/usuarios","93":"pages/pedidos/index","94":"pages/pedidos/nuevo/_tipoProducto/_uidProducto","95":"pages/pedidos/nuevo/index","96":"pages/pedidos/nuevo/points/index","97":"pages/perfil","98":"pages/perfil/index","99":"pages/perfil/informacion","100":"pages/perfil/seguridad","101":"pages/precios","102":"pages/registro","103":"pages/verificacion-email/_uidUsuario"}[chunkId]||chunkId) + ".js");
 /******/ 			var moreModules = chunk.modules, chunkIds = chunk.ids;
 /******/ 			for(var moduleId in moreModules) {
 /******/ 				modules[moduleId] = moreModules[moduleId];
@@ -640,7 +640,7 @@ var helpers = __webpack_require__(0);
 var VList = __webpack_require__(76);
 
 // EXTERNAL MODULE: ./node_modules/vuetify/src/components/VList/VListGroup.sass
-var VListGroup = __webpack_require__(166);
+var VListGroup = __webpack_require__(167);
 
 // EXTERNAL MODULE: ./node_modules/vuetify/lib/components/VIcon/index.js
 var VIcon = __webpack_require__(9);
@@ -1641,7 +1641,7 @@ module.exports = require("ufo");
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var _src_components_VToolbar_VToolbar_sass__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(170);
+/* harmony import */ var _src_components_VToolbar_VToolbar_sass__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(171);
 /* harmony import */ var _src_components_VToolbar_VToolbar_sass__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_src_components_VToolbar_VToolbar_sass__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var _VSheet_VSheet__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(11);
 /* harmony import */ var _VImg_VImg__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(65);
@@ -1801,7 +1801,7 @@ module.exports = require("ufo");
 
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return BaseItemGroup; });
-/* harmony import */ var _src_components_VItemGroup_VItemGroup_sass__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(168);
+/* harmony import */ var _src_components_VItemGroup_VItemGroup_sass__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(169);
 /* harmony import */ var _src_components_VItemGroup_VItemGroup_sass__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_src_components_VItemGroup_VItemGroup_sass__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var _mixins_comparable__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(89);
 /* harmony import */ var _mixins_proxyable__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(43);
@@ -3121,7 +3121,7 @@ __webpack_require__.r(__webpack_exports__);
 var VBtn = __webpack_require__(51);
 
 // EXTERNAL MODULE: ./node_modules/vuetify/lib/components/VSnackbar/VSnackbar.js
-var VSnackbar = __webpack_require__(264);
+var VSnackbar = __webpack_require__(266);
 
 // CONCATENATED MODULE: ./node_modules/vuetify-loader/lib/loader.js??ref--4!./node_modules/babel-loader/lib??ref--2-0!./node_modules/vue-loader/lib/loaders/templateLoader.js??ref--7!./node_modules/@nuxt/components/dist/loader.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./components/SnackbarError.vue?vue&type=template&id=1066e29e&scoped=true&
 
@@ -3215,7 +3215,7 @@ var componentNormalizer = __webpack_require__(7);
 
 function injectStyles (context) {
   
-  var style0 = __webpack_require__(181)
+  var style0 = __webpack_require__(182)
 if (style0.__inject__) style0.__inject__(context)
 
 }
@@ -3229,7 +3229,7 @@ var component = Object(componentNormalizer["a" /* default */])(
   false,
   injectStyles,
   "1066e29e",
-  "96f4e694"
+  "d51d452e"
   
 )
 
@@ -4001,7 +4001,7 @@ let configsDev = {
 let configsProd = {
   DEFAULT: {
     apiKey: "AIzaSyDTuZ91o553zO6Y6d9pc-GJfLfx0ymUhO8",
-    authDomain: "jekuaa-py.firebaseapp.com",
+    authDomain: "jekuaapy.com",
     projectId: "jekuaa-py",
     storageBucket: "jekuaa-py.appspot.com",
     messagingSenderId: "398733523589",
@@ -4010,7 +4010,7 @@ let configsProd = {
   },
   FOTO_CURSO: {
     apiKey: "AIzaSyDTuZ91o553zO6Y6d9pc-GJfLfx0ymUhO8",
-    authDomain: "jekuaa-py.firebaseapp.com",
+    authDomain: "jekuaapy.com",
     projectId: "jekuaa-py",
     storageBucket: "prod-j-fotos-cursos",
     messagingSenderId: "398733523589",
@@ -4019,7 +4019,7 @@ let configsProd = {
   },
   FOTO_PERFIL: {
     apiKey: "AIzaSyDTuZ91o553zO6Y6d9pc-GJfLfx0ymUhO8",
-    authDomain: "jekuaa-py.firebaseapp.com",
+    authDomain: "jekuaapy.com",
     projectId: "jekuaa-py",
     storageBucket: "prod-j-fotos-perfiles",
     messagingSenderId: "398733523589",
@@ -4028,7 +4028,7 @@ let configsProd = {
   },
   CONTENIDO_CLASE_BORRADOR_VERIFICACION: {
     apiKey: "AIzaSyDTuZ91o553zO6Y6d9pc-GJfLfx0ymUhO8",
-    authDomain: "jekuaa-py.firebaseapp.com",
+    authDomain: "jekuaapy.com",
     projectId: "jekuaa-py",
     storageBucket: "prod-j-cursos-contenido-bv",
     messagingSenderId: "398733523589",
@@ -4104,16 +4104,16 @@ const fb = external_firebase_default.a;
 __webpack_require__.r(__webpack_exports__);
 
 // EXTERNAL MODULE: ./node_modules/vuetify/lib/components/VAppBar/VAppBar.js
-var VAppBar = __webpack_require__(258);
+var VAppBar = __webpack_require__(260);
 
 // EXTERNAL MODULE: ./node_modules/vuetify/lib/components/VAppBar/VAppBarNavIcon.js
-var VAppBarNavIcon = __webpack_require__(261);
+var VAppBarNavIcon = __webpack_require__(263);
 
 // EXTERNAL MODULE: ./node_modules/vuetify/lib/components/VBtn/VBtn.js
 var VBtn = __webpack_require__(51);
 
 // EXTERNAL MODULE: ./node_modules/vuetify/lib/components/VDivider/VDivider.js
-var VDivider = __webpack_require__(212);
+var VDivider = __webpack_require__(215);
 
 // EXTERNAL MODULE: ./node_modules/vuetify/lib/components/VIcon/VIcon.js
 var VIcon = __webpack_require__(72);
@@ -4134,16 +4134,16 @@ var components_VList = __webpack_require__(2);
 var VListItemIcon = __webpack_require__(47);
 
 // EXTERNAL MODULE: ./node_modules/vuetify/lib/components/VNavigationDrawer/VNavigationDrawer.js
-var VNavigationDrawer = __webpack_require__(257);
+var VNavigationDrawer = __webpack_require__(259);
 
 // EXTERNAL MODULE: ./node_modules/vuetify/lib/components/VGrid/VSpacer.js
-var VSpacer = __webpack_require__(260);
+var VSpacer = __webpack_require__(262);
 
 // EXTERNAL MODULE: ./node_modules/vuetify/lib/components/VTabs/VTab.js
-var VTab = __webpack_require__(259);
+var VTab = __webpack_require__(261);
 
 // EXTERNAL MODULE: ./node_modules/vuetify/lib/components/VTabs/VTabs.js + 2 modules
-var VTabs = __webpack_require__(265);
+var VTabs = __webpack_require__(267);
 
 // EXTERNAL MODULE: ./node_modules/vuetify/lib/components/VToolbar/index.js
 var VToolbar = __webpack_require__(96);
@@ -4341,7 +4341,7 @@ var componentNormalizer = __webpack_require__(7);
 
 function injectStyles (context) {
   
-  var style0 = __webpack_require__(174)
+  var style0 = __webpack_require__(175)
 if (style0.__inject__) style0.__inject__(context)
 
 }
@@ -4355,7 +4355,7 @@ var component = Object(componentNormalizer["a" /* default */])(
   false,
   injectStyles,
   "12ac34a2",
-  "2d2d7880"
+  "4c70fa1a"
   
 )
 
@@ -4370,10 +4370,10 @@ var component = Object(componentNormalizer["a" /* default */])(
 __webpack_require__.r(__webpack_exports__);
 
 // EXTERNAL MODULE: ./node_modules/vuetify/lib/components/VAppBar/VAppBar.js
-var VAppBar = __webpack_require__(258);
+var VAppBar = __webpack_require__(260);
 
 // EXTERNAL MODULE: ./node_modules/vuetify/lib/components/VAppBar/VAppBarNavIcon.js
-var VAppBarNavIcon = __webpack_require__(261);
+var VAppBarNavIcon = __webpack_require__(263);
 
 // EXTERNAL MODULE: ./node_modules/vuetify/lib/components/VAvatar/VAvatar.js
 var VAvatar = __webpack_require__(73);
@@ -4385,10 +4385,10 @@ var VBtn = __webpack_require__(51);
 var VCard = __webpack_require__(81);
 
 // EXTERNAL MODULE: ./node_modules/vuetify/lib/components/VChip/VChip.js
-var VChip = __webpack_require__(213);
+var VChip = __webpack_require__(216);
 
 // EXTERNAL MODULE: ./node_modules/vuetify/lib/components/VDivider/VDivider.js
-var VDivider = __webpack_require__(212);
+var VDivider = __webpack_require__(215);
 
 // EXTERNAL MODULE: ./node_modules/vuetify/lib/components/VIcon/VIcon.js
 var VIcon = __webpack_require__(72);
@@ -4412,19 +4412,19 @@ var components_VList = __webpack_require__(2);
 var VListItemIcon = __webpack_require__(47);
 
 // EXTERNAL MODULE: ./node_modules/vuetify/lib/components/VMenu/VMenu.js + 1 modules
-var VMenu = __webpack_require__(238);
+var VMenu = __webpack_require__(240);
 
 // EXTERNAL MODULE: ./node_modules/vuetify/lib/components/VNavigationDrawer/VNavigationDrawer.js
-var VNavigationDrawer = __webpack_require__(257);
+var VNavigationDrawer = __webpack_require__(259);
 
 // EXTERNAL MODULE: ./node_modules/vuetify/lib/components/VGrid/VSpacer.js
-var VSpacer = __webpack_require__(260);
+var VSpacer = __webpack_require__(262);
 
 // EXTERNAL MODULE: ./node_modules/vuetify/lib/components/VTabs/VTab.js
-var VTab = __webpack_require__(259);
+var VTab = __webpack_require__(261);
 
 // EXTERNAL MODULE: ./node_modules/vuetify/lib/components/VTabs/VTabs.js + 2 modules
-var VTabs = __webpack_require__(265);
+var VTabs = __webpack_require__(267);
 
 // CONCATENATED MODULE: ./node_modules/vuetify-loader/lib/loader.js??ref--4!./node_modules/babel-loader/lib??ref--2-0!./node_modules/vue-loader/lib/loaders/templateLoader.js??ref--7!./node_modules/@nuxt/components/dist/loader.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./components/NavigationUser.vue?vue&type=template&id=04cd72f9&scoped=true&
 
@@ -4783,7 +4783,7 @@ var componentNormalizer = __webpack_require__(7);
 
 function injectStyles (context) {
   
-  var style0 = __webpack_require__(177)
+  var style0 = __webpack_require__(178)
 if (style0.__inject__) style0.__inject__(context)
 
 }
@@ -4797,7 +4797,7 @@ var component = Object(componentNormalizer["a" /* default */])(
   false,
   injectStyles,
   "04cd72f9",
-  "28790edc"
+  "65075489"
   
 )
 
@@ -5026,7 +5026,7 @@ var componentNormalizer = __webpack_require__(7);
 
 function injectStyles (context) {
   
-  var style0 = __webpack_require__(160)
+  var style0 = __webpack_require__(161)
 if (style0.__inject__) style0.__inject__(context)
 
 }
@@ -5040,7 +5040,7 @@ var component = Object(componentNormalizer["a" /* default */])(
   false,
   injectStyles,
   "79fa2a73",
-  "c7cc34a2"
+  "68de0ebc"
   
 )
 
@@ -5811,7 +5811,7 @@ const baseMixins = Object(_util_mixins__WEBPACK_IMPORTED_MODULE_9__[/* default *
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var _src_components_VList_VListItem_sass__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(164);
+/* harmony import */ var _src_components_VList_VListItem_sass__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(165);
 /* harmony import */ var _src_components_VList_VListItem_sass__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_src_components_VList_VListItem_sass__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var _mixins_colorable__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(6);
 /* harmony import */ var _mixins_routable__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(10);
@@ -9093,7 +9093,7 @@ const baseMixins = Object(_util_mixins__WEBPACK_IMPORTED_MODULE_8__[/* default *
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var _src_components_VList_VList_sass__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(165);
+/* harmony import */ var _src_components_VList_VList_sass__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(166);
 /* harmony import */ var _src_components_VList_VList_sass__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_src_components_VList_VList_sass__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var _VSheet_VSheet__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(11);
 // Styles
@@ -9257,7 +9257,7 @@ const baseMixins = Object(_util_mixins__WEBPACK_IMPORTED_MODULE_8__[/* default *
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var _src_components_VList_VListItemGroup_sass__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(167);
+/* harmony import */ var _src_components_VList_VListItemGroup_sass__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(168);
 /* harmony import */ var _src_components_VList_VListItemGroup_sass__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_src_components_VList_VListItemGroup_sass__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var _VItemGroup_VItemGroup__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(17);
 /* harmony import */ var _mixins_colorable__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(6);
@@ -9512,13 +9512,13 @@ var VCard = __webpack_require__(81);
 var components_VCard = __webpack_require__(18);
 
 // EXTERNAL MODULE: ./node_modules/vuetify/lib/components/VFooter/VFooter.js
-var VFooter = __webpack_require__(263);
+var VFooter = __webpack_require__(265);
 
 // EXTERNAL MODULE: ./node_modules/vuetify/lib/components/VIcon/VIcon.js
 var VIcon = __webpack_require__(72);
 
 // EXTERNAL MODULE: ./node_modules/vuetify/lib/components/VGrid/VSpacer.js
-var VSpacer = __webpack_require__(260);
+var VSpacer = __webpack_require__(262);
 
 // CONCATENATED MODULE: ./node_modules/vuetify-loader/lib/loader.js??ref--4!./node_modules/babel-loader/lib??ref--2-0!./node_modules/vue-loader/lib/loaders/templateLoader.js??ref--7!./node_modules/@nuxt/components/dist/loader.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./components/FooterDefault.vue?vue&type=template&id=18ec2959&scoped=true&
 
@@ -9611,7 +9611,7 @@ var componentNormalizer = __webpack_require__(7);
 
 function injectStyles (context) {
   
-  var style0 = __webpack_require__(179)
+  var style0 = __webpack_require__(180)
 if (style0.__inject__) style0.__inject__(context)
 
 }
@@ -9625,7 +9625,7 @@ var component = Object(componentNormalizer["a" /* default */])(
   false,
   injectStyles,
   "18ec2959",
-  "53b5994e"
+  "91ddf7e8"
   
 )
 
@@ -9646,13 +9646,13 @@ var VCard = __webpack_require__(81);
 var components_VCard = __webpack_require__(18);
 
 // EXTERNAL MODULE: ./node_modules/vuetify/lib/components/VFooter/VFooter.js
-var VFooter = __webpack_require__(263);
+var VFooter = __webpack_require__(265);
 
 // EXTERNAL MODULE: ./node_modules/vuetify/lib/components/VIcon/VIcon.js
 var VIcon = __webpack_require__(72);
 
 // EXTERNAL MODULE: ./node_modules/vuetify/lib/components/VGrid/VSpacer.js
-var VSpacer = __webpack_require__(260);
+var VSpacer = __webpack_require__(262);
 
 // CONCATENATED MODULE: ./node_modules/vuetify-loader/lib/loader.js??ref--4!./node_modules/babel-loader/lib??ref--2-0!./node_modules/vue-loader/lib/loaders/templateLoader.js??ref--7!./node_modules/@nuxt/components/dist/loader.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./components/FooterMiembro.vue?vue&type=template&id=a00cc71a&scoped=true&
 
@@ -9745,7 +9745,7 @@ var componentNormalizer = __webpack_require__(7);
 
 function injectStyles (context) {
   
-  var style0 = __webpack_require__(183)
+  var style0 = __webpack_require__(184)
 if (style0.__inject__) style0.__inject__(context)
 
 }
@@ -9759,7 +9759,7 @@ var component = Object(componentNormalizer["a" /* default */])(
   false,
   injectStyles,
   "a00cc71a",
-  "4a7f2473"
+  "2b6af526"
   
 )
 
@@ -10302,7 +10302,7 @@ function removeActivator(activator) {
 "use strict";
 
 // EXTERNAL MODULE: ./node_modules/vuetify/src/components/VOverlay/VOverlay.sass
-var VOverlay = __webpack_require__(163);
+var VOverlay = __webpack_require__(164);
 
 // EXTERNAL MODULE: ./node_modules/vuetify/lib/mixins/colorable/index.js
 var colorable = __webpack_require__(6);
@@ -10871,7 +10871,7 @@ var VAvatar = __webpack_require__(73);
 var VBtn = __webpack_require__(51);
 
 // EXTERNAL MODULE: ./node_modules/vuetify/lib/components/VDivider/VDivider.js
-var VDivider = __webpack_require__(212);
+var VDivider = __webpack_require__(215);
 
 // EXTERNAL MODULE: ./node_modules/vuetify/lib/components/VIcon/VIcon.js
 var VIcon = __webpack_require__(72);
@@ -10880,7 +10880,7 @@ var VIcon = __webpack_require__(72);
 var VImg = __webpack_require__(65);
 
 // EXTERNAL MODULE: ./node_modules/vuetify/lib/components/VTextField/VTextField.js + 3 modules
-var VTextField = __webpack_require__(210);
+var VTextField = __webpack_require__(213);
 
 // CONCATENATED MODULE: ./node_modules/vuetify-loader/lib/loader.js??ref--4!./node_modules/babel-loader/lib??ref--2-0!./node_modules/vue-loader/lib/loaders/templateLoader.js??ref--7!./node_modules/@nuxt/components/dist/loader.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./components/notFound.vue?vue&type=template&id=372dc122&scoped=true&
 
@@ -10979,7 +10979,7 @@ var component = Object(componentNormalizer["a" /* default */])(
   false,
   injectStyles,
   "372dc122",
-  "c2f3fa28"
+  "5df14e59"
   
 )
 
@@ -10992,7 +10992,7 @@ var component = Object(componentNormalizer["a" /* default */])(
 "use strict";
 
 // EXTERNAL MODULE: ./node_modules/vuetify/src/components/VWindow/VWindow.sass
-var VWindow = __webpack_require__(173);
+var VWindow = __webpack_require__(174);
 
 // EXTERNAL MODULE: ./node_modules/vuetify/lib/directives/touch/index.js
 var touch = __webpack_require__(37);
@@ -11648,7 +11648,7 @@ var componentNormalizer = __webpack_require__(7);
 
 function injectStyles (context) {
   
-  var style0 = __webpack_require__(161)
+  var style0 = __webpack_require__(162)
 if (style0.__inject__) style0.__inject__(context)
 
 }
@@ -11662,7 +11662,7 @@ var component = Object(componentNormalizer["a" /* default */])(
   false,
   injectStyles,
   null,
-  "4d52000c"
+  "7cc912ff"
   
 )
 
@@ -11674,7 +11674,7 @@ var component = Object(componentNormalizer["a" /* default */])(
 /***/ (function(module, exports, __webpack_require__) {
 
 __webpack_require__(128);
-module.exports = __webpack_require__(193);
+module.exports = __webpack_require__(194);
 
 
 /***/ }),
@@ -15289,6 +15289,51 @@ module.exports = {
 
 // Exports
 module.exports = {
+	"hljs-subtr": "e4csfkI9IzkHJ9WWG7ojzA==",
+	"hljs-comment": "Fw9IWv0CJ9RWqiflLinmcw==",
+	"hljs-doctag": "mBG7GziBrb7wtsGlHqQswg==",
+	"hljs-meta": "_6T1BlHIAygUR0zIwPUFiVA==",
+	"hljs-quote": "VhNXgPlMvy1-sqg38GAk4Q==",
+	"hljs-attr": "_0FVxQ2pIHt2EEjwcHvVu+g==",
+	"hljs-regexp": "KWa3vel67ZJIVHiuHQkYiA==",
+	"hljs-selector-id": "HXpmuxA-JIFajyFUrkKRRg==",
+	"hljs-selector-tag": "E7KBnts2SUmlRYL3H1f1fQ==",
+	"hljs-tag": "_9guvzowWZapEAdjxhvujAQ==",
+	"hljs-template-tag": "CZFhZ96ULzcAYjV1iEaThA==",
+	"hljs-bullet": "MOlZVupGbIMOobxn+6bYcg==",
+	"hljs-params": "_4ps30mrCddO-RqQ2PifCoA==",
+	"hljs-selector-class": "Kl+3Tyz4vui4wD+Mmvy52w==",
+	"hljs-keyword": "_1rx4hTZhhX7fSbzDxUTiPA==",
+	"hljs-section": "_2m2X7BATqmHC9enu9jK6Pw==",
+	"hljs-symbol": "ye-XDamIIiD9dO9PpEeZbw==",
+	"hljs-type": "QtMHQLGEecqCCNJphiJmtQ==",
+	"hljs-addition": "kFqY5XsxSU2bFrfyq+CUOg==",
+	"hljs-link": "KzGVpNOu-cFEkR79ONVoZA==",
+	"hljs-number": "dSq6e-n9swykHHa7iybGgQ==",
+	"hljs-string": "pt+K-Qx+2c3yUdRIXQSvhQ==",
+	"hljs-attribute": "doS8WS1hWl81-brzZearlg==",
+	"hljs-template-variable": "_4WK3ioSyZPfBUF6b1xAo6A==",
+	"hljs-variable": "_1y7KLuIzhGPQvFuyP4gsWg==",
+	"hljs-built_in": "wNvYpZKrJ0Kca1swBtHu6A==",
+	"hljs-class": "seZo2O828iQtLK9Q-UYzdg==",
+	"hljs-formula": "+Fn5+wVE9Da2rRr1vv4bWw==",
+	"hljs-function": "hsxl2dbZKV9ii0LXaFaAIA==",
+	"hljs-name": "LTRYMq9iw64ouEMXPSF3qQ==",
+	"hljs-title": "I5cip8R+2LZEPynOnjD7bQ==",
+	"hljs-deletion": "MeC8uMxMXpIGY7yAuQlj6g==",
+	"hljs-literal": "cDJczSg+VRiZ+VEbHbotZA==",
+	"hljs-selector-pseudo": "z0TkKH1sQGLgEgKSE9MWaw==",
+	"hljs-emphasis": "FOOlRZFpXjVOxc74GmRrOA==",
+	"hljs-strong": "gwOcRBziXjttEfRt8rZXPA=="
+};
+
+
+/***/ }),
+/* 159 */
+/***/ (function(module, exports) {
+
+// Exports
+module.exports = {
 	"theme--light": "PJCHvoMV7ihEvVSnEJOFAQ==",
 	"v-application": "_8SoN2WPxgKERoO4jK1BdsA==",
 	"text--primary": "nXp2HqjAri4GJYMadcZT9w==",
@@ -15301,7 +15346,7 @@ module.exports = {
 
 
 /***/ }),
-/* 159 */
+/* 160 */
 /***/ (function(module, exports) {
 
 // Exports
@@ -15312,7 +15357,7 @@ module.exports = {
 
 
 /***/ }),
-/* 160 */
+/* 161 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -15323,7 +15368,7 @@ __webpack_require__.r(__webpack_exports__);
 
 
 /***/ }),
-/* 161 */
+/* 162 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -15334,7 +15379,7 @@ __webpack_require__.r(__webpack_exports__);
 
 
 /***/ }),
-/* 162 */
+/* 163 */
 /***/ (function(module, exports) {
 
 // Exports
@@ -15369,7 +15414,7 @@ module.exports = {
 
 
 /***/ }),
-/* 163 */
+/* 164 */
 /***/ (function(module, exports) {
 
 // Exports
@@ -15385,7 +15430,7 @@ module.exports = {
 
 
 /***/ }),
-/* 164 */
+/* 165 */
 /***/ (function(module, exports) {
 
 // Exports
@@ -15428,7 +15473,7 @@ module.exports = {
 
 
 /***/ }),
-/* 165 */
+/* 166 */
 /***/ (function(module, exports) {
 
 // Exports
@@ -15465,7 +15510,7 @@ module.exports = {
 
 
 /***/ }),
-/* 166 */
+/* 167 */
 /***/ (function(module, exports) {
 
 // Exports
@@ -15494,7 +15539,7 @@ module.exports = {
 
 
 /***/ }),
-/* 167 */
+/* 168 */
 /***/ (function(module, exports) {
 
 // Exports
@@ -15505,7 +15550,7 @@ module.exports = {
 
 
 /***/ }),
-/* 168 */
+/* 169 */
 /***/ (function(module, exports) {
 
 // Exports
@@ -15515,7 +15560,7 @@ module.exports = {
 
 
 /***/ }),
-/* 169 */
+/* 170 */
 /***/ (function(module, exports) {
 
 // Exports
@@ -15545,7 +15590,7 @@ module.exports = {
 
 
 /***/ }),
-/* 170 */
+/* 171 */
 /***/ (function(module, exports) {
 
 // Exports
@@ -15583,7 +15628,7 @@ module.exports = {
 
 
 /***/ }),
-/* 171 */
+/* 172 */
 /***/ (function(module, exports) {
 
 // Exports
@@ -15635,7 +15680,7 @@ module.exports = {
 
 
 /***/ }),
-/* 172 */
+/* 173 */
 /***/ (function(module, exports) {
 
 // Exports
@@ -15654,7 +15699,7 @@ module.exports = {
 
 
 /***/ }),
-/* 173 */
+/* 174 */
 /***/ (function(module, exports) {
 
 // Exports
@@ -15692,7 +15737,7 @@ module.exports = {
 
 
 /***/ }),
-/* 174 */
+/* 175 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -15703,7 +15748,7 @@ __webpack_require__.r(__webpack_exports__);
 
 
 /***/ }),
-/* 175 */
+/* 176 */
 /***/ (function(module, exports) {
 
 // Exports
@@ -15749,7 +15794,7 @@ module.exports = {
 
 
 /***/ }),
-/* 176 */
+/* 177 */
 /***/ (function(module, exports) {
 
 // Exports
@@ -15772,7 +15817,7 @@ module.exports = {
 
 
 /***/ }),
-/* 177 */
+/* 178 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -15783,7 +15828,7 @@ __webpack_require__.r(__webpack_exports__);
 
 
 /***/ }),
-/* 178 */
+/* 179 */
 /***/ (function(module, exports) {
 
 // Exports
@@ -15802,7 +15847,7 @@ module.exports = {
 
 
 /***/ }),
-/* 179 */
+/* 180 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -15813,7 +15858,7 @@ __webpack_require__.r(__webpack_exports__);
 
 
 /***/ }),
-/* 180 */
+/* 181 */
 /***/ (function(module, exports) {
 
 // Exports
@@ -15848,7 +15893,7 @@ module.exports = {
 
 
 /***/ }),
-/* 181 */
+/* 182 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -15859,7 +15904,7 @@ __webpack_require__.r(__webpack_exports__);
 
 
 /***/ }),
-/* 182 */
+/* 183 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -15870,7 +15915,7 @@ __webpack_require__.r(__webpack_exports__);
 
 
 /***/ }),
-/* 183 */
+/* 184 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -15881,7 +15926,7 @@ __webpack_require__.r(__webpack_exports__);
 
 
 /***/ }),
-/* 184 */
+/* 185 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -15892,7 +15937,7 @@ __webpack_require__.r(__webpack_exports__);
 
 
 /***/ }),
-/* 185 */
+/* 186 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -15903,13 +15948,13 @@ __webpack_require__.r(__webpack_exports__);
 
 
 /***/ }),
-/* 186 */
+/* 187 */
 /***/ (function(module, exports) {
 
 module.exports = require("cookieparser");
 
 /***/ }),
-/* 187 */
+/* 188 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -16003,7 +16048,7 @@ const mutations = {
 };
 
 /***/ }),
-/* 188 */
+/* 189 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -16445,7 +16490,7 @@ const mutations = {
 };
 
 /***/ }),
-/* 189 */
+/* 190 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -16462,7 +16507,7 @@ const actions = {};
 const mutations = {};
 
 /***/ }),
-/* 190 */
+/* 191 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -16631,7 +16676,7 @@ const actions = {
 };
 
 /***/ }),
-/* 191 */
+/* 192 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -16731,13 +16776,13 @@ const actions = {
 };
 
 /***/ }),
-/* 192 */
+/* 193 */
 /***/ (function(module, exports) {
 
 // This file is intentionally left empty for noop aliases
 
 /***/ }),
-/* 193 */
+/* 194 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -16768,6 +16813,7 @@ __webpack_require__.d(components_namespaceObject, "CursosRecomendacionPorqueVist
 __webpack_require__.d(components_namespaceObject, "CursosSinAccesoCurso", function() { return CursosSinAccesoCurso; });
 __webpack_require__.d(components_namespaceObject, "CursosVisualizadorArticulo", function() { return CursosVisualizadorArticulo; });
 __webpack_require__.d(components_namespaceObject, "CursosVisualizadorVideo", function() { return CursosVisualizadorVideo; });
+__webpack_require__.d(components_namespaceObject, "CursosVisualizadorYoutube", function() { return CursosVisualizadorYoutube; });
 __webpack_require__.d(components_namespaceObject, "InformacionUsuarioFormularioInformacionUsuario", function() { return InformacionUsuarioFormularioInformacionUsuario; });
 __webpack_require__.d(components_namespaceObject, "UsuariosCartaPresentacion", function() { return UsuariosCartaPresentacion; });
 __webpack_require__.d(components_namespaceObject, "UsuariosCartaPresentacionInstructor", function() { return UsuariosCartaPresentacionInstructor; });
@@ -16775,20 +16821,21 @@ __webpack_require__.d(components_namespaceObject, "BlogsMiembroBuscadorBlog", fu
 __webpack_require__.d(components_namespaceObject, "BlogsMiembroErroresBlog", function() { return BlogsMiembroErroresBlog; });
 __webpack_require__.d(components_namespaceObject, "BlogsMiembroFormularioBlogActualizar", function() { return BlogsMiembroFormularioBlogActualizar; });
 __webpack_require__.d(components_namespaceObject, "BlogsMiembroFormularioBlogLeer", function() { return BlogsMiembroFormularioBlogLeer; });
+__webpack_require__.d(components_namespaceObject, "CursosPublicadoMiembroBuscadorCursosPublicado", function() { return CursosPublicadoMiembroBuscadorCursosPublicado; });
+__webpack_require__.d(components_namespaceObject, "CursosPublicadoMiembroListaUnidadesClases", function() { return CursosPublicadoMiembroListaUnidadesClases; });
+__webpack_require__.d(components_namespaceObject, "CursosPublicadoEstudianteBuscadorCursosPublicado", function() { return CursosPublicadoEstudianteBuscadorCursosPublicado; });
+__webpack_require__.d(components_namespaceObject, "CursosPublicadoEstudianteListaUnidadesClases", function() { return CursosPublicadoEstudianteListaUnidadesClases; });
+__webpack_require__.d(components_namespaceObject, "CursosPublicadoModeradorBuscadorCursosPublicado", function() { return CursosPublicadoModeradorBuscadorCursosPublicado; });
+__webpack_require__.d(components_namespaceObject, "CursosPublicadoModeradorListaUnidadesClases", function() { return CursosPublicadoModeradorListaUnidadesClases; });
+__webpack_require__.d(components_namespaceObject, "CursosBorradorModeradorBuscadorCursosBorrador", function() { return CursosBorradorModeradorBuscadorCursosBorrador; });
+__webpack_require__.d(components_namespaceObject, "CursosBorradorModeradorListaUnidadesClases", function() { return CursosBorradorModeradorListaUnidadesClases; });
 __webpack_require__.d(components_namespaceObject, "CursosBorradorMiembroBuscadorCursosBorrador", function() { return CursosBorradorMiembroBuscadorCursosBorrador; });
 __webpack_require__.d(components_namespaceObject, "CursosBorradorMiembroFormularioCurso", function() { return CursosBorradorMiembroFormularioCurso; });
 __webpack_require__.d(components_namespaceObject, "CursosBorradorMiembroGeneradorArticulo", function() { return CursosBorradorMiembroGeneradorArticulo; });
 __webpack_require__.d(components_namespaceObject, "CursosBorradorMiembroGeneradorVideoClase", function() { return CursosBorradorMiembroGeneradorVideoClase; });
+__webpack_require__.d(components_namespaceObject, "CursosBorradorMiembroGeneradorVideoYoutubeClase", function() { return CursosBorradorMiembroGeneradorVideoYoutubeClase; });
 __webpack_require__.d(components_namespaceObject, "CursosBorradorMiembroListaUnidadesClases", function() { return CursosBorradorMiembroListaUnidadesClases; });
 __webpack_require__.d(components_namespaceObject, "CursosBorradorMiembroProgramaEstudio", function() { return CursosBorradorMiembroProgramaEstudio; });
-__webpack_require__.d(components_namespaceObject, "CursosBorradorModeradorBuscadorCursosBorrador", function() { return CursosBorradorModeradorBuscadorCursosBorrador; });
-__webpack_require__.d(components_namespaceObject, "CursosBorradorModeradorListaUnidadesClases", function() { return CursosBorradorModeradorListaUnidadesClases; });
-__webpack_require__.d(components_namespaceObject, "CursosPublicadoEstudianteBuscadorCursosPublicado", function() { return CursosPublicadoEstudianteBuscadorCursosPublicado; });
-__webpack_require__.d(components_namespaceObject, "CursosPublicadoEstudianteListaUnidadesClases", function() { return CursosPublicadoEstudianteListaUnidadesClases; });
-__webpack_require__.d(components_namespaceObject, "CursosPublicadoMiembroBuscadorCursosPublicado", function() { return CursosPublicadoMiembroBuscadorCursosPublicado; });
-__webpack_require__.d(components_namespaceObject, "CursosPublicadoMiembroListaUnidadesClases", function() { return CursosPublicadoMiembroListaUnidadesClases; });
-__webpack_require__.d(components_namespaceObject, "CursosPublicadoModeradorBuscadorCursosPublicado", function() { return CursosPublicadoModeradorBuscadorCursosPublicado; });
-__webpack_require__.d(components_namespaceObject, "CursosPublicadoModeradorListaUnidadesClases", function() { return CursosPublicadoModeradorListaUnidadesClases; });
 __webpack_require__.d(components_namespaceObject, "UsuariosModeradorVisualizadorDatosUsuario", function() { return UsuariosModeradorVisualizadorDatosUsuario; });
 
 // EXTERNAL MODULE: external "vue"
@@ -17579,137 +17626,137 @@ function shouldScrollToTop(route) {
 
 
 
-const _43b025f8 = () => interopDefault(__webpack_require__.e(/* import() | pages/centro */ 39).then(__webpack_require__.bind(null, 557)));
+const _e123449a = () => interopDefault(__webpack_require__.e(/* import() | pages/centro */ 41).then(__webpack_require__.bind(null, 632)));
 
-const _7f20200c = () => interopDefault(__webpack_require__.e(/* import() | pages/cuentas-jekuaapy-sin-verificar */ 40).then(__webpack_require__.bind(null, 547)));
+const _3e9cd272 = () => interopDefault(__webpack_require__.e(/* import() | pages/cuentas-jekuaapy-sin-verificar */ 42).then(__webpack_require__.bind(null, 622)));
 
-const _3f56d42f = () => interopDefault(__webpack_require__.e(/* import() | pages/historial-compra */ 47).then(__webpack_require__.bind(null, 558)));
+const _5b0ade2a = () => interopDefault(__webpack_require__.e(/* import() | pages/historial-compra */ 49).then(__webpack_require__.bind(null, 633)));
 
-const _0d33bab4 = () => interopDefault(__webpack_require__.e(/* import() | pages/historial-compra/productos */ 48).then(__webpack_require__.bind(null, 550)));
+const _22fd35d9 = () => interopDefault(__webpack_require__.e(/* import() | pages/historial-compra/productos */ 50).then(__webpack_require__.bind(null, 625)));
 
-const _6f9bd31f = () => interopDefault(__webpack_require__.e(/* import() | pages/inicioSesion */ 50).then(__webpack_require__.bind(null, 559)));
+const _e07bdacc = () => interopDefault(__webpack_require__.e(/* import() | pages/inicioSesion */ 52).then(__webpack_require__.bind(null, 634)));
 
-const _781621e7 = () => interopDefault(__webpack_require__.e(/* import() | pages/jekuaapoints/index */ 52).then(__webpack_require__.bind(null, 560)));
+const _546b920c = () => interopDefault(__webpack_require__.e(/* import() | pages/jekuaapoints/index */ 54).then(__webpack_require__.bind(null, 635)));
 
-const _c1223eac = () => interopDefault(__webpack_require__.e(/* import() | pages/miembro/index */ 75).then(__webpack_require__.bind(null, 561)));
+const _4f032d65 = () => interopDefault(__webpack_require__.e(/* import() | pages/miembro/index */ 77).then(__webpack_require__.bind(null, 636)));
 
-const _f8f3b3c0 = () => interopDefault(__webpack_require__.e(/* import() | pages/mis-cursos */ 76).then(__webpack_require__.bind(null, 562)));
+const _5cc7ef4a = () => interopDefault(__webpack_require__.e(/* import() | pages/mis-cursos */ 78).then(__webpack_require__.bind(null, 637)));
 
-const _46a6f5e0 = () => interopDefault(__webpack_require__.e(/* import() | pages/moderador/index */ 89).then(__webpack_require__.bind(null, 563)));
+const _0f3ee1ea = () => interopDefault(__webpack_require__.e(/* import() | pages/moderador/index */ 91).then(__webpack_require__.bind(null, 638)));
 
-const _78769d57 = () => interopDefault(__webpack_require__.e(/* import() | pages/pedidos/index */ 91).then(__webpack_require__.bind(null, 548)));
+const _280aea12 = () => interopDefault(__webpack_require__.e(/* import() | pages/pedidos/index */ 93).then(__webpack_require__.bind(null, 623)));
 
-const _56d2765f = () => interopDefault(__webpack_require__.e(/* import() | pages/perfil */ 95).then(__webpack_require__.bind(null, 551)));
+const _badea3cc = () => interopDefault(__webpack_require__.e(/* import() | pages/perfil */ 97).then(__webpack_require__.bind(null, 626)));
 
-const _127ec543 = () => interopDefault(__webpack_require__.e(/* import() | pages/perfil/index */ 96).then(__webpack_require__.bind(null, 564)));
+const _11bf15b0 = () => interopDefault(__webpack_require__.e(/* import() | pages/perfil/index */ 98).then(__webpack_require__.bind(null, 639)));
 
-const _ab89d9e4 = () => interopDefault(__webpack_require__.e(/* import() | pages/perfil/informacion */ 97).then(__webpack_require__.bind(null, 565)));
+const _f2def99a = () => interopDefault(__webpack_require__.e(/* import() | pages/perfil/informacion */ 99).then(__webpack_require__.bind(null, 640)));
 
-const _2b6b4821 = () => interopDefault(__webpack_require__.e(/* import() | pages/perfil/seguridad */ 98).then(__webpack_require__.bind(null, 566)));
+const _f38f04f4 = () => interopDefault(__webpack_require__.e(/* import() | pages/perfil/seguridad */ 100).then(__webpack_require__.bind(null, 641)));
 
-const _34e4156a = () => interopDefault(__webpack_require__.e(/* import() | pages/precios */ 99).then(__webpack_require__.bind(null, 567)));
+const _60ecd50f = () => interopDefault(__webpack_require__.e(/* import() | pages/precios */ 101).then(__webpack_require__.bind(null, 642)));
 
-const _629b9e86 = () => interopDefault(__webpack_require__.e(/* import() | pages/registro */ 100).then(__webpack_require__.bind(null, 568)));
+const _90aa58fe = () => interopDefault(__webpack_require__.e(/* import() | pages/registro */ 102).then(__webpack_require__.bind(null, 643)));
 
-const _0860c789 = () => interopDefault(__webpack_require__.e(/* import() | pages/jekuaapoints/comprar */ 51).then(__webpack_require__.bind(null, 569)));
+const _251ac26e = () => interopDefault(__webpack_require__.e(/* import() | pages/jekuaapoints/comprar */ 53).then(__webpack_require__.bind(null, 644)));
 
-const _5a50d6f9 = () => interopDefault(__webpack_require__.e(/* import() | pages/miembro/blogs/index */ 55).then(__webpack_require__.bind(null, 570)));
+const _770ad1de = () => interopDefault(__webpack_require__.e(/* import() | pages/miembro/blogs/index */ 57).then(__webpack_require__.bind(null, 645)));
 
-const _39d0c573 = () => interopDefault(__webpack_require__.e(/* import() | pages/miembro/cursos/index */ 72).then(__webpack_require__.bind(null, 571)));
+const _9753b1a4 = () => interopDefault(__webpack_require__.e(/* import() | pages/miembro/cursos/index */ 74).then(__webpack_require__.bind(null, 646)));
 
-const _4812e9cf = () => interopDefault(__webpack_require__.e(/* import() | pages/moderador/blogs */ 77).then(__webpack_require__.bind(null, 572)));
+const _63c6f3ca = () => interopDefault(__webpack_require__.e(/* import() | pages/moderador/blogs */ 79).then(__webpack_require__.bind(null, 647)));
 
-const _5722b84e = () => interopDefault(__webpack_require__.e(/* import() | pages/moderador/cursos/index */ 87).then(__webpack_require__.bind(null, 573)));
+const _79bafa58 = () => interopDefault(__webpack_require__.e(/* import() | pages/moderador/cursos/index */ 89).then(__webpack_require__.bind(null, 648)));
 
-const _1ae42292 = () => interopDefault(__webpack_require__.e(/* import() | pages/moderador/usuarios */ 90).then(__webpack_require__.bind(null, 574)));
+const _62394248 = () => interopDefault(__webpack_require__.e(/* import() | pages/moderador/usuarios */ 92).then(__webpack_require__.bind(null, 649)));
 
-const _215a0774 = () => interopDefault(__webpack_require__.e(/* import() | pages/pedidos/nuevo/index */ 93).then(__webpack_require__.bind(null, 549)));
+const _0c0cf72b = () => interopDefault(__webpack_require__.e(/* import() | pages/pedidos/nuevo/index */ 95).then(__webpack_require__.bind(null, 624)));
 
-const _45e82442 = () => interopDefault(__webpack_require__.e(/* import() | pages/miembro/blogs/mis-blogs */ 56).then(__webpack_require__.bind(null, 575)));
+const _2db024a7 = () => interopDefault(__webpack_require__.e(/* import() | pages/miembro/blogs/mis-blogs */ 58).then(__webpack_require__.bind(null, 650)));
 
-const _6839065e = () => interopDefault(__webpack_require__.e(/* import() | pages/miembro/blogs/nuevo */ 57).then(__webpack_require__.bind(null, 576)));
+const _f619fd7a = () => interopDefault(__webpack_require__.e(/* import() | pages/miembro/blogs/nuevo */ 59).then(__webpack_require__.bind(null, 651)));
 
-const _0f663aa0 = () => interopDefault(__webpack_require__.e(/* import() | pages/miembro/cursos/borradores */ 71).then(__webpack_require__.bind(null, 577)));
+const _0e165dd5 = () => interopDefault(__webpack_require__.e(/* import() | pages/miembro/cursos/borradores */ 73).then(__webpack_require__.bind(null, 652)));
 
-const _47b8f4d8 = () => interopDefault(__webpack_require__.e(/* import() | pages/miembro/cursos/nuevo */ 73).then(__webpack_require__.bind(null, 578)));
+const _7b8352da = () => interopDefault(__webpack_require__.e(/* import() | pages/miembro/cursos/nuevo */ 75).then(__webpack_require__.bind(null, 653)));
 
-const _7d39685f = () => interopDefault(__webpack_require__.e(/* import() | pages/miembro/cursos/publicados */ 74).then(__webpack_require__.bind(null, 579)));
+const _d9fa38f8 = () => interopDefault(__webpack_require__.e(/* import() | pages/miembro/cursos/publicados */ 76).then(__webpack_require__.bind(null, 654)));
 
-const _0c8fd7ec = () => interopDefault(__webpack_require__.e(/* import() | pages/moderador/cursos/borradores */ 86).then(__webpack_require__.bind(null, 554)));
+const _79e14c22 = () => interopDefault(__webpack_require__.e(/* import() | pages/moderador/cursos/borradores */ 88).then(__webpack_require__.bind(null, 629)));
 
-const _7ea499b9 = () => interopDefault(__webpack_require__.e(/* import() | pages/moderador/cursos/publicados */ 88).then(__webpack_require__.bind(null, 580)));
+const _47fbdf9e = () => interopDefault(__webpack_require__.e(/* import() | pages/moderador/cursos/publicados */ 90).then(__webpack_require__.bind(null, 655)));
 
-const _4653e7fa = () => interopDefault(__webpack_require__.e(/* import() | pages/pedidos/nuevo/points/index */ 94).then(__webpack_require__.bind(null, 581)));
+const _b3a55c30 = () => interopDefault(__webpack_require__.e(/* import() | pages/pedidos/nuevo/points/index */ 96).then(__webpack_require__.bind(null, 656)));
 
-const _491db052 = () => interopDefault(__webpack_require__.e(/* import() | pages/miembro/blog/actualizar/_referencia */ 54).then(__webpack_require__.bind(null, 582)));
+const _15ac98dc = () => interopDefault(__webpack_require__.e(/* import() | pages/miembro/blog/actualizar/_referencia */ 56).then(__webpack_require__.bind(null, 657)));
 
-const _553b5986 = () => interopDefault(__webpack_require__.e(/* import() | pages/miembro/curso-borrador/vista-previa/_uidCurso/clase */ 65).then(__webpack_require__.bind(null, 583)));
+const _a24b49aa = () => interopDefault(__webpack_require__.e(/* import() | pages/miembro/curso-borrador/vista-previa/_uidCurso/clase */ 67).then(__webpack_require__.bind(null, 658)));
 
-const _d2b9997a = () => interopDefault(__webpack_require__.e(/* import() | pages/miembro/curso-borrador/vista-previa/_uidCurso/clase/_uidClase */ 66).then(__webpack_require__.bind(null, 584)));
+const _0a6daf04 = () => interopDefault(__webpack_require__.e(/* import() | pages/miembro/curso-borrador/vista-previa/_uidCurso/clase/_uidClase */ 68).then(__webpack_require__.bind(null, 659)));
 
-const _0f91ae07 = () => interopDefault(__webpack_require__.e(/* import() | pages/miembro/blog/_referencia */ 53).then(__webpack_require__.bind(null, 585)));
+const _20c9ba42 = () => interopDefault(__webpack_require__.e(/* import() | pages/miembro/blog/_referencia */ 55).then(__webpack_require__.bind(null, 660)));
 
-const _c0318282 = () => interopDefault(__webpack_require__.e(/* import() | pages/miembro/curso-borrador/_uidCurso */ 58).then(__webpack_require__.bind(null, 555)));
+const _5a18dffa = () => interopDefault(__webpack_require__.e(/* import() | pages/miembro/curso-borrador/_uidCurso */ 60).then(__webpack_require__.bind(null, 630)));
 
-const _0a69d0e3 = () => interopDefault(__webpack_require__.e(/* import() | pages/miembro/curso-borrador/_uidCurso/index */ 61).then(__webpack_require__.bind(null, 586)));
+const _35366748 = () => interopDefault(__webpack_require__.e(/* import() | pages/miembro/curso-borrador/_uidCurso/index */ 63).then(__webpack_require__.bind(null, 661)));
 
-const _fd79f580 = () => interopDefault(__webpack_require__.e(/* import() | pages/miembro/curso-borrador/_uidCurso/auxiliares */ 59).then(__webpack_require__.bind(null, 587)));
+const _4d84b40a = () => interopDefault(__webpack_require__.e(/* import() | pages/miembro/curso-borrador/_uidCurso/auxiliares */ 61).then(__webpack_require__.bind(null, 662)));
 
-const _4fb0f4d2 = () => interopDefault(__webpack_require__.e(/* import() | pages/miembro/curso-borrador/_uidCurso/foto-curso */ 60).then(__webpack_require__.bind(null, 615)));
+const _b0a8d4e6 = () => interopDefault(__webpack_require__.e(/* import() | pages/miembro/curso-borrador/_uidCurso/foto-curso */ 62).then(__webpack_require__.bind(null, 690)));
 
-const _14452a3e = () => interopDefault(__webpack_require__.e(/* import() | pages/miembro/curso-borrador/_uidCurso/precios */ 62).then(__webpack_require__.bind(null, 556)));
+const _8374893a = () => interopDefault(__webpack_require__.e(/* import() | pages/miembro/curso-borrador/_uidCurso/precios */ 64).then(__webpack_require__.bind(null, 631)));
 
-const _3561e40a = () => interopDefault(__webpack_require__.e(/* import() | pages/miembro/curso-borrador/_uidCurso/programa-estudio */ 63).then(__webpack_require__.bind(null, 588)));
+const _99dc66f6 = () => interopDefault(__webpack_require__.e(/* import() | pages/miembro/curso-borrador/_uidCurso/programa-estudio */ 65).then(__webpack_require__.bind(null, 663)));
 
-const _7744d8a4 = () => interopDefault(__webpack_require__.e(/* import() | pages/miembro/curso-borrador/_uidCurso/publicacion */ 64).then(__webpack_require__.bind(null, 589)));
+const _6bb70a53 = () => interopDefault(__webpack_require__.e(/* import() | pages/miembro/curso-borrador/_uidCurso/publicacion */ 66).then(__webpack_require__.bind(null, 664)));
 
-const _262bcc71 = () => interopDefault(__webpack_require__.e(/* import() | pages/miembro/curso-publicado/_uidCurso/index */ 70).then(__webpack_require__.bind(null, 590)));
+const _54f202ac = () => interopDefault(__webpack_require__.e(/* import() | pages/miembro/curso-publicado/_uidCurso/index */ 72).then(__webpack_require__.bind(null, 665)));
 
-const _4b0e9cbd = () => interopDefault(__webpack_require__.e(/* import() | pages/moderador/curso-borrador/_uidCurso/index */ 81).then(__webpack_require__.bind(null, 591)));
+const _15e1a43c = () => interopDefault(__webpack_require__.e(/* import() | pages/moderador/curso-borrador/_uidCurso/index */ 83).then(__webpack_require__.bind(null, 666)));
 
-const _0bbf0852 = () => interopDefault(__webpack_require__.e(/* import() | pages/moderador/curso-publicado/_uidCurso/index */ 85).then(__webpack_require__.bind(null, 592)));
+const _df9be15c = () => interopDefault(__webpack_require__.e(/* import() | pages/moderador/curso-publicado/_uidCurso/index */ 87).then(__webpack_require__.bind(null, 667)));
 
-const _3a1b68cc = () => interopDefault(__webpack_require__.e(/* import() | pages/miembro/curso-publicado/_uidCurso/ajustes */ 67).then(__webpack_require__.bind(null, 593)));
+const _7903df15 = () => interopDefault(__webpack_require__.e(/* import() | pages/miembro/curso-publicado/_uidCurso/ajustes */ 69).then(__webpack_require__.bind(null, 668)));
 
-const _54f44109 = () => interopDefault(__webpack_require__.e(/* import() | pages/miembro/curso-publicado/_uidCurso/clase */ 68).then(__webpack_require__.bind(null, 594)));
+const _f88b1178 = () => interopDefault(__webpack_require__.e(/* import() | pages/miembro/curso-publicado/_uidCurso/clase */ 70).then(__webpack_require__.bind(null, 669)));
 
-const _500b8be0 = () => interopDefault(__webpack_require__.e(/* import() | pages/miembro/curso-publicado/_uidCurso/clase/_uidClase */ 69).then(__webpack_require__.bind(null, 595)));
+const _ef4e9a76 = () => interopDefault(__webpack_require__.e(/* import() | pages/miembro/curso-publicado/_uidCurso/clase/_uidClase */ 71).then(__webpack_require__.bind(null, 670)));
 
-const _3a34dcb4 = () => interopDefault(__webpack_require__.e(/* import() | pages/moderador/curso-borrador/_uidCurso/auxiliares */ 78).then(__webpack_require__.bind(null, 596)));
+const _26baefa1 = () => interopDefault(__webpack_require__.e(/* import() | pages/moderador/curso-borrador/_uidCurso/auxiliares */ 80).then(__webpack_require__.bind(null, 671)));
 
-const _79d71155 = () => interopDefault(__webpack_require__.e(/* import() | pages/moderador/curso-borrador/_uidCurso/clase */ 79).then(__webpack_require__.bind(null, 597)));
+const _23d7a27a = () => interopDefault(__webpack_require__.e(/* import() | pages/moderador/curso-borrador/_uidCurso/clase */ 81).then(__webpack_require__.bind(null, 672)));
 
-const _4903d414 = () => interopDefault(__webpack_require__.e(/* import() | pages/moderador/curso-borrador/_uidCurso/clase/_uidClase */ 80).then(__webpack_require__.bind(null, 598)));
+const _1a5b89cf = () => interopDefault(__webpack_require__.e(/* import() | pages/moderador/curso-borrador/_uidCurso/clase/_uidClase */ 82).then(__webpack_require__.bind(null, 673)));
 
-const _28e8f06f = () => interopDefault(__webpack_require__.e(/* import() | pages/moderador/curso-publicado/_uidCurso/clase */ 82).then(__webpack_require__.bind(null, 599)));
+const _820af82c = () => interopDefault(__webpack_require__.e(/* import() | pages/moderador/curso-publicado/_uidCurso/clase */ 84).then(__webpack_require__.bind(null, 674)));
 
-const _87293e8c = () => interopDefault(__webpack_require__.e(/* import() | pages/moderador/curso-publicado/_uidCurso/clase/_uidClase */ 83).then(__webpack_require__.bind(null, 600)));
+const _160a625f = () => interopDefault(__webpack_require__.e(/* import() | pages/moderador/curso-publicado/_uidCurso/clase/_uidClase */ 85).then(__webpack_require__.bind(null, 675)));
 
-const _6c9c0ab4 = () => interopDefault(__webpack_require__.e(/* import() | pages/moderador/curso-publicado/_uidCurso/estudiantes */ 84).then(__webpack_require__.bind(null, 601)));
+const _6da7c5e1 = () => interopDefault(__webpack_require__.e(/* import() | pages/moderador/curso-publicado/_uidCurso/estudiantes */ 86).then(__webpack_require__.bind(null, 676)));
 
-const _2f4d4258 = () => interopDefault(__webpack_require__.e(/* import() | pages/pedidos/nuevo/_tipoProducto/_uidProducto */ 92).then(__webpack_require__.bind(null, 602)));
+const _4d645906 = () => interopDefault(__webpack_require__.e(/* import() | pages/pedidos/nuevo/_tipoProducto/_uidProducto */ 94).then(__webpack_require__.bind(null, 677)));
 
-const _36689445 = () => interopDefault(__webpack_require__.e(/* import() | pages/bienvenido-a-jekuaapy/_nombreUsuario */ 36).then(__webpack_require__.bind(null, 603)));
+const _683bb5ac = () => interopDefault(__webpack_require__.e(/* import() | pages/bienvenido-a-jekuaapy/_nombreUsuario */ 38).then(__webpack_require__.bind(null, 678)));
 
-const _81561628 = () => interopDefault(__webpack_require__.e(/* import() | pages/blog/_referencia */ 37).then(__webpack_require__.bind(null, 604)));
+const _1a222a51 = () => interopDefault(__webpack_require__.e(/* import() | pages/blog/_referencia */ 39).then(__webpack_require__.bind(null, 679)));
 
-const _224cd4f3 = () => interopDefault(__webpack_require__.e(/* import() | pages/curso/_codigo/index */ 44).then(__webpack_require__.bind(null, 605)));
+const _3f06cfd8 = () => interopDefault(__webpack_require__.e(/* import() | pages/curso/_codigo/index */ 46).then(__webpack_require__.bind(null, 680)));
 
-const _4473698b = () => interopDefault(__webpack_require__.e(/* import() | pages/estudiante/_nombreUsuario */ 46).then(__webpack_require__.bind(null, 552)));
+const _55ab75c6 = () => interopDefault(__webpack_require__.e(/* import() | pages/estudiante/_nombreUsuario */ 48).then(__webpack_require__.bind(null, 627)));
 
-const _2d26d25f = () => interopDefault(__webpack_require__.e(/* import() | pages/verificacion-email/_uidUsuario */ 101).then(__webpack_require__.bind(null, 606)));
+const _047799f8 = () => interopDefault(__webpack_require__.e(/* import() | pages/verificacion-email/_uidUsuario */ 103).then(__webpack_require__.bind(null, 681)));
 
-const _5115498b = () => interopDefault(__webpack_require__.e(/* import() | pages/curso/_codigo/clase */ 41).then(__webpack_require__.bind(null, 607)));
+const _6dcf4470 = () => interopDefault(__webpack_require__.e(/* import() | pages/curso/_codigo/clase */ 43).then(__webpack_require__.bind(null, 682)));
 
-const _caa903c4 = () => interopDefault(__webpack_require__.e(/* import() | pages/curso/_codigo/clase/_uidClase */ 42).then(__webpack_require__.bind(null, 608)));
+const _448b9bce = () => interopDefault(__webpack_require__.e(/* import() | pages/curso/_codigo/clase/_uidClase */ 44).then(__webpack_require__.bind(null, 683)));
 
-const _590eb150 = () => interopDefault(__webpack_require__.e(/* import() | pages/curso/_codigo/continuar */ 43).then(__webpack_require__.bind(null, 609)));
+const _40d6b1b5 = () => interopDefault(__webpack_require__.e(/* import() | pages/curso/_codigo/continuar */ 45).then(__webpack_require__.bind(null, 684)));
 
-const _37fc754e = () => interopDefault(__webpack_require__.e(/* import() | pages/blogs/_seccion/_categoria */ 38).then(__webpack_require__.bind(null, 610)));
+const _0c697f04 = () => interopDefault(__webpack_require__.e(/* import() | pages/blogs/_seccion/_categoria */ 40).then(__webpack_require__.bind(null, 685)));
 
-const _431be216 = () => interopDefault(__webpack_require__.e(/* import() | pages/cursos/_seccion/_categoria */ 45).then(__webpack_require__.bind(null, 611)));
+const _fc500f20 = () => interopDefault(__webpack_require__.e(/* import() | pages/cursos/_seccion/_categoria */ 47).then(__webpack_require__.bind(null, 686)));
 
-const _29e1970f = () => interopDefault(__webpack_require__.e(/* import() | pages/index */ 49).then(__webpack_require__.bind(null, 612)));
+const _c0200818 = () => interopDefault(__webpack_require__.e(/* import() | pages/index */ 51).then(__webpack_require__.bind(null, 687)));
 
 const emptyFn = () => {};
 
@@ -17722,273 +17769,273 @@ const routerOptions = {
   scrollBehavior: router_scrollBehavior,
   routes: [{
     path: "/centro",
-    component: _43b025f8,
+    component: _e123449a,
     name: "centro"
   }, {
     path: "/cuentas-jekuaapy-sin-verificar",
-    component: _7f20200c,
+    component: _3e9cd272,
     name: "cuentas-jekuaapy-sin-verificar"
   }, {
     path: "/historial-compra",
-    component: _3f56d42f,
+    component: _5b0ade2a,
     name: "historial-compra",
     children: [{
       path: "productos",
-      component: _0d33bab4,
+      component: _22fd35d9,
       name: "historial-compra-productos"
     }]
   }, {
     path: "/inicioSesion",
-    component: _6f9bd31f,
+    component: _e07bdacc,
     name: "inicioSesion"
   }, {
     path: "/jekuaapoints",
-    component: _781621e7,
+    component: _546b920c,
     name: "jekuaapoints"
   }, {
     path: "/miembro",
-    component: _c1223eac,
+    component: _4f032d65,
     name: "miembro"
   }, {
     path: "/mis-cursos",
-    component: _f8f3b3c0,
+    component: _5cc7ef4a,
     name: "mis-cursos"
   }, {
     path: "/moderador",
-    component: _46a6f5e0,
+    component: _0f3ee1ea,
     name: "moderador"
   }, {
     path: "/pedidos",
-    component: _78769d57,
+    component: _280aea12,
     name: "pedidos"
   }, {
     path: "/perfil",
-    component: _56d2765f,
+    component: _badea3cc,
     children: [{
       path: "",
-      component: _127ec543,
+      component: _11bf15b0,
       name: "perfil"
     }, {
       path: "informacion",
-      component: _ab89d9e4,
+      component: _f2def99a,
       name: "perfil-informacion"
     }, {
       path: "seguridad",
-      component: _2b6b4821,
+      component: _f38f04f4,
       name: "perfil-seguridad"
     }]
   }, {
     path: "/precios",
-    component: _34e4156a,
+    component: _60ecd50f,
     name: "precios"
   }, {
     path: "/registro",
-    component: _629b9e86,
+    component: _90aa58fe,
     name: "registro"
   }, {
     path: "/jekuaapoints/comprar",
-    component: _0860c789,
+    component: _251ac26e,
     name: "jekuaapoints-comprar"
   }, {
     path: "/miembro/blogs",
-    component: _5a50d6f9,
+    component: _770ad1de,
     name: "miembro-blogs"
   }, {
     path: "/miembro/cursos",
-    component: _39d0c573,
+    component: _9753b1a4,
     name: "miembro-cursos"
   }, {
     path: "/moderador/blogs",
-    component: _4812e9cf,
+    component: _63c6f3ca,
     name: "moderador-blogs"
   }, {
     path: "/moderador/cursos",
-    component: _5722b84e,
+    component: _79bafa58,
     name: "moderador-cursos"
   }, {
     path: "/moderador/usuarios",
-    component: _1ae42292,
+    component: _62394248,
     name: "moderador-usuarios"
   }, {
     path: "/pedidos/nuevo",
-    component: _215a0774,
+    component: _0c0cf72b,
     name: "pedidos-nuevo"
   }, {
     path: "/miembro/blogs/mis-blogs",
-    component: _45e82442,
+    component: _2db024a7,
     name: "miembro-blogs-mis-blogs"
   }, {
     path: "/miembro/blogs/nuevo",
-    component: _6839065e,
+    component: _f619fd7a,
     name: "miembro-blogs-nuevo"
   }, {
     path: "/miembro/cursos/borradores",
-    component: _0f663aa0,
+    component: _0e165dd5,
     name: "miembro-cursos-borradores"
   }, {
     path: "/miembro/cursos/nuevo",
-    component: _47b8f4d8,
+    component: _7b8352da,
     name: "miembro-cursos-nuevo"
   }, {
     path: "/miembro/cursos/publicados",
-    component: _7d39685f,
+    component: _d9fa38f8,
     name: "miembro-cursos-publicados"
   }, {
     path: "/moderador/cursos/borradores",
-    component: _0c8fd7ec,
+    component: _79e14c22,
     name: "moderador-cursos-borradores"
   }, {
     path: "/moderador/cursos/publicados",
-    component: _7ea499b9,
+    component: _47fbdf9e,
     name: "moderador-cursos-publicados"
   }, {
     path: "/pedidos/nuevo/points",
-    component: _4653e7fa,
+    component: _b3a55c30,
     name: "pedidos-nuevo-points"
   }, {
     path: "/miembro/blog/actualizar/:referencia?",
-    component: _491db052,
+    component: _15ac98dc,
     name: "miembro-blog-actualizar-referencia"
   }, {
     path: "/miembro/curso-borrador/vista-previa/:uidCurso?/clase",
-    component: _553b5986,
+    component: _a24b49aa,
     name: "miembro-curso-borrador-vista-previa-uidCurso-clase",
     children: [{
       path: ":uidClase?",
-      component: _d2b9997a,
+      component: _0a6daf04,
       name: "miembro-curso-borrador-vista-previa-uidCurso-clase-uidClase"
     }]
   }, {
     path: "/miembro/blog/:referencia?",
-    component: _0f91ae07,
+    component: _20c9ba42,
     name: "miembro-blog-referencia"
   }, {
     path: "/miembro/curso-borrador/:uidCurso?",
-    component: _c0318282,
+    component: _5a18dffa,
     children: [{
       path: "",
-      component: _0a69d0e3,
+      component: _35366748,
       name: "miembro-curso-borrador-uidCurso"
     }, {
       path: "auxiliares",
-      component: _fd79f580,
+      component: _4d84b40a,
       name: "miembro-curso-borrador-uidCurso-auxiliares"
     }, {
       path: "foto-curso",
-      component: _4fb0f4d2,
+      component: _b0a8d4e6,
       name: "miembro-curso-borrador-uidCurso-foto-curso"
     }, {
       path: "precios",
-      component: _14452a3e,
+      component: _8374893a,
       name: "miembro-curso-borrador-uidCurso-precios"
     }, {
       path: "programa-estudio",
-      component: _3561e40a,
+      component: _99dc66f6,
       name: "miembro-curso-borrador-uidCurso-programa-estudio"
     }, {
       path: "publicacion",
-      component: _7744d8a4,
+      component: _6bb70a53,
       name: "miembro-curso-borrador-uidCurso-publicacion"
     }]
   }, {
     path: "/miembro/curso-publicado/:uidCurso",
-    component: _262bcc71,
+    component: _54f202ac,
     name: "miembro-curso-publicado-uidCurso"
   }, {
     path: "/moderador/curso-borrador/:uidCurso",
-    component: _4b0e9cbd,
+    component: _15e1a43c,
     name: "moderador-curso-borrador-uidCurso"
   }, {
     path: "/moderador/curso-publicado/:uidCurso",
-    component: _0bbf0852,
+    component: _df9be15c,
     name: "moderador-curso-publicado-uidCurso"
   }, {
     path: "/miembro/curso-publicado/:uidCurso?/ajustes",
-    component: _3a1b68cc,
+    component: _7903df15,
     name: "miembro-curso-publicado-uidCurso-ajustes"
   }, {
     path: "/miembro/curso-publicado/:uidCurso?/clase",
-    component: _54f44109,
+    component: _f88b1178,
     name: "miembro-curso-publicado-uidCurso-clase",
     children: [{
       path: ":uidClase?",
-      component: _500b8be0,
+      component: _ef4e9a76,
       name: "miembro-curso-publicado-uidCurso-clase-uidClase"
     }]
   }, {
     path: "/moderador/curso-borrador/:uidCurso?/auxiliares",
-    component: _3a34dcb4,
+    component: _26baefa1,
     name: "moderador-curso-borrador-uidCurso-auxiliares"
   }, {
     path: "/moderador/curso-borrador/:uidCurso?/clase",
-    component: _79d71155,
+    component: _23d7a27a,
     name: "moderador-curso-borrador-uidCurso-clase",
     children: [{
       path: ":uidClase?",
-      component: _4903d414,
+      component: _1a5b89cf,
       name: "moderador-curso-borrador-uidCurso-clase-uidClase"
     }]
   }, {
     path: "/moderador/curso-publicado/:uidCurso?/clase",
-    component: _28e8f06f,
+    component: _820af82c,
     name: "moderador-curso-publicado-uidCurso-clase",
     children: [{
       path: ":uidClase?",
-      component: _87293e8c,
+      component: _160a625f,
       name: "moderador-curso-publicado-uidCurso-clase-uidClase"
     }]
   }, {
     path: "/moderador/curso-publicado/:uidCurso?/estudiantes",
-    component: _6c9c0ab4,
+    component: _6da7c5e1,
     name: "moderador-curso-publicado-uidCurso-estudiantes"
   }, {
     path: "/pedidos/nuevo/:tipoProducto/:uidProducto?",
-    component: _2f4d4258,
+    component: _4d645906,
     name: "pedidos-nuevo-tipoProducto-uidProducto"
   }, {
     path: "/bienvenido-a-jekuaapy/:nombreUsuario?",
-    component: _36689445,
+    component: _683bb5ac,
     name: "bienvenido-a-jekuaapy-nombreUsuario"
   }, {
     path: "/blog/:referencia?",
-    component: _81561628,
+    component: _1a222a51,
     name: "blog-referencia"
   }, {
     path: "/curso/:codigo",
-    component: _224cd4f3,
+    component: _3f06cfd8,
     name: "curso-codigo"
   }, {
     path: "/estudiante/:nombreUsuario?",
-    component: _4473698b,
+    component: _55ab75c6,
     name: "estudiante-nombreUsuario"
   }, {
     path: "/verificacion-email/:uidUsuario?",
-    component: _2d26d25f,
+    component: _047799f8,
     name: "verificacion-email-uidUsuario"
   }, {
     path: "/curso/:codigo?/clase",
-    component: _5115498b,
+    component: _6dcf4470,
     name: "curso-codigo-clase",
     children: [{
       path: ":uidClase?",
-      component: _caa903c4,
+      component: _448b9bce,
       name: "curso-codigo-clase-uidClase"
     }]
   }, {
     path: "/curso/:codigo?/continuar",
-    component: _590eb150,
+    component: _40d6b1b5,
     name: "curso-codigo-continuar"
   }, {
     path: "/blogs/:seccion?/:categoria?",
-    component: _37fc754e,
+    component: _0c697f04,
     name: "blogs-seccion-categoria"
   }, {
     path: "/cursos/:seccion?/:categoria?",
-    component: _431be216,
+    component: _fc500f20,
     name: "cursos-seccion-categoria"
   }, {
     path: "/",
-    component: _29e1970f,
+    component: _c0200818,
     name: "index"
   }],
   fallback: false
@@ -18188,7 +18235,7 @@ var error_component = Object(componentNormalizer["a" /* default */])(
   false,
   injectStyles,
   "0e2d8744",
-  "50a63eac"
+  "2795dfd9"
   
 )
 
@@ -18492,7 +18539,7 @@ var nuxt_loading_component = Object(componentNormalizer["a" /* default */])(
   false,
   nuxt_loading_injectStyles,
   null,
-  "3a5853ac"
+  "1ea9209f"
   
 )
 
@@ -18506,8 +18553,11 @@ var videojs_custom_theme = __webpack_require__(156);
 // EXTERNAL MODULE: ./assets/style/fonts.scss
 var fonts = __webpack_require__(157);
 
+// EXTERNAL MODULE: ./assets/style/style_code.scss
+var style_code = __webpack_require__(158);
+
 // EXTERNAL MODULE: ./node_modules/vuetify/src/components/VApp/VApp.sass
-var VApp = __webpack_require__(158);
+var VApp = __webpack_require__(159);
 
 // EXTERNAL MODULE: ./node_modules/vuetify/lib/mixins/themeable/index.js
 var themeable = __webpack_require__(5);
@@ -18575,7 +18625,7 @@ var mixins = __webpack_require__(3);
 
 }));
 // EXTERNAL MODULE: ./node_modules/vuetify/src/components/VMain/VMain.sass
-var VMain = __webpack_require__(159);
+var VMain = __webpack_require__(160);
 
 // EXTERNAL MODULE: ./node_modules/vuetify/lib/mixins/ssr-bootable/index.js
 var ssr_bootable = __webpack_require__(22);
@@ -18702,7 +18752,7 @@ var SnackbarError = __webpack_require__(25);
 
 function default_injectStyles (context) {
   
-  var style0 = __webpack_require__(182)
+  var style0 = __webpack_require__(183)
 if (style0.__inject__) style0.__inject__(context)
 
 }
@@ -18716,7 +18766,7 @@ var default_component = Object(componentNormalizer["a" /* default */])(
   false,
   default_injectStyles,
   null,
-  "2a2f2b65"
+  "03bb3552"
   
 )
 
@@ -18726,13 +18776,13 @@ var default_component = Object(componentNormalizer["a" /* default */])(
 installComponents(default_component, {Loading: __webpack_require__(41).default,NavigationUser: __webpack_require__(35).default,NavigationDefault: __webpack_require__(34).default,FooterDefault: __webpack_require__(82).default,SnackbarError: __webpack_require__(25).default})
 
 // EXTERNAL MODULE: ./node_modules/vuetify/lib/components/VAppBar/VAppBar.js
-var VAppBar = __webpack_require__(258);
+var VAppBar = __webpack_require__(260);
 
 // EXTERNAL MODULE: ./node_modules/vuetify/lib/components/VAppBar/VAppBarNavIcon.js
-var VAppBarNavIcon = __webpack_require__(261);
+var VAppBarNavIcon = __webpack_require__(263);
 
 // EXTERNAL MODULE: ./node_modules/vuetify/lib/components/VDivider/VDivider.js
-var VDivider = __webpack_require__(212);
+var VDivider = __webpack_require__(215);
 
 // EXTERNAL MODULE: ./node_modules/vuetify/lib/components/VIcon/VIcon.js
 var VIcon = __webpack_require__(72);
@@ -18756,10 +18806,10 @@ var components_VList = __webpack_require__(2);
 var VListItemIcon = __webpack_require__(47);
 
 // EXTERNAL MODULE: ./node_modules/vuetify/lib/components/VNavigationDrawer/VNavigationDrawer.js
-var VNavigationDrawer = __webpack_require__(257);
+var VNavigationDrawer = __webpack_require__(259);
 
 // EXTERNAL MODULE: ./node_modules/vuetify/lib/components/VGrid/VSpacer.js
-var VSpacer = __webpack_require__(260);
+var VSpacer = __webpack_require__(262);
 
 // CONCATENATED MODULE: ./node_modules/vuetify-loader/lib/loader.js??ref--4!./node_modules/babel-loader/lib??ref--2-0!./node_modules/vue-loader/lib/loaders/templateLoader.js??ref--7!./node_modules/@nuxt/components/dist/loader.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./layouts/miembro.vue?vue&type=template&id=756718f4&scoped=true&
 
@@ -19010,7 +19060,7 @@ var FooterMiembro = __webpack_require__(83);
 
 function miembro_injectStyles (context) {
   
-  var style0 = __webpack_require__(184)
+  var style0 = __webpack_require__(185)
 if (style0.__inject__) style0.__inject__(context)
 
 }
@@ -19024,7 +19074,7 @@ var miembro_component = Object(componentNormalizer["a" /* default */])(
   false,
   miembro_injectStyles,
   "756718f4",
-  "c2edc702"
+  "7815266c"
   
 )
 
@@ -19265,7 +19315,7 @@ var moderadorvue_type_template_id_b026659a_scoped_true_staticRenderFns = [];
 
 function moderador_injectStyles (context) {
   
-  var style0 = __webpack_require__(185)
+  var style0 = __webpack_require__(186)
 if (style0.__inject__) style0.__inject__(context)
 
 }
@@ -19279,7 +19329,7 @@ var moderador_component = Object(componentNormalizer["a" /* default */])(
   false,
   moderador_injectStyles,
   "b026659a",
-  "c2a29dce"
+  "455ff3c6"
   
 )
 
@@ -19289,6 +19339,7 @@ var moderador_component = Object(componentNormalizer["a" /* default */])(
 installComponents(moderador_component, {Loading: __webpack_require__(41).default,SnackbarError: __webpack_require__(25).default})
 
 // CONCATENATED MODULE: ../functions/.nuxt/App.js
+
 
 
 
@@ -19483,15 +19534,15 @@ const VUEX_PROPERTIES = ['state', 'getters', 'actions', 'mutations'];
 let store_store = {};
 
 (function updateModules() {
-  store_store = normalizeRoot(__webpack_require__(194), 'store/index.js'); // If store is an exported method = classic mode (deprecated)
+  store_store = normalizeRoot(__webpack_require__(195), 'store/index.js'); // If store is an exported method = classic mode (deprecated)
   // Enforce store modules
 
   store_store.modules = store_store.modules || {};
-  resolveStoreModules(__webpack_require__(187), 'modules/sistema.js');
-  resolveStoreModules(__webpack_require__(188), 'modules/usuarios/index.js');
-  resolveStoreModules(__webpack_require__(189), 'modules/blogs/index.js');
-  resolveStoreModules(__webpack_require__(190), 'modules/usuarios/miembro.js');
-  resolveStoreModules(__webpack_require__(191), 'modules/usuarios/moderador.js'); // If the environment supports hot reloading...
+  resolveStoreModules(__webpack_require__(188), 'modules/sistema.js');
+  resolveStoreModules(__webpack_require__(189), 'modules/usuarios/index.js');
+  resolveStoreModules(__webpack_require__(190), 'modules/blogs/index.js');
+  resolveStoreModules(__webpack_require__(191), 'modules/usuarios/miembro.js');
+  resolveStoreModules(__webpack_require__(192), 'modules/usuarios/moderador.js'); // If the environment supports hot reloading...
 })(); // createStore
 
 
@@ -19608,47 +19659,49 @@ function mergeProperty(storeModule, moduleData, property) {
 // CONCATENATED MODULE: ../functions/.nuxt/components/index.js
 const components_FooterDefault = () => Promise.resolve(/* import() */).then(__webpack_require__.bind(null, 82)).then(c => wrapFunctional(c.default || c));
 const components_FooterMiembro = () => Promise.resolve(/* import() */).then(__webpack_require__.bind(null, 83)).then(c => wrapFunctional(c.default || c));
-const FotoPerfil = () => __webpack_require__.e(/* import() | components/foto-perfil */ 30).then(__webpack_require__.bind(null, 400)).then(c => wrapFunctional(c.default || c));
+const FotoPerfil = () => __webpack_require__.e(/* import() | components/foto-perfil */ 32).then(__webpack_require__.bind(null, 475)).then(c => wrapFunctional(c.default || c));
 const components_Loading = () => Promise.resolve(/* import() */).then(__webpack_require__.bind(null, 41)).then(c => wrapFunctional(c.default || c));
 const components_NavigationDefault = () => Promise.resolve(/* import() */).then(__webpack_require__.bind(null, 34)).then(c => wrapFunctional(c.default || c));
 const components_NavigationUser = () => Promise.resolve(/* import() */).then(__webpack_require__.bind(null, 35)).then(c => wrapFunctional(c.default || c));
 const NotFound = () => Promise.resolve(/* import() */).then(__webpack_require__.bind(null, 119)).then(c => wrapFunctional(c.default || c));
 const components_SnackbarError = () => Promise.resolve(/* import() */).then(__webpack_require__.bind(null, 25)).then(c => wrapFunctional(c.default || c));
 const Spinner = () => Promise.resolve(/* import() */).then(__webpack_require__.bind(null, 125)).then(c => wrapFunctional(c.default || c));
-const Tiptap = () => __webpack_require__.e(/* import() | components/tiptap */ 32).then(__webpack_require__.bind(null, 301)).then(c => wrapFunctional(c.default || c));
-const AuthEmail = () => __webpack_require__.e(/* import() | components/auth-email */ 1).then(__webpack_require__.bind(null, 361)).then(c => wrapFunctional(c.default || c));
-const BlogsBuscadorBlog = () => __webpack_require__.e(/* import() | components/blogs-buscador-blog */ 2).then(__webpack_require__.bind(null, 466)).then(c => wrapFunctional(c.default || c));
-const BlogsRecomendacionPorDarMG = () => __webpack_require__.e(/* import() | components/blogs-recomendacion-por-dar-m-g */ 7).then(__webpack_require__.bind(null, 451)).then(c => wrapFunctional(c.default || c));
-const BlogsRecomendacionPorSeccion = () => __webpack_require__.e(/* import() | components/blogs-recomendacion-por-seccion */ 8).then(__webpack_require__.bind(null, 450)).then(c => wrapFunctional(c.default || c));
-const BlogsRecomendacionPorSimilitud = () => __webpack_require__.e(/* import() | components/blogs-recomendacion-por-similitud */ 9).then(__webpack_require__.bind(null, 461)).then(c => wrapFunctional(c.default || c));
-const BlogsVisualizador = () => __webpack_require__.e(/* import() | components/blogs-visualizador */ 10).then(__webpack_require__.bind(null, 305)).then(c => wrapFunctional(c.default || c));
-const CursosIniciarSesion = () => __webpack_require__.e(/* import() | components/cursos-iniciar-sesion */ 19).then(__webpack_require__.bind(null, 464)).then(c => wrapFunctional(c.default || c));
-const CursosRecomendacionPorqueViste = () => __webpack_require__.e(/* import() | components/cursos-recomendacion-porque-viste */ 26).then(__webpack_require__.bind(null, 613)).then(c => wrapFunctional(c.default || c));
-const CursosSinAccesoCurso = () => __webpack_require__.e(/* import() | components/cursos-sin-acceso-curso */ 27).then(__webpack_require__.bind(null, 465)).then(c => wrapFunctional(c.default || c));
-const CursosVisualizadorArticulo = () => __webpack_require__.e(/* import() | components/cursos-visualizador-articulo */ 28).then(__webpack_require__.bind(null, 302)).then(c => wrapFunctional(c.default || c));
-const CursosVisualizadorVideo = () => __webpack_require__.e(/* import() | components/cursos-visualizador-video */ 29).then(__webpack_require__.bind(null, 303)).then(c => wrapFunctional(c.default || c));
-const InformacionUsuarioFormularioInformacionUsuario = () => __webpack_require__.e(/* import() | components/informacion-usuario-formulario-informacion-usuario */ 31).then(__webpack_require__.bind(null, 614)).then(c => wrapFunctional(c.default || c));
-const UsuariosCartaPresentacion = () => __webpack_require__.e(/* import() | components/usuarios-carta-presentacion */ 33).then(__webpack_require__.bind(null, 462)).then(c => wrapFunctional(c.default || c));
-const UsuariosCartaPresentacionInstructor = () => __webpack_require__.e(/* import() | components/usuarios-carta-presentacion-instructor */ 34).then(__webpack_require__.bind(null, 463)).then(c => wrapFunctional(c.default || c));
-const BlogsMiembroBuscadorBlog = () => __webpack_require__.e(/* import() | components/blogs-miembro-buscador-blog */ 3).then(__webpack_require__.bind(null, 452)).then(c => wrapFunctional(c.default || c));
-const BlogsMiembroErroresBlog = () => __webpack_require__.e(/* import() | components/blogs-miembro-errores-blog */ 4).then(__webpack_require__.bind(null, 459)).then(c => wrapFunctional(c.default || c));
-const BlogsMiembroFormularioBlogActualizar = () => __webpack_require__.e(/* import() | components/blogs-miembro-formulario-blog-actualizar */ 5).then(__webpack_require__.bind(null, 457)).then(c => wrapFunctional(c.default || c));
-const BlogsMiembroFormularioBlogLeer = () => __webpack_require__.e(/* import() | components/blogs-miembro-formulario-blog-leer */ 6).then(__webpack_require__.bind(null, 458)).then(c => wrapFunctional(c.default || c));
-const CursosBorradorMiembroBuscadorCursosBorrador = () => __webpack_require__.e(/* import() | components/cursos-borrador-miembro-buscador-cursos-borrador */ 11).then(__webpack_require__.bind(null, 453)).then(c => wrapFunctional(c.default || c));
-const CursosBorradorMiembroFormularioCurso = () => __webpack_require__.e(/* import() | components/cursos-borrador-miembro-formulario-curso */ 12).then(__webpack_require__.bind(null, 460)).then(c => wrapFunctional(c.default || c));
-const CursosBorradorMiembroGeneradorArticulo = () => __webpack_require__.e(/* import() | components/cursos-borrador-miembro-generador-articulo */ 13).then(__webpack_require__.bind(null, 468)).then(c => wrapFunctional(c.default || c));
-const CursosBorradorMiembroGeneradorVideoClase = () => __webpack_require__.e(/* import() | components/cursos-borrador-miembro-generador-video-clase */ 14).then(__webpack_require__.bind(null, 469)).then(c => wrapFunctional(c.default || c));
-const CursosBorradorMiembroListaUnidadesClases = () => __webpack_require__.e(/* import() | components/cursos-borrador-miembro-lista-unidades-clases */ 15).then(__webpack_require__.bind(null, 363)).then(c => wrapFunctional(c.default || c));
-const CursosBorradorMiembroProgramaEstudio = () => __webpack_require__.e(/* import() | components/cursos-borrador-miembro-programa-estudio */ 16).then(__webpack_require__.bind(null, 553)).then(c => wrapFunctional(c.default || c));
-const CursosBorradorModeradorBuscadorCursosBorrador = () => __webpack_require__.e(/* import() | components/cursos-borrador-moderador-buscador-cursos-borrador */ 17).then(__webpack_require__.bind(null, 455)).then(c => wrapFunctional(c.default || c));
-const CursosBorradorModeradorListaUnidadesClases = () => __webpack_require__.e(/* import() | components/cursos-borrador-moderador-lista-unidades-clases */ 18).then(__webpack_require__.bind(null, 365)).then(c => wrapFunctional(c.default || c));
-const CursosPublicadoEstudianteBuscadorCursosPublicado = () => __webpack_require__.e(/* import() | components/cursos-publicado-estudiante-buscador-cursos-publicado */ 20).then(__webpack_require__.bind(null, 467)).then(c => wrapFunctional(c.default || c));
-const CursosPublicadoEstudianteListaUnidadesClases = () => __webpack_require__.e(/* import() | components/cursos-publicado-estudiante-lista-unidades-clases */ 21).then(__webpack_require__.bind(null, 367)).then(c => wrapFunctional(c.default || c));
-const CursosPublicadoMiembroBuscadorCursosPublicado = () => __webpack_require__.e(/* import() | components/cursos-publicado-miembro-buscador-cursos-publicado */ 22).then(__webpack_require__.bind(null, 454)).then(c => wrapFunctional(c.default || c));
-const CursosPublicadoMiembroListaUnidadesClases = () => __webpack_require__.e(/* import() | components/cursos-publicado-miembro-lista-unidades-clases */ 23).then(__webpack_require__.bind(null, 364)).then(c => wrapFunctional(c.default || c));
-const CursosPublicadoModeradorBuscadorCursosPublicado = () => __webpack_require__.e(/* import() | components/cursos-publicado-moderador-buscador-cursos-publicado */ 24).then(__webpack_require__.bind(null, 456)).then(c => wrapFunctional(c.default || c));
-const CursosPublicadoModeradorListaUnidadesClases = () => __webpack_require__.e(/* import() | components/cursos-publicado-moderador-lista-unidades-clases */ 25).then(__webpack_require__.bind(null, 366)).then(c => wrapFunctional(c.default || c));
-const UsuariosModeradorVisualizadorDatosUsuario = () => __webpack_require__.e(/* import() | components/usuarios-moderador-visualizador-datos-usuario */ 35).then(__webpack_require__.bind(null, 362)).then(c => wrapFunctional(c.default || c)); // nuxt/nuxt.js#8607
+const Tiptap = () => __webpack_require__.e(/* import() | components/tiptap */ 34).then(__webpack_require__.bind(null, 375)).then(c => wrapFunctional(c.default || c));
+const AuthEmail = () => __webpack_require__.e(/* import() | components/auth-email */ 1).then(__webpack_require__.bind(null, 436)).then(c => wrapFunctional(c.default || c));
+const BlogsBuscadorBlog = () => __webpack_require__.e(/* import() | components/blogs-buscador-blog */ 2).then(__webpack_require__.bind(null, 541)).then(c => wrapFunctional(c.default || c));
+const BlogsRecomendacionPorDarMG = () => __webpack_require__.e(/* import() | components/blogs-recomendacion-por-dar-m-g */ 7).then(__webpack_require__.bind(null, 526)).then(c => wrapFunctional(c.default || c));
+const BlogsRecomendacionPorSeccion = () => __webpack_require__.e(/* import() | components/blogs-recomendacion-por-seccion */ 8).then(__webpack_require__.bind(null, 525)).then(c => wrapFunctional(c.default || c));
+const BlogsRecomendacionPorSimilitud = () => __webpack_require__.e(/* import() | components/blogs-recomendacion-por-similitud */ 9).then(__webpack_require__.bind(null, 536)).then(c => wrapFunctional(c.default || c));
+const BlogsVisualizador = () => __webpack_require__.e(/* import() | components/blogs-visualizador */ 10).then(__webpack_require__.bind(null, 380)).then(c => wrapFunctional(c.default || c));
+const CursosIniciarSesion = () => __webpack_require__.e(/* import() | components/cursos-iniciar-sesion */ 20).then(__webpack_require__.bind(null, 539)).then(c => wrapFunctional(c.default || c));
+const CursosRecomendacionPorqueViste = () => __webpack_require__.e(/* import() | components/cursos-recomendacion-porque-viste */ 27).then(__webpack_require__.bind(null, 688)).then(c => wrapFunctional(c.default || c));
+const CursosSinAccesoCurso = () => __webpack_require__.e(/* import() | components/cursos-sin-acceso-curso */ 28).then(__webpack_require__.bind(null, 540)).then(c => wrapFunctional(c.default || c));
+const CursosVisualizadorArticulo = () => __webpack_require__.e(/* import() | components/cursos-visualizador-articulo */ 29).then(__webpack_require__.bind(null, 376)).then(c => wrapFunctional(c.default || c));
+const CursosVisualizadorVideo = () => __webpack_require__.e(/* import() | components/cursos-visualizador-video */ 30).then(__webpack_require__.bind(null, 377)).then(c => wrapFunctional(c.default || c));
+const CursosVisualizadorYoutube = () => __webpack_require__.e(/* import() | components/cursos-visualizador-youtube */ 31).then(__webpack_require__.bind(null, 378)).then(c => wrapFunctional(c.default || c));
+const InformacionUsuarioFormularioInformacionUsuario = () => __webpack_require__.e(/* import() | components/informacion-usuario-formulario-informacion-usuario */ 33).then(__webpack_require__.bind(null, 689)).then(c => wrapFunctional(c.default || c));
+const UsuariosCartaPresentacion = () => __webpack_require__.e(/* import() | components/usuarios-carta-presentacion */ 35).then(__webpack_require__.bind(null, 537)).then(c => wrapFunctional(c.default || c));
+const UsuariosCartaPresentacionInstructor = () => __webpack_require__.e(/* import() | components/usuarios-carta-presentacion-instructor */ 36).then(__webpack_require__.bind(null, 538)).then(c => wrapFunctional(c.default || c));
+const BlogsMiembroBuscadorBlog = () => __webpack_require__.e(/* import() | components/blogs-miembro-buscador-blog */ 3).then(__webpack_require__.bind(null, 527)).then(c => wrapFunctional(c.default || c));
+const BlogsMiembroErroresBlog = () => __webpack_require__.e(/* import() | components/blogs-miembro-errores-blog */ 4).then(__webpack_require__.bind(null, 534)).then(c => wrapFunctional(c.default || c));
+const BlogsMiembroFormularioBlogActualizar = () => __webpack_require__.e(/* import() | components/blogs-miembro-formulario-blog-actualizar */ 5).then(__webpack_require__.bind(null, 532)).then(c => wrapFunctional(c.default || c));
+const BlogsMiembroFormularioBlogLeer = () => __webpack_require__.e(/* import() | components/blogs-miembro-formulario-blog-leer */ 6).then(__webpack_require__.bind(null, 533)).then(c => wrapFunctional(c.default || c));
+const CursosPublicadoMiembroBuscadorCursosPublicado = () => __webpack_require__.e(/* import() | components/cursos-publicado-miembro-buscador-cursos-publicado */ 23).then(__webpack_require__.bind(null, 529)).then(c => wrapFunctional(c.default || c));
+const CursosPublicadoMiembroListaUnidadesClases = () => __webpack_require__.e(/* import() | components/cursos-publicado-miembro-lista-unidades-clases */ 24).then(__webpack_require__.bind(null, 439)).then(c => wrapFunctional(c.default || c));
+const CursosPublicadoEstudianteBuscadorCursosPublicado = () => __webpack_require__.e(/* import() | components/cursos-publicado-estudiante-buscador-cursos-publicado */ 21).then(__webpack_require__.bind(null, 542)).then(c => wrapFunctional(c.default || c));
+const CursosPublicadoEstudianteListaUnidadesClases = () => __webpack_require__.e(/* import() | components/cursos-publicado-estudiante-lista-unidades-clases */ 22).then(__webpack_require__.bind(null, 442)).then(c => wrapFunctional(c.default || c));
+const CursosPublicadoModeradorBuscadorCursosPublicado = () => __webpack_require__.e(/* import() | components/cursos-publicado-moderador-buscador-cursos-publicado */ 25).then(__webpack_require__.bind(null, 531)).then(c => wrapFunctional(c.default || c));
+const CursosPublicadoModeradorListaUnidadesClases = () => __webpack_require__.e(/* import() | components/cursos-publicado-moderador-lista-unidades-clases */ 26).then(__webpack_require__.bind(null, 441)).then(c => wrapFunctional(c.default || c));
+const CursosBorradorModeradorBuscadorCursosBorrador = () => __webpack_require__.e(/* import() | components/cursos-borrador-moderador-buscador-cursos-borrador */ 18).then(__webpack_require__.bind(null, 530)).then(c => wrapFunctional(c.default || c));
+const CursosBorradorModeradorListaUnidadesClases = () => __webpack_require__.e(/* import() | components/cursos-borrador-moderador-lista-unidades-clases */ 19).then(__webpack_require__.bind(null, 440)).then(c => wrapFunctional(c.default || c));
+const CursosBorradorMiembroBuscadorCursosBorrador = () => __webpack_require__.e(/* import() | components/cursos-borrador-miembro-buscador-cursos-borrador */ 11).then(__webpack_require__.bind(null, 528)).then(c => wrapFunctional(c.default || c));
+const CursosBorradorMiembroFormularioCurso = () => __webpack_require__.e(/* import() | components/cursos-borrador-miembro-formulario-curso */ 12).then(__webpack_require__.bind(null, 535)).then(c => wrapFunctional(c.default || c));
+const CursosBorradorMiembroGeneradorArticulo = () => __webpack_require__.e(/* import() | components/cursos-borrador-miembro-generador-articulo */ 13).then(__webpack_require__.bind(null, 543)).then(c => wrapFunctional(c.default || c));
+const CursosBorradorMiembroGeneradorVideoClase = () => __webpack_require__.e(/* import() | components/cursos-borrador-miembro-generador-video-clase */ 14).then(__webpack_require__.bind(null, 545)).then(c => wrapFunctional(c.default || c));
+const CursosBorradorMiembroGeneradorVideoYoutubeClase = () => __webpack_require__.e(/* import() | components/cursos-borrador-miembro-generador-video-youtube-clase */ 15).then(__webpack_require__.bind(null, 544)).then(c => wrapFunctional(c.default || c));
+const CursosBorradorMiembroListaUnidadesClases = () => __webpack_require__.e(/* import() | components/cursos-borrador-miembro-lista-unidades-clases */ 16).then(__webpack_require__.bind(null, 438)).then(c => wrapFunctional(c.default || c));
+const CursosBorradorMiembroProgramaEstudio = () => __webpack_require__.e(/* import() | components/cursos-borrador-miembro-programa-estudio */ 17).then(__webpack_require__.bind(null, 628)).then(c => wrapFunctional(c.default || c));
+const UsuariosModeradorVisualizadorDatosUsuario = () => __webpack_require__.e(/* import() | components/usuarios-moderador-visualizador-datos-usuario */ 37).then(__webpack_require__.bind(null, 437)).then(c => wrapFunctional(c.default || c)); // nuxt/nuxt.js#8607
 
 function wrapFunctional(options) {
   if (!options || !options.functional) {
@@ -19706,7 +19759,7 @@ external_vue_default.a.use(framework["a" /* default */], {});
   ctx.$vuetify = vuetify.framework;
 });
 // EXTERNAL MODULE: ../functions/.nuxt/empty.js
-var _nuxt_empty = __webpack_require__(192);
+var _nuxt_empty = __webpack_require__(193);
 
 // CONCATENATED MODULE: ../functions/.nuxt/pwa/meta.utils.js
 function mergeMeta(to, from) {
@@ -20163,6 +20216,8 @@ async function createApp(ssrContext, config = {}) {
       }],
       "script": [{
         "src": "https:\u002F\u002Fvjs.zencdn.net\u002F7.19.2\u002Fvideo.min.js"
+      }, {
+        "src": "https:\u002F\u002Fcdnjs.cloudflare.com\u002Fajax\u002Flibs\u002Fhighlight.js\u002F11.6.0\u002Fhighlight.min.js"
       }],
       "style": []
     },
@@ -20710,7 +20765,7 @@ const createNext = ssrContext => opts => {
 });
 
 /***/ }),
-/* 194 */
+/* 195 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -20727,7 +20782,7 @@ var external_jwt_decode_default = /*#__PURE__*/__webpack_require__.n(external_jw
 // CONCATENATED MODULE: ./helpers/index.js
 
 
-const cookieparser = __webpack_require__(186);
+const cookieparser = __webpack_require__(187);
 
 function getUserFromCookie(req) {
   if (!req.headers.cookie) return null;
@@ -20807,87 +20862,99 @@ const actions = {
 };
 
 /***/ }),
-/* 195 */
+/* 196 */
 /***/ (function(module, exports) {
 
 module.exports = require("core-js/modules/esnext.map.delete-all.js");
 
 /***/ }),
-/* 196 */
+/* 197 */
 /***/ (function(module, exports) {
 
 module.exports = require("core-js/modules/esnext.map.every.js");
 
 /***/ }),
-/* 197 */
+/* 198 */
 /***/ (function(module, exports) {
 
 module.exports = require("core-js/modules/esnext.map.filter.js");
 
 /***/ }),
-/* 198 */
+/* 199 */
 /***/ (function(module, exports) {
 
 module.exports = require("core-js/modules/esnext.map.find.js");
 
 /***/ }),
-/* 199 */
+/* 200 */
 /***/ (function(module, exports) {
 
 module.exports = require("core-js/modules/esnext.map.find-key.js");
 
 /***/ }),
-/* 200 */
+/* 201 */
 /***/ (function(module, exports) {
 
 module.exports = require("core-js/modules/esnext.map.includes.js");
 
 /***/ }),
-/* 201 */
+/* 202 */
 /***/ (function(module, exports) {
 
 module.exports = require("core-js/modules/esnext.map.key-of.js");
 
 /***/ }),
-/* 202 */
+/* 203 */
 /***/ (function(module, exports) {
 
 module.exports = require("core-js/modules/esnext.map.map-keys.js");
 
 /***/ }),
-/* 203 */
+/* 204 */
 /***/ (function(module, exports) {
 
 module.exports = require("core-js/modules/esnext.map.map-values.js");
 
 /***/ }),
-/* 204 */
+/* 205 */
 /***/ (function(module, exports) {
 
 module.exports = require("core-js/modules/esnext.map.merge.js");
 
 /***/ }),
-/* 205 */
+/* 206 */
 /***/ (function(module, exports) {
 
 module.exports = require("core-js/modules/esnext.map.reduce.js");
 
 /***/ }),
-/* 206 */
+/* 207 */
 /***/ (function(module, exports) {
 
 module.exports = require("core-js/modules/esnext.map.some.js");
 
 /***/ }),
-/* 207 */
+/* 208 */
 /***/ (function(module, exports) {
 
 module.exports = require("core-js/modules/esnext.map.update.js");
 
 /***/ }),
-/* 208 */,
-/* 209 */,
-/* 210 */
+/* 209 */
+/***/ (function(module, exports) {
+
+module.exports = require("algoliasearch-helper");
+
+/***/ }),
+/* 210 */,
+/* 211 */,
+/* 212 */
+/***/ (function(module, exports) {
+
+module.exports = require("algoliasearch-helper/types/algoliasearch.js");
+
+/***/ }),
+/* 213 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -21560,8 +21627,8 @@ const dirtyTypes = ['color', 'file', 'time', 'date', 'datetime-local', 'week', '
 }));
 
 /***/ }),
-/* 211 */,
-/* 212 */
+/* 214 */,
+/* 215 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -21606,11 +21673,11 @@ const dirtyTypes = ['color', 'file', 'time', 'date', 'datetime-local', 'week', '
 }));
 
 /***/ }),
-/* 213 */
+/* 216 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var _src_components_VChip_VChip_sass__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(175);
+/* harmony import */ var _src_components_VChip_VChip_sass__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(176);
 /* harmony import */ var _src_components_VChip_VChip_sass__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_src_components_VChip_VChip_sass__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var _util_mixins__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(3);
 /* harmony import */ var _transitions__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(24);
@@ -21796,160 +21863,154 @@ const dirtyTypes = ['color', 'file', 'time', 'date', 'datetime-local', 'week', '
 }));
 
 /***/ }),
-/* 214 */
+/* 217 */
 /***/ (function(module, exports) {
 
 module.exports = require("vuelidate");
 
 /***/ }),
-/* 215 */
+/* 218 */
 /***/ (function(module, exports) {
 
 module.exports = require("vuelidate/lib/validators");
 
 /***/ }),
-/* 216 */
-/***/ (function(module, exports) {
-
-module.exports = require("core-js/modules/esnext.set.add-all.js");
-
-/***/ }),
-/* 217 */
-/***/ (function(module, exports) {
-
-module.exports = require("core-js/modules/esnext.set.delete-all.js");
-
-/***/ }),
-/* 218 */
-/***/ (function(module, exports) {
-
-module.exports = require("core-js/modules/esnext.set.difference.js");
-
-/***/ }),
 /* 219 */
-/***/ (function(module, exports) {
-
-module.exports = require("core-js/modules/esnext.set.every.js");
-
-/***/ }),
-/* 220 */
-/***/ (function(module, exports) {
-
-module.exports = require("core-js/modules/esnext.set.filter.js");
-
-/***/ }),
-/* 221 */
-/***/ (function(module, exports) {
-
-module.exports = require("core-js/modules/esnext.set.find.js");
-
-/***/ }),
-/* 222 */
-/***/ (function(module, exports) {
-
-module.exports = require("core-js/modules/esnext.set.intersection.js");
-
-/***/ }),
-/* 223 */
-/***/ (function(module, exports) {
-
-module.exports = require("core-js/modules/esnext.set.is-disjoint-from.js");
-
-/***/ }),
-/* 224 */
-/***/ (function(module, exports) {
-
-module.exports = require("core-js/modules/esnext.set.is-subset-of.js");
-
-/***/ }),
-/* 225 */
-/***/ (function(module, exports) {
-
-module.exports = require("core-js/modules/esnext.set.is-superset-of.js");
-
-/***/ }),
-/* 226 */
-/***/ (function(module, exports) {
-
-module.exports = require("core-js/modules/esnext.set.join.js");
-
-/***/ }),
-/* 227 */
-/***/ (function(module, exports) {
-
-module.exports = require("core-js/modules/esnext.set.map.js");
-
-/***/ }),
-/* 228 */
-/***/ (function(module, exports) {
-
-module.exports = require("core-js/modules/esnext.set.reduce.js");
-
-/***/ }),
-/* 229 */
-/***/ (function(module, exports) {
-
-module.exports = require("core-js/modules/esnext.set.some.js");
-
-/***/ }),
-/* 230 */
-/***/ (function(module, exports) {
-
-module.exports = require("core-js/modules/esnext.set.symmetric-difference.js");
-
-/***/ }),
-/* 231 */
-/***/ (function(module, exports) {
-
-module.exports = require("core-js/modules/esnext.set.union.js");
-
-/***/ }),
-/* 232 */
-/***/ (function(module, exports) {
-
-module.exports = require("instantsearch.js/cjs/connectors");
-
-/***/ }),
-/* 233 */
-/***/ (function(module, exports) {
-
-module.exports = require("mitt");
-
-/***/ }),
-/* 234 */
-/***/ (function(module, exports) {
-
-module.exports = require("instantsearch.js/cjs/lib/utils");
-
-/***/ }),
-/* 235 */
-/***/ (function(module, exports) {
-
-module.exports = require("instantsearch.js/cjs/widgets/index/index");
-
-/***/ }),
-/* 236 */
-/***/ (function(module, exports) {
-
-module.exports = require("instantsearch.js/cjs");
-
-/***/ }),
-/* 237 */
 /***/ (function(module, exports) {
 
 module.exports = require("algoliasearch/lite");
 
 /***/ }),
+/* 220 */
+/***/ (function(module, exports) {
+
+module.exports = require("core-js/modules/esnext.set.add-all.js");
+
+/***/ }),
+/* 221 */
+/***/ (function(module, exports) {
+
+module.exports = require("core-js/modules/esnext.set.delete-all.js");
+
+/***/ }),
+/* 222 */
+/***/ (function(module, exports) {
+
+module.exports = require("core-js/modules/esnext.set.difference.js");
+
+/***/ }),
+/* 223 */
+/***/ (function(module, exports) {
+
+module.exports = require("core-js/modules/esnext.set.every.js");
+
+/***/ }),
+/* 224 */
+/***/ (function(module, exports) {
+
+module.exports = require("core-js/modules/esnext.set.filter.js");
+
+/***/ }),
+/* 225 */
+/***/ (function(module, exports) {
+
+module.exports = require("core-js/modules/esnext.set.find.js");
+
+/***/ }),
+/* 226 */
+/***/ (function(module, exports) {
+
+module.exports = require("core-js/modules/esnext.set.intersection.js");
+
+/***/ }),
+/* 227 */
+/***/ (function(module, exports) {
+
+module.exports = require("core-js/modules/esnext.set.is-disjoint-from.js");
+
+/***/ }),
+/* 228 */
+/***/ (function(module, exports) {
+
+module.exports = require("core-js/modules/esnext.set.is-subset-of.js");
+
+/***/ }),
+/* 229 */
+/***/ (function(module, exports) {
+
+module.exports = require("core-js/modules/esnext.set.is-superset-of.js");
+
+/***/ }),
+/* 230 */
+/***/ (function(module, exports) {
+
+module.exports = require("core-js/modules/esnext.set.join.js");
+
+/***/ }),
+/* 231 */
+/***/ (function(module, exports) {
+
+module.exports = require("core-js/modules/esnext.set.map.js");
+
+/***/ }),
+/* 232 */
+/***/ (function(module, exports) {
+
+module.exports = require("core-js/modules/esnext.set.reduce.js");
+
+/***/ }),
+/* 233 */
+/***/ (function(module, exports) {
+
+module.exports = require("core-js/modules/esnext.set.some.js");
+
+/***/ }),
+/* 234 */
+/***/ (function(module, exports) {
+
+module.exports = require("core-js/modules/esnext.set.symmetric-difference.js");
+
+/***/ }),
+/* 235 */
+/***/ (function(module, exports) {
+
+module.exports = require("core-js/modules/esnext.set.union.js");
+
+/***/ }),
+/* 236 */
+/***/ (function(module, exports) {
+
+module.exports = require("hogan.js");
+
+/***/ }),
+/* 237 */
+/***/ (function(module, exports) {
+
+module.exports = require("@algolia/events");
+
+/***/ }),
 /* 238 */
+/***/ (function(module, exports) {
+
+module.exports = require("qs");
+
+/***/ }),
+/* 239 */
+/***/ (function(module, exports) {
+
+module.exports = require("vue-server-renderer/basic");
+
+/***/ }),
+/* 240 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 
 // EXTERNAL MODULE: ./node_modules/vuetify/src/components/VMenu/VMenu.sass
-var VMenu = __webpack_require__(176);
+var VMenu = __webpack_require__(177);
 
 // EXTERNAL MODULE: ./node_modules/vuetify/lib/components/VThemeProvider/VThemeProvider.js
-var VThemeProvider = __webpack_require__(262);
+var VThemeProvider = __webpack_require__(264);
 
 // EXTERNAL MODULE: ./node_modules/vuetify/lib/mixins/activatable/index.js
 var activatable = __webpack_require__(50);
@@ -22862,94 +22923,94 @@ const VMenu_baseMixins = Object(mixins["a" /* default */])(dependent["a" /* defa
 }));
 
 /***/ }),
-/* 239 */,
-/* 240 */
+/* 241 */,
+/* 242 */
 /***/ (function(module, exports) {
 
 module.exports = require("showdown");
 
 /***/ }),
-/* 241 */
+/* 243 */
 /***/ (function(module, exports) {
 
 module.exports = require("@algolia/recommend");
 
 /***/ }),
-/* 242 */
+/* 244 */
 /***/ (function(module, exports) {
 
 module.exports = require("core-js/modules/esnext.array.last-item.js");
 
 /***/ }),
-/* 243 */
+/* 245 */
 /***/ (function(module, exports) {
 
 module.exports = require("video.js");
 
 /***/ }),
-/* 244 */
+/* 246 */
 /***/ (function(module, exports) {
 
 module.exports = require("url");
 
 /***/ }),
-/* 245 */
+/* 247 */
 /***/ (function(module, exports) {
 
 module.exports = require("@tiptap/vue-2");
 
 /***/ }),
-/* 246 */
+/* 248 */
 /***/ (function(module, exports) {
 
 module.exports = require("@tiptap/starter-kit");
 
 /***/ }),
-/* 247 */
+/* 249 */
 /***/ (function(module, exports) {
 
 module.exports = require("@tiptap/extension-document");
 
 /***/ }),
-/* 248 */
+/* 250 */
 /***/ (function(module, exports) {
 
 module.exports = require("@tiptap/extension-paragraph");
 
 /***/ }),
-/* 249 */
+/* 251 */
 /***/ (function(module, exports) {
 
 module.exports = require("@tiptap/extension-text");
 
 /***/ }),
-/* 250 */
+/* 252 */
 /***/ (function(module, exports) {
 
 module.exports = require("@tiptap/extension-image");
 
 /***/ }),
-/* 251 */
+/* 253 */
 /***/ (function(module, exports) {
 
 module.exports = require("@tiptap/extension-dropcursor");
 
 /***/ }),
-/* 252 */,
-/* 253 */
+/* 254 */,
+/* 255 */
 /***/ (function(module, exports) {
 
 module.exports = require("vuedraggable");
 
 /***/ }),
-/* 254 */,
-/* 255 */,
 /* 256 */,
-/* 257 */
+/* 257 */,
+/* 258 */,
+/* 259 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var _src_components_VNavigationDrawer_VNavigationDrawer_sass__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(162);
+/* harmony import */ var _src_components_VNavigationDrawer_VNavigationDrawer_sass__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(163);
 /* harmony import */ var _src_components_VNavigationDrawer_VNavigationDrawer_sass__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_src_components_VNavigationDrawer_VNavigationDrawer_sass__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var _VImg_VImg__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(65);
 /* harmony import */ var _mixins_applicationable__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(44);
@@ -23365,11 +23426,11 @@ const baseMixins = Object(_util_mixins__WEBPACK_IMPORTED_MODULE_13__[/* default 
 }));
 
 /***/ }),
-/* 258 */
+/* 260 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var _src_components_VAppBar_VAppBar_sass__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(169);
+/* harmony import */ var _src_components_VAppBar_VAppBar_sass__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(170);
 /* harmony import */ var _src_components_VAppBar_VAppBar_sass__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_src_components_VAppBar_VAppBar_sass__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var _VToolbar_VToolbar__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(16);
 /* harmony import */ var _directives_scroll__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(86);
@@ -23626,7 +23687,7 @@ const baseMixins = Object(_util_mixins__WEBPACK_IMPORTED_MODULE_8__[/* default *
 }));
 
 /***/ }),
-/* 259 */
+/* 261 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -23729,7 +23790,7 @@ Object(_mixins_groupable__WEBPACK_IMPORTED_MODULE_0__[/* factory */ "a"])('tabsB
 }));
 
 /***/ }),
-/* 260 */
+/* 262 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -23741,7 +23802,7 @@ Object(_mixins_groupable__WEBPACK_IMPORTED_MODULE_0__[/* factory */ "a"])('tabsB
 /* harmony default export */ __webpack_exports__["a"] = (Object(_util_helpers__WEBPACK_IMPORTED_MODULE_1__[/* createSimpleFunctional */ "i"])('spacer', 'div', 'v-spacer'));
 
 /***/ }),
-/* 261 */
+/* 263 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -23780,7 +23841,7 @@ Object(_mixins_groupable__WEBPACK_IMPORTED_MODULE_0__[/* factory */ "a"])('tabsB
 }));
 
 /***/ }),
-/* 262 */
+/* 264 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -23809,11 +23870,11 @@ Object(_mixins_groupable__WEBPACK_IMPORTED_MODULE_0__[/* factory */ "a"])('tabsB
 }));
 
 /***/ }),
-/* 263 */
+/* 265 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var _src_components_VFooter_VFooter_sass__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(178);
+/* harmony import */ var _src_components_VFooter_VFooter_sass__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(179);
 /* harmony import */ var _src_components_VFooter_VFooter_sass__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_src_components_VFooter_VFooter_sass__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var _VSheet_VSheet__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(11);
 /* harmony import */ var _mixins_applicationable__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(44);
@@ -23910,11 +23971,11 @@ Object(_mixins_groupable__WEBPACK_IMPORTED_MODULE_0__[/* factory */ "a"])('tabsB
 }));
 
 /***/ }),
-/* 264 */
+/* 266 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var _src_components_VSnackbar_VSnackbar_sass__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(180);
+/* harmony import */ var _src_components_VSnackbar_VSnackbar_sass__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(181);
 /* harmony import */ var _src_components_VSnackbar_VSnackbar_sass__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_src_components_VSnackbar_VSnackbar_sass__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var _VSheet_VSheet__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(11);
 /* harmony import */ var _mixins_colorable__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(6);
@@ -24113,16 +24174,16 @@ Object(_mixins_groupable__WEBPACK_IMPORTED_MODULE_0__[/* factory */ "a"])('tabsB
 }));
 
 /***/ }),
-/* 265 */
+/* 267 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 
 // EXTERNAL MODULE: ./node_modules/vuetify/src/components/VTabs/VTabs.sass
-var VTabs = __webpack_require__(171);
+var VTabs = __webpack_require__(172);
 
 // EXTERNAL MODULE: ./node_modules/vuetify/src/components/VSlideGroup/VSlideGroup.sass
-var VSlideGroup = __webpack_require__(172);
+var VSlideGroup = __webpack_require__(173);
 
 // EXTERNAL MODULE: ./node_modules/vuetify/lib/components/VIcon/index.js
 var VIcon = __webpack_require__(9);

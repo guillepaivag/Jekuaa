@@ -1,5 +1,5 @@
-const isProduction = false
-const localeProduction = false
+const isProduction = true
+const localeProduction = true
 
 const baseURL = isProduction ? 
   'https://southamerica-east1-jekuaa-py.cloudfunctions.net' : 
@@ -37,7 +37,8 @@ module.exports = {
     ],
     script: [
       { src: 'https://vjs.zencdn.net/7.19.2/video.min.js' },
-      { src: 'https://cdnjs.cloudflare.com/ajax/libs/videojs-youtube/2.6.1/Youtube.min.js' },
+      // { src: 'https://cdnjs.cloudflare.com/ajax/libs/videojs-youtube/2.6.1/Youtube.min.js' },
+      { src: 'https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.6.0/highlight.min.js' },
     ]
   },
 
@@ -46,6 +47,7 @@ module.exports = {
     '~/assets/style/visualizador_prose_mirror.scss',
     '~/assets/style/videojs_custom_theme.scss',
     '~/assets/style/fonts.scss',
+    '~/assets/style/style_code.scss',
   ],
   
   // Plugins to run before rendering page: https://go.nuxtjs.dev/config-plugins
@@ -83,6 +85,7 @@ module.exports = {
       ['~/assets/style/visualizador_prose_mirror.scss'],
       ['~/assets/style/videojs_custom_theme.scss'],
       ['~/assets/style/fonts.scss'],
+      ['~/assets/style/style_code.scss'],
     ]
   ],
 

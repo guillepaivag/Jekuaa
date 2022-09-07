@@ -41,9 +41,26 @@ export default {
         uidCurso: String,
         uidUnidad: String,
         uidClase: String,
-        contenidoInicial: Object,   // numero en segundos y codigo de youtube
+        otrosDatos: {
+            type: Object, // numero en segundos y codigo de youtube
+            /**
+             * {
+             *      tipoContenidoClaseActual: String,
+             *      contenidoClaseActual: String || Object
+             * 
+             *      codigoVideoYoutube: String,
+             *      duracion: Number,
+             * }
+            */
+        },
     },
     methods: {
+        inicializacion () {
+            this.codigoVideoYoutube = this.otrosDatos.tipoContenidoClaseActual === 'video-youtube' ? 
+            this.otrosDatos.contenidoClaseActual.codigoVideoYoutube : ''
+
+            this.duracion = this.segundosToTimeString()
+        },
         sendYoutube () {
             const duracionFinalEnSegundos = this.getDuracionEnSegundos()
 
@@ -65,11 +82,15 @@ export default {
             return horas*60*60 + minutos*60 + segundos
         },
         segundosToTimeString () {
-            const date = new Date(0)
-            date.setSeconds(this.contenidoInicial.duracion)
-            const timeString = date.toISOString().substring(11, 19)
+            if (this.otrosDatos.tipoContenidoClaseActual === 'video-youtube') {
+                const date = new Date(0)
+                date.setSeconds(this.otrosDatos.contenidoClaseActual.duracion)
+                const timeString = date.toISOString().substring(11, 19)
 
-            return timeString
+                return timeString
+            }
+
+            return '00:00:00'
         }
     },
     computed: {
@@ -95,14 +116,12 @@ export default {
         }
     },
     watch: {
-        contenidoInicial: function (n, v) {
-            this.codigoVideoYoutube = this.contenidoInicial.codigoVideoYoutube ? this.contenidoInicial.codigoVideoYoutube : ''
-            this.duracion = this.segundosToTimeString()
+        otrosDatos: function (n, v) {
+            this.inicializacion()
         }
     },
     created () {
-        this.codigoVideoYoutube = this.contenidoInicial.codigoVideoYoutube ? this.contenidoInicial.codigoVideoYoutube : ''
-        this.duracion = this.segundosToTimeString()
+        this.inicializacion()
     },
 }
 </script>

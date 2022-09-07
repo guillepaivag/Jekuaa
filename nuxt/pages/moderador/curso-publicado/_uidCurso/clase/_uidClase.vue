@@ -24,8 +24,12 @@
                 v-else-if="contenidoClasesPublicado.tipoContenido === 'video'" 
                 :options="contenido" 
             />
+            <VisualizadorYoutube 
+                v-else-if="contenidoClasesPublicado.tipoContenido === 'video-youtube'"
+                :codigoVideoYoutube="contenido" 
+            />
             <VisualizadorArticulo 
-                v-else
+                v-else-if="contenidoClasesPublicado.tipoContenido === 'articulo'"
                 :contenido="contenido" 
             />
 
@@ -43,6 +47,14 @@
                                 class="mb-1"
                             >
                                 mdi-play-circle
+                            </v-icon>
+                            <v-icon 
+                                v-if="clasePublicado.tipoClase === 'video-youtube'"
+                                size="29"
+                                color="#683bce"
+                                class="mb-1"
+                            >
+                                mdi-youtube
                             </v-icon>
                             <v-icon 
                                 v-if="clasePublicado.tipoClase === 'articulo'"
@@ -94,6 +106,7 @@
 <script>
 import VisualizadorArticulo from '@/components/cursos/VisualizadorArticulo'
 import VisualizadorVideo from '@/components/cursos/VisualizadorVideo'
+import VisualizadorYoutube from '@/components/cursos/VisualizadorYoutube'
 import ListaUnidadesClases from '@/components/cursos-publicado/moderador/ListaUnidadesClases'
 import { fb } from '@/plugins/firebase'
 const db = fb.firestore()
@@ -118,6 +131,7 @@ export default {
     components: {
         VisualizadorArticulo,
         VisualizadorVideo,
+        VisualizadorYoutube,
         ListaUnidadesClases,
     },
 
@@ -135,6 +149,8 @@ export default {
             this.$emit('agregarListaClases', {})
         },
         async inicializacionDeClase () {
+            this.uidClase = this.$route.params.uidClase
+
             this.clasePublicado = null
             this.contenidoClasesPublicado = null
             this.contenido = null
@@ -178,15 +194,17 @@ export default {
                         }
                     ]
                 }
-            } else {
+            } else if (this.contenidoClasesPublicado.tipoContenido === 'articulo') {
                 respuesta = await this.$axios.$get(`/serviceCursoPublicado/moderador/obtenerArticulo/${this.uidCurso}/${this.uidClase}`, config)
                 this.contenido = respuesta.resultado ? respuesta.resultado : null
+            } else if (this.contenidoClasesPublicado.tipoContenido === 'video-youtube') {
+                this.contenido = this.contenidoClasesPublicado.codigoVideoYoutube
             }
         }
     },
 
     watch: {
-        'uidClase': async function (n, v) {
+        '$route.params.uidClase': async function (n, v) {
             await this.inicializacionDeClase()
 
             // await Axios: marcar clase como participada

@@ -32,6 +32,10 @@
                         v-if="contenidoClasesPublicado.tipoContenido === 'video'" 
                         :options="contenido" 
                     />
+                    <VisualizadorYoutube 
+                        v-if="contenidoClasesPublicado.tipoContenido === 'video-youtube'" 
+                        :codigoVideoYoutube="contenido" 
+                    />
                     <VisualizadorArticulo 
                         v-else-if="contenidoClasesPublicado.tipoContenido === 'articulo'" 
                         :contenido="contenido" 
@@ -108,6 +112,7 @@ import IniciarSesion from '@/components/cursos/IniciarSesion'
 import SinAccesoCurso from '@/components/cursos/SinAccesoCurso'
 import VisualizadorArticulo from '@/components/cursos/VisualizadorArticulo'
 import VisualizadorVideo from '@/components/cursos/VisualizadorVideo'
+import VisualizadorYoutube from '@/components/cursos/VisualizadorYoutube'
 import ListaUnidadesClases from '@/components/cursos-publicado/estudiante/ListaUnidadesClases'
 import { fb } from '@/plugins/firebase'
 const db = fb.firestore()
@@ -138,6 +143,7 @@ export default {
         SinAccesoCurso,
         VisualizadorArticulo,
         VisualizadorVideo,
+        VisualizadorYoutube,
         ListaUnidadesClases,
     },
 
@@ -155,6 +161,8 @@ export default {
             this.$emit('agregarListaClases', {})
         },
         async inicializacionDeClase () {
+            this.uidClase = this.$route.params.uidClase
+
             this.clasePublicado = null
             this.contenidoClasesPublicado = null
             this.contenido = null
@@ -202,9 +210,12 @@ export default {
                             }
                         ]
                     }
-                } else {
+                } else if (this.contenidoClasesPublicado.tipoContenido === 'articulo') {
                     respuesta = await this.$axios.$get(`/serviceCursoPublicado/obtenerArticulo/${this.uidCurso}/${this.uidClase}`, config)
                     this.contenido = respuesta.resultado ? respuesta.resultado : null
+                } else if (this.contenidoClasesPublicado.tipoContenido === 'video-youtube') {
+                    respuesta = await this.$axios.$get(`/serviceCursoPublicado/obtenerVideoYoutube/${this.uidCurso}/${this.uidClase}`, config)
+                    this.contenido = respuesta.resultado ? respuesta.resultado.codigoVideoYoutube : null
                 }
             } catch (error) {
                 console.log('error.response', error.response)
@@ -219,7 +230,7 @@ export default {
     },
 
     watch: {
-        'uidClase': async function (n, v) {
+        '$route.params.uidClase': async function (n, v) {
             await this.inicializacionDeClase()
 
             // await Axios: marcar clase como participada

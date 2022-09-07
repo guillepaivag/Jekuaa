@@ -403,13 +403,11 @@
                                                                     circle
                                                                     color="success"
                                                                     class="mb-1"
-                                                                    v-on:click="
-                                                                        dialogSubirContenido.value = true; 
-                                                                        dialogSubirContenido.tipo = 'video';
-                                                                        dialogSubirContenido.uidCurso = uidCursoProp;
-                                                                        dialogSubirContenido.uidUnidad = datoUnidad.uid;
-                                                                        dialogSubirContenido.uidClase = datoClase.uid;
-                                                                    "
+                                                                    v-on:click="setContenidoVideoParaActualizarContenidoClase(
+                                                                        uidCursoProp, 
+                                                                        datoUnidad.uid, 
+                                                                        datoClase.uid
+                                                                    )"
                                                                 >
                                                                     <v-icon left>
                                                                         mdi-play-circle
@@ -421,14 +419,13 @@
                                                                     circle
                                                                     color="success"
                                                                     class="mb-1"
-                                                                    v-on:click="
-                                                                        dialogSubirContenido.value = true; 
-                                                                        dialogSubirContenido.tipo = 'articulo';
-                                                                        dialogSubirContenido.uidCurso = uidCursoProp;
-                                                                        dialogSubirContenido.uidUnidad = datoUnidad.uid;
-                                                                        dialogSubirContenido.uidClase = datoClase.uid;
-                                                                        dialogSubirContenido.contenidoViejo = datoClase.valorContenido;
-                                                                    "
+                                                                    v-on:click="setContenidoArticuloParaActualizarContenidoClase(
+                                                                        uidCursoProp,
+                                                                        datoUnidad.uid,
+                                                                        datoClase.uid,
+                                                                        datoClase.tipoClase,
+                                                                        datoClase.valorContenido
+                                                                    )"
                                                                 >
                                                                     <v-icon left>
                                                                         mdi-file-multiple
@@ -440,14 +437,13 @@
                                                                     circle
                                                                     color="success"
                                                                     class="mb-1"
-                                                                    v-on:click="
-                                                                        dialogSubirContenido.value = true; 
-                                                                        dialogSubirContenido.tipo = 'video-youtube';
-                                                                        dialogSubirContenido.uidCurso = uidCursoProp;
-                                                                        dialogSubirContenido.uidUnidad = datoUnidad.uid;
-                                                                        dialogSubirContenido.uidClase = datoClase.uid;
-                                                                        dialogSubirContenido.contenidoViejo = datoClase.valorContenido;
-                                                                    "
+                                                                    v-on:click="setContenidoVideoYoutubeParaActualizarContenidoClase(
+                                                                        uidCursoProp,
+                                                                        datoUnidad.uid,
+                                                                        datoClase.uid,
+                                                                        datoClase.tipoClase,
+                                                                        datoClase.valorContenido,
+                                                                    )"
                                                                 >
                                                                     <v-icon left>
                                                                         mdi-youtube
@@ -519,7 +515,7 @@
                                                                         </div>
                                                                     </v-col>
                                                                     <v-col cols="12" lg="5">
-                                                                        <div class="">
+                                                                        <div class="contenedor_descripcion_video">
                                                                             
                                                                             <p style="font-size: 20px;">
                                                                                 <!-- {{ datoClase.datosContenido.fileName }} -->
@@ -924,7 +920,7 @@
                         :uidCurso="uidCursoProp"
                         :uidUnidad="dialogSubirContenido.uidUnidad"
                         :uidClase="dialogSubirContenido.uidClase"
-                        :contenidoInicial="dialogSubirContenido.contenidoViejo"
+                        :otrosDatos="dialogSubirContenido.otrosDatos"
                         @sendYoutube="subirVideoYoutubeClase($event)"
                     />
                     <GeneradorArticulo 
@@ -932,12 +928,12 @@
                         :uidCurso="uidCursoProp"
                         :uidUnidad="dialogSubirContenido.uidUnidad"
                         :uidClase="dialogSubirContenido.uidClase"
-                        :contenidoInicial="dialogSubirContenido.contenidoViejo"
+                        :otrosDatos="dialogSubirContenido.otrosDatos"
                         @sendArticulo="subirArticuloClase($event)"
                     />
                     
                     <div v-else-if="dialogSubirContenido.tipo === 'video-youtube'">
-                        {{dialogSubirContenido.contenidoViejo}}
+                        {{dialogSubirContenido.otrosDatos}}
                     </div>
                 </div>
 
@@ -1018,7 +1014,7 @@ export default {
                 uidUnidad: '',
                 uidClase: '',
                 contenido: null,
-                contenidoViejo: null,
+                otrosDatos: null,
             }
         }
     },
@@ -1038,6 +1034,35 @@ export default {
         // General
         actualizarTodoElContenido() {
             alert('verificando')
+        },
+        setContenidoArticuloParaActualizarContenidoClase (uidCurso, uidUnidad, uidClase, tipoContenidoClaseActual, contenidoActual) {
+            this.dialogSubirContenido.value = true; 
+            this.dialogSubirContenido.tipo = 'articulo';
+            this.dialogSubirContenido.uidCurso = uidCurso;
+            this.dialogSubirContenido.uidUnidad = uidUnidad;
+            this.dialogSubirContenido.uidClase = uidClase;
+            this.dialogSubirContenido.otrosDatos = {
+                tipoContenidoClaseActual: tipoContenidoClaseActual,
+                contenidoClaseActual: contenidoActual,
+            };
+        },
+        setContenidoVideoParaActualizarContenidoClase (uidCurso, uidUnidad, uidClase) {
+            this.dialogSubirContenido.value = true; 
+            this.dialogSubirContenido.tipo = 'video';
+            this.dialogSubirContenido.uidCurso = uidCurso;
+            this.dialogSubirContenido.uidUnidad = uidUnidad;
+            this.dialogSubirContenido.uidClase = uidClase;
+        },
+        setContenidoVideoYoutubeParaActualizarContenidoClase (uidCurso, uidUnidad, uidClase, tipoContenidoClaseActual, contenidoActual) {
+            this.dialogSubirContenido.value = true; 
+            this.dialogSubirContenido.tipo = 'video-youtube';
+            this.dialogSubirContenido.uidCurso = uidCurso;
+            this.dialogSubirContenido.uidUnidad = uidUnidad;
+            this.dialogSubirContenido.uidClase = uidClase;
+            this.dialogSubirContenido.otrosDatos = {
+                tipoContenidoClaseActual: tipoContenidoClaseActual,
+                contenidoClaseActual: contenidoActual,
+            };
         },
         secondsToString(seconds) {
             var hour = Math.floor(seconds / 3600);
@@ -1907,7 +1932,7 @@ export default {
                 this.dialogSubirContenido.uidUnidad = ''
                 this.dialogSubirContenido.uidClase = ''
                 this.dialogSubirContenido.contenido = null
-                this.dialogSubirContenido.contenidoViejo = null
+                this.dialogSubirContenido.otrosDatos = null
             }
         },
     },

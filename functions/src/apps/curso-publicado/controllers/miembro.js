@@ -6,7 +6,7 @@ const CursoPublicado = require("../../../models/Cursos/curso/CursoPublicado")
 const ContenidoVideoPublicado = require("../../../models/Cursos/contenidoClase/ContenidoVideoPublicado")
 const ContenidoArticuloPublicado = require("../../../models/Cursos/contenidoClase/ContenidoArticuloPublicado")
 const ContenidoClase = require("../../../models/Cursos/contenidoClase/ContenidoClase")
-const ContenidoYoutubeBorrador = require("../../../models/Cursos/contenidoClase/contenidoYoutube/ContenidoYoutubeBorrador")
+const ContenidoYoutubePublicado = require("../../../models/Cursos/contenidoClase/contenidoYoutube/ContenidoYoutubePublicado")
 
 const controller = {}
 
@@ -86,16 +86,16 @@ controller.obtenerVideoYoutubeClase = async (req = request, res = response) => {
 
         const respuesta = new Respuesta()
 
-        const result = await ContenidoClase.obtenerDocumentoBorrador(uidCurso, uidClase)
-        const contenidoYoutubeBorrador = new ContenidoYoutubeBorrador(result.contenidoClase)
+        const result = await ContenidoClase.obtenerDocumentoPublicado(uidCurso, uidClase)
+        const contenidoYoutubePublicado = new ContenidoYoutubePublicado(result.contenidoClase)
 
         // Retornar respuesta
         respuesta.setRespuesta({
             estado: 200,
             mensaje: 'exito',
             resultado: {
-                codigoVideoYoutube: contenidoYoutubeBorrador.codigoVideoYoutube,
-                duracion: contenidoYoutubeBorrador.duracion
+                codigoVideoYoutube: contenidoYoutubePublicado.codigoVideoYoutube,
+                duracion: contenidoYoutubePublicado.duracion
             }
         })
         

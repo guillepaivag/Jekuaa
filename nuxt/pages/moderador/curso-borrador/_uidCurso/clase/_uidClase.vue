@@ -28,6 +28,10 @@
                 v-else-if="contenidoClasesBorrador.tipoContenido === 'articulo'" 
                 :contenido="contenido" 
             />
+            <VisualizadorYoutube 
+                v-else-if="contenidoClasesBorrador.tipoContenido === 'video-youtube'"
+                :codigoVideoYoutube="contenido"
+            />
             <div v-else>
                 <h3>
                     Sin contenido :(
@@ -48,6 +52,14 @@
                                 class="mb-1"
                             >
                                 mdi-play-circle
+                            </v-icon>
+                            <v-icon 
+                                v-else-if="claseBorrador.tipoClase === 'video-youtube'"
+                                size="29"
+                                color="#683bce"
+                                class="mb-1"
+                            >
+                                mdi-youtube
                             </v-icon>
                             <v-icon 
                                 v-else-if="claseBorrador.tipoClase === 'articulo'"
@@ -99,6 +111,7 @@
 <script>
 import VisualizadorArticulo from '@/components/cursos/VisualizadorArticulo'
 import VisualizadorVideo from '@/components/cursos/VisualizadorVideo'
+import VisualizadorYoutube from '@/components/cursos/VisualizadorYoutube'
 import ListaUnidadesClases from '@/components/cursos-borrador/moderador/ListaUnidadesClases'
 import { fb } from '@/plugins/firebase'
 const db = fb.firestore()
@@ -123,6 +136,7 @@ export default {
     components: {
         VisualizadorArticulo,
         VisualizadorVideo,
+        VisualizadorYoutube,
         ListaUnidadesClases,
     },
 
@@ -140,6 +154,8 @@ export default {
             this.$emit('agregarListaClases', {})
         },
         async inicializacionDeClase () {
+            this.uidClase = this.$route.params.uidClase
+
             this.claseBorrador = null
             this.contenidoClasesBorrador = null
             this.contenido = null
@@ -183,6 +199,8 @@ export default {
                         }
                     ]
                 }
+            } else if (this.contenidoClasesBorrador.tipoContenido === 'video-youtube') {
+                this.contenido = this.contenidoClasesBorrador.codigoVideoYoutube
             } else if (this.contenidoClasesBorrador.tipoContenido === 'articulo') {
                 respuesta = await this.$axios.$get(`/serviceCursoBorrador/moderador/obtenerArticulo/${this.uidCurso}/${this.uidClase}`, config)
                 this.contenido = respuesta.resultado ? respuesta.resultado : null
@@ -194,7 +212,7 @@ export default {
     },
 
     watch: {
-        'uidClase': async function (n, v) {
+        '$route.params.uidClase': async function (n, v) {
             await this.inicializacionDeClase()
 
             // await Axios: marcar clase como participada

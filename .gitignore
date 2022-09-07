@@ -65,10 +65,16 @@ node_modules/
 # dotenv environment variables file
 .env
 
+# Firebase
+.firebase
+
 # Nuxt
 nuxt/package-lock.json
 nuxt/helpers/config_firebase_dev.js
 nuxt/helpers/config_firebase_prod.js
+
+# Public
+public/
 
 # Functions
 functions/package-lock.json

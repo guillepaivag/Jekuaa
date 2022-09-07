@@ -1,7 +1,7 @@
-exports.ids = [15];
+exports.ids = [16];
 exports.modules = {
 
-/***/ 363:
+/***/ 438:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -9,7 +9,7 @@ exports.modules = {
 __webpack_require__.r(__webpack_exports__);
 
 // EXTERNAL MODULE: ./node_modules/vuetify/lib/components/VDivider/VDivider.js
-var VDivider = __webpack_require__(212);
+var VDivider = __webpack_require__(215);
 
 // EXTERNAL MODULE: ./node_modules/vuetify/lib/components/VIcon/VIcon.js
 var VIcon = __webpack_require__(72);
@@ -30,11 +30,9 @@ var components_VList = __webpack_require__(2);
 var VListItemGroup = __webpack_require__(79);
 
 // EXTERNAL MODULE: ./node_modules/vuetify/lib/components/VGrid/VSpacer.js
-var VSpacer = __webpack_require__(260);
+var VSpacer = __webpack_require__(262);
 
-// CONCATENATED MODULE: ./node_modules/vuetify-loader/lib/loader.js??ref--4!./node_modules/babel-loader/lib??ref--2-0!./node_modules/vue-loader/lib/loaders/templateLoader.js??ref--7!./node_modules/@nuxt/components/dist/loader.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./components/cursos-borrador/miembro/ListaUnidadesClases.vue?vue&type=template&id=7724681c&
-
-
+// CONCATENATED MODULE: ./node_modules/vuetify-loader/lib/loader.js??ref--4!./node_modules/babel-loader/lib??ref--2-0!./node_modules/vue-loader/lib/loaders/templateLoader.js??ref--7!./node_modules/@nuxt/components/dist/loader.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./components/cursos-borrador/miembro/ListaUnidadesClases.vue?vue&type=template&id=4df6ad5b&
 
 
 
@@ -43,7 +41,9 @@ var VSpacer = __webpack_require__(260);
 
 
 
-var ListaUnidadesClasesvue_type_template_id_7724681c_render = function render() {
+
+
+var ListaUnidadesClasesvue_type_template_id_4df6ad5b_render = function render() {
   var _vm = this,
       _c = _vm._self._c;
 
@@ -76,7 +76,12 @@ var ListaUnidadesClasesvue_type_template_id_7724681c_render = function render() 
           "size": "18",
           "color": "#683bce"
         }
-      }, [_vm._v("\n                                    mdi-play-circle\n                                ")]) : elementClase.data.tipoClase === 'articulo' ? _c(VIcon["a" /* default */], {
+      }, [_vm._v("\n                                    mdi-play-circle\n                                ")]) : elementClase.data.tipoClase === 'video-youtube' ? _c(VIcon["a" /* default */], {
+        attrs: {
+          "size": "18",
+          "color": "#683bce"
+        }
+      }, [_vm._v("\n                                    mdi-youtube\n                                ")]) : elementClase.data.tipoClase === 'articulo' ? _c(VIcon["a" /* default */], {
         attrs: {
           "size": "18",
           "color": "#683bce"
@@ -109,7 +114,7 @@ var ListaUnidadesClasesvue_type_template_id_7724681c_render = function render() 
 
 var staticRenderFns = [];
 
-// CONCATENATED MODULE: ./components/cursos-borrador/miembro/ListaUnidadesClases.vue?vue&type=template&id=7724681c&
+// CONCATENATED MODULE: ./components/cursos-borrador/miembro/ListaUnidadesClases.vue?vue&type=template&id=4df6ad5b&
 
 // CONCATENATED MODULE: ./node_modules/babel-loader/lib??ref--2-0!./node_modules/@nuxt/components/dist/loader.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./components/cursos-borrador/miembro/ListaUnidadesClases.vue?vue&type=script&lang=js&
 /* harmony default export */ var ListaUnidadesClasesvue_type_script_lang_js_ = ({
@@ -149,12 +154,12 @@ function injectStyles (context) {
 
 var component = Object(componentNormalizer["a" /* default */])(
   miembro_ListaUnidadesClasesvue_type_script_lang_js_,
-  ListaUnidadesClasesvue_type_template_id_7724681c_render,
+  ListaUnidadesClasesvue_type_template_id_4df6ad5b_render,
   staticRenderFns,
   false,
   injectStyles,
   null,
-  "75f6cb20"
+  "3a286fe3"
   
 )
 

@@ -4,7 +4,7 @@
             <Tiptap 
                 class="mt-5" 
                 v-model="articulo" 
-                :contenidoNuevo="contenidoInicial"
+                :contenidoNuevo="articuloInicial"
             />
         </div>
         
@@ -29,6 +29,7 @@ export default {
     data() {
         return {
             articulo: '',
+            articuloInicial: '',
         }
     },
     components: {
@@ -38,9 +39,22 @@ export default {
         uidCurso: String,
         uidUnidad: String,
         uidClase: String,
-        contenidoInicial: String,
+        otrosDatos: {
+            type: Object,
+            /**
+             * {
+             *      tipoContenidoClaseActual: String,
+             *      contenidoClaseActual: Object || String,
+             * }
+            */
+        },
     },
     methods: {
+        inicializacion () {
+            this.articulo = this.otrosDatos.tipoContenidoClaseActual === 'articulo' ? this.otrosDatos.contenidoClaseActual : ''
+            this.articuloInicial = this.otrosDatos.tipoContenidoClaseActual === 'articulo' ? this.otrosDatos.contenidoClaseActual : ''
+        },
+        
         sendArticulo () {
             this.$emit('sendArticulo', {
                 uidCurso: this.uidCurso,
@@ -48,15 +62,15 @@ export default {
                 uidClase: this.uidClase,
                 articulo: this.articulo,
             })
-        }
+        },
     },
     watch: {
-        contenidoInicial: function (n, v) {
-            this.articulo = this.contenidoInicial ? this.contenidoInicial : ''
+        otrosDatos: function (n, v) {
+            this.inicializacion()
         }
     },
     created () {
-        this.articulo = this.contenidoInicial ? this.contenidoInicial : ''
+        this.inicializacion()
     },
 }
 </script>

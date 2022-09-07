@@ -31,7 +31,7 @@
     "nuxt": "2.15.3",
     "showdown": "^1.9.1",
     "video.js": "^7.19.2",
-    "vue-instantsearch": "^4.1.1",
+    "vue-instantsearch": "3.9.0",
     "vuedraggable": "^2.24.3",
     "vuelidate": "^0.7.6"
   },

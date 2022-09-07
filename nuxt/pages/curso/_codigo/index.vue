@@ -214,7 +214,14 @@
                                         mdi-play-circle
                                     </v-icon>
                                     <v-icon 
-                                        v-if="clase.tipoClase === 'articulo'"
+                                        v-else-if="clase.tipoClase === 'video-youtube'"
+                                        color="#683bce"
+                                        left
+                                    >
+                                        mdi-youtube
+                                    </v-icon>
+                                    <v-icon 
+                                        v-else-if="clase.tipoClase === 'articulo'"
                                         color="#683bce"
                                         left
                                     >

@@ -450,7 +450,27 @@ middlewares.construirDatosBlogPUT = (req, res, next) => {
             const nombreBlogTemp = `${Date.now()}~${uidBlog}.md`
             rutaArchivoTemp = path.join(os.tmpdir(), 'blogs', nombreBlogTemp)
     
-            let turndownService = new TurndownService()
+            let turndownService = new TurndownService({
+                headingStyle: 'setext',
+                hr: '* * *',
+                bulletListMarker: '*',
+                codeBlockStyle: 'fenced',
+                fence: '```',
+                emDelimiter: '_',
+                strongDelimiter: '**',
+                linkStyle: 'inlined',
+                linkReferenceStyle: 'full',
+                br: '  ',
+                blankReplacement: function (content, node) {
+                    return node.isBlock ? '\n\n' : ''
+                },
+                keepReplacement: function (content, node) {
+                    return node.isBlock ? '\n\n' + node.outerHTML + '\n\n' : node.outerHTML
+                },
+                defaultReplacement: function (content, node) {
+                    return node.isBlock ? '\n\n' + content + '\n\n' : content
+                }
+            })
             let markdown = turndownService.turndown(contenidoBlog)
     
             fs.writeFileSync(rutaArchivoTemp, markdown)
