@@ -2,6 +2,8 @@ const { request, response } = require("express")
 const db = require('../../../../../db')
 const ClaseBorrador = require("../../../../models/Cursos/clase/ClaseBorrador")
 const generadorDeErroresClaseBorrador = require('../../../../helpers/generadorDeErroresClaseBorrador')
+const Usuario = require("../../../../models/Usuarios/Usuario")
+const CursoBorrador = require("../../../../models/Cursos/curso/CursoBorrador")
 
 const borrador = {}
 
@@ -91,6 +93,7 @@ borrador.verificadorDeTipoDeDatosPUT = (req = request, res = response, next) => 
 
         const {
             titulo,
+            contribuyentes,
             descripcion,
             vistaPrevia
         } = datosClase
@@ -98,6 +101,18 @@ borrador.verificadorDeTipoDeDatosPUT = (req = request, res = response, next) => 
         
         if ( titulo && typeof titulo !== 'string' ) {
             throw new TypeError('El titulo de la clase debe ser String.')
+        }
+
+        if ( contribuyentes ) {
+            if ( !Array.isArray(contribuyentes) ) {
+                throw new TypeError('No es un arreglo de contribuyentes.')
+            }
+
+            for (const contribuyente of contribuyentes) {
+                if ( typeof contribuyente !== 'string' ) {
+                    throw new TypeError('Debe ser un arreglo de string los contribuyentes.')
+                }
+            }
         }
 
         if ( descripcion && typeof descripcion !== 'string' ) {
@@ -151,6 +166,7 @@ borrador.verificadorDeDatosPUT = async (req = request, res = response, next) => 
 
         const {
             titulo,
+            contribuyentes,
             descripcion,
             vistaPrevia
         } = datosClase
@@ -166,6 +182,25 @@ borrador.verificadorDeDatosPUT = async (req = request, res = response, next) => 
             }
         }
 
+        // Contribuyentes
+        if ( contribuyentes ) {
+            if ( !contribuyentes.length ) throw new TypeError('No existen contribuyentes.')
+
+            for (const contribuyente of contribuyentes) {
+                // Debe existir el usuario
+                const usuario = await Usuario.obtenerUsuarioPorUID(contribuyente)
+                if ( !usuario || usuario.eliminado ) throw new TypeError('No existe el usuario.')
+
+                // Debe ser contribuyente del curso
+                const cursoBorrador = await CursoBorrador.obtenerCurso(params.uidCurso)
+                if ( !cursoBorrador ) throw new TypeError('No existe el curso.')
+
+                if ( !cursoBorrador.contribuyentes.includes(contribuyente) )
+                    throw new TypeError('No es contribuyente de este curso.')
+            }
+        }
+
+        // Descripcion
         if ( descripcion ) {
             if ( descripcion.trim().length < 10 ) {
                 throw new TypeError('La descripción de la clase debe ser mayor o igual a 10.')
@@ -222,11 +257,13 @@ borrador.construirDatosClaseBorradorPUT = (req = request, res = response, next) 
 
         const {
             titulo,
+            contribuyentes,
             descripcion,
             vistaPrevia
         } = datosClase
         
         titulo ? req.body.datosClase.titulo = titulo.trim() : ''
+        contribuyentes ? req.body.datosClase.contribuyentes = contribuyentes : ''
         descripcion ? req.body.datosClase.descripcion = descripcion.trim() : ''
         vistaPrevia !== undefined ? req.body.datosClase.vistaPrevia = vistaPrevia : ''
 

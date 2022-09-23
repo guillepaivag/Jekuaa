@@ -6,6 +6,9 @@ const generadorDeErroresClaseBorrador = async (claseBorrador = new ClaseBorrador
     if ( claseBorrador.titulo === '' ) 
         mensajesError.push('clase_no_existe_titulo')
 
+    if ( !claseBorrador.contribuyentes.length ) 
+        mensajesError.push('clase_no_existe_contribuyentes')
+
     if ( claseBorrador.descripcion === '' ) 
         mensajesError.push('clase_no_existe_descripcion')
 

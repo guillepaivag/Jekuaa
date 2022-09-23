@@ -274,12 +274,19 @@
                                                     </p>
                                                 </li>
 
-                                                <!-- <li>
+                                                <li>
                                                     <b>Vista previa:</b> 
                                                     <p style="display: inline;">
                                                         {{ datoClase.vistaPrevia ? 'Si' : 'No' }}
                                                     </p>
-                                                </li> -->
+                                                </li>
+
+                                                <li>
+                                                    <b>Contribuyentes:</b> 
+                                                    <p style="display: inline;">
+                                                        {{ datoClase.contribuyentes.toString() }}
+                                                    </p>
+                                                </li>
 
                                                 <li>
                                                     <u 
@@ -304,71 +311,93 @@
                                         <v-divider class="mt-3"></v-divider>
 
                                         <v-card-actions class="pl-4 py-4">
-                                            <v-btn
-                                                title="Cambiar orden"
-                                                :class="`btn-move-handle-${datoUnidad.uid}`"
-                                                fab
-                                                dark
-                                                small
-                                                color="#683bce"
-                                            >
-                                                <v-icon dark color="">
-                                                    mdi-swap-vertical-bold
-                                                </v-icon>
-                                            </v-btn>
+                                            <div class="horizontal_slider">
+                                                <div class="slider_container">
+                                                
+                                                    <v-btn
+                                                        title="Cambiar orden"
+                                                        :class="`item-btn-move-handle btn-move-handle-${datoUnidad.uid}`"
+                                                        fab
+                                                        dark
+                                                        small
+                                                        color="#683bce"
+                                                    >
+                                                        <v-icon dark color="">
+                                                            mdi-swap-vertical-bold
+                                                        </v-icon>
+                                                    </v-btn>
 
-                                            <v-btn
-                                                class=""
-                                                title="Actualizar clase"
-                                                fab
-                                                dark
-                                                small
-                                                color="#683bce"
-                                                v-on:click="mostrarActualizacionClase(datoUnidad.uid, datoClase.uid)"
-                                            >
-                                                <v-icon dark color="">
-                                                    mdi-content-save-edit
-                                                </v-icon>
-                                            </v-btn>
+                                                    <v-btn
+                                                        class="item-btn-move-handle"
+                                                        title="Actualizar contribuyentes"
+                                                        fab
+                                                        dark
+                                                        small
+                                                        color="#683bce" 
+                                                        :to="`/miembro/curso-borrador/curso/${uidCursoProp}/clase/${datoClase.uid}/contribuyentes`"
+                                                        target="_blank"
+                                                    >
+                                                        <v-icon dark color="">
+                                                            mdi-account-multiple
+                                                        </v-icon>
+                                                    </v-btn>
 
-                                            <v-btn
-                                                :disabled="!!datoClase.auxiliares.estadoContenido.length"
-                                                class=""
-                                                title="Cambiar unidad"
-                                                fab
-                                                dark
-                                                small
-                                                color="#683bce"
-                                                v-on:click="mostrarDialogCambioUnidad(datoUnidad.uid, datoClase.uid)"
-                                            >
-                                                <v-icon dark color="">
-                                                    mdi-content-save-move
-                                                </v-icon>
-                                            </v-btn>
+                                                    <v-btn
+                                                        class="item-btn-move-handle"
+                                                        title="Actualizar clase"
+                                                        fab
+                                                        dark
+                                                        small
+                                                        color="#683bce"
+                                                        v-on:click="mostrarActualizacionClase(datoUnidad.uid, datoClase.uid)"
+                                                    >
+                                                        <v-icon dark color="">
+                                                            mdi-content-save-edit
+                                                        </v-icon>
+                                                    </v-btn>
 
-                                            <v-btn
-                                                :disabled="!!datoClase.auxiliares.estadoContenido.length"
-                                                class=""
-                                                title="Eliminar clase"
-                                                fab
-                                                dark
-                                                small
-                                                color="red"
-                                                v-on:click="
-                                                    verificarEliminacionElemento.value = true; 
-                                                    verificarEliminacionElemento.uid = datoClase.uid; 
-                                                    verificarEliminacionElemento.tipo = 'clase';
-                                                    verificarEliminacionElemento.uidUnidadAux = datoUnidad.uid
-                                                "
-                                            >
-                                                <v-icon dark color="">
-                                                    mdi-delete
-                                                </v-icon>
-                                            </v-btn>
+                                                    <v-btn
+                                                        :disabled="!!datoClase.auxiliares.estadoContenido.length"
+                                                        class="item-btn-move-handle"
+                                                        title="Cambiar unidad"
+                                                        fab
+                                                        dark
+                                                        small
+                                                        color="#683bce"
+                                                        v-on:click="mostrarDialogCambioUnidad(datoUnidad.uid, datoClase.uid)"
+                                                    >
+                                                        <v-icon dark color="">
+                                                            mdi-content-save-move
+                                                        </v-icon>
+                                                    </v-btn>
+
+                                                    <v-btn
+                                                        :disabled="!!datoClase.auxiliares.estadoContenido.length"
+                                                        class="item-btn-move-handle"
+                                                        title="Eliminar clase"
+                                                        fab
+                                                        dark
+                                                        small
+                                                        color="red"
+                                                        v-on:click="
+                                                            verificarEliminacionElemento.value = true; 
+                                                            verificarEliminacionElemento.uid = datoClase.uid; 
+                                                            verificarEliminacionElemento.tipo = 'clase';
+                                                            verificarEliminacionElemento.uidUnidadAux = datoUnidad.uid
+                                                        "
+                                                    >
+                                                        <v-icon dark color="">
+                                                            mdi-delete
+                                                        </v-icon>
+                                                    </v-btn>
+
+                                                </div>
+                                            </div>
 
                                             <v-spacer></v-spacer>
 
                                             <v-btn
+                                                class="ml-2"
                                                 icon
                                                 @click="datoClase.auxiliares.mostrarContenido = !datoClase.auxiliares.mostrarContenido"
                                             >
@@ -1336,6 +1365,7 @@ export default {
                     if (index2 !== -1) {
                         this.datosUnidades[index].datosClases[index2].uid = snapshot.data().uid
                         this.datosUnidades[index].datosClases[index2].ordenClase = snapshot.data().ordenClase
+                        this.datosUnidades[index].datosClases[index2].contribuyentes = snapshot.data().contribuyentes
                         this.datosUnidades[index].datosClases[index2].titulo = snapshot.data().titulo
                         this.datosUnidades[index].datosClases[index2].descripcion = snapshot.data().descripcion
                         this.datosUnidades[index].datosClases[index2].duracion = snapshot.data().duracion
@@ -1983,6 +2013,31 @@ export default {
 </script>
 
 <style scoped>
+.horizontal_slider {
+    display: block;
+    width: 100%;
+    overflow-x: auto;
+}
+
+.slider_container {
+    display: block;
+    white-space: nowrap;
+    margin-bottom: 5px;
+    padding: 10px;
+}
+
+.item-btn-move-handle {
+    background-color: #683bce;
+    margin-right: 10px;
+    transition: 500ms;
+}
+
+.item-btn-move-handle:hover {
+    cursor: pointer;
+    background-color: #b291fe;
+    transition: 500ms;
+}
+
 #create .v-speed-dial {
     position: fixed;
 }

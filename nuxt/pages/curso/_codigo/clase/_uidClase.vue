@@ -67,8 +67,11 @@
                             </v-icon>
                             {{ clasePublicado.titulo }} 
                         </h3>
+
                         <span> {{ clasePublicado.descripcion }} </span>
+                        
                         <v-divider class="my-3"></v-divider>
+                        
                         <h4>
                             Creación: 
                             {{ new Date(contenidoClasesPublicado.fechaCreacion.seconds * 1000).toISOString().substr(0, 10) }}
@@ -77,6 +80,15 @@
                             Actualización: 
                             {{ new Date(contenidoClasesPublicado.fechaActualizacion.seconds * 1000).toISOString().substr(0, 10) }}
                         </h4>
+
+                        <v-divider class="my-3"></v-divider>
+
+                        <div class="">
+                            <ListaContribuyentesClase 
+                                :datosCursoProp="datosCurso"
+                                :contribuyentes="datosContribuyentes" 
+                            />
+                        </div>
                     </div>
                 </v-col>
                 <v-col cols="12" v-if="!mostrarListaClases" :md="mostrarListaClases ? 0 : 4">
@@ -114,6 +126,7 @@ import VisualizadorArticulo from '@/components/cursos/VisualizadorArticulo'
 import VisualizadorVideo from '@/components/cursos/VisualizadorVideo'
 import VisualizadorYoutube from '@/components/cursos/VisualizadorYoutube'
 import ListaUnidadesClases from '@/components/cursos-publicado/estudiante/ListaUnidadesClases'
+import ListaContribuyentesClase from '@/components/usuarios/ListaContribuyentesClase'
 import { fb } from '@/plugins/firebase'
 const db = fb.firestore()
 
@@ -127,6 +140,7 @@ export default {
             contenidoClasesPublicado: null,
             contenido: null,
             tipoAccesoAlCurso: 'con_acceso',
+            datosContribuyentes: [],
         }
     },
 
@@ -145,6 +159,7 @@ export default {
         VisualizadorVideo,
         VisualizadorYoutube,
         ListaUnidadesClases,
+        ListaContribuyentesClase,
     },
 
     methods: {
@@ -160,6 +175,29 @@ export default {
         agregarListaClases () {
             this.$emit('agregarListaClases', {})
         },
+        async inicializacionContribuyentes () {
+            
+            const contribuyentesAux = []
+            for (const contribuyente of this.clasePublicado.contribuyentes) {
+                const ref = this.$firebase.firestore().collection('Usuarios').doc(contribuyente)
+                const doc = await ref.get()
+                const datosUsuario = doc.data()
+
+                let config = {
+                    headers: { 'Content-Type': 'application/json' }
+                }
+                const respuesta = await this.$axios.$get(`/serviceUsuario/obtenerAuthentication/uid/${contribuyente}`, config)
+                const datosAuth = respuesta.resultado
+
+                contribuyentesAux.push({
+                    uid: contribuyente,
+                    auth: datosAuth,
+                    firestore: datosUsuario,
+                })
+            }
+
+            this.datosContribuyentes = contribuyentesAux
+        },
         async inicializacionDeClase () {
             this.uidClase = this.$route.params.uidClase
 
@@ -171,6 +209,8 @@ export default {
             const snapshot = await db.collectionGroup('ClasesPublicado').where('uid', '==', this.uidClase).get()
             if (snapshot.empty) this.$router.push(`/curso/${this.codigo}`)
             this.clasePublicado = snapshot.docs[0].data()
+
+            this.inicializacionContribuyentes()
 
             this.$emit('cambioClase', {
                 datosClase: this.clasePublicado,

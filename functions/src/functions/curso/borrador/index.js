@@ -59,20 +59,7 @@ ffCursos.validacionEstadoDocumentoCursoBorrador = functions
             const cursoPublicado = new Curso( doc.data() )
 
             let huboCambio = false
-            if ( !huboCambio ) {
-                if (cursoPublicado.contribuyentes.length === cursoBorrador.contribuyentes.length) {
-                    for (let i = 0; i < cursoPublicado.contribuyentes.length; i++) {
-                        const contribuyente = cursoPublicado.contribuyentes[i]
-                        if ( !cursoBorrador.contribuyentes.includes(contribuyente) ) {
-                            huboCambio = true
-                            break
-                        }
-                    }
-                } else {
-                    huboCambio = true
-                }
-            }
-            
+                       
             if ( !huboCambio ) 
                 huboCambio = cursoPublicado.fotoPerfil !== cursoBorrador.fotoPerfil
 

@@ -106,6 +106,42 @@ controller.quitarAuxiliar = async (req = request, res = response) => {
     }
 }
 
+controller.quitarContribuyente = async (req = request, res = response) => {
+    try {
+        const { datos, params } = req
+        const { uidSolicitante, datosAuthSolicitante } = datos
+        const uidCurso = params.uidCurso
+        const uidUsuario = params.uidUsuario
+
+        const respuesta = new Respuesta()
+
+        const cursoBorrador = new CursoBorrador()
+        await cursoBorrador.importarDatosDeUnCurso(uidCurso)
+        const contribuyentes = cursoBorrador.contribuyentes
+        const index = contribuyentes.findIndex(v => v === uidUsuario)
+        if (index !== -1) contribuyentes.splice(index, 1)
+
+        CursoBorrador.actualizarCurso(uidCurso, { contribuyentes })
+        if (cursoBorrador.estadoDocumento !== 'nuevo') 
+            CursoPublicado.actualizarCurso(uidCurso, { contribuyentes })
+
+        // Retornar respuesta
+        respuesta.setRespuesta({
+            estado: 200,
+            mensaje: 'exito',
+            resultado: contribuyentes
+        })
+        
+        return res.status( respuesta.estado ).json( respuesta.getRespuesta() )
+
+    } catch (error) {
+        console.log('Error - quitarContribuyente: ', error)
+
+        const respuesta = manejadorErrores( error )
+        return res.status( respuesta.estado ).json( respuesta.getRespuesta() )
+    }
+}
+
 controller.actualizarDatosPrecio = async (req = request, res = response) => {
     try {
         const { datos, body, params } = req

@@ -46,6 +46,18 @@
                             Auxiliares
                         </v-btn>
 
+                        <v-btn
+                            v-if="datosCurso && datosCurso.responsable === $store.state.modules.usuarios.uid"
+                            class="mb-2"
+                            text
+                            color="#683bce"
+                            :disabled="!uidCurso"
+                            :to="`/miembro/curso-borrador/${uidCurso}/contribuyentes`"
+                            exact
+                        >
+                            Contribuyentes
+                        </v-btn>
+
                         <!-- <v-btn
                             v-if="datosCurso && datosCurso.responsable === $store.state.modules.usuarios.uid"
                             class="mb-2"
@@ -86,10 +98,10 @@
 
                 </v-col>
 
-                <v-divider 
+                <!-- <v-divider 
                     class="my-v-divider mr-0"
                     vertical
-                ></v-divider>
+                ></v-divider> -->
                 
                 <v-col cols="12" md="10">
                     <nuxt-child />
@@ -170,6 +182,20 @@
                     mdi-currency-usd
                 </v-icon>
             </v-btn> -->
+
+            <v-btn
+                v-if="datosCurso && datosCurso.responsable === $store.state.modules.usuarios.uid"
+                title="Contribuyentes"
+                fab
+                small
+                dark
+                color="green"
+                :to="`/miembro/curso-borrador/${uidCurso}/contribuyentes`"
+            >
+                <v-icon>
+                    mdi-account-multiple
+                </v-icon>
+            </v-btn>
 
             <v-btn
                 v-if="datosCurso && datosCurso.responsable === $store.state.modules.usuarios.uid"
@@ -323,7 +349,7 @@ export default {
     }
 
     .my-v-divider {
-        margin-left: -40px;
+        /* margin-left: -40px; */
     }
 }
 
@@ -340,7 +366,7 @@ export default {
 
 @media (min-width: 960px) and (max-width: 1263.99px) {
     .my-v-divider {
-        margin-left: -2px;
+        /* margin-left: -2px; */
     }
   
 }

@@ -295,4 +295,48 @@ borrador.verificacionAuxiliaresPUT = async (req = request, res = response, next)
 }
 
 
+
+
+borrador.verificacionContribuyentesPUT = async (req = request, res = response, next) => {
+    try {
+        const { datos, body, params } = req
+        const { uidSolicitante, datosAuthSolicitante } = datos
+        const { contribuyentes } = body
+
+        // Verificacion: Existe curso
+        const cursoBorrador = new CursoBorrador()
+        const existeCursoBorrador = await cursoBorrador.importarDatosDeUnCurso(params.uidCurso)
+
+        if (!existeCursoBorrador) {
+            throw new Errores({
+                estado: 400,
+                mensajeCliente: 'no_existe_curso_borrador',
+                mensajeServidor: 'No existe el curso.'
+            })
+        }
+
+        if (contribuyentes.length > 20) 
+            throw new TypeError('Solo se puede asignar hasta 20 contribuyentes a un curso.')
+
+        if ( !contribuyentes.includes(cursoBorrador.instructor) ) 
+            throw new TypeError('No existe el instructor en los contribuyentes.')
+
+        for (const contribuyente of contribuyentes) {
+            const result = contribuyentes.filter(v => v === contribuyente)
+            
+            if (result.length > 1) 
+                throw new TypeError('Se duplicaron algunos contribuyentes.')
+        }
+
+        req.body.tienePublicado = cursoBorrador.estadoDocumento !== 'nuevo'
+
+        next()
+    } catch (error) {
+        next(error)
+    }
+}
+
+
+
+
 module.exports = borrador

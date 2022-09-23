@@ -26,6 +26,7 @@ class Clase {
     constructor (datos = {}) {
         const {
             uid,                // r - a
+            contribuyentes,      // r - a
             ordenClase,         // r - a
             titulo,             // r 
             descripcion,        // 
@@ -37,6 +38,7 @@ class Clase {
         } = datos
     
         this.uid = uid ? uid : db.collection(COLECCION_CLASES).doc().id
+        this.contribuyentes = contribuyentes ? contribuyentes : ''
         this.ordenClase = ordenClase ? ordenClase : 0
         this.titulo = titulo ?  titulo : ''
         this.descripcion = descripcion ?  descripcion : ''
@@ -50,6 +52,7 @@ class Clase {
     getClase () {
         return {
             uid: this.uid,
+            contribuyentes: this.contribuyentes,
             ordenClase: this.ordenClase,
             titulo: this.titulo,
             descripcion: this.descripcion,
@@ -63,13 +66,14 @@ class Clase {
 
     setClase (datos = {}) {
         const {
-            uid, ordenClase, titulo, 
+            uid, contribuyentes, ordenClase, titulo, 
             descripcion, duracion, 
             tipoClase, complementos,
             subtitulos, vistaPrevia
         } = datos
 
         this.setUid(uid)
+        this.setContribuyentes(contribuyentes)
         this.setOrdenClase(ordenClase)
         this.setTitulo(titulo)
         this.setDescripcion(descripcion)
@@ -87,7 +91,12 @@ class Clase {
         return this
     }
 
-    setOrdenClase ( ordenClase = 1 ) {
+    setContribuyentes ( contribuyentes = '' ) {
+        this.contribuyentes = contribuyentes
+        return this
+    }
+    
+    setOrdenClase ( ordenClase = 0 ) {
         this.ordenClase = ordenClase
         return this
     }

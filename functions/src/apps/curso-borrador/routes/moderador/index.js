@@ -8,14 +8,16 @@ const {
     verificadorDeTipoDeDatosPOST, 
     verificadorDeDatosPOST,
     construirDatosCursoBorradorPOST,
-    verificacionAuxiliaresPUT
+    verificacionAuxiliaresPUT,
+    verificacionContribuyentesPUT
 } = require('../../middlewares/moderador')
 const { 
     crearCursoBorrador, 
     actualizarAuxiliares, 
     obtenerUrlVideoClase, 
     obtenerArticuloClase, 
-    obtenerVideoYoutubeClase
+    obtenerVideoYoutubeClase,
+    actualizarContribuyentes
 } = require('../../controllers/moderador')
 
 // CREAR
@@ -30,6 +32,7 @@ router.post('/crear',
     crearCursoBorrador)
 
 
+// ACTUALIZAR AUXILIARES
 router.put('/actualizarAuxiliares/:uidCurso', 
     estaAutenticado,
     esModerador,
@@ -38,6 +41,15 @@ router.put('/actualizarAuxiliares/:uidCurso',
     actualizarAuxiliares)
 
 
+// ACTUALIZAR CONTRIBUYENTES
+router.put('/actualizarContribuyentes/:uidCurso', 
+    estaAutenticado,
+    esModerador,
+    esModeradorDeCursos,
+    verificacionContribuyentesPUT,
+    actualizarContribuyentes)
+    
+    
 // OBTENER VIDEO
 router.get('/obtenerVideo/:uidCurso/:uidClase', 
     estaAutenticado,

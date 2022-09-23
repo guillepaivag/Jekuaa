@@ -167,6 +167,7 @@ middlewares.construccionPedidoTipoProducto = async (req = request, res = respons
                     precioTotal: precio * cantidad,
                     fechaReembolsado: null,
                 })
+                
                 listaDetallesItems.push(detallesItem)
             }
         }

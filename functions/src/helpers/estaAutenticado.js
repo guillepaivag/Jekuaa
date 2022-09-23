@@ -4,8 +4,6 @@ const admin = require('../../firebase-service')
 const getAuthToken = require('./getAuthToken')
 
 const estaAutenticado = (req = request, res = response, next) => {
-    console.time('go')
-
     const myNext = async () => {
         
         try {

@@ -61,7 +61,7 @@ export default {
             uidCurso: '',
             datosCurso: null,
             unidades: [],
-            mostrarListaClases: false,
+            mostrarListaClases: true,
             cargandoDatosCurso: true,
             porcentajeProgreso: 0,
             listaClases: [],

@@ -50,7 +50,8 @@ export default {
         return {
             uidCurso: this.$route.params.uidCurso,
             items: [
-                { id: 'auxiliares', title: 'Actualizar auxiliares', description: 'Agregar/eliminar ayudantes en este curso para facilitar las tareas.', to: `/moderador/curso-borrador/${this.uidCurso}/auxiliares` },
+                { id: 'auxiliares', title: 'Actualizar auxiliares', description: 'Agregar/eliminar ayudantes en este curso para facilitar las tareas.', to: `/moderador/curso-borrador/${this.$route.params.uidCurso}/auxiliares` },
+                { id: 'contribuyentes', title: 'Actualizar contribuyentes', description: 'Agregar/eliminar contribuyentes en este curso.', to: `/moderador/curso-borrador/${this.$route.params.uidCurso}/contribuyentes` },
                 { id: 'contenidos', title: 'Verificar contenido', description: 'Verificar si el contenido del curso es válido.', to: `` },
             ],
             uidPrimeraClase: 'cargando',
@@ -78,7 +79,7 @@ export default {
         this.uidPrimeraClase = snapshotClase.docs[0].id
 
         const items = JSON.parse( JSON.stringify( this.items ) )
-        items[1].to = `/moderador/curso-borrador/${this.uidCurso}/clase/${this.uidPrimeraClase}`
+        items[items.length-1].to = `/moderador/curso-borrador/${this.uidCurso}/clase/${this.uidPrimeraClase}`
 
         this.items = items
     },

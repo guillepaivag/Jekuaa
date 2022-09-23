@@ -101,6 +101,20 @@ ffClases.eventoActualizacionClaseBorrador = functions
             if ( !huboCambio ) 
                 huboCambio = clasePublicada.titulo !== claseBorrador.titulo
 
+            if ( !huboCambio ) {
+                if ( clasePublicada.contribuyentes.length === claseBorrador.contribuyentes.length ) {
+                    for (let i = 0; i < clasePublicada.contribuyentes.length; i++) {
+                        const element = clasePublicada.contribuyentes[i]
+                        if ( !claseBorrador.contribuyentes.includes(element) ) {
+                            huboCambio = true
+                            break
+                        }
+                    }
+                } else {
+                    huboCambio = true
+                }
+            }
+
             if ( !huboCambio ) 
                 huboCambio = clasePublicada.descripcion !== claseBorrador.descripcion
 

@@ -368,7 +368,7 @@
                         {{ new Date(curso.fechaCreacion.seconds * 1000).toISOString().substr(0, 10) }}
                     </div>
 
-                    <div class="mb-12">
+                    <div class="mb-5">
                         <h2 class="subtitulos"> Fecha actualización: </h2>
                         <v-divider class="mb-3"/>
                         {{ new Date(curso.fechaActualizacion.seconds * 1000).toISOString().substr(0, 10) }}
@@ -380,8 +380,17 @@
         </div>
 
         <!-- Presentación del instructor -->
-        <div class="mb-15">
-            <CartaPresentacionInstructor :uidUsuario="curso.instructor"/>
+        <div class="container mb-15">
+            <CartaPresentacionInstructor 
+                v-if="curso.contribuyentes.length === 1"
+                :uidUsuario="curso.instructor"
+            />
+            <ListaContribuyentes 
+                v-else
+                :uidCurso="curso.uid"
+                :datosCursoProp="curso"
+                :contribuyentes="contribuyentes"
+            />
         </div>
 
         <v-dialog
@@ -419,8 +428,8 @@
 
 <script>
 import { fb } from '@/plugins/firebase'
-import showdown from 'showdown'
 import CartaPresentacionInstructor from '@/components/usuarios/CartaPresentacionInstructor'
+import ListaContribuyentes from '@/components/usuarios/ListaContribuyentes'
 import informacionSecciones from '@/helpers/informacionSecciones'
 import informacionIdiomas from '@/helpers/informacionIdiomas'
 import informacionNiveles from '@/helpers/informacionNiveles'
@@ -437,10 +446,12 @@ export default {
             informacionIdiomas: informacionIdiomas,
             informacionNiveles: informacionNiveles,
             porcentajeProgreso: 0,
+            contribuyentes: [],
         }
     },
     components: {
         CartaPresentacionInstructor,
+        ListaContribuyentes,
     },
     methods: {
         secondsToString(seconds) {
@@ -605,6 +616,29 @@ export default {
             .get()
 
         this.meGustaEsteCurso = !!docCursoMG.exists
+
+        if (this.curso.contribuyentes.length > 1) {
+            const contribuyentesAux = []
+            for (const contribuyente of this.curso.contribuyentes) {
+                const ref = this.$firebase.firestore().collection('Usuarios').doc(contribuyente)
+                const doc = await ref.get()
+                const datosUsuario = doc.data()
+
+                let config = {
+                    headers: { 'Content-Type': 'application/json' }
+                }
+                const respuesta = await this.$axios.$get(`/serviceUsuario/obtenerAuthentication/uid/${contribuyente}`, config)
+                const datosAuth = respuesta.resultado
+
+                contribuyentesAux.push({
+                    uid: contribuyente,
+                    auth: datosAuth,
+                    firestore: datosUsuario,
+                })
+            }
+
+            this.contribuyentes = contribuyentesAux
+        }
     },
     async asyncData({ app, $firebase, $axios, redirect, params }) {
         // Variables
@@ -700,7 +734,7 @@ contenedor_contenido_derecha */
 }
 
 .contenedor_informacion_curso {
-    margin: 30px 0 30px 0;
+    margin: 30px 0 10px 0;
 }
 
 .contenedor_resumen_curso {

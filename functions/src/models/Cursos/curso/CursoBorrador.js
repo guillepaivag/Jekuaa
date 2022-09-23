@@ -93,6 +93,11 @@ class CursoBorrador extends Curso {
         return true
     }
 
+    static async obtenerCurso ( uidCurso = '' ) {
+        const cursoBorrador = new CursoBorrador()
+        return await cursoBorrador.importarDatosDeUnCurso(uidCurso)
+    }
+
     static async actualizarCurso ( uidCurso = '', datosActualizados = {} ) {
         await db
         .collection(COLECCION_CURSOS).doc(uidCurso)

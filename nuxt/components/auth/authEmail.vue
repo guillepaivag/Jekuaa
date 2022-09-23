@@ -285,6 +285,8 @@ export default {
       !this.$v.nombreUsuario.minLength && errors.push('La mínima cantidad de caracteres es 1.')
       !this.$v.nombreUsuario.maxLength && errors.push('No puede exceder a 20 carácteres.')
       !this.$v.nombreUsuario.required && errors.push('El nombre de usuario es requerido.')
+      !( /^[a-zA-Z0-9_]+$/.test(this.nombreUsuario) ) && errors.push('El nombre de usuario solo puede tener a-z A-Z 0-9 _.')
+
       return errors
     },
     nombreCompletoError () {

@@ -5,11 +5,11 @@ const config = require('../../config')
 const Pedido = require('../models/Pedido')
 const { milliseconds_a_timestamp } = require('../utils/timestamp')
 const CursoPublicado = require('../models/Cursos/curso/CursoPublicado')
-const InformeVentaInstructor = require('../models/InformeVentaInstructor')
 const DetallesItem = require('../models/helpers/DetallesItem')
 const Usuario = require('../models/Usuarios/Usuario')
 const MisCursos = require('../models/MisCursos')
 const Miembro = require('../models/Usuarios/TiposUsuarios/Miembro')
+const RegistroActividadProducto = require('../models/RegistroActividadProducto')
 
 
 const ff = {}
@@ -90,6 +90,23 @@ ff.pedidoCompletado = functions
 
                 }
 
+                const referenciaPedido = db.collection('Usuarios').doc(pedidoNuevo.uidComprador).collection('Pedidos').doc(pedidoNuevo.uid)
+                const referenciaDetallesItem = db.collection('Usuarios').doc(pedidoNuevo.uidComprador).collection('Pedidos').doc(pedidoNuevo.uid).collection('DetallesItem').doc(pedidoNuevo.uid)
+                const registroActividadProducto = new RegistroActividadProducto({
+                    uidComprador: pedidoNuevo.uidComprador, 
+                    uidVendedor: uidMiembro, 
+                    tipoProducto: item.tipoItem, 
+                    uidProducto: item.uidItem, 
+                    uidPedido: pedidoNuevo.uid, 
+                    referenciaPedido,
+                    uidDetallesItem: item.uidItem, 
+                    referenciaDetallesItem, 
+                    fechaCompra: pedidoNuevo.fechaCompra, 
+                    fechaReembolso: null,
+                })
+
+                RegistroActividadProducto.agregarRegistroActividadProducto(registroActividadProducto)
+
                 const esNuevoEstudianteDeMiembro = (oldDataEstudianteMiembro.cantidadCursos === 0 && newDataEstudianteMiembro.cantidadCursos === 1)
                 if (esNuevoEstudianteDeMiembro) {
                     await Miembro.actualizarMiembro(uidMiembro, {
@@ -97,6 +114,7 @@ ff.pedidoCompletado = functions
                     })
                 }
             }
+            
         }
     }
 
@@ -140,7 +158,7 @@ ff.reembolsoDeUnProducto = functions
         Pedido.actualizar(uidUsuario, uidPedido, datosActualizados)
 
 		// Si es productos
-        if (pedido.tipoPedido === 'productos') {
+        if ( pedido.tipoPedido === 'productos' ) {
             let uidMiembro = ''
             let oldDataEstudianteMiembro = null
             let newDataEstudianteMiembro = null
@@ -180,6 +198,10 @@ ff.reembolsoDeUnProducto = functions
                 newDataEstudianteMiembro = JSON.parse( JSON.stringify( docEstudianteMiembro.data() ) )
                 newDataEstudianteMiembro.cantidadCursos--
             }
+
+            RegistroActividadProducto.actualizarRegistroActividadProducto(uidPedido, uidDetallesItem, {
+                fechaReembolso: detallesItemNuevo.fechaReembolsado
+            })
 
             const yaNoEsEstudianteDeMiembro = (oldDataEstudianteMiembro.cantidadCursos === 1 && newDataEstudianteMiembro.cantidadCursos === 0)
             if (yaNoEsEstudianteDeMiembro) {

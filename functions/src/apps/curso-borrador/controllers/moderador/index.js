@@ -74,6 +74,36 @@ controller.actualizarAuxiliares = async (req = request, res = response) => {
     }
 }
 
+controller.actualizarContribuyentes = async (req = request, res = response) => {
+    try {
+        const { datos, body, params } = req
+        const { uidSolicitante, datosAuthSolicitante } = datos
+        const { contribuyentes, tienePublicado } = body
+
+        const respuesta = new Respuesta()
+
+        CursoBorrador.actualizarCurso(params.uidCurso, { contribuyentes })
+        
+        if (tienePublicado)
+            CursoPublicado.actualizarCurso(params.uidCurso, { contribuyentes })
+
+        // Retornar respuesta
+        respuesta.setRespuesta({
+            estado: 200,
+            mensaje: 'exito',
+            resultado: null
+        })
+        
+        return res.status( respuesta.estado ).json( respuesta.getRespuesta() )
+
+    } catch (error) {
+        console.log('Error - actualizarContribuyentes: ', error)
+
+        const respuesta = manejadorErrores( error )
+        return res.status( respuesta.estado ).json( respuesta.getRespuesta() )
+    }
+}
+
 controller.obtenerUrlVideoClase = async (req = request, res = response) => {
     try {
         const { datos, body, params } = req

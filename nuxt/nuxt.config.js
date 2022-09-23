@@ -1,5 +1,5 @@
-const isProduction = true
-const localeProduction = true
+const isProduction = false
+const localeProduction = false
 
 const baseURL = isProduction ? 
   'https://southamerica-east1-jekuaa-py.cloudfunctions.net' : 

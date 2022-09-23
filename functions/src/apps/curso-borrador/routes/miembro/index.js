@@ -27,7 +27,8 @@ const {
     actualizarCursoBorrador, 
     publicarCursoBorrador,
     actualizarDatosPrecio,
-    quitarAuxiliar
+    quitarAuxiliar,
+    quitarContribuyente
 } = require('../../controllers/miembro')
 
 
@@ -65,6 +66,16 @@ router.delete('/quitar-auxiliar/:uidCurso/:uidUsuario',
     esResponsableDelCursoBorrador,
     errorSiElCursoSeEstaPublicando,
     quitarAuxiliar)
+
+
+// ACTUALIZAR PRECIO DEL CURSO
+router.delete('/quitar-contribuyente/:uidCurso/:uidUsuario', 
+    estaAutenticado,
+    esMiembro,
+    esMiembroInstructor,
+    esResponsableDelCursoBorrador,
+    errorSiElCursoSeEstaPublicando,
+    quitarContribuyente)
 
 
 // ACTUALIZAR PRECIO DEL CURSO

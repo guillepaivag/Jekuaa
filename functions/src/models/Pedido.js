@@ -1,6 +1,4 @@
 const db = require("../../db")
-const { milliseconds_a_timestamp } = require("../utils/timestamp")
-const DatosPago = require("./helpers/DatosPago")
 const DetallesItem = require("./helpers/DetallesItem")
 const COLECCION = 'Pedidos'
 const COLECCION_DETALLES_ITEM = 'DetallesItems'
