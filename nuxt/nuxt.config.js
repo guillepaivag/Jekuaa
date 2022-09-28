@@ -1,4 +1,4 @@
-const isProduction = false
+const isProduction = true
 const localeProduction = false
 
 const baseURL = isProduction ? 
@@ -12,7 +12,7 @@ module.exports = {
   // Global page headers: https://go.nuxtjs.dev/config-head
   head: {
     titleTemplate: '%s - Jekuaapy',
-    title: 'Jekuaapy: Aprendizaje online contigo',
+    title: 'Jekuaapy: Aprende en un mundo nuevo',
     meta: [
       { charset: 'utf-8' },
       { name: 'viewport', content: 'width=device-width, initial-scale=1' },
@@ -20,11 +20,11 @@ module.exports = {
       { name: 'robots', content: 'index, follow' },
       { name: 'keywords', content: 'informatica, algoritmos, desarrollo web, tutoriales, enseñanza, matematica, calculo, enseñanza eficiente' },
       { hid: 'og:site_name', property: 'og:site_name', content: 'Jekuaapy', },
-      { property: 'og:title', content: 'Jekuaapy: Aprendizaje online contigo' },
+      { property: 'og:title', content: 'Jekuaapy: Aprende en un mundo nuevo' },
       { property: 'og:description', content: '¡Nunca es tarde para hacer un cambio! Estudia desde cero, investiga, aprende y despega con Jekuaapy de forma online y eficiente. ¡Lee blogs de diversos temas! Mejora tus conocimientos sobre programación, desarrollo web, matemática y otras áreas más!' },
       { property: 'og:image', content: '/image-og-2022.png' },
       { hid: 'og:image:secure_url', property: 'og:image:secure_url', content: '/image-og-2022.png', },
-      { hid: 'og:image:alt', property: 'og:image:alt', content: 'Jekuaapy aprendizaje online contigo', },
+      { hid: 'og:image:alt', property: 'og:image:alt', content: 'Jekuaapy: Aprende en un mundo nuevo', },
       { hid: 'og:type', property: 'og:type', content: 'website' },
       { hid: 'og:url', property: 'og:url', content: 'https://jekuaapy.com', },
     ],

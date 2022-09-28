@@ -356,7 +356,7 @@ export default {
         },
     },
     async created() {
-        const doc = await db.collection('CursosPublicado').doc(this.uidCurso).get()
+        const doc = await db.collection('CursosBorrador').doc(this.uidCurso).get()
 
         if (!doc.exists) {
             this.$router.push('/moderador/cursos/borradores')

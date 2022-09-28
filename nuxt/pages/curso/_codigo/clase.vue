@@ -150,13 +150,6 @@ export default {
 
         this.uidCurso = snapshotCurso.docs[0].id
         this.datosCurso = snapshotCurso.docs[0].data()
-
-        const docMiCurso = await db
-        .collection('Usuarios').doc(usuario.uid)
-        .collection('MisCursos').doc(this.uidCurso)
-        .get()
-
-        this.miCurso = docMiCurso.exists ? docMiCurso.data() : null
         
         // Lista unidades/clases
         const snapshotUnidades = await db
@@ -188,20 +181,29 @@ export default {
             i++
         }
 
-        const snapshotProgresoClase = await this.$firebase.firestore()
-        .collection('Usuarios')
-        .doc(usuario.uid)
-        .collection('MisCursos')
-        .doc(this.uidCurso)
-        .collection('ProgresosClases')
-        .get()
+        if (usuario.uid) {
+            const docMiCurso = await db
+            .collection('Usuarios').doc(usuario.uid)
+            .collection('MisCursos').doc(this.uidCurso)
+            .get()
 
-        this.listaProgresos = []
-        for (const docProgresoClase of snapshotProgresoClase.docs) {
-            this.listaProgresos.push(docProgresoClase.data())
+            this.miCurso = docMiCurso.exists ? docMiCurso.data() : null
+        
+            const snapshotProgresoClase = await this.$firebase.firestore()
+            .collection('Usuarios')
+            .doc(usuario.uid)
+            .collection('MisCursos')
+            .doc(this.uidCurso)
+            .collection('ProgresosClases')
+            .get()
+
+            this.listaProgresos = []
+            for (const docProgresoClase of snapshotProgresoClase.docs) {
+                this.listaProgresos.push(docProgresoClase.data())
+            }
+
+            this.calcularPorcentajeProgreso(this.listaClases, this.listaProgresos)
         }
-
-        this.calcularPorcentajeProgreso(this.listaClases, this.listaProgresos)
 
         this.unidades = unidades
 

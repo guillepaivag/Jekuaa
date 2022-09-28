@@ -18,10 +18,10 @@
         </div>
 
         <div class="">
-            <v-row no-gutters>
+            <v-row>
                 <v-col class="" cols="12" md="2">
                     
-                    <div class="conjuntoBotones">
+                    <v-card class="text-center conjuntoBotones">
                         <v-btn
                             v-for="(item, index) in informacionBotones" :key="index"
                             class="mb-2"
@@ -30,6 +30,7 @@
                             :disabled="!uidCurso"
                             :to="item.to"
                             exact
+                            block
                         >
                             {{ item.title }}
                         </v-btn>
@@ -42,6 +43,7 @@
                             :disabled="!uidCurso"
                             :to="`/miembro/curso-borrador/${uidCurso}/auxiliares`"
                             exact
+                            block
                         >
                             Auxiliares
                         </v-btn>
@@ -54,6 +56,7 @@
                             :disabled="!uidCurso"
                             :to="`/miembro/curso-borrador/${uidCurso}/contribuyentes`"
                             exact
+                            block
                         >
                             Contribuyentes
                         </v-btn>
@@ -66,6 +69,7 @@
                             :disabled="!uidCurso"
                             :to="`/miembro/curso-borrador/${uidCurso}/precios`"
                             exact
+                            block
                         >
                             Precio
                         </v-btn> -->
@@ -78,6 +82,7 @@
                             :disabled="!uidCurso"
                             :to="`/miembro/curso-borrador/${uidCurso}/publicacion`"
                             exact
+                            block
                         >
                             Publicación
                         </v-btn>
@@ -91,10 +96,11 @@
                             color="#683bce"
                             :to="`/miembro/curso-borrador/vista-previa/${uidCurso}/clase/${uidPrimeraClase}`"
                             exact
+                            block
                         >
                             Vista previa
                         </v-btn>
-                    </div>
+                    </v-card>
 
                 </v-col>
 

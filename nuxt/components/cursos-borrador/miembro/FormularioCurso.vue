@@ -295,7 +295,7 @@ export default {
             listaSecciones: [],
             seccionSeleccionado: {
                 uid: '', 
-                nombre: 'Curso normal'
+                texto: 'Curso normal'
             },
 
             listaCategorias: [],

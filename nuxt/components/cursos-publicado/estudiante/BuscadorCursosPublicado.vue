@@ -727,7 +727,8 @@ body {
   @include transition(opacity 0.3s ease);
   display: block;
   width: 100%;
-	object-fit: cover;
+	// object-fit: cover;
+  object-fit: inherit;
 }
 
 .article-details {

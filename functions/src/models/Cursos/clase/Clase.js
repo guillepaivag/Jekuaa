@@ -38,7 +38,7 @@ class Clase {
         } = datos
     
         this.uid = uid ? uid : db.collection(COLECCION_CLASES).doc().id
-        this.contribuyentes = contribuyentes ? contribuyentes : ''
+        this.contribuyentes = contribuyentes ? contribuyentes : []
         this.ordenClase = ordenClase ? ordenClase : 0
         this.titulo = titulo ?  titulo : ''
         this.descripcion = descripcion ?  descripcion : ''
@@ -91,7 +91,7 @@ class Clase {
         return this
     }
 
-    setContribuyentes ( contribuyentes = '' ) {
+    setContribuyentes ( contribuyentes = [] ) {
         this.contribuyentes = contribuyentes
         return this
     }

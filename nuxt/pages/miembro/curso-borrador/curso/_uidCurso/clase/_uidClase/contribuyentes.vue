@@ -46,6 +46,7 @@
 
                 <v-card-actions>
                     <v-btn
+                        :disabled="contribuyente.esContribuyente && contribuyentesClase.length === 1"
                         :color="contribuyente.esContribuyente ? 'red' : 'green'"
                         :loading="contribuyente.procesando"
                         outlined

@@ -162,6 +162,9 @@ middlewares.marcarComoClaseVisualizada = async (req = request, res = response, n
          * Si existe: actualizar
          * Sino: Crear como visualizado
         */
+
+        if (!uidSolicitante) return next()
+
         const miCurso = await MisCursos.obtener(uidSolicitante, uidCurso)
 
         if (miCurso) {
