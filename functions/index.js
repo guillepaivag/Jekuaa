@@ -54,7 +54,7 @@ const {
 const { validacionContenidoClase } = require('./src/functions/curso/borrador/contenidoClase')
 const { eventoPublicacionCurso } = require('./src/functions/curso/publicacion')
 const { creacionCursoPublicado, actualizacionCursoPublicado, meGustaCurso } = require('./src/functions/curso/publicado')
-const { pedidoCompletado, reembolsoDeUnProducto } = require('./src/functions/pedidos')
+const { pedidoProductoCompletado, reembolsoDeUnProducto } = require('./src/functions/pedidos')
 const { eliminacionClasePublicado } = require('./src/functions/curso/publicado/clase')
 
 
@@ -125,5 +125,5 @@ exports.indexCursoBorradorAlgolia = indexCursoBorradorAlgolia
 exports.indexCursoPublicadoAlgolia = indexCursoPublicadoAlgolia
 
 // Pedidos
-exports.pedidoCompletado = pedidoCompletado
+exports.pedidoProductoCompletado = pedidoProductoCompletado
 exports.reembolsoDeUnProducto = reembolsoDeUnProducto

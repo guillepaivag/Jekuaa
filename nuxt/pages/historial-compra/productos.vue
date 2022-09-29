@@ -136,22 +136,6 @@
                             </div>
 
                             <div class="mb-7">
-                                <h2>Factura</h2>
-                                <v-divider></v-divider>
-                                <p style="display: inline;">
-                                    {{ dataDialog.tieneFactura ? 'Si' : 'No' }}
-                                </p>
-                            </div>
-
-                            <div class="mb-7">
-                                <h2>Recibo</h2>
-                                <v-divider></v-divider>
-                                <p style="display: inline;">
-                                    {{ dataDialog.tieneRecibo ? 'Si' : 'No' }}
-                                </p>
-                            </div>
-
-                            <div class="mb-7">
                                 <h2>Fecha del pedido</h2>
                                 <v-divider></v-divider>
                                 <p style="display: inline;">
@@ -199,7 +183,7 @@
                                 
                                 <div v-if="detallesItem.tipoItem === 'curso'">
                                     <p style="display: inline;">
-                                        Curso
+                                        Curso {{ detallesItem.uid }}
                                     </p>
                                     <p class="text-h4 text--primary">
                                         {{ detallesItem.informacion.titulo }}
@@ -210,7 +194,7 @@
                                 
                                 <div v-if="dataDialog.tipoPedido === 'productos'">
                                     <p v-if="detallesItem.detalles.porcentajeDescuento" class="text--primary" style="display: inline;">
-                                        {{ detallesItem.precioTotal }} JP || {{ detallesItem.detalles.precioReal }} JP
+                                        {{ detallesItem.precioTotal }} JP || {{ detallesItem.detalles.precioUnitarioOriginal }} JP
                                     </p>
                                     <p v-else class="text--primary" style="display: inline;">
                                         Costo: {{ detallesItem.precioTotal }} JP
@@ -219,7 +203,7 @@
 
                                 <div v-else>
                                     <p v-if="detallesItem.detalles.porcentajeDescuento" class="text--primary" style="display: inline;">
-                                        ${{ detallesItem.precioTotal }} || ${{ detallesItem.detalles.precioReal }}
+                                        ${{ detallesItem.precioTotal }} || ${{ detallesItem.detalles.precioUnitarioOriginal }}
                                     </p>
                                     <p v-else class="text--primary" style="display: inline;">
                                         Costo: ${{ detallesItem.precioTotal }}
@@ -378,7 +362,7 @@ export default {
                 
                 const uidPedido = this.dataDialog.uid
                 const uidProducto = this.dataDialog.detallesItems[index].uidItem
-                const { resultado } = await this.$axios.$put(`/servicePedido/reembolsarProducto/${uidPedido}/${uidProducto}`, body, config)
+                const { resultado } = await this.$axios.$put(`/servicePedido/producto/reembolsar/${uidPedido}/${uidProducto}`, body, config)
 
                 // Actualizar pedido
                 const pedido = this.pedidos.find(v => v.uid === this.dataDialog.uid)
@@ -419,9 +403,8 @@ export default {
 
             const uid = this.$store.state.modules.usuarios.uid
             const snapshotPedidos = await db.collection('Usuarios').doc(uid)
-            .collection('Pedidos')
+            .collection('PedidosProductos')
             .where('estado', '==', 'completado')
-            .where('tipoPedido', '==', 'productos')
             .orderBy('fechaCompra', 'desc')
             .limit(this.cantidadAMostrar)
             .get()
@@ -439,7 +422,7 @@ export default {
                 pedido.detallesItems = []
 
                 const snapshotDetallesItems = await db.collection('Usuarios').doc(uid)
-                .collection('Pedidos').doc(docPedido.id)
+                .collection('PedidosProductos').doc(docPedido.id)
                 .collection('DetallesItems')
                 .get()
 
@@ -469,9 +452,8 @@ export default {
 
             const uid = this.$store.state.modules.usuarios.uid
             const snapshotPedidos = await db.collection('Usuarios').doc(uid)
-            .collection('Pedidos')
+            .collection('PedidosProductos')
             .where('estado', '==', 'completado')
-            .where('tipoPedido', '==', 'productos')
             .orderBy('fechaCompra', 'desc')
             .startAfter(this.ultimoDoc)
             .limit(this.cantidadAMostrar)
@@ -484,7 +466,7 @@ export default {
                 pedido.detallesItems = []
 
                 const snapshotDetallesItems = await db.collection('Usuarios').doc(uid)
-                .collection('Pedidos').doc(docPedido.id)
+                .collection('PedidosProductos').doc(docPedido.id)
                 .collection('DetallesItems')
                 .get()
 
@@ -511,9 +493,8 @@ export default {
         async verificarSiExisteMas () {
             const uid = this.$store.state.modules.usuarios.uid
             const snapshotPedidos = await db.collection('Usuarios').doc(uid)
-            .collection('Pedidos')
+            .collection('PedidosProductos')
             .where('estado', '==', 'completado')
-            .where('tipoPedido', '==', 'productos')
             .orderBy('fechaCompra', 'desc')
             .startAfter(this.ultimoDoc)
             .limit(1)

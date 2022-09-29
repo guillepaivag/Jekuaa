@@ -2,14 +2,14 @@ const functions = require('firebase-functions')
 const admin = require('../../firebase-service')
 const db = require('../../db')
 const config = require('../../config')
-const Pedido = require('../models/Pedido')
 const { milliseconds_a_timestamp } = require('../utils/timestamp')
 const CursoPublicado = require('../models/Cursos/curso/CursoPublicado')
-const DetallesItem = require('../models/helpers/DetallesItem')
+const DetallesItem = require('../models/DetallesItem')
 const Usuario = require('../models/Usuarios/Usuario')
 const MisCursos = require('../models/MisCursos')
 const Miembro = require('../models/Usuarios/TiposUsuarios/Miembro')
 const RegistroActividadProducto = require('../models/RegistroActividadProducto')
+const PedidoProducto = require('../models/PedidoProducto')
 
 
 const ff = {}
@@ -24,97 +24,93 @@ const decrementar = admin.firestore.FieldValue.increment(-1)
 
 
 
-ff.pedidoCompletado = functions
+ff.pedidoProductoCompletado = functions
 .region('southamerica-east1')
-.firestore.document('Usuarios/{uidUsuario}/Pedidos/{uidPedido}')
+.firestore.document('Usuarios/{uidUsuario}/PedidosProductos/{uidPedido}')
 .onUpdate(async ( change, context ) => {
     const docNuevo = change.after
     const docViejo = change.before
     const { uidUsuario, uidPedido } = context.params
     
-    const pedidoViejo = new Pedido(docViejo.data())
-    const pedidoNuevo = new Pedido(docNuevo.data())
+    const pedidoProductoViejo = new PedidoProducto(docViejo.data())
+    const pedidoProductoNuevo = new PedidoProducto(docNuevo.data())
 
-    const recienCompletadoElPedido = pedidoViejo.estado === 'pendiente' && pedidoNuevo.estado === 'completado'
-    if (recienCompletadoElPedido) {
-        if (pedidoNuevo.tipoPedido === 'productos') {
+    const recienCompletadoElPedidoProducto = pedidoProductoViejo.estado === 'pendiente' && pedidoProductoNuevo.estado === 'completado'
+    if (recienCompletadoElPedidoProducto) {
+        for (const item of pedidoProductoNuevo.items) {
+            let uidMiembro = ''
+            let oldDataEstudianteMiembro = null
+            let newDataEstudianteMiembro = null
             
-            for (const item of pedidoNuevo.items) {
-                let uidMiembro = ''
-                let oldDataEstudianteMiembro = null
-                let newDataEstudianteMiembro = null
+            if (item.tipoItem === 'curso') {
                 
-                if (item.tipoItem === 'curso') {
-                    
-                    // Aumentar cantidad de estudiantes
-                    CursoPublicado.actualizarCurso(item.uidItem, {
-                        cantidadEstudiantes: incrementar,
-                    })
-
-                    // Obtenemos el instructor
-                    const cursoPublicado = await CursoPublicado.obtenerCurso(item.uidItem)
-                    uidMiembro = cursoPublicado.instructor
-
-                    // Aumentar cantidad de estudiantes por miembro
-                    const docEstudianteMiembro = await db
-                    .collection('Miembros').doc(uidMiembro)
-                    .collection('EstudiantesDeMiembro').doc(uidUsuario)
-                    .get()
-
-                    if (docEstudianteMiembro.exists) {
-                        docEstudianteMiembro.ref.update({
-                            cantidadCursos: incrementar,
-                        })
-
-                        oldDataEstudianteMiembro = docEstudianteMiembro.data()
-
-                        newDataEstudianteMiembro = JSON.parse( JSON.stringify( docEstudianteMiembro.data() ) )
-                        newDataEstudianteMiembro.cantidadCursos++
-
-                    } else {
-                        docEstudianteMiembro.ref.set({
-                            uid: uidUsuario,
-                            cantidadCursos: 1,
-                        })
-
-                        oldDataEstudianteMiembro = {
-                            uid: uidUsuario,
-                            cantidadCursos: 0,
-                        }
-
-                        newDataEstudianteMiembro = {
-                            uid: uidUsuario,
-                            cantidadCursos: 1,
-                        }
-                    }
-
-                }
-
-                const referenciaPedido = db.collection('Usuarios').doc(pedidoNuevo.uidComprador).collection('Pedidos').doc(pedidoNuevo.uid)
-                const referenciaDetallesItem = db.collection('Usuarios').doc(pedidoNuevo.uidComprador).collection('Pedidos').doc(pedidoNuevo.uid).collection('DetallesItem').doc(pedidoNuevo.uid)
-                const registroActividadProducto = new RegistroActividadProducto({
-                    uidComprador: pedidoNuevo.uidComprador, 
-                    uidVendedor: uidMiembro, 
-                    tipoProducto: item.tipoItem, 
-                    uidProducto: item.uidItem, 
-                    uidPedido: pedidoNuevo.uid, 
-                    referenciaPedido,
-                    uidDetallesItem: item.uidItem, 
-                    referenciaDetallesItem, 
-                    fechaCompra: pedidoNuevo.fechaCompra, 
-                    fechaReembolso: null,
+                // Aumentar cantidad de estudiantes
+                CursoPublicado.actualizarCurso(item.uidItem, {
+                    cantidadEstudiantes: incrementar,
                 })
 
-                RegistroActividadProducto.agregarRegistroActividadProducto(registroActividadProducto)
+                // Obtenemos el instructor
+                const cursoPublicado = await CursoPublicado.obtenerCurso(item.uidItem)
+                uidMiembro = cursoPublicado.instructor
 
-                const esNuevoEstudianteDeMiembro = (oldDataEstudianteMiembro.cantidadCursos === 0 && newDataEstudianteMiembro.cantidadCursos === 1)
-                if (esNuevoEstudianteDeMiembro) {
-                    await Miembro.actualizarMiembro(uidMiembro, {
-                        cantidadEstudiantes: incrementar,
+                // Aumentar cantidad de estudiantes por miembro
+                const docEstudianteMiembro = await db
+                .collection('Miembros').doc(uidMiembro)
+                .collection('EstudiantesDeMiembro').doc(uidUsuario)
+                .get()
+
+                if (docEstudianteMiembro.exists) {
+                    docEstudianteMiembro.ref.update({
+                        cantidadCursos: incrementar,
                     })
+
+                    oldDataEstudianteMiembro = docEstudianteMiembro.data()
+
+                    newDataEstudianteMiembro = JSON.parse( JSON.stringify( docEstudianteMiembro.data() ) )
+                    newDataEstudianteMiembro.cantidadCursos++
+
+                } else {
+                    docEstudianteMiembro.ref.set({
+                        uid: uidUsuario,
+                        cantidadCursos: 1,
+                    })
+
+                    oldDataEstudianteMiembro = {
+                        uid: uidUsuario,
+                        cantidadCursos: 0,
+                    }
+
+                    newDataEstudianteMiembro = {
+                        uid: uidUsuario,
+                        cantidadCursos: 1,
+                    }
                 }
+
             }
-            
+
+            const referenciaPedido = db.collection('Usuarios').doc(pedidoProductoNuevo.uidComprador).collection('PedidosProductos').doc(pedidoProductoNuevo.uid)
+            const referenciaDetallesItem = db.collection('Usuarios').doc(pedidoProductoNuevo.uidComprador).collection('PedidosProductos').doc(pedidoProductoNuevo.uid).collection('DetallesItems').doc(pedidoNuevo.uid)
+            const registroActividadProducto = new RegistroActividadProducto({
+                uidComprador: pedidoProductoNuevo.uidComprador, 
+                uidVendedor: uidMiembro, 
+                tipoProducto: item.tipoItem, 
+                uidProducto: item.uidItem, 
+                uidPedido: pedidoProductoNuevo.uid, 
+                referenciaPedido,
+                uidDetallesItem: item.uidItem, 
+                referenciaDetallesItem, 
+                fechaCompra: pedidoProductoNuevo.fechaCompra, 
+                fechaReembolso: null,
+            })
+
+            RegistroActividadProducto.agregarRegistroActividadProducto(registroActividadProducto)
+
+            const esNuevoEstudianteDeMiembro = (oldDataEstudianteMiembro.cantidadCursos === 0 && newDataEstudianteMiembro.cantidadCursos === 1)
+            if (esNuevoEstudianteDeMiembro) {
+                await Miembro.actualizarMiembro(uidMiembro, {
+                    cantidadEstudiantes: incrementar,
+                })
+            }
         }
     }
 
@@ -127,7 +123,7 @@ ff.pedidoCompletado = functions
 
 ff.reembolsoDeUnProducto = functions
 .region('southamerica-east1')
-.firestore.document('Usuarios/{uidUsuario}/Pedidos/{uidPedido}/DetallesItems/{uidDetallesItem}')
+.firestore.document('Usuarios/{uidUsuario}/PedidosProductos/{uidPedido}/DetallesItems/{uidDetallesItem}')
 .onUpdate(async ( change, context ) => {
     const docViejo = change.before
     const docNuevo = change.after
@@ -140,79 +136,72 @@ ff.reembolsoDeUnProducto = functions
     if (recienReembolsado) {
         
         // Para el pedido
-        const pedido = await Pedido.obtener(uidUsuario, uidPedido)
+        const pedidoProducto = await PedidoProducto.obtener(uidUsuario, uidPedido)
         let producto = null
         const datosActualizados = {}
 
         // 1.1.1. cantidadReembolsado++
-        pedido.cantidadReembolsado++
-        datosActualizados.cantidadReembolsado = pedido.cantidadReembolsado
+        pedidoProducto.cantidadReembolsado++
+        datosActualizados.cantidadReembolsado = pedidoProducto.cantidadReembolsado
 
         // 1.1.2. cantidadItems === cantidadReembolsado ? todoReembolsado = true : ''
-        if (pedido.cantidadItems === pedido.cantidadReembolsado) 
+        if (pedidoProducto.cantidadItems === pedidoProducto.cantidadReembolsado) 
             datosActualizados.todoReembolsado = true
 
         // 1.1.3. tieneReembolso = true
         datosActualizados.tieneReembolso = true
 
-        Pedido.actualizar(uidUsuario, uidPedido, datosActualizados)
+        PedidoProducto.actualizar(uidUsuario, uidPedido, datosActualizados)
 
-		// Si es productos
-        if ( pedido.tipoPedido === 'productos' ) {
-            let uidMiembro = ''
-            let oldDataEstudianteMiembro = null
-            let newDataEstudianteMiembro = null
-            
-            // Devolver Points
-            const incrementarPoint = admin.firestore.FieldValue.increment(detallesItemNuevo.precioTotal)
-            Usuario.actalizarUsuarioPorUID(uidUsuario, { point: incrementarPoint })
+		let uidMiembro = ''
+        let oldDataEstudianteMiembro = null
+        let newDataEstudianteMiembro = null
+        
+        // Devolver Points
+        const incrementarPoint = admin.firestore.FieldValue.increment(detallesItemNuevo.precioTotal)
+        Usuario.actalizarUsuarioPorUID(uidUsuario, { point: incrementarPoint })
 
-            // Si es curso
-            if (detallesItemNuevo.tipoItem === 'curso') {
-                // Quitar producto (Actualizar vista previa)
-                MisCursos.actualizar(uidUsuario, detallesItemNuevo.uidItem, {
-                    tipoAcceso: 'vistaPrevia',
-                })
-            
-                // Decrementar cantidad de estudiantes del curso
-                CursoPublicado.actualizarCurso(detallesItemNuevo.uidItem, {
-                    cantidadEstudiantes: decrementar,
-                })
-
-                // Obtenemos el instructor
-                producto = await CursoPublicado.obtenerCurso(detallesItemNuevo.uidItem)
-                uidMiembro = producto.instructor
-
-                // Decrementar cantidad de estudiantes por miembro
-                const docEstudianteMiembro = await db
-                .collection('Miembros').doc(uidMiembro)
-                .collection('EstudiantesDeMiembro').doc(uidUsuario)
-                .get()
-                
-                docEstudianteMiembro.ref.update({
-                    cantidadCursos: decrementar,
-                })
-
-                oldDataEstudianteMiembro = docEstudianteMiembro.data()
-
-                newDataEstudianteMiembro = JSON.parse( JSON.stringify( docEstudianteMiembro.data() ) )
-                newDataEstudianteMiembro.cantidadCursos--
-            }
-
-            RegistroActividadProducto.actualizarRegistroActividadProducto(uidPedido, uidDetallesItem, {
-                fechaReembolso: detallesItemNuevo.fechaReembolsado
+        // Si es curso
+        if (detallesItemNuevo.tipoItem === 'curso') {
+            // Quitar producto (Actualizar vista previa)
+            MisCursos.actualizar(uidUsuario, detallesItemNuevo.uidItem, {
+                tipoAcceso: 'vistaPrevia',
+            })
+        
+            // Decrementar cantidad de estudiantes del curso
+            CursoPublicado.actualizarCurso(detallesItemNuevo.uidItem, {
+                cantidadEstudiantes: decrementar,
             })
 
-            const yaNoEsEstudianteDeMiembro = (oldDataEstudianteMiembro.cantidadCursos === 1 && newDataEstudianteMiembro.cantidadCursos === 0)
-            if (yaNoEsEstudianteDeMiembro) {
-                await Miembro.actualizarMiembro(uidMiembro, {
-                    cantidadEstudiantes: decrementar,
-                })
-            }
+            // Obtenemos el instructor
+            producto = await CursoPublicado.obtenerCurso(detallesItemNuevo.uidItem)
+            uidMiembro = producto.instructor
 
-        } else if (pedido.tipoPedido === 'monedas') {
-            const decrementarPoint = admin.firestore.FieldValue.increment(-detallesItemNuevo.detalles.cantidadTotalPoint)
-            Usuario.actalizarUsuarioPorUID(uidUsuario, { point: decrementarPoint })
+            // Decrementar cantidad de estudiantes por miembro
+            const docEstudianteMiembro = await db
+            .collection('Miembros').doc(uidMiembro)
+            .collection('EstudiantesDeMiembro').doc(uidUsuario)
+            .get()
+            
+            docEstudianteMiembro.ref.update({
+                cantidadCursos: decrementar,
+            })
+
+            oldDataEstudianteMiembro = docEstudianteMiembro.data()
+
+            newDataEstudianteMiembro = JSON.parse( JSON.stringify( docEstudianteMiembro.data() ) )
+            newDataEstudianteMiembro.cantidadCursos--
+        }
+
+        RegistroActividadProducto.actualizarRegistroActividadProducto(uidPedido, uidDetallesItem, {
+            fechaReembolso: detallesItemNuevo.fechaReembolsado
+        })
+
+        const yaNoEsEstudianteDeMiembro = (oldDataEstudianteMiembro.cantidadCursos === 1 && newDataEstudianteMiembro.cantidadCursos === 0)
+        if (yaNoEsEstudianteDeMiembro) {
+            await Miembro.actualizarMiembro(uidMiembro, {
+                cantidadEstudiantes: decrementar,
+            })
         }
     }
 

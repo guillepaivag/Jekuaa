@@ -199,7 +199,7 @@ export default {
                     }
                 }
 
-                const respuesta = await this.$axios.$post(`/servicePedido/generarPedidoProducto`, body, config)
+                const respuesta = await this.$axios.$post(`/servicePedido/producto/generarPedido`, body, config)
 
                 this.pagado = true
 

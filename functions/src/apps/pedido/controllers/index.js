@@ -1,10 +1,9 @@
 const { request, response } = require("express")
 const manejadorErrores = require("../../../helpers/manejoErrores")
 const DatosPago = require("../../../models/helpers/DatosPago")
-const DetallesItem = require("../../../models/helpers/DetallesItem")
+const DetallesItem = require("../../../models/DetallesItem")
 const MisCursos = require("../../../models/MisCursos")
-const Pedido = require("../../../models/Pedido")
-const RegistroActividadProducto = require("../../../models/RegistroActividadProducto")
+const PedidoProducto = require("../../../models/PedidoProducto")
 const Respuesta = require("../../../models/Respuesta")
 const Usuario = require("../../../models/Usuarios/Usuario")
 const { milliseconds_a_timestamp } = require("../../../utils/timestamp")
@@ -16,41 +15,41 @@ controller.generarPedidoTipoProducto = async (req = request, res = response) => 
     try {
         const { datos, body, params, requestStartTime } = req
         const { uidSolicitante, datosAuthSolicitante } = datos
-        const { pedidos, datosPedido, listaDetallesItems, datosUsuario } = body
+        const { pedidos, datosPedidoProducto, listaDetallesItems, datosUsuario } = body
 
         const respuesta = new Respuesta()
         
         // Crear pedido
-        const pedido = new Pedido(datosPedido)
-        await Pedido.agregar( uidSolicitante, pedido )
-        await Pedido.crearDetallesItems( uidSolicitante, pedido.uid, listaDetallesItems )
+        const pedidoProducto = new PedidoProducto(datosPedidoProducto)
+        await PedidoProducto.agregar( uidSolicitante, pedidoProducto )
+        await DetallesItem.crear( uidSolicitante, pedidoProducto.uid, listaDetallesItems, 'productos' )
 
         // Pagar la cantidad de points que vale este producto
         const usuario = new Usuario(datosUsuario)
-        const pointsRestantes = usuario.point - pedido.costoTotal
+        const pointsRestantes = usuario.point - pedidoProducto.costoTotal
         usuario.point = pointsRestantes
         await Usuario.actalizarUsuarioPorUID(uidSolicitante, {
             point: pointsRestantes,
         })
 
         // Actualizar pedido como "completado"
-        await Pedido.actualizar(uidSolicitante, pedido.uid, {
+        await PedidoProducto.actualizar(uidSolicitante, pedidoProducto.uid, {
             estado: 'completado',
             fechaCompra: milliseconds_a_timestamp(Date.now()),
             datosPago: new DatosPago({ 
                 formaDePago: 'points', 
-                gratis: pedido.costoTotal === 0, 
+                gratis: pedidoProducto.costoTotal === 0, 
             }).getDatosPago()
         })
 
         // Dar producto
-        for (let i = 0; i < pedido.items.length; i++) {
-            const item = pedido.items[i]
+        for (let i = 0; i < pedidoProducto.items.length; i++) {
+            const item = pedidoProducto.items[i]
             
             if ( item.tipoItem === 'curso' ) {
-                const cursoComprado = await MisCursos.obtener(uidSolicitante, item.uidItem)
+                const existeDocumento = await MisCursos.obtener(uidSolicitante, item.uidItem)
 
-                if (cursoComprado) {
+                if (existeDocumento) {
                     await MisCursos.actualizar(uidSolicitante, item.uidItem, {
                         tipoAcceso: 'completo'
                     })
@@ -59,7 +58,8 @@ controller.generarPedidoTipoProducto = async (req = request, res = response) => 
                         uid: item.uidItem, 
                         tipoAcceso: 'completo',
                         ultimaActividad: null,
-                        uidSolicitante: uidSolicitante,
+                        uidEstudiante: uidSolicitante,
+                        cantidadVisualizada: 0,
                     })
                     await MisCursos.agregar(uidSolicitante, misCursos)
                 }
@@ -71,13 +71,13 @@ controller.generarPedidoTipoProducto = async (req = request, res = response) => 
         respuesta.setRespuesta({
             estado: 200,
             mensaje: 'exito',
-            resultado: {requestStartTime, pedidos, datosPedido, listaDetallesItems}
+            resultado: {requestStartTime, pedidos, datosPedidoProducto, listaDetallesItems}
         })
         
         return res.status( respuesta.estado ).json( respuesta.getRespuesta() )
 
     } catch (error) {
-        console.log('Error - generarPedido: ', error)
+        console.log('Error - generarPedidoTipoProducto: ', error)
 
         const respuesta = manejadorErrores( error )
         return res.status( respuesta.estado ).json( respuesta.getRespuesta() )
@@ -93,7 +93,6 @@ controller.generarReembolsoTipoProducto = async (req = request, res = response) 
         const { uidPedido, uidProducto } = params
 
         const respuesta = new Respuesta()
-        let estado = 'exito'
         
         // Reembolsar item
         await DetallesItem.actualizar(uidSolicitante, uidPedido, uidProducto, {

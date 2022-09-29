@@ -3,13 +3,13 @@ const admin = require('../../../../firebase-service')
 const db = require("../../../../db")
 const CursoPublicado = require("../../../models/Cursos/curso/CursoPublicado")
 const Errores = require("../../../models/Error/Errores")
-const DetallesItem = require("../../../models/helpers/DetallesItem")
-const Pedido = require("../../../models/Pedido")
+const DetallesItem = require("../../../models/DetallesItem")
 const Usuario = require("../../../models/Usuarios/Usuario")
 const { milliseconds_a_timestamp } = require("../../../utils/timestamp")
 const ProgresoClase = require("../../../models/ProgresoClase")
 const ClasePublicado = require("../../../models/Cursos/clase/ClasePublicado")
 const MisCursos = require("../../../models/MisCursos")
+const PedidoProducto = require("../../../models/PedidoProducto")
 
 const middlewares = {}
 
@@ -58,16 +58,15 @@ middlewares.validacionPedidoTipoProducto = async (req = request, res = response,
             // VALIDAR SI SE PUEDE REALIZAR EL PEDIDO:
             const item = { tipoItem: pedido.tipoItem, uidItem: pedido.uidItem, }
             const snapshot = await db.collection('Usuarios').doc(uidSolicitante)
-                .collection('Pedidos')
-                .where('tipoPedido', '==', 'productos')
+                .collection('PedidosProductos')
                 .where('items', 'array-contains', item)
                 .get()
-      
+            
             if (!snapshot.empty) {
                 const dataPedidos = []
                 for (const doc of snapshot.docs) 
-                    dataPedidos.push( new Pedido(doc.data()) )
-
+                    dataPedidos.push( new PedidoProducto(doc.data()) )
+    
                 for (const dataPedido of dataPedidos) {
                     if (dataPedido.estado === 'pendiente') {
                         throw new Errores({
@@ -80,7 +79,7 @@ middlewares.validacionPedidoTipoProducto = async (req = request, res = response,
                     if (dataPedido.estado === 'completado') {
                         const snapshot2 = await db
                         .collection('Usuarios').doc(uidSolicitante)
-                        .collection('Pedidos').doc(dataPedido.uid)
+                        .collection('PedidosProductos').doc(dataPedido.uid)
                         .collection('DetallesItems')
                         .where('tipoItem', '==', pedido.tipoItem)
                         .where('uidItem', '==', pedido.uidItem)
@@ -143,6 +142,16 @@ middlewares.construccionPedidoTipoProducto = async (req = request, res = respons
         const { uidSolicitante, datosAuthSolicitante } = datos
         const { pedidos, datosUsuario } = body
 
+        /**
+         * pedidos: [
+         *  { 
+         *      tipoItem, 
+         *      uidItem, 
+         *      producto, 
+         *  }
+         * ]
+         */
+
         const listaDetallesItems = []
         for (let i = 0; i < pedidos.length; i++) {
             const pedido = pedidos[i]
@@ -159,7 +168,7 @@ middlewares.construccionPedidoTipoProducto = async (req = request, res = respons
                     tipoItem: 'curso',
                     uidItem: pedido.producto.uid,
                     detalles: {
-                        precioReal: pedido.producto.datosPrecio.precio,
+                        precioUnitarioOriginal: pedido.producto.datosPrecio.precio,
                         porcentajeDescuento: hayDescuento ? pedido.producto.datosPrecio.descuento.porcentaje : 0,
                     },
                     cantidad: cantidad,
@@ -182,22 +191,21 @@ middlewares.construccionPedidoTipoProducto = async (req = request, res = respons
             })
         }
         
-        const pedido = new Pedido({
+        const pedido = new PedidoProducto({
             uidComprador: uidSolicitante, 
-            tipoPedido: 'productos', 
             cantidadItems: listaDetallesItems.length, 
             costoTotal: costoTotal, 
             items: items,
             estado: 'pendiente', 
             fechaPedido: milliseconds_a_timestamp(requestStartTime),
+            cantidadReembolsado: 0,
+            todoReembolsado: false,
             tieneReembolso: false, 
-            tieneRecibo: false, 
-            tieneFactura: false, 
             fechaCompra: null, 
             datosPago: null,
         })
 
-        req.body.datosPedido = pedido.getPedido()
+        req.body.datosPedidoProducto = pedido.getPedidoProducto()
         req.body.listaDetallesItems = listaDetallesItems
 
         next()
@@ -213,8 +221,8 @@ middlewares.validacionReembolsoTipoProducto = async (req = request, res = respon
         const { uidPedido, uidProducto } = params
 
         // Existe pedido
-        const pedido = await Pedido.obtener(uidSolicitante, uidPedido)
-        if (!pedido) {
+        const pedidoProducto = await PedidoProducto.obtener(uidSolicitante, uidPedido)
+        if (!pedidoProducto) {
             throw new Errores({
                 estado: 400,
                 mensajeCliente: 'no_existe_pedido',
@@ -224,7 +232,7 @@ middlewares.validacionReembolsoTipoProducto = async (req = request, res = respon
 
         // Verificar si se puede reembolsar (30 días para reembolsar)
         const diasValidos = 60 * 60 * 24 * 1000 * 30
-        const fechaCompra = pedido.fechaCompra.seconds*1000
+        const fechaCompra = pedidoProducto.fechaCompra.seconds*1000
         if ( requestStartTime > fechaCompra+diasValidos ) {
             throw new Errores({
                 estado: 400,
@@ -236,7 +244,7 @@ middlewares.validacionReembolsoTipoProducto = async (req = request, res = respon
         // Existe producto en el pedido y no esta reembolsado
         const doc = await db
         .collection('Usuarios').doc(uidSolicitante)
-        .collection('Pedidos').doc(uidPedido)
+        .collection('PedidosProductos').doc(uidPedido)
         .collection('DetallesItems').doc(uidProducto)
         .get()
 

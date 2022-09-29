@@ -81,9 +81,10 @@ export default {
 }
 
 .item {
+    max-width: 110px;
     border-radius: 15px;
     display: inline-block;
-    margin-right: 70px;
+    margin-right: 40px;
     text-align: center;
 }
 
