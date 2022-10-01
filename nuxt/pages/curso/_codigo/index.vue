@@ -237,7 +237,7 @@
                                         left
                                         title="Vista previa"
                                     >
-                                        mdi-eye
+                                        mdi-lock-open-alert
                                     </v-icon>
 
                                     {{ secondsToString(clase.duracion) }}

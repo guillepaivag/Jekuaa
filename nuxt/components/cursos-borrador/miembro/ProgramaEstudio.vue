@@ -924,17 +924,35 @@
         <!-- Subir contenido -->
         <v-dialog
             v-model="dialogSubirContenido.value"
+            :fullscreen="dialogSubirContenido.tipo === 'articulo'"
             width="700"
         >
 
             <v-card>
-                <v-card-title class="text-h5 primary white--text lighten-2">
-                    {{
-                        dialogSubirContenido.tipo === 'video' ? 
-                        'Subir un video' : 
-                        'Subir un articulo' 
-                    }}
-                </v-card-title>
+                <v-toolbar
+                    dark
+                    color="primary"
+                >
+                    <v-card-title v-if="dialogSubirContenido.tipo === 'video'" class="text-h5 white--text lighten-2">
+                        {{ 'Subir un video' }}
+                    </v-card-title>
+
+                    <v-card-title v-else-if="dialogSubirContenido.tipo === 'articulo'" class="text-h5 white--text lighten-2">
+                        {{ 'Subir un articulo' }}
+                    </v-card-title>
+
+                    <v-card-title v-else-if="dialogSubirContenido.tipo === 'video-youtube'" class="text-h5 white--text lighten-2">
+                        {{ 'Subir un video de YouTube' }}
+                    </v-card-title>
+                    <v-spacer></v-spacer>
+                    <v-btn
+                        icon
+                        dark
+                        @click="dialogSubirContenido.value = false"
+                    >
+                        <v-icon>mdi-close</v-icon>
+                    </v-btn>
+                </v-toolbar>
 
                 <div class="container">
                     <GeneradorVideoClase 
@@ -973,6 +991,7 @@
                     <v-btn
                         color="red"
                         text
+                        block
                         @click="dialogSubirContenido.value = false"
                     >
                         Cerrar

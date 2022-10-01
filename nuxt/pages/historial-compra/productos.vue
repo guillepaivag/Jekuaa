@@ -73,7 +73,7 @@
                                     title="Detalles"
                                 >
                                     <v-icon dark>
-                                        mdi-eye
+                                        mdi-eye-outline
                                     </v-icon>
                                 </v-btn>
                             </td>

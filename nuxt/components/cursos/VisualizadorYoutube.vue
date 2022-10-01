@@ -3,7 +3,7 @@
         <iframe 
             class="iframeYT"
             :src="urlVideoYoutube" 
-            title="PELEA GOKU VS FREZZER COMPLETA SIN PUBLICIDAD! SAGA FREZER" 
+            title="Clase de Jekuaapy" 
             frameborder="0" 
             allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
             allowfullscreen

@@ -43,12 +43,18 @@
                 </div>
             </div>
             
-            <v-divider :class="!mostrarListaClases ? 'mt-10' : 'mt-6'" class="my-5"></v-divider>
+            <v-divider :class="!mostrarListaClases ? 'mt-10' : 'mt-6'" class="mt-5 mb-4"></v-divider>
 
             <!-- Información de la clase seleccionada -->
             <v-row>
                 <v-col cols="12" :md="mostrarListaClases ? 12 : 8">
                     <div v-if="clasePublicado && contenidoClasesPublicado">
+                        <nuxt-link class="tituloCurso" style="text-decoration: none;" :to="`/curso/${datosCurso.codigo}`" target="_blank">
+                            <h3 class="mb-3">
+                                {{ datosCurso.titulo }}
+                            </h3>
+                        </nuxt-link>
+                        
                         <h3 class="mb-2"> 
                             <v-icon 
                                 v-if="clasePublicado.tipoClase === 'video'"
@@ -95,7 +101,7 @@
 
                     <!-- Boton para agregar lista de unidades/clases al padre -->
                     <v-btn
-                        class="btnAgregarListaClases mb-3"
+                        class="btnAgregarListaClases mb-5"
                         outlined
                         block
                         text
@@ -298,6 +304,17 @@ export default {
 .contenidoFull {
     max-width: 50em;
     padding: 0 !important;
+}
+
+.tituloCurso {
+    color: #683bce;
+    display: inline-block;
+    transition: 400ms;
+}
+
+.tituloCurso:hover {
+    color: #7a4ee1;
+    transition: 400ms;
 }
 
 @media (max-width: 959px) {

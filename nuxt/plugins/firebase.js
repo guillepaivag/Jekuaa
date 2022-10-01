@@ -34,7 +34,7 @@ export default async ({ env, store, redirect }, inject) => {
 
       if (user) {
         store.commit('modules/sistema/setLoading', true)
-        // await store.dispatch('modules/usuarios/setDatosUsuarioPorUID', user.uid)
+        store.dispatch('modules/usuarios/setDatosUsuarioPorUID', user.uid)
 
       } else {
         await store.dispatch('modules/usuarios/logout')

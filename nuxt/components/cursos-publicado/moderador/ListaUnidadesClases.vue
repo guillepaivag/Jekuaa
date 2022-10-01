@@ -42,7 +42,7 @@
 
                             <v-list-item-action>
                                 <v-icon color="gray">
-                                    mdi-star
+                                    mdi-eye-outline
                                 </v-icon>
                             </v-list-item-action>
                         </v-list-item>

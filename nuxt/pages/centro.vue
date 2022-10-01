@@ -29,7 +29,7 @@
                                     </v-btn>
 
                                     <v-btn :to="`/curso/${curso.datos.codigo}`" icon>
-                                        <v-icon>mdi-eye</v-icon>
+                                        <v-icon>mdi-eye-outline</v-icon>
                                     </v-btn>
 
                                     <v-spacer></v-spacer>
@@ -77,7 +77,7 @@
                                     </v-btn>
 
                                     <v-btn to="/cursos" icon>
-                                        <v-icon>mdi-eye</v-icon>
+                                        <v-icon>mdi-eye-outline</v-icon>
                                     </v-btn>
 
                                     <v-spacer></v-spacer>

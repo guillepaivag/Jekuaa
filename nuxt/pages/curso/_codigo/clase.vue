@@ -1,9 +1,13 @@
 <template>
     <div class="vistaClase">
 
-        <div class="mt-10 mb-10">
+        <div class="mt-5 mb-10">
             <v-row>
-                <v-col cols="12" :style="!mostrarListaClases ? 'margin-top: -15px;' : ''" :md="mostrarListaClases ? '8' : '12'">
+                <v-col 
+                    cols="12" 
+                    :md="mostrarListaClases ? '8' : '12'"
+                    :style="!mostrarListaClases ? 'margin-top: 10px;' : ''"
+                > 
                     <!-- Contenido de la clase -->
                     <nuxt-child 
                         v-if="!cargandoDatosCurso"
@@ -19,7 +23,7 @@
                 <v-col cols="12" md="4" v-if="mostrarListaClases">
 
                     <v-btn
-                        class="btnAgregarListaClases mb-3"
+                        class="btnAgregarListaClases mb-5"
                         outlined
                         block
                         text

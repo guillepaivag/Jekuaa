@@ -1,4 +1,4 @@
-const isProduction = true
+const isProduction = false
 const localeProduction = false
 
 const baseURL = isProduction ? 

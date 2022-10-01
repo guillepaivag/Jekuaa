@@ -6,31 +6,41 @@
 
                 <v-list-item-group color="primary">
                     <div v-for="(elementClase, index) in elementUnidad.clases" :key="index">
-                        <v-list-item :to="`/curso/${codigo}/clase/${elementClase.data.uid}`">
+                        <v-list-item 
+                            class="elemento_texto_clase"
+                            :to="`/curso/${codigo}/clase/${elementClase.data.uid}`"
+                        >
                             <v-list-item-content>
+
+                                <!--  -->
                                 <v-list-item-title class="tituloClase">
                                     <v-icon 
                                         v-if="elementClase.data.tipoClase === 'video'"
-                                        size="18"
-                                        color="#683bce"
+                                        size="20"
+                                        :color="getColorDisplay(elementClase.data.uid) === 'green' ? '#683bce' : 'gray'"
                                     >
                                         mdi-play-circle
                                     </v-icon>
                                     <v-icon 
-                                        v-if="elementClase.data.tipoClase === 'video-youtube'"
-                                        size="18"
-                                        color="#683bce"
+                                        v-else-if="elementClase.data.tipoClase === 'video-youtube'"
+                                        size="20"
+                                        :color="getColorDisplay(elementClase.data.uid) === 'green' ? 'red' : 'gray'"
                                     >
                                         mdi-youtube
                                     </v-icon>
                                     <v-icon 
-                                        v-if="elementClase.data.tipoClase === 'articulo'"
-                                        size="18"
-                                        color="#683bce"
+                                        v-else-if="elementClase.data.tipoClase === 'articulo'"
+                                        size="20"
+                                        :color="getColorDisplay(elementClase.data.uid) === 'green' ? '#ff1d89' : 'gray'"
                                     >
                                         mdi-file-multiple
                                     </v-icon>
-                                    <p style="display: inline; margin-left: 5px !important;">{{ elementClase.data.titulo }}</p>
+                                    <p 
+                                        :style="getColorDisplay(elementClase.data.uid) === 'green' ? 'color: #683bce;' : 'color: gray;'"
+                                        style="display: inline; margin-left: 5px !important;"
+                                    >
+                                        {{ elementClase.data.titulo }}
+                                </p>
                                 </v-list-item-title>
                             </v-list-item-content>
 
@@ -43,20 +53,18 @@
                                 size="18"
                                 title="Vista previa"
                             >
-                                mdi-eye
+                                mdi-lock-open-alert
                             </v-icon>
 
-                            <p style="display: inline; font-size: 13px; margin-top: 16px; margin-right: -8px;">
+                            <p 
+                                :style="getColorDisplay(elementClase.data.uid) === 'green' ? 'color: #683bce;' : 'color: gray;'"
+                                style="display: inline; font-size: 13px; margin-top: 16px; margin-right: -8px;"
+                            >
                                 {{ secondsToString(elementClase.data.duracion) }}
                             </p>
 
-                            <v-list-item-action>
-                                <v-icon :color="getColorDisplay(elementClase.data.uid)">
-                                    mdi-star
-                                </v-icon>
-                            </v-list-item-action>
                         </v-list-item>
-                    <v-divider></v-divider>
+                        <v-divider></v-divider>
                     </div>
                 </v-list-item-group>
             </div>
@@ -91,6 +99,18 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
+.elemento_texto_clase {
+    color: black;
+}
+
+.clase_visualizada {
+    background-color: #fcd8e9;
+}
+
+/* .v-item--active:hover {
+    color: blueviolet;
+} */
+
 
 </style>

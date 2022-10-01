@@ -157,7 +157,7 @@
                 :to="`/miembro/curso-borrador/vista-previa/${uidCurso}/clase/${uidPrimeraClase}`"
             >
                 <v-icon>
-                    mdi-eye
+                    mdi-eye-outline
                 </v-icon>
             </v-btn>
             

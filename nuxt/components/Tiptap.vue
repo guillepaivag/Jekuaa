@@ -112,7 +112,7 @@
         @click.prevent="addImage"
       >
         <span class="material-icons">
-          link
+          image
         </span>
       </v-btn>
 
