@@ -11,7 +11,7 @@
 
         <div class="horizontal_slider">
             <div class="slider_container">
-                <v-card :to="`/blog/${blog.referencia}`" class="item pl-4 pt-7 white--text" v-for="(blog, index) in blogsRecomendados" :key="index">
+                <v-card :to="`/blog/${blog.referencia}`" class="item white--text" v-for="(blog, index) in blogsRecomendados" :key="index">
                     <v-img
                         style="display: inline-block; margin-bottom: -12px;"
                         height="35"
@@ -53,7 +53,7 @@ export default {
     },
     methods: {
         getTitulo (titulo) {
-            const maxLength = 35
+            const maxLength = 28
 
             if (titulo.length > maxLength) {
                 return titulo.substring(0, maxLength) + '...'
@@ -96,6 +96,7 @@ export default {
 
 .item {
     border-radius: 20px;
+    padding: 25px 0 0 15px;
     background-color: #683bce;
     display: inline-block;
     margin-right: 10px;
@@ -111,11 +112,11 @@ export default {
 }
 
 .styleTitulo {
-    font-size: 15px;
+    font-size: 20px;
 }
 
 .porqueVisteTitulo {
-    color: #ff1d89;
+    color: #683bce;
     text-decoration: none;
     transition: 500ms;
     font-weight: bold !important;
@@ -123,7 +124,7 @@ export default {
 
 .porqueVisteTitulo:hover {
     transition: 500ms;
-    color: #683bce;
+    color: #ff1d89;
 }
 
 </style>

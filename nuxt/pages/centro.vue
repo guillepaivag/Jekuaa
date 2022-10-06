@@ -1,142 +1,93 @@
 <template>
     <div class="">
 
-        <v-row>
-            <v-col cols="12" md="4">
-                <div
-                    v-if="listaMisCursos.length"
-                    class="container contenedorUlitmasClasesVisualizadas"
+        <div class="container">
+            <h2>¡Hola {{$store.state.modules.usuarios.nombreCompleto}}!</h2>
+            
+            <v-divider class="mt-5 mb-5" />
+
+            <div class="mb-10">
+                <v-alert
+                    v-if="$store.state.modules.usuarios.emailVerificado"
+                    dense
+                    text
+                    type="success"
+                    color="#683bce"
                 >
-                    <h2 class="mb-5">¡Ultimos cursos visualizados!</h2>
-
-                    <v-row dense>
-                        <v-col
-                            v-for="(curso, index) in listaMisCursos" :key="index"
-                        >
-                            <v-card>
-                                <v-img
-                                    :src="curso.datos.fotoPerfil"
-                                    class="white--text align-end"
-                                    gradient="to bottom, rgba(0,0,0,.1), rgba(0,0,0,.5)"
-                                    :height="100"
-                                >
-                                    <v-card-title v-text="curso.datos.titulo"></v-card-title>
-                                </v-img>
-
-                                <v-card-actions>
-                                    <v-btn icon>
-                                        <v-icon>mdi-share-variant</v-icon>
-                                    </v-btn>
-
-                                    <v-btn :to="`/curso/${curso.datos.codigo}`" icon>
-                                        <v-icon>mdi-eye-outline</v-icon>
-                                    </v-btn>
-
-                                    <v-spacer></v-spacer>
-
-                                    <v-btn
-                                        outlined
-                                        text
-                                        color="#683bce"
-                                        class=""
-                                        small
-                                        :to="`/curso/${curso.datos.codigo}${curso.progreso === 100 ? '' : '/continuar'}`"
-                                    >
-                                        <b v-if="curso.progreso === 100">¡Finalizado!</b>
-                                        <b v-else>🚀 Continuar {{ curso.progreso }}%</b>
-                                    </v-btn>
-                                </v-card-actions>
-                            </v-card>
-                        </v-col>
-                    </v-row>
-
-                </div>
-                <div 
+                    ¡Correo verificado con exito!
+                </v-alert>
+                <v-alert
                     v-else
-                    class="container contenedorUlitmasClasesVisualizadas"
+                    dense
+                    text
+                    type="error"
                 >
-                    <h2 class="mb-5">¿Todavía no tienes cursos?</h2>
+                    <v-row align="center">
+                        <v-col class="grow">
+                            <p style="margin-bottom: 5px;">Falta verificar el correo: <b>{{ $store.state.modules.usuarios.correo }}</b></p>
+                            <p style="margin-bottom: 0;">
+                                <a href="/cuentas-jekuaapy-sin-verificar">Más información</a> sobre cuentas de Jekuaapy sin verificar.
+                            </p>
+                        </v-col>
+                        <v-col class="shrink">
+                            <v-btn
+                                v-if="estadoCorreoVerificacion !== 'reenviando'"
+                                depressed
+                                small
+                                color="error"
+                                v-on:click="reeviarCorreoVerificacion"
+                            >
+                                <div v-if="estadoCorreoVerificacion === 'reenviado'">
+                                    <v-icon left>
+                                        mdi-checkbox-marked-circle-outline
+                                    </v-icon>
 
-                    <v-row dense>
-                        <v-col>
-                            <v-card>
-                                <v-img
-                                    :src="require(`~/assets/img/tWyTbZ.webp`)"
-                                    class="white--text align-end"
-                                    gradient="to bottom, rgba(0,0,0,.1), rgba(0,0,0,.5)"
-                                    :height="100"
-                                >
-                                    <v-card-title>
-                                        ¡Conoce el mundo de Jekuaapy!
-                                    </v-card-title>
-                                </v-img>
+                                    Volver a enviar verificación
+                                </div>
 
-                                <v-card-actions>
-                                    <v-btn icon>
-                                        <v-icon>mdi-share-variant</v-icon>
-                                    </v-btn>
-
-                                    <v-btn to="/cursos" icon>
-                                        <v-icon>mdi-eye-outline</v-icon>
-                                    </v-btn>
-
-                                    <v-spacer></v-spacer>
-
-                                    <v-btn
-                                        outlined
-                                        text
-                                        color="#683bce"
-                                        class=""
-                                        small
-                                        to="/cursos"
-                                    >
-                                        <b> Voy a empezar </b>
-                                    </v-btn>
-                                </v-card-actions>
-                            </v-card>
+                                <div v-if="estadoCorreoVerificacion === ''">
+                                    Reenviar correo de verificación
+                                </div>
+                                
+                            </v-btn>
+                            <div v-else>
+                                <v-progress-circular 
+                                    color="red"
+                                    class="mr-1"
+                                    indeterminate
+                                    :size="20"
+                                ></v-progress-circular>
+                            </div>
                         </v-col>
                     </v-row>
-                </div>
-            </v-col>
-            <v-col cols="12" md="8">
-                <div class="container">
-                    <h2>¡Hola {{$store.state.modules.usuarios.nombreCompleto}}!</h2>
                     
-                    <v-divider class="mt-5 mb-5" />
+                </v-alert>
+            </div>
+            
+            <div class="mb-10">
+                <UltimosCursosVisualizados :listaMisCursos="listaMisCursos" />
+            </div>
 
-                    <!-- <div v-for="(item, index) in listaMisCursos" :key="index">
-                        <div v-if="cursoDisponibleParaRecomendacion(item)" class="mt-5 mb-10">
-                            <RecomendacionPorqueVisteCurso  
-                                :uidCurso="item.datos.uid" 
-                            />
-                        </div>
-                    </div> -->
+            <div class="mb-10" v-for="(item, index) in listaBlogsMG" :key="index">
+                <RecomendacionPorDarMGBlog 
+                    v-if="blogDisponibleParaRecomendacion(item)"
+                    :uidBlog="item.datos.uid" 
+                />
+            </div>
 
-                    <div v-for="(item, index) in listaBlogsMG" :key="index">
-                        <div v-if="blogDisponibleParaRecomendacion(item)" class="mt-5 mb-10">
-                            <RecomendacionPorDarMGBlog 
-                                :uidBlog="item.datos.uid" 
-                            />
-                        </div>
-                    </div>
-                    
-
-                    <div class="mt-5 mb-10">
-                        <RecomendacionPorSeccionBlog seccion="informatica" />
-                    </div>
-
-                    <div class="mt-5 mb-10">
-                        <RecomendacionPorSeccionBlog seccion="" />
-                    </div>
-                </div>
-            </v-col>
-        </v-row>
+            <div class="contenedor_contenidos_destacados mb-1">
+                <ContenidosDestacados />
+            </div>
+            
+        </div>
+        
     </div>
 </template>
 
 <script>
 import { fb } from '~/plugins/firebase'
-import RecomendacionPorSeccionBlog from '@/components/blogs/RecomendacionPorSeccion'
+import ContenidosDestacados from '@/components/ContenidosDestacados'
+import UltimosCursosVisualizados from '@/components/cursos-publicado/estudiante/UltimosCursosVisualizados'
 import RecomendacionPorDarMGBlog from '@/components/blogs/RecomendacionPorDarMG'
 // import RecomendacionPorqueVisteCurso from '@/components/cursos/RecomendacionPorqueViste'
 
@@ -147,12 +98,14 @@ export default {
     middleware: 'accesoAutenticado',
     data() {
         return {
+            estadoCorreoVerificacion: '',
             listaMisCursos: [],
             listaBlogsMG: [],
         }
     },
     components: {
-        RecomendacionPorSeccionBlog,
+        UltimosCursosVisualizados,
+        ContenidosDestacados,
         RecomendacionPorDarMGBlog,
         // RecomendacionPorqueVisteCurso,
     },
@@ -171,7 +124,7 @@ export default {
             const disponibleHabilitado = item.datos.habilitado && item.datos.publicado
 
             // Dias disponibles del me gusta
-            return disponibleHabilitado && this.diasDisponiblesParaRecomendacion(item.blogMG.fechaMeGusta.seconds, 1)
+            return disponibleHabilitado && this.diasDisponiblesParaRecomendacion(item.blogMG.fechaMeGusta.seconds, 3)
         },
         cursoDisponibleParaRecomendacion (item) {
             // Esta habilitado y publicado
@@ -188,6 +141,39 @@ export default {
 
             refMiCurso.progreso = porcentajeProgreso
         },
+
+        async reeviarCorreoVerificacion () {
+            try {
+                this.estadoCorreoVerificacion = 'reenviando'
+
+                // await new Promise(res => {
+                //     setTimeout(() => {
+                //         res()
+                //     }, 2000)
+                // })
+
+                let token = this.$firebase.auth().currentUser
+                token = token ? await token.getIdToken() : ''
+                await this.$store.dispatch('modules/usuarios/setTOKEN', token)
+
+                let config = {
+                    headers: {
+                        'Content-Type': 'application/json',
+                        Authorization: `Bearer ${token}`
+                    }
+                }
+
+                await this.$axios.$get(`/serviceUsuario/reeviarCorreoVerificacion`, config)
+
+                this.estadoCorreoVerificacion = 'reenviado'
+
+            } catch (error) {
+                console.log('error', error)
+
+                const accion = await this.$store.dispatch('modules/sistema/errorHandler', error)
+            }
+            
+        }
     },
     async created () {
         const usuario = this.$store.state.modules.usuarios
@@ -227,7 +213,7 @@ export default {
         .collection('Usuarios').doc(usuario.uid)
         .collection('BlogsMG')
         .orderBy('fechaMeGusta', 'desc')
-        .limit(3)
+        .limit(1)
         .get()
 
         const listaBlogsMG = []
@@ -254,7 +240,7 @@ export default {
 </script>
 
 <style scoped>
-.contenedorUlitmasClasesVisualizadas {
-    max-width: 650px;
+.contenedor_contenidos_destacados {
+    /* max-width: 1080px; */
 }
 </style>

@@ -115,7 +115,7 @@ export default {
 }
 
 .porqueVisteTitulo {
-    color: #ff1d89;
+    color: #683bce;
     text-decoration: none;
     transition: 500ms;
     font-weight: bold !important;
@@ -123,6 +123,6 @@ export default {
 
 .porqueVisteTitulo:hover {
     transition: 500ms;
-    color: #683bce;
+    color: #ff1d89;
 }
 </style>

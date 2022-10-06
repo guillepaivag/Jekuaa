@@ -118,7 +118,7 @@ export default {
                     }
                 }
 
-                const respuesta = await this.$axios.$get(`/serviceUsuario/reeviarCorreoVerificacion`, config)
+                await this.$axios.$get(`/serviceUsuario/reeviarCorreoVerificacion`, config)
 
                 this.estadoCorreoVerificacion = 'reenviado'
 

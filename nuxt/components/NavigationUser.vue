@@ -176,8 +176,7 @@
       <v-spacer />
 
       <v-btn
-        class="btnMisCursos1 mr-3"
-        text
+        class="btnMisCursos1 white--text mr-3"
         small
         color="#683bce"
         to="/mis-cursos"
