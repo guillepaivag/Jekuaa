@@ -9,28 +9,32 @@
 
             <div class="horizontal_slider">
                 <div class="slider_container">
-                    <nuxt-link 
-                        v-for="(curso, index) in listaMisCursos" 
-                        :key="index"
-                        :to="`/curso/${curso.datos.codigo}${curso.progreso === 100 ? '' : '/continuar'}`"
-                    >
-                        <div  
-                            class="item pl-4 pt-7 white--text" 
-                            :style="`background-image: linear-gradient(to right, rgba(0, 0, 0, .6), rgba(0, 0, 0, .6)), url('${curso.datos.fotoPerfil}'); border-color: ${curso.progreso === 100 ? '#683bce' : '#40ab09'};`"
+                        <nuxt-link 
+                            v-for="(curso, index) in listaMisCursos" 
+                            :key="index"
+                            class="element"
+                            style="text-decoration: none;" 
+                            :to="`/curso/${curso.datos.codigo}${curso.progreso === 100 ? '' : '/continuar'}`"
                         >
-                            <v-img
-                                style="display: inline-block; margin-bottom: -12px;"
-                                height="35"
-                                max-width="35"
-                                :src="require(`~/assets/img/logo600x600.png`)"
+                            <div 
+                                class="cuadros"
+                                :style="`
+                                    background-image: linear-gradient(to right, rgba(0, 0, 0, .6), rgba(0, 0, 0, .6)), url('${curso.datos.fotoPerfil}');
+                                    border-color: ${curso.progreso === 100 ? '#683bce' : '#40ab09'};    
+                                `"
                             >
-                            </v-img>
-                            <h2 :title="curso.datos.titulo" class="styleTitulo ml-2" style="display: inline-block;">
-                                {{ getTitulo(curso.datos.titulo) }} ({{curso.progreso}}%)
-                            </h2>
-                            
-                        </div>
-                    </nuxt-link>
+                                <v-img
+                                    style="display: inline-block; margin-bottom: -12px;"
+                                    height="35"
+                                    max-width="35"
+                                    :src="require(`~/assets/img/logo600x600.png`)"
+                                >
+                                </v-img>
+                                <h2 style="" class="styleTitulo white--text mt-5">
+                                    {{ getTitulo(curso.datos.titulo) }} ({{curso.progreso}}%)
+                                </h2>
+                            </div>
+                        </nuxt-link>
                 </div>
             </div>
 
@@ -48,13 +52,14 @@
                         :style="`background-image: linear-gradient(to right, rgba(0, 0, 0, .6), rgba(0, 0, 0, .6)), url('https://previews.123rf.com/images/maximusnd/maximusnd1707/maximusnd170702407/82017455-estrellas-y-galaxias-en-el-espacio-exterior-que-muestran-la-belleza-de-la-exploraci%C3%B3n-espacial.jpg');`"
                     >
                         <v-img
-                            style="display: inline-block; margin-bottom: -12px;"
+                            class="imgLogo2"
+                            style="margin-bottom: -12px;"
                             height="35"
                             max-width="35"
                             :src="require(`~/assets/img/logo600x600.png`)"
                         >
                         </v-img>
-                        <h2 title="Explora" class="styleTitulo ml-2" style="display: inline-block;">
+                        <h2 title="Explora" class="styleTitulo2" style="display: inline-block;">
                             ¡Conoce el mundo de Jekuaapy!
                         </h2>
                         
@@ -82,13 +87,10 @@ export default {
     },
     methods: {
         getTitulo (titulo) {
-            const maxLength = 26
+            const maxLength = 80
 
-            if (titulo.length > maxLength) {
-                return titulo.substring(0, maxLength) + '...'
-            }
-
-            return titulo
+            if (titulo.length > maxLength) return titulo.substring(0, maxLength) + '...'
+            else return titulo
         }
     }
 }
@@ -105,18 +107,26 @@ export default {
 }
 
 .slider_container {
-    display: block;
+    display: inline-block;
     white-space: nowrap;
     margin-bottom: 5px;
 }
 
-.item {
-    cursor: pointer;  
+.element {
+    margin: 0px;
+    width: 341px;
+    height: 200px;
+}
+
+.cuadros {
+    cursor: pointer;
+
+    padding: 20px;
 
     background-size: cover;
     background-repeat: no-repeat;
     
-    border: 4px solid;
+    border: 3.5px solid;
     border-radius: 20px;
 
     display: inline-block;
@@ -126,15 +136,25 @@ export default {
     transition: 500ms; 
 }
 
-.item::before {
-    background-color: rgba(0, 0, 255, 0.8) !important;
-    position: absolute;
-    display: block;
+.styleTitulo {
+    font-size: 23px;
+    white-space: normal;
+}
+
+.styleTitulo2 {
+    font-size: 23px;
+    margin-left: 10px;
+    margin-top: 10px;
 }
 
 .contenedor_item2 {
     display: block;
     width: 100%;
+}
+
+.imgLogo2 {
+    margin-left: 5px;
+    display: inline-block;
 }
 
 .item2 {
@@ -148,12 +168,8 @@ export default {
     border-radius: 20px;
     border-color: #ff1d89;
 
-    height: 150px;
+    height: 120px;
     width: 450px;
-}
-
-.styleTitulo {
-    font-size: 18px;
 }
 
 .porqueVisteTitulo {
@@ -171,6 +187,28 @@ export default {
 @media (max-width: 500px) {
     .item2 {
         width: 100%;
+    }
+}
+
+@media (max-width: 447.33px) {
+
+    .contenedor_item2 {
+        
+    }
+
+    .item2 {
+        text-align: center;
+    }
+
+    .imgLogo2 {
+        display: none;
+    }
+
+    .styleTitulo2 {
+        font-size: 23px;
+        margin-left: 0;
+        margin-top: 0;
+        display: block;
     }
 }
 </style>

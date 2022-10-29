@@ -151,18 +151,6 @@
             </div>
             
         </v-parallax>
-
-        <v-progress-linear
-            v-if="miCurso"
-            height="22"
-            :value="porcentajeProgreso"
-            background-color="#ebebeb"
-            color="#683bce"
-        >
-            <strong style="color: #44DC3F;">
-                Progreso {{ porcentajeProgreso }}%
-            </strong>
-        </v-progress-linear>
         
         <div class="container">
 
@@ -250,6 +238,23 @@
                 </v-col>
 
                 <v-col class="contenedor_detalles_curso" cols="12" md="5">
+
+                    <div v-if="miCurso" class="mb-12">
+                        <h2 class="subtitulos"> Progreso </h2>
+                        <v-divider class="mb-3"/>
+                        <v-progress-linear
+                            height="22"
+                            rounded
+                            :value="porcentajeProgreso"
+                            background-color="#ebebeb"
+                            color="#683bce"
+                        >
+                            <strong style="color: #44DC3F;">
+                                {{ porcentajeProgreso }}%
+                            </strong>
+                        </v-progress-linear>
+                    </div>
+
                     <div class="mb-12">
                         <h2 class="subtitulos"> Precio </h2>
                         <v-divider class="mb-3"/>

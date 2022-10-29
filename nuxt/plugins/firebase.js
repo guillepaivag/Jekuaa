@@ -34,7 +34,27 @@ export default async ({ env, store, redirect }, inject) => {
 
       if (user) {
         store.commit('modules/sistema/setLoading', true)
-        store.dispatch('modules/usuarios/setDatosUsuarioPorUID', user.uid)
+
+        if (user.metadata.creationTime !== user.metadata.lastSignInTime) 
+          store.dispatch('modules/usuarios/setDatosUsuarioPorUID', user.uid)
+        else {
+          const token = await user.getIdToken()
+          const nombreUsuario = user.email.split('@')[0] + new Date(user.metadata.creationTime).getTime()
+
+          store.dispatch('modules/usuarios/setDatosUsuario', {
+            token: token,
+            emailVerificado: user.emailVerified,
+            fotoPerfil: user.photoURL,
+            uid: user.uid,
+            nombreUsuario: nombreUsuario,
+            correo: user.email,
+            nombreCompleto: user.displayName,
+            fechaNacimiento: null,
+            plan: 'gratis',
+            rol: 'estudiante',
+            point: 0,
+          })
+        }
 
       } else {
         await store.dispatch('modules/usuarios/logout')

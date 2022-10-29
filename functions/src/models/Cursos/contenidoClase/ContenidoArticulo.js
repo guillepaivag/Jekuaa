@@ -72,10 +72,11 @@ class ContenidoArticulo extends ContenidoClase {
         const files = response[0]
         const file = files[0]
 
-        const archivo = file.createReadStream()
+        const readerStream = file.createReadStream()
+        readerStream.setEncoding('utf8')
         return await new Promise((resolve, reject) => {
             let contenido = ''
-            archivo
+            readerStream
             .on('data', contenidoObtenido => {
                 // Obtener el contenido del archivo
                 contenido += contenidoObtenido

@@ -7,6 +7,7 @@
                 v-for="(item, index) in destacados" :key="index"
                 class="d-flex child-flex cuadros"
                 :cols="cantidadCuadros"
+                :title="item.datos.titulo"
             >
                 <nuxt-link style="text-decoration: none; display: block;" :to="getLink(item.tipo, item.datos)">
                     <div 
@@ -20,30 +21,11 @@
                             :src="require(`~/assets/img/logo600x600.png`)"
                         >
                         </v-img>
-                        <h2 class="styleTitulo white--text mt-3">
+                        <h2 class="styleTitulo white--text mt-5">
                             {{ getTitulo(item.tipo, item.datos) }}
                         </h2>
                     </div>
                 </nuxt-link>
-                <!-- <v-img
-                    :src="`https://storage.googleapis.com/prod-j-fotos-cursos/vBiXFBChuTVnBsthzCSU%2FfotoCurso%2Fpublicado-1664221059590.png`"
-                    :lazy-src="`https://picsum.photos/10/6?image=${n * 5 + 10}`"
-                    class="grey lighten-2"
-                    style="border-radius: 0.4rem;"
-                >
-                    <template v-slot:placeholder>
-                        <v-row
-                            class="fill-height ma-0"
-                            align="center"
-                            justify="center"
-                        >
-                            <v-progress-circular
-                                indeterminate
-                                color="grey lighten-5"
-                            ></v-progress-circular>
-                        </v-row>
-                    </template>
-                </v-img> -->
             </v-col>
         </v-row>
     </div>
@@ -69,7 +51,13 @@ export default {
                 return 'https://images.unsplash.com/photo-1537420327992-d6e192287183?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8Mnx8c3BhY2V8ZW58MHx8MHx8&auto=format&fit=crop&w=600&q=60'
         },
         getTitulo (tipo, item) {
-            if (tipo === 'blog') return item.titulo
+            let titulo = ''
+            const maxLength = 55
+
+            if (tipo === 'blog') titulo = item.titulo
+
+            if (titulo.length > maxLength) return titulo.substring(0, maxLength) + '...'
+            else return titulo
         },
         getLink (tipo, item) {
             if (tipo === 'blog') return `/blog/${item.referencia}`
@@ -91,9 +79,10 @@ export default {
       
         const destacadosAux = []
         for (const doc of snapshot.docs) {
+            const datos = doc.data()
             destacadosAux.push({
                 tipo: 'blog',
-                datos: doc.data(),
+                datos,
             })
         }
 

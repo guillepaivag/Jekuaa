@@ -1,4 +1,4 @@
-const isProduction = true
+const isProduction = false
 const localeProduction = false
 
 const baseURL = isProduction ? 
@@ -44,6 +44,7 @@ module.exports = {
 
   // Global CSS: https://go.nuxtjs.dev/config-css
   css: [
+    '~/assets/style/prose_mirror.scss',
     '~/assets/style/visualizador_prose_mirror.scss',
     '~/assets/style/videojs_custom_theme.scss',
     '~/assets/style/fonts.scss',
@@ -83,6 +84,7 @@ module.exports = {
     [
       'nuxt-sass-resources-loader',
       ['~/assets/style/visualizador_prose_mirror.scss'],
+      ['~/assets/style/prose_mirror.scss'],
       ['~/assets/style/videojs_custom_theme.scss'],
       ['~/assets/style/fonts.scss'],
       ['~/assets/style/style_code.scss'],

@@ -1,5 +1,5 @@
 <template>
-    <div class="ProseMirror contenedorVisualizador mt-5 mb-5" v-html="contenido"></div>
+    <div class="ProseMirrorVisualizador contenedorVisualizador mt-5 mb-5" v-html="contenido"></div>
 </template>
 
 <script>

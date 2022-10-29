@@ -11,7 +11,7 @@
 
         <div class="horizontal_slider">
             <div class="slider_container">
-                <v-card :to="`/blog/${blog.referencia}`" class="item white--text" v-for="(blog, index) in blogsRecomendados" :key="index">
+                <v-card :title="blog.titulo" :to="`/blog/${blog.referencia}`" class="item white--text" v-for="(blog, index) in blogsRecomendados" :key="index">
                     <v-img
                         style="display: inline-block; margin-bottom: -12px;"
                         height="35"
@@ -53,7 +53,7 @@ export default {
     },
     methods: {
         getTitulo (titulo) {
-            const maxLength = 28
+            const maxLength = 23
 
             if (titulo.length > maxLength) {
                 return titulo.substring(0, maxLength) + '...'

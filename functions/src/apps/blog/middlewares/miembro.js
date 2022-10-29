@@ -389,7 +389,7 @@ middlewares.construirDatosBlogPOST = (req, res, next) => {
         const nombreBlogTemp = `${Date.now()}~${blog.uid}.md`
         const rutaArchivoTemp = path.join(os.tmpdir(), 'blogs', nombreBlogTemp)
 
-        fs.writeFileSync(rutaArchivoTemp, '')
+        fs.writeFileSync(rutaArchivoTemp, '', 'utf8')
         
         req.body.datosBlog = datosBlogFormateado
         req.body.rutaArchivoTemp = rutaArchivoTemp
@@ -471,9 +471,10 @@ middlewares.construirDatosBlogPUT = (req, res, next) => {
                     return node.isBlock ? '\n\n' + content + '\n\n' : content
                 }
             })
+
             let markdown = turndownService.turndown(contenidoBlog)
     
-            fs.writeFileSync(rutaArchivoTemp, markdown)
+            fs.writeFileSync(rutaArchivoTemp, markdown, 'utf8')
         }
     
         const existeDatosParaActualizar = (datosActualizados && Object.keys(datosActualizados).length) || rutaArchivoTemp

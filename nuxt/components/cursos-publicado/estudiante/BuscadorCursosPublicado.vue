@@ -204,7 +204,6 @@
                                 
                                 <!-- Parte: Precios -->
                                 <div class="my-4">
-                                  <b class="post-description">Precio:</b>
 
                                   <!-- Gratis -->
                                   <v-chip

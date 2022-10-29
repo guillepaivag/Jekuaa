@@ -14,7 +14,7 @@
         </v-list-item-avatar>
 
         <v-list-item-content>
-          <v-list-item-title class="estiloTexto">
+          <v-list-item-title class="estiloTexto1">
             {{ nombreUsuario }}
           </v-list-item-title>
         </v-list-item-content>
@@ -34,7 +34,7 @@
           </v-list-item-icon>
 
           <v-list-item-content>
-            <v-list-item-title class="estiloTexto">
+            <v-list-item-title class="">
               {{ item.title }}
             </v-list-item-title>
           </v-list-item-content>
@@ -52,7 +52,7 @@
           </v-list-item-icon>
 
           <v-list-item-content>
-            <v-list-item-title class="estiloTexto">
+            <v-list-item-title class="">
               Mis cursos
             </v-list-item-title>
           </v-list-item-content>
@@ -69,7 +69,7 @@
           </v-list-item-icon>
 
           <v-list-item-content>
-            <v-list-item-title class="estiloTexto">
+            <v-list-item-title class="">
               Historial de compra
             </v-list-item-title>
           </v-list-item-content>
@@ -87,7 +87,7 @@
           </v-list-item-icon>
 
           <v-list-item-content>
-            <v-list-item-title class="estiloTexto">
+            <v-list-item-title class="">
               Miembro
             </v-list-item-title>
           </v-list-item-content>
@@ -105,7 +105,7 @@
           </v-list-item-icon>
 
           <v-list-item-content>
-            <v-list-item-title class="estiloTexto">
+            <v-list-item-title class="">
               Moderador
             </v-list-item-title>
           </v-list-item-content>
@@ -119,7 +119,7 @@
           </v-list-item-icon>
 
           <v-list-item-content>
-            <v-list-item-title class="estiloTexto">
+            <v-list-item-title class="">
               Cerrar sesión
             </v-list-item-title>
           </v-list-item-content>
@@ -150,39 +150,46 @@
       </div>
 
       <v-tabs align-with-title class="d-none d-sm-none d-md-flex" optional color="#683bce">
-        <v-tab to="/centro">
+        <v-tab class="tab1" to="/centro">
           <v-icon class="navItemIcon">
             mdi-home
           </v-icon>
           <samp class="estiloTexto">Centro</samp>
         </v-tab>
 
-        <v-tab to="/blogs">
+        <v-tab class="tab1" to="/blogs">
           <v-icon class="navItemIcon">
             mdi-book-open-variant
           </v-icon>
           <samp class="estiloTexto">Blogs</samp>
         </v-tab>
 
-        <v-tab to="/cursos">
+        <v-tab class="tab1" to="/cursos">
           <v-icon class="navItemIcon">
             mdi-television-play
           </v-icon>
           <samp class="estiloTexto">Cursos</samp>
         </v-tab>
 
+        <v-tab class="tab1" to="/mis-cursos">
+          <v-icon class="navItemIcon px-9">
+            mdi-bookshelf
+          </v-icon>
+          <samp class="estiloTexto">Mis cursos</samp>
+        </v-tab>
+
       </v-tabs>
 
       <v-spacer />
 
-      <v-btn
+      <!-- <v-btn
         class="btnMisCursos1 white--text mr-3"
         small
         color="#683bce"
         to="/mis-cursos"
       >
         Mis cursos
-      </v-btn>
+      </v-btn> -->
 
       <v-chip
         class="mr-3"
@@ -223,7 +230,6 @@
           </template>
           
           <v-card class="mx-auto" max-width="300" tile>
-            <!-- shaped -->
             <v-list shaped>
               
               <div class="mx-auto text-center mt-3">
@@ -232,11 +238,11 @@
                   size="55"
                 >
                   <v-img v-if="!!fotoPerfil" :src="fotoPerfil" />
-                  <span v-else class="estiloTexto white--text headline">
+                  <span v-else class="estiloTexto1 white--text headline">
                     {{ inicialNombreUsuario }}
                   </span>
                 </v-avatar>
-                <h3 class="estiloTexto mt-2">
+                <h3 class="estiloTexto1 mt-2">
                   {{ nombreUsuario }}
                 </h3>
                 <p class="caption mt-1">
@@ -365,26 +371,41 @@ export default {
   width: 50%;
 }
 
+.tab1 {
+  display: block;
+  padding: 10px 1px 1px 0;
+  min-width: 75px !important;
+}
+
 .containerLogo {
-    margin-left: 5px;
-    margin-right: -20px;
+  margin-left: 5px;
+  margin-right: -20px;
 }
 
 .navButtons {
-    margin-left: 10px;
+  margin-left: 10px;
 }
 
 .navItemIcon {
-    margin-right: 10px;
+  font-size: 20px;
+  margin-bottom: 3px;
 }
 
-.containerIcono{
-    margin-right: 10px;
+.containerIcono {
+  margin-right: 10px;
 }
 
 .estiloTexto {
-    font-family: 'Asap', sans-serif;
-    font-weight: bold;
+  font-family: 'Asap', sans-serif;
+  font-weight: bold;
+  display: block;
+  font-size: 11px;
+}
+
+.estiloTexto1 {
+  font-family: 'Asap', sans-serif;
+  font-weight: bold;
+  font-size: 16px;
 }
 
 @media (max-width: 460px) {

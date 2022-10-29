@@ -348,7 +348,7 @@ export default {
         ],
         editorProps: {
           attributes: {
-            class: 'contenedor_editor',
+            class: '',
           },
         },
         content: this.value,

@@ -24,7 +24,7 @@ class ContenidoYoutube extends ContenidoClase {
     }
 
     setContenidoYoutube (data = {}) {
-        this.setContenidoClase(data)
+        this.setContenidoClase( {...data, tipoContenido: 'video-youtube'} )
         this.setDuracion( data.duracion )
         this.setCodigoVideoYoutube( data.codigoVideoYoutube )
         this.setFechaSubida( data.fechaSubida )
