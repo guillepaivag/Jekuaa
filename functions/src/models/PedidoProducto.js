@@ -5,19 +5,72 @@ const COLECCION = 'PedidosProductos'
 
 class PedidoProducto extends Pedido {
     constructor (data = {}) {
+        const {
+            cantidadPaquetesDeItems,
+            cantidadTotalItems,
+            costoTotal,
+            formaDePago,
+            fechaCompra,
+            items,
+            tieneAlgunReembolso,
+            todoReembolsado,
+            cantidadReembolsado,
+        } = data
+
         super(data)
-        this.tipoPedido = 'productos'
+
+        this.cantidadPaquetesDeItems = cantidadPaquetesDeItems ? cantidadPaquetesDeItems : 0
+        this.cantidadTotalItems = cantidadTotalItems ? cantidadTotalItems : 0
+        this.costoTotal = costoTotal ? costoTotal : 0
+        this.formaDePago = formaDePago ? formaDePago : 'points'
+        this.fechaCompra = fechaCompra ? fechaCompra : null
+        this.items = items ? items : [] // [{ tipoItem, uidItem, }]
+        this.tieneAlgunReembolso = tieneAlgunReembolso !== undefined ? tieneAlgunReembolso : false
+        this.todoReembolsado = todoReembolsado !== undefined ? todoReembolsado : false
+        this.cantidadReembolsado = cantidadReembolsado ? cantidadReembolsado : 0
+    
     }
 
     getPedidoProducto () {
         return {
             ...super.getPedido(),
-            tipoPedido: this.tipoPedido
+            cantidadPaquetesDeItems: this.cantidadPaquetesDeItems,
+            cantidadTotalItems: this.cantidadTotalItems,
+            costoTotal: this.costoTotal,
+            formaDePago: this.formaDePago,
+            fechaCompra: this.fechaCompra,
+            items: this.items,
+            tieneAlgunReembolso: this.tieneAlgunReembolso,
+            todoReembolsado: this.todoReembolsado,
+            cantidadReembolsado: this.cantidadReembolsado,
         }
     }
 
     setPedidoProducto (data = {}) {
+        const {
+            cantidadPaquetesDeItems,
+            cantidadTotalItems,
+            costoTotal,
+            formaDePago,
+            fechaCompra,
+            items,
+            tieneAlgunReembolso,
+            todoReembolsado,
+            cantidadReembolsado,
+        } = data
+
         super.setPedido(data)
+
+        this.cantidadPaquetesDeItems = cantidadPaquetesDeItems ? cantidadPaquetesDeItems : 0
+        this.cantidadTotalItems = cantidadTotalItems ? cantidadTotalItems : 0
+        this.costoTotal = costoTotal ? costoTotal : 0
+        this.formaDePago = formaDePago ? formaDePago : 'points'
+        this.fechaCompra = fechaCompra ? fechaCompra : null
+        this.items = items ? items : [] // [{ tipoItem, uidItem, }]
+        this.tieneAlgunReembolso = tieneAlgunReembolso !== undefined ? tieneAlgunReembolso : false
+        this.todoReembolsado = todoReembolsado !== undefined ? todoReembolsado : false
+        this.cantidadReembolsado = cantidadReembolsado ? cantidadReembolsado : 0
+        
         return this
     }
 
