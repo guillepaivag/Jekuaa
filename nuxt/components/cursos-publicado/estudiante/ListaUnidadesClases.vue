@@ -91,7 +91,7 @@ export default {
             return hour + ':' + minute + ':' + String(second).split('.')[0];
         },
         getColorDisplay (uidClase) {
-            const progreso = this.listaProgresos.find(v => v.uidClase === uidClase)
+            const progreso = this.listaProgresos.find(v => v === uidClase)
         
             return !!progreso ? 'green' : 'gray'
         }

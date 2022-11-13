@@ -177,6 +177,7 @@ middlewares.marcarComoClaseVisualizada = async (req = request, res = response, n
 
                 MisCursos.actualizar(uidSolicitante, uidCurso, {
                     cantidadVisualizada: admin.firestore.FieldValue.increment(1),
+                    clasesVisualizadas: admin.firestore.FieldValue.arrayUnion(uidClase)
                 })
             } else if ( !progresoClase ) {
                 // Agreagmos nuevo progreso
@@ -186,6 +187,7 @@ middlewares.marcarComoClaseVisualizada = async (req = request, res = response, n
     
                 MisCursos.actualizar(uidSolicitante, uidCurso, {
                     cantidadVisualizada: admin.firestore.FieldValue.increment(1),
+                    clasesVisualizadas: admin.firestore.FieldValue.arrayUnion(uidClase)
                 })
             }
 
@@ -200,6 +202,7 @@ middlewares.marcarComoClaseVisualizada = async (req = request, res = response, n
                 ultimaActividad: milliseconds_a_timestamp(Date.now()), 
                 uidEstudiante: uidSolicitante, 
                 cantidadVisualizada: 1,
+                clasesVisualizadas: [uidClase]
             })
             MisCursos.agregar(uidSolicitante, miCursoNuevo)
 

@@ -13,6 +13,8 @@ export default {
     middleware: '',
 
     async asyncData ({ app, store, $firebase, $axios, redirect, params }) {
+
+        const usuario = store.state.modules.usuarios
         
         /**
          * ########################################################################################
@@ -24,7 +26,7 @@ export default {
                 for (const clase of unidad.clases) {
                     const datosClase = clase.data
 
-                    const existe = listaProgresos.find(v => v.uidClase === datosClase.uid)
+                    const existe = listaProgresos.find(v => v === datosClase.uid)
 
                     if (!existe) return datosClase.uid
                 }
@@ -38,6 +40,7 @@ export default {
 
         const db = $firebase.firestore()
         const codigo = params.codigo
+        let miCurso = null
 
         const snapshotCurso = await db
         .collection('CursosPublicado').where('codigo', '==', codigo)
@@ -75,21 +78,24 @@ export default {
 
             i++
         }
+        console.log('1')
+        if (usuario.uid) {
+            const docMiCurso = await db
+            .collection('Usuarios').doc(usuario.uid)
+            .collection('MisCursos').doc(uidCurso)
+            .get()
 
-        const usuario = store.state.modules.usuarios
-
-        const snapshotProgresoClase = await db
-        .collection('Usuarios')
-        .doc(usuario.uid)
-        .collection('MisCursos')
-        .doc(uidCurso)
-        .collection('ProgresosClases')
-        .get()
-
-        const listaProgresos = []
-        for (const docProgresoClase of snapshotProgresoClase.docs) {
-            listaProgresos.push(docProgresoClase.data())
+            miCurso = docMiCurso.exists ? docMiCurso.data() : null
         }
+        console.log('2')
+
+        if (!miCurso) return redirect(`/cursos`)
+
+        console.log('3')
+        const listaProgresos = []
+        for (const uidClase of miCurso.clasesVisualizadas) 
+            listaProgresos.push(uidClase)
+            console.log('4')
 
         const uidClase = obtenerUidClaseParaRedireccionar(unidades, listaProgresos)
         return redirect(`/curso/${codigo}/clase/${uidClase}`)

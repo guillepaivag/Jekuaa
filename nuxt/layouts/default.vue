@@ -81,7 +81,6 @@ export default {
 ::-webkit-scrollbar-thumb {
   background-color: #683bce;
   border-radius: 20px;
-
 }
 
 ::-webkit-scrollbar:horizontal{

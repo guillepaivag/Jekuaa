@@ -188,34 +188,37 @@
                             <div class="contenedor_clase mb-3" v-for="(clase, index2) in unidad.clases" :key="index2">
                                 <v-btn
                                     class="objeto_clase"
-                                    outlined
+                                    :outlined="!claseYaVisualizada(clase.uid)"
                                     rounded
-                                    text
+                                    :text="!claseYaVisualizada(clase.uid)"
                                     color="#683bce"
                                     :to="`/curso/${codigoCurso}/clase/${clase.uid}`"
                                 >
                                     <v-icon 
                                         v-if="clase.tipoClase === 'video'"
-                                        color="#683bce"
+                                        :color="claseYaVisualizada(clase.uid) ? '#ffffff' : '#683bce'"
                                         left
                                     >
                                         mdi-play-circle
                                     </v-icon>
                                     <v-icon 
                                         v-else-if="clase.tipoClase === 'video-youtube'"
-                                        color="#683bce"
+                                        :color="claseYaVisualizada(clase.uid) ? '#ffffff' : '#683bce'"
                                         left
                                     >
                                         mdi-youtube
                                     </v-icon>
                                     <v-icon 
                                         v-else-if="clase.tipoClase === 'articulo'"
-                                        color="#683bce"
+                                        :color="claseYaVisualizada(clase.uid) ? '#ffffff' : '#683bce'"
                                         left
                                     >
                                         mdi-file-multiple
                                     </v-icon>
-                                    {{ clase.titulo }}
+                                    
+                                    <span :style="claseYaVisualizada(clase.uid) ? 'color: #ffffff;' : 'color: #683bce;'">
+                                        {{ clase.titulo }}
+                                    </span>
 
                                     <v-spacer />
 
@@ -228,7 +231,9 @@
                                         mdi-lock-open-alert
                                     </v-icon>
 
-                                    {{ secondsToString(clase.duracion) }}
+                                    <span :style="claseYaVisualizada(clase.uid) ? 'color: #ffffff;' : 'color: #683bce;'">
+                                        {{ secondsToString(clase.duracion) }}
+                                    </span>
                                 </v-btn>
                             </div>
 
@@ -558,6 +563,12 @@ export default {
         },
         calcularPorcentajeProgreso (cantidadClases, cantidadVisualizada) {
             this.porcentajeProgreso = parseInt((cantidadVisualizada * 100) / cantidadClases)
+        },
+        claseYaVisualizada (uidClase) {
+            console.log('this.miCurso', this.miCurso)
+            
+            if (!this.miCurso) return false
+            else return this.miCurso.clasesVisualizadas.includes(uidClase)
         }
     },
     computed: {

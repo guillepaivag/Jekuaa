@@ -22,7 +22,7 @@ class PedidoProducto extends Pedido {
         this.cantidadPaquetesDeItems = cantidadPaquetesDeItems ? cantidadPaquetesDeItems : 0
         this.cantidadTotalItems = cantidadTotalItems ? cantidadTotalItems : 0
         this.costoTotal = costoTotal ? costoTotal : 0
-        this.formaDePago = formaDePago ? formaDePago : 'points'
+        this.formaDePago = formaDePago ? formaDePago : ''
         this.fechaCompra = fechaCompra ? fechaCompra : null
         this.items = items ? items : [] // [{ tipoItem, uidItem, }]
         this.tieneAlgunReembolso = tieneAlgunReembolso !== undefined ? tieneAlgunReembolso : false
@@ -64,7 +64,7 @@ class PedidoProducto extends Pedido {
         this.cantidadPaquetesDeItems = cantidadPaquetesDeItems ? cantidadPaquetesDeItems : 0
         this.cantidadTotalItems = cantidadTotalItems ? cantidadTotalItems : 0
         this.costoTotal = costoTotal ? costoTotal : 0
-        this.formaDePago = formaDePago ? formaDePago : 'points'
+        this.formaDePago = formaDePago ? formaDePago : ''
         this.fechaCompra = fechaCompra ? fechaCompra : null
         this.items = items ? items : [] // [{ tipoItem, uidItem, }]
         this.tieneAlgunReembolso = tieneAlgunReembolso !== undefined ? tieneAlgunReembolso : false

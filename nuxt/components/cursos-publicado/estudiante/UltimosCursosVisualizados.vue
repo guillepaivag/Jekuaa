@@ -14,9 +14,10 @@
                             :key="index"
                             class="element"
                             style="text-decoration: none;" 
+                            :title="curso.datos.titulo"
                             :to="`/curso/${curso.datos.codigo}${curso.progreso === 100 ? '' : '/continuar'}`"
                         >
-                            <div 
+                            <div
                                 class="cuadros"
                                 :style="`
                                     background-image: linear-gradient(to right, rgba(0, 0, 0, .6), rgba(0, 0, 0, .6)), url('${curso.datos.fotoPerfil}');
@@ -30,8 +31,9 @@
                                     :src="require(`~/assets/img/logo600x600.png`)"
                                 >
                                 </v-img>
+                                <b class="ml-2" style="font-size: 20px; color: aliceblue;">{{curso.progreso}}%</b>
                                 <h2 style="" class="styleTitulo white--text mt-5">
-                                    {{ getTitulo(curso.datos.titulo) }} ({{curso.progreso}}%)
+                                    {{ getTitulo(curso.datos.titulo) }}
                                 </h2>
                             </div>
                         </nuxt-link>
@@ -87,11 +89,26 @@ export default {
     },
     methods: {
         getTitulo (titulo) {
-            const maxLength = 80
+            const maxLength = 22
 
             if (titulo.length > maxLength) return titulo.substring(0, maxLength) + '...'
             else return titulo
         }
+    },
+    created () {
+        let a = [
+            'Curso para Conseguir Inversión para Videojuegos: Preparar un Pitch Exitoso',
+            'fkndsoifh doihgiod hdfig',
+            'foihf ioejig jogdf',
+        ]
+        for (let i = 0; i < this.listaMisCursos.length; i++) {
+            let curso = this.listaMisCursos[i]
+            curso.datos.titulo = a[i]
+
+            this.listaMisCursos[i] = curso
+        }
+
+        
     }
 }
 </script>

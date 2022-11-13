@@ -1,12 +1,13 @@
 <template>
     <div class="vistaClase">
 
-        <div class="mt-5 mb-10">
+        <div class="mt-4 mb-10">
             <v-row>
                 <v-col 
                     cols="12" 
                     :md="mostrarListaClases ? '8' : '12'"
                     :style="!mostrarListaClases ? 'margin-top: 10px;' : ''"
+                    style="margin-left: 0 !important; margin-right: 0 !important;"
                 > 
                     <!-- Contenido de la clase -->
                     <nuxt-child 
@@ -92,33 +93,21 @@ export default {
 
             if ( this.miCurso ) {
                 if ( this.miCurso.tipoAcceso === 'completo' ) {
-                    if (!this.listaProgresos.find(v => v.uidClase === datosClase.uid)) {
-                        this.listaProgresos.push({
-                            uidCurso: this.uidCurso,
-                            uidClase: datosClase.uid,
-                            visualizado: true,
-                        })
+                    if (!this.listaProgresos.find(v => v === datosClase.uid)) {
+                        this.listaProgresos.push(datosClase.uid)
 
                         this.calcularPorcentajeProgreso(this.listaClases, this.listaProgresos)
                     }
                 } else if ( this.miCurso.tipoAcceso === 'vistaPrevia' ) {
                     if (datosClase.vistaPrevia) {
-                        this.listaProgresos.push({
-                            uidCurso: this.uidCurso,
-                            uidClase: datosClase.uid,
-                            visualizado: true,
-                        })
+                        this.listaProgresos.push(datosClase.uid)
 
                         this.calcularPorcentajeProgreso(this.listaClases, this.listaProgresos)
                     }
                 }
             } else {
                 if (datosClase.vistaPrevia) {
-                    this.listaProgresos.push({
-                        uidCurso: this.uidCurso,
-                        uidClase: datosClase.uid,
-                        visualizado: true,
-                    })
+                    this.listaProgresos.push(datosClase.uid)
 
                     this.calcularPorcentajeProgreso(this.listaClases, this.listaProgresos)
                 }
@@ -127,10 +116,8 @@ export default {
         calcularPorcentajeProgreso (listaClases, listaProgresos) {
             let cantidadProgresosClases = 0
 
-            for (const clase of listaClases) {
-                if (listaProgresos.find(v => v.uidClase === clase.uid)) 
-                    cantidadProgresosClases++
-            }
+            for (const clase of listaClases) 
+                if (listaProgresos.find(v => v === clase.uid)) cantidadProgresosClases++
 
             this.porcentajeProgreso = parseInt((cantidadProgresosClases * 100) / listaClases.length)
         },
@@ -192,18 +179,10 @@ export default {
             .get()
 
             this.miCurso = docMiCurso.exists ? docMiCurso.data() : null
-        
-            const snapshotProgresoClase = await this.$firebase.firestore()
-            .collection('Usuarios')
-            .doc(usuario.uid)
-            .collection('MisCursos')
-            .doc(this.uidCurso)
-            .collection('ProgresosClases')
-            .get()
 
             this.listaProgresos = []
-            for (const docProgresoClase of snapshotProgresoClase.docs) {
-                this.listaProgresos.push(docProgresoClase.data())
+            for (const uidClase of this.miCurso.clasesVisualizadas) {
+                this.listaProgresos.push(uidClase)
             }
 
             this.calcularPorcentajeProgreso(this.listaClases, this.listaProgresos)
@@ -218,7 +197,7 @@ export default {
 
 <style scoped>
 .vistaClase {
-    margin: 0 30px;
+    margin: 0 15px;
 }
 
 .tituloUnidad {

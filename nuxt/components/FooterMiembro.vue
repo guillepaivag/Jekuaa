@@ -41,6 +41,10 @@ export default {
       fixed: false,
       socials: [
         {
+          icon: 'mdi-youtube',
+          to: 'https://www.youtube.com/channel/UChtdWCIA1RaYnbMXy-KvU8Q',
+        },
+        {
           icon: 'mdi-instagram',
           to: 'https://instagram.com/jekuaapy',
         },

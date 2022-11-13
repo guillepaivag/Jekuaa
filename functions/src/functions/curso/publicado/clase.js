@@ -21,19 +21,22 @@ ff.eliminacionClasePublicado = functions
     const decrementar = admin.firestore.FieldValue.increment(-1)
 
     // Leer todos los progresos referentes a la clase elimianda de todos los estudiantes
-    const snapshot = await db
+    const snapshotProgresoClase = await db
     .collectionGroup('ProgresosClases')
     .where('uidClase', '==', uidClasePublicado)
     .get()
 
-    for (const docProgresoClase of snapshot.docs) {
+    for (const docProgresoClase of snapshotProgresoClase.docs) {
         const refMiCurso = docProgresoClase.ref.parent.parent
 
         // Eliminar todos los progresos
         docProgresoClase.ref.delete()
 
         // Decrementar la cantidad visualizada de su curso
-        refMiCurso.update({ cantidadVisualizada: decrementar })
+        refMiCurso.update({ 
+            cantidadVisualizada: decrementar, 
+            clasesVisualizadas: admin.firestore.FieldValue.arrayRemove(uidClasePublicado)
+        })
     }
     
     return true

@@ -35,6 +35,7 @@
                     <VisualizadorYoutube 
                         v-if="contenidoClasesPublicado.tipoContenido === 'video-youtube'" 
                         :codigoVideoYoutube="contenido" 
+                        :autoPlay="true"
                     />
                     <VisualizadorArticulo 
                         v-else-if="contenidoClasesPublicado.tipoContenido === 'articulo'" 

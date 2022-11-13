@@ -15,7 +15,7 @@ const {
 } = require('../../middlewares/miembro')
 
 const { 
-    construirElContenidoClaseArticulo, 
+    construirElContenidoClaseArticulo, verificacionContenidoClaseGamificado, 
 } = require('../../middlewares/miembro/contenidoClase')
 
 const { 
@@ -24,7 +24,45 @@ const {
     obtenerArticuloClaseBorrador,
     agregarContenidoClaseVideoYoutubeBorrador,
     obtenerVideoYoutubeClaseBorrador,
+    agregarContenidoClaseGamificadoBorrador,
 } = require('../../controllers/miembro/contenidoClase')
+
+router.put('/actualizarGamificacion/:uidCurso/:uidUnidad/:uidClase', 
+    estaAutenticado,
+    esMiembro,
+    esMiembroInstructor_InstructorAuxiliar,
+    esAdministradorDelCursoBorrador, 
+    errorSiElCursoSeEstaPublicando,
+    verificacionContenidoClaseGamificado,
+    agregarContenidoClaseGamificadoBorrador)
+
+// router.put('/crearPreguntaGamificada/:uidCurso/:uidClase', 
+//     estaAutenticado,
+//     esMiembro,
+//     esMiembroInstructor_InstructorAuxiliar,
+//     esAdministradorDelCursoBorrador, 
+//     errorSiElCursoSeEstaPublicando,
+//     verificacionContenidoClaseGamificado,
+//     agregarContenidoClaseGamificadoBorrador)
+
+// router.put('/actualizarPreguntaGamificada/:uidCurso/:uidClase', 
+//     estaAutenticado,
+//     esMiembro,
+//     esMiembroInstructor_InstructorAuxiliar,
+//     esAdministradorDelCursoBorrador, 
+//     errorSiElCursoSeEstaPublicando,
+//     verificacionContenidoClaseGamificado,
+//     agregarContenidoClaseGamificadoBorrador)
+
+// router.put('/eliminarPreguntaGamificada/:uidCurso/:uidClase', 
+//     estaAutenticado,
+//     esMiembro,
+//     esMiembroInstructor_InstructorAuxiliar,
+//     esAdministradorDelCursoBorrador, 
+//     errorSiElCursoSeEstaPublicando,
+//     verificacionContenidoClaseGamificado,
+//     agregarContenidoClaseGamificadoBorrador)
+
 
 
 

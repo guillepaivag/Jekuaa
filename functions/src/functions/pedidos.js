@@ -8,8 +8,8 @@ const DetallesItem = require('../models/DetallesItem')
 const Usuario = require('../models/Usuarios/Usuario')
 const MisCursos = require('../models/MisCursos')
 const Miembro = require('../models/Usuarios/TiposUsuarios/Miembro')
-const RegistroActividadProducto = require('../models/RegistroActividadProducto')
 const PedidoProducto = require('../models/PedidoProducto')
+const DetallesItemProducto = require('../models/DetallesItemProducto')
 
 
 const ff = {}
@@ -42,7 +42,7 @@ ff.pedidoProductoCompletado = functions
             let oldDataEstudianteMiembro = null
             let newDataEstudianteMiembro = null
             
-            if (item.tipoItem === 'curso') {
+            if ( item.tipoItem === 'curso' ) {
                 
                 // Aumentar cantidad de estudiantes
                 CursoPublicado.actualizarCurso(item.uidItem, {
@@ -88,23 +88,6 @@ ff.pedidoProductoCompletado = functions
 
             }
 
-            const referenciaPedido = db.collection('Usuarios').doc(pedidoProductoNuevo.uidComprador).collection('PedidosProductos').doc(pedidoProductoNuevo.uid)
-            const referenciaDetallesItem = db.collection('Usuarios').doc(pedidoProductoNuevo.uidComprador).collection('PedidosProductos').doc(pedidoProductoNuevo.uid).collection('DetallesItems').doc(pedidoNuevo.uid)
-            const registroActividadProducto = new RegistroActividadProducto({
-                uidComprador: pedidoProductoNuevo.uidComprador, 
-                uidVendedor: uidMiembro, 
-                tipoProducto: item.tipoItem, 
-                uidProducto: item.uidItem, 
-                uidPedido: pedidoProductoNuevo.uid, 
-                referenciaPedido,
-                uidDetallesItem: item.uidItem, 
-                referenciaDetallesItem, 
-                fechaCompra: pedidoProductoNuevo.fechaCompra, 
-                fechaReembolso: null,
-            })
-
-            RegistroActividadProducto.agregarRegistroActividadProducto(registroActividadProducto)
-
             const esNuevoEstudianteDeMiembro = (oldDataEstudianteMiembro.cantidadCursos === 0 && newDataEstudianteMiembro.cantidadCursos === 1)
             if (esNuevoEstudianteDeMiembro) {
                 await Miembro.actualizarMiembro(uidMiembro, {
@@ -123,58 +106,61 @@ ff.pedidoProductoCompletado = functions
 
 ff.reembolsoDeUnProducto = functions
 .region('southamerica-east1')
-.firestore.document('Usuarios/{uidUsuario}/PedidosProductos/{uidPedido}/DetallesItems/{uidDetallesItem}')
+.firestore.document('Usuarios/{uidUsuario}/PedidosProductos/{uidPedido}/DetallesItemsProducto/{uidDetallesItem}')
 .onUpdate(async ( change, context ) => {
     const docViejo = change.before
     const docNuevo = change.after
     const { uidUsuario, uidPedido, uidDetallesItem } = context.params
     
-    const detallesItemViejo = new DetallesItem(docViejo.data())
-    const detallesItemNuevo = new DetallesItem(docNuevo.data())
+    const detallesItemProductoViejo = new DetallesItemProducto(docViejo.data())
+    const detallesItemProductoNuevo = new DetallesItemProducto(docNuevo.data())
 
-    const recienReembolsado = detallesItemViejo.fechaReembolsado === null && detallesItemNuevo.fechaReembolsado !== null
-    if (recienReembolsado) {
+    console.log('detallesItemProductoViejo', JSON.stringify(detallesItemProductoViejo.getDetalleItemProducto()))
+    console.log('detallesItemProductoNuevo', JSON.stringify(detallesItemProductoNuevo.getDetalleItemProducto()))
+
+    const recienReembolsado = detallesItemProductoNuevo.cantidadReembolsado > detallesItemProductoViejo.cantidadReembolsado
+    if ( recienReembolsado ) {
         
         // Para el pedido
         const pedidoProducto = await PedidoProducto.obtener(uidUsuario, uidPedido)
         let producto = null
-        const datosActualizados = {}
+        const datosActualizadosPedidoProducto = {}
 
-        // 1.1.1. cantidadReembolsado++
-        pedidoProducto.cantidadReembolsado++
-        datosActualizados.cantidadReembolsado = pedidoProducto.cantidadReembolsado
+        // 1.1.1. aumentar cantidadReembolsado
+        pedidoProducto.cantidadReembolsado += (detallesItemProductoNuevo.cantidadReembolsado - detallesItemProductoViejo.cantidadReembolsado)
+        datosActualizadosPedidoProducto.cantidadReembolsado = pedidoProducto.cantidadReembolsado
 
-        // 1.1.2. cantidadItems === cantidadReembolsado ? todoReembolsado = true : ''
-        if (pedidoProducto.cantidadItems === pedidoProducto.cantidadReembolsado) 
-            datosActualizados.todoReembolsado = true
-
-        // 1.1.3. tieneReembolso = true
-        datosActualizados.tieneReembolso = true
-
-        PedidoProducto.actualizar(uidUsuario, uidPedido, datosActualizados)
+        // 1.1.2. actualizar a todo reembolsado
+        if (pedidoProducto.cantidadTotalItems === pedidoProducto.cantidadReembolsado) 
+            datosActualizadosPedidoProducto.todoReembolsado = true
+        
+        // 1.1.3. tieneAlgunReembolso = true
+        datosActualizadosPedidoProducto.tieneAlgunReembolso = true
+        
+        PedidoProducto.actualizar(uidUsuario, uidPedido, datosActualizadosPedidoProducto)
 
 		let uidMiembro = ''
         let oldDataEstudianteMiembro = null
         let newDataEstudianteMiembro = null
         
         // Devolver Points
-        const incrementarPoint = admin.firestore.FieldValue.increment(detallesItemNuevo.precioTotal)
+        const incrementarPoint = admin.firestore.FieldValue.increment(detallesItemProductoNuevo.precioTotal)
         Usuario.actalizarUsuarioPorUID(uidUsuario, { point: incrementarPoint })
 
         // Si es curso
-        if (detallesItemNuevo.tipoItem === 'curso') {
+        if (detallesItemProductoNuevo.tipoItem === 'curso') {
             // Quitar producto (Actualizar vista previa)
-            MisCursos.actualizar(uidUsuario, detallesItemNuevo.uidItem, {
+            MisCursos.actualizar(uidUsuario, detallesItemProductoNuevo.uidItem, {
                 tipoAcceso: 'vistaPrevia',
             })
         
             // Decrementar cantidad de estudiantes del curso
-            CursoPublicado.actualizarCurso(detallesItemNuevo.uidItem, {
+            CursoPublicado.actualizarCurso(detallesItemProductoNuevo.uidItem, {
                 cantidadEstudiantes: decrementar,
             })
 
             // Obtenemos el instructor
-            producto = await CursoPublicado.obtenerCurso(detallesItemNuevo.uidItem)
+            producto = await CursoPublicado.obtenerCurso(detallesItemProductoNuevo.uidItem)
             uidMiembro = producto.instructor
 
             // Decrementar cantidad de estudiantes por miembro
@@ -192,10 +178,6 @@ ff.reembolsoDeUnProducto = functions
             newDataEstudianteMiembro = JSON.parse( JSON.stringify( docEstudianteMiembro.data() ) )
             newDataEstudianteMiembro.cantidadCursos--
         }
-
-        RegistroActividadProducto.actualizarRegistroActividadProducto(uidPedido, uidDetallesItem, {
-            fechaReembolso: detallesItemNuevo.fechaReembolsado
-        })
 
         const yaNoEsEstudianteDeMiembro = (oldDataEstudianteMiembro.cantidadCursos === 1 && newDataEstudianteMiembro.cantidadCursos === 0)
         if (yaNoEsEstudianteDeMiembro) {

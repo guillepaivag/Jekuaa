@@ -55,6 +55,38 @@ middleware.construirElContenidoClaseArticulo = async (req, res, next) => {
     }
 }
 
+middleware.verificacionContenidoClaseGamificado = async (req, res, next) => {
+    try {
+        const { datos, body, params } = req
+        const { uidSolicitante, datosAuthSolicitante } = datos
+        const { uidCurso, uidUnidad, uidClase } = params
+        const { mensaje, cantidadNiveles, cantidadPreguntasParaResponder } = body
 
+        // Tipos de datos
+
+        if ( typeof mensaje !== 'string' ) 
+            throw new TypeError('El mensaje debe ser un string.')
+
+        if ( typeof cantidadNiveles !== 'number' ) 
+            throw new TypeError('La cantidad de niveles debe ser un número.')
+
+        if ( typeof cantidadPreguntasParaResponder !== 'number' ) 
+            throw new TypeError('La cantidad de preguntas para responder debe ser un número.')
+
+        // Verificaciones generales
+        
+
+
+        // Construccion
+
+        req.body.mensaje = mensaje
+        req.body.cantidadNiveles = cantidadNiveles
+        req.body.cantidadPreguntasParaResponder = cantidadPreguntasParaResponder
+
+        next()
+    } catch (error) {
+        next(error)
+    }
+}
 
 module.exports = middleware

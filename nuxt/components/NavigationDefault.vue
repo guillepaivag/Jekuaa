@@ -1,5 +1,7 @@
 <template>
   <div class="">
+
+
     <v-navigation-drawer
       v-model="drawer"
       temporary
@@ -12,7 +14,7 @@
                 </v-list-item-avatar> -->
 
         <v-list-item-content>
-          <v-list-item-title class="estiloTexto">
+          <v-list-item-title class="estiloTexto2">
             Jekuaapy
           </v-list-item-title>
         </v-list-item-content>
@@ -32,7 +34,7 @@
           </v-list-item-icon>
 
           <v-list-item-content>
-            <v-list-item-title class="estiloTexto">
+            <v-list-item-title class="">
               {{ item.title }}
             </v-list-item-title>
           </v-list-item-content>
@@ -49,7 +51,7 @@
           </v-list-item-icon>
 
           <v-list-item-content>
-            <v-list-item-title class="estiloTexto">
+            <v-list-item-title class="estiloTexto2">
               Registrarme
             </v-list-item-title>
           </v-list-item-content>
@@ -64,13 +66,16 @@
           </v-list-item-icon>
 
           <v-list-item-content>
-            <v-list-item-title class="estiloTexto">
+            <v-list-item-title class="estiloTexto2">
               Iniciar sesión
             </v-list-item-title>
           </v-list-item-content>
         </v-list-item>
       </v-list>
     </v-navigation-drawer>
+
+
+
 
     <v-app-bar
       height="55"
@@ -89,40 +94,34 @@
       </div>
 
       <v-tabs align-with-title class="d-none d-sm-none d-md-flex" optional color="#683bce">
-        <v-tab to="/">
+        <v-tab class="tab1" to="/">
           <v-icon class="navItemIcon">
             mdi-home
           </v-icon>
           <samp class="estiloTexto">Inicio</samp>
         </v-tab>
 
-        <v-tab to="/blogs">
+        <v-tab class="tab1" to="/blogs">
           <v-icon class="navItemIcon">
             mdi-book-open-variant
           </v-icon>
           <samp class="estiloTexto">Blogs</samp>
         </v-tab>
 
-        <v-tab to="/cursos">
+        <v-tab class="tab1" to="/cursos">
           <v-icon class="navItemIcon">
             mdi-television-play
           </v-icon>
           <samp class="estiloTexto">Cursos</samp>
         </v-tab>
 
-        <!-- <v-tab to="/precios">
-          <v-icon class="navItemIcon">
-            mdi-alpha-p-circle
-          </v-icon>
-          <samp class="estiloTexto">Precios</samp>
-        </v-tab> -->
       </v-tabs>
 
       <v-spacer />
 
       <v-toolbar-items class="d-none d-sm-none d-md-flex">
         <v-btn
-          class="estiloTexto"
+          class="estiloTexto2"
           color="#683bce"
           text
           to="/registro"
@@ -134,7 +133,7 @@
         </v-btn>
 
         <v-btn
-          class="estiloTexto"
+          class="estiloTexto2"
           color="#683bce"
           text
           to="/inicioSesion"
@@ -146,83 +145,125 @@
         </v-btn>
       </v-toolbar-items>
 
-      <!-- <div class="containerIcono d-none d-sm-none d-md-flex">
-                <v-btn
-                    color="#683bce"
-                    text
-                    to="/autenticacion/registro"
-                >
-                    <v-icon left>
-                        mdi-account-plus
-                    </v-icon>
-                    Registrarme
-                </v-btn>
-
-                <v-btn
-                    color="#683bce"
-                    text
-                    to="/autenticacion/inicioSesion"
-                >
-                    <v-icon left>
-                        mdi-account-circle
-                    </v-icon>
-                    Iniciar sesión
-                </v-btn>
-            </div> -->
-
       <div class="containerIcono d-flex d-sm-flex d-md-none">
         <v-app-bar-nav-icon @click="drawer = true" />
       </div>
     </v-app-bar>
+
+
   </div>
 </template>
 
 <script>
+import { mapActions, mapState, mapGetters } from 'vuex'
+
 export default {
   name: 'NavigationDefault',
-  data: () => ({
-    sidebar: false,
-    drawer: null,
-    items: [
-      { title: 'Inicio', icon: 'mdi-home', to: '/' },
-      { title: 'Blogs', icon: 'mdi-book-open-variant', to: '/blogs' },
-      { title: 'Cursos', icon: 'mdi-television-play', to: '/cursos' },
-      // { title: 'Precios', icon: 'mdi-alpha-p-circle', to: '/precios' },
-    ],
-    user: {
-      initials: 'GP',
-      fullName: 'Guillermo Paiva',
-      email: 'guillepaivag@gmail.com'
+  data () {
+    return {
+      sidebar: false,
+      drawer: null,
+      items: [
+        { title: 'Inicio', icon: 'mdi-home', to: '/' },
+        { title: 'Blogs', icon: 'mdi-book-open-variant', to: '/blogs' },
+        { title: 'Cursos', icon: 'mdi-television-play', to: '/cursos' },
+        // { title: 'Precios', icon: 'mdi-alpha-p-circle', to: '/precios' },
+      ],
+      itemsMenu2: [
+        { text: 'Ver perfil', icon: 'mdi-account', to: '/perfil' },
+        { text: 'Historial de compra', icon: 'mdi-history', to: '/historial-compra/productos' },
+      ]
     }
-  })
+  },
+  methods: {
+    ...mapActions('modules/usuarios', ['logout']),
+    async cerrarSesion () {
+      
+      try {
+        this.logout()
+        
+        this.$router.push('/')
+
+      } catch (error) {
+        console.log('cerrarSesion - NavigationUser: ', error)
+
+      } finally {
+
+      }
+        
+    }
+  },
+  computed: {
+    ...mapState('modules/usuarios', ['fotoPerfil', 'nombreUsuario', 'correo']),
+    ...mapGetters('modules/usuarios', ['esMiembro', 'esModerador']),
+    inicialNombreUsuario () {
+      return this.nombreUsuario ? this.nombreUsuario[0].toUpperCase() : ''
+    },
+    correoUsuario () {
+      return this.correo
+    },
+  },
+  async mounted () {}
 }
 </script>
 
 <style scoped>
+.v-tabs {
+  width: 50%;
+}
+
+.tab1 {
+  display: block;
+  padding: 10px 1px 1px 0;
+  min-width: 75px !important;
+}
+
 .containerLogo {
-    margin-left: 5px;
-    margin-right: -20px;
+  margin-left: 5px;
+  margin-right: -20px;
 }
 
 .navButtons {
-    margin-left: 10px;
+  margin-left: 10px;
 }
 
 .navItemIcon {
-    margin-right: 10px;
+  font-size: 20px;
+  margin-bottom: 3px;
 }
 
-.containerIcono{
-    margin-right: 10px;
-}
-
-.containerItems {
-    margin-left: 20px;
+.containerIcono {
+  margin-right: 10px;
 }
 
 .estiloTexto {
-    font-family: 'Asap', sans-serif;
-    font-weight: bold;
+  font-family: 'Asap', sans-serif;
+  font-weight: bold;
+  display: block;
+  font-size: 11px;
 }
+
+.estiloTexto1 {
+  font-family: 'Asap', sans-serif;
+  font-weight: bold;
+  font-size: 16px;
+}
+
+.estiloTexto2 {
+  font-family: 'Asap', sans-serif;
+  font-weight: bold;
+}
+
+@media (max-width: 460px) {
+  .btnMisCursos1 {
+    display: none;
+  }
+}
+
+/* @media (min-width: 461px) {
+  .btnMisCursos2 {
+    display: none;
+  }
+} */
 
 </style>

@@ -230,6 +230,8 @@ ffContenidoClase.validacionContenidoClase = functions
                 rutaPrefix: `${uidCurso}/${uidClase}/${fileNameAux}`
             })
             
+        } else if (result.contenidoClase.tipoContenido === 'gamificado-simple') {
+            
         }
 
         // TODO: Mover el archivo de "validacion" a "borrador"

@@ -535,7 +535,9 @@
                                                                     <v-col class="" cols="12" lg="7">
                                                                         <div class="">
                                                                             <div class="container" v-if="datoClase.valorContenido">
-                                                                                <VisualizadorYoutube :codigoVideoYoutube="datoClase.valorContenido.codigoVideoYoutube" />
+                                                                                <VisualizadorYoutube 
+                                                                                    :codigoVideoYoutube="datoClase.valorContenido.codigoVideoYoutube"
+                                                                                />
                                                                                 <!-- {{datoClase.valorContenido}} -->
                                                                             </div>
                                                                             <div class="text-center" v-else>

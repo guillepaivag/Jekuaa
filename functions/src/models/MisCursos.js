@@ -8,12 +8,13 @@ const COLECCION = 'MisCursos'
 
 class MisCursos {
     constructor(data = {}) {
-        const { uid, tipoAcceso, ultimaActividad, uidEstudiante, cantidadVisualizada } = data
+        const { uid, tipoAcceso, ultimaActividad, uidEstudiante, cantidadVisualizada, clasesVisualizadas } = data
         this.uid = uid ? uid : ''
         this.tipoAcceso = tipoAcceso ? tipoAcceso : 'vistaPrevia' // vistaPrevia, suscripcion, completo
         this.ultimaActividad = ultimaActividad ? ultimaActividad : null
         this.uidEstudiante = uidEstudiante ? uidEstudiante : ''
         this.cantidadVisualizada = cantidadVisualizada ? cantidadVisualizada : 0
+        this.clasesVisualizadas = clasesVisualizadas ? clasesVisualizadas : []
     }
 
     getMisCursos() {
@@ -23,16 +24,18 @@ class MisCursos {
             ultimaActividad: this.ultimaActividad,
             uidEstudiante: this.uidEstudiante,
             cantidadVisualizada: this.cantidadVisualizada,
+            clasesVisualizadas: this.clasesVisualizadas,
         }
     }
 
     setMisCursos(data = {}) {
-        const { uid, tipoAcceso, ultimaActividad, uidEstudiante, cantidadVisualizada } = data
+        const { uid, tipoAcceso, ultimaActividad, uidEstudiante, cantidadVisualizada, clasesVisualizadas } = data
         this.setUid( uid )
         this.setTipoAcceso( tipoAcceso )
         this.setUltimaActividad( ultimaActividad )
         this.setUltimaActividad( uidEstudiante )
         this.setCantidadVisualizada( cantidadVisualizada )
+        this.setClasesVisualizadas(clasesVisualizadas)
 
         return this
     }
@@ -59,6 +62,11 @@ class MisCursos {
 
     setCantidadVisualizada ( cantidadVisualizada = 0 ) {
         this.cantidadVisualizada = cantidadVisualizada
+        return this
+    }
+
+    setClasesVisualizadas ( clasesVisualizadas = [] ) {
+        this.clasesVisualizadas = clasesVisualizadas
         return this
     }
 

@@ -40,14 +40,17 @@
                             v-for="(pedido, index) in pedidos" :key="index"
                         >
                             <td>
-                                <div v-if="pedido.cantidadItems === 1">
+                                <div v-if="pedido.cantidadTotalItems === 1">
                                     <div v-if="pedido.detallesItems[0].tipoItem === 'curso'">
                                         {{ pedido.detallesItems[0].informacion.titulo }}
                                     </div>
                                 </div>
+                                <div v-else>
+                                    Varios
+                                </div>
                             </td>
                             <td>
-                                <div v-if="pedido.cantidadItems === 1">
+                                <div v-if="pedido.cantidadTotalItems === 1">
                                     <div v-if="pedido.detallesItems[0].tipoItem === 'curso'">
                                         Curso
                                     </div>
@@ -58,9 +61,9 @@
                             </td>
                             <td>{{ getFecha(pedido.fechaCompra.seconds) }}</td>
                             <td>{{ pedido.costoTotal }}</td>
-                            <td>{{ getFormaDePago(pedido.datosPago.formaDePago) }}</td>
+                            <td>{{ getFormaDePago(pedido.formaDePago) }}</td>
                             <td>
-                                {{ pedido.cantidadReembolsado }} / {{pedido.cantidadItems}}
+                                {{ pedido.cantidadReembolsado }} / {{pedido.cantidadTotalItems}}
                             </td>
                             <td>
                                 <v-btn
@@ -100,13 +103,13 @@
         </div>
 
         <v-dialog
-            v-model="dialog"
+            v-model="dialogPedido"
             fullscreen
             hide-overlay
             transition="dialog-bottom-transition"
         >
             
-            <v-card v-if="dataDialog">
+            <v-card v-if="dataDialogPedido">
                 <v-toolbar
                     dark
                     color="green"
@@ -114,12 +117,12 @@
                     <v-btn
                         icon
                         dark
-                        @click="dialog = false"
+                        @click="dialogPedido = false"
                     >
                         <v-icon>mdi-close</v-icon>
                     </v-btn>
                     <v-toolbar-title>
-                        Detalles del pedido: {{dataDialog.uid}}
+                        Detalles del pedido: {{dataDialogPedido.uid}}
                     </v-toolbar-title>
                 </v-toolbar>
                 
@@ -131,7 +134,7 @@
                                 <h2>Forma de pago</h2>
                                 <v-divider></v-divider>
                                 <p style="display: inline;">
-                                    {{ getFormaDePago(dataDialog.datosPago.formaDePago) }}
+                                    {{ getFormaDePago(dataDialogPedido.formaDePago) }}
                                 </p>
                             </div>
 
@@ -139,7 +142,7 @@
                                 <h2>Fecha del pedido</h2>
                                 <v-divider></v-divider>
                                 <p style="display: inline;">
-                                    {{ getFecha(dataDialog.fechaPedido.seconds) }}
+                                    {{ getFecha(dataDialogPedido.fechaPedido.seconds) }}
                                 </p>
                             </div>
                             
@@ -147,18 +150,23 @@
                                 <h2>Fecha de la compra</h2>
                                 <v-divider></v-divider>
                                 <p style="display: inline;">
-                                    {{ getFecha(dataDialog.fechaCompra.seconds) }}
+                                    {{ getFecha(dataDialogPedido.fechaCompra.seconds) }}
                                 </p>
                             </div>
 
                             <div class="mb-7">
                                 <h2>Costo total</h2>
                                 <v-divider></v-divider>
-                                <p v-if="dataDialog.tipoPedido === 'productos'" style="display: inline;">
-                                    {{ dataDialog.costoTotal }} JP
+                                <p style="display: inline;">
+                                    {{ dataDialogPedido.costoTotal }} JP
                                 </p>
-                                <p v-else style="display: inline;">
-                                    ${{ dataDialog.costoTotal }}
+                            </div>
+
+                            <div class="mb-7">
+                                <h2>Paquetes de items</h2>
+                                <v-divider></v-divider>
+                                <p style="display: inline;">
+                                    {{ dataDialogPedido.cantidadPaquetesDeItems }}
                                 </p>
                             </div>
 
@@ -166,7 +174,7 @@
                                 <h2>Reembolsos / Items</h2>
                                 <v-divider></v-divider>
                                 <p style="display: inline;">
-                                    {{ dataDialog.cantidadReembolsado }} / {{ dataDialog.cantidadItems }}
+                                    {{ dataDialogPedido.cantidadReembolsado }} / {{ dataDialogPedido.cantidadTotalItems }}
                                 </p>
                             </div>
                         </v-col>
@@ -175,53 +183,52 @@
 
                         <v-col cols="12" md="9">
                             <v-card
-                                v-for="(detallesItem, index) in dataDialog.detallesItems" :key="index"
-                                class="mx-auto"
+                                v-for="(detallesItem, index) in dataDialogPedido.detallesItems" :key="index"
+                                class="mx-auto pb-2"
+                                :class="vistaReembolso[index] && !esObtencionUnica(detallesItem.tipoItem) ? 'pb-15' : ''"
                                 max-width="600"
                             >
                                 <v-card-text>
                                 
-                                <div v-if="detallesItem.tipoItem === 'curso'">
-                                    <p style="display: inline;">
-                                        Curso {{ detallesItem.uid }}
-                                    </p>
-                                    <p class="text-h4 text--primary">
-                                        {{ detallesItem.informacion.titulo }}
-                                    </p>
-                                </div>
+                                    <div v-if="detallesItem.tipoItem === 'curso'">
+                                        <p style="display: inline;">
+                                            Curso {{ detallesItem.uid }}
+                                        </p>
+                                        <p class="text-h4 text--primary">
+                                            {{ detallesItem.informacion.titulo }}
+                                        </p>
+                                    </div>
 
-                                <p> Cantidad de items: {{ detallesItem.cantidad }} </p>
-                                
-                                <div v-if="dataDialog.tipoPedido === 'productos'">
-                                    <p v-if="detallesItem.detalles.porcentajeDescuento" class="text--primary" style="display: inline;">
-                                        {{ detallesItem.precioTotal }} JP || {{ detallesItem.detalles.precioUnitarioOriginal }} JP
+                                    <p> Cantidad de items: {{ detallesItem.cantidad }} </p>
+                                    
+                                    <p v-if="detallesItem.porcentajeDescuento" class="text--primary" style="display: inline;">
+                                        <b>Costo unitario:</b> 
+                                            <span>{{ detallesItem.precioUnitario }} JP</span> 
+                                            <span class="text-decoration-line-through">{{ detallesItem.precioUnitarioOriginal }} JP</span> 
+                                        
+                                        <b class="ml-3">Costo total:</b> 
+                                            <span>{{ detallesItem.precioTotal }} JP</span>
                                     </p>
                                     <p v-else class="text--primary" style="display: inline;">
-                                        Costo: {{ detallesItem.precioTotal }} JP
-                                    </p>
-                                </div>
+                                        <b>Costo unitario:</b>
+                                            <span>{{ detallesItem.precioUnitarioOriginal }} JP</span>
 
-                                <div v-else>
-                                    <p v-if="detallesItem.detalles.porcentajeDescuento" class="text--primary" style="display: inline;">
-                                        ${{ detallesItem.precioTotal }} || ${{ detallesItem.detalles.precioUnitarioOriginal }}
+                                        <b class="ml-3">Costo total:</b>
+                                            <span>{{ detallesItem.precioTotal }} JP</span>
                                     </p>
-                                    <p v-else class="text--primary" style="display: inline;">
-                                        Costo: ${{ detallesItem.precioTotal }}
-                                    </p>
-                                </div>
                                 
                                 </v-card-text>
                                 <v-card-actions>
                                     <v-btn
-                                        text
+                                        class="white--text"
                                         color="green accent-4"
-                                        :to="generateLinkProducto(dataDialog.tipoPedido, detallesItem.tipoItem, detallesItem)"
+                                        :to="generateLinkProducto(detallesItem.tipoItem, detallesItem)"
                                     >
                                         Ver producto
                                     </v-btn>
                                     <v-btn
                                         readonly
-                                        v-if="detallesItem.fechaReembolsado"
+                                        v-if="detallesItem.todoReembolsado"
                                         text
                                         color="accent-4"
                                     >
@@ -243,7 +250,7 @@
                                     class="transition-fast-in-fast-out v-card--reveal"
                                     style="height: 100%;"
                                 >
-                                    <v-card-text class="pb-0">
+                                    <v-card-text style="margin-bottom: -20px;">
                                         <!-- Solo tendras acceso al contenido gratis, tu progreso se mantiene y te devolvemos tus JP. -->
                                         <nuxt-link to="">
                                             <p class="text-h6 text--primary">
@@ -256,6 +263,14 @@
                                         <v-text-field
                                             v-model="quieroReembolsar[index]"
                                             :label="`Escribe: Quiero reembolsar`"
+                                        ></v-text-field>
+                                        <v-text-field
+                                            v-if="!esObtencionUnica(detallesItem.tipoItem)"
+                                            v-model="cantidadAReembolsar[index]"
+                                            type="number"
+                                            min="1"
+                                            :max="detallesItem.cantidad-detallesItem.cantidadReembolsado"
+                                            :label="`Puedes reembolsar ${detallesItem.cantidad-detallesItem.cantidadReembolsado} item/s`"
                                         ></v-text-field>
                                     </div>
 
@@ -270,8 +285,8 @@
                                             Si, quiero reembolsar
                                         </v-btn>
                                         <v-btn
-                                            text
-                                            color="green accent-4"
+                                            class="white--text"
+                                            color="green"
                                             @click="cambiarVistaReembolso(index, false)"
                                         >
                                             Volver 😇
@@ -284,6 +299,7 @@
                     </v-row>
                     
                 </div>
+
             </v-card>
         </v-dialog>
     </div>
@@ -291,8 +307,8 @@
 
 <script>
 import { fb } from '~/plugins/firebase'
-import jsCookie from 'js-cookie/dist/js.cookie'
 const db = fb.firestore()
+import { tiposObtencionUnica } from '@/helpers/tiposDeObtencionPorProducto'
 
 export default {
     name: '',
@@ -303,11 +319,12 @@ export default {
             pedidos: [],
             ultimoDoc: null,
             existeMas: false,
-            dialog: false,
-            dataDialog: null,
+            dialogPedido: false,
+            dataDialogPedido: null,
             vistaReembolso: [],
-            procesandoReembolso: [],
+            cantidadAReembolsar: [],
             quieroReembolsar: [],
+            procesandoReembolso: [],
             cantidadAMostrar: 5,
             cargandoPedidos: false,
         }
@@ -318,15 +335,11 @@ export default {
             return d.toLocaleString()
         },
         getFormaDePago(formaDePago) {
-            if (formaDePago === 'points') return 'JP'
+            if (formaDePago === 'points') return 'Points'
             else return ''
         },
-        generateLinkProducto (tipoPedido, tipoItem, detallesItem) {
-            if (tipoPedido === 'productos') {
-                if (tipoItem === 'curso') {
-                    return `/curso/${detallesItem.informacion.codigo}`
-                }
-            }
+        generateLinkProducto (tipoItem, detallesItem) {
+            if (tipoItem === 'curso') return `/curso/${detallesItem.informacion.codigo}`
         },
         cambiarVistaReembolso(indexDetallesItems, reembolsar) {
             let aux = JSON.parse( JSON.stringify( this.vistaReembolso ) )
@@ -335,7 +348,7 @@ export default {
         },
         esValidoReembolsar () {
             const diasValidos = 60 * 60 * 24 * 1000 * 30
-            const fechaCompra = this.dataDialog.fechaCompra.seconds*1000
+            const fechaCompra = this.dataDialogPedido.fechaCompra.seconds*1000
 
             return Date.now() <= fechaCompra+diasValidos
         },
@@ -345,13 +358,19 @@ export default {
             procesandoReembolso[index] = true
             this.procesandoReembolso = procesandoReembolso
 
-            let fechaReembolsado = null
             try {
                 let token = this.$firebase.auth().currentUser
                 token = token ? await token.getIdToken() : ''
                 await this.$store.dispatch('modules/usuarios/setTOKEN', token)
 
-                let body = {  }
+                const uidPedido = this.dataDialogPedido.uid
+                const uidItem = this.dataDialogPedido.detallesItems[index].uidItem
+                const tipoItem = this.dataDialogPedido.detallesItems[index].tipoItem
+                const cantidad = this.cantidadAReembolsar[index]
+
+                let body = {
+                    listaItems: [ { tipoItem, uidItem, cantidad } ]
+                }
 
                 let config = {
                     headers: {
@@ -360,21 +379,25 @@ export default {
                     }
                 }
                 
-                const uidPedido = this.dataDialog.uid
-                const uidProducto = this.dataDialog.detallesItems[index].uidItem
-                const { resultado } = await this.$axios.$put(`/servicePedido/producto/reembolsar/${uidPedido}/${uidProducto}`, body, config)
+                const { resultado } = await this.$axios.$put(`/servicePedido/producto/reembolsar/${uidPedido}`, body, config)
 
-                // Actualizar pedido
-                const pedido = this.pedidos.find(v => v.uid === this.dataDialog.uid)
-                pedido.cantidadReembolsado++
-                if (pedido.cantidadItems === pedido.cantidadReembolsado) pedido.todoReembolsado = true
-                pedido.tieneReembolso = true
+                // Actualizar detalles del item: cantidadReembolsado, tieneAlgunReembolso, todoReembolsado
+                const cantidadReembolsado = this.dataDialogPedido.detallesItems[index].cantidadReembolsado + cantidad
+                this.dataDialogPedido.detallesItems[index].cantidadReembolsado = cantidadReembolsado
+                this.dataDialogPedido.detallesItems[index].tieneAlgunReembolso = true
+                this.dataDialogPedido.detallesItems[index].todoReembolsado = this.dataDialogPedido.detallesItems[index].cantidad === cantidadReembolsado
+
+                // Actualizar pedido: cantidadReembolsado, todoReembolsado, tieneAlgunReembolso
+                const pedido = this.pedidos.find(v => v.uid === this.dataDialogPedido.uid)
+                pedido.cantidadReembolsado += cantidad
+                if (pedido.cantidadTotalItems === pedido.cantidadReembolsado) pedido.todoReembolsado = true
+                pedido.tieneAlgunReembolso = true
 
                 // Devolver points al usuario
-                this.$store.state.modules.usuarios.point += this.dataDialog.detallesItems[index].precioTotal
+                this.$store.state.modules.usuarios.point += this.dataDialogPedido.detallesItems[index].precioTotal
                 
                 // Actualizar item como reembolsados
-                this.dataDialog.detallesItems[index].fechaReembolsado = {
+                this.dataDialogPedido.detallesItems[index].fechaReembolsado = {
                     nanoseconds: resultado._nanoseconds,
                     seconds: resultado._seconds,
                 }
@@ -422,9 +445,9 @@ export default {
                 pedido.detallesItems = []
 
                 const snapshotDetallesItems = await db.collection('Usuarios').doc(uid)
-                .collection('PedidosProductos').doc(docPedido.id)
-                .collection('DetallesItems')
-                .get()
+                    .collection('PedidosProductos').doc(docPedido.id)
+                    .collection('DetallesItemsProducto')
+                    .get()
 
                 let j = 0
                 for (const docDetallesItem of snapshotDetallesItems.docs) {
@@ -467,7 +490,7 @@ export default {
 
                 const snapshotDetallesItems = await db.collection('Usuarios').doc(uid)
                 .collection('PedidosProductos').doc(docPedido.id)
-                .collection('DetallesItems')
+                .collection('DetallesItemsProducto')
                 .get()
 
                 let j = 0
@@ -504,17 +527,21 @@ export default {
         },
         async abrirDialog (uidPedido) {
             const pedido = this.pedidos.find(v => v.uid === uidPedido)
-            this.dataDialog = pedido
-            this.vistaReembolso = Array(this.dataDialog.detallesItems.length).fill(false)
-            this.quieroReembolsar = Array(this.dataDialog.detallesItems.length).fill('')
-            this.procesandoReembolso = Array(this.dataDialog.detallesItems.length).fill(false)
-
-            this.dialog = true
+            
+            this.dataDialogPedido = pedido
+            this.vistaReembolso = Array(this.dataDialogPedido.detallesItems.length).fill(false)
+            this.cantidadAReembolsar = Array(this.dataDialogPedido.detallesItems.length).fill(1)
+            this.quieroReembolsar = Array(this.dataDialogPedido.detallesItems.length).fill('')
+            this.procesandoReembolso = Array(this.dataDialogPedido.detallesItems.length).fill(false)
+            this.dialogPedido = true
+        },
+        esObtencionUnica (tipoProducto) {
+            return tiposObtencionUnica.includes(tipoProducto)
         },
     },
     watch: {
-        dialog: function (n, v) {
-            if (!this.dialog) this.dataDialog = null
+        dialogPedido: function (n, v) {
+            if (!this.dialogPedido) this.dataDialogPedido = null
         },
     },
     async created() {

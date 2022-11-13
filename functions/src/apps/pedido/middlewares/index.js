@@ -6,10 +6,12 @@ const Errores = require("../../../models/Error/Errores")
 const DetallesItem = require("../../../models/DetallesItem")
 const Usuario = require("../../../models/Usuarios/Usuario")
 const { milliseconds_a_timestamp } = require("../../../utils/timestamp")
-const ProgresoClase = require("../../../models/ProgresoClase")
-const ClasePublicado = require("../../../models/Cursos/clase/ClasePublicado")
 const MisCursos = require("../../../models/MisCursos")
 const PedidoProducto = require("../../../models/PedidoProducto")
+const DetallesItemProducto = require("../../../models/DetallesItemProducto")
+
+const tiposObtencionUnica = ['curso']
+const tiposObtencionPorCantidad = []
 
 const middlewares = {}
 
@@ -17,27 +19,41 @@ middlewares.validacionPedidoTipoProducto = async (req = request, res = response,
     try {
         const { datos, body, params, requestStartTime } = req
         const { uidSolicitante, datosAuthSolicitante } = datos
-        const { pedidos } = body
+        const { listaItems } = body
 
         /**
-         * pedidos: [
+         * listaItems: [
          *  { 
          *      tipoItem, 
          *      uidItem, 
+         *      cantidad,
          *      producto, // se agrega despues
          *  }
          * ]
          */
 
-        // EXISTENCIA:
-        for (let i = 0; i < pedidos.length; i++) {
-            const pedido = pedidos[i]
+        if ( !Array.isArray(listaItems) ) throw new TypeError('Se necesita un arreglo de items.')
+
+        // Verificaciones
+        for (let i = 0; i < listaItems.length; i++) {
+            const datosItem = listaItems[i]
             let existe = false
             
-            if (pedido.tipoItem === 'curso') {
-                const doc = await db.collection('CursosPublicado').doc(pedido.uidItem).get()
+            // Tipos de datos
+            if (typeof datosItem.tipoItem !== 'string') 
+                throw new TypeError('El tipoItem tiene que ser string.')
+
+            if (typeof datosItem.uidItem !== 'string') 
+                throw new TypeError('El uidItem tiene que ser string.')
+
+            if (typeof datosItem.cantidad !== 'number') 
+                throw new TypeError('La cantidad debe ser numerica.')
+
+            // Existencia
+            if (datosItem.tipoItem === 'curso') {
+                const doc = await db.collection('CursosPublicado').doc(datosItem.uidItem).get()
                 existe = doc.exists
-                pedidos[i].producto = doc.data()
+                listaItems[i].producto = doc.data()
     
             } else {
                 throw new TypeError('No es un tipo de producto válido.')
@@ -50,25 +66,45 @@ middlewares.validacionPedidoTipoProducto = async (req = request, res = response,
                     mensajeServidor: 'No existe este producto.',
                 })
             }
-        }
 
-        for (let i = 0; i < pedidos.length; i++) {
-            const pedido = pedidos[i]
+            // La cantidad tiene que ser mayor a 0
+            if (datosItem.cantidad <= 0) {
+                throw new Errores({
+                    estado: 400,
+                    mensajeCliente: 'error_en_cantidad_del_item',
+                    mensajeServidor: 'La cantidad no puede ser menor o igual a 0.'
+                })
+            }
 
-            // VALIDAR SI SE PUEDE REALIZAR EL PEDIDO:
-            const item = { tipoItem: pedido.tipoItem, uidItem: pedido.uidItem, }
-            const snapshot = await db.collection('Usuarios').doc(uidSolicitante)
-                .collection('PedidosProductos')
-                .where('items', 'array-contains', item)
-                .get()
-            
-            if (!snapshot.empty) {
-                const dataPedidos = []
-                for (const doc of snapshot.docs) 
-                    dataPedidos.push( new PedidoProducto(doc.data()) )
-    
-                for (const dataPedido of dataPedidos) {
-                    if (dataPedido.estado === 'pendiente') {
+            // Solo se puede obtener un(1) itemProducto, si ese itemProducto es de obtencion unica
+            if ( tiposObtencionUnica.includes(datosItem.tipoItem) ) {
+                
+                // Solo se puede tener una(1) cantidad para productos de obtencion unica
+                if (datosItem.cantidad !== 1) {
+                    throw new Errores({
+                        estado: 400,
+                        mensajeCliente: 'error_en_cantidad_del_item',
+                        mensajeServidor: 'Para productos de obtencion unica solo se puede pedir 1.'
+                    })
+                }
+
+                // Obtener pedidos que son relacionados a un itemProducto-solicitado
+                const itemFilter = { tipoItem: datosItem.tipoItem, uidItem: datosItem.uidItem, }
+                const snapshotPedidos = await db.collection('Usuarios').doc(uidSolicitante)
+                    .collection('PedidosProductos')
+                    .where('items', 'array-contains', itemFilter)
+                    .get()
+                
+                const pedidosRelacionados = []
+                for (const doc of snapshotPedidos.docs) 
+                    pedidosRelacionados.push( new PedidoProducto(doc.data()) )
+
+                // Ya que este producto es de OBTENCION UNICA, no puede existir OTRO PEDIDO 
+                // con ese mismo producto en estado PENDIENTE o COMPLETADO pero sin estar 
+                // reembolsado el producto
+                for (const pedidoRelacionado of pedidosRelacionados) {
+                    
+                    if ( pedidoRelacionado.estado === 'pendiente' ) {
                         throw new Errores({
                             estado: 400,
                             mensajeCliente: 'producto_esta_en_pedido',
@@ -76,18 +112,18 @@ middlewares.validacionPedidoTipoProducto = async (req = request, res = response,
                         })
                     }
 
-                    if (dataPedido.estado === 'completado') {
+                    else if ( pedidoRelacionado.estado === 'completado' ) {
                         const snapshot2 = await db
-                        .collection('Usuarios').doc(uidSolicitante)
-                        .collection('PedidosProductos').doc(dataPedido.uid)
-                        .collection('DetallesItems')
-                        .where('tipoItem', '==', pedido.tipoItem)
-                        .where('uidItem', '==', pedido.uidItem)
-                        .get()
+                            .collection('Usuarios').doc(uidSolicitante)
+                            .collection('PedidosProductos').doc(pedidoRelacionado.uid)
+                            .collection('DetallesItemsProducto')
+                            .where('tipoItem', '==', datosItem.tipoItem)
+                            .where('uidItem', '==', datosItem.uidItem)
+                            .get()
 
-                        const detallesItem = new DetallesItem(snapshot2.docs[0].data())
-                        
-                        if (!detallesItem.fechaReembolsado) {
+                        const detallesItemProducto = new DetallesItemProducto(snapshot2.docs[0].data())
+
+                        if (!detallesItemProducto.todoReembolsado) {
                             throw new Errores({
                                 estado: 400,
                                 mensajeCliente: 'producto_ya_obtenido',
@@ -95,39 +131,46 @@ middlewares.validacionPedidoTipoProducto = async (req = request, res = response,
                             })
                         }
                     }
-                }
 
+                }
             }
+        }
+
+        // VALIDAR SI TIENE SUFICIENTES MONEDAS
+        let costoTotal = 0
+        for (let i = 0; i < listaItems.length; i++) {
+            const datosItem = listaItems[i]
             
-            // VALIDAR SI TIENE SUFICIENTES POINTS
-            if (pedido.tipoItem === 'curso') {
+            if (datosItem.tipoItem === 'curso') {
 
                 let hayDescuento = false
-                if (pedido.producto.datosPrecio.descuento) {
-                    const tiempoInicio = pedido.producto.datosPrecio.descuento.fechaInicio.seconds * 1000
-                    const tiempoFin = pedido.producto.datosPrecio.descuento.fechaFin.seconds * 1000
+                if (datosItem.producto.datosPrecio.descuento) {
+                    const tiempoInicio = datosItem.producto.datosPrecio.descuento.fechaInicio.seconds * 1000
+                    const tiempoFin = datosItem.producto.datosPrecio.descuento.fechaFin.seconds * 1000
                     hayDescuento = requestStartTime >= tiempoInicio && requestStartTime <= tiempoFin
                 }
                 
-                const usuario = new Usuario()
-                await usuario.importarDatosUsuarioPorUID(uidSolicitante)
-                const sinJP = (hayDescuento && pedido.producto.datosPrecio.descuento.precio > usuario.point) || 
-                (!hayDescuento && pedido.producto.datosPrecio.precio > usuario.point)
+                if (hayDescuento) costoTotal += (datosItem.producto.datosPrecio.descuento.precio * datosItem.cantidad)
+                else costoTotal += (datosItem.producto.datosPrecio.precio * datosItem.cantidad)
 
-                if (sinJP) {
-                    throw new Errores({
-                        estado: 400,
-                        mensajeCliente: 'insuficientes_points',
-                        mensajeServidor: 'No tienes suficientes POINTS.'
-                    })
-                }
-
-                req.body.datosUsuario = usuario.getUsuario()
-    
             } else {
                 throw new TypeError('No es un tipo de producto válido.')
             }
 
+        }
+
+        const usuario = new Usuario()
+        await usuario.importarDatosUsuarioPorUID(uidSolicitante)
+        req.body.datosUsuario = usuario.getUsuario()
+
+        const sinMonedas = costoTotal > usuario.point
+
+        if (sinMonedas) {
+            throw new Errores({
+                estado: 400,
+                mensajeCliente: 'insuficientes_points',
+                mensajeServidor: 'No tienes suficientes POINTS.'
+            })
         }
 
         next()
@@ -140,72 +183,80 @@ middlewares.construccionPedidoTipoProducto = async (req = request, res = respons
     try {
         const { datos, body, params, requestStartTime } = req
         const { uidSolicitante, datosAuthSolicitante } = datos
-        const { pedidos, datosUsuario } = body
+        const { listaItems, datosUsuario } = body
 
         /**
-         * pedidos: [
+         * listaItems: [
          *  { 
          *      tipoItem, 
          *      uidItem, 
+         *      cantidad,
          *      producto, 
          *  }
          * ]
          */
 
+        const uidPedido = db.collection('PedidosProductos').doc().id
+
         const listaDetallesItems = []
-        for (let i = 0; i < pedidos.length; i++) {
-            const pedido = pedidos[i]
+        for (let i = 0; i < listaItems.length; i++) {
+            const datosItem = listaItems[i]
             
-            if (pedido.tipoItem === 'curso') {
-                const cantidad = 1
+            if (datosItem.tipoItem === 'curso') {
+                const cantidad = datosItem.cantidad
 
-                let hayDescuento = pedido.producto.datosPrecio.descuento && 
-                pedido.producto.datosPrecio.descuento.fechaInicio.seconds*1000 <= requestStartTime &&
-                pedido.producto.datosPrecio.descuento.fechaFin.seconds*1000 >= requestStartTime
-                const precio = hayDescuento ? pedido.producto.datosPrecio.descuento.precio : pedido.producto.datosPrecio.precio
+                const hayDescuento = datosItem.producto.datosPrecio.descuento && 
+                datosItem.producto.datosPrecio.descuento.fechaInicio.seconds*1000 <= requestStartTime &&
+                datosItem.producto.datosPrecio.descuento.fechaFin.seconds*1000 >= requestStartTime
+                const precio = hayDescuento ? datosItem.producto.datosPrecio.descuento.precio : datosItem.producto.datosPrecio.precio
 
-                const detallesItem = new DetallesItem({
-                    tipoItem: 'curso',
-                    uidItem: pedido.producto.uid,
-                    detalles: {
-                        precioUnitarioOriginal: pedido.producto.datosPrecio.precio,
-                        porcentajeDescuento: hayDescuento ? pedido.producto.datosPrecio.descuento.porcentaje : 0,
-                    },
-                    cantidad: cantidad,
+                const detallesItemProducto = new DetallesItemProducto({
+                    tipoItem: datosItem.tipoItem,
+                    uidItem: datosItem.uidItem,
+                    uidPedido: uidPedido,
+                    precioUnitarioOriginal: datosItem.producto.datosPrecio.precio,
+                    porcentajeDescuento: hayDescuento ? datosItem.producto.datosPrecio.descuento.porcentaje : 0,
                     precioUnitario: precio,
+                    cantidad: cantidad,
                     precioTotal: precio * cantidad,
-                    fechaReembolsado: null,
+                    tieneAlgunReembolso: false,
+                    todoReembolsado: false,
+                    cantidadReembolsado: 0,
                 })
                 
-                listaDetallesItems.push(detallesItem)
+                listaDetallesItems.push(detallesItemProducto)
             }
         }
 
         const items = []
         let costoTotal = 0
+        let cantidadTotalItems = 0
         for (const detallesItem of listaDetallesItems) {
             costoTotal += detallesItem.precioTotal
+            cantidadTotalItems += detallesItem.cantidad
             items.push({
                 tipoItem: detallesItem.tipoItem,
                 uidItem: detallesItem.uidItem,
             })
         }
         
-        const pedido = new PedidoProducto({
-            uidComprador: uidSolicitante, 
-            cantidadItems: listaDetallesItems.length, 
-            costoTotal: costoTotal, 
-            items: items,
-            estado: 'pendiente', 
+        const pedidoProducto = new PedidoProducto({
+            uid: uidPedido,
+            uidComprador: uidSolicitante,
+            estado: 'pendiente',
             fechaPedido: milliseconds_a_timestamp(requestStartTime),
-            cantidadReembolsado: 0,
+            cantidadPaquetesDeItems: listaDetallesItems.length,
+            cantidadTotalItems: cantidadTotalItems,
+            costoTotal: costoTotal,
+            formaDePago: '',
+            fechaCompra: null,
+            items: items,
+            tieneAlgunReembolso: false,
             todoReembolsado: false,
-            tieneReembolso: false, 
-            fechaCompra: null, 
-            datosPago: null,
+            cantidadReembolsado: 0,
         })
 
-        req.body.datosPedidoProducto = pedido.getPedidoProducto()
+        req.body.datosPedidoProducto = pedidoProducto.getPedidoProducto()
         req.body.listaDetallesItems = listaDetallesItems
 
         next()
@@ -218,7 +269,20 @@ middlewares.validacionReembolsoTipoProducto = async (req = request, res = respon
     try {
         const { datos, body, params, requestStartTime } = req
         const { uidSolicitante, datosAuthSolicitante } = datos
-        const { uidPedido, uidProducto } = params
+        const { uidPedido } = params
+        const { listaItems } = body
+
+        /**
+         * listaItems: [
+         *  { 
+         *      tipoItem, 
+         *      uidItem, 
+         *      cantidad, 
+         *      cantidadReembolsadoNuevo, // se agrega despues
+         *      todoReembolsadoNuevo, // se agrega despues
+         *  }
+         * ]
+         */
 
         // Existe pedido
         const pedidoProducto = await PedidoProducto.obtener(uidSolicitante, uidPedido)
@@ -230,6 +294,14 @@ middlewares.validacionReembolsoTipoProducto = async (req = request, res = respon
             })
         }
 
+        if ( pedidoProducto.todoReembolsado ) {
+            throw new Errores({
+                estado: 400,
+                mensajeCliente: 'pedido_ya_reembolsado',
+                mensajeServidor: 'No hay nada que reembolsar.'
+            })
+        }
+
         // Verificar si se puede reembolsar (30 días para reembolsar)
         const diasValidos = 60 * 60 * 24 * 1000 * 30
         const fechaCompra = pedidoProducto.fechaCompra.seconds*1000
@@ -237,48 +309,67 @@ middlewares.validacionReembolsoTipoProducto = async (req = request, res = respon
             throw new Errores({
                 estado: 400,
                 mensajeCliente: 'pedido_fecha_fuera_de_reembolso',
-                mensajeServidor: 'Ya no se puede reembolsar'
+                mensajeServidor: 'Ya no se puede reembolsar.'
             })
         }
 
-        // Existe producto en el pedido y no esta reembolsado
-        const doc = await db
-        .collection('Usuarios').doc(uidSolicitante)
-        .collection('PedidosProductos').doc(uidPedido)
-        .collection('DetallesItems').doc(uidProducto)
-        .get()
-
-        if (!doc.exists) {
-            throw new Errores({
-                estado: 400,
-                mensajeCliente: 'no_existe_item_en_pedido',
-                mensajeServidor: 'No existe este item en este pedido.'
-            })
-        }
+        for (const datosItem of listaItems) {
+            // Existe producto en el pedido y no esta reembolsado
+            const doc = await db
+                .collection('Usuarios').doc(uidSolicitante)
+                .collection('PedidosProductos').doc(uidPedido)
+                .collection('DetallesItemsProducto').doc(datosItem.uidItem)
+                .get()
         
-        const detallesItem = new DetallesItem(doc.data())
-        if (detallesItem.fechaReembolsado) {
-            throw new Errores({
-                estado: 400,
-                mensajeCliente: 'producto_ya_reembolsado',
-                mensajeServidor: 'Este producto ya esta reembolsado.'
-            })
-        }
-        
-        if (detallesItem.tipoItem === 'curso') {
-            // Si tiene más del 50% no se puede reembolsar
-            const uidCurso = detallesItem.uidItem
-            const cursoPublicado = await CursoPublicado.obtenerCurso(uidCurso)
-            const miCurso = await MisCursos.obtener(uidSolicitante, uidCurso)
-            
-            const porcentajeProgreso = (miCurso.cantidadVisualizada * 100) / cursoPublicado.cantidadClases
-
-            if (porcentajeProgreso > 50) {
+            if (!doc.exists) {
                 throw new Errores({
                     estado: 400,
-                    mensajeCliente: 'no_se_puede_reembolsar',
-                    mensajeServidor: 'Ya tiene 50% del curso, no se puede reembolsar.'
+                    mensajeCliente: 'no_existe_item_en_pedido',
+                    mensajeServidor: 'No existe este item en este pedido.'
                 })
+            }
+
+            // No tiene que estar todo reembolsado
+            const detallesItemProducto = new DetallesItemProducto(doc.data())
+            if (detallesItemProducto.todoReembolsado) {
+                throw new Errores({
+                    estado: 400,
+                    mensajeCliente: 'producto_ya_reembolsado',
+                    mensajeServidor: 'Este producto ya esta reembolsado.'
+                })
+            }
+
+            // Verificar la cantidad a reembolsar con la cantidad restante deL paquete de items
+            const cantidadDisponible = detallesItemProducto.cantidad - detallesItemProducto.cantidadReembolsado
+            if ( datosItem.cantidad > cantidadDisponible ) {
+                throw new Errores({
+                    estado: 400,
+                    mensajeCliente: 'cantidad_reembolso_item_excedido',
+                    mensajeServidor: 'No hay suficientes items disponibles para reembolsar.'
+                })
+            }
+
+            datosItem.cantidadReembolsadoNuevo = datosItem.cantidad + detallesItemProducto.cantidadReembolsado
+            datosItem.todoReembolsadoNuevo = detallesItemProducto.cantidad === (datosItem.cantidad + detallesItemProducto.cantidadReembolsado)
+
+            // Verificar de manera customizada dependiendo del tipo de item que sea
+            if ( datosItem.tipoItem === 'curso' ) {
+                // Si tiene más del 50% no se puede reembolsar
+                const uidCurso = detallesItemProducto.uidItem
+                const cursoPublicado = await CursoPublicado.obtenerCurso(uidCurso)
+                const miCurso = await MisCursos.obtener(uidSolicitante, uidCurso)
+                
+                const porcentajeProgreso = (miCurso.cantidadVisualizada * 100) / cursoPublicado.cantidadClases
+    
+                if (porcentajeProgreso > 50) {
+                    throw new Errores({
+                        estado: 400,
+                        mensajeCliente: 'no_se_puede_reembolsar',
+                        mensajeServidor: 'Ya tiene 50% del curso, no se puede reembolsar.'
+                    })
+                }
+            } else {
+                throw new TypeError('No es un tipo de producto válido.')
             }
         }
 

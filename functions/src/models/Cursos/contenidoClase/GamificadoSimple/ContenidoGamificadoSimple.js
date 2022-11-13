@@ -2,30 +2,36 @@ const ContenidoClase = require("../ContenidoClase")
 
 class ContenidoGamificadoSimple extends ContenidoClase {
     constructor (data = {}) {
-        const { mensaje, cantidadPreguntas, cantidadTotalPreguntas, } = data
+        const { mensaje, cantidadNiveles, cantidadPreguntasParaResponder, cantidadTotalPreguntas, duracion, } = data
 
         super({...data, tipoContenido: 'gamificado-simple'})
         this.mensaje = mensaje ? mensaje : ''
-        this.cantidadPreguntas = cantidadPreguntas ? cantidadPreguntas : 0
+        this.cantidadNiveles = cantidadNiveles ? cantidadNiveles : 0
+        this.cantidadPreguntasParaResponder = cantidadPreguntasParaResponder ? cantidadPreguntasParaResponder : 0
         this.cantidadTotalPreguntas = cantidadTotalPreguntas ? cantidadTotalPreguntas : 0
+        this.duracion = duracion ? duracion : 0
     }
 
     getContenidoGamificadoSimple () {
         return {
             ...super.getContenidoClase(),
             mensaje: this.mensaje,
-            cantidadPreguntas: this.cantidadPreguntas,
+            cantidadNiveles: this.cantidadNiveles,
+            cantidadPreguntasParaResponder: this.cantidadPreguntasParaResponder,
             cantidadTotalPreguntas: this.cantidadTotalPreguntas,
+            duracion: this.duracion,
         }
     }
 
     setContenidoGamificadoSimple (data = {}) {
-        const { mensaje, cantidadPreguntas, cantidadTotalPreguntas, } = data
+        const { mensaje, cantidadNiveles, cantidadPreguntasParaResponder, cantidadTotalPreguntas, duracion, } = data
 
         this.setContenidoClase({...data, tipoContenido: 'gamificado-simple'})
         this.mensaje = mensaje ? mensaje : ''
-        this.cantidadPreguntas = cantidadPreguntas ? cantidadPreguntas : 0
+        this.cantidadNiveles = cantidadNiveles ? cantidadNiveles : 0
+        this.cantidadPreguntasParaResponder = cantidadPreguntasParaResponder ? cantidadPreguntasParaResponder : 0
         this.cantidadTotalPreguntas = cantidadTotalPreguntas ? cantidadTotalPreguntas : 0
+        this.duracion = duracion ? duracion : 0
 
         return this
     }

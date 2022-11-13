@@ -9,13 +9,13 @@ const {
 } = require('../middlewares')
 const { generarPedidoTipoProducto, generarReembolsoTipoProducto } = require('../controllers')
 
-router.post('/producto/generarPedido', 
+router.post('/producto/generarPedido',
     estaAutenticado,
     validacionPedidoTipoProducto, 
     construccionPedidoTipoProducto,
     generarPedidoTipoProducto)
 
-router.put('/producto/reembolsar/:uidPedido/:uidProducto', 
+router.put('/producto/reembolsar/:uidPedido',
     estaAutenticado,
     validacionReembolsoTipoProducto, 
     generarReembolsoTipoProducto)

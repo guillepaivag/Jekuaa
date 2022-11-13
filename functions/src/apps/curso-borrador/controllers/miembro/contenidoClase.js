@@ -13,8 +13,98 @@ const config = require("../../../../../config")
 const ContenidoYoutubeBorrador = require('../../../../models/Cursos/contenidoClase/contenidoYoutube/ContenidoYoutubeBorrador')
 const { milliseconds_a_timestamp } = require('../../../../utils/timestamp')
 const db = require('../../../../../db')
+const ContenidoGamificadoSimpleBorrador = require('../../../../models/Cursos/contenidoClase/GamificadoSimple/ContenidoGamificadoSimpleBorrador')
 
 const controller = {}
+
+
+controller.agregarContenidoClaseGamificadoBorrador = async (req = request, res = response) => {
+    try {
+        const { datos, body, params } = req
+        const { uidSolicitante, datosAuthSolicitante } = datos
+        const { uidCurso, uidUnidad, uidClase } = params
+        const { mensaje, cantidadNiveles, cantidadPreguntasParaResponder } = body
+
+        const respuesta = new Respuesta()
+
+        // Obtener documento de contenido de clase borrador
+        const result = await ContenidoClase.obtenerDocumentoBorrador(uidCurso, uidClase)
+        let duracion = 0
+
+        if ( result.contenidoClase.estadoContenido === 'procesando' ) 
+            throw new Error('Ya se esta procesando un contenido en esta clase.')
+
+        // Actualizar como procesando el estadoContenido
+        await ContenidoClase.actualizarDocumentoBorrador(uidCurso, uidClase, {
+            estadoContenido: 'procesando'
+        })
+
+        if (result.tipoContenido === 'video' || result.tipoContenido === 'articulo') {
+            // Eliminar el archivo video||articulo de borrador
+            const fileNameAux = result.contenidoClase.tipoContenido === 'video' ?
+            `video.${result.contenidoClase.fileExtension}` : 'articulo.md'
+
+            const rutaModo = config.environment.mode === 'production' ? 'prod' : 'dev'
+            const bucketNameContenidoBorrador = rutaModo === 'prod' ? 'prod-j-cursos-contenido-b' : 'dev-j-cursos-contenido-b'
+
+            await ContenidoClase.eliminarContenidoArchivo({
+                bucketName: bucketNameContenidoBorrador,
+                rutaPrefix: `${uidCurso}/${uidClase}/${fileNameAux}`
+            })
+            
+        } else if ( result.tipoContenido === 'gamificado-simple' ) {
+            // Obtener la duracion anterior
+            duracion = result.contenidoClase.duracion
+        }
+
+        // Actualizar documento contenido clase
+        const documentoContenidoClase = new ContenidoGamificadoSimpleBorrador({
+            uid: uidClase,
+            tipoContenido: 'gamificado-simple',
+
+            mensaje: mensaje,
+            cantidadNiveles: cantidadNiveles,
+            cantidadPreguntasParaResponder: cantidadPreguntasParaResponder,
+            cantidadTotalPreguntas: 0,
+            duracion,
+
+            mensajesError: [],
+            contieneErrores: false,
+            estadoDocumento: result.contenidoClase.estadoDocumento === 'nuevo' ? 'nuevo' : 'actualizado',
+            estadoContenido: '',
+        }).getContenidoYoutubeBorrador()
+
+        await ContenidoClase.agregarDocumentoBorrador(uidCurso, documentoContenidoClase)
+        
+        // Actualizar documento clase
+        const documentoClase = {
+            duracion: 0,
+            tipoClase: 'gamificado-simple',
+        }
+        const snapshot = await db.collectionGroup('ClasesBorrador').where('uid', '==', uidClase).get()
+        const docs = snapshot.docs
+        for (let i = 0; i < docs.length; i++) {
+            const doc = docs[i]
+            await doc.ref.update(documentoClase)
+        }
+        
+        // Retornar respuesta
+        respuesta.setRespuesta({
+            estado: 200,
+            mensaje: 'exito',
+            resultado: null
+        })
+        
+        return res.status( respuesta.estado ).json( respuesta.getRespuesta() )
+
+    } catch (error) {
+        console.log('Error - agregarContenidoClaseGamificadoBorrador: ', error)
+
+        const respuesta = manejadorErrores( error )
+        return res.status( respuesta.estado ).json( respuesta.getRespuesta() )
+    }
+}
+
 
 
 controller.agregarContenidoClaseArticuloBorrador = async (req = request, res = response) => {
@@ -121,6 +211,7 @@ controller.agregarContenidoClaseVideoYoutubeBorrador = async (req = request, res
             estadoDocumento: result.contenidoClase.estadoDocumento === 'nuevo' ? 'nuevo' : 'actualizado',
             estadoContenido: '',
         }).getContenidoYoutubeBorrador()
+
         await ContenidoClase.agregarDocumentoBorrador(uidCurso, documentoContenidoClase)
         
         // Actualizar documento clase
