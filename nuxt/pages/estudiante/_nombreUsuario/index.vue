@@ -257,9 +257,11 @@ export default {
         }
 
         try {
+            console.log("nombreUsuario",nombreUsuario)
             const snapshot = await db.collection('Usuarios').where('nombreUsuario', '==', nombreUsuario).get()
             if (snapshot.empty) redirect('/')
             const dataUser = snapshot.docs[0].data()
+            console.log("dataUser",dataUser)
 
             delete dataUser.plan
             delete dataUser.rol
@@ -268,6 +270,7 @@ export default {
 
             const doc = await db.collection('InformacionUsuarios').doc(dataUser.uid).get()
             const infoUser = doc.data()
+            console.log("infoUser",infoUser)
 
             // Obtener datos de usuario
             let responseAuthUsuario = await $axios.$get(`/serviceUsuario/obtenerAuthentication/nombreUsuario/${nombreUsuario}`, config)

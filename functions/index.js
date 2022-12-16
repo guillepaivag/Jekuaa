@@ -12,6 +12,7 @@ const ServiceBlog = require('./src/apps/blog/app.service')
 const ServiceCursoBorrador = require('./src/apps/curso-borrador/app.service')
 const ServiceCursoPublicado = require('./src/apps/curso-publicado/app.service')
 const ServicePedido = require('./src/apps/pedido/app.service')
+const ServiceEquipo = require('./src/apps/equipo/app.service')
 
 // Funciones Cloud Functions
 const {
@@ -68,6 +69,7 @@ exports.serviceBlog = functions.region('southamerica-east1').https.onRequest(Ser
 exports.serviceCursoBorrador = functions.region('southamerica-east1').https.onRequest(ServiceCursoBorrador)
 exports.serviceCursoPublicado = functions.region('southamerica-east1').https.onRequest(ServiceCursoPublicado)
 exports.servicePedido = functions.region('southamerica-east1').https.onRequest(ServicePedido)
+exports.serviceEquipo = functions.region('southamerica-east1').https.onRequest(ServiceEquipo)
 
 
 // TRIGGERS:

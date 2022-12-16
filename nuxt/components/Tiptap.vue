@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="principal">
     <div v-if="editor" class="botonesEditor">
       <v-btn
         title="Negrita"
@@ -295,7 +295,7 @@
 </template>
 
 <script>
-import { Editor, EditorContent, VueNodeViewRenderer } from '@tiptap/vue-2'
+import { Editor, EditorContent } from '@tiptap/vue-2'
 import StarterKit from '@tiptap/starter-kit'
 
 import Document from '@tiptap/extension-document'
@@ -385,9 +385,12 @@ export default {
 
 <style lang="scss" scoped>
 /* Basic editor styles */
-.botonesEditor {
-  margin-bottom: 25px;
+
+.principal {
+  background: pink;
+  
 }
+
 
 .botonEditor {
   background: #683bce;
@@ -398,5 +401,21 @@ export default {
 
 .is-active {
   background: #ff1d89 !important;
+}
+
+</style>
+
+<style>
+body {
+  overflow-x: hidden;
+}
+.botonesEditor {
+  margin-bottom: 25px;
+  position: -webkit-sticky;
+  position: sticky;
+  top: 0;
+  padding: 5px;
+  background-color: #cae8ca;
+  border: 2px solid #4CAF50;
 }
 </style>

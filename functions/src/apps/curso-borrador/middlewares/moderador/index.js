@@ -119,7 +119,7 @@ borrador.verificadorDeDatosPOST = async (req = request, res = response, next) =>
         }
 
         // Referencia URL
-        if ( codigo.trim().length < 1 ) {
+        if ( codigo.trim().length < 10 ) {
             throw new TypeError('La referencia url del curso debe ser mayor o igual a 10.')
         }
         
